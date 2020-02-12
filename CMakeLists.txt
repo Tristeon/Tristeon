@@ -44,29 +44,31 @@ read_directory(${PROJECT_SOURCE_DIR}/src)
 
 #Config definitions
 if (MSVC)
-set(EDITOR_DEF -DTRISTEON_EDITOR=1)
+set(EDITOR_DEF -DTRISTEON2D_EDITOR=1)
 set(LOG_DEF -DTRISTEON_LOGENABLED=1)
 set(DEBUG_FLAGS ${CMAKE_CXX_FLAGS_DEBUG})
 else(MSVC)
-set(EDITOR_DEF -DTRISTEON_EDITOR)
-set(LOG_DEF -DTRISTEON_LOGENABLED)
+set(EDITOR_DEF -DTRISTEON2D_EDITOR)
+set(LOG_DEF -DTRISTEON2D_LOGENABLED)
 set(DEBUG_FLAGS )
 endif(MSVC)
 
 set(CMAKE_CXX_FLAGS_DEBUGEDITOR "${DEBUG_FLAGS} ${EDITOR_DEF} ${LOG_DEF}")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUGEDITOR ${CMAKE_EXE_LINKER_FLAGS_DEBUG})
 set(CMAKE_C_FLAGS_DEBUGEDITOR ${CMAKE_C_FLAGS_DEBUG})
+set(CMAKE_SHARED_LINKER_FLAGS_DEBUGEDITOR ${CMAKE_SHARED_LINKER_FLAGS_DEBUG})
 
 set(CMAKE_CXX_FLAGS_EDITOR "${EDITOR_DEF} ${LOG_DEF}")
 set(CMAKE_EXE_LINKER_FLAGS_EDITOR ${CMAKE_EXE_LINKER_FLAGS_RELEASE})
 set(CMAKE_C_FLAGS_EDITOR ${CMAKE_C_FLAGS_RELEASE})
+set(CMAKE_SHARED_LINKER_FLAGS_EDITOR ${CMAKE_SHARED_LINKER_FLAGS_RELEASE})
 
 set(CMAKE_CXX_FLAGS_DEBUG "${DEBUG_FLAGS} ${LOG_DEF}")
 
 set(CMAKE_CONFIGURATION_TYPES Debug DebugEditor Release Editor)
 
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
-
+	
 #GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -79,10 +81,10 @@ macro(link_libs targetname)
 endmacro()
 
 if (MSVC)
-	add_executable(Tristeon ${tristeonSRC})
+	add_executable(Tristeon2D ${tristeonSRC})
 	
 	#Set target output directory
-	set_target_properties(Tristeon
+	set_target_properties(Tristeon2D
 		PROPERTIES
 		ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
 		LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
@@ -102,7 +104,7 @@ if (MSVC)
 	)
 	
 	#Set working directory to build in MSVC
-	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon.vcxproj.user" 
+	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon2D.vcxproj.user" 
 		"<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
 		<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
 		<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|x64'\">
@@ -124,9 +126,9 @@ if (MSVC)
 		</Project>"
 	)
 	#Set Tristeon as the start project
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon2D)
 
-	link_libs(Tristeon)
+	link_libs(Tristeon2D)
 	
 else(MSVC)
 	add_executable(Debug ${tristeonSRC})
