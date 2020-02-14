@@ -9,6 +9,7 @@ namespace Tristeon
 	public:
 		String(std::string s);
 		operator std::string();
+		std::string getStdString() const { return internalString; }
 		String& operator+(std::string const& other) const;
 		String& operator+(char* const& other) const;
 		void operator+=(std::string const& other);
