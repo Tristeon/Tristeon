@@ -1,22 +1,19 @@
 #pragma once
 
-struct GLFWwindow;
+#include <QOpenGLWidget>
 
 namespace Tristeon
 {
 	class Engine;
 
-	class Window final
+	class Window : QOpenGLWidget
 	{
 	public:
 		explicit Window(Engine* engine);
 		~Window();
 
-		GLFWwindow* getGLFWwindow() const { return window; }
 	private:
 		void onResize(int w, int h);
-
-		GLFWwindow* window = nullptr;
 
 		int width = 0, height = 0;
 		Engine* engine = nullptr;

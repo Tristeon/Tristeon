@@ -22,6 +22,9 @@
 	SOFTWARE.
 */
 
+#include <QApplication>
+#include <QWidget>
+
 #include "Engine.h"
 
 #ifndef TRISTEON_LOGENABLED
@@ -32,8 +35,10 @@
 //#include <Editor/Editor.h>
 #endif
 
-int main()
+int main(int argc, char** argv)
 {
+    QApplication app(argc, argv);
+
 #ifndef TRISTEON_LOGENABLED
 	FreeConsole();
 #endif

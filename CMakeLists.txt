@@ -1,17 +1,34 @@
 cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
 #Project
-project(Tristeon2D)
-set (Tristeon2D_VERSION_MAJOR 1)
-set (Tristeon2D_VERSION_MINOR 1)	
+project(Tristeon LANGUAGES CXX)
+set (Tristeon_VERSION_MAJOR 1)
+set (Tristeon_VERSION_MINOR 1)	
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+set(CMAKE_MODULE_PATH ${MAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
 include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/src")
+
+if (MSVC)
+    message("Use Visual Studio MSVC")
+    # Visual Studio
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP true)
+    include(InstallRequiredSystemLibraries)
+    file(COPY ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
+endif()
 
 #Add source files
 macro(read_directory curdir)
@@ -41,15 +58,14 @@ macro(read_directory curdir)
 endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
-
 #Config definitions
 if (MSVC)
-set(EDITOR_DEF -DTRISTEON2D_EDITOR=1)
+set(EDITOR_DEF -DTRISTEON_EDITOR=1)
 set(LOG_DEF -DTRISTEON_LOGENABLED=1)
 set(DEBUG_FLAGS ${CMAKE_CXX_FLAGS_DEBUG})
 else(MSVC)
-set(EDITOR_DEF -DTRISTEON2D_EDITOR)
-set(LOG_DEF -DTRISTEON2D_LOGENABLED)
+set(EDITOR_DEF -DTRISTEON_EDITOR)
+set(LOG_DEF -DTRISTEON_LOGENABLED)
 set(DEBUG_FLAGS )
 endif(MSVC)
 
@@ -68,23 +84,19 @@ set(CMAKE_CXX_FLAGS_DEBUG "${DEBUG_FLAGS} ${LOG_DEF}")
 set(CMAKE_CONFIGURATION_TYPES Debug DebugEditor Release Editor)
 
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
-	
-#GLFW
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory(external/glfw)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 #Libraries
 macro(link_libs targetname)
-	target_link_libraries(${targetname} glfw)
+	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 endmacro()
 
 if (MSVC)
-	add_executable(Tristeon2D ${tristeonSRC})
+	add_executable(Tristeon ${tristeonSRC})
 	
 	#Set target output directory
-	set_target_properties(Tristeon2D
+	set_target_properties(Tristeon
 		PROPERTIES
 		ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
 		LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
@@ -104,7 +116,7 @@ if (MSVC)
 	)
 	
 	#Set working directory to build in MSVC
-	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon2D.vcxproj.user" 
+	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon.vcxproj.user" 
 		"<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
 		<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
 		<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|x64'\">
@@ -126,9 +138,9 @@ if (MSVC)
 		</Project>"
 	)
 	#Set Tristeon as the start project
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon2D)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon)
 
-	link_libs(Tristeon2D)
+	link_libs(Tristeon)
 	
 else(MSVC)
 	add_executable(Debug ${tristeonSRC})

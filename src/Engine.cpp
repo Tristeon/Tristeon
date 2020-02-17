@@ -1,5 +1,6 @@
 #include "Engine.h"
-#include <GLFW/glfw3.h>
+
+#include <QApplication>
 
 namespace Tristeon
 {
@@ -11,12 +12,6 @@ namespace Tristeon
 
 	void Engine::run()
 	{
-		do
-		{
-			glfwPollEvents();
-
-			renderer->renderScene();
-			renderer->renderHUD();
-		} while (!glfwWindowShouldClose(window->getGLFWwindow()));
+		QApplication::exec();
 	}
 }
