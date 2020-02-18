@@ -6,12 +6,17 @@
 
 namespace Tristeon
 {
-	class Engine final
+	class Engine
 	{
+		friend Window;
+		friend Renderer;
+
 	public:
 		explicit Engine();
-		void run();
+		~Engine();
 
+		void run();
+		void update();
 	private:
 		std::unique_ptr<Renderer> renderer;
 		std::unique_ptr<Window> window;

@@ -1,21 +1,34 @@
 #pragma once
 
-#include <QOpenGLWidget>
+#include <QWindow>
+#include <QTimer>
+#include <QOpenGLFunctions>
+#include <QOpenGLPaintDevice>
+#include <QOpenGLContext>
+#include <QPainter>
 
 namespace Tristeon
 {
 	class Engine;
 
-	class Window : QOpenGLWidget
+	class Window : public QWindow, private QOpenGLFunctions
 	{
+		Q_OBJECT
+		friend Engine;
 	public:
 		explicit Window(Engine* engine);
 		~Window();
-
 	private:
-		void onResize(int w, int h);
+		void preRender();
+		void postRender();
 
-		int width = 0, height = 0;
+		void initialize();
+		void update();
+
 		Engine* engine = nullptr;
+
+		QOpenGLContext* context = nullptr;
+
+		QTimer* timer;
 	};
 }

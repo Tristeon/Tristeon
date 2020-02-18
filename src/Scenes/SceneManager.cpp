@@ -5,6 +5,7 @@ namespace Tristeon
 {
 	Scene* SceneManager::getCurrentScene()
 	{
+		//TODO: Scenemanager implementation
 		return nullptr;
 	}
 }

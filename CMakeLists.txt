@@ -85,7 +85,8 @@ set(CMAKE_CONFIGURATION_TYPES Debug DebugEditor Release Editor)
 
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets OpenGL REQUIRED)
+set(QT_USE_QTOPENGL TRUE)
 
 #Libraries
 macro(link_libs targetname)

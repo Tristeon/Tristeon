@@ -3,16 +3,23 @@
 namespace Tristeon
 {
 	class Engine;
+	class Scene;
+	class HUD;
+	class Window;
 
 	class Renderer
 	{
+		friend Engine;
+		friend Window;
 	public:
 		Renderer(Engine* engine);
 		~Renderer();
 
-		void renderScene();
-		void renderHUD();
 	private:
+		void renderScene(Scene* scene);
+		void renderHUD(HUD* hud);
+		void initialize();
+
 		Engine* engine = nullptr;
 	};
 }

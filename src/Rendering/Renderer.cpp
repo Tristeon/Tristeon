@@ -12,12 +12,16 @@ namespace Tristeon
 
 	Renderer::~Renderer()
 	{
+
 	}
 
-	void Renderer::renderScene()
+	void Renderer::initialize()
 	{
-		Scene* scene = SceneManager::getCurrentScene();
 
+	}
+
+	void Renderer::renderScene(Scene* scene)
+	{
 		if (scene == nullptr)
 			return;
 
@@ -28,8 +32,8 @@ namespace Tristeon
 		}
 	}
 
-	void Renderer::renderHUD()
+	void Renderer::renderHUD(HUD* hud)
 	{
-
+		//TODO: HUD rendering
 	}
 }
