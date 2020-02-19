@@ -6,7 +6,6 @@
 [Rr]elease[Dd]ebug/
 [Rr]elease[Ww]ith[Dd]ebug[Ii]nfo/
 [Ll]og/
-**/[Bb]in/
 .idea/
 cmake-build-debug/
 
@@ -14,6 +13,11 @@ bin/[Ee]ditor/
 bin/[Dd]ebug[Ee]ditor/
 bin/[Dd]ebug/
 bin/[Rr]elease/
+
+# Local binaries
+*.dll
+*.qm
+*.ilk
 
 # Build files
 *.exe
