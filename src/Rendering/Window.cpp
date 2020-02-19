@@ -14,23 +14,18 @@ namespace Tristeon
 		timer->start(0);
 	}
 
-	Window::~Window()
-	{
-		delete context;
-	}
-
 	void Window::preRender()
 	{
 		if (!context)
 			initialize();
-
+		
 		if (!isExposed())
 			return;
 
-		context->makeCurrent(this);
+		context->context->makeCurrent(this);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+		context->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		context->glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
 	}
 
 	void Window::postRender()
@@ -38,23 +33,24 @@ namespace Tristeon
 		if (!isExposed())
 			return;
 
-		context->swapBuffers(this);
+		context->context->swapBuffers(this);
 	}
 
 	void Window::initialize()
 	{
-		context = new QOpenGLContext(this);
-		context->setFormat(requestedFormat());
-		context->create();
-		context->makeCurrent(this);
-
-		initializeOpenGLFunctions();
-
+		context = std::make_unique<GLContext>(this);
 		engine->renderer->initialize();
 	}
 
 	void Window::update()
 	{
 		engine->update();
+	}
+
+	void Window::resizeEvent(QResizeEvent* ev)
+	{
+		if (!context)
+			return;
+		context->glViewport(0, 0, ev->size().width(), ev->size().height());
 	}
 }

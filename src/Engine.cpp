@@ -10,10 +10,12 @@ namespace Tristeon
 	{
 		window = std::make_unique<Window>(this);
 		renderer = std::make_unique<Renderer>(this);
+		SceneManager::initialize();
 	}
 
 	Engine::~Engine()
 	{
+		SceneManager::reset();
 
 	}
 

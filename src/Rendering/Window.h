@@ -2,22 +2,19 @@
 
 #include <QWindow>
 #include <QTimer>
-#include <QOpenGLFunctions>
-#include <QOpenGLPaintDevice>
-#include <QOpenGLContext>
-#include <QPainter>
+#include <QResizeEvent>
+#include "GLContext.h"
 
 namespace Tristeon
 {
 	class Engine;
 
-	class Window : public QWindow, private QOpenGLFunctions
+	class Window : public QWindow
 	{
 		Q_OBJECT
 		friend Engine;
 	public:
 		explicit Window(Engine* engine);
-		~Window();
 	private:
 		void preRender();
 		void postRender();
@@ -25,9 +22,11 @@ namespace Tristeon
 		void initialize();
 		void update();
 
+		void resizeEvent(QResizeEvent* ev) override;
+
 		Engine* engine = nullptr;
 
-		QOpenGLContext* context = nullptr;
+		std::unique_ptr<GLContext> context = nullptr;
 
 		QTimer* timer;
 	};

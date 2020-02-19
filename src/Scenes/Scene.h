@@ -4,6 +4,7 @@
 
 namespace Tristeon
 {
+	class SceneManager;
 	class Layer;
 	class Engine;
 	class HUD;
@@ -11,7 +12,11 @@ namespace Tristeon
 	class Scene
 	{
 		friend Engine;
+		friend SceneManager;
 	public:
+		Scene() = default;
+		~Scene() = default;
+		
 		Layer* getLayer(unsigned int index) const;
 		unsigned int getLayerCount() const;
 		HUD* getHUD() const;

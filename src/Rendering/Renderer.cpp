@@ -25,7 +25,7 @@ namespace Tristeon
 		if (scene == nullptr)
 			return;
 
-		for (int i = 0; i < scene->getLayerCount(); i++)
+		for (unsigned int i = 0; i < scene->getLayerCount(); i++)
 		{
 			Layer* layer = scene->getLayer(i);
 			layer->render();
