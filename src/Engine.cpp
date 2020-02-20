@@ -16,7 +16,6 @@ namespace Tristeon
 	Engine::~Engine()
 	{
 		SceneManager::reset();
-
 	}
 
 	void Engine::run()

@@ -30,9 +30,19 @@ namespace Tristeon
 		if (!shader.isReady())
 			return;
 
+		//TileSet
 		GLContext::getInstance()->glActiveTexture(0);
 		tileSet->texture->bind();
-		
+
+		shader.getShaderProgram()->setUniformValue("tileSetWidth", tileSet->width);
+		shader.getShaderProgram()->setUniformValue("tileSetWidth", tileSet->height);
+
+		//Camera
+		shader.getShaderProgram()->setUniformValue("cameraPos", 0.0f, 0.0f);
+		shader.getShaderProgram()->setUniformValue("cameraWidth", 10.0f);
+		shader.getShaderProgram()->setUniformValue("cameraHeight", 10.0f);
+
+		//Draw
 		shader.bind();
 		GLContext::getInstance()->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
