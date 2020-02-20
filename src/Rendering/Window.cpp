@@ -1,56 +1,63 @@
 #include "Window.h"
 #include "Engine.h"
 #include <iostream>
+#include <QOpenGLFunctions>
+
+
+#include "Scenes/Scene.h"
+#include "Scenes/SceneManager.h"
 
 namespace Tristeon
 {
-	Window::Window(Engine* engine) : engine(engine)
+	Window::Window(Engine* engine, QWidget* parent) : QOpenGLWidget(parent), engine(engine)
 	{
-		setSurfaceType(QWindow::OpenGLSurface);
-		show();
-
 		timer = new QTimer(this);
 		QObject::connect(timer, &QTimer::timeout, this, &Window::update);
 		timer->start(0);
+		show();
 	}
 
-	void Window::preRender()
+	void Window::initializeGL()
 	{
-		if (!context)
-			initialize();
-		
-		if (!isExposed())
-			return;
+		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
+		f->glClearColor(1, 1, 0, 1);
 
-		context->context->makeCurrent(this);
-
-		context->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		context->glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+		f->glEnable(GL_DEPTH_TEST);
+		f->glEnable(GL_CULL_FACE);
+		f->glCullFace(GL_BACK);
 	}
 
-	void Window::postRender()
+	void Window::resizeGL(int w, int h)
 	{
-		if (!isExposed())
-			return;
-
-		context->context->swapBuffers(this);
+		paintGL();
 	}
 
-	void Window::initialize()
+	void Window::paintGL()
 	{
-		context = std::make_unique<GLContext>(this);
-		engine->renderer->initialize();
+		context()->makeCurrent(context()->surface());
+
+		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
+		f->glClearColor(1, 1, 0, 1);
+		f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Scene* scene = SceneManager::getCurrentScene();
+		if (scene != nullptr)
+		{
+			engine->renderer->renderScene(scene);
+			engine->renderer->renderHUD(scene->getHUD());
+		}
 	}
 
 	void Window::update()
 	{
-		engine->update();
-	}
-
-	void Window::resizeEvent(QResizeEvent* ev)
-	{
-		if (!context)
+		if (engine == nullptr)
 			return;
-		context->glViewport(0, 0, ev->size().width(), ev->size().height());
+
+		Scene* scene = SceneManager::getCurrentScene();
+
+		if (scene != nullptr)
+			scene->update();
+
+		paintGL();
 	}
 }

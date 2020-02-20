@@ -16,9 +16,9 @@ namespace Tristeon
 		~Engine();
 
 		void run();
-		void update();
+		void setWindow(Window* window);
 	private:
+		Window* window = nullptr;
 		std::unique_ptr<Renderer> renderer;
-		std::unique_ptr<Window> window;
 	};
 }

@@ -1,33 +1,27 @@
 #pragma once
 
-#include <QWindow>
 #include <QTimer>
+#include <QOpenGLWidget>
 #include <QResizeEvent>
-#include "GLContext.h"
 
 namespace Tristeon
 {
 	class Engine;
 
-	class Window : public QWindow
+	class Window : public QOpenGLWidget
 	{
 		Q_OBJECT
 		friend Engine;
 	public:
-		explicit Window(Engine* engine);
+		Window(Engine* engine, QWidget* parent);
 	private:
-		void preRender();
-		void postRender();
+		void initializeGL() override;
+		void resizeGL(int w, int h) override;
+		void paintGL() override;
 
-		void initialize();
 		void update();
-
-		void resizeEvent(QResizeEvent* ev) override;
-
+		
 		Engine* engine = nullptr;
-
-		std::unique_ptr<GLContext> context = nullptr;
-
-		QTimer* timer;
+		QTimer* timer = nullptr;
 	};
 }

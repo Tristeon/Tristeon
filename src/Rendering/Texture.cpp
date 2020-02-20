@@ -1,7 +1,5 @@
 #include "Texture.h"
 #include <QImage>
-#include <QOpenGLTexture>
-#include "GLContext.h"
 
 namespace Tristeon
 {
@@ -25,11 +23,6 @@ namespace Tristeon
 
 	void Texture::load()
 	{
-		if (!GLContext::isReady())
-			return;
-		
-		GLContext::makeCurrent();
-
 		QImage image;
 		loaded = image.load(imagePath);
 

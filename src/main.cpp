@@ -22,35 +22,78 @@
 	SOFTWARE.
 */
 
-#include <QApplication>
-#include <QWidget>
-
 #include "Engine.h"
 
 #ifndef TRISTEON_LOGENABLED
 #include <Windows.h>
 #endif
 
+#include <iostream>
+#include <QWidget>
+#include <QtUiTools/QtUiTools>
+#include <QMainWindow>
+
+std::unique_ptr<Tristeon::Engine> engine;
+
 #ifdef TRISTEON_EDITOR
-//#include <Editor/Editor.h>
+class CustomLoader : public QUiLoader
+{
+	
+};
+#else
+class CustomLoader : public QUiLoader
+{
+	QWidget* createWidget(const QString& className, QWidget* parent = nullptr, const QString& name = QString()) override;
+};
+
+QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, const QString& name)
+{
+	if (name == "game")
+	{
+		Tristeon::Window* window = new Tristeon::Window(engine.get(), parent);
+		engine->setWindow(window);
+		return window;
+	}
+	return QUiLoader::createWidget(className, parent, name);
+}
 #endif
+
+QWidget* loadUIFile()
+{
+	CustomLoader loader;
+#if TRISTEON_EDITOR
+	QFile file("Internal/UI/Editor.ui");
+#else
+	QFile file("Internal/UI/Game.ui");
+#endif
+	file.open(QFile::ReadOnly);
+	
+	QWidget* formWidget = loader.load(&file);
+	file.close();
+
+	return formWidget;
+}
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
-
 #ifndef TRISTEON_LOGENABLED
 	FreeConsole();
 #endif
 
-	Tristeon::Engine engine{};
+	engine = std::make_unique<Tristeon::Engine>();
 
+	QApplication app(argc, argv);
+	QMainWindow window;
+	QWidget* widget = loadUIFile();
+	window.setCentralWidget(widget);
+	window.show();
+	
 #ifdef TRISTEON_EDITOR
 	//TristeonEditor::Editor editor{};
 #else
 	//TODO: Auto start game with the starting scene loaded in in game/release mode
 #endif
 
-	engine.run();
-	return 0;
+	engine->run();
+	return app.exec();
 }

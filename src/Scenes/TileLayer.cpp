@@ -1,8 +1,8 @@
 #include "TileLayer.h"
 
 #include <iostream>
-
-#include "Rendering/GLContext.h"
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
 
 namespace Tristeon
 {
@@ -30,20 +30,24 @@ namespace Tristeon
 		if (!shader.isReady())
 			return;
 
+		std::cout << "Rendering tiles, maybe?" << std::endl;
+		
 		//TileSet
-		GLContext::getInstance()->glActiveTexture(0);
+		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
+		f->glActiveTexture(0);
 		tileSet->texture->bind();
 
-		shader.getShaderProgram()->setUniformValue("tileSetWidth", tileSet->width);
-		shader.getShaderProgram()->setUniformValue("tileSetWidth", tileSet->height);
+		auto program = shader.getShaderProgram();
+		program->setUniformValue("tileSetWidth", tileSet->width);
+		program->setUniformValue("tileSetWidth", tileSet->height);
 
 		//Camera
-		shader.getShaderProgram()->setUniformValue("cameraPos", 0.0f, 0.0f);
-		shader.getShaderProgram()->setUniformValue("cameraWidth", 10.0f);
-		shader.getShaderProgram()->setUniformValue("cameraHeight", 10.0f);
+		program->setUniformValue("cameraPos", 0.0f, 0.0f);
+		program->setUniformValue("cameraWidth", 10.0f);
+		program->setUniformValue("cameraHeight", 10.0f);
 
 		//Draw
 		shader.bind();
-		GLContext::getInstance()->glDrawArrays(GL_TRIANGLES, 0, 3);
+		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 }

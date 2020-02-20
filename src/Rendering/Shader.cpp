@@ -1,10 +1,7 @@
 #include "Shader.h"
-
-
 #include <iostream>
 #include <QFileSystemModel>
-
-#include "GLContext.h"
+#include <QOpenGLContext>
 
 namespace Tristeon
 {
@@ -53,7 +50,7 @@ namespace Tristeon
 		vertexData = vertexFile.readAll().toStdString();
 		fragmentData = fragmentFile.readAll().toStdString();
 
-		program = new QOpenGLShaderProgram(GLContext::getQContext());
+		program = new QOpenGLShaderProgram(QOpenGLContext::currentContext());
 		program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexData.c_str());
 		program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentData.c_str());
 		program->link();

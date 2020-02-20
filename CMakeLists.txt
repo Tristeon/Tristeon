@@ -85,12 +85,13 @@ set(CMAKE_CONFIGURATION_TYPES Debug DebugEditor Release Editor)
 
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 
-find_package(Qt5 COMPONENTS Core Widgets OpenGL REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
 #Libraries
 macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
+	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)
 endmacro()
 
 if (MSVC)

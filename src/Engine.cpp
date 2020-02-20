@@ -8,7 +8,6 @@ namespace Tristeon
 {
 	Engine::Engine()
 	{
-		window = std::make_unique<Window>(this);
 		renderer = std::make_unique<Renderer>(this);
 		SceneManager::initialize();
 	}
@@ -23,21 +22,8 @@ namespace Tristeon
 		QApplication::exec();
 	}
 
-	void Engine::update()
+	void Engine::setWindow(Window* window)
 	{
-		Scene* scene = SceneManager::getCurrentScene();
-		
-		if (scene != nullptr)
-			scene->update();
-
-		window->preRender();
-		
-		if (scene != nullptr)
-		{
-			renderer->renderScene(scene);
-			renderer->renderHUD(scene->getHUD());
-		}
-
-		window->postRender();
+		this->window = window;
 	}
 }
