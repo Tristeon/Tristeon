@@ -6,22 +6,28 @@ set (Tristeon_VERSION_MAJOR 1)
 set (Tristeon_VERSION_MINOR 1)	
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+#CMake lookup path for modules (find_package)
 set(CMAKE_MODULE_PATH ${MAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+#Qt reflection
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+#C++
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#Output/compilation
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+#Including our own src folder for ease of use
 include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
+#QT configuration stuff
 if (MSVC)
     message("Use Visual Studio MSVC")
     # Visual Studio
@@ -30,7 +36,7 @@ if (MSVC)
     file(COPY ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
 endif()
 
-#Add source files
+#Add source files recursively by looking through the folder structure
 macro(read_directory curdir)
 	file(GLOB children RELATIVE ${curdir} ${curdir}/*)
 	
@@ -58,6 +64,10 @@ macro(read_directory curdir)
 endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
+#include Qt
+find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools REQUIRED)
+set(QT_USE_QTOPENGL TRUE)
+
 #Config definitions
 if (MSVC)
 set(EDITOR_DEF -DTRISTEON_EDITOR=1)
@@ -69,24 +79,37 @@ set(LOG_DEF -DTRISTEON_LOGENABLED)
 set(DEBUG_FLAGS )
 endif(MSVC)
 
-set(CMAKE_CXX_FLAGS_DEBUGEDITOR "${DEBUG_FLAGS} ${EDITOR_DEF} ${LOG_DEF}")
+#Set config flags for custom build versions
+set(CMAKE_C_FLAGS_DEBUGEDITOR "${CMAKE_C_FLAGS_DEBUG} ${EDITOR_DEF} ${LOG_DEF}")
+set(CMAKE_CXX_FLAGS_DEBUGEDITOR "${CMAKE_CXX_FLAGS_DEBUG} ${EDITOR_DEF} ${LOG_DEF}")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUGEDITOR ${CMAKE_EXE_LINKER_FLAGS_DEBUG})
-set(CMAKE_C_FLAGS_DEBUGEDITOR ${CMAKE_C_FLAGS_DEBUG})
 set(CMAKE_SHARED_LINKER_FLAGS_DEBUGEDITOR ${CMAKE_SHARED_LINKER_FLAGS_DEBUG})
 
+set(CMAKE_C_FLAGS_EDITOR "${CMAKE_C_FLAGS_RELEASE} ${EDITOR_DEF} ${LOG_DEF}")
 set(CMAKE_CXX_FLAGS_EDITOR "${EDITOR_DEF} ${LOG_DEF}")
 set(CMAKE_EXE_LINKER_FLAGS_EDITOR ${CMAKE_EXE_LINKER_FLAGS_RELEASE})
-set(CMAKE_C_FLAGS_EDITOR ${CMAKE_C_FLAGS_RELEASE})
 set(CMAKE_SHARED_LINKER_FLAGS_EDITOR ${CMAKE_SHARED_LINKER_FLAGS_RELEASE})
 
-set(CMAKE_CXX_FLAGS_DEBUG "${DEBUG_FLAGS} ${LOG_DEF}")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${LOG_DEF}")
 
+#Set build configs in cmake
 set(CMAKE_CONFIGURATION_TYPES Debug DebugEditor Release Editor)
 
-set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+#Fix to allow QT to recognize debugeditor as a valid debug build
+set_target_properties(Qt5::Core PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
+set_target_properties(Qt5::Core PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
 
-find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools REQUIRED)
-set(QT_USE_QTOPENGL TRUE)
+set_target_properties(Qt5::Widgets PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
+set_target_properties(Qt5::Widgets PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
+
+set_target_properties(Qt5::UiTools PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
+set_target_properties(Qt5::UiTools PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
+
+set_target_properties(Qt5::OpenGL PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
+set_target_properties(Qt5::OpenGL PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
+
+# ??
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 
 #Libraries
 macro(link_libs targetname)
@@ -116,7 +139,7 @@ if (MSVC)
 		LIBRARY_OUTPUT_DIRECTORY_EDITOR "${CMAKE_SOURCE_DIR}/bin"
 		RUNTIME_OUTPUT_DIRECTORY_EDITOR "${CMAKE_SOURCE_DIR}/bin"
 	)
-	
+
 	#Set working directory to build in MSVC
 	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon.vcxproj.user" 
 		"<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
@@ -145,6 +168,7 @@ if (MSVC)
 	link_libs(Tristeon)
 	
 else(MSVC)
+	#Create "build configurations" for other IDEs/compilers
 	add_executable(Debug ${tristeonSRC})
 	add_executable(Release ${tristeonSRC})
 	add_executable(Editor ${tristeonSRC})
@@ -152,8 +176,8 @@ else(MSVC)
 	
 	target_compile_definitions(Debug PUBLIC ${CMAKE_CXX_FLAGS_DEBUG})
 	target_compile_definitions(Release PUBLIC ${CMAKE_CXX_FLAGS_RELEASE})
-	target_compile_definitions(Editor PUBLIC ${CMAKE_CXX_FLAGS_DEBUGEDITOR})
-	target_compile_definitions(DebugEditor PUBLIC ${CMAKE_CXX_FLAGS_EDITOR})
+	target_compile_definitions(Editor PUBLIC ${CMAKE_CXX_FLAGS_EDITOR})
+	target_compile_definitions(DebugEditor PUBLIC ${CMAKE_CXX_FLAGS_DEBUGEDITOR})
 	
 	link_libs(Debug)
 	link_libs(Release)
