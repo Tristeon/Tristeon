@@ -22,20 +22,15 @@ out vec4 FragColor;
 vec2 getTileUV(vec2 uv, int x, int y);
 void main()
 {
-    // int[] data = int[](
-    //     0, 0, 0, 18, 19, 20, 21, 0, 0, 0,
-    //     0, 18, 19, 20, 19, 20, 19, 20, 21, 0,
-    //     0, 49, 50, 50, 50, 50, 50, 50, 54, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-    // );
+    int levelWidth = 10;
+    int levelHeight = 10;
 
-    // FragColor = texture2D(tileSet, getTileUV(texCoord, 4, 4));
+    int[] data = int[] (
+        1, 1, 1
+    );
+
+    FragColor = texture2D(tileSet, getTileUV(texCoord, 2, 4));
+    return;
 
     float tileX = texCoord.x * cameraWidth;
     float tileY = texCoord.y * cameraHeight;
@@ -52,17 +47,20 @@ void main()
     FragColor = texture2D(tileSet, vec2(tileU, tileV));
 }
 
-int getTileIndex(int tilePosX, int tilePosY)
+ivec2 getTileIndexFromData(int[100] data)
 {
-    return 0;
+    int index = 0;
+
+    if (data[index] == -1)
+        return ivec2(-1, -1);
 }
 
 vec2 getTileUV(vec2 uv, int tileX, int tileY)
 {
-    float x = uv.x * tileSetWidth;
-    float y = uv.y * tileSetHeight;
+    float x = uv.x / tileSetWidth;
+    float y = uv.y / tileSetHeight;
 
-    float u = (x - floor(x));
-    float v = (y - floor(y));
+    float u = (tileX / tileSetWidth) + x;
+    float v = (tileY / tileSetHeight) + y;
     return vec2(u, v);
 }

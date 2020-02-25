@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QFileSystemModel>
 #include <QOpenGLContext>
+#include <QOpenGLShaderProgram>
 
 namespace Tristeon
 {

@@ -22,7 +22,7 @@ namespace Tristeon
 		shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
 
 		Tile tileInfo[256] = { {} };
-		tileSet = std::make_unique<TileSet>("Project/Tiny Platformer/Tileset(16x16)/Tileset.png", 16, 16, tileInfo);
+		tileSet = std::make_unique<TileSet>("Project/TilesetTest.jpg", 3, 5, tileInfo);
 	}
 
 	void TileLayer::render()
@@ -30,8 +30,6 @@ namespace Tristeon
 		if (!shader.isReady())
 			return;
 
-		std::cout << "Rendering tiles, maybe?" << std::endl;
-		
 		//TileSet
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 		f->glActiveTexture(0);
@@ -39,7 +37,7 @@ namespace Tristeon
 
 		auto program = shader.getShaderProgram();
 		program->setUniformValue("tileSetWidth", tileSet->width);
-		program->setUniformValue("tileSetWidth", tileSet->height);
+		program->setUniformValue("tileSetHeight", tileSet->height);
 
 		//Camera
 		program->setUniformValue("cameraPos", 0.0f, 0.0f);
