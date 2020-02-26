@@ -13,6 +13,7 @@ namespace Tristeon
 
 	Window::Window()
 	{
+		resize(800, 600);
 		instance = this;
 	}
 

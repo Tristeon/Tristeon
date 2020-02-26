@@ -50,6 +50,7 @@ namespace Tristeon
 			engine->renderer->renderScene(scene);
 			engine->renderer->renderHUD(scene->getHUD());
 		}
+		Window::main()->update();
 	}
 
 	void GameView::update()
@@ -64,11 +65,6 @@ namespace Tristeon
 		if (scene != nullptr)
 			scene->update();
 
-		if (Keyboard::pressed(Key_Space))
-			std::cout << "Spacebar pressed" << std::endl;
-		if (Keyboard::released(Key_Space))
-			std::cout << "Spacebar released" << std::endl;
-		
 		paintGL();
 
 		Mouse::reset();

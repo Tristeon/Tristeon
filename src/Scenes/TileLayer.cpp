@@ -4,6 +4,8 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
+#include "Input/Keyboard.h"
+
 namespace Tristeon
 {
 	TileLayer::TileLayer()
@@ -27,6 +29,9 @@ namespace Tristeon
 
 	void TileLayer::render()
 	{
+		if (Keyboard::pressed(Key_R))
+			shader.reload();
+
 		if (!shader.isReady())
 			return;
 
@@ -36,13 +41,13 @@ namespace Tristeon
 		tileSet->texture->bind();
 
 		auto program = shader.getShaderProgram();
-		program->setUniformValue("tileSetWidth", tileSet->width);
-		program->setUniformValue("tileSetHeight", tileSet->height);
+		program->setUniformValue("tileSetCols", tileSet->width);
+		program->setUniformValue("tileSetRows", tileSet->height);
 
 		//Camera
 		program->setUniformValue("cameraPos", 0.0f, 0.0f);
-		program->setUniformValue("cameraWidth", 10.0f);
-		program->setUniformValue("cameraHeight", 10.0f);
+		program->setUniformValue("cameraPixelsX", 1920);
+		program->setUniformValue("cameraPixelsY", 1080);
 
 		//Draw
 		shader.bind();

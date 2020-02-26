@@ -34,6 +34,14 @@ namespace Tristeon
 		program->bind();
 	}
 
+	void Shader::reload()
+	{
+		delete program;
+		ready = false;
+		failed = false;
+		initialize();
+	}
+
 	void Shader::initialize()
 	{
 		QFile vertexFile(vertexPath.c_str());

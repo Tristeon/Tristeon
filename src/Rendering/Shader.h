@@ -15,6 +15,7 @@ namespace Tristeon
 		void bind();
 
 		QOpenGLShaderProgram* getShaderProgram() const { return program; }
+		void reload();
 	private:
 		void initialize();
 		
