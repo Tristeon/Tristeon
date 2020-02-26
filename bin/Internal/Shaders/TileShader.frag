@@ -7,9 +7,10 @@ uniform int tileSetRows;
 
 uniform int[] levelData;
 
-uniform vec2 cameraPos;
 uniform int cameraPixelsX;
 uniform int cameraPixelsY;
+uniform int cameraPosX;
+uniform int cameraPosY;
 
 out vec4 FragColor;
 
@@ -34,8 +35,12 @@ void main()
     float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / cameraPixelsX;
     float normalizedTileHeight = (float)tileSetSize.y / tileSetRows / cameraPixelsY;
 
-    float tileX = (texCoord.x * 1.0f / normalizedTileWidth);
-    float tileY = (texCoord.y * 1.0f / normalizedTileHeight);
+    vec2 coords = texCoord;
+    coords.x += (float)cameraPosX / cameraPixelsX;
+    coords.y += (float)cameraPosY / cameraPixelsY;
+    
+    float tileX = (coords.x * 1.0f / normalizedTileWidth);
+    float tileY = (coords.y * 1.0f / normalizedTileHeight);
 
     float tileU = (tileX - floor(tileX));
     float tileV = (tileY - floor(tileY));

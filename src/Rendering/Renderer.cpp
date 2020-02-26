@@ -1,7 +1,6 @@
 #include "Renderer.h"
-#include <Scenes/SceneManager.h>
 #include <Scenes/Scene.h>
-#include <Scenes/Layer.h>
+#include "Scenes/Layers/Layer.h"
 
 namespace Tristeon
 {
@@ -28,7 +27,7 @@ namespace Tristeon
 		for (unsigned int i = 0; i < scene->getLayerCount(); i++)
 		{
 			Layer* layer = scene->getLayer(i);
-			layer->render();
+			layer->render(scene);
 		}
 	}
 

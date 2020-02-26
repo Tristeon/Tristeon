@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include <Scenes/Scene.h>
 
-#include "TileLayer.h"
+#include "Layers/TileLayer.h"
 
 namespace Tristeon
 {
@@ -17,6 +17,9 @@ namespace Tristeon
 	{
 		currentScene = std::make_unique<Scene>();
 		currentScene->layers.push_back(std::make_unique<TileLayer>());
+		currentScene->camera = std::make_unique<Camera>();
+		currentScene->camera->zoom = 1.0f;
+		currentScene->camera->size = Vector2Int(800, 600);
 	}
 
 	void SceneManager::reset()

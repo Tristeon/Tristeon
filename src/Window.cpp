@@ -90,11 +90,16 @@ namespace Tristeon
 
 	void Window::keyPressEvent(QKeyEvent* event)
 	{
+		if (event->isAutoRepeat())
+			return;
 		keyPressEvents.push(*event);
 	}
 
 	void Window::keyReleaseEvent(QKeyEvent* event)
 	{
+		if (event->isAutoRepeat())
+			return;
+		
 		keyReleaseEvents.push(*event);
 	}
 

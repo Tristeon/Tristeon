@@ -2,7 +2,7 @@
 #include <stdexcept>
 namespace Tristeon
 {
-	Layer* Scene::getLayer(unsigned int index) const
+	Layer* Scene::getLayer(unsigned int const& index) const
 	{
 		if (index < 0 || index > layers.size() - 1)
 			throw std::invalid_argument("Index must be more than 0 and less than the amount of layers");
@@ -17,7 +17,12 @@ namespace Tristeon
 
 	HUD* Scene::getHUD() const
 	{
-		return currentHUD;
+		return hud;
+	}
+
+	Camera* Scene::getCamera() const
+	{
+		return camera.get();
 	}
 
 	void Scene::update()

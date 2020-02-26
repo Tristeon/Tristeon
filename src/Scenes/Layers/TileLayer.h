@@ -10,7 +10,7 @@ namespace Tristeon
 	{
 	public:
 		TileLayer();
-		virtual void render() override;
+		virtual void render(Scene* scene) override;
 	private:
 		std::unique_ptr<TileSet> tileSet = nullptr;
 		Shader shader;
