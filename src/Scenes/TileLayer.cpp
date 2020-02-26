@@ -24,7 +24,7 @@ namespace Tristeon
 		shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
 
 		Tile tileInfo[256] = { {} };
-		tileSet = std::make_unique<TileSet>("Project/TilesetTest.jpg", 3, 5, tileInfo);
+		tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, tileInfo);
 	}
 
 	void TileLayer::render()
@@ -49,6 +49,10 @@ namespace Tristeon
 		program->setUniformValue("cameraPixelsX", 1920);
 		program->setUniformValue("cameraPixelsY", 1080);
 
+		//Transparency
+		f->glEnable(GL_BLEND);
+		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		//Draw
 		shader.bind();
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
