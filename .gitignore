@@ -9,10 +9,19 @@
 .idea/
 cmake-build-debug/
 
+#Build folders
 bin/[Ee]ditor/
 bin/[Dd]ebug[Ee]ditor/
 bin/[Dd]ebug/
 bin/[Rr]elease/
+
+#Cmake local files
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+
+#VS local files
+*.filters
 
 # Local binaries
 *.dll

@@ -5,12 +5,12 @@ namespace Tristeon
 	class Engine;
 	class Scene;
 	class HUD;
-	class Window;
+	class GameView;
 
 	class Renderer
 	{
 		friend Engine;
-		friend Window;
+		friend GameView;
 	public:
 		Renderer(Engine* engine);
 		~Renderer();

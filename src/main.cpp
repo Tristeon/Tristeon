@@ -33,6 +33,8 @@
 #include <QtUiTools/QtUiTools>
 #include <QMainWindow>
 
+#include "Window.h"
+
 std::unique_ptr<Tristeon::Engine> engine;
 
 #ifdef TRISTEON_EDITOR
@@ -50,7 +52,7 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 {
 	if (name == "game")
 	{
-		Tristeon::Window* window = new Tristeon::Window(engine.get(), parent);
+		Tristeon::GameView* window = new Tristeon::GameView(engine.get(), parent);
 		engine->setWindow(window);
 		return window;
 	}
@@ -83,7 +85,7 @@ int main(int argc, char** argv)
 	engine = std::make_unique<Tristeon::Engine>();
 
 	QApplication app(argc, argv);
-	QMainWindow window;
+	Tristeon::Window window;
 	QWidget* widget = loadUIFile();
 	window.setCentralWidget(widget);
 	window.show();

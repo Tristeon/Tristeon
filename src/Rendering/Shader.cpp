@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QFileSystemModel>
 #include <QOpenGLContext>
+#include <QOpenGLShaderProgram>
 
 namespace Tristeon
 {
@@ -31,6 +32,14 @@ namespace Tristeon
 	void Shader::bind() 
 	{
 		program->bind();
+	}
+
+	void Shader::reload()
+	{
+		delete program;
+		ready = false;
+		failed = false;
+		initialize();
 	}
 
 	void Shader::initialize()

@@ -2,13 +2,13 @@
 #include <memory>
 
 #include <Rendering/Renderer.h>
-#include <Rendering/Window.h>
+#include <Rendering/GameView.h>
 
 namespace Tristeon
 {
 	class Engine
 	{
-		friend Window;
+		friend GameView;
 		friend Renderer;
 
 	public:
@@ -16,9 +16,9 @@ namespace Tristeon
 		~Engine();
 
 		void run();
-		void setWindow(Window* window);
+		void setWindow(GameView* window);
 	private:
-		Window* window = nullptr;
+		GameView* view = nullptr;
 		std::unique_ptr<Renderer> renderer;
 	};
 }

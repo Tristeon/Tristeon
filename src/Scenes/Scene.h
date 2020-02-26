@@ -8,12 +8,12 @@ namespace Tristeon
 	class Layer;
 	class Engine;
 	class HUD;
-	class Window;
+	class GameView;
 	
 	class Scene
 	{
 		friend Engine;
-		friend Window;
+		friend GameView;
 		friend SceneManager;
 	public:
 		Scene() = default;

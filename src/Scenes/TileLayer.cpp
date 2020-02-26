@@ -4,6 +4,8 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
+#include "Input/Keyboard.h"
+
 namespace Tristeon
 {
 	TileLayer::TileLayer()
@@ -22,30 +24,35 @@ namespace Tristeon
 		shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
 
 		Tile tileInfo[256] = { {} };
-		tileSet = std::make_unique<TileSet>("Project/Tiny Platformer/Tileset(16x16)/Tileset.png", 16, 16, tileInfo);
+		tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, tileInfo);
 	}
 
 	void TileLayer::render()
 	{
+		if (Keyboard::pressed(Key_R))
+			shader.reload();
+
 		if (!shader.isReady())
 			return;
 
-		std::cout << "Rendering tiles, maybe?" << std::endl;
-		
 		//TileSet
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 		f->glActiveTexture(0);
 		tileSet->texture->bind();
 
 		auto program = shader.getShaderProgram();
-		program->setUniformValue("tileSetWidth", tileSet->width);
-		program->setUniformValue("tileSetWidth", tileSet->height);
+		program->setUniformValue("tileSetCols", tileSet->width);
+		program->setUniformValue("tileSetRows", tileSet->height);
 
 		//Camera
 		program->setUniformValue("cameraPos", 0.0f, 0.0f);
-		program->setUniformValue("cameraWidth", 10.0f);
-		program->setUniformValue("cameraHeight", 10.0f);
+		program->setUniformValue("cameraPixelsX", 1920);
+		program->setUniformValue("cameraPixelsY", 1080);
 
+		//Transparency
+		f->glEnable(GL_BLEND);
+		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		//Draw
 		shader.bind();
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);

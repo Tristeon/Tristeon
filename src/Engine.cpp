@@ -22,8 +22,8 @@ namespace Tristeon
 		QApplication::exec();
 	}
 
-	void Engine::setWindow(Window* window)
+	void Engine::setWindow(GameView* window)
 	{
-		this->window = window;
+		this->view = window;
 	}
 }
