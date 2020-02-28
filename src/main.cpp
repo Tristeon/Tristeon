@@ -52,9 +52,9 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 {
 	if (name == "game")
 	{
-		Tristeon::GameView* window = new Tristeon::GameView(engine.get(), parent);
-		engine->setWindow(window);
-		return window;
+		Tristeon::GameView* gameView = new Tristeon::GameView(engine.get(), parent);
+		engine->setGameView(gameView);
+		return gameView;
 	}
 	return QUiLoader::createWidget(className, parent, name);
 }
@@ -96,6 +96,5 @@ int main(int argc, char** argv)
 	//TODO: Auto start game with the starting scene loaded in in game/release mode
 #endif
 
-	engine->run();
-	return app.exec();
+	return QApplication::exec();
 }

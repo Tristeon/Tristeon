@@ -1,6 +1,7 @@
 #include "GameView.h"
 #include "Engine.h"
 #include <iostream>
+#include <QApplication>
 #include <QMainWindow>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
@@ -21,6 +22,11 @@ namespace Tristeon
 		show();
 	}
 
+	void GameView::makeContextCurrent()
+	{
+		context()->makeCurrent(context()->surface());
+	}
+
 	void GameView::initializeGL()
 	{
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
@@ -29,6 +35,10 @@ namespace Tristeon
 		f->glEnable(GL_DEPTH_TEST);
 		f->glEnable(GL_CULL_FACE);
 		f->glCullFace(GL_BACK);
+
+		f->glEnable(GL_BLEND);
+		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	}
 
 	void GameView::resizeGL(int w, int h)
@@ -38,10 +48,10 @@ namespace Tristeon
 
 	void GameView::paintGL()
 	{
-		context()->makeCurrent(context()->surface());
+		makeContextCurrent();
 
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-		f->glClearColor(1, 1, 0, 1);
+		f->glClearColor(1, 0.75, 0.75, 1);
 		f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		Scene* scene = SceneManager::getCurrentScene();
@@ -55,9 +65,12 @@ namespace Tristeon
 
 	void GameView::update()
 	{
-		if (engine == nullptr)
-			return;
-
+		if (firstUpdate)
+		{
+			firstUpdate = false;
+			engine->initialize();
+		}
+		
 		Window::main()->pollEvents();
 
 		Scene* scene = SceneManager::getCurrentScene();

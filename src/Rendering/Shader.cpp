@@ -1,8 +1,9 @@
 #include "Shader.h"
 #include <iostream>
-#include <QFileSystemModel>
 #include <QOpenGLContext>
 #include <QOpenGLShaderProgram>
+#include "Engine.h"
+#include "Window.h"
 
 namespace Tristeon
 {
@@ -13,7 +14,7 @@ namespace Tristeon
 
 	Shader::Shader(std::string const& vertexShader, std::string const& fragmentShader) : vertexPath(vertexShader), fragmentPath(fragmentShader)
 	{
-
+		initialize();
 	}
 
 	Shader::~Shader()
@@ -23,9 +24,6 @@ namespace Tristeon
 
 	bool Shader::isReady()
 	{
-		if (!failed && !ready)
-			initialize();
-
 		return !failed && ready;
 	}
 
@@ -59,11 +57,11 @@ namespace Tristeon
 		vertexData = vertexFile.readAll().toStdString();
 		fragmentData = fragmentFile.readAll().toStdString();
 
-		program = new QOpenGLShaderProgram(QOpenGLContext::currentContext());
+		program = new QOpenGLShaderProgram(Engine::instance()->gameView()->context());
 		program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexData.c_str());
 		program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentData.c_str());
 		program->link();
-
+		std::cout << "Created shader program " << program << " with vertexpath " << vertexPath << " and fragmentpath " << fragmentPath << std::endl;
 		ready = true;
 	}
 }

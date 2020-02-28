@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "Camera.h"
 
 namespace Tristeon
 {
@@ -19,13 +20,15 @@ namespace Tristeon
 		Scene() = default;
 		~Scene() = default;
 		
-		Layer* getLayer(unsigned int index) const;
+		Layer* getLayer(unsigned int const& index) const;
 		unsigned int getLayerCount() const;
 		HUD* getHUD() const;
+		Camera* getCamera() const;
 	private:
 		void update();
 
-		HUD* currentHUD;
+		std::unique_ptr<Camera> camera = nullptr;
+		HUD* hud = nullptr;
 		std::vector<std::unique_ptr<Layer>> layers;
 	};
 }

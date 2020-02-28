@@ -19,6 +19,22 @@ namespace Tristeon
 		QOpenGLTexture* getQTexture() const { return texture; }
 
 		void bind();
+
+		int width()
+		{
+			if (!loaded) 
+				load();
+			
+			return texture->width();
+		}
+		
+		int height()
+		{
+			if (!loaded)
+				load();
+			
+			return texture->height();
+		}
 	private:
 		void load();
 		

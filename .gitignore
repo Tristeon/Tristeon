@@ -20,6 +20,9 @@ CMakeFiles/
 cmake_install.cmake
 CMakeCache.txt
 
+#Qt Generated files
+Tristeon_autogen/
+
 #VS local files
 *.filters
 

@@ -13,13 +13,16 @@ namespace Tristeon
 		friend Engine;
 	public:
 		GameView(Engine* engine, QWidget* parent);
+
+		void makeContextCurrent();
 	private:
 		void initializeGL() override;
 		void resizeGL(int w, int h) override;
 		void paintGL() override;
 
 		void update();
-		
+
+		bool firstUpdate = true;
 		Engine* engine = nullptr;
 		QTimer* timer = nullptr;
 	};

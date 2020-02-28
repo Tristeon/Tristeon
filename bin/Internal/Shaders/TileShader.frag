@@ -7,9 +7,17 @@ uniform int tileSetRows;
 
 uniform int[] levelData;
 
-uniform vec2 cameraPos;
-uniform int cameraPixelsX;
-uniform int cameraPixelsY;
+struct CameraData
+{
+    int posX;
+    int posY;
+
+    int pixelsX;
+    int pixelsY;
+
+    float zoom;
+};
+uniform CameraData camera;
 
 out vec4 FragColor;
 
@@ -31,11 +39,17 @@ void main()
 
     //Determine which tile we're on using the camera's properties
     ivec2 tileSetSize = textureSize(tileSet, 0);
-    float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / cameraPixelsX;
-    float normalizedTileHeight = (float)tileSetSize.y / tileSetRows / cameraPixelsY;
+    float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / (camera.pixelsX / camera.zoom);
+    float normalizedTileHeight = (float)tileSetSize.y / tileSetRows / (camera.pixelsY / camera.zoom);
 
-    float tileX = (texCoord.x * 1.0f / normalizedTileWidth);
-    float tileY = (texCoord.y * 1.0f / normalizedTileHeight);
+    vec2 coords = texCoord;
+    coords.x -= 0.5f;
+    coords.y -= 0.5f;
+    coords.x += (float)camera.posX / (camera.pixelsX / camera.zoom);
+    coords.y += (float)camera.posY / (camera.pixelsY / camera.zoom);
+    
+    float tileX = (coords.x / normalizedTileWidth);
+    float tileY = (coords.y / normalizedTileHeight);
 
     float tileU = (tileX - floor(tileX));
     float tileV = (tileY - floor(tileY));
