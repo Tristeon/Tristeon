@@ -12,13 +12,16 @@ namespace Tristeon
 		friend Renderer;
 
 	public:
-		explicit Engine();
+		Engine();
 		~Engine();
 
-		void run();
-		void setWindow(GameView* window);
+		static Engine* instance() { return _instance; }
+		void initialize();
+		void setGameView(GameView* gameView);
+		GameView* gameView() const { return view; }
 	private:
 		GameView* view = nullptr;
 		std::unique_ptr<Renderer> renderer;
+		static Engine* _instance;
 	};
 }

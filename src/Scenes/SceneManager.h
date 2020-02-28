@@ -12,10 +12,9 @@ namespace Tristeon
 	public:
 		static Scene* getCurrentScene();
 	private:
-		static void initialize();
+		static void loadScene();
 		static void reset();
 		
 		static std::unique_ptr<Scene> currentScene;
-		
 	};
 }

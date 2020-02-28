@@ -23,6 +23,9 @@ namespace Tristeon
 
 	void Texture::load()
 	{
+		if (loaded)
+			delete texture;
+		
 		QImage image;
 		loaded = image.load(imagePath);
 

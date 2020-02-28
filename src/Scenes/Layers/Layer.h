@@ -2,11 +2,12 @@
 
 namespace Tristeon
 {
+	class Renderer;
 	class Scene;
 
 	class Layer
 	{
 	public:
-		virtual void render(Scene* scene) = 0;
+		virtual void render(Renderer* renderer, Scene* scene) = 0;
 	};
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Shader.h"
 
 namespace Tristeon
 {
@@ -15,11 +16,12 @@ namespace Tristeon
 		Renderer(Engine* engine);
 		~Renderer();
 
+		Shader* getSpriteShader() const { return spriteShader; }
 	private:
 		void renderScene(Scene* scene);
 		void renderHUD(HUD* hud);
-		void initialize();
 
 		Engine* engine = nullptr;
+		Shader* spriteShader = nullptr;
 	};
 }

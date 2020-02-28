@@ -1,29 +1,29 @@
 #include "Engine.h"
-
-#include <QApplication>
 #include <Scenes/SceneManager.h>
-#include <Scenes/Scene.h>
 
 namespace Tristeon
 {
+	Engine* Engine::_instance = nullptr;
+
 	Engine::Engine()
 	{
-		renderer = std::make_unique<Renderer>(this);
-		SceneManager::initialize();
+		_instance = this;
 	}
 
 	Engine::~Engine()
 	{
 		SceneManager::reset();
+		_instance = nullptr;
 	}
 
-	void Engine::run()
+	void Engine::initialize()
 	{
-		QApplication::exec();
+		renderer = std::make_unique<Renderer>(this);
+		SceneManager::loadScene();
 	}
 
-	void Engine::setWindow(GameView* window)
+	void Engine::setGameView(GameView* gameView)
 	{
-		this->view = window;
+		view = gameView;
 	}
 }

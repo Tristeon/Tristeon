@@ -126,5 +126,6 @@ namespace Tristeon
 	void Window::closeEvent(QCloseEvent* event)
 	{
 		QApplication::quit();
+		exit(0);
 	}
 }

@@ -7,6 +7,8 @@
 #include <Input/Keyboard.h>
 #include <Scenes/Scene.h>
 
+#include "Engine.h"
+
 namespace Tristeon
 {
 	TileLayer::TileLayer()
@@ -22,19 +24,20 @@ namespace Tristeon
 				3, 3, 1, 2, 2
 			});
 		
-		shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
-
+		shader = std::make_unique<Shader>("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
+		
 		Tile tileInfo[256] = { {} };
 		tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, tileInfo);
 	}
 
-	void TileLayer::render(Scene* scene)
+	void TileLayer::render(Renderer* renderer, Scene* scene)
 	{
 		if (Keyboard::pressed(Key_R))
-			shader.reload();
+			shader->reload();
 
-		if (!shader.isReady())
+		if (!shader->isReady())
 			return;
+		shader->bind();
 
 		if (Keyboard::held(Key_Left))
 			scene->getCamera()->position.x -= 1;
@@ -50,29 +53,24 @@ namespace Tristeon
 			scene->getCamera()->zoom -= 0.01f;
 		if (Keyboard::held(Key_Equal))
 			scene->getCamera()->zoom += 0.01f;
-		
+
 		//TileSet
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
+		QOpenGLFunctions* f = Engine::instance()->gameView()->context()->functions();
 		f->glActiveTexture(0);
 		tileSet->texture->bind();
 
-		auto program = shader.getShaderProgram();
+		QOpenGLShaderProgram* program = shader->getShaderProgram();
 		program->setUniformValue("tileSetCols", tileSet->width);
 		program->setUniformValue("tileSetRows", tileSet->height);
 
 		//Camera
-		program->setUniformValue("cameraPosX", scene->getCamera()->position.x);
-		program->setUniformValue("cameraPosY", scene->getCamera()->position.y);
-		//TODO: Zoom might not be very intuitive because it zooms into the bottom left as opposed to the center
-		program->setUniformValue("cameraPixelsX", (int)(scene->getCamera()->size.x * (1.0f / scene->getCamera()->zoom)));
-		program->setUniformValue("cameraPixelsY", (int)(scene->getCamera()->size.y * (1.0f / scene->getCamera()->zoom)));
+		program->setUniformValue("camera.posX", scene->getCamera()->position.x);
+		program->setUniformValue("camera.posY", scene->getCamera()->position.y);
+		program->setUniformValue("camera.pixelsX", (int)scene->getCamera()->size.x);
+		program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
+		program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
 
-		//Transparency
-		f->glEnable(GL_BLEND);
-		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
 		//Draw
-		shader.bind();
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 }

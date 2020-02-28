@@ -16,6 +16,7 @@ namespace Tristeon
 
 		QOpenGLShaderProgram* getShaderProgram() const { return program; }
 		void reload();
+		QOpenGLShaderProgram* program = nullptr;
 	private:
 		void initialize();
 		
@@ -24,7 +25,6 @@ namespace Tristeon
 		
 		std::string vertexData = "";
 		std::string fragmentData = "";
-		QOpenGLShaderProgram* program = nullptr;
 
 		bool ready = false;
 		bool failed = false;
