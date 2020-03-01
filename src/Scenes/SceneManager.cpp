@@ -28,10 +28,10 @@ namespace Tristeon
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
 
 		auto* actor = new Actor();
-		actor->_sprite = std::make_unique<SpriteBehaviour>();
-		actor->_sprite->setTexture("Project/penguin.png", true);
-		actor->_sprite->width = 128;
-		actor->_sprite->height = 128;
+		SpriteBehaviour* sprite = actor->addBehaviour<SpriteBehaviour>();
+		sprite->setTexture("Project/penguin.png", true);
+		sprite->width = 128;
+		sprite->height = 128;
 		actor->position.x = 208;
 		actor->position.y = 1042;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor));

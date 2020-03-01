@@ -1,4 +1,5 @@
 #pragma once
+#include "Behaviour.h"
 #include "Rendering/Texture.h"
 
 namespace Tristeon
@@ -11,10 +12,11 @@ namespace Tristeon
 
 	class ActorLayer;
 	
-	class SpriteBehaviour
+	class SpriteBehaviour : public Behaviour
 	{
 		friend ActorLayer;
 	public:
+		SpriteBehaviour() = default;
 		int width = 64;
 		int height = 64;
 		SpriteRenderMode renderMode = Standard;

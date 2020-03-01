@@ -40,6 +40,9 @@ namespace Tristeon
 				actor->position.x += 2;
 
 			SpriteBehaviour* sprite = actor->sprite();
+			if (sprite == nullptr)
+				continue;
+			
 			sprite->texture->bind();
 
 			//Sprite info
