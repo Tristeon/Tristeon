@@ -4,14 +4,14 @@ namespace Tristeon
 {
 	Behaviour::Behaviour(Behaviour&& other) noexcept
 	{
-		owner = other.owner;
-		other.owner = nullptr;
+		_owner = other._owner;
+		other._owner = nullptr;
 	}
 
 	Behaviour& Behaviour::operator=(Behaviour&& other) noexcept
 	{
-		owner = other.owner;
-		other.owner = nullptr;
+		_owner = other._owner;
+		other._owner = nullptr;
 		return *this;
 	}
 }

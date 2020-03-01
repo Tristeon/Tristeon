@@ -2,5 +2,8 @@
 
 namespace Tristeon
 {
-
+	void Layer::update()
+	{
+		//Empty
+	}
 }

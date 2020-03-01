@@ -3,9 +3,12 @@
 namespace Tristeon
 {
 	class Actor;
+	class ActorLayer;
 	
 	class Behaviour
 	{
+		friend Actor;
+		friend ActorLayer;
 	public:
 		Behaviour() = default;
 		virtual ~Behaviour() = default; //Enables V-Tables
@@ -14,8 +17,10 @@ namespace Tristeon
 
 		Behaviour(Behaviour&& other) noexcept;
 		Behaviour& operator=(Behaviour&& other) noexcept;
-		
+
+		Actor* owner() const { return _owner; }
 	private:
-		Actor* owner = nullptr;
+		virtual void update() { /* Empty */ }
+		Actor* _owner = nullptr;
 	};
 }

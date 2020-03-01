@@ -9,5 +9,6 @@ namespace Tristeon
 	{
 	public:
 		virtual void render(Renderer* renderer, Scene* scene) = 0;
+		virtual void update();
 	};
 }

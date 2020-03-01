@@ -49,6 +49,7 @@ namespace Tristeon
 	T_is_behaviour<T>* Actor::addBehaviour()
 	{
 		T* result = new T();
+		result->_owner = this;
 		behaviours.push_back(std::unique_ptr<T>(result));
 		return result;
 	}

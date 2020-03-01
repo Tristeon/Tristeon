@@ -1,5 +1,8 @@
 #include "Scene.h"
 #include <stdexcept>
+
+#include "Layers/Layer.h"
+
 namespace Tristeon
 {
 	Layer* Scene::getLayer(unsigned int const& index) const
@@ -27,6 +30,7 @@ namespace Tristeon
 
 	void Scene::update()
 	{
-		//TODO: Implement scene update
+		for (auto& layer : layers)
+			layer->update();
 	}
 }

@@ -14,7 +14,7 @@ namespace Tristeon
 		friend SceneManager;
 	public:
 		void render(Renderer* renderer, Scene* scene) override;
-
+		void update() override;
 	private:
 		std::vector<std::unique_ptr<Actor>> actors;
 	};

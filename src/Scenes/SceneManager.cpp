@@ -2,6 +2,8 @@
 #include <Scenes/Scene.h>
 
 
+
+#include "Actors/Behaviours/TestBehaviour.h"
 #include "Layers/ActorLayer.h"
 #include "Layers/TileLayer.h"
 
@@ -28,6 +30,7 @@ namespace Tristeon
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
 
 		auto* actor = new Actor();
+		actor->addBehaviour<TestBehaviour>();
 		SpriteBehaviour* sprite = actor->addBehaviour<SpriteBehaviour>();
 		sprite->setTexture("Project/penguin.png", true);
 		sprite->width = 128;

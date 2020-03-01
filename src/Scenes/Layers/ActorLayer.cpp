@@ -3,7 +3,6 @@
 #include <QOpenGLFunctions>
 #include <Scenes/Scene.h>
 #include <Rendering/Renderer.h>
-
 #include "Input/Keyboard.h"
 
 namespace Tristeon
@@ -29,16 +28,6 @@ namespace Tristeon
 		program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
 		for (std::unique_ptr<Actor>& actor : actors)
 		{
-			if (Keyboard::held(Key_W))
-				actor->position.y += 2;
-			if (Keyboard::held(Key_S))
-				actor->position.y -= 2;
-
-			if (Keyboard::held(Key_A))
-				actor->position.x -= 2;
-			if (Keyboard::held(Key_D))
-				actor->position.x += 2;
-
 			SpriteBehaviour* sprite = actor->sprite();
 			if (sprite == nullptr)
 				continue;
@@ -56,5 +45,12 @@ namespace Tristeon
 			//Animation
 			f->glDrawArrays(GL_TRIANGLES, 0, 3);
 		}
+	}
+
+	void ActorLayer::update()
+	{
+		for (auto& actor : actors)
+			for (auto& behaviour : actor->behaviours)
+				behaviour->update();
 	}
 }
