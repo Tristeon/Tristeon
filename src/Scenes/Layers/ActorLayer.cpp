@@ -3,6 +3,8 @@
 #include <QOpenGLFunctions>
 #include <Scenes/Scene.h>
 #include <Rendering/Renderer.h>
+
+#include "Actors/Behaviours/BehaviourCollector.h"
 #include "Input/Keyboard.h"
 
 namespace Tristeon
@@ -26,9 +28,10 @@ namespace Tristeon
 		program->setUniformValue("camera.pixelsX", (int)scene->getCamera()->size.x);
 		program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
 		program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
-		for (std::unique_ptr<Actor>& actor : actors)
+
+		for (Sprite* sprite : BehaviourCollector<Sprite>::all())
 		{
-			SpriteBehaviour* sprite = actor->sprite();
+			Actor* actor = sprite->owner();
 			if (sprite == nullptr)
 				continue;
 			

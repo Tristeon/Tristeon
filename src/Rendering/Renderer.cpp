@@ -6,12 +6,7 @@ namespace Tristeon
 {
 	Renderer::Renderer(Engine* engine) : engine(engine)
 	{
-		spriteShader = new Shader("Internal/Shaders/Sprite.vert", "Internal/Shaders/Sprite.frag");
-	}
-
-	Renderer::~Renderer()
-	{
-
+		spriteShader = std::make_unique<Shader>("Internal/Shaders/Sprite.vert", "Internal/Shaders/Sprite.frag");
 	}
 
 	void Renderer::renderScene(Scene* scene)

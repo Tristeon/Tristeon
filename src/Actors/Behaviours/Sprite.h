@@ -12,11 +12,12 @@ namespace Tristeon
 
 	class ActorLayer;
 	
-	class SpriteBehaviour : public Behaviour
+	class Sprite : public Behaviour
 	{
 		friend ActorLayer;
 	public:
-		SpriteBehaviour() = default;
+		Sprite();
+		virtual ~Sprite();
 		int width = 64;
 		int height = 64;
 		SpriteRenderMode renderMode = Standard;

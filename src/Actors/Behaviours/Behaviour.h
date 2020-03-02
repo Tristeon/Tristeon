@@ -10,8 +10,8 @@ namespace Tristeon
 		friend Actor;
 		friend ActorLayer;
 	public:
-		Behaviour() = default;
-		virtual ~Behaviour() = default; //Enables V-Tables
+		Behaviour();
+		virtual ~Behaviour();
 		Behaviour(const Behaviour& other) = delete;
 		Behaviour& operator=(const Behaviour& other) = delete;
 

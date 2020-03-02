@@ -31,7 +31,7 @@ namespace Tristeon
 
 		auto* actor = new Actor();
 		actor->addBehaviour<TestBehaviour>();
-		SpriteBehaviour* sprite = actor->addBehaviour<SpriteBehaviour>();
+		Sprite* sprite = actor->addBehaviour<Sprite>();
 		sprite->setTexture("Project/penguin.png", true);
 		sprite->width = 128;
 		sprite->height = 128;

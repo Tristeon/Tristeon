@@ -1,7 +1,19 @@
 #include "Behaviour.h"
 
+#include "BehaviourCollector.h"
+
 namespace Tristeon
 {
+	Behaviour::Behaviour()
+	{
+		BehaviourCollector<Behaviour>::add(this);
+	}
+
+	Behaviour::~Behaviour()
+	{
+		BehaviourCollector<Behaviour>::remove(this);
+	}
+
 	Behaviour::Behaviour(Behaviour&& other) noexcept
 	{
 		_owner = other._owner;

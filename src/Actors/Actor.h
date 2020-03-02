@@ -1,6 +1,6 @@
 #pragma once
 #include "Behaviours/Behaviour.h"
-#include "Behaviours/SpriteBehaviour.h"
+#include "Behaviours/Sprite.h"
 #include "Math/Vector2Int.h"
 
 namespace Tristeon
@@ -27,7 +27,7 @@ namespace Tristeon
 		T_is_behaviour<T>* addBehaviour();
 
 		//TODO: Cache known behaviours
-		SpriteBehaviour* sprite() { return behaviour<SpriteBehaviour>(); }
+		Sprite* sprite() { return behaviour<Sprite>(); }
 
 	private:
 		std::vector<std::unique_ptr<Behaviour>> behaviours;

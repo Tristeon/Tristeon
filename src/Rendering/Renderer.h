@@ -8,20 +8,19 @@ namespace Tristeon
 	class HUD;
 	class GameView;
 
-	class Renderer
+	class Renderer final
 	{
 		friend Engine;
 		friend GameView;
 	public:
-		Renderer(Engine* engine);
-		~Renderer();
+		explicit Renderer(Engine* engine);
 
-		Shader* getSpriteShader() const { return spriteShader; }
+		Shader* getSpriteShader() const { return spriteShader.get(); }
 	private:
 		void renderScene(Scene* scene);
 		void renderHUD(HUD* hud);
 
 		Engine* engine = nullptr;
-		Shader* spriteShader = nullptr;
+		std::unique_ptr<Shader> spriteShader = nullptr;
 	};
 }
