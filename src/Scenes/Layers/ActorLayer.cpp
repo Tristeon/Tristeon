@@ -31,22 +31,9 @@ namespace Tristeon
 
 		for (Sprite* sprite : BehaviourCollector<Sprite>::all())
 		{
-			Actor* actor = sprite->owner();
 			if (sprite == nullptr)
 				continue;
-			
-			sprite->texture->bind();
-
-			//Sprite info
-			program->setUniformValue("renderMode", sprite->renderMode);
-			program->setUniformValue("sprite.width", sprite->width);
-			program->setUniformValue("sprite.height", sprite->height);
-			program->setUniformValue("actor.position", actor->position.x, actor->position.y);
-			program->setUniformValue("actor.scale", actor->scale.x, actor->scale.y);
-			program->setUniformValue("actor.rotation", actor->rotation);
-
-			//Animation
-			f->glDrawArrays(GL_TRIANGLES, 0, 3);
+			sprite->render(program);
 		}
 	}
 

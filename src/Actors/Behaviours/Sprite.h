@@ -1,15 +1,12 @@
 #pragma once
 #include "Behaviour.h"
+#include "Rendering/SpriteRenderMode.h"
 #include "Rendering/Texture.h"
+
+class QOpenGLShaderProgram;
 
 namespace Tristeon
 {
-	enum SpriteRenderMode
-	{
-		Standard,
-		Animated,
-	};
-
 	class ActorLayer;
 	
 	class Sprite : public Behaviour
@@ -20,11 +17,13 @@ namespace Tristeon
 		virtual ~Sprite();
 		int width = 64;
 		int height = 64;
-		SpriteRenderMode renderMode = Standard;
-		
+
+		virtual SpriteRenderMode getRenderMode();
 		void setTexture(std::string const& path, bool setSize);
-	private:
+	protected:
+		virtual void render(QOpenGLShaderProgram* program);
+		
 		std::string texturePath = "";
-		Texture* texture = nullptr;
+		std::unique_ptr<Texture> texture = nullptr;
 	};
 }

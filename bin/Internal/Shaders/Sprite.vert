@@ -5,6 +5,7 @@ struct Sprite
 {
     int width;
     int height;
+    int renderMode;
 };
 uniform Sprite sprite;
 
