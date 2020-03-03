@@ -30,7 +30,7 @@ namespace Tristeon
 	void Sprite::setTexture(std::string const& path, bool setSize)
 	{
 		texturePath = path;
-		texture = std::make_unique<Texture>(path);
+		texture = std::make_unique<Texture>(path); //TODO: Texture caching through an asset loader of some sorts
 
 		if (setSize)
 		{
