@@ -2,6 +2,7 @@
 #include "Behaviours/Behaviour.h"
 #include "Behaviours/Sprite.h"
 #include "Math/Vector2Int.h"
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
@@ -9,7 +10,7 @@ namespace Tristeon
 	class SceneManager;
 
 	template<typename T>
-	using T_is_behaviour = std::enable_if_t<std::is_base_of<Behaviour, T>::value, T>;
+	using IsBehaviour = std::enable_if_t<std::is_base_of<Behaviour, T>::value, T>;
 	
 	class Actor
 	{
@@ -21,20 +22,20 @@ namespace Tristeon
 		float rotation = 0;
 
 		template<typename T>
-		T_is_behaviour<T>* behaviour();
+		IsBehaviour<T>* behaviour();
 
 		template<typename T>
-		T_is_behaviour<T>* addBehaviour();
+		IsBehaviour<T>* addBehaviour();
 
 		//TODO: Cache known behaviours
 		Sprite* sprite() { return behaviour<Sprite>(); }
 
 	private:
-		std::vector<std::unique_ptr<Behaviour>> behaviours;
+		Vector<Unique<Behaviour>> behaviours;
 	};
 
 	template <typename T>
-	T_is_behaviour<T>* Actor::behaviour()
+	IsBehaviour<T>* Actor::behaviour()
 	{
 		for (auto const& behaviour : behaviours)
 		{
@@ -46,11 +47,11 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	T_is_behaviour<T>* Actor::addBehaviour()
+	IsBehaviour<T>* Actor::addBehaviour()
 	{
 		T* result = new T();
 		result->_owner = this;
-		behaviours.push_back(std::unique_ptr<T>(result));
+		behaviours.push_back(Unique<T>(result));
 		return result;
 	}
 }

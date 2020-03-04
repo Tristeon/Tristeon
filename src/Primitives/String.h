@@ -1,6 +1,5 @@
 #pragma once
-#include <sstream>
-#include <vector>
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
@@ -21,11 +20,11 @@ namespace Tristeon
 		/**
 		 * Splits a string into separate strings based on the given delimiter.
 		 */
-		static std::vector<String> split(String const& string, char const& delim);
+		static Vector<String> split(String const& string, char const& delim);
 		/**
 		 * Splits a string into separate strings based on the given delimiter.
 		 */
-		std::vector<String> split(char const& delim) const;
+		Vector<String> split(char const& delim) const;
 
 		/**
 		 * Generates a string with random characters with a given length.
@@ -34,7 +33,7 @@ namespace Tristeon
 		 */
 		static String generateRandom(int const& length);
 	private:
-		void internalSplit(const std::string& s, char delim, std::vector<String>& result) const;
+		void internalSplit(const std::string& s, char delim, Vector<String>& result) const;
 		std::string internalString;
 	};
 }

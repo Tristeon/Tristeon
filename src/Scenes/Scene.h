@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Camera.h"
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
@@ -27,8 +28,8 @@ namespace Tristeon
 	private:
 		void update();
 
-		std::unique_ptr<Camera> camera = nullptr;
+		Unique<Camera> camera = nullptr;
 		HUD* hud = nullptr;
-		std::vector<std::unique_ptr<Layer>> layers;
+		Vector<Unique<Layer>> layers;
 	};
 }

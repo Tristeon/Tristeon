@@ -7,15 +7,18 @@
 
 namespace Tristeon
 {
+
 	class SceneManager;
 	
 	class ActorLayer : public Layer
 	{
+
+		
 		friend SceneManager;
 	public:
 		void render(Renderer* renderer, Scene* scene) override;
 		void update() override;
 	private:
-		std::vector<std::unique_ptr<Actor>> actors;
+		Vector<Unique<Actor>> actors;
 	};
 }

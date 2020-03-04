@@ -21,7 +21,7 @@ namespace Tristeon
 		GameView* gameView() const { return view; }
 	private:
 		GameView* view = nullptr;
-		std::unique_ptr<Renderer> renderer;
+		Unique<Renderer> renderer;
 		static Engine* _instance;
 	};
 }

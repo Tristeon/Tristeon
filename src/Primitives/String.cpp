@@ -45,14 +45,14 @@ namespace Tristeon
 		return string.toLower();
 	}
 
-	std::vector<String> String::split(String const& string, char const& delim)
+	Vector<String> String::split(String const& string, char const& delim)
 	{
 		return string.split(delim);
 	}
 
-	std::vector<String> String::split(char const& delim) const
+	Vector<String> String::split(char const& delim) const
 	{
-		std::vector<String> elems;
+		Vector<String> elems;
 		internalSplit(internalString, delim, elems);
 		return elems;
 	}
@@ -77,7 +77,7 @@ namespace Tristeon
 		return output;
 	}
 
-	void String::internalSplit(const std::string& s, char delim, std::vector<String>& result) const
+	void String::internalSplit(const std::string& s, char delim, Vector<String>& result) const
 	{
 		std::stringstream ss;
 		ss.str(s);
