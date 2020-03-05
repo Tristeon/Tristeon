@@ -39,22 +39,27 @@ void main()
 
     //Determine which tile we're on using the camera's properties
     ivec2 tileSetSize = textureSize(tileSet, 0);
-    float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / (camera.pixelsX / camera.zoom);
+    //Normalized tile... is the size of tiles within the 0..1 range of the screen
+    float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / (camera.pixelsX / camera.zoom); 
     float normalizedTileHeight = (float)tileSetSize.y / tileSetRows / (camera.pixelsY / camera.zoom);
 
     vec2 coords = texCoord;
+    //Move the coords by -0.5 to center the tiles for accurate zooming
     coords.x -= 0.5f;
     coords.y -= 0.5f;
+    //Move the coords by the camera position (scaled by zoom)
     coords.x += (float)camera.posX / (camera.pixelsX / camera.zoom);
     coords.y += (float)camera.posY / (camera.pixelsY / camera.zoom);
     
+    //Calculate tile x,y by dividing the adjusted texcoords by the 0..1 tile size
     float tileX = (coords.x / normalizedTileWidth);
     float tileY = (coords.y / normalizedTileHeight);
 
+    //Calculate tile u,v by taking the leftover decimals in tileX and tileY
     float tileU = (tileX - floor(tileX));
     float tileV = (tileY - floor(tileY));
 
-    //Calculate data index
+    //Calculate data index based on tileX and tileY
     int dataX = (int)floor(tileX);
     int dataY = levelHeight - (int)floor(tileY) - 1; //Y needs to be flipped, -1 to start at "0"
     int dataIndex = dataY * levelWidth + dataX;
