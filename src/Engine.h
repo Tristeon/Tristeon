@@ -4,6 +4,8 @@
 #include <Rendering/Renderer.h>
 #include <Rendering/GameView.h>
 
+#include "TypeDefinitions.h"
+
 namespace Tristeon
 {
 	class Engine

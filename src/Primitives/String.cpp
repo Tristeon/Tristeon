@@ -1,7 +1,7 @@
 #include "String.h"
 #include <algorithm>
 #include <iterator>
-
+#include <sstream>
 namespace Tristeon
 {
 	String::String(std::string s) : internalString(s)
