@@ -4,6 +4,20 @@
 
 namespace Tristeon
 {
+	REGISTER_TYPE_CPP(TestBehaviour)
+
+	json TestBehaviour::serialize()
+	{
+		json j;
+		j["typeID"] = TRISTEON_TYPENAME(TestBehaviour);
+		return j;
+	}
+
+	void TestBehaviour::deserialize(json j)
+	{
+		//Empty
+	}
+
 	void TestBehaviour::update()
 	{
 		if (Keyboard::held(Key_W))

@@ -8,18 +8,42 @@
 #include <QOpenGLShaderProgram>
 
 #include "BehaviourCollector.h"
-#include "Rendering/SpriteRenderMode.h"
+#include <Rendering/SpriteRenderMode.h>
 
 namespace Tristeon
 {
+	REGISTER_TYPE_CPP(Sprite)
+	
 	Sprite::Sprite()
 	{
 		BehaviourCollector<Sprite>::add(this);
+
+		texture = std::make_unique<Texture>();
 	}
 
 	Sprite::~Sprite()
 	{
 		BehaviourCollector<Sprite>::remove(this);
+	}
+
+	json Sprite::serialize()
+	{
+		json j;
+		j["typeID"] = TRISTEON_TYPENAME(Sprite);
+		j["width"] = width;
+		j["height"] = height;
+		j["texturePath"] = texture->getPath();
+		return j;
+	}
+
+	void Sprite::deserialize(json j)
+	{
+		width = j["width"];
+		height = j["height"];
+
+		std::string texturePath = j["texturePath"];
+		if (texturePath != texture->getPath()) //Update if new path
+			texture = std::make_unique<Texture>(texturePath);
 	}
 
 	SpriteRenderMode Sprite::getRenderMode()
@@ -29,7 +53,6 @@ namespace Tristeon
 
 	void Sprite::setTexture(std::string const& path, bool setSize)
 	{
-		texturePath = path;
 		texture = std::make_unique<Texture>(path); //TODO: Texture caching through an asset loader of some sorts
 
 		if (setSize)

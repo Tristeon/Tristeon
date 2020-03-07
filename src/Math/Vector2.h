@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <array>
+#include <json.h>
 
 namespace Tristeon
 {
@@ -139,6 +140,16 @@ namespace Tristeon
 		static constexpr Vector2 convert(T const& vec) { return { vec.x, vec.y }; }
 	};
 
+	inline void to_json(nlohmann::json& j, const Vector2& p) {
+		j["x"] = p.x;
+		j["y"] = p.y;
+	}
+
+	inline void from_json(const nlohmann::json& j, Vector2& p) {
+		p.x = j["x"];
+		p.y = j["y"];
+	}
+	
 	/**
 	* Multiplies the x,y,z components with the given multiplier
 	*/

@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.h"
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {
@@ -7,7 +8,11 @@ namespace Tristeon
 
 	class AnimationSprite : public Sprite
 	{
+		REGISTER_TYPE_H(AnimationSprite)
 	public:
+		json serialize() override;
+		void deserialize(json j) override;
+
 		SpriteRenderMode getRenderMode() override;
 
 		void setAnimationClip(AnimationClip* clip);

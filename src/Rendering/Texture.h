@@ -18,6 +18,8 @@ namespace Tristeon
 		bool isLoaded() const { return loaded; }
 		QOpenGLTexture* getQTexture() const { return texture; }
 
+		std::string getPath() const { return imagePath.toStdString(); }
+		
 		void bind();
 
 		int width()

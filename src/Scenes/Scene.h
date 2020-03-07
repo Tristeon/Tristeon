@@ -1,8 +1,11 @@
 #pragma once
-#include <vector>
 #include <memory>
-#include "Camera.h"
-#include "TypeDefinitions.h"
+#include <vector>
+
+#include <Scenes/Camera.h>
+#include <Serialization/Serializable.h>
+#include <Serialization/TypeRegister.h>
+#include <TypeDefinitions.h>
 
 namespace Tristeon
 {
@@ -12,14 +15,20 @@ namespace Tristeon
 	class HUD;
 	class GameView;
 	
-	class Scene
+	class Scene : public Serializable
 	{
 		friend Engine;
 		friend GameView;
 		friend SceneManager;
+
+		REGISTER_TYPE_H(Scene)
+		
 	public:
-		Scene() = default;
+		Scene();
 		~Scene() = default;
+
+		json serialize() override;
+		void deserialize(json j) override;
 		
 		Layer* getLayer(unsigned int const& index) const;
 		unsigned int getLayerCount() const;
@@ -29,7 +38,7 @@ namespace Tristeon
 		void update();
 
 		Unique<Camera> camera = nullptr;
-		HUD* hud = nullptr;
+		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;
 	};
 }

@@ -1,6 +1,5 @@
 #include "TileLayer.h"
 
-#include <iostream>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
@@ -11,23 +10,31 @@
 
 namespace Tristeon
 {
+	REGISTER_TYPE_CPP(TileLayer)
+	
 	TileLayer::TileLayer()
 	{
-		width = 5;
-		height = 5;
-		
-		data = std::unique_ptr<int[]>(new int[25]
-			{
-				1, 2, 3, 4, 5,
-				5, 4, 3, 2, 1,
-				1, 1, 5, 4, 4,
-				3, 3, 1, 2, 2
-			});
-		
 		shader = std::make_unique<Shader>("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
-		
-		Tile tileInfo[256] = { {} };
-		tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, tileInfo);
+		tileSet = std::make_unique<TileSet>();
+	}
+
+	json TileLayer::serialize()
+	{
+		json j;
+		j["typeID"] = TRISTEON_TYPENAME(TileLayer);
+		j["width"] = width;
+		j["height"] = height;
+		j["tileSet"] = tileSet->serialize();
+		//TODO: Serialize TileLayer level data
+		return j;
+	}
+
+	void TileLayer::deserialize(json j)
+	{
+		width = j["width"];
+		height = j["height"];
+		tileSet->deserialize(j["tileSet"]);
+		//TODO: Deserialize TileLayer level data
 	}
 
 	void TileLayer::render(Renderer* renderer, Scene* scene)

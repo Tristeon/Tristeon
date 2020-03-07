@@ -6,6 +6,7 @@
 #include "Animations/AnimationClip.h"
 #include "Layers/ActorLayer.h"
 #include "Layers/TileLayer.h"
+#include "Serialization/JsonSerializer.h"
 
 namespace Tristeon
 {
@@ -20,7 +21,11 @@ namespace Tristeon
 	void SceneManager::loadScene()
 	{
 		currentScene = std::make_unique<Scene>();
-		currentScene->layers.push_back(std::make_unique<TileLayer>());
+
+		TileLayer* tileLayer = new TileLayer();
+		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, nullptr);
+		
+		currentScene->layers.push_back(std::unique_ptr<TileLayer>(tileLayer));
 		currentScene->camera = std::make_unique<Camera>();
 		currentScene->camera->zoom = 0.3f;
 		currentScene->camera->size = Vector2Int(800, 600);
@@ -51,6 +56,14 @@ namespace Tristeon
 		animation->setAnimationClip(idle);
 		
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
+
+		//Proof of creation using json, scene is reset and then loaded in through json data
+		json data = currentScene->serialize();
+		std::cout << "Scene: " << currentScene->serialize() << std::endl;
+
+		Unique<Serializable> serializable = TypeRegister::createInstance(data["typeID"]);
+		currentScene.reset((Scene*)serializable.release()); //Cast and move ownership over
+		currentScene->deserialize(data);
 	}
 
 	void SceneManager::reset()

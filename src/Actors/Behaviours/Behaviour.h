@@ -1,11 +1,12 @@
 #pragma once
+#include <Serialization/Serializable.h>
 
 namespace Tristeon
 {
 	class Actor;
 	class ActorLayer;
 	
-	class Behaviour
+	class Behaviour : public Serializable
 	{
 		friend Actor;
 		friend ActorLayer;
@@ -14,6 +15,9 @@ namespace Tristeon
 		virtual ~Behaviour();
 		Behaviour(const Behaviour& other) = delete;
 		Behaviour& operator=(const Behaviour& other) = delete;
+
+		json serialize() override = 0;
+		void deserialize(json j) override = 0;
 
 		Behaviour(Behaviour&& other) noexcept;
 		Behaviour& operator=(Behaviour&& other) noexcept;

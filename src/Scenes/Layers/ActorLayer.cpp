@@ -4,11 +4,39 @@
 #include <Scenes/Scene.h>
 #include <Rendering/Renderer.h>
 
-#include "Actors/Behaviours/BehaviourCollector.h"
-#include "Input/Keyboard.h"
+#include <Actors/Behaviours/BehaviourCollector.h>
+#include <Input/Keyboard.h>
 
 namespace Tristeon
 {
+	REGISTER_TYPE_CPP(ActorLayer)
+	
+	json ActorLayer::serialize()
+	{
+		json j;
+		j["typeID"] = TRISTEON_TYPENAME(ActorLayer);
+
+		json serializedActors = json::array_t();
+		for (size_t i = 0; i < actors.size(); i++)
+			serializedActors.push_back(actors[i]->serialize());
+		j["actors"] = serializedActors;
+		
+		return j;
+	}
+
+	void ActorLayer::deserialize(json j)
+	{
+		actors.clear();
+		
+		for (auto serializedActor : j["actors"])
+		{
+			//TODO: Potentially detect existing actors and simply re-deserialize as opposed to recreating them
+			Unique<Serializable> serializable = TypeRegister::createInstance(serializedActor["typeID"]);
+			serializable->deserialize(serializedActor);
+			actors.push_back(Unique<Actor>((Actor*)serializable.release()));
+		}
+	}
+
 	void ActorLayer::render(Renderer* renderer, Scene* scene)
 	{
 		if (!renderer->getSpriteShader()->isReady())
