@@ -17,23 +17,7 @@ namespace Tristeon
 	{
 		shader = std::make_unique<Shader>("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
 		tileSet = std::make_unique<TileSet>();
-
-		int data[60] = {
-			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-			4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
-			9, 10, -1, -1, -1, -1, 4, 4, 14, 14,
-			-1, -1, -1, -1, -1, 4, 10, 9, 4, 14,
-			0, 1, 2, 0, 8, 3, 6, 3, 6, 8,
-			3, 6, 3, 6, 3, 6, 3, 6, 3, 6
-		};
-		
-		QOpenGLFunctions* f = Engine::instance()->gameView()->context()->functions();
-		f->glGenBuffers(1, &tbo);
-		f->glBindBuffer(GL_TEXTURE_BUFFER, tbo);
-		f->glBufferData(GL_TEXTURE_BUFFER, sizeof(int) * 60, data, GL_STATIC_DRAW);
-
-		f->glGenTextures(1, &tbo_tex);
-		f->glBindBuffer(GL_TEXTURE_BUFFER, 0);
+		data = Unique<int[]>(new int[1]{ -1 });
 	}
 
 	TileLayer::~TileLayer()
@@ -49,7 +33,11 @@ namespace Tristeon
 		j["width"] = width;
 		j["height"] = height;
 		j["tileSet"] = tileSet->serialize();
-		//TODO: Serialize TileLayer level data
+
+		json d = json::array();
+		for (unsigned int i = 0; i < width * height; i++)
+			d.push_back(data[i]);
+		j["data"] = d;
 		return j;
 	}
 
@@ -58,11 +46,19 @@ namespace Tristeon
 		width = j["width"];
 		height = j["height"];
 		tileSet->deserialize(j["tileSet"]);
-		//TODO: Deserialize TileLayer level data
+
+		data = Unique<int[]>(new int[j["data"].size()]);
+		for (unsigned int i = 0; i < j["data"].size(); i++)
+			data[i] = j["data"][i];
+		
+		createTBO();
 	}
 
 	void TileLayer::render(Renderer* renderer, Scene* scene)
 	{
+		if (tbo == 0 || tbo_tex == 0)
+			return;
+		
 		if (Keyboard::pressed(Key_R))
 			shader->reload();
 
@@ -110,8 +106,28 @@ namespace Tristeon
 		f->glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
 		context->extraFunctions()->glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
 		program->setUniformValue("levelData", 1);
+
+		program->setUniformValue("levelWidth", width);
+		program->setUniformValue("levelHeight", height);
 		
 		//Draw
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+
+	void TileLayer::createTBO()
+	{
+		QOpenGLFunctions* f = Engine::instance()->gameView()->context()->functions();
+
+		if (tbo != 0)
+			f->glDeleteBuffers(1, &tbo);
+		if (tbo_tex != 0)
+			f->glDeleteTextures(1, &tbo_tex);
+		
+		f->glGenBuffers(1, &tbo);
+		f->glBindBuffer(GL_TEXTURE_BUFFER, tbo);
+		f->glBufferData(GL_TEXTURE_BUFFER, sizeof(int) * width * height, data.get(), GL_STATIC_DRAW);
+
+		f->glGenTextures(1, &tbo_tex);
+		f->glBindBuffer(GL_TEXTURE_BUFFER, 0);
 	}
 }

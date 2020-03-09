@@ -6,6 +6,8 @@ uniform int tileSetCols;
 uniform int tileSetRows;
 
 uniform samplerBuffer levelData;
+uniform int levelWidth;
+uniform int levelHeight;
 
 struct CameraData
 {
@@ -25,10 +27,6 @@ vec2 getTileUV(vec2 uv, int x, int y);
 ivec2 tileTo2DIndex(int tile);
 void main()
 {
-    //Level
-    int levelWidth = 10;
-    int levelHeight = 6;
-
     //Determine which tile we're on using the camera's properties
     ivec2 tileSetSize = textureSize(tileSet, 0);
     //Normalized tile... is the size of tiles within the 0..1 range of the screen

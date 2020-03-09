@@ -23,12 +23,14 @@ namespace Tristeon
 
 		virtual void render(Renderer* renderer, Scene* scene) override;
 	private:
-		GLuint tbo;
-		GLuint tbo_tex;
+		GLuint tbo = 0;
+		GLuint tbo_tex = 0;
 		
 		Unique<TileSet> tileSet = nullptr;
 		Unique<Shader> shader;
 		Unique<int[]> data = nullptr;
-		int width = 0, height = 0;
+		unsigned int width = 0, height = 0;
+
+		void createTBO();
 	};
 }
