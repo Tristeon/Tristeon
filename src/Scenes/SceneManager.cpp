@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include <Scenes/Scene.h>
 
-#include "Actors/Behaviours/AnimationSprite.h"
+#include "Actors/AnimationSprite.h"
 #include "Actors/Behaviours/TestBehaviour.h"
 #include "Animations/AnimationClip.h"
 #include "Layers/ActorLayer.h"
@@ -34,27 +34,21 @@ namespace Tristeon
 		auto* layer = new ActorLayer();
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
 
-		auto* actor = new Actor();
+		auto* actor = new Sprite();
 		actor->addBehaviour<TestBehaviour>();
-		Sprite* sprite = actor->addBehaviour<Sprite>();
-		sprite->setTexture("Project/penguin.png", true);
-		sprite->width = 128;
-		sprite->height = 128;
+		actor->setTexture("Project/penguin.png", true);
+		actor->width = 128;
+		actor->height = 128;
 		actor->position.x = 208;
 		actor->position.y = 1042;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor));
 
-		auto* actor2 = new Actor();
+		auto* actor2 = new AnimationSprite();
 		actor2->position.x = 1478;
 		actor2->position.y = 870;
-
-		AnimationSprite* animation = actor2->addBehaviour<AnimationSprite>();
-		animation->setTexture("Project/Tiny Platformer/Sprites/Character 1/Run.png", false);
-		animation->width = 256;
-		animation->height = 256;
-		AnimationClip* idle = new AnimationClip("Project/Tiny Platformer/Sprites/Character 1/Run.png", 6, 1, true); //TODO: Memory leak, animation clips should be owned by some kinda manager
-		animation->setAnimationClip(idle);
-		
+		actor2->setTexture("Project/Tiny Platformer/Sprites/Character 1/Run.png", false);
+		actor2->width = 256;
+		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
 		//Proof of creation using json, scene is reset and then loaded in through json data

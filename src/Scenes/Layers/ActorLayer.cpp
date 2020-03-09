@@ -4,8 +4,10 @@
 #include <Scenes/Scene.h>
 #include <Rendering/Renderer.h>
 
-#include <Actors/Behaviours/BehaviourCollector.h>
 #include <Input/Keyboard.h>
+
+#include "Actors/Collector.h"
+#include "Actors/Sprite.h"
 
 namespace Tristeon
 {
@@ -57,7 +59,7 @@ namespace Tristeon
 		program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
 		program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
 
-		for (Sprite* sprite : BehaviourCollector<Sprite>::all())
+		for (Sprite* sprite : ActorCollector<Sprite>::all())
 		{
 			if (sprite == nullptr)
 				continue;

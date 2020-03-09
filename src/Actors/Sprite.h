@@ -1,6 +1,5 @@
 #pragma once
-#include "Behaviour.h"
-
+#include "Actor.h"
 #include <Rendering/SpriteRenderMode.h>
 #include <Rendering/Texture.h>
 
@@ -12,7 +11,7 @@ namespace Tristeon
 {
 	class ActorLayer;
 	
-	class Sprite : public Behaviour
+	class Sprite : public Actor
 	{
 		REGISTER_TYPE_H(Sprite)
 		

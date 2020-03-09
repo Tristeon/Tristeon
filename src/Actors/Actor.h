@@ -1,6 +1,5 @@
 #pragma once
 #include "Behaviours/Behaviour.h"
-#include "Behaviours/Sprite.h"
 #include "Math/Vector2Int.h"
 #include "TypeDefinitions.h"
 
@@ -38,9 +37,7 @@ namespace Tristeon
 		template<typename T>
 		IsBehaviour<T>* addBehaviour();
 
-		//TODO: Cache known behaviours
-		Sprite* sprite() { return behaviour<Sprite>(); }
-
+		virtual void update() { /* Empty */ }
 	private:
 		Vector<Unique<Behaviour>> behaviours;
 		std::string tag = "";

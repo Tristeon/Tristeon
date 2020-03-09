@@ -7,8 +7,9 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
-#include "BehaviourCollector.h"
 #include <Rendering/SpriteRenderMode.h>
+
+#include "Collector.h"
 
 namespace Tristeon
 {
@@ -16,19 +17,18 @@ namespace Tristeon
 	
 	Sprite::Sprite()
 	{
-		BehaviourCollector<Sprite>::add(this);
-
+		ActorCollector<Sprite>::add(this);
 		texture = std::make_unique<Texture>();
 	}
 
 	Sprite::~Sprite()
 	{
-		BehaviourCollector<Sprite>::remove(this);
+		ActorCollector<Sprite>::remove(this);
 	}
 
 	json Sprite::serialize()
 	{
-		json j;
+		json j = Actor::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Sprite);
 		j["width"] = width;
 		j["height"] = height;
@@ -38,6 +38,8 @@ namespace Tristeon
 
 	void Sprite::deserialize(json j)
 	{
+		Actor::deserialize(j);
+		
 		width = j["width"];
 		height = j["height"];
 
@@ -70,9 +72,9 @@ namespace Tristeon
 		program->setUniformValue("sprite.renderMode", static_cast<int>(getRenderMode()));
 		program->setUniformValue("sprite.width", width);
 		program->setUniformValue("sprite.height", height);
-		program->setUniformValue("actor.position", owner()->position.x, owner()->position.y);
-		program->setUniformValue("actor.scale", owner()->scale.x, owner()->scale.y);
-		program->setUniformValue("actor.rotation", owner()->rotation);
+		program->setUniformValue("actor.position", position.x, position.y);
+		program->setUniformValue("actor.scale", scale.x, scale.y);
+		program->setUniformValue("actor.rotation", rotation);
 
 		//Animation
 		QOpenGLContext::currentContext()->functions()->glDrawArrays(GL_TRIANGLES, 0, 3);
