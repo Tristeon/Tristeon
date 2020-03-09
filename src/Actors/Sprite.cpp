@@ -66,6 +66,8 @@ namespace Tristeon
 
 	void Sprite::render(QOpenGLShaderProgram* program)
 	{
+		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
+		f->glActiveTexture(GL_TEXTURE0);
 		texture->bind();
 
 		//Sprite info
@@ -76,7 +78,6 @@ namespace Tristeon
 		program->setUniformValue("actor.scale", scale.x, scale.y);
 		program->setUniformValue("actor.rotation", rotation);
 
-		//Animation
-		QOpenGLContext::currentContext()->functions()->glDrawArrays(GL_TRIANGLES, 0, 3);
+		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 }

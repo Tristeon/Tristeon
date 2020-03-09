@@ -1,11 +1,11 @@
-#version 150
+#version 330
 in vec2 texCoord;
 
 uniform sampler2D tileSet;
 uniform int tileSetCols;
 uniform int tileSetRows;
 
-uniform int[] levelData;
+uniform samplerBuffer levelData;
 
 struct CameraData
 {
@@ -28,14 +28,6 @@ void main()
     //Level
     int levelWidth = 10;
     int levelHeight = 6;
-    int[] data = int[] (
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-         4,  4, -1, -1, -1, -1, -1, -1, -1, -1,
-         9, 10, -1, -1, -1, -1,  4,  4, 14, 14,
-        -1, -1, -1, -1, -1,  4, 10,  9,  4, 14,
-         0,  1,  2,  0,  8,  3,  6,  3,  6,  8,
-         3,  6,  3,  6,  3,  6,  3,  6,  3,  6
-    );
 
     //Determine which tile we're on using the camera's properties
     ivec2 tileSetSize = textureSize(tileSet, 0);
@@ -67,7 +59,8 @@ void main()
         discard; //Discard all out of map tiles
 
     //Convert data tile to tileset index
-    ivec2 tileIndex = tileTo2DIndex(data[dataY * levelWidth + dataX]);
+    int dataValue = floatBitsToInt(texelFetch(levelData, dataIndex).r);
+    ivec2 tileIndex = tileTo2DIndex(dataValue);
     if (tileIndex.x == -1 || tileIndex.y == -1)
         discard; //Discard empty tiles
 
