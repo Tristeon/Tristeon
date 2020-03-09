@@ -31,14 +31,10 @@ namespace Tristeon
 	{
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 		f->glClearColor(1, 1, 0, 1);
-
-		f->glEnable(GL_DEPTH_TEST);
 		f->glEnable(GL_CULL_FACE);
 		f->glCullFace(GL_BACK);
-
 		f->glEnable(GL_BLEND);
 		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	}
 
 	void GameView::resizeGL(int w, int h)

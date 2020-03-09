@@ -59,7 +59,7 @@ namespace Tristeon
 
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
-		std::cout << "Scene: " << currentScene->serialize() << std::endl;
+		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
 
 		Unique<Serializable> serializable = TypeRegister::createInstance(data["typeID"]);
 		currentScene.reset((Scene*)serializable.release()); //Cast and move ownership over
