@@ -3,17 +3,12 @@
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(AnimationClip)
-	
-	AnimationClip::AnimationClip(std::string const& texturePath, int const& cols, int const& rows, bool const& loops)
-		: AnimationClip(texturePath, cols, rows, 0, cols* rows, loops)
-	{
-		//Empty
-	}
 
-	AnimationClip::AnimationClip(std::string const& texturePath, int const& cols, int const& rows,
-		int const& startIndex, int const& endIndex, bool const& loops) : texturePath(texturePath), cols(cols), rows(rows), startIndex(startIndex), endIndex(endIndex), loops(loops)
+	AnimationClip::AnimationClip(std::string const& texturePath, unsigned const& cols, unsigned const& rows,
+		bool const& loops, int const& startIndex, int const& endIndex) : rows(rows), cols(cols), loops(loops), texturePath(texturePath)
 	{
-		//Empty
+		this->startIndex = startIndex == -1 ? 0 : startIndex;
+		this->endIndex = endIndex == -1 ? cols * rows : endIndex;
 	}
 
 	json AnimationClip::serialize()

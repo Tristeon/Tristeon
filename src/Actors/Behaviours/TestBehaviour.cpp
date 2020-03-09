@@ -29,5 +29,7 @@ namespace Tristeon
 			owner()->position.x -= 2;
 		if (Keyboard::held(Key_D))
 			owner()->position.x += 2;
+
+		owner()->rotation++;
 	}
 }

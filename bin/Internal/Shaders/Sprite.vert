@@ -31,12 +31,22 @@ struct CameraData
 uniform CameraData camera;
  
 out vec2 texCoord;
+
+const float PI = 3.14159265;
+const float toRAD = PI / 180.0f;
+
 void main()
 {
     float x = -1.0 + float((gl_VertexID & 1) << 2);
     float y = -1.0 + float((gl_VertexID & 2) << 1);
     texCoord.x = (x+1.0)*0.5;
     texCoord.y = (y+1.0)*0.5;
+
+    float rad = actor.rotation * toRAD;
+    float rotX = x * cos(rad) - y * sin(rad);
+    float rotY = y * cos(rad) + x * sin(rad);
+    x = rotX;
+    y = rotY;
 
     x = x / float(camera.pixelsX / camera.zoom) * sprite.width;
     y = y / float(camera.pixelsY / camera.zoom) * sprite.height;
