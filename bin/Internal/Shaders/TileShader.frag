@@ -4,6 +4,8 @@ in vec2 texCoord;
 uniform sampler2D tileSet;
 uniform int tileSetCols;
 uniform int tileSetRows;
+uniform int tileRenderWidth;
+uniform int tileRenderHeight;
 
 uniform samplerBuffer levelData;
 uniform int levelWidth;
@@ -30,8 +32,8 @@ void main()
     //Determine which tile we're on using the camera's properties
     ivec2 tileSetSize = textureSize(tileSet, 0);
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
-    float normalizedTileWidth = (float)tileSetSize.x / tileSetCols / (camera.pixelsX / camera.zoom); 
-    float normalizedTileHeight = (float)tileSetSize.y / tileSetRows / (camera.pixelsY / camera.zoom);
+    float normalizedTileWidth = (float)tileRenderWidth / (camera.pixelsX / camera.zoom); 
+    float normalizedTileHeight = (float)tileRenderHeight / (camera.pixelsY / camera.zoom);
 
     vec2 coords = texCoord;
     //Move the coords by -0.5 to center the tiles for accurate zooming

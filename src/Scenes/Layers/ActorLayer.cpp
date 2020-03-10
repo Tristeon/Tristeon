@@ -12,8 +12,8 @@
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(ActorLayer)
-	
-	json ActorLayer::serialize()
+
+		json ActorLayer::serialize()
 	{
 		json j;
 		j["typeID"] = TRISTEON_TYPENAME(ActorLayer);
@@ -22,14 +22,14 @@ namespace Tristeon
 		for (size_t i = 0; i < actors.size(); i++)
 			serializedActors.push_back(actors[i]->serialize());
 		j["actors"] = serializedActors;
-		
+
 		return j;
 	}
 
 	void ActorLayer::deserialize(json j)
 	{
 		actors.clear();
-		
+
 		for (auto serializedActor : j["actors"])
 		{
 			//TODO: Potentially detect existing actors and simply re-deserialize as opposed to recreating them
@@ -39,7 +39,7 @@ namespace Tristeon
 		}
 	}
 
-	void ActorLayer::render(Renderer* renderer, Scene* scene)
+	void ActorLayer::render(Renderer * renderer, Scene * scene)
 	{
 		if (!renderer->getSpriteShader()->isReady())
 			return;
@@ -70,7 +70,10 @@ namespace Tristeon
 	void ActorLayer::update()
 	{
 		for (auto& actor : actors)
+		{
+			actor->update();
 			for (auto& behaviour : actor->behaviours)
 				behaviour->update();
+		}
 	}
 }

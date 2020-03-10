@@ -91,9 +91,12 @@ namespace Tristeon
 		tileSet->texture->bind();
 		program->setUniformValue("tileSet", 0);
 
-		program->setUniformValue("tileSetCols", tileSet->width);
-		program->setUniformValue("tileSetRows", tileSet->height);
+		program->setUniformValue("tileSetCols", tileSet->cols);
+		program->setUniformValue("tileSetRows", tileSet->rows);
 
+		program->setUniformValue("tileRenderWidth", tileSet->tileRenderWidth);
+		program->setUniformValue("tileRenderHeight", tileSet->tileRenderHeight);
+		
 		//Camera
 		program->setUniformValue("camera.posX", scene->getCamera()->position.x);
 		program->setUniformValue("camera.posY", scene->getCamera()->position.y);
