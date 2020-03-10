@@ -6,6 +6,8 @@ uniform int tileSetCols;
 uniform int tileSetRows;
 uniform int tileRenderWidth;
 uniform int tileRenderHeight;
+uniform int tileSetHorizontalSpacing;
+uniform int tileSetVerticalSpacing;
 
 uniform samplerBuffer levelData;
 uniform int levelWidth;
@@ -30,7 +32,6 @@ ivec2 tileTo2DIndex(int tile);
 void main()
 {
     //Determine which tile we're on using the camera's properties
-    ivec2 tileSetSize = textureSize(tileSet, 0);
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
     float normalizedTileWidth = (float)tileRenderWidth / (camera.pixelsX / camera.zoom); 
     float normalizedTileHeight = (float)tileRenderHeight / (camera.pixelsY / camera.zoom);
@@ -48,8 +49,8 @@ void main()
     float tileY = (coords.y / normalizedTileHeight);
 
     //Calculate tile u,v by taking the leftover decimals in tileX and tileY
-    float tileU = (tileX - floor(tileX));
-    float tileV = (tileY - floor(tileY));
+    float tileU = mod(tileX, 1);
+    float tileV = mod(tileY, 1);
 
     //Calculate data index based on tileX and tileY
     int dataX = (int)floor(tileX);
@@ -87,5 +88,12 @@ vec2 getTileUV(vec2 uv, int tileX, int tileY)
 
     float u = ((tileX) * 1.0 / tileSetCols) + x;
     float v = ((tileSetRows - tileY - 1) * 1.0 / tileSetRows) + y;
+
+    //Scale tile down with spacing x and y and then move the UV
+    //float spacingX = 1f + (1 * 2f) / (float)tileRenderWidth;
+    //float spacingY = 1f + (1 * 2f) / (float)tileRenderHeight;
+
+    //u = u * spacingX - (tileSetHorizontalSpacing / (float)tileRenderWidth);
+    //v = v * spacingY - (tileSetVerticalSpacing / (float)tileRenderHeight);
     return vec2(u, v);
 }

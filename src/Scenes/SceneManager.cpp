@@ -25,8 +25,18 @@ namespace Tristeon
 		TileLayer* tileLayer = new TileLayer();
 		tileLayer->width = 10;
 		tileLayer->height = 6;
-		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, nullptr, 256, 256);
-		tileLayer->data = Unique<int[]>(new int[60] {
+		//tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, nullptr, 256, 256);
+		//tileLayer->data = Unique<int[]>(new int[60] {
+		//		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		//		4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
+		//		9, 10, -1, -1, -1, -1, 4, 4, 14, 14,
+		//		-1, -1, -1, -1, -1, 4, 10, 9, 4, 14,
+		//		0, 1, 2, 0, 8, 3, 6, 3, 6, 8,
+		//		3, 6, 3, 6, 3, 6, 3, 6, 3, 6
+		//	});
+
+		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest2.png", 11, 11, nullptr, 16, 16, 1, 1);
+		tileLayer->data = Unique<int[]>(new int[60]{
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 				4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
 				9, 10, -1, -1, -1, -1, 4, 4, 14, 14,
@@ -38,29 +48,29 @@ namespace Tristeon
 		currentScene->layers.push_back(std::unique_ptr<TileLayer>(tileLayer));
 
 		currentScene->camera = std::make_unique<Camera>();
-		currentScene->camera->zoom = 0.3f;
-		currentScene->camera->size = Vector2Int(800, 600);
-		currentScene->camera->position = Vector2Int(1250, 800);
+		currentScene->camera->zoom = 1;
+		currentScene->camera->size = Vector2Int(160, 96);
+		currentScene->camera->position = Vector2Int(0, 0);
 
 		auto* layer = new ActorLayer();
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
 
-		auto* actor = new Sprite();
-		actor->addBehaviour<TestBehaviour>();
-		actor->setTexture("Project/penguin.png", true);
-		actor->width = 256;
-		actor->height = 256;
-		actor->position.x = 208;
-		actor->position.y = 1042;
-		layer->actors.push_back(std::unique_ptr<Actor>(actor));
+		//auto* actor = new Sprite();
+		//actor->addBehaviour<TestBehaviour>();
+		//actor->setTexture("Project/penguin.png", true);
+		//actor->width = 256;
+		//actor->height = 256;
+		//actor->position.x = 208;
+		//actor->position.y = 1042;
+		//layer->actors.push_back(std::unique_ptr<Actor>(actor));
 
-		auto* actor2 = new AnimationSprite();
-		actor2->position.x = 2000;
-		actor2->position.y = 1250;
-		actor2->setTexture("Project/Tiny Platformer/Sprites/Character 1/Run.png", false);
-		actor2->width = 512;
-		actor2->height = 512;
-		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
+		//auto* actor2 = new AnimationSprite();
+		//actor2->position.x = 2000;
+		//actor2->position.y = 1250;
+		//actor2->setTexture("Project/Tiny Platformer/Sprites/Character 1/Run.png", false);
+		//actor2->width = 512;
+		//actor2->height = 512;
+		//layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();

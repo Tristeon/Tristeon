@@ -10,7 +10,14 @@ namespace Tristeon
 		//Empty
 	}
 
-	TileSet::TileSet(std::string const& imagePath, unsigned int const& cols, unsigned int const& rows, Tile tileInfo[], int const& tileRenderWidth, int const& tileRenderHeight) : cols(cols), rows(rows)
+	TileSet::TileSet(std::string const& imagePath, 
+		uint const& cols, 
+		uint const& rows, 
+		Tile tileInfo[], 
+		int const& tileRenderWidth, 
+		int const& tileRenderHeight,
+		uint const& horizontalSpacing,
+		uint const& verticalSpacing) : cols(cols), rows(rows), horizontalSpacing(horizontalSpacing), verticalSpacing(verticalSpacing)
 	{
 		this->tileInfo = std::make_unique<Tile[]>(cols * rows);
 		if (tileInfo != nullptr)
@@ -31,6 +38,8 @@ namespace Tristeon
 		j["texturePath"] = texture->getPath();
 		j["tileRenderWidth"] = tileRenderWidth;
 		j["tileRenderHeight"] = tileRenderHeight;
+		j["horizontalSpacing"] = horizontalSpacing;
+		j["verticalSpacing"] = verticalSpacing;
 		//TODO: Serialize tileset tile info
 		return j;
 	}
@@ -45,6 +54,9 @@ namespace Tristeon
 
 		tileRenderWidth = j["tileRenderWidth"];
 		tileRenderHeight = j["tileRenderHeight"];
+
+		horizontalSpacing = j["horizontalSpacing"];
+		verticalSpacing = j["verticalSpacing"];
 
 		//TODO: Deserialize tileset tile info
 	}

@@ -16,14 +16,27 @@ namespace Tristeon
 		REGISTER_TYPE_H(TileSet)
 	public:
 		explicit TileSet();
-		explicit TileSet(std::string const& imagePath, unsigned int const& cols, unsigned int const& rows, Tile tileInfo[], int const& tileRenderWidth = -1, int const& tileRenderHeight = -1);
+		explicit TileSet(std::string const& imagePath, 
+			uint const& cols, 
+			uint const& rows, 
+			Tile tileInfo[], 
+			int const& tileRenderWidth = -1, 
+			int const& tileRenderHeight = -1, 
+			uint const& horizontalSpacing = 0, 
+			uint const& verticalSpacing = 0
+		);
+
 		json serialize() override;
 		void deserialize(json j) override;
 		
 		unsigned int cols = 0;
 		unsigned int rows = 0;
-		unsigned int tileRenderWidth;
-		unsigned int tileRenderHeight;
+		unsigned int tileRenderWidth = 0;
+		unsigned int tileRenderHeight = 0;
+
+		unsigned int horizontalSpacing = 0;
+		unsigned int verticalSpacing = 0;
+		
 		std::unique_ptr<Tile[]> tileInfo = nullptr;
 		std::unique_ptr<Texture> texture = nullptr;
 	};

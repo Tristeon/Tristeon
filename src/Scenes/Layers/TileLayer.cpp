@@ -96,6 +96,9 @@ namespace Tristeon
 
 		program->setUniformValue("tileRenderWidth", tileSet->tileRenderWidth);
 		program->setUniformValue("tileRenderHeight", tileSet->tileRenderHeight);
+
+		program->setUniformValue("tileSetHorizontalSpacing", tileSet->horizontalSpacing);
+		program->setUniformValue("tileSetVerticalSpacing", tileSet->verticalSpacing);
 		
 		//Camera
 		program->setUniformValue("camera.posX", scene->getCamera()->position.x);
@@ -112,7 +115,7 @@ namespace Tristeon
 
 		program->setUniformValue("levelWidth", width);
 		program->setUniformValue("levelHeight", height);
-		
+
 		//Draw
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
