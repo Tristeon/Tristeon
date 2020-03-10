@@ -34,6 +34,7 @@ namespace Tristeon
 
 		texture = new QOpenGLTexture(image.mirrored());
 		texture->setWrapMode(QOpenGLTexture::Repeat);
+		texture->setMinMagFilters(QOpenGLTexture::Nearest, QOpenGLTexture::Nearest);
 		loaded = true;
 	}
 }

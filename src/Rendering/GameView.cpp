@@ -20,6 +20,12 @@ namespace Tristeon
 		QObject::connect(timer, &QTimer::timeout, this, &GameView::update);
 		timer->start(0);
 		show();
+
+		QSurfaceFormat format;
+		format.setRenderableType(QSurfaceFormat::OpenGL);
+		format.setProfile(QSurfaceFormat::CoreProfile);
+		format.setSamples(0);
+		setFormat(format);
 	}
 
 	void GameView::makeContextCurrent()
@@ -35,6 +41,7 @@ namespace Tristeon
 		f->glCullFace(GL_BACK);
 		f->glEnable(GL_BLEND);
 		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		f->glDisable(GL_MULTISAMPLE);
 	}
 
 	void GameView::resizeGL(int w, int h)
