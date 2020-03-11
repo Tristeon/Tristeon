@@ -35,7 +35,7 @@ namespace Tristeon
 		//		3, 6, 3, 6, 3, 6, 3, 6, 3, 6
 		//	});
 
-		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest2.png", 11, 11, nullptr, 16, 16, 1, 1);
+		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest5.png", 2, 2, nullptr, 16, 16, 1, 1, 1, 1, 1, 1);
 		tileLayer->data = Unique<int[]>(new int[60]{
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 				4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -49,7 +49,7 @@ namespace Tristeon
 
 		currentScene->camera = std::make_unique<Camera>();
 		currentScene->camera->zoom = 1;
-		currentScene->camera->size = Vector2Int(160, 96);
+		currentScene->camera->size = Vector2Int(40, 40);
 		currentScene->camera->position = Vector2Int(0, 0);
 
 		auto* layer = new ActorLayer();

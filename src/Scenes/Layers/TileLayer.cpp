@@ -89,16 +89,20 @@ namespace Tristeon
 		//Upload texture & tileset info
 		f->glActiveTexture(GL_TEXTURE0);
 		tileSet->texture->bind();
-		program->setUniformValue("tileSet", 0);
+		program->setUniformValue("tileSet.texture", 0);
 
-		program->setUniformValue("tileSetCols", tileSet->cols);
-		program->setUniformValue("tileSetRows", tileSet->rows);
+		program->setUniformValue("tileSet.cols", tileSet->cols);
+		program->setUniformValue("tileSet.rows", tileSet->rows);
 
-		program->setUniformValue("tileRenderWidth", tileSet->tileRenderWidth);
-		program->setUniformValue("tileRenderHeight", tileSet->tileRenderHeight);
+		program->setUniformValue("tileSet.renderWidth", tileSet->tileRenderWidth);
+		program->setUniformValue("tileSet.renderHeight", tileSet->tileRenderHeight);
 
-		program->setUniformValue("tileSetHorizontalSpacing", tileSet->horizontalSpacing);
-		program->setUniformValue("tileSetVerticalSpacing", tileSet->verticalSpacing);
+		program->setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
+		program->setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
+		program->setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
+		program->setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
+		program->setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
+		program->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
 		
 		//Camera
 		program->setUniformValue("camera.posX", scene->getCamera()->position.x);
@@ -111,10 +115,10 @@ namespace Tristeon
 		f->glActiveTexture(GL_TEXTURE1);
 		f->glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
 		context->extraFunctions()->glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
-		program->setUniformValue("levelData", 1);
+		program->setUniformValue("level.data", 1);
 
-		program->setUniformValue("levelWidth", width);
-		program->setUniformValue("levelHeight", height);
+		program->setUniformValue("level.width", width);
+		program->setUniformValue("level.height", height);
 
 		//Draw
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);

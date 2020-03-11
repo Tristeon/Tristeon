@@ -21,7 +21,12 @@ namespace Tristeon
 			uint const& rows, 
 			Tile tileInfo[], 
 			int const& tileRenderWidth = -1, 
-			int const& tileRenderHeight = -1, 
+			int const& tileRenderHeight = -1,
+
+			uint const& spacingLeft = 0,
+			uint const& spacingRight = 0,
+			uint const& spacingTop = 0,
+			uint const& spacingBottom = 0,
 			uint const& horizontalSpacing = 0, 
 			uint const& verticalSpacing = 0
 		);
@@ -34,6 +39,11 @@ namespace Tristeon
 		unsigned int tileRenderWidth = 0;
 		unsigned int tileRenderHeight = 0;
 
+		unsigned int spacingLeft = 0;
+		unsigned int spacingRight = 0;
+		unsigned int spacingTop = 0;
+		unsigned int spacingBottom = 0;
+		
 		unsigned int horizontalSpacing = 0;
 		unsigned int verticalSpacing = 0;
 		
