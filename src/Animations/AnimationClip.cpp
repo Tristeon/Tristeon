@@ -4,8 +4,14 @@ namespace Tristeon
 {
 	REGISTER_TYPE_CPP(AnimationClip)
 
-	AnimationClip::AnimationClip(std::string const& texturePath, unsigned const& cols, unsigned const& rows,
-		bool const& loops, int const& startIndex, int const& endIndex) : rows(rows), cols(cols), loops(loops), texturePath(texturePath)
+	AnimationClip::AnimationClip(std::string const& texturePath, 
+		unsigned const& cols, 
+		unsigned const& rows,
+		bool const& loops, 
+		int const& startIndex, 
+		int const& endIndex, 
+		uint const& horizontalFrameSpacing, 
+		uint const& verticalFrameSpacing) : rows(rows), cols(cols), horizontalFrameSpacing(horizontalFrameSpacing), verticalFrameSpacing(verticalFrameSpacing), loops(loops), texturePath(texturePath)
 	{
 		this->startIndex = startIndex == -1 ? 0 : startIndex;
 		this->endIndex = endIndex == -1 ? cols * rows : endIndex;
@@ -21,6 +27,10 @@ namespace Tristeon
 		j["endIndex"] = endIndex;
 		j["loops"] = loops;
 		j["texturePath"] = texturePath;
+
+		j["spacing"]["horizontalFrame"] = horizontalFrameSpacing;
+		j["spacing"]["verticalFrame"] = verticalFrameSpacing;
+
 		return j;
 	}
 
@@ -32,5 +42,8 @@ namespace Tristeon
 		endIndex = j["endIndex"];
 		loops = j["loops"];
 		texturePath = j["texturePath"].get<std::string>();
+
+		horizontalFrameSpacing = j["spacing"]["horizontalFrame"];
+		verticalFrameSpacing = j["spacing"]["verticalFrame"];
 	}
 }

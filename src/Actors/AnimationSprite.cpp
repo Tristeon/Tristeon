@@ -23,7 +23,7 @@ namespace Tristeon
 		//TODO load animation clips from file
 
 		//TODO: Memory leak here
-		clip = new AnimationClip("Project/Tiny Platformer/Sprites/Character 1/Run.png", 6, 1, true);
+		clip = new AnimationClip("Project/SpriteSheet.png", 4, 4, true, 0, 8, 1, 1);
 	}
 
 	SpriteRenderMode AnimationSprite::getRenderMode()
@@ -45,6 +45,9 @@ namespace Tristeon
 			program->setUniformValue("animation.frame", static_cast<int>(floor(currentFrame)) + clip->startIndex);
 			program->setUniformValue("animation.cols", clip->cols);
 			program->setUniformValue("animation.rows", clip->rows);
+
+			program->setUniformValue("spacing.horizontalFrame", clip->horizontalFrameSpacing);
+			program->setUniformValue("spacing.verticalFrame", clip->verticalFrameSpacing);
 		}
 
 		Sprite::render(program);
@@ -55,13 +58,13 @@ namespace Tristeon
 		if (clip == nullptr)
 			return;
 
-		if (clip->startIndex + floor(currentFrame) >= clip->endIndex)
+		if (clip->startIndex + floor(currentFrame) > clip->endIndex)
 		{
 			if (clip->loops)
 				currentFrame = 0;
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		currentFrame += 0.1f;
+		currentFrame += 0.01f;
 	}
 }

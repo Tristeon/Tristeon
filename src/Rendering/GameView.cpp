@@ -39,7 +39,7 @@ namespace Tristeon
 		f->glClearColor(1, 1, 0, 1);
 		f->glEnable(GL_CULL_FACE);
 		f->glCullFace(GL_BACK);
-		f->glEnable(GL_BLEND);
+		//f->glEnable(GL_BLEND);
 		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		f->glDisable(GL_MULTISAMPLE);
 	}

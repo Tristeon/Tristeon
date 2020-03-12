@@ -26,6 +26,11 @@ namespace Tristeon
 		int width = 64;
 		int height = 64;
 
+		int spacingLeft = 0;
+		int spacingRight = 0;
+		int spacingTop = 0;
+		int spacingBottom = 0;
+
 		virtual SpriteRenderMode getRenderMode();
 		void setTexture(std::string const& path, bool setSize);
 	protected:

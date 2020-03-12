@@ -33,6 +33,11 @@ namespace Tristeon
 		j["width"] = width;
 		j["height"] = height;
 		j["texturePath"] = texture->getPath();
+
+		j["spacing"]["left"] = spacingLeft;
+		j["spacing"]["right"] = spacingLeft;
+		j["spacing"]["top"] = spacingTop;
+		j["spacing"]["bottom"] = spacingBottom;
 		return j;
 	}
 
@@ -46,6 +51,11 @@ namespace Tristeon
 		std::string texturePath = j["texturePath"];
 		if (texturePath != texture->getPath()) //Update if new path
 			texture = std::make_unique<Texture>(texturePath);
+
+		spacingLeft = j["spacing"]["left"];
+		spacingRight = j["spacing"]["right"];
+		spacingTop = j["spacing"]["top"];
+		spacingBottom = j["spacing"]["bottom"];
 	}
 
 	SpriteRenderMode Sprite::getRenderMode()
@@ -77,6 +87,11 @@ namespace Tristeon
 		program->setUniformValue("actor.position", position.x, position.y);
 		program->setUniformValue("actor.scale", scale.x, scale.y);
 		program->setUniformValue("actor.rotation", rotation);
+
+		program->setUniformValue("spacing.left", spacingLeft);
+		program->setUniformValue("spacing.right", spacingRight);
+		program->setUniformValue("spacing.top", spacingTop);
+		program->setUniformValue("spacing.bottom", spacingBottom);
 
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}

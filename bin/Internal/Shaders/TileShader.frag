@@ -100,7 +100,7 @@ vec2 getTileUV(vec2 uv, int tileX, int tileY)
 {
     //Coords beyond our tileset mess up spacing so we clamp them
     tileX = tileX % tileSet.cols;
-    tileY = tileY % tileSet.rows;
+    tileY = tileSet.rows - 1 - (tileY % tileSet.rows);
     ivec2 texSize = textureSize(tileSet.texture, 0);
 
     //Determine the amount of pixels per tile
