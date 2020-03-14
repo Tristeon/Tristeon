@@ -24,7 +24,7 @@ namespace Tristeon
 	};
 
 	template<typename T, typename BaseType>
-	Vector<T*> Collector<T, BaseType>::collection = {};
+	Vector<T*> Collector<T, BaseType>::collection;
 
 	template <typename T, typename BaseType>
 	void Collector<T, BaseType>::add(T* t)

@@ -13,12 +13,11 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 
-		SpriteRenderMode getRenderMode() override;
-
 		void setAnimationClip(AnimationClip* clip);
 	protected:
-		void render(QOpenGLShaderProgram* program) override;
-		void update() override;
+		virtual void render(QOpenGLShaderProgram* program) override;
+		virtual void update() override;
+		virtual Shader* getShader() override;
 
 		float currentFrame = 0;
 		AnimationClip* clip = nullptr;

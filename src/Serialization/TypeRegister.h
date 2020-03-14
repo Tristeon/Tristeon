@@ -12,7 +12,7 @@ namespace Tristeon
 	template <typename T> Unique<Serializable> CreateInstance() { return std::make_unique<T>(); }
 
 	/**
-	 * \brief The typeregister pretty much is a map that is used to create instances of registered types
+	 * The typeregister pretty much is a map that is used to create instances of registered types
 	 * In order to create instances you can call createInstance()
 	 */
 	struct TypeRegister
@@ -21,7 +21,7 @@ namespace Tristeon
 		using TypeMap = std::map<String, Unique<Serializable>(*)()>;
 
 		/**
-		 * \brief Creates instance of an object that inherits from the introspectioninterface.
+		 * Creates instance of an object that inherits from Serializable.
 		 * The user must take ownership of the instance himself.
 		 */
 		static Unique<Serializable> createInstance(const std::string& s)
@@ -35,6 +35,9 @@ namespace Tristeon
 			return it->second();
 		}
 
+		/**
+		 * Returns the full register
+		 */
 		static TypeMap* getMap()
 		{
 			static TypeMap instance;
@@ -43,7 +46,7 @@ namespace Tristeon
 	};
 
 	/**
-	 * \brief The derived register is used to register types into the typeregister's map
+	 * The derived register is used to register types into the typeregister's map
 	 */
 	template <typename T>
 	struct DerivedRegister : TypeRegister
@@ -55,11 +58,11 @@ namespace Tristeon
 	};
 
 	/**
-	 * \brief Creates a variable called reg using derivedregister, this is needed to register the type into the typeregister
+	 * Registers the given type into the TypeRegister for object creation through serialization.
 	 */
 #define REGISTER_TYPE_H(t) static DerivedRegister<t> reg;
 	 /**
-	  * \brief Creates the static instance of the derived register which registers the type into the typeregister
+	  * Registers the given type into the TypeRegister for object creation through serialization.
 	  */
 #define REGISTER_TYPE_CPP(t) DerivedRegister<t> t::reg;
 }

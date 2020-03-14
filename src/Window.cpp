@@ -4,29 +4,14 @@
 
 #include "Input/Mouse.h"
 #include <QMouseEvent>
+#include <QSurfaceFormat>
+
 
 #include "Input/Keyboard.h"
+#include "Scenes/SceneManager.h"
 
 namespace Tristeon
 {
-	Window* Window::instance = nullptr;
-
-	Window::Window()
-	{
-		resize(800, 800);
-		instance = this;
-	}
-
-	Window::~Window()
-	{
-		instance = nullptr;
-	}
-
-	Window* Window::main()
-	{
-		return instance;
-	}
-
 	void Window::pollEvents()
 	{
 		//Mouse handling
@@ -68,6 +53,7 @@ namespace Tristeon
 		}
 	}
 
+
 	void Window::mousePressEvent(QMouseEvent* event)
 	{
 		mousePressEvents.push(*event);
@@ -103,28 +89,9 @@ namespace Tristeon
 		keyReleaseEvents.push(*event);
 	}
 
-	void Window::focusInEvent(QFocusEvent* event)
-	{
-		
-	}
-
-	void Window::focusOutEvent(QFocusEvent* event)
-	{
-		
-	}
-
-	void Window::moveEvent(QMoveEvent* event)
-	{
-		
-	}
-
-	void Window::resizeEvent(QResizeEvent* event)
-	{
-		
-	}
-
 	void Window::closeEvent(QCloseEvent* event)
 	{
+		SceneManager::reset();
 		QApplication::quit();
 		exit(0);
 	}

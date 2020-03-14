@@ -43,11 +43,11 @@ namespace Tristeon
 	};
 	
 	class Window;
-	class GameView;
+	class Engine;
 	class Mouse final
 	{
 		friend Window;
-		friend GameView;
+		friend Engine;
 		
 		static bool pressed(MouseButton button);
 		static bool held(MouseButton button);

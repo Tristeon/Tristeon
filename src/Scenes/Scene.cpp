@@ -22,8 +22,8 @@ namespace Tristeon
 		j["hud"] = hud->serialize();
 
 		json serializedLayers = json::array_t();
-		for (size_t i = 0; i < layers.size(); i++)
-			serializedLayers.push_back(layers[i]->serialize());
+		for (auto& layer : layers)
+			serializedLayers.push_back(layer->serialize());
 		j["layers"] = serializedLayers;
 		return j;
 	}
@@ -34,7 +34,6 @@ namespace Tristeon
 		hud->deserialize(j["hud"]);
 
 		layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
-
 		for (auto serializedLayer : j["layers"])
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedLayer["typeID"]);
@@ -49,6 +48,16 @@ namespace Tristeon
 			throw std::invalid_argument("Index must be more than 0 and less than the amount of layers");
 
 		return layers[index].get();
+	}
+
+	Layer* Scene::findLayer(std::string const& name) const
+	{
+		for (const auto& layer : layers)
+		{
+			if (layer->name == name)
+				return layer.get();
+		}
+		return nullptr;
 	}
 
 	unsigned int Scene::getLayerCount() const

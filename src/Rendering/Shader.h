@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <QOpenGLShaderProgram>
+
+class QOpenGLShaderProgram;
 
 namespace Tristeon
 {
@@ -14,9 +15,10 @@ namespace Tristeon
 		bool isReady();
 		void bind();
 
+		bool isEmpty();
+
 		QOpenGLShaderProgram* getShaderProgram() const { return program; }
 		void reload();
-		QOpenGLShaderProgram* program = nullptr;
 	private:
 		void initialize();
 		
@@ -28,5 +30,8 @@ namespace Tristeon
 
 		bool ready = false;
 		bool failed = false;
+		bool empty = false;
+
+		QOpenGLShaderProgram* program = nullptr;
 	};
 }

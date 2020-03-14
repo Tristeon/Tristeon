@@ -529,11 +529,11 @@ namespace Tristeon
 	};
 	
 	class Window;
-	class GameView;
+	class Engine;
 	class Keyboard
 	{
 		friend Window;
-		friend GameView;
+		friend Engine;
 		
 	public:
 		static bool pressed(Key key);

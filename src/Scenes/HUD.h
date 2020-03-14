@@ -4,6 +4,9 @@
 
 namespace Tristeon
 {
+	/**
+	 * HUD is still a work in progress and currently contains no further implementation.
+	 */
 	class HUD : public Serializable
 	{
 		REGISTER_TYPE_H(HUD)

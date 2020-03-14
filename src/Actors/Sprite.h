@@ -1,9 +1,11 @@
 #pragma once
 #include "Actor.h"
-#include <Rendering/SpriteRenderMode.h>
-#include <Rendering/Texture.h>
 
+#include <Rendering/Texture.h>
 #include <Serialization/TypeRegister.h>
+#include <Rendering/Graphic.h>
+
+#include <Rendering/Shader.h>
 
 class QOpenGLShaderProgram;
 
@@ -11,30 +13,25 @@ namespace Tristeon
 {
 	class ActorLayer;
 	
-	class Sprite : public Actor
+	class Sprite : public Graphic
 	{
 		REGISTER_TYPE_H(Sprite)
 		
 		friend ActorLayer;
 	public:
 		Sprite();
-		virtual ~Sprite();
+		virtual ~Sprite() = default;
 
 		json serialize() override;
 		void deserialize(json j) override;
 
 		int width = 64;
 		int height = 64;
-
-		int spacingLeft = 0;
-		int spacingRight = 0;
-		int spacingTop = 0;
-		int spacingBottom = 0;
-
-		virtual SpriteRenderMode getRenderMode();
+		
 		void setTexture(std::string const& path, bool setSize);
 	protected:
-		virtual void render(QOpenGLShaderProgram* program);
+		virtual void render(QOpenGLShaderProgram* program) override;
+		virtual Shader* getShader() override;
 
 		std::unique_ptr<Texture> texture = nullptr;
 	};

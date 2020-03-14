@@ -7,6 +7,9 @@ namespace Tristeon
 	class StringHelper
 	{
 	public:
+		/**
+		 * Changes all of the string's characters to lowercase characters.
+		 */
 		static String toLower(String& string);
 
 		/**

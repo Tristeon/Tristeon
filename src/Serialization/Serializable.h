@@ -4,29 +4,25 @@ using namespace nlohmann;
 
 namespace Tristeon
 {
+	/**
+	 * Serializable is the base class for all Serializable objects in Tristeon.
+	 * It implements a serialize() and deserialize() function which need to be overridden to serialize variables,
+	 * and in order for type introspection to work properly.
+	 */
 	class Serializable
 	{
 	public:
 		virtual ~Serializable() = default;
 
 		/**
-		 * \brief Serialize interface that is called on derived instance of serializable to obtain json data of objects
+		 * Serialize interface that is called on derived instance of serializable to obtain json data of objects
+		 * Each class that implements this function must set json["typeID"] to TRISTEON_TYPENAME(ClassType).
+		 * Any other variables are optional but required for serialization purposes.
 		 */
-		virtual json serialize() { return json(); }
+		virtual json serialize() = 0;
 		/**
-		 * \brief Deserialize interface for classes to decide how to use json data to load in data into their class
+		 * Deserialize interface for classes to decide how to use json data to load in data into their class
 		 */
-		virtual void deserialize(json j) {}
-
-		/**
-		 * \brief Checks if the T is the exact same type as this one. (Does not work with inheritance yet)
-		 */
-		template <typename T> bool isType();
+		virtual void deserialize(json j) = 0;
 	};
-
-	template<typename T>
-	bool Serializable::isType()
-	{
-		return serialize()["typeID"] == TRISTEON_TYPENAME(T);
-	}
 }

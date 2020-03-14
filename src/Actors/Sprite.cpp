@@ -7,23 +7,13 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
-#include <Rendering/SpriteRenderMode.h>
-
-#include "Collector.h"
-
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(Sprite)
 	
 	Sprite::Sprite()
 	{
-		ActorCollector<Sprite>::add(this);
 		texture = std::make_unique<Texture>();
-	}
-
-	Sprite::~Sprite()
-	{
-		ActorCollector<Sprite>::remove(this);
 	}
 
 	json Sprite::serialize()
@@ -33,11 +23,6 @@ namespace Tristeon
 		j["width"] = width;
 		j["height"] = height;
 		j["texturePath"] = texture->getPath();
-
-		j["spacing"]["left"] = spacingLeft;
-		j["spacing"]["right"] = spacingLeft;
-		j["spacing"]["top"] = spacingTop;
-		j["spacing"]["bottom"] = spacingBottom;
 		return j;
 	}
 
@@ -51,16 +36,6 @@ namespace Tristeon
 		std::string texturePath = j["texturePath"];
 		if (texturePath != texture->getPath()) //Update if new path
 			texture = std::make_unique<Texture>(texturePath);
-
-		spacingLeft = j["spacing"]["left"];
-		spacingRight = j["spacing"]["right"];
-		spacingTop = j["spacing"]["top"];
-		spacingBottom = j["spacing"]["bottom"];
-	}
-
-	SpriteRenderMode Sprite::getRenderMode()
-	{
-		return SpriteRenderMode::Normal;
 	}
 
 	void Sprite::setTexture(std::string const& path, bool setSize)
@@ -81,18 +56,19 @@ namespace Tristeon
 		texture->bind();
 
 		//Sprite info
-		program->setUniformValue("sprite.renderMode", static_cast<int>(getRenderMode()));
 		program->setUniformValue("sprite.width", width);
 		program->setUniformValue("sprite.height", height);
+		
 		program->setUniformValue("actor.position", position.x, position.y);
 		program->setUniformValue("actor.scale", scale.x, scale.y);
 		program->setUniformValue("actor.rotation", rotation);
 
-		program->setUniformValue("spacing.left", spacingLeft);
-		program->setUniformValue("spacing.right", spacingRight);
-		program->setUniformValue("spacing.top", spacingTop);
-		program->setUniformValue("spacing.bottom", spacingBottom);
-
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+
+	Shader* Sprite::getShader()
+	{
+		static Shader shader = Shader("Internal/Shaders/Sprite.vert", "Internal/Shaders/Sprite.frag");
+		return &shader;
 	}
 }

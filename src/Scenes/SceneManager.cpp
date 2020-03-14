@@ -1,30 +1,35 @@
 #include "SceneManager.h"
-#include <Scenes/Scene.h>
 
-#include "Actors/AnimationSprite.h"
-#include "Actors/Behaviours/TestBehaviour.h"
-#include "Animations/AnimationClip.h"
-#include "Layers/ActorLayer.h"
-#include "Layers/TileLayer.h"
-#include "Serialization/JsonSerializer.h"
+#include <Scenes/Scene.h>
+#include <Serialization/JsonSerializer.h>
+
+#include <Actors/Behaviours/TestBehaviour.h>
+
+#include <Actors/AnimationSprite.h>
+#include <Animations/AnimationClip.h>
+
+#include <Scenes/Layers/ActorLayer.h>
+#include <Scenes/Layers/TileLayer.h>
 
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
 
-	Scene* SceneManager::getCurrentScene()
+	Scene* SceneManager::current()
 	{
-		//TODO: SceneManager implementation
 		return currentScene.get();
 	}
 
 	void SceneManager::loadScene()
 	{
+		//TODO: SceneManager implementation
+		
 		currentScene = std::make_unique<Scene>();
 
-		TileLayer* tileLayer = new TileLayer();
-		tileLayer->width = 10;
-		tileLayer->height = 6;
+		auto* tileLayer = new TileLayer();
+		tileLayer->w = 10;
+		tileLayer->h = 6;
+		//->
 		//tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, nullptr, 256, 256);
 		//tileLayer->data = Unique<int[]>(new int[60] {
 		//		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -68,12 +73,8 @@ namespace Tristeon
 		actor2->position.x = 2000;
 		actor2->position.y = 1250;
 		actor2->setTexture("Project/SpriteSheet.png", false);
-		actor2->width = 512;
-		actor2->height = 512;
-		actor2->spacingTop = 1;
-		actor2->spacingBottom = 1;
-		actor2->spacingLeft = 1;
-		actor2->spacingRight = 1;
+		actor2->width = 256;
+		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
 		//Proof of creation using json, scene is reset and then loaded in through json data
@@ -87,6 +88,6 @@ namespace Tristeon
 
 	void SceneManager::reset()
 	{
-		//currentScene.reset();
+		currentScene.reset();
 	}
 }

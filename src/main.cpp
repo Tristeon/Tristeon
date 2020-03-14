@@ -1,7 +1,7 @@
 /*
 	MIT License
 
-	Copyright (c) 2017 Tristan Metz, Leon Brands
+	Copyright (c) 2020 Tristan Metz, Leon Brands
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,8 @@
 #include <Windows.h>
 #endif
 
-#include <iostream>
-#include <QWidget>
 #include <QtUiTools/QtUiTools>
-#include <QMainWindow>
+#include <QWidget>
 
 #include "Window.h"
 
@@ -52,9 +50,8 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 {
 	if (name == "game")
 	{
-		Tristeon::GameView* gameView = new Tristeon::GameView(engine.get(), parent);
-		engine->setGameView(gameView);
-		return gameView;
+		auto* gameView = new Tristeon::GameView(engine.get(), parent);
+		return gameView->widget(); //Converts GameView into a QOpenGLWidget because we don't normally allow access to its base class 
 	}
 	return QUiLoader::createWidget(className, parent, name);
 }
@@ -82,10 +79,14 @@ int main(int argc, char** argv)
 	FreeConsole();
 #endif
 
-	engine = std::make_unique<Tristeon::Engine>();
 
 	QApplication app(argc, argv);
+
 	Tristeon::Window window;
+	window.resize(800, 800);
+
+	engine = std::make_unique<Tristeon::Engine>();
+	
 	QWidget* widget = loadUIFile();
 	window.setCentralWidget(widget);
 	window.show();

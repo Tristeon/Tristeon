@@ -1,8 +1,9 @@
 #include "AnimationSprite.h"
 
 #include <QOpenGLShaderProgram>
+#include <QOpenGLFunctions>
 
-#include "Animations/AnimationClip.h"
+#include <Animations/AnimationClip.h>
 
 namespace Tristeon
 {
@@ -12,6 +13,7 @@ namespace Tristeon
 	{
 		json j = Sprite::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(AnimationSprite);
+
 		//TODO: Animation clips from file
 
 		return j;
@@ -20,15 +22,11 @@ namespace Tristeon
 	void AnimationSprite::deserialize(json j)
 	{
 		Sprite::deserialize(j);
+		
 		//TODO load animation clips from file
 
 		//TODO: Memory leak here
-		clip = new AnimationClip("Project/SpriteSheet.png", 4, 4, true, 0, 8, 1, 1);
-	}
-
-	SpriteRenderMode AnimationSprite::getRenderMode()
-	{
-		return SpriteRenderMode::Animated;
+		clip = new AnimationClip("Project/SpriteSheet.png", 4, 4, true, 0, 8, AnimationClip::Spacing{ 1, 1, 1, 1, 1, 1 });
 	}
 
 	void AnimationSprite::setAnimationClip(AnimationClip* clip)
@@ -46,8 +44,12 @@ namespace Tristeon
 			program->setUniformValue("animation.cols", clip->cols);
 			program->setUniformValue("animation.rows", clip->rows);
 
-			program->setUniformValue("spacing.horizontalFrame", clip->horizontalFrameSpacing);
-			program->setUniformValue("spacing.verticalFrame", clip->verticalFrameSpacing);
+			program->setUniformValue("spacing.left", clip->spacing.left);
+			program->setUniformValue("spacing.right", clip->spacing.right);
+			program->setUniformValue("spacing.top", clip->spacing.top);
+			program->setUniformValue("spacing.bottom", clip->spacing.bottom);
+			program->setUniformValue("spacing.horizontalFrame", clip->spacing.horizontalFrame);
+			program->setUniformValue("spacing.verticalFrame", clip->spacing.verticalFrame);
 		}
 
 		Sprite::render(program);
@@ -66,5 +68,11 @@ namespace Tristeon
 				return; //Simply hold onto the last frame if we aren't looping
 		}
 		currentFrame += 0.01f;
+	}
+
+	Shader* AnimationSprite::getShader()
+	{
+		static Shader shader = Shader("Internal/Shaders/Sprite.vert", "Internal/Shaders/AnimatedSprite.frag");
+		return &shader;
 	}
 }

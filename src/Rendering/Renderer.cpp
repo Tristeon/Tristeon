@@ -1,12 +1,20 @@
 #include "Renderer.h"
+#include <QOpenGLShaderProgram>
 #include <Scenes/Scene.h>
-#include "Scenes/Layers/Layer.h"
+#include <Scenes/Layers/Layer.h>
 
 namespace Tristeon
 {
-	Renderer::Renderer(Engine* engine) : engine(engine)
+	Vector<Shader*> Renderer::prepass;
+	
+	void Renderer::registerPrePassShader(Shader* shader)
 	{
-		spriteShader = std::make_unique<Shader>("Internal/Shaders/Sprite.vert", "Internal/Shaders/Sprite.frag");
+		prepass.push_back(shader);
+	}
+
+	void Renderer::deregisterPrePassShader(Shader* shader)
+	{
+		prepass.remove(shader);
 	}
 
 	void Renderer::renderScene(Scene* scene)
@@ -14,6 +22,23 @@ namespace Tristeon
 		if (scene == nullptr)
 			return;
 
+		//Send common data to all shaders through a prepass
+		for (size_t i = 0; i < prepass.size() ; i++)
+		{
+			Shader* shader = prepass[i];
+			QOpenGLShaderProgram* program = shader->getShaderProgram();
+
+			program->bind();
+			
+			//Upload camera settings to the shader
+			program->setUniformValue("camera.posX", scene->getCamera()->position.x);
+			program->setUniformValue("camera.posY", scene->getCamera()->position.y);
+			program->setUniformValue("camera.pixelsX", (int)scene->getCamera()->size.x);
+			program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
+			program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
+		}
+
+		//Render each layer
 		for (unsigned int i = 0; i < scene->getLayerCount(); i++)
 		{
 			Layer* layer = scene->getLayer(i);

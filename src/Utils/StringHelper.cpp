@@ -1,8 +1,9 @@
 #include "StringHelper.h"
+
+#include <TypeDefinitions.h>
+
 #include <algorithm>
 #include <sstream>
-
-#include "TypeDefinitions.h"
 
 namespace Tristeon
 {

@@ -1,26 +1,25 @@
 #include "ActorLayer.h"
 
-#include <QOpenGLFunctions>
-#include <Scenes/Scene.h>
 #include <Rendering/Renderer.h>
+#include <Scenes/Scene.h>
 
-#include <Input/Keyboard.h>
+#include <Actors/Collector.h>
+#include <Actors/Sprite.h>
 
-#include "Actors/Collector.h"
-#include "Actors/Sprite.h"
+#include <Rendering/GameView.h>
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(ActorLayer)
+	REGISTER_TYPE_CPP(ActorLayer);
 
-		json ActorLayer::serialize()
+	json ActorLayer::serialize()
 	{
-		json j;
+		json j = Layer::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(ActorLayer);
 
 		json serializedActors = json::array_t();
-		for (size_t i = 0; i < actors.size(); i++)
-			serializedActors.push_back(actors[i]->serialize());
+		for (auto& actor : actors)
+			serializedActors.push_back(actor->serialize());
 		j["actors"] = serializedActors;
 
 		return j;
@@ -28,6 +27,8 @@ namespace Tristeon
 
 	void ActorLayer::deserialize(json j)
 	{
+		Layer::deserialize(j);
+		
 		actors.clear();
 
 		for (auto serializedActor : j["actors"])
@@ -39,31 +40,42 @@ namespace Tristeon
 		}
 	}
 
+	Actor* ActorLayer::getActor(unsigned int const& index) const
+	{
+		if (index < 0 || index > actors.size())
+			throw std::invalid_argument("Index in ActorLayer::getActor() must be 0 or higher, and lower than getActorSize()");
+
+		return actors[index].get();
+	}
+
+	unsigned ActorLayer::getActorCount() const
+	{
+		return actors.size();
+	}
+
+	Actor* ActorLayer::findActor(std::string const& name) const
+	{
+		for (auto& actor : actors)
+		{
+			if (actor->name == name)
+				return actor.get();
+		}
+
+		return nullptr;
+	}
+
 	void ActorLayer::render(Renderer * renderer, Scene * scene)
 	{
-		if (!renderer->getSpriteShader()->isReady())
-			return;
-
-		if (Keyboard::pressed(Key_R))
-			renderer->getSpriteShader()->reload();
-
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-		auto program = renderer->getSpriteShader()->getShaderProgram();
-		program->bind();
-		f->glActiveTexture(0);
-
-		//Camera
-		program->setUniformValue("camera.posX", scene->getCamera()->position.x);
-		program->setUniformValue("camera.posY", scene->getCamera()->position.y);
-		program->setUniformValue("camera.pixelsX", (int)scene->getCamera()->size.x);
-		program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
-		program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
-
-		for (Sprite* sprite : ActorCollector<Sprite>::all())
+		//Render each graphic
+		for (auto& actor : actors)
 		{
-			if (sprite == nullptr)
+			auto* graphic = dynamic_cast<Graphic*>(actor.get());
+			if (graphic == nullptr)
 				continue;
-			sprite->render(program);
+
+			Shader* shader = graphic->getShader();
+			shader->bind();
+			graphic->render(shader->getShaderProgram());
 		}
 	}
 

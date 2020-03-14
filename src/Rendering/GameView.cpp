@@ -1,46 +1,48 @@
 #include "GameView.h"
-#include "Engine.h"
-#include <iostream>
-#include <QApplication>
-#include <QMainWindow>
-#include <QOpenGLFunctions>
-#include <QOpenGLWidget>
 
-#include "Input/Keyboard.h"
-#include "Input/Mouse.h"
-#include "Scenes/Scene.h"
-#include "Scenes/SceneManager.h"
-#include "Window.h"
+#include <QOpenGLFunctions>
+
+#include <Engine.h>
+#include <Scenes/Scene.h>
+#include <Scenes/SceneManager.h>
+#include <Window.h>
 
 namespace Tristeon
 {
 	GameView::GameView(Engine* engine, QWidget* parent) : QOpenGLWidget(parent), engine(engine)
 	{
-		timer = new QTimer(this);
-		QObject::connect(timer, &QTimer::timeout, this, &GameView::update);
-		timer->start(0);
+		engine->_view = this;
 		show();
 
+		//Disables sampling because it harms 2D transparency
 		QSurfaceFormat format;
 		format.setRenderableType(QSurfaceFormat::OpenGL);
 		format.setProfile(QSurfaceFormat::CoreProfile);
 		format.setSamples(0);
+		format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
+		format.setSwapInterval(0);
 		setFormat(format);
 	}
 
 	void GameView::makeContextCurrent()
 	{
-		context()->makeCurrent(context()->surface());
+		instance()->context()->makeCurrent(instance()->context()->surface());
 	}
 
 	void GameView::initializeGL()
 	{
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-		f->glClearColor(1, 1, 0, 1);
+		QOpenGLFunctions* f = context()->functions();
+		f->glClearColor(0, 0, 0, 1);
+
+		//Enable culling
 		f->glEnable(GL_CULL_FACE);
 		f->glCullFace(GL_BACK);
-		//f->glEnable(GL_BLEND);
+
+		//Enable transparency blending
+		f->glEnable(GL_BLEND);
 		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		//Disable multisampling because any form of aliasing messes with transparency in 2D
 		f->glDisable(GL_MULTISAMPLE);
 	}
 
@@ -53,37 +55,16 @@ namespace Tristeon
 	{
 		makeContextCurrent();
 
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-		f->glClearColor(1, 0.75, 0.75, 1);
-		f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		QOpenGLFunctions* f = context()->functions();
+		f->glClear(GL_COLOR_BUFFER_BIT);
 
-		Scene* scene = SceneManager::getCurrentScene();
+		Scene* scene = SceneManager::current();
 		if (scene != nullptr)
 		{
-			engine->renderer->renderScene(scene);
-			engine->renderer->renderHUD(scene->getHUD());
-		}
-		Window::main()->update();
-	}
-
-	void GameView::update()
-	{
-		if (firstUpdate)
-		{
-			firstUpdate = false;
-			engine->initialize();
+			engine->_renderer->renderScene(scene);
+			engine->_renderer->renderHUD(scene->getHUD());
 		}
 		
-		Window::main()->pollEvents();
-
-		Scene* scene = SceneManager::getCurrentScene();
-
-		if (scene != nullptr)
-			scene->update();
-
-		paintGL();
-
-		Mouse::reset();
-		Keyboard::reset();
+		Window::instance()->update();
 	}
 }

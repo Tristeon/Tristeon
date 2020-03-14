@@ -9,16 +9,20 @@ namespace Tristeon
 {
 	Shader::Shader()
 	{
-		//Empty
+		empty = true;
+
 	}
 
 	Shader::Shader(std::string const& vertexShader, std::string const& fragmentShader) : vertexPath(vertexShader), fragmentPath(fragmentShader)
 	{
 		initialize();
+		Renderer::registerPrePassShader(this);
 	}
 
 	Shader::~Shader()
 	{
+		if (!empty)
+			Renderer::deregisterPrePassShader(this);
 		delete program;
 	}
 
@@ -30,6 +34,11 @@ namespace Tristeon
 	void Shader::bind() 
 	{
 		program->bind();
+	}
+
+	bool Shader::isEmpty()
+	{
+		return empty;
 	}
 
 	void Shader::reload()
@@ -57,7 +66,7 @@ namespace Tristeon
 		vertexData = vertexFile.readAll().toStdString();
 		fragmentData = fragmentFile.readAll().toStdString();
 
-		program = new QOpenGLShaderProgram(Engine::instance()->gameView()->context());
+		program = new QOpenGLShaderProgram(GameView::context());
 		program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexData.c_str());
 		program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentData.c_str());
 		program->link();

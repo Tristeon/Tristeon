@@ -1,5 +1,8 @@
 #include "Camera.h"
 
+#include <Scenes/Scene.h>
+#include <Scenes/SceneManager.h>
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(Camera)
@@ -19,5 +22,10 @@ namespace Tristeon
 		position = j["position"];
 		size = j["size"];
 		zoom = j["zoom"];
+	}
+
+	Camera* Camera::main()
+	{
+		return SceneManager::current()->getCamera();
 	}
 }
