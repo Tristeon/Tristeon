@@ -7,6 +7,8 @@
 
 #include <Rendering/Shader.h>
 
+#include "Utils/Colour.h"
+
 class QOpenGLShaderProgram;
 
 namespace Tristeon
@@ -42,12 +44,17 @@ namespace Tristeon
 		int height = 64;
 
 		/**
+		 * The colour of the sprite, this acts as a multiplier on top of the existing texture.
+		 */
+		Colour colour = Colour::white();
+
+		/**
 		 * Sets the texture of the sprite to the texture at the given path.
 		 *
 		 * \param path The filepath of the new texture.
 		 * \param setSize If true, the sprite will take on the size of the texture.
 		 */
-		void setTexture(std::string const& path, bool setSize);
+		virtual void setTexture(std::string const& path, bool const& setSize);
 	protected:
 		virtual void render(QOpenGLShaderProgram* program) override;
 		virtual Shader* getShader() override;

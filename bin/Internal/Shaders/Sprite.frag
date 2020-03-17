@@ -8,6 +8,8 @@ struct Sprite
 {
     int width;
     int height;
+
+    vec4 colour;
 };
 uniform Sprite sprite;
 
@@ -19,5 +21,5 @@ void main()
 
     ivec2 texSize = textureSize(mainTex, 0);
 
-    FragColor = texture2D(mainTex, texCoord);
+    FragColor = texture2D(mainTex, texCoord) * sprite.colour;
 }

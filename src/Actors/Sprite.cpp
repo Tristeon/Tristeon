@@ -22,6 +22,7 @@ namespace Tristeon
 		j["typeID"] = TRISTEON_TYPENAME(Sprite);
 		j["width"] = width;
 		j["height"] = height;
+		j["colour"] = colour;
 		j["texturePath"] = texture->getPath();
 		return j;
 	}
@@ -33,12 +34,14 @@ namespace Tristeon
 		width = j["width"];
 		height = j["height"];
 
+		colour = j["colour"];
+
 		std::string texturePath = j["texturePath"];
 		if (texturePath != texture->getPath()) //Update if new path
 			texture = std::make_unique<Texture>(texturePath);
 	}
 
-	void Sprite::setTexture(std::string const& path, bool setSize)
+	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
 		texture = std::make_unique<Texture>(path); //TODO: Texture caching through an asset loader of some sorts
 
@@ -58,6 +61,7 @@ namespace Tristeon
 		//Sprite info
 		program->setUniformValue("sprite.width", width);
 		program->setUniformValue("sprite.height", height);
+		program->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
 		
 		program->setUniformValue("actor.position", position.x, position.y);
 		program->setUniformValue("actor.scale", scale.x, scale.y);

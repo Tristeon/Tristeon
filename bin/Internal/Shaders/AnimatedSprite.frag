@@ -20,6 +20,8 @@ struct Sprite
 {
     int width;
     int height;
+
+    vec4 colour;
 };
 uniform Sprite sprite;
 
@@ -58,5 +60,5 @@ void main()
     float u = x + (startX / (float)texSize.x);
     float v = y + (startY / (float)texSize.y);
     
-    FragColor = texture2D(mainTex, vec2(u, v));
+    FragColor = texture2D(mainTex, vec2(u, v)) * sprite.colour;
 }

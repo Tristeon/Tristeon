@@ -5,6 +5,8 @@ struct Sprite
 {
     int width;
     int height;
+
+    vec4 colour;
 };
 uniform Sprite sprite;
 
