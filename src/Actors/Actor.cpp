@@ -33,7 +33,7 @@ namespace Tristeon
 		for (auto serializedBehaviour : j["behaviours"])
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
-			Behaviour* behaviour = (Behaviour*)serializable.release();
+			auto* behaviour = dynamic_cast<Behaviour*>(serializable.release());
 			behaviour->_owner = this;
 			behaviours.push_back(Unique<Behaviour>(behaviour));
 

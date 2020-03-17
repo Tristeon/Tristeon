@@ -5,7 +5,13 @@ namespace Tristeon
 {
 	class Actor;
 	class ActorLayer;
-	
+
+	/**
+	 * A Behaviour in Tristeon is a class that can be added to an Actor to dynamically add additional behaviour to the Actor object.
+	 *
+	 * Behaviours are useful because they can be reused and added to different objects,
+	 * enabling programmers to generalize behaviour, reduce code and simplify the inheritance tree.
+	 */
 	class Behaviour : public Serializable
 	{
 		friend Actor;
@@ -22,6 +28,9 @@ namespace Tristeon
 		Behaviour(Behaviour&& other) noexcept;
 		Behaviour& operator=(Behaviour&& other) noexcept;
 
+		/**
+		 * Behaviours are owned by an actor. This value is never nullptr.
+		 */
 		Actor* owner() const { return _owner; }
 	private:
 		virtual void update() { /* Empty */ }

@@ -1,8 +1,6 @@
 #include "AnimationSprite.h"
 
 #include <QOpenGLShaderProgram>
-#include <QOpenGLFunctions>
-
 #include <Animations/AnimationClip.h>
 
 namespace Tristeon

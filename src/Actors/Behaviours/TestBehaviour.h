@@ -4,6 +4,9 @@
 
 namespace Tristeon
 {
+	/**
+	 * Temporary test behaviour used to test our behaviour system. Will be removed at release.
+	 */
 	class TestBehaviour : public Behaviour
 	{
 		REGISTER_TYPE_H(TestBehaviour)

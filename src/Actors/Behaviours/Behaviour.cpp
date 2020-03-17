@@ -1,16 +1,17 @@
 #include "Behaviour.h"
-#include "Actors/Collector.h"
+
+#include <Actors/Collector.h>
 
 namespace Tristeon
 {
 	Behaviour::Behaviour()
 	{
-		BehaviourCollector<Behaviour>::add(this);
+		Collector<Behaviour>::add(this);
 	}
 
 	Behaviour::~Behaviour()
 	{
-		BehaviourCollector<Behaviour>::remove(this);
+		Collector<Behaviour>::remove(this);
 	}
 
 	Behaviour::Behaviour(Behaviour&& other) noexcept
