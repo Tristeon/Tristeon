@@ -530,20 +530,41 @@ namespace Tristeon
 	
 	class Window;
 	class Engine;
+
+	/**
+	 * Interface to interact with the OS Keyboard.
+	 *
+	 * To get keyboard input, use pressed(), held(), released() and more.
+	 */
 	class Keyboard
 	{
 		friend Window;
 		friend Engine;
 		
 	public:
-		static bool pressed(Key key);
-		static bool held(Key key);
-		static bool released(Key key);
+		/**
+		 * Was this key pressed on the current frame?
+		 */
+		static bool pressed(Key const& key);
+
+		/**
+		 * Was this key held during the current frame?
+		 */
+		static bool held(Key const& key);
+
+		/**
+		 * Was this key released on the current frame?
+		 */
+		static bool released(Key const& key);
 		
 	private:
-		static void onPress(QKeyEvent event);
-		static void onRelease(QKeyEvent event);
+		static void onPress(QKeyEvent const& event);
+		static void onRelease(QKeyEvent const& event);
 
+		/**
+		 * Clears frame-based data structures.
+		 * Called every frame by the main Engine loop.
+		 */
 		static void reset();
 		
 		static std::map<Key, bool> keys;

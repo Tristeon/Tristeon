@@ -10,7 +10,8 @@ namespace Tristeon
 		bool const& loops, 
 		int const& startIndex, 
 		int const& endIndex,
-		Spacing const& spacing) : rows(rows), cols(cols), spacing(spacing), loops(loops), texturePath(texturePath)
+		Spacing const& spacing,
+		float const& playbackRate) : cols(cols), rows(rows), spacing(spacing), loops(loops), texturePath(texturePath), playbackRate(playbackRate)
 	{
 		this->startIndex = startIndex == -1 ? 0 : startIndex;
 		this->endIndex = endIndex == -1 ? cols * rows : endIndex;

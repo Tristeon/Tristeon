@@ -67,7 +67,7 @@ namespace Tristeon
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		currentFrame += 0.01f;
+		currentFrame += 0.01f * clip->playbackRate; //TODO: Time::deltaTime();
 	}
 
 	Shader* AnimationSprite::getShader()

@@ -10,7 +10,6 @@ namespace Tristeon
 	Shader::Shader()
 	{
 		empty = true;
-
 	}
 
 	Shader::Shader(std::string const& vertexShader, std::string const& fragmentShader) : vertexPath(vertexShader), fragmentPath(fragmentShader)
@@ -26,17 +25,17 @@ namespace Tristeon
 		delete program;
 	}
 
-	bool Shader::isReady()
+	bool Shader::isReady() const
 	{
 		return !failed && ready;
 	}
 
-	void Shader::bind() 
+	void Shader::bind() const
 	{
 		program->bind();
 	}
 
-	bool Shader::isEmpty()
+	bool Shader::isEmpty() const
 	{
 		return empty;
 	}
@@ -58,7 +57,8 @@ namespace Tristeon
 
 		if (!vertexFile.isOpen() || !fragmentFile.isOpen())
 		{
-			std::cout << "Failed to create shader program with files: [Vertex] " + vertexPath + ", [Fragment] " + fragmentPath << std::endl;
+			std::cout << "Failed to create shader program with files: [Vertex] " + vertexPath + ", [Fragment] " +
+				fragmentPath << std::endl;
 			failed = true;
 			return;
 		}
@@ -70,7 +70,8 @@ namespace Tristeon
 		program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexData.c_str());
 		program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentData.c_str());
 		program->link();
-		std::cout << "Created shader program " << program << " with vertexpath " << vertexPath << " and fragmentpath " << fragmentPath << std::endl;
+		std::cout << "Created shader program " << program << " with vertexpath " << vertexPath << " and fragmentpath "
+			<< fragmentPath << std::endl;
 		ready = true;
 	}
 }

@@ -1,7 +1,7 @@
 #include "Mouse.h"
 
-#include "Math/Math.h"
-#include "Math/Vector2Int.h"
+#include <Math/Math.h>
+#include <Math/Vector2Int.h>
 
 namespace Tristeon
 {
@@ -11,22 +11,22 @@ namespace Tristeon
 	bool Mouse::buttonsDoubleClicked[MaxMouseButton];
 	Vector2Int Mouse::mousePos = Vector2Int::zero();
 	
-	bool Mouse::pressed(MouseButton button)
+	bool Mouse::pressed(MouseButton const& button)
 	{
 		return buttonsPressed[button];
 	}
 
-	bool Mouse::held(MouseButton button)
+	bool Mouse::held(MouseButton const& button)
 	{
 		return buttons[button];
 	}
 
-	bool Mouse::released(MouseButton button)
+	bool Mouse::released(MouseButton const& button)
 	{
 		return buttonsReleased[button];
 	}
 
-	bool Mouse::doubleClicked(MouseButton button)
+	bool Mouse::doubleClicked(MouseButton const& button)
 	{
 		return buttonsDoubleClicked[button];
 	}
@@ -36,7 +36,7 @@ namespace Tristeon
 		return mousePos;
 	}
 
-	void Mouse::onPress(QMouseEvent event)
+	void Mouse::onPress(QMouseEvent const& event)
 	{
 		int const index = Math::maskToIndex(event.button());
 		buttonsPressed[index] = true;
@@ -44,7 +44,7 @@ namespace Tristeon
 		buttonsReleased[index] = false;
 	}
 
-	void Mouse::onRelease(QMouseEvent event)
+	void Mouse::onRelease(QMouseEvent const& event)
 	{
 		int const index = Math::maskToIndex(event.button());
 		buttonsPressed[index] = false;
@@ -52,13 +52,13 @@ namespace Tristeon
 		buttonsReleased[index] = true;
 	}
 
-	void Mouse::onDoubleClick(QMouseEvent event)
+	void Mouse::onDoubleClick(QMouseEvent const& event)
 	{
 		int const index = Math::maskToIndex(event.button());
 		buttonsDoubleClicked[index] = true;
 	}
 
-	void Mouse::onMove(QMouseEvent event)
+	void Mouse::onMove(QMouseEvent const& event)
 	{
 		mousePos = Vector2Int(event.pos().x(), event.pos().y());
 	}

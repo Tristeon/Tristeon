@@ -1,6 +1,6 @@
 #pragma once
+#include <Math/Vector2Int.h>
 #include <QMouseEvent>
-#include "Math/Vector2Int.h"
 
 namespace Tristeon
 {
@@ -44,22 +44,52 @@ namespace Tristeon
 	
 	class Window;
 	class Engine;
+
+	/**
+	 * Interface to interact with the OS Mouse.
+	 *
+	 * To get mouse input, use pressed(), held(), released() and more.
+	 * For mouse movement, use position().
+	 */
 	class Mouse final
 	{
 		friend Window;
 		friend Engine;
-		
-		static bool pressed(MouseButton button);
-		static bool held(MouseButton button);
-		static bool released(MouseButton button);
-		static bool doubleClicked(MouseButton button);
+	public:
+		/**
+		 * Was this button pressed down on the current frame?
+		 */
+		static bool pressed(MouseButton const& button);
+
+		/**
+		 * Was this button held during the current frame?
+		 */
+		static bool held(MouseButton const& button);
+
+		/**
+		 * Was this button released on the current frame?
+		 */
+		static bool released(MouseButton const& button);
+
+		/**
+		 * Did a double click event occur with this mouse button?
+		 */
+		static bool doubleClicked(MouseButton const& button);
+
+		/**
+		 * The position of the mouse, local to the Window.
+		 */
 		static Vector2 position();
 	private:
-		static void onPress(QMouseEvent event);
-		static void onRelease(QMouseEvent event);
-		static void onDoubleClick(QMouseEvent event);
-		static void onMove(QMouseEvent event);
+		static void onPress(QMouseEvent const& event);
+		static void onRelease(QMouseEvent const& event);
+		static void onDoubleClick(QMouseEvent const& event);
+		static void onMove(QMouseEvent const& event);
 
+		/**
+		 * Clears frame-based data structures.
+		 * Called every frame by the main Engine loop.
+		 */
 		static void reset();
 		
 		static bool buttons[];
