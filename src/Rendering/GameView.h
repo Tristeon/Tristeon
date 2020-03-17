@@ -4,6 +4,7 @@
 #include <QTimer>
 
 #include <Utils/Singleton.h>
+#include <Utils/Colour.h>
 
 namespace Tristeon
 {
@@ -21,6 +22,11 @@ namespace Tristeon
 		 * Called by the Qt UI loader, do not call again.
 		 */
 		GameView(Engine* engine, QWidget* parent);
+
+		/**
+		 * Sets the clear colour of the GameView.
+		 */
+		static void setClearColour(Colour const& colour);
 
 		/**
 		 * Sets QOpenGLContext::currentContext to the context of this widget.

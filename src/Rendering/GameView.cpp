@@ -24,6 +24,12 @@ namespace Tristeon
 		setFormat(format);
 	}
 
+	void GameView::setClearColour(Colour const& colour)
+	{
+		QOpenGLFunctions* f = context()->functions();
+		f->glClearColor(colour.r, colour.g, colour.b, colour.a);
+	}
+
 	void GameView::makeContextCurrent()
 	{
 		instance()->context()->makeCurrent(instance()->context()->surface());
