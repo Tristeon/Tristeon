@@ -1,14 +1,12 @@
 #include "Window.h"
 
+#include <Input/Keyboard.h>
+#include <Input/Mouse.h>
+
 #include <QApplication>
-
-#include "Input/Mouse.h"
 #include <QMouseEvent>
-#include <QSurfaceFormat>
 
-
-#include "Input/Keyboard.h"
-#include "Scenes/SceneManager.h"
+#include <Scenes/SceneManager.h>
 
 namespace Tristeon
 {
@@ -39,6 +37,12 @@ namespace Tristeon
 			mouseMoveEvents.pop();
 		}
 
+		while (!mouseWheelEvents.empty())
+		{
+			Mouse::onScroll(mouseWheelEvents.front());
+			mouseWheelEvents.pop();
+		}
+
 		//Keyboard handling
 		while (!keyPressEvents.empty())
 		{
@@ -52,7 +56,6 @@ namespace Tristeon
 			keyReleaseEvents.pop();
 		}
 	}
-
 
 	void Window::mousePressEvent(QMouseEvent* event)
 	{
@@ -72,6 +75,11 @@ namespace Tristeon
 	void Window::mouseMoveEvent(QMouseEvent* event)
 	{
 		mouseMoveEvents.push(*event);
+	}
+
+	void Window::wheelEvent(QWheelEvent* event)
+	{
+		mouseWheelEvents.push(*event);
 	}
 
 	void Window::keyPressEvent(QKeyEvent* event)

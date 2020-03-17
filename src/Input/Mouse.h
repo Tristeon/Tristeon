@@ -1,6 +1,7 @@
 #pragma once
 #include <Math/Vector2Int.h>
 #include <QMouseEvent>
+#include <queue>
 
 namespace Tristeon
 {
@@ -79,12 +80,27 @@ namespace Tristeon
 		/**
 		 * The position of the mouse, local to the Window.
 		 */
-		static Vector2 position();
+		static Vector2Int position();
+
+		/**
+		 * The amount of pixels the mouse moved in the current frame.
+		 */
+		static Vector2Int deltaPos();
+
+		/**
+		 * The amount in degrees at which the scroll wheel scrolled in the current frame.
+		 *
+		 * Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture hence why this returns a Vector2Int.
+		 * Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+		 */
+		static Vector2Int deltaScroll();
+		
 	private:
 		static void onPress(QMouseEvent const& event);
 		static void onRelease(QMouseEvent const& event);
 		static void onDoubleClick(QMouseEvent const& event);
 		static void onMove(QMouseEvent const& event);
+		static void onScroll(QWheelEvent const& event);
 
 		/**
 		 * Clears frame-based data structures.
@@ -98,5 +114,7 @@ namespace Tristeon
 		static bool buttonsDoubleClicked[];
 
 		static Vector2Int mousePos;
+		static Vector2Int mouseDelta;
+		static Vector2Int scrollDelta;
 	};
 }

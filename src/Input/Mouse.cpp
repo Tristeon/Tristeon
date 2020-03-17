@@ -9,7 +9,10 @@ namespace Tristeon
 	bool Mouse::buttonsPressed[MaxMouseButton];
 	bool Mouse::buttonsReleased[MaxMouseButton];
 	bool Mouse::buttonsDoubleClicked[MaxMouseButton];
+	
 	Vector2Int Mouse::mousePos = Vector2Int::zero();
+	Vector2Int Mouse::mouseDelta = Vector2Int::zero();
+	Vector2Int Mouse::scrollDelta = Vector2Int::zero();
 	
 	bool Mouse::pressed(MouseButton const& button)
 	{
@@ -31,9 +34,19 @@ namespace Tristeon
 		return buttonsDoubleClicked[button];
 	}
 
-	Vector2 Mouse::position()
+	Vector2Int Mouse::position()
 	{
 		return mousePos;
+	}
+
+	Vector2Int Mouse::deltaPos()
+	{
+		return mouseDelta;
+	}
+
+	Vector2Int Mouse::deltaScroll()
+	{
+		return scrollDelta;
 	}
 
 	void Mouse::onPress(QMouseEvent const& event)
@@ -60,7 +73,14 @@ namespace Tristeon
 
 	void Mouse::onMove(QMouseEvent const& event)
 	{
-		mousePos = Vector2Int(event.pos().x(), event.pos().y());
+		Vector2Int const newPos = Vector2Int(event.pos().x(), event.pos().y());
+		mouseDelta += newPos - mousePos;
+		mousePos = newPos;
+	}
+
+	void Mouse::onScroll(QWheelEvent const& event)
+	{
+		scrollDelta += Vector2Int(event.angleDelta().x(), event.angleDelta().y());
 	}
 
 	void Mouse::reset()
@@ -68,5 +88,8 @@ namespace Tristeon
 		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
 		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
 		std::fill(std::begin(buttonsDoubleClicked), std::end(buttonsDoubleClicked), false);
+
+		mouseDelta = Vector2Int::zero();
+		scrollDelta = Vector2Int::zero();
 	}
 }
