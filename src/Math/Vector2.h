@@ -118,6 +118,7 @@ namespace Tristeon
 		Vector2 operator/(const Vector2 & divider) const;
 		Vector2 operator+(const Vector2 & vec) const;
 		Vector2 operator-(const Vector2 & vec) const;
+		Vector2 operator-() const;
 		void operator-=(const Vector2 & vector);
 		void operator+=(const Vector2 & vector);
 		void operator *=(const Vector2 & vector);

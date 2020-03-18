@@ -8,16 +8,20 @@
 #include <Input/Mouse.h>
 #include <QApplication>
 
+#include "AssetDatabase.h"
+
 namespace Tristeon
 {
 	void Engine::run()
 	{
 		QApplication::processEvents();
+		AssetDatabase::load();
 		
 		_renderer = std::make_unique<Renderer>();
 
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
-		SceneManager::loadScene();
+		SceneManager::load("Scene");
+		//SceneManager::testLoadScene();
 
 		while (!QApplication::closingDown())
 		{

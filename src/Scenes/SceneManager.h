@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 
+#include <TypeDefinitions.h>
+
 namespace Tristeon
 {
 	class Window;
@@ -22,10 +24,31 @@ namespace Tristeon
 		 */
 		static Scene* current();
 
+		/**
+		 * Unloads the current scene and then loads a scene with the given name (no file extension).
+		 */
+		static void load(String const& name);
+
+		/**
+		 * Saves the given scene as a file at the filepath.
+		 */
+		static void save(Scene* scene, String const& filepath);
 	private:
-		static void loadScene();
+		/**
+		 * Finds the path of the first scene with the given name.
+		 */
+		static String findPath(String const& name);
+
+		/**
+		 * TODO: Remove once we have an editor and this becomes unnecessary.
+		 */
+		static void testLoadScene();
+
+		/**
+		 * Clears the current scene.
+		 */
 		static void reset();
 		
-		static std::unique_ptr<Scene> currentScene;
+		static Unique<Scene> currentScene;
 	};
 }

@@ -33,6 +33,6 @@ namespace Tristeon
 		//Write to file
 		std::ofstream stream;
 		stream.open(path, std::fstream::out);
-		stream << obj;
+		stream << obj.dump(4);
 	}
 }

@@ -9,7 +9,7 @@ using namespace nlohmann;
 namespace Tristeon
 {
 	template<typename T>
-	using IsSerializable = std::enable_if_t<std::is_base_of<Serializable, T>::value>;
+	using IsSerializable = std::enable_if_t<std::is_base_of<Serializable, T>::value, T>;
 	
 	/**
 	 * The JsonSerializer class is a static class used to load & save json objects from a file.

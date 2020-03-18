@@ -3,6 +3,8 @@
 #include <Scenes/Scene.h>
 #include <Serialization/JsonSerializer.h>
 
+#include "AssetDatabase.h"
+
 #include <Actors/Behaviours/TestBehaviour.h>
 
 #include <Actors/AnimationSprite.h>
@@ -20,7 +22,44 @@ namespace Tristeon
 		return currentScene.get();
 	}
 
-	void SceneManager::loadScene()
+	void SceneManager::load(String const& name)
+	{
+		String const path = findPath(name);
+		if (path.empty())
+		{
+			std::cout << "Couldn't find scene: " << name << std::endl;
+			currentScene.reset();
+			return;
+		}
+		
+		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
+	}
+
+	void SceneManager::save(Scene* scene, String const& filepath)
+	{
+		if (filepath == "")
+			throw std::invalid_argument("Filepath can't be empty!");
+		
+		json data = scene->serialize();
+		JsonSerializer::save(filepath, data);
+	}
+
+	String SceneManager::findPath(String const& name)
+	{
+		Vector<String> scenes = AssetDatabase::get("scene");
+		for (String const& scene : scenes)
+		{
+			QFile const file{ QString(scene.c_str()) };
+			QFileInfo info{ file };
+
+			if (info.baseName().toStdString() == name)
+				return scene;
+		}
+
+		return "";
+	}
+
+	void SceneManager::testLoadScene()
 	{
 		//TODO: SceneManager implementation
 		
@@ -81,6 +120,8 @@ namespace Tristeon
 		json data = currentScene->serialize();
 		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
 
+		JsonSerializer::save("Project/Scene.scene", data);
+		
 		Unique<Serializable> serializable = TypeRegister::createInstance(data["typeID"]);
 		currentScene.reset((Scene*)serializable.release()); //Cast and move ownership over
 		currentScene->deserialize(data);

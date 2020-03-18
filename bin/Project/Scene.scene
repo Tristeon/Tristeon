@@ -1,0 +1,159 @@
+{
+    "camera": {
+        "position": {
+            "x": 0,
+            "y": 0
+        },
+        "size": {
+            "x": 800,
+            "y": 800
+        },
+        "typeID": "Tristeon::Camera",
+        "zoom": 0.30000001192092896
+    },
+    "hud": {
+        "typeID": "Tristeon::HUD"
+    },
+    "layers": [
+        {
+            "data": [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                4,
+                4,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                9,
+                10,
+                -1,
+                -1,
+                -1,
+                -1,
+                4,
+                4,
+                14,
+                14,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                4,
+                10,
+                9,
+                4,
+                14,
+                0,
+                1,
+                2,
+                0,
+                8,
+                3,
+                6,
+                3,
+                6,
+                8,
+                3,
+                6,
+                3,
+                6,
+                3,
+                6,
+                3,
+                6,
+                3,
+                6
+            ],
+            "height": 6,
+            "tileSet": {
+                "height": 2,
+                "horizontalSpacing": 1,
+                "spacingBottom": 1,
+                "spacingLeft": 1,
+                "spacingRight": 1,
+                "spacingTop": 1,
+                "texturePath": "Project/TilesetTest5.png",
+                "tileRenderHeight": 256,
+                "tileRenderWidth": 256,
+                "typeID": "Tristeon::TileSet",
+                "verticalSpacing": 1,
+                "width": 2
+            },
+            "typeID": "Tristeon::TileLayer",
+            "width": 10
+        },
+        {
+            "actors": [
+                {
+                    "behaviours": [
+                        {
+                            "typeID": "Tristeon::TestBehaviour"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0
+                    },
+                    "height": 256,
+                    "name": "",
+                    "position": {
+                        "x": 208.0,
+                        "y": 1042.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "tag": "",
+                    "texturePath": "Project/penguin.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 256
+                },
+                {
+                    "behaviours": [],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0
+                    },
+                    "height": 256,
+                    "name": "",
+                    "position": {
+                        "x": 2000.0,
+                        "y": 1250.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "tag": "",
+                    "texturePath": "Project/SpriteSheet.png",
+                    "typeID": "Tristeon::AnimationSprite",
+                    "width": 256
+                }
+            ],
+            "name": "",
+            "typeID": "Tristeon::ActorLayer"
+        }
+    ],
+    "typeID": "Tristeon::Scene"
+}

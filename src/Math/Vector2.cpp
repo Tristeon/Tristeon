@@ -125,6 +125,11 @@ namespace Tristeon
 		return { x - vec.x, y - vec.y };
 	}
 
+	Vector2 Vector2::operator-() const
+	{
+		return { -x, -y };
+	}
+
 	float Vector2::operator[](const int& value) const
 	{
 		return getAxis(value);
