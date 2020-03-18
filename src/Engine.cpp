@@ -6,38 +6,35 @@
 
 #include <Input/Keyboard.h>
 #include <Input/Mouse.h>
+#include <QApplication>
 
 namespace Tristeon
 {
-	Engine::Engine()
+	void Engine::run()
 	{
-		QTimer::singleShot(0, this, &Engine::initialize);
-
-		timer = new QTimer(this);
-		connect(timer, &QTimer::timeout, this, &Engine::update);
-		timer->start(0);
-	}
-
-	void Engine::initialize()
-	{
+		QApplication::processEvents();
+		
 		_renderer = std::make_unique<Renderer>();
 
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
 		SceneManager::loadScene();
-	}
 
-	void Engine::update()
-	{
-		Window::instance()->pollEvents();
+		while (!QApplication::closingDown())
+		{
+			QApplication::processEvents();
+			Window::instance()->pollEvents();
 
-		Scene* scene = SceneManager::current();
+			Scene* scene = SceneManager::current();
 
-		if (scene != nullptr)
-			scene->update();
+			if (scene != nullptr)
+				scene->update();
 
-		_view->paintGL();
+			_view->paintGL();
 
-		Mouse::reset();
-		Keyboard::reset();
+			Mouse::reset();
+			Keyboard::reset();
+			
+			QApplication::sendPostedEvents();
+		}
 	}
 }

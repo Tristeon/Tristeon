@@ -18,28 +18,14 @@ namespace Tristeon
 	{
 		friend GameView;
 	public:
-		/**
-		 * Called in main.cpp, do not call again.
-		 */
-		Engine();
-
+		Engine() = default;
 		Engine(Engine const& other) = delete;
 		void operator=(Engine const& other) = delete;
+		void run();
 	private:
 		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
 		Unique<Renderer> _renderer = nullptr;
 
 		QTimer* timer = nullptr; //Qt objects can't be unique_ptr so we delete it manually
-
-		/**
-		 * Creates the engine subsystems.
-		 * This function is called by GameView because Qt requires us to wait till QtApplication::exec() is called.
-		 */
-		void initialize();
-
-		/**
-		 * Called every frame, runs the subsystem updates and renders the current scene.
-		 */
-		void update();
 	};
 }

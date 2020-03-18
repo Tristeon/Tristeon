@@ -97,5 +97,6 @@ int main(int argc, char** argv)
 	//TODO: Auto start game with the starting scene loaded in in game/release mode
 #endif
 
-	return QApplication::exec();
+	engine->run();
+	return 0;
 }

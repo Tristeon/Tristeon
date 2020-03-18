@@ -70,7 +70,7 @@ namespace Tristeon
 			engine->_renderer->renderScene(scene);
 			engine->_renderer->renderHUD(scene->getHUD());
 		}
-		
-		Window::instance()->update();
+
+		update();
 	}
 }
