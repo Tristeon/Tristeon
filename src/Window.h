@@ -1,6 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QMouseEvent>
+#include <QtGamepad/QtGamepad>
 
 #include <Utils/Singleton.h>
 
@@ -18,6 +19,8 @@ namespace Tristeon
 	{
 		friend Engine;
 	public:
+		Window();
+		
 		/**
 		 * The width of the full main window.
 		 * For rendering purposes, it is recommended to use GameView::width()
@@ -40,6 +43,8 @@ namespace Tristeon
 		void keyReleaseEvent(QKeyEvent* event) override;
 		void closeEvent(QCloseEvent* event) override;
 
+		void gamepadsChanged();
+		
 	private:
 		std::queue<QMouseEvent> mousePressEvents;
 		std::queue<QMouseEvent> mouseReleaseEvents;
@@ -50,9 +55,12 @@ namespace Tristeon
 		std::queue<QKeyEvent> keyReleaseEvents;
 		std::queue<QWheelEvent> mouseWheelEvents;
 
+		QGamepad* activeGamepad = nullptr;
 		/**
 		 * Iterates over the event queues and sends each event to their respective classes (Mouse, Keyboard, ...)
 		 */
 		void pollEvents();
+
+		void connectGamepads();
 	};
 }

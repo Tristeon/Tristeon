@@ -65,7 +65,7 @@ endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
 #include Qt
-find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml Gamepad REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
 #Config definitions
@@ -111,6 +111,9 @@ set_target_properties(Qt5::OpenGL PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE
 set_target_properties(Qt5::Qml PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
 set_target_properties(Qt5::Qml PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
 
+set_target_properties(Qt5::Gamepad PROPERTIES MAP_IMPORTED_CONFIG_DEBUGEDITOR "DEBUG")
+set_target_properties(Qt5::Gamepad PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEASE")
+
 # ??
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 
@@ -119,6 +122,7 @@ macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)
 	target_link_libraries(${targetname} PRIVATE Qt5::Qml)
+	target_link_libraries(${targetname} PRIVATE Qt5::Gamepad)
 endmacro()
 
 if (MSVC)

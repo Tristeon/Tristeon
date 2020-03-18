@@ -5,10 +5,10 @@
 
 namespace Tristeon
 {
-	bool Mouse::buttons[MaxMouseButton];
-	bool Mouse::buttonsPressed[MaxMouseButton];
-	bool Mouse::buttonsReleased[MaxMouseButton];
-	bool Mouse::buttonsDoubleClicked[MaxMouseButton];
+	bool Mouse::buttons[Last];
+	bool Mouse::buttonsPressed[Last];
+	bool Mouse::buttonsReleased[Last];
+	bool Mouse::buttonsDoubleClicked[Last];
 	
 	Vector2Int Mouse::mousePos = Vector2Int::zero();
 	Vector2Int Mouse::mouseDelta = Vector2Int::zero();

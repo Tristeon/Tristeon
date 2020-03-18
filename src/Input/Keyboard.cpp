@@ -2,9 +2,9 @@
 
 namespace Tristeon
 {
-	std::map<Key, bool> Keyboard::keys;
-	std::map<Key, bool> Keyboard::keysPressed;
-	std::map<Key, bool> Keyboard::keysReleased;
+	std::map<int, bool> Keyboard::keys;
+	std::map<int, bool> Keyboard::keysPressed;
+	std::map<int, bool> Keyboard::keysReleased;
 
 	bool Keyboard::pressed(Key const& key)
 	{
@@ -29,16 +29,16 @@ namespace Tristeon
 
 	void Keyboard::onPress(QKeyEvent const& event)
 	{
-		keys[(Key)event.key()] = true;
-		keysPressed[(Key)event.key()] = true;
-		keysReleased[(Key)event.key()] = false;
+		keys[event.key()] = true;
+		keysPressed[event.key()] = true;
+		keysReleased[event.key()] = false;
 	}
 
 	void Keyboard::onRelease(QKeyEvent const& event)
 	{
-		keys[(Key)event.key()] = false;
-		keysPressed[(Key)event.key()] = false;
-		keysReleased[(Key)event.key()] = true;
+		keys[event.key()] = false;
+		keysPressed[event.key()] = false;
+		keysReleased[event.key()] = true;
 	}
 
 	void Keyboard::reset()

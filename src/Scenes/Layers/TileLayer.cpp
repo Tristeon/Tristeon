@@ -92,7 +92,7 @@ namespace Tristeon
 		if (tbo == 0 || tbo_tex == 0)
 			return;
 		
-		if (Keyboard::pressed(Key_R))
+		if (Keyboard::pressed(Keyboard::R))
 			shader->reload();
 
 		if (!shader->isReady())
@@ -105,19 +105,19 @@ namespace Tristeon
 			isDirty = false;
 		}
 
-		if (Keyboard::held(Key_Left))
+		if (Keyboard::held(Keyboard::Left))
 			scene->getCamera()->position.x -= 1;
-		if (Keyboard::held(Key_Right))
+		if (Keyboard::held(Keyboard::Right))
 			scene->getCamera()->position.x += 1;
 
-		if (Keyboard::held(Key_Up))
+		if (Keyboard::held(Keyboard::Up))
 			scene->getCamera()->position.y += 1;
-		if (Keyboard::held(Key_Down))
+		if (Keyboard::held(Keyboard::Down))
 			scene->getCamera()->position.y -= 1;
 
-		if (Keyboard::held(Key_Minus))
+		if (Keyboard::held(Keyboard::Minus))
 			scene->getCamera()->zoom -= 0.01f;
-		if (Keyboard::held(Key_Equal))
+		if (Keyboard::held(Keyboard::Equal))
 			scene->getCamera()->zoom += 0.01f;
 
 		//TileSet

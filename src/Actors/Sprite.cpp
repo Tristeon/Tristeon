@@ -65,7 +65,7 @@ namespace Tristeon
 		
 		program->setUniformValue("actor.position", position.x, position.y);
 		program->setUniformValue("actor.scale", scale.x, scale.y);
-		program->setUniformValue("actor.rotation", rotation);
+		program->setUniformValue("actor.rotation", -rotation);
 
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}

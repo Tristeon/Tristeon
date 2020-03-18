@@ -1,5 +1,6 @@
 #include "TestBehaviour.h"
 #include "Actors/Actor.h"
+#include "Input/Gamepad.h"
 #include "Input/Keyboard.h"
 
 namespace Tristeon
@@ -20,15 +21,11 @@ namespace Tristeon
 
 	void TestBehaviour::update()
 	{
-		if (Keyboard::held(Key_W))
-			owner()->position.y += 2;
-		if (Keyboard::held(Key_S))
-			owner()->position.y -= 2;
+		if (Gamepad::held(Gamepad::X))
+			printf("Holding x...");
 
-		if (Keyboard::held(Key_A))
-			owner()->position.x -= 2;
-		if (Keyboard::held(Key_D))
-			owner()->position.x += 2;
+		owner()->position.x += Gamepad::axisLeft().x;
+		owner()->position.y += Gamepad::axisLeft().y;
 
 		owner()->rotation++;
 	}
