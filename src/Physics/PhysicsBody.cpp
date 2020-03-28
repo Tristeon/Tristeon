@@ -153,5 +153,6 @@ namespace Tristeon
 		body->DestroyFixture(fixtures[collider]);
 		fixtures.erase(collider);
 		add(collider);
+		collider->isDirty = false;
 	}
 }
