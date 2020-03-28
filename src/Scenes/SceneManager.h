@@ -42,7 +42,7 @@ namespace Tristeon
 		/**
 		 * TODO: Remove once we have an editor and this becomes unnecessary.
 		 */
-		static void testLoadScene();
+		static void saveTestScene();
 
 		/**
 		 * Clears the current scene.

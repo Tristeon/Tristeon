@@ -56,9 +56,22 @@ namespace Tristeon
 		 * Get the OpenGL Context for the GameView Widget.
 		 */
 		static QOpenGLContext* context() { return instance()->widget()->context(); }
+
+		/**
+		 * The time it took for a single frame to execute in ms.
+		 */
+		static float deltaTime() { return instance()->_deltaTime; }
+
+		/**
+		 * The amount of frames per second the program is running at.
+		 */
+		static uint fps() { return instance()->_fps; }
 	private:
 		Engine* engine = nullptr;
 
+		uint _fps = 0;
+		float _deltaTime = 0;
+		
 		void initializeGL() override;
 		void resizeGL(int w, int h) override;
 		void paintGL() override;

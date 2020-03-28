@@ -2,11 +2,6 @@
 
 namespace Tristeon
 {
-	void Layer::update()
-	{
-		//Empty
-	}
-
 	json Layer::serialize()
 	{
 		json j;

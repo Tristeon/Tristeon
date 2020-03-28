@@ -13,6 +13,9 @@
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/TileLayer.h>
 
+#include "Physics/Collider.h"
+#include <Physics/PhysicsBody.h>
+
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
@@ -33,6 +36,8 @@ namespace Tristeon
 		}
 		
 		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
+
+		for (auto start : Collector<IStart>::all()) start->start();
 	}
 
 	void SceneManager::save(Scene* scene, String const& filepath)
@@ -59,7 +64,7 @@ namespace Tristeon
 		return "";
 	}
 
-	void SceneManager::testLoadScene()
+	void SceneManager::saveTestScene()
 	{
 		//TODO: SceneManager implementation
 		
@@ -106,6 +111,14 @@ namespace Tristeon
 		actor->height = 256;
 		actor->position.x = 208;
 		actor->position.y = 1042;
+		PhysicsBody* body = actor->addBehaviour<PhysicsBody>();
+		body->type = PhysicsBody::Dynamic;
+		Collider* col = actor->addBehaviour<Collider>();
+		col->width(256);
+		col->height(256);
+		col->density(1.0f);
+		col->friction(0.3f);
+		col->restitution(0);
 		layer->actors.push_back(std::unique_ptr<Actor>(actor));
 
 		auto* actor2 = new AnimationSprite();
@@ -116,15 +129,31 @@ namespace Tristeon
 		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
+		auto* actor3 = new Sprite();
+		actor3->setTexture("", true);
+		actor3->width = 2048;
+		actor3->height = 256;
+		actor3->position.x = 0;
+		actor3->position.y = 0;
+		actor3->addBehaviour<PhysicsBody>();
+		Collider* floor = actor3->addBehaviour<Collider>();
+		floor->width(2048);
+		floor->height(256);
+		floor->density(0.0f);
+		floor->restitution(0);
+		layer->actors.push_back(std::unique_ptr<Actor>(actor3));
+
+		auto* actor4 = new Sprite();
+		actor4->setTexture("", true);
+		actor4->width = 128;
+		actor4->height = 128;
+		layer->actors.push_back(std::unique_ptr<Actor>(actor4));
+		
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
 		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
-
 		JsonSerializer::save("Project/Scene.scene", data);
-		
-		Unique<Serializable> serializable = TypeRegister::createInstance(data["typeID"]);
-		currentScene.reset((Scene*)serializable.release()); //Cast and move ownership over
-		currentScene->deserialize(data);
+		currentScene.reset();
 	}
 
 	void SceneManager::reset()

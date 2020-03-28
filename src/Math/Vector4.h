@@ -108,7 +108,7 @@ namespace Tristeon
 		std::array<float, 4> toArray() const { return { x, y, z, w }; }
 
 		template<typename T>
-		constexpr T convert() { return T{ x, y, z, w }; }
+		constexpr T convert() const { return T{ x, y, z, w }; }
 
 		template<typename T>
 		static constexpr Vector4 convert(T* vec) { return Vector4{ vec->x, vec->y, vec->z, vec->w }; }

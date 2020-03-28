@@ -6,9 +6,15 @@
 
 #include <Input/Keyboard.h>
 #include <Input/Mouse.h>
+#include <Input/Gamepad.h>
 #include <QApplication>
 
 #include "AssetDatabase.h"
+#include <Callbacks/IEarlyUpdate.h>
+#include <Callbacks/IFixedUpdate.h>
+#include <Callbacks/ILateUpdate.h>
+#include <Callbacks/IUpdate.h>
+
 
 namespace Tristeon
 {
@@ -18,25 +24,62 @@ namespace Tristeon
 		AssetDatabase::load();
 		
 		_renderer = std::make_unique<Renderer>();
-
+		_physics = std::make_unique<PhysicsWorld>();
+		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
+		SceneManager::saveTestScene();
 		SceneManager::load("Scene");
-		//SceneManager::testLoadScene();
 
+		auto lastTime = std::chrono::high_resolution_clock::now();
+		uint frames = 0;
+		float time = 0;
+		float fixedUpdateTime = 0;
+
+		uint fixedUpdateFrames = 60; //TODO: Make fixed update frames available to be modified
+		float fixedDeltaTime = (1.0f / fixedUpdateFrames) * 1000.0f; 
+		
 		while (!QApplication::closingDown())
 		{
 			QApplication::processEvents();
 			Window::instance()->pollEvents();
 
-			Scene* scene = SceneManager::current();
+			//Keep track of elapsed time to calculate deltaTime (used in gameplay/physics systems to account for FPS differences)
+			auto now = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(now - lastTime);
+			float const deltaTime = duration.count() / 1000.0f; //Convert to ms
+			GameView::instance()->_deltaTime = deltaTime;
+			lastTime = now;
 
-			if (scene != nullptr)
-				scene->update();
+			//FPS counter
+			frames++;
+			time += deltaTime;
+			fixedUpdateTime += deltaTime;
+			if (time >= 1)
+			{
+				GameView::instance()->_fps = frames;
+				frames = 0;
+				time--;
+			}
 
+			if (inPlayMode)
+			{
+				while (fixedUpdateTime > fixedDeltaTime) 
+				{
+					_physics->update();
+					for (auto fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
+					fixedUpdateTime -= fixedDeltaTime;
+				}
+
+				for (auto early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();
+				for (auto update : Collector<IUpdate>::all()) update->update();
+				for (auto late : Collector<ILateUpdate>::all()) late->lateUpdate();
+			}
+			
 			_view->paintGL();
 
 			Mouse::reset();
 			Keyboard::reset();
+			Gamepad::reset();
 			
 			QApplication::sendPostedEvents();
 		}

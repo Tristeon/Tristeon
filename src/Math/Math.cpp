@@ -15,4 +15,14 @@ namespace Tristeon
 
 		return MAX_BIT - result;
 	}
+
+	float Math::toRadians(float const& degrees)
+	{
+		return degrees * toRad;
+	}
+
+	float Math::toDegrees(float const& radians)
+	{
+		return radians * toDeg;
+	}
 }

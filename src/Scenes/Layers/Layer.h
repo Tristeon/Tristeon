@@ -31,10 +31,5 @@ namespace Tristeon
 		 * Layers are free to implement this in whichever way they like.
 		 */
 		virtual void render(Renderer* renderer, Scene* scene) = 0;
-
-		/**
-		 * Updates the layer, the base function is empty and its implementation is non-mandatory.
-		 */
-		virtual void update();
 	};
 }

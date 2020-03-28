@@ -95,8 +95,6 @@ namespace Tristeon
 		 */
 		Camera* getCamera() const;
 	private:
-		void update();
-
 		Unique<Camera> camera = nullptr;
 		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;

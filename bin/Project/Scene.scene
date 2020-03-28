@@ -102,6 +102,24 @@
                     "behaviours": [
                         {
                             "typeID": "Tristeon::TestBehaviour"
+                        },
+                        {
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "height": 256.0,
+                            "offset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::Collider",
+                            "width": 256.0
                         }
                     ],
                     "colour": {
@@ -149,6 +167,73 @@
                     "texturePath": "Project/SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
+                },
+                {
+                    "behaviours": [
+                        {
+                            "type": 0,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 0.0,
+                            "friction": 0.0,
+                            "height": 256.0,
+                            "offset": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::Collider",
+                            "width": 2048.0
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0
+                    },
+                    "height": 256,
+                    "name": "",
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "tag": "",
+                    "texturePath": "",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 2048
+                },
+                {
+                    "behaviours": [],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0
+                    },
+                    "height": 128,
+                    "name": "",
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "tag": "",
+                    "texturePath": "",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 128
                 }
             ],
             "name": "",

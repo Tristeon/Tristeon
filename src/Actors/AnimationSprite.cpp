@@ -3,6 +3,8 @@
 #include <QOpenGLShaderProgram>
 #include <Animations/AnimationClip.h>
 
+#include "Rendering/GameView.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(AnimationSprite)
@@ -65,7 +67,7 @@ namespace Tristeon
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		currentFrame += 0.01f * clip->playbackRate; //TODO: Time::deltaTime();
+		currentFrame += 0.01f * clip->playbackRate * GameView::deltaTime();
 	}
 
 	Shader* AnimationSprite::getShader()

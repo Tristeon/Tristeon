@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include <Serialization/TypeRegister.h>
+#include <Callbacks/IUpdate.h>
 
 namespace Tristeon
 {
@@ -11,7 +12,7 @@ namespace Tristeon
 	 *
 	 * The animation behaviour is mostly defined in the AnimationClip itself, the AnimationSprite then uses that data to play the animation.
 	 */
-	class AnimationSprite : public Sprite
+	class AnimationSprite : public Sprite, public IUpdate
 	{
 		REGISTER_TYPE_H(AnimationSprite)
 	public:

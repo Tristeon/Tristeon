@@ -74,10 +74,4 @@ namespace Tristeon
 	{
 		return camera.get();
 	}
-
-	void Scene::update()
-	{
-		for (auto& layer : layers)
-			layer->update();
-	}
 }

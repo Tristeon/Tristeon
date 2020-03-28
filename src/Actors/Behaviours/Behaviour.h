@@ -1,5 +1,6 @@
 #pragma once
 #include <Serialization/Serializable.h>
+#include <Utils/Vector.h>
 
 namespace Tristeon
 {
@@ -33,7 +34,6 @@ namespace Tristeon
 		 */
 		Actor* owner() const { return _owner; }
 	private:
-		virtual void update() { /* Empty */ }
 		Actor* _owner = nullptr;
 	};
 }

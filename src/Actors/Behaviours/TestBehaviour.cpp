@@ -1,7 +1,12 @@
-#include "TestBehaviour.h"
-#include "Actors/Actor.h"
-#include "Input/Gamepad.h"
-#include "Input/Keyboard.h"
+#include <Actors/Behaviours/TestBehaviour.h>
+#include <Actors/Actor.h>
+
+#include <Input/Gamepad.h>
+#include <Input/Keyboard.h>
+
+#include <Rendering/GameView.h>
+
+#include <Physics/PhysicsBody.h>
 
 namespace Tristeon
 {
@@ -19,14 +24,16 @@ namespace Tristeon
 		//Empty
 	}
 
+	void TestBehaviour::start()
+	{
+		body = owner()->behaviour<PhysicsBody>();
+	}
+
 	void TestBehaviour::update()
 	{
-		if (Gamepad::held(Gamepad::X))
-			printf("Holding x...");
-
-		owner()->position.x += Gamepad::axisLeft().x;
-		owner()->position.y += Gamepad::axisLeft().y;
-
-		owner()->rotation++;
+		if (Gamepad::pressed(Gamepad::A))
+			body->velocity({body->velocity().x, 1500});
+		
+		body->applyForce(Gamepad::axisLeft() * GameView::deltaTime() * 100);
 	}
 }

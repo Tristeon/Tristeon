@@ -78,14 +78,4 @@ namespace Tristeon
 			graphic->render(shader->getShaderProgram());
 		}
 	}
-
-	void ActorLayer::update()
-	{
-		for (auto& actor : actors)
-		{
-			actor->update();
-			for (auto& behaviour : actor->behaviours)
-				behaviour->update();
-		}
-	}
 }

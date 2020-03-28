@@ -51,7 +51,7 @@ namespace Tristeon
 		 * Finds the first actor of the given type within this layer.
 		 *
 		 * Returns nullptr if no actor was found.
-		 * 
+		 *
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
@@ -61,7 +61,7 @@ namespace Tristeon
 		 * Returns a vector of all the actors of the given type within this layer.
 		 *
 		 * Returns an empty vector if no actors were found.
-		 * 
+		 *
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
@@ -71,11 +71,6 @@ namespace Tristeon
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
 		void render(Renderer* renderer, Scene* scene) override;
-
-		/**
-		 * Sends an update call to each actor.
-		 */
-		void update() override;
 	private:
 		Vector<Unique<Actor>> actors;
 	};

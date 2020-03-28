@@ -3,9 +3,8 @@
 #include <map>
 
 #include <TypeDefinitions.h>
-
-#include "Typename.h"
-#include "Serializable.h"
+#include <Serialization/Typename.h>
+#include <Serialization/Serializable.h>
 
 namespace Tristeon
 {

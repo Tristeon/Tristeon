@@ -15,5 +15,19 @@ namespace Tristeon
 		 * E.g: 16 is the 5th bitmask so the function will return 5.
 		 */
 		static int maskToIndex(uint64_t mask);
+
+		/**
+		 * Converts a value in degrees to a value in radians.
+		 */
+		static float toRadians(float const& degrees);
+
+		/**
+		 * Converts a value in radians to a value in degrees.
+		 */
+		static float toDegrees(float const& radians);
+		
+		constexpr static float PI = 3.14159265;
+		constexpr static float toRad = PI / 180.0f;
+		constexpr static float toDeg = 180.0f / PI;
 	};
 }

@@ -5,6 +5,7 @@
 
 #include <Rendering/GameView.h>
 #include <Rendering/Renderer.h>
+#include <Physics/PhysicsWorld.h>
 
 #include <TypeDefinitions.h>
 
@@ -23,8 +24,10 @@ namespace Tristeon
 		void operator=(Engine const& other) = delete;
 		void run();
 	private:
+		bool inPlayMode = true;
 		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
 		Unique<Renderer> _renderer = nullptr;
+		Unique<PhysicsWorld> _physics = nullptr;
 
 		QTimer* timer = nullptr; //Qt objects can't be unique_ptr so we delete it manually
 	};

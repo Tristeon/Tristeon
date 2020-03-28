@@ -117,12 +117,16 @@ set_target_properties(Qt5::Gamepad PROPERTIES MAP_IMPORTED_CONFIG_EDITOR "RELEAS
 # ??
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 
+#Box2D
+add_subdirectory(external/box2d)
+
 #Libraries
 macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)
 	target_link_libraries(${targetname} PRIVATE Qt5::Qml)
 	target_link_libraries(${targetname} PRIVATE Qt5::Gamepad)
+	target_link_libraries(${targetname} PUBLIC box2d)
 endmacro()
 
 if (MSVC)
