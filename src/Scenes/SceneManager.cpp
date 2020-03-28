@@ -3,7 +3,7 @@
 #include <Scenes/Scene.h>
 #include <Serialization/JsonSerializer.h>
 
-#include "AssetDatabase.h"
+#include <AssetDatabase.h>
 
 #include <Actors/Behaviours/TestBehaviour.h>
 
@@ -13,7 +13,7 @@
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/TileLayer.h>
 
-#include "Physics/Collider.h"
+#include <Physics/BoxCollider.h>
 #include <Physics/PhysicsBody.h>
 
 namespace Tristeon
@@ -42,7 +42,7 @@ namespace Tristeon
 
 	void SceneManager::save(Scene* scene, String const& filepath)
 	{
-		if (filepath == "")
+		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
 		
 		json data = scene->serialize();
@@ -113,7 +113,7 @@ namespace Tristeon
 		actor->position.y = 1042;
 		PhysicsBody* body = actor->addBehaviour<PhysicsBody>();
 		body->type = PhysicsBody::Dynamic;
-		Collider* col = actor->addBehaviour<Collider>();
+		BoxCollider* col = actor->addBehaviour<BoxCollider>();
 		col->width(256);
 		col->height(256);
 		col->density(1.0f);
@@ -136,7 +136,7 @@ namespace Tristeon
 		actor3->position.x = 0;
 		actor3->position.y = 0;
 		actor3->addBehaviour<PhysicsBody>();
-		Collider* floor = actor3->addBehaviour<Collider>();
+		BoxCollider* floor = actor3->addBehaviour<BoxCollider>();
 		floor->width(2048);
 		floor->height(256);
 		floor->density(0.0f);

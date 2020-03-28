@@ -14,7 +14,6 @@ namespace Tristeon
 	class Collider : public Behaviour, public IStart, public ILateUpdate
 	{
 		friend class PhysicsBody;
-		REGISTER_TYPE_H(Collider);
 	public:
 		virtual ~Collider();
 		
@@ -23,12 +22,6 @@ namespace Tristeon
 		
 		json serialize() override;
 		void deserialize(json j) override;
-
-		float width() const;
-		void width(float const& value);
-
-		float height() const;
-		void height(float const& value);
 
 		float density() const;
 		void density(float const& value);
@@ -49,9 +42,6 @@ namespace Tristeon
 		void sensor(bool const& value);
 
 	protected:
-		//Shape definition
-		float _width = 0;
-		float _height = 0;
 		Vector2 _offset = {};
 		float _rotationOffset = 0;
 
@@ -63,7 +53,7 @@ namespace Tristeon
 		bool _sensor = false;
 		
 		std::unique_ptr<b2Shape> shape;
-		virtual void createShape();
+		virtual void createShape() = 0;
 
 		b2Fixture* getFixture();
 		b2Shape* getShape();

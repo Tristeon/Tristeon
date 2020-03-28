@@ -31,9 +31,10 @@ namespace Tristeon
 
 	void TestBehaviour::update()
 	{
-		if (Gamepad::pressed(Gamepad::A))
+		if (Keyboard::pressed(Keyboard::Space))
 			body->velocity({body->velocity().x, 1500});
-		
-		body->applyForce(Gamepad::axisLeft() * GameView::deltaTime() * 100);
+
+		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
+		body->applyForce(Vector2(horizontal, 0) *GameView::deltaTime() * 100);
 	}
 }

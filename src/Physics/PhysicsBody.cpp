@@ -112,16 +112,8 @@ namespace Tristeon
 		float collectiveDensity = 0.0f;
 		for (auto collider : colliders)
 		{
-			b2FixtureDef def;
-			def.shape = collider->getShape();
-			def.density = collider->density();
-			def.friction = collider->friction();
-			def.isSensor = collider->sensor();
-
-			collectiveDensity += def.density;
-			
-			b2Fixture* fixture = body->CreateFixture(&def);
-			fixtures[collider] = fixture;
+			add(collider);
+			collectiveDensity += collider->density();
 		}
 
 		if (collectiveDensity == 0.0f && type == Dynamic)
@@ -131,7 +123,7 @@ namespace Tristeon
 
 	void PhysicsBody::add(Collider* collider)
 	{
-		if (fixtures.find(collider) == fixtures.end())
+		if (fixtures.find(collider) != fixtures.end())
 			return;
 
 		b2FixtureDef def;

@@ -118,7 +118,7 @@
                             "restitution": 0.0,
                             "rotationOffset": 0.0,
                             "sensor": false,
-                            "typeID": "Tristeon::Collider",
+                            "typeID": "Tristeon::BoxCollider",
                             "width": 256.0
                         }
                     ],
@@ -185,7 +185,7 @@
                             "restitution": 0.0,
                             "rotationOffset": 0.0,
                             "sensor": false,
-                            "typeID": "Tristeon::Collider",
+                            "typeID": "Tristeon::BoxCollider",
                             "width": 2048.0
                         }
                     ],
