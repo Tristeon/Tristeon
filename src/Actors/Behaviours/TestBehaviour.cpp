@@ -8,6 +8,8 @@
 
 #include <Physics/PhysicsBody.h>
 
+#include "Physics/PhysicsWorld.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(TestBehaviour)
@@ -31,7 +33,7 @@ namespace Tristeon
 
 	void TestBehaviour::update()
 	{
-		if (Keyboard::pressed(Keyboard::Space))
+		if (Keyboard::pressed(Keyboard::Space) && PhysicsWorld::raycast(body->position(), Vector2::down(), 256))
 			body->velocity({body->velocity().x, 1500});
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);

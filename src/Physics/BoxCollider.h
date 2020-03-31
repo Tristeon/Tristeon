@@ -15,7 +15,7 @@ namespace Tristeon
 
 		float height() const;
 		void height(float const& value);
-
+		
 	protected:
 		float _width = 0;
 		float _height = 0;

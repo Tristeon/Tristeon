@@ -16,12 +16,24 @@ namespace Tristeon
 		json j;
 		j["typeID"] = TRISTEON_TYPENAME(PhysicsBody);
 		j["type"] = type;
+		j["gravityScale"] = _gravityScale;
+		j["fixedRotation"] = _fixedRotation;
+		j["linearDamping"] = _linearDamping;
+		j["angularDamping"] = _angularDamping;
+		j["enabled"] = _enabled;
+		j["continuous"] = _continuous;
 		return j;
 	}
 
 	void PhysicsBody::deserialize(json j)
 	{
 		type = j["type"];
+		_gravityScale = j["gravityScale"];
+		_fixedRotation = j["fixedRotation"];
+		_linearDamping = j["linearDamping"];
+		_angularDamping = j["angularDamping"];
+		_enabled = j["enabled"];
+		_continuous = j["continuous"];
 	}
 
 	void PhysicsBody::start()
@@ -96,6 +108,83 @@ namespace Tristeon
 		body->SetLinearVelocity(meterValue.convert<b2Vec2>());
 	}
 
+	float PhysicsBody::gravityScale() const
+	{
+		return _gravityScale;
+	}
+
+	void PhysicsBody::gravityScale(float const& value)
+	{
+		body->SetGravityScale(value);
+		_gravityScale = value;
+	}
+
+	bool PhysicsBody::fixedRotation() const
+	{
+		return _fixedRotation;
+	}
+
+	void PhysicsBody::fixedRotation(bool const& value)
+	{
+		body->SetFixedRotation(value);
+		_fixedRotation = value;
+	}
+
+	float PhysicsBody::linearDamping() const
+	{
+		return _linearDamping;
+	}
+
+	void PhysicsBody::linearDamping(float const& value)
+	{
+		body->SetLinearDamping(value);
+		_linearDamping = value;
+	}
+
+	float PhysicsBody::angularDamping() const
+	{
+		return _angularDamping;
+	}
+
+	void PhysicsBody::angularDamping(float const& value)
+	{
+		body->SetAngularDamping(value);
+		_angularDamping = value;
+	}
+
+	Vector2 PhysicsBody::position() const
+	{
+		return PhysicsWorld::metersToPixels(Vector2::convert(body->GetPosition()));
+	}
+
+	void PhysicsBody::position(Vector2 const& value)
+	{
+		Vector2 const meterValue = PhysicsWorld::pixelsToMeters(value);
+		body->SetTransform(meterValue.convert<b2Vec2>(), body->GetAngle());
+	}
+
+	float PhysicsBody::rotation() const
+	{
+		return -Math::toDegrees(body->GetAngle());
+	}
+
+	void PhysicsBody::rotation(float const& value)
+	{
+		float const radianValue = -Math::toRadians(value);
+		body->SetTransform(body->GetPosition(), radianValue);
+	}
+
+	bool PhysicsBody::continuous() const
+	{
+		return _continuous;
+	}
+
+	void PhysicsBody::continuous(bool const& value)
+	{
+		body->SetBullet(value);
+		_continuous = value;
+	}
+
 	void PhysicsBody::createBody()
 	{
 		b2World* world = PhysicsWorld::instance()->world.get();
@@ -103,7 +192,15 @@ namespace Tristeon
 
 		b2BodyDef bodyDef;
 		bodyDef.position = meterPosition.convert<b2Vec2>();
+		bodyDef.angle = Math::toRadians(-owner()->rotation);
 		bodyDef.type = (b2BodyType)type;
+		bodyDef.fixedRotation = _fixedRotation;
+		bodyDef.gravityScale = _gravityScale;
+		bodyDef.allowSleep = true;
+		bodyDef.awake = true;
+		bodyDef.enabled = _enabled;
+		bodyDef.userData = this;
+		bodyDef.bullet = _continuous;
 		
 		body = std::unique_ptr<b2Body, BodyDeleter>(world->CreateBody(&bodyDef), {});
 		

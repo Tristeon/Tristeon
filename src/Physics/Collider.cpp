@@ -40,7 +40,7 @@ namespace Tristeon
 
 		j["offset"] = _offset;
 		j["rotationOffset"] = _rotationOffset;
-
+		
 		j["density"] = _density;
 		j["friction"] = _friction;
 		j["restitution"] = _restitution;
@@ -73,7 +73,10 @@ namespace Tristeon
 
 		b2Fixture* fixture = getFixture();
 		if (fixture != nullptr)
+		{
 			fixture->SetDensity(value);
+			owner()->behaviour<PhysicsBody>()->body->ResetMassData();
+		}
 	}
 
 	float Collider::friction() const
@@ -104,28 +107,6 @@ namespace Tristeon
 			fixture->SetRestitution(value);
 	}
 
-	Vector2 Collider::offset() const
-	{
-		return _offset;
-	}
-
-	void Collider::offset(Vector2 const& value)
-	{
-		_offset = value;
-		isDirty = true;
-	}
-
-	float Collider::rotationOffset() const
-	{
-		return _rotationOffset;
-	}
-
-	void Collider::rotationOffset(float const& value)
-	{
-		_rotationOffset = value;
-		isDirty = true;
-	}
-
 	bool Collider::sensor() const
 	{
 		return _sensor;
@@ -149,5 +130,27 @@ namespace Tristeon
 		if (shape == nullptr)
 			createShape();
 		return shape.get();
+	}
+
+	Vector2 Collider::offset() const
+	{
+		return _offset;
+	}
+
+	void Collider::offset(Vector2 const& value)
+	{
+		_offset = value;
+		isDirty = true;
+	}
+
+	float Collider::rotationOffset() const
+	{
+		return _rotationOffset;
+	}
+
+	void Collider::rotationOffset(float const& value)
+	{
+		_rotationOffset = value;
+		isDirty = true;
 	}
 }

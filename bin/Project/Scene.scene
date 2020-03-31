@@ -104,22 +104,27 @@
                             "typeID": "Tristeon::TestBehaviour"
                         },
                         {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": true,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
                             "type": 2,
                             "typeID": "Tristeon::PhysicsBody"
                         },
                         {
                             "density": 1.0,
                             "friction": 0.30000001192092896,
-                            "height": 256.0,
                             "offset": {
                                 "x": 0.0,
                                 "y": 0.0
                             },
+                            "radius": 128.0,
                             "restitution": 0.0,
                             "rotationOffset": 0.0,
                             "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 256.0
+                            "typeID": "Tristeon::CircleCollider"
                         }
                     ],
                     "colour": {
@@ -171,6 +176,12 @@
                 {
                     "behaviours": [
                         {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": false,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
                             "type": 0,
                             "typeID": "Tristeon::PhysicsBody"
                         },

@@ -6,6 +6,8 @@
 
 namespace Tristeon
 {
+	class RaycastResult;
+
 	class PhysicsWorld : Singleton<PhysicsWorld>
 	{
 		friend class Collider;
@@ -22,7 +24,9 @@ namespace Tristeon
 
 		static uint32 metersToPixels(float const& meters);
 		static Vector2 metersToPixels(Vector2 const& meters);
-		
+
+		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance);
+		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance, RaycastResult& result);
 	private:
 		void add(Collider* collider);
 		void remove(Collider* collider);

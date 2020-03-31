@@ -32,19 +32,19 @@ namespace Tristeon
 		float restitution() const;
 		void restitution(float const& value);
 
+		bool sensor() const;
+		void sensor(bool const& value);
+
 		Vector2 offset() const;
 		void offset(Vector2 const& value);
 
 		float rotationOffset() const;
 		void rotationOffset(float const& value);
-
-		bool sensor() const;
-		void sensor(bool const& value);
-
+		
 	protected:
 		Vector2 _offset = {};
 		float _rotationOffset = 0;
-
+		
 		//Simulation values
 		float _density = 0;
 		float _friction = 0;

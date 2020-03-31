@@ -16,6 +16,8 @@
 #include <Physics/BoxCollider.h>
 #include <Physics/PhysicsBody.h>
 
+#include "Physics/CircleCollider.h"
+
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
@@ -113,9 +115,9 @@ namespace Tristeon
 		actor->position.y = 1042;
 		PhysicsBody* body = actor->addBehaviour<PhysicsBody>();
 		body->type = PhysicsBody::Dynamic;
-		BoxCollider* col = actor->addBehaviour<BoxCollider>();
-		col->width(256);
-		col->height(256);
+		body->continuous(true);
+		CircleCollider* col = actor->addBehaviour<CircleCollider>();
+		col->radius(128);
 		col->density(1.0f);
 		col->friction(0.3f);
 		col->restitution(0);

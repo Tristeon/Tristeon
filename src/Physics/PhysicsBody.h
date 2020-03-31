@@ -15,7 +15,8 @@ namespace Tristeon
 	{
 		friend class Collider;
 		friend class SceneManager;
-
+		friend class RaycastResult;
+		
 		REGISTER_TYPE_H(PhysicsBody)
 	public:
 		json serialize() override;
@@ -49,6 +50,28 @@ namespace Tristeon
 
 		Vector2 velocity() const;
 		void velocity(Vector2 const& value);
+
+		float gravityScale() const;
+		void gravityScale(float const& value);
+
+		bool fixedRotation() const;
+		void fixedRotation(bool const& value);
+
+		float linearDamping() const;
+		void linearDamping(float const& value);
+
+		float angularDamping() const;
+		void angularDamping(float const& value);
+
+		Vector2 position() const;
+		void position(Vector2 const& value);
+
+		float rotation() const;
+		void rotation(float const& value);
+
+		bool continuous() const;
+		void continuous(bool const& value);
+		
 	protected:
 		void createBody();
 		void add(Collider* collider);
@@ -56,6 +79,16 @@ namespace Tristeon
 		void resetCollider(Collider* collider);
 
 		Type type = Static;
+
+		float _gravityScale = 1;
+		bool _fixedRotation = false;
+
+		float _linearDamping = 0.0f;
+		float _angularDamping = 0.01f;
+
+		bool _enabled = true;
+
+		bool _continuous = false;
 
 		//TODO: Handle Dirty colliders
 		//TODO: Handle removal and addition of colliders
