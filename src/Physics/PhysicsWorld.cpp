@@ -11,26 +11,6 @@ namespace Tristeon
 		world = std::make_unique<b2World>(gravity);
 	}
 
-	void PhysicsWorld::add(Collider* collider)
-	{
-		
-	}
-
-	void PhysicsWorld::remove(Collider* collider)
-	{
-		
-	}
-
-	void PhysicsWorld::add(Rigidbody* rigidbody)
-	{
-		
-	}
-
-	void PhysicsWorld::remove(Rigidbody* rigidbody)
-	{
-		
-	}
-
 	void PhysicsWorld::update()
 	{
 		world->Step(1.0f / 60.0f, velocityIterations, positionIterations);

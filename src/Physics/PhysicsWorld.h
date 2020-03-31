@@ -28,12 +28,6 @@ namespace Tristeon
 		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance);
 		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance, RaycastResult& result);
 	private:
-		void add(Collider* collider);
-		void remove(Collider* collider);
-
-		void add(Rigidbody* rigidbody);
-		void remove(Rigidbody* rigidbody);
-
 		void update();
 
 		int velocityIterations = 8;
