@@ -8,6 +8,8 @@
 
 #include <Physics/PhysicsBody.h>
 
+
+#include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 
 namespace Tristeon
@@ -24,6 +26,16 @@ namespace Tristeon
 	void TestBehaviour::deserialize(json j)
 	{
 		//Empty
+	}
+
+	void TestBehaviour::contactBegin(Collider* other)
+	{
+		std::cout << "Penguin collided with: " + other->owner()->name << std::endl;
+	}
+
+	void TestBehaviour::contactEnd(Collider* other)
+	{
+		std::cout << "Penguin stopped colliding with: " + other->owner()->name << std::endl;
 	}
 
 	void TestBehaviour::start()

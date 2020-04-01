@@ -16,6 +16,7 @@ namespace Tristeon
 		friend class Collider;
 		friend class SceneManager;
 		friend class RaycastResult;
+		friend class CollisionListener;
 		
 		REGISTER_TYPE_H(PhysicsBody)
 	public:

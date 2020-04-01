@@ -4,6 +4,8 @@
 #include <Utils/Singleton.h>
 #include <Math/Vector2.h>
 
+#include <Physics/CollisionListener.h>
+
 namespace Tristeon
 {
 	class RaycastResult;
@@ -34,5 +36,6 @@ namespace Tristeon
 		int positionIterations = 3;
 		
 		Unique<b2World> world;
+		CollisionListener listener;
 	};
 }

@@ -113,6 +113,7 @@ namespace Tristeon
 		actor->height = 256;
 		actor->position.x = 208;
 		actor->position.y = 1042;
+		actor->name = "Penguin";
 		PhysicsBody* body = actor->addBehaviour<PhysicsBody>();
 		body->type = PhysicsBody::Dynamic;
 		body->continuous(true);
@@ -126,6 +127,7 @@ namespace Tristeon
 		auto* actor2 = new AnimationSprite();
 		actor2->position.x = 2000;
 		actor2->position.y = 1250;
+		actor2->name = "Animated numbers";
 		actor2->setTexture("Project/SpriteSheet.png", false);
 		actor2->width = 256;
 		actor2->height = 256;
@@ -133,6 +135,7 @@ namespace Tristeon
 
 		auto* actor3 = new Sprite();
 		actor3->setTexture("", true);
+		actor3->name = "Ground";
 		actor3->width = 2048;
 		actor3->height = 256;
 		actor3->position.x = 0;
@@ -145,12 +148,6 @@ namespace Tristeon
 		floor->restitution(0);
 		layer->actors.push_back(std::unique_ptr<Actor>(actor3));
 
-		auto* actor4 = new Sprite();
-		actor4->setTexture("", true);
-		actor4->width = 128;
-		actor4->height = 128;
-		layer->actors.push_back(std::unique_ptr<Actor>(actor4));
-		
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
 		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;

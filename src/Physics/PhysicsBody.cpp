@@ -231,6 +231,7 @@ namespace Tristeon
 		def.restitution = collider->restitution();
 		
 		b2Fixture* fixture = body->CreateFixture(&def);
+		fixture->SetUserData(collider);
 		fixtures[collider] = fixture;
 	}
 

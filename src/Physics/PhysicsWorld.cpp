@@ -1,7 +1,7 @@
 #include "PhysicsWorld.h"
 
-#include <Rendering/GameView.h>
 #include <Physics/RayCastResult.h>
+#include <Rendering/GameView.h>
 
 namespace Tristeon
 {
@@ -9,6 +9,7 @@ namespace Tristeon
 	{
 		b2Vec2 gravity(0.0f, -10.0f);
 		world = std::make_unique<b2World>(gravity);
+		world->SetContactListener(&listener);
 	}
 
 	void PhysicsWorld::update()

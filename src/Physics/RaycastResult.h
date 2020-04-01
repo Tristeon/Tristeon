@@ -6,9 +6,8 @@
 
 namespace Tristeon
 {
-	class RaycastResult : public b2RayCastCallback
+	struct RaycastResult : b2RayCastCallback
 	{
-	public:
 		Collider* collider = nullptr;
 		Vector2 point;
 		Vector2 normal;
