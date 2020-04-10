@@ -3,6 +3,10 @@
 
 namespace Tristeon
 {
+	/**
+	 * Internal class. Used to listen to box2D collision callbacks and relay them to I..Begin/End callbacks.
+	 * Do not use.
+	 */
 	class CollisionListener : public b2ContactListener
 	{
 	public:

@@ -15,6 +15,8 @@
 #include <Callbacks/ILateUpdate.h>
 #include <Callbacks/IUpdate.h>
 
+#include "Actors/Actor.h"
+
 
 namespace Tristeon
 {
@@ -74,6 +76,9 @@ namespace Tristeon
 				for (auto update : Collector<IUpdate>::all()) update->update();
 				for (auto late : Collector<ILateUpdate>::all()) late->lateUpdate();
 			}
+
+			for (auto const& behaviour : destroyedBehaviours) behaviour->owner()->removeBehaviour(behaviour);
+			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 			
 			_view->paintGL();
 
@@ -83,5 +88,15 @@ namespace Tristeon
 			
 			QApplication::sendPostedEvents();
 		}
+	}
+
+	void Engine::destroyLater(Actor* actor)
+	{
+		destroyedActors.add(actor);
+	}
+
+	void Engine::destroyLater(Behaviour* behaviour)
+	{
+		destroyedBehaviours.add(behaviour);
 	}
 }

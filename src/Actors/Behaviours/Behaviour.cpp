@@ -2,6 +2,8 @@
 
 #include <Actors/Collector.h>
 
+#include "Engine.h"
+
 namespace Tristeon
 {
 	Behaviour::Behaviour()
@@ -25,5 +27,10 @@ namespace Tristeon
 		_owner = other._owner;
 		other._owner = nullptr;
 		return *this;
+	}
+
+	void Behaviour::destroy()
+	{
+		Engine::instance()->destroyLater(this);
 	}
 }

@@ -1,11 +1,15 @@
 #include "Actor.h"
 
+#include "Callbacks/IPreDestroy.h"
+#include "Engine.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(Actor)
 
 	Actor::~Actor()
 	{
+		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
 			_behaviours[i].reset();
@@ -38,7 +42,9 @@ namespace Tristeon
 		name = j["name"].get<std::string>();
 		tag = j["tag"].get<std::string>();
 
+		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
+
 		for (auto serializedBehaviour : j["behaviours"])
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
@@ -56,10 +62,19 @@ namespace Tristeon
 		{
 			if (_behaviours[i].get() == behaviour)
 			{
+				auto* pre = dynamic_cast<IPreDestroy*>(_behaviours[i].get());
+				if (pre != nullptr)
+					pre->preDestroy();
+				
 				_behaviours[i].reset();
 				_behaviours.removeAt(i);
 				break;
 			}
 		}
+	}
+
+	void Actor::destroy()
+	{
+		Engine::instance()->destroyLater(this);
 	}
 }

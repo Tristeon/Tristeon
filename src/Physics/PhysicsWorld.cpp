@@ -10,6 +10,14 @@ namespace Tristeon
 		b2Vec2 gravity(0.0f, -10.0f);
 		world = std::make_unique<b2World>(gravity);
 		world->SetContactListener(&listener);
+
+		b2BodyDef bodyDef;
+		bodyDef.position = b2Vec2(0, 0);
+		bodyDef.angle = 0.0f;
+		bodyDef.type = b2_staticBody;
+		bodyDef.fixedRotation = true;
+		
+		staticBody = std::unique_ptr<b2Body, PhysicsBody::BodyDeleter>(world->CreateBody(&bodyDef), {});
 	}
 
 	void PhysicsWorld::update()

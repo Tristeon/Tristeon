@@ -3,6 +3,8 @@
 
 #include <TypeDefinitions.h>
 
+#include <Actors/Behaviours/Behaviour.h>
+
 namespace Tristeon
 {
 	class Window;
@@ -43,6 +45,13 @@ namespace Tristeon
 		 * TODO: Remove once we have an editor and this becomes unnecessary.
 		 */
 		static void saveTestScene();
+
+		/**
+		 * Finds the actor's layer and removes the actor from said layer.
+		 * Then destroys the actor itself.
+		 * Used internally by Engine to avoid deleting actors within critical loops.
+		 */
+		static void destroyActor(Actor* actor);
 
 		/**
 		 * Clears the current scene.

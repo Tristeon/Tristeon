@@ -8,9 +8,17 @@
 
 #include <Rendering/GameView.h>
 
+#include <Callbacks/IPreDestroy.h>
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(ActorLayer);
+
+	ActorLayer::~ActorLayer()
+	{
+		for (auto const& actor : findAllActorsOfType<IPreDestroy>())
+			actor->preDestroy();
+	}
 
 	json ActorLayer::serialize()
 	{
@@ -28,7 +36,7 @@ namespace Tristeon
 	void ActorLayer::deserialize(json j)
 	{
 		Layer::deserialize(j);
-		
+
 		actors.clear();
 
 		for (auto serializedActor : j["actors"])
@@ -73,9 +81,26 @@ namespace Tristeon
 			if (graphic == nullptr)
 				continue;
 
-			Shader* shader = graphic->getShader();
+			Shader * shader = graphic->getShader();
 			shader->bind();
 			graphic->render(shader->getShaderProgram());
+		}
+	}
+
+	void ActorLayer::destroyActor(Actor * actor)
+	{
+		for (size_t i = 0; i < actors.size(); i++)
+		{
+			if (actors[i].get() == actor)
+			{
+				auto* pre = dynamic_cast<IPreDestroy*>(actors[i].get());
+				if (pre != nullptr)
+					pre->preDestroy();
+
+				actors[i].reset();
+				actors.removeAt(i);
+				break;
+			}
 		}
 	}
 }

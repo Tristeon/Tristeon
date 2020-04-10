@@ -10,9 +10,6 @@ namespace Tristeon
 	class Shader;
 	class SceneManager;
 
-	template<typename T>
-	using IsActor = std::enable_if_t<std::is_base_of<Actor, T>::value, T>;
-	
 	/**
 	 * The actor layer contains a list of actors.
 	 *
@@ -25,6 +22,8 @@ namespace Tristeon
 
 		friend SceneManager;
 	public:
+		virtual ~ActorLayer();
+		
 		json serialize() override;
 		void deserialize(json j) override;
 
@@ -51,11 +50,9 @@ namespace Tristeon
 		 * Finds the first actor of the given type within this layer.
 		 *
 		 * Returns nullptr if no actor was found.
-		 *
-		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
-		IsActor<T>* findActorOfType() const;
+		T* findActorOfType() const;
 
 		/**
 		 * Returns a vector of all the actors of the given type within this layer.
@@ -65,18 +62,25 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
-		Vector<IsActor<T>*> findAllActorsOfType() const;
+		Vector<T*> findAllActorsOfType() const;
+
 	protected:
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
 		void render(Renderer* renderer, Scene* scene) override;
+
+		/**
+		 * Removes the given actor from this layer, and then destroys the actor itself.
+		 * Used internally by Engine/SceneManager to avoid deleting actors within critical loops.
+		 */
+		void destroyActor(Actor* actor);
 	private:
 		Vector<Unique<Actor>> actors;
 	};
 
 	template <typename T>
-	IsActor<T>* ActorLayer::findActorOfType() const
+	T* ActorLayer::findActorOfType() const
 	{
 		for (auto& actor : actors)
 		{
@@ -87,7 +91,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<IsActor<T>*> ActorLayer::findAllActorsOfType() const
+	Vector<T*> ActorLayer::findAllActorsOfType() const
 	{
 		Vector<T*> result;
 

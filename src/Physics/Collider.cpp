@@ -10,27 +10,32 @@
 
 namespace Tristeon
 {
-	Collider::~Collider()
-	{
-		if (owner() != nullptr && owner()->behaviour<PhysicsBody>() != nullptr)
-			owner()->behaviour<PhysicsBody>()->remove(this);
-	}
-
 	void Collider::start()
 	{
-		if (!owner()->behaviour<PhysicsBody>())
-			throw std::runtime_error("Can't have a collider without a PhysicsBody!");
-		else
-			owner()->behaviour<PhysicsBody>()->add(this);
+		if (body == nullptr)
+		{
+			PhysicsBody* pb = owner()->behaviour<PhysicsBody>();
+			if (pb != nullptr)
+				body = pb->getBody();
+			else
+				body = PhysicsWorld::instance()->staticBody.get();
+		}
+
+		addSelf();
 	}
 
 	void Collider::lateUpdate()
 	{
 		if (isDirty)
 		{
-			PhysicsBody* body = owner()->behaviour<PhysicsBody>();
-			body->resetCollider(this);
+			removeSelf();
+			addSelf();
 		}
+	}
+
+	void Collider::preDestroy()
+	{
+		removeSelf();
 	}
 
 	json Collider::serialize()
@@ -71,11 +76,10 @@ namespace Tristeon
 	{
 		_density = value;
 
-		b2Fixture* fixture = getFixture();
 		if (fixture != nullptr)
 		{
 			fixture->SetDensity(value);
-			owner()->behaviour<PhysicsBody>()->body->ResetMassData();
+			fixture->GetBody()->ResetMassData();
 		}
 	}
 
@@ -88,7 +92,6 @@ namespace Tristeon
 	{
 		_friction = value;
 
-		b2Fixture* fixture = getFixture();
 		if (fixture != nullptr)
 			fixture->SetFriction(value);
 	}
@@ -102,7 +105,6 @@ namespace Tristeon
 	{
 		_restitution = value;
 
-		b2Fixture* fixture = getFixture();
 		if (fixture != nullptr)
 			fixture->SetRestitution(value);
 	}
@@ -115,21 +117,45 @@ namespace Tristeon
 	void Collider::sensor(bool const& value)
 	{
 		_sensor = value;
-		b2Fixture* fixture = getFixture();
 		if (fixture != nullptr)
 			fixture->SetSensor(value);
 	}
 
-	b2Fixture* Collider::getFixture()
+	b2Shape* Collider::getShape(bool const& includeOwnerTransform)
 	{
-		return owner()->behaviour<PhysicsBody>()->fixtures[this];
+		createShape(includeOwnerTransform);
+		return shape.get();
 	}
 
-	b2Shape* Collider::getShape()
+	void Collider::addSelf()
 	{
-		if (shape == nullptr)
-			createShape();
-		return shape.get();
+		b2FixtureDef def;
+		def.shape = getShape(body->GetType() == b2_staticBody);
+		def.density = density();
+		def.friction = friction();
+		def.isSensor = sensor();
+		def.restitution = restitution();
+
+		fixture = body->CreateFixture(&def);
+		fixture->SetUserData(this);
+	}
+
+	void Collider::removeSelf()
+	{
+		if (body == nullptr)
+			return;
+		
+		body->DestroyFixture(fixture);
+		fixture = nullptr;
+	}
+
+	void Collider::setPhysicsBody(b2Body* newBody)
+	{
+		removeSelf();
+		body = newBody;
+		if (body == nullptr)
+			body = PhysicsWorld::instance()->staticBody.get();
+		addSelf();
 	}
 
 	Vector2 Collider::offset() const

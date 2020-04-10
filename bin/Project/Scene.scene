@@ -176,16 +176,6 @@
                 {
                     "behaviours": [
                         {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": false,
-                            "enabled": true,
-                            "fixedRotation": false,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 0,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
                             "density": 0.0,
                             "friction": 0.0,
                             "height": 256.0,

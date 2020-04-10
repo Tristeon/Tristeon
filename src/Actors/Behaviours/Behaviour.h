@@ -30,6 +30,12 @@ namespace Tristeon
 		Behaviour& operator=(Behaviour&& other) noexcept;
 
 		/**
+		 * Destroy safely removes the behaviour from its actor and deletes the Behaviour instance.
+		 * destroy() should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.
+		 */
+		void destroy();
+
+		/**
 		 * Behaviours are owned by an actor. This value is never nullptr.
 		 */
 		Actor* owner() const { return _owner; }

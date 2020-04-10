@@ -1,5 +1,7 @@
 #include "CircleCollider.h"
 #include <box2d/b2_shape.h>
+
+#include "Actors/Actor.h"
 #include "box2d/b2_circle_shape.h"
 #include "PhysicsWorld.h"
 
@@ -7,7 +9,7 @@ namespace Tristeon
 {
 	REGISTER_TYPE_CPP(CircleCollider)
 
-	json CircleCollider::serialize()
+		json CircleCollider::serialize()
 	{
 		json j = Collider::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(CircleCollider);
@@ -32,11 +34,17 @@ namespace Tristeon
 		isDirty = true;
 	}
 
-	void CircleCollider::createShape()
+	void CircleCollider::createShape(bool const& includeBodyTransform)
 	{
 		auto* circle = new b2CircleShape();
+
 		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius);
-		circle->m_p = PhysicsWorld::pixelsToMeters(_offset).convert<b2Vec2>();
+		
+		if (includeBodyTransform)
+			circle->m_p = PhysicsWorld::pixelsToMeters(owner()->position + _offset).convert<b2Vec2>();
+		else
+			circle->m_p = PhysicsWorld::pixelsToMeters(_offset).convert<b2Vec2>();
+
 		shape = std::unique_ptr<b2Shape>(circle);
 	}
 }

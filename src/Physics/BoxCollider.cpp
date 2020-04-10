@@ -5,17 +5,26 @@
 
 #include <box2d/b2_polygon_shape.h>
 
+#include "Actors/Actor.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(BoxCollider)
 	
-	void BoxCollider::createShape()
+	void BoxCollider::createShape(bool const& includeBodyTransform)
 	{
 		auto* polygon = new b2PolygonShape();
 
 		Vector2 const size = PhysicsWorld::pixelsToMeters({ _width, _height });
-		Vector2 const offset = PhysicsWorld::pixelsToMeters(_offset);
-		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), Math::toRadians(_rotationOffset));
+		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
+		float rotationOffset = Math::toRadians(_rotationOffset);
+		if (includeBodyTransform)
+		{
+			offset = PhysicsWorld::pixelsToMeters(owner()->position) + offset;
+			rotationOffset = Math::toRadians(owner()->rotation) + rotationOffset;
+		}
+		
+		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), -rotationOffset);
 		shape = std::unique_ptr<b2Shape>(polygon);
 	}
 

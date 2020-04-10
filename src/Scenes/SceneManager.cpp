@@ -140,7 +140,6 @@ namespace Tristeon
 		actor3->height = 256;
 		actor3->position.x = 0;
 		actor3->position.y = 0;
-		actor3->addBehaviour<PhysicsBody>();
 		BoxCollider* floor = actor3->addBehaviour<BoxCollider>();
 		floor->width(2048);
 		floor->height(256);
@@ -153,6 +152,13 @@ namespace Tristeon
 		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
 		JsonSerializer::save("Project/Scene.scene", data);
 		currentScene.reset();
+	}
+
+	void SceneManager::destroyActor(Actor* actor)
+	{
+		Vector<ActorLayer*> actorLayers = current()->findLayersOfType<ActorLayer>();
+		for (const auto& layer : actorLayers)
+			layer->destroyActor(actor);
 	}
 
 	void SceneManager::reset()

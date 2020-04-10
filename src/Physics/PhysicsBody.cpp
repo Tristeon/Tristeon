@@ -10,7 +10,7 @@
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(PhysicsBody)
-	
+
 	json PhysicsBody::serialize()
 	{
 		json j;
@@ -38,13 +38,34 @@ namespace Tristeon
 
 	void PhysicsBody::start()
 	{
-		createBody();
+		if (body == nullptr)
+			createBody();
+
+		for (auto& col : owner()->behaviours<Collider>())
+		{
+			col->setPhysicsBody(body.get());
+		}
 	}
 
 	void PhysicsBody::fixedUpdate()
 	{
+		if (!_enabled)
+			return;
+		
 		owner()->position = PhysicsWorld::metersToPixels(Vector2::convert(body->GetPosition()));
-		owner()->rotation = -Math::toDegrees(body->GetAngle());
+
+		if (!_fixedRotation)
+			owner()->rotation = -Math::toDegrees(body->GetAngle());
+	}
+
+	void PhysicsBody::preDestroy()
+	{
+		for (auto& col : owner()->behaviours<Collider>())
+		{
+			col->setPhysicsBody(nullptr);
+		}
+		
+		body.reset();
 	}
 
 	void PhysicsBody::BodyDeleter::operator()(b2Body* body)
@@ -84,12 +105,6 @@ namespace Tristeon
 		}
 	}
 
-	void PhysicsBody::applyAngularImpulse(float const& impulse)
-	{
-		float const meterImpulse = PhysicsWorld::pixelsToMeters(impulse);
-		body->ApplyAngularImpulse(meterImpulse, true);
-	}
-	
 	void PhysicsBody::applyTorque(float const& torque)
 	{
 		float const meterTorque = PhysicsWorld::pixelsToMeters(torque);
@@ -185,6 +200,27 @@ namespace Tristeon
 		_continuous = value;
 	}
 
+	bool PhysicsBody::enabled() const
+	{
+		return _enabled;
+	}
+
+	void PhysicsBody::enabled(bool const& value)
+	{
+		if (value)
+			position(owner()->position);
+		
+		body->SetEnabled(value);
+		_enabled = value;
+	}
+
+	b2Body* PhysicsBody::getBody()
+	{
+		if (body == nullptr)
+			createBody();
+		return body.get();
+	}
+
 	void PhysicsBody::createBody()
 	{
 		b2World* world = PhysicsWorld::instance()->world.get();
@@ -201,56 +237,7 @@ namespace Tristeon
 		bodyDef.enabled = _enabled;
 		bodyDef.userData = this;
 		bodyDef.bullet = _continuous;
-		
+
 		body = std::unique_ptr<b2Body, BodyDeleter>(world->CreateBody(&bodyDef), {});
-		
-		auto colliders = owner()->behaviours<Collider>();
-
-		float collectiveDensity = 0.0f;
-		for (auto collider : colliders)
-		{
-			add(collider);
-			collectiveDensity += collider->density();
-		}
-
-		if (collectiveDensity == 0.0f && type == Dynamic)
-			std::cout << "A dynamic rigidbody without any density will behave oddly." << std::endl;
-			//throw std::logic_error("A dynamic rigidbody must have at least one (1) collider with a density > 0");
-	}
-
-	void PhysicsBody::add(Collider* collider)
-	{
-		if (fixtures.find(collider) != fixtures.end())
-			return;
-
-		b2FixtureDef def;
-		def.shape = collider->getShape();
-		def.density = collider->density();
-		def.friction = collider->friction();
-		def.isSensor = collider->sensor();
-		def.restitution = collider->restitution();
-		
-		b2Fixture* fixture = body->CreateFixture(&def);
-		fixture->SetUserData(collider);
-		fixtures[collider] = fixture;
-	}
-
-	void PhysicsBody::remove(Collider* collider)
-	{
-		if (fixtures.find(collider) == fixtures.end())
-			return;
-		body->DestroyFixture(fixtures[collider]);
-		fixtures.erase(collider);
-	}
-
-	void PhysicsBody::resetCollider(Collider* collider)
-	{
-		if (fixtures.find(collider) == fixtures.end())
-			return;
-		
-		body->DestroyFixture(fixtures[collider]);
-		fixtures.erase(collider);
-		add(collider);
-		collider->isDirty = false;
 	}
 }

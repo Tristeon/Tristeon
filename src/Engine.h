@@ -8,6 +8,7 @@
 #include <Physics/PhysicsWorld.h>
 
 #include <TypeDefinitions.h>
+#include <Utils/Singleton.h>
 
 namespace Tristeon
 {
@@ -15,14 +16,20 @@ namespace Tristeon
 	 * Engine is the absolute core of Tristeon. It owns engine subsystems such as Renderer, GameView, Physics, etc.
 	 * It manages the creation and destruction of the engine subsystems. Subsystems may be accessible through their own Singleton instances.
 	 */
-	class Engine final : public QObject
+	class Engine final : public QObject, private Singleton<Engine>
 	{
 		friend GameView;
+		friend Actor;
+		friend Behaviour;
+		
 	public:
 		Engine() = default;
 		Engine(Engine const& other) = delete;
 		void operator=(Engine const& other) = delete;
 		void run();
+		
+		void destroyLater(Actor* actor);
+		void destroyLater(Behaviour* behaviour);
 	private:
 		bool inPlayMode = true;
 		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
@@ -30,5 +37,8 @@ namespace Tristeon
 		Unique<PhysicsWorld> _physics = nullptr;
 
 		QTimer* timer = nullptr; //Qt objects can't be unique_ptr so we delete it manually
+
+		Vector<Actor*> destroyedActors;
+		Vector<Behaviour*> destroyedBehaviours;
 	};
 }

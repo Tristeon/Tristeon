@@ -3,6 +3,10 @@
 
 namespace Tristeon
 {
+	/**
+	 * ICallback is a base class for callback classes and simply adds/removes callback instances to collectors,
+	 * enabling highly efficient callbacks, reducing realtime iteration cost.
+	 */
 	template<typename T>
 	class ICallback
 	{
