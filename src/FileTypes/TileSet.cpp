@@ -53,7 +53,12 @@ namespace Tristeon
 		
 		j["horizontalSpacing"] = horizontalSpacing;
 		j["verticalSpacing"] = verticalSpacing;
-		//TODO: Serialize tileset tile info
+
+		auto info = json::array_t();
+		for (size_t i = 0; i < cols * rows; i++)
+			info.push_back(tileInfo[i]);
+		j["tileInfo"] = info;
+		
 		return j;
 	}
 
@@ -77,5 +82,8 @@ namespace Tristeon
 		verticalSpacing = j["verticalSpacing"];
 
 		//TODO: Deserialize tileset tile info
+		this->tileInfo = std::make_unique<Tile[]>(cols * rows);
+		for (size_t i = 0; i < cols * rows; i++)
+			tileInfo[i] = j["tileInfo"][i];
 	}
 }

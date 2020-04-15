@@ -8,8 +8,25 @@ namespace Tristeon
 {
 	struct Tile
 	{
-		//TODO: Tile info
+		bool hasCollider = false;
+		float density = 1.0f;
+		float friction = 0.0f;
+		float restitution = 0.0f;
 	};
+
+	inline void to_json(json& j, const Tile& p) {
+		j["hasCollider"] = p.hasCollider;
+		j["density"] = p.density;
+		j["friction"] = p.friction;
+		j["restitution"] = p.restitution;
+	}
+
+	inline void from_json(const json& j, Tile& p) {
+		p.hasCollider = j["hasCollider"];
+		p.density = j["density"];
+		p.friction = j["friction"];
+		p.restitution = j["restitution"];
+	}
 
 	/**
 	 * A TileSet is an image that gets interpreted as if it were constructed out of separated tiles, 

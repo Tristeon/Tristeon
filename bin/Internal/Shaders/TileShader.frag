@@ -55,6 +55,10 @@ void main()
     //Move the coords by -0.5 to center the tiles for accurate zooming
     coords.x -= 0.5f;
     coords.y -= 0.5f;
+    //Then slightly adjust to make tiles centered again
+    coords.x += normalizedTileWidth / 2.0f;
+    coords.y += normalizedTileHeight / 2.0f;
+
     //Move the coords by the camera position (scaled by zoom)
     coords.x += (float)camera.posX / (camera.pixelsX / camera.zoom);
     coords.y += (float)camera.posY / (camera.pixelsY / camera.zoom);

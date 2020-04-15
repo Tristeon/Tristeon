@@ -5,8 +5,6 @@
 #include <TypeDefinitions.h>
 #include <QDir>
 
-#include <Serialization/Serializable.h>
-
 namespace Tristeon
 {
 	class AssetDatabase

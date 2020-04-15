@@ -129,6 +129,22 @@ namespace Tristeon
 		y *= value;
 	}
 
+	bool Vector2Int::operator<(const Vector2Int& vec) const
+	{
+		if (x < vec.x) return true;
+		if (x > vec.x) return false;
+
+		return y < vec.y;
+	}
+
+	bool Vector2Int::operator>(const Vector2Int& vec) const
+	{
+		if (x > vec.x) return true;
+		if (x < vec.x) return false;
+
+		return y > vec.y;
+	}
+
 	std::string Vector2Int::toString() const
 	{
 		return "{ " + std::to_string(x) + ", " + std::to_string(y) + " }";

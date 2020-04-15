@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <TObject.h>
 
 class QOpenGLShaderProgram;
 
@@ -10,7 +11,7 @@ namespace Tristeon
 	 *
 	 * Graphic objects can use this class to create shader programs with vertex & fragment shaders.
 	 */
-	class Shader
+	class Shader : public TObject
 	{
 	public:
 		/**

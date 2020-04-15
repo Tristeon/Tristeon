@@ -174,6 +174,28 @@ namespace Tristeon
 		z *= value;
 	}
 
+	bool Vector3::operator<(const Vector3& vec) const
+	{
+		if (x < vec.x) return true;
+		if (x > vec.x) return false;
+
+		if (y < vec.y) return true;
+		if (y > vec.y) return false;
+
+		return z < vec.z;
+	}
+
+	bool Vector3::operator>(const Vector3& vec) const
+	{
+		if (x > vec.x) return true;
+		if (x < vec.x) return false;
+
+		if (y > vec.y) return true;
+		if (y < vec.y) return false;
+
+		return z > vec.z;
+	}
+
 	std::string Vector3::toString() const
 	{
 		return "{ " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + " }";

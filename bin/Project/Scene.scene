@@ -17,81 +17,377 @@
     "layers": [
         {
             "data": [
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
+                13,
+                13,
+                13,
+                13,
+                13,
+                13,
+                13,
+                13,
+                13,
+                13,
                 4,
-                4,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                9,
-                10,
-                -1,
-                -1,
-                -1,
-                -1,
-                4,
-                4,
-                14,
-                14,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                4,
-                10,
-                9,
-                4,
-                14,
-                0,
-                1,
                 2,
-                0,
-                8,
                 3,
-                6,
-                3,
-                6,
-                8,
-                3,
-                6,
-                3,
-                6,
-                3,
-                6,
-                3,
-                6,
-                3,
-                6
+                1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                13,
+                13,
+                13,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
             ],
             "height": 6,
             "tileSet": {
-                "height": 2,
-                "horizontalSpacing": 1,
-                "spacingBottom": 1,
-                "spacingLeft": 1,
-                "spacingRight": 1,
-                "spacingTop": 1,
-                "texturePath": "Project/TilesetTest5.png",
+                "height": 7,
+                "horizontalSpacing": 2,
+                "spacingBottom": 2,
+                "spacingLeft": 2,
+                "spacingRight": 2,
+                "spacingTop": 2,
+                "texturePath": "Project/GoldBricks.png",
+                "tileInfo": [
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": true,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": -107374176.0,
+                        "friction": -107374176.0,
+                        "hasCollider": true,
+                        "restitution": -107374176.0
+                    }
+                ],
                 "tileRenderHeight": 256,
                 "tileRenderWidth": 256,
                 "typeID": "Tristeon::TileSet",
-                "verticalSpacing": 1,
-                "width": 2
+                "verticalSpacing": 2,
+                "width": 7
             },
             "typeID": "Tristeon::TileLayer",
             "width": 10
@@ -172,45 +468,6 @@
                     "texturePath": "Project/SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
-                },
-                {
-                    "behaviours": [
-                        {
-                            "density": 0.0,
-                            "friction": 0.0,
-                            "height": 256.0,
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 2048.0
-                        }
-                    ],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0
-                    },
-                    "height": 256,
-                    "name": "Ground",
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "tag": "",
-                    "texturePath": "",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 2048
                 }
             ],
             "name": "",

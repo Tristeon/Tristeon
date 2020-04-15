@@ -10,6 +10,8 @@ namespace Tristeon
 	{
 		REGISTER_TYPE_H(CircleCollider)
 	public:
+		virtual ~CircleCollider() = default;
+		
 		json serialize() override;
 		void deserialize(json j) override;
 

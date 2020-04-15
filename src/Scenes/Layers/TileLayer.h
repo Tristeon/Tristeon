@@ -9,6 +9,8 @@
 
 #include <Math/Vector2Int.h>
 
+#include <box2d/b2_fixture.h>
+
 namespace Tristeon
 {
 	class SceneManager;
@@ -27,9 +29,10 @@ namespace Tristeon
 	{
 		REGISTER_TYPE_H(TileLayer);
 		friend SceneManager;
+		friend class CollisionListener;
 	public:
 		TileLayer();
-		~TileLayer();
+		virtual ~TileLayer();
 
 		json serialize() override;
 		void deserialize(json j) override;
@@ -85,7 +88,6 @@ namespace Tristeon
 		int tile(Vector2Int const& coords);
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
-
 	private:
 		GLuint tbo = 0;
 		GLuint tbo_tex = 0;
@@ -104,5 +106,13 @@ namespace Tristeon
 		 * This TBO is used to send the Level data to the tile shader.
 		 */
 		void createTBO();
+		
+		/**
+		 * Creates box colliders for all tiles that have the hasCollider flag set to true in their TileSet.
+		 * Currently doesn't support other shapes.
+		 */
+		void createColliders();
+
+		std::map<Vector2Int, b2Fixture*> fixtures;
 	};
 }

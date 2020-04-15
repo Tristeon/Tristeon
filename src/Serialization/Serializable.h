@@ -1,5 +1,7 @@
 #pragma once
 #include <json.h>
+#include <TObject.h>
+
 using namespace nlohmann;
 
 namespace Tristeon
@@ -9,7 +11,7 @@ namespace Tristeon
 	 * It implements a serialize() and deserialize() function which need to be overridden to serialize variables,
 	 * and in order for type introspection to work properly.
 	 */
-	class Serializable
+	class Serializable : public TObject
 	{
 	public:
 		virtual ~Serializable() = default;

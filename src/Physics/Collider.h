@@ -27,9 +27,9 @@ namespace Tristeon
 	public:
 		virtual ~Collider() = default;
 		
-		void start() override;
-		void lateUpdate() override;
-		void preDestroy() override;
+		virtual void start() override;
+		virtual void lateUpdate() override;
+		virtual void preDestroy() override;
 		
 		json serialize() override;
 		void deserialize(json j) override;

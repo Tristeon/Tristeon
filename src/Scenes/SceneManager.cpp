@@ -17,6 +17,7 @@
 #include <Physics/PhysicsBody.h>
 
 #include "Physics/CircleCollider.h"
+#include "Physics/PhysicsWorld.h"
 
 namespace Tristeon
 {
@@ -86,14 +87,17 @@ namespace Tristeon
 		//		3, 6, 3, 6, 3, 6, 3, 6, 3, 6
 		//	});
 
-		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest5.png", 2, 2, nullptr, 256, 256, 1, 1, 1, 1, 1, 1);
+		Tile tileInfo[48];
+		tileInfo[13].hasCollider = true;
+		
+		tileLayer->tileSet = std::make_unique<TileSet>("Project/GoldBricks.png", 7, 7, tileInfo, 256, 256, 2, 2, 2, 2, 2, 2);
 		tileLayer->data = Unique<int[]>(new int[60]{
+				13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+				4, 2, 3, 1, -1, -1, -1, -1, -1, -1,
 				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-				4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
-				9, 10, -1, -1, -1, -1, 4, 4, 14, 14,
-				-1, -1, -1, -1, -1, 4, 10, 9, 4, 14,
-				0, 1, 2, 0, 8, 3, 6, 3, 6, 8,
-				3, 6, 3, 6, 3, 6, 3, 6, 3, 6
+				-1, -1, -1, 13, 13, 13, -1, -1, -1, -1,
+				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+				-1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 			});
 
 		currentScene->layers.push_back(std::unique_ptr<TileLayer>(tileLayer));
@@ -133,25 +137,27 @@ namespace Tristeon
 		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
-		auto* actor3 = new Sprite();
-		actor3->setTexture("", true);
-		actor3->name = "Ground";
-		actor3->width = 2048;
-		actor3->height = 256;
-		actor3->position.x = 0;
-		actor3->position.y = 0;
-		BoxCollider* floor = actor3->addBehaviour<BoxCollider>();
-		floor->width(2048);
-		floor->height(256);
-		floor->density(0.0f);
-		floor->restitution(0);
-		layer->actors.push_back(std::unique_ptr<Actor>(actor3));
+		//auto* actor3 = new Sprite();
+		//actor3->setTexture("", true);
+		//actor3->name = "Ground";
+		//actor3->width = 2048;
+		//actor3->height = 256;
+		//actor3->position.x = 0;
+		//actor3->position.y = 0;
+		//BoxCollider* floor = actor3->addBehaviour<BoxCollider>();
+		//floor->width(2048);
+		//floor->height(256);
+		//floor->density(0.0f);
+		//floor->restitution(0);
+		//layer->actors.push_back(std::unique_ptr<Actor>(actor3));
 
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
 		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
 		JsonSerializer::save("Project/Scene.scene", data);
 		currentScene.reset();
+
+		std::cout << "Physics body count: " << PhysicsWorld::instance()->world->GetBodyCount() << std::endl;
 	}
 
 	void SceneManager::destroyActor(Actor* actor)

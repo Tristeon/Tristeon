@@ -119,6 +119,15 @@ namespace Tristeon
 		void operator *=(const int& value);
 
 		/**
+		 * Operator used to order vectors in maps/dictionaries.
+		 */
+		bool operator <(const Vector2Int& vec) const;
+		/**
+		 * Operator used to order vectors in maps/dictionaries.
+		 */
+		bool operator >(const Vector2Int& vec) const;
+		
+		/**
 		* Convert this instance to a string describing the properties
 		*/
 		std::string toString() const;

@@ -38,6 +38,16 @@ namespace Tristeon
 		std::cout << "Penguin stopped colliding with: " + other->owner()->name << std::endl;
 	}
 
+	void TestBehaviour::tileContactBegin(TileContact const& contact)
+	{
+		std::cout << "Penguin collided with tile " << contact.tileIndex.toString() << std::endl;
+	}
+
+	void TestBehaviour::tileContactEnd(TileContact const& contact)
+	{
+		std::cout << "Penguin stopped colliding with tile " << contact.tileIndex.toString() << std::endl;
+	}
+
 	void TestBehaviour::start()
 	{
 		body = owner()->behaviour<PhysicsBody>();

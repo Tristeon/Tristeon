@@ -29,7 +29,7 @@ namespace Tristeon
 		 * THe zoom of the camera. This value is 1 by default but can be adjusted to zoom in/out
 		 * of the scene without having to adjust the size variable.
 		 */
-		float zoom;
+		float zoom = 0;
 		
 		json serialize() override;
 		void deserialize(json j) override;

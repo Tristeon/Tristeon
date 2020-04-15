@@ -21,6 +21,7 @@ namespace Tristeon
 				body = PhysicsWorld::instance()->staticBody.get();
 		}
 
+		removeSelf();
 		addSelf();
 	}
 
@@ -129,6 +130,8 @@ namespace Tristeon
 
 	void Collider::addSelf()
 	{
+		std::cout << "Collider adding self. Owner: " << owner()->name << std::endl;
+		
 		b2FixtureDef def;
 		def.shape = getShape(body->GetType() == b2_staticBody);
 		def.density = density();
@@ -145,6 +148,7 @@ namespace Tristeon
 		if (body == nullptr)
 			return;
 		
+		std::cout << "Collider removing self. Owner: " << owner()->name << std::endl;
 		body->DestroyFixture(fixture);
 		fixture = nullptr;
 	}

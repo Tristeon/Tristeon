@@ -5,9 +5,13 @@
 
 #include <Input/Keyboard.h>
 #include <Scenes/Scene.h>
+#include <FileTypes/TileSet.h>
 
 #include <Engine.h>
 #include <QOpenGLShaderProgram>
+
+#include "box2d/b2_fixture.h"
+#include "box2d/b2_polygon_shape.h"
 
 namespace Tristeon
 {
@@ -24,6 +28,9 @@ namespace Tristeon
 	{
 		QOpenGLFunctions* f = GameView::context()->functions();
 		f->glDeleteBuffers(1, &tbo);
+
+		for (auto const& pair: fixtures)
+			PhysicsWorld::instance()->staticBody->DestroyFixture(pair.second);
 	}
 
 	json TileLayer::serialize()
@@ -47,24 +54,27 @@ namespace Tristeon
 		h = j["height"];
 		tileSet->deserialize(j["tileSet"]);
 
-		data = Unique<int[]>(new int[j["data"].size()]);
+		data = std::make_unique<int[]>(j["data"].size());
 		for (unsigned int i = 0; i < j["data"].size(); i++)
 			data[i] = j["data"][i];
 		
+		std::cout << data.get() << std::endl;
+
 		createTBO();
+		createColliders();
 	}
 
 	int& TileLayer::operator[](Vector2Int const& coords)
 	{
 		if (coords.x < 0 || coords.y < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
-		
+
 		if (coords.x * coords.y > w * h || coords.x > w || coords.y > h)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
 		isDirty = true;
-		
-		return data[coords.y * w + coords.x];
+
+		return data[coords.y * (int)w + coords.x];
 	}
 
 	void TileLayer::tile(int const& x, int const& y, int const& value)
@@ -87,11 +97,11 @@ namespace Tristeon
 		return (*this)[coords];
 	}
 
-	void TileLayer::render(Renderer* renderer, Scene* scene)
+	void TileLayer::render(Renderer * renderer, Scene * scene)
 	{
 		if (tbo == 0 || tbo_tex == 0)
 			return;
-		
+
 		if (Keyboard::pressed(Keyboard::R))
 			shader->reload();
 
@@ -102,6 +112,7 @@ namespace Tristeon
 		if (isDirty)
 		{
 			createTBO(); //TODO: Reloading data is faster than recreating the object
+			createColliders();
 			isDirty = false;
 		}
 
@@ -143,7 +154,7 @@ namespace Tristeon
 		program->setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
 		program->setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
 		program->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
-		
+
 		//Bind level data
 		f->glActiveTexture(GL_TEXTURE1);
 		f->glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
@@ -165,12 +176,55 @@ namespace Tristeon
 			f->glDeleteBuffers(1, &tbo);
 		if (tbo_tex != 0)
 			f->glDeleteTextures(1, &tbo_tex);
-		
+
 		f->glGenBuffers(1, &tbo);
 		f->glBindBuffer(GL_TEXTURE_BUFFER, tbo);
 		f->glBufferData(GL_TEXTURE_BUFFER, sizeof(int) * w * h, data.get(), GL_STATIC_DRAW);
 
 		f->glGenTextures(1, &tbo_tex);
 		f->glBindBuffer(GL_TEXTURE_BUFFER, 0);
+	}
+
+	void TileLayer::createColliders()
+	{
+		for (int x = 0; x < w; x++)
+		{
+			for (int y = 0; y < h; y++)
+			{
+				int const index = y * w + x;
+				if (data[index] == -1)
+					continue;
+				
+				Tile const tile = tileSet->tileInfo[data[index]];
+				bool const colliderExists = fixtures.find(Vector2Int{ x, y }) != fixtures.end();
+
+				//No collider exists but the tile wants a collider
+				if (tile.hasCollider && !colliderExists)
+				{
+					Vector2 position = Vector2(x * tileSet->tileRenderWidth, y * tileSet->tileRenderHeight);
+					Vector2 const meterSize = PhysicsWorld::pixelsToMeters({ tileSet->tileRenderWidth / 2.0f, tileSet->tileRenderHeight / 2.0f });
+					Vector2 meterPosition = PhysicsWorld::pixelsToMeters(position);
+
+					b2PolygonShape shape;
+					shape.SetAsBox(meterSize.x, meterSize.y, meterPosition.convert<b2Vec2>(), 0);
+
+					b2FixtureDef def;
+					def.shape = &shape;
+					def.density = tile.density;
+					def.friction = tile.friction;
+					def.restitution = tile.restitution;
+
+					auto fixture = PhysicsWorld::instance()->staticBody->CreateFixture(&def);
+					fixture->SetUserData(this);
+					fixtures[{x, y}] = fixture;
+				}
+				//A collider exists but the tile doesn't want a collider
+				else if (!tile.hasCollider && colliderExists)
+				{
+					PhysicsWorld::instance()->staticBody->DestroyFixture(fixtures[{ x, y }]);
+					fixtures.erase(fixtures.find({ x, y }));
+				}
+			}
+		}
 	}
 }

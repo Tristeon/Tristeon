@@ -1,4 +1,6 @@
 #pragma once
+#include <TObject.h>
+
 #include <QOpenGLTexture>
 #include <QString>
 #include <string>
@@ -13,7 +15,7 @@ namespace Tristeon
 	 *
 	 * TODO: Textures are currently not batched, multiple objects with the same texture could be more performant
 	 */
-	class Texture
+	class Texture : public TObject
 	{
 	public:
 		/**
