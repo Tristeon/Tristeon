@@ -82,3 +82,6 @@ Tristeon_autogen/
 *.lib
 .vs/
 x64/
+*.tlog
+external/box2d/src/box2d.dir
+Tristeon.dir

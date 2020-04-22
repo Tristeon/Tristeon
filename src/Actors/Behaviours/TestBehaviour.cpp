@@ -1,3 +1,4 @@
+// ReSharper disable All
 #include <Actors/Behaviours/TestBehaviour.h>
 #include <Actors/Actor.h>
 
@@ -8,7 +9,6 @@
 
 #include <Physics/PhysicsBody.h>
 
-
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 
@@ -16,16 +16,36 @@ namespace Tristeon
 {
 	REGISTER_TYPE_CPP(TestBehaviour)
 
+	void TestBehaviour::start()
+	{
+		body = owner()->behaviour<PhysicsBody>();
+	}
+
+	void TestBehaviour::update()
+	{
+		bool grounded = PhysicsWorld::raycast(owner()->position, Vector2::down(), groundedDistance);
+		if (Gamepad::pressed(Gamepad::X) && grounded)
+			body->velocity({ body->velocity().x, jumpVelocity });
+
+		float const horizontal = Gamepad::axisLeft().x;
+		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
+	}
+	
 	json TestBehaviour::serialize()
 	{
 		json j;
 		j["typeID"] = TRISTEON_TYPENAME(TestBehaviour);
+		j["jumpVelocity"] = jumpVelocity;
+		j["groundedDistance"] = groundedDistance;
+		j["runSpeed"] = runSpeed;
 		return j;
 	}
 
 	void TestBehaviour::deserialize(json j)
 	{
-		//Empty
+		jumpVelocity = j["jumpVelocity"];
+		groundedDistance = j["groundedDistance"];
+		runSpeed = j["runSpeed"];
 	}
 
 	void TestBehaviour::contactBegin(Collider* other)
@@ -46,19 +66,5 @@ namespace Tristeon
 	void TestBehaviour::tileContactEnd(TileContact const& contact)
 	{
 		std::cout << "Penguin stopped colliding with tile " << contact.tileIndex.toString() << std::endl;
-	}
-
-	void TestBehaviour::start()
-	{
-		body = owner()->behaviour<PhysicsBody>();
-	}
-
-	void TestBehaviour::update()
-	{
-		if (Keyboard::pressed(Keyboard::Space) && PhysicsWorld::raycast(body->position(), Vector2::down(), 256))
-			body->velocity({body->velocity().x, 1500});
-
-		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
-		body->applyForce(Vector2(horizontal, 0) *GameView::deltaTime() * 100);
 	}
 }

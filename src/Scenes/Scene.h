@@ -63,6 +63,12 @@ namespace Tristeon
 		Layer* findLayer(std::string const& name) const;
 
 		/**
+		 * Adds a new layer of the given type and returns it.
+		 */
+		template<typename T>
+		T* addLayer();
+
+		/**
 		 * Finds the first layer of the given type.
 		 * Returns nullptr if no layer is found.
 		 *
@@ -86,6 +92,12 @@ namespace Tristeon
 		unsigned int getLayerCount() const;
 
 		/**
+		 * Removes the layer from the Scene and destroys it.
+		 * \param layer After this function, layer will point to invalid memory.
+		 */
+		void destroyLayer(Layer* layer);
+		
+		/**
 		 * Returns the Scene HUD.
 		 */
 		HUD* getHUD() const;
@@ -99,6 +111,17 @@ namespace Tristeon
 		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;
 	};
+
+	template <typename T>
+	T* Scene::addLayer()
+	{
+		static_assert(std::is_base_of<Layer, T>::value, "Can't add a new Layer if it isn't of type Layer");
+		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Layer!");
+		
+		T* newLayer = new T();
+		layers.push_back(std::unique_ptr<T>(newLayer));
+		return newLayer;
+	}
 
 	template <typename T>
 	IsLayer<T>* Scene::findLayerOfType()

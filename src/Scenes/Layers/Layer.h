@@ -16,6 +16,8 @@ namespace Tristeon
 		friend Renderer;
 		friend Scene;
 	public:
+		virtual ~Layer() = default;
+		
 		json serialize() override;
 		void deserialize(json j) override;
 

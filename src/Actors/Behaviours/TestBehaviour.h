@@ -35,5 +35,9 @@ namespace Tristeon
 		void tileContactEnd(TileContact const& contact) override;
 	protected:
 		PhysicsBody* body = nullptr;
+
+		float jumpVelocity = 1500;
+		float groundedDistance = 256;
+		float runSpeed = 100;
 	};
 }

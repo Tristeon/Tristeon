@@ -5,6 +5,8 @@
 
 #include <Actors/Behaviours/Behaviour.h>
 
+#include "Utils/Delegate.h"
+
 namespace Tristeon
 {
 	class Window;
@@ -35,6 +37,8 @@ namespace Tristeon
 		 * Saves the given scene as a file at the filepath.
 		 */
 		static void save(Scene* scene, String const& filepath);
+
+		static Delegate<Scene*> sceneLoaded;
 	private:
 		/**
 		 * Finds the path of the first scene with the given name.

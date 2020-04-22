@@ -33,13 +33,42 @@
 
 #include "Window.h"
 
+#ifdef TRISTEON_EDITOR
+#include <Editor/Editor.h>
+#include <Editor/LayerListEditor.h>
+#include <Editor/QtPlugins/AspectRatioWidget.h>
+
+std::unique_ptr<TristeonEditor::Editor> editor;
+#endif
+
 std::unique_ptr<Tristeon::Engine> engine;
 
 #ifdef TRISTEON_EDITOR
 class CustomLoader : public QUiLoader
 {
-	
+	QWidget* createWidget(const QString& className, QWidget* parent = nullptr, const QString& name = QString()) override;
 };
+
+QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, const QString& name)
+{
+	if (name == "game")
+	{
+		auto* gameView = new Tristeon::GameView(engine.get(), parent); //Gets childed to aspect_ratio, don't worry about ownership
+		gameView->widget()->setObjectName(name);
+
+		auto* aspect_ratio = new TristeonEditor::AspectRatioWidget(gameView->widget(), parent->width(), parent->height(), parent);
+		return aspect_ratio;
+	}
+	
+	if (name == "layers")
+	{
+		auto* layerList = new TristeonEditor::LayerListEditor(parent);
+		editor->windows.add(layerList);
+		return layerList;
+	}
+
+	return QUiLoader::createWidget(className, parent, name);
+}
 #else
 class CustomLoader : public QUiLoader
 {
@@ -79,24 +108,26 @@ int main(int argc, char** argv)
 	FreeConsole();
 #endif
 
-
 	QApplication app(argc, argv);
 
 	Tristeon::Window window;
-	window.resize(800, 800);
-
+	window.resize(1920, 1080);
+	window.showMaximized();
+	
 	engine = std::make_unique<Tristeon::Engine>();
+
+#ifdef TRISTEON_EDITOR
+	editor = std::make_unique<TristeonEditor::Editor>();
+#else
+	//TODO: Auto start game with the starting scene loaded in in game/release mode
+#endif
 	
 	QWidget* widget = loadUIFile();
 	window.setCentralWidget(widget);
 	window.show();
-	
-#ifdef TRISTEON_EDITOR
-	//TristeonEditor::Editor editor{};
-#else
-	//TODO: Auto start game with the starting scene loaded in in game/release mode
-#endif
 
+	QApplication::processEvents();
+	editor->initialize();
 	engine->run();
 	return 0;
 }

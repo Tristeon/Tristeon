@@ -5,8 +5,8 @@
             "y": 0
         },
         "size": {
-            "x": 800,
-            "y": 800
+            "x": 1920,
+            "y": 1080
         },
         "typeID": "Tristeon::Camera",
         "zoom": 0.30000001192092896
@@ -79,6 +79,7 @@
                 -1
             ],
             "height": 6,
+            "name": "TileLayer",
             "tileSet": {
                 "height": 7,
                 "horizontalSpacing": 2,
@@ -397,6 +398,9 @@
                 {
                     "behaviours": [
                         {
+                            "groundedDistance": 256.0,
+                            "jumpVelocity": 1500.0,
+                            "runSpeed": 100.0,
                             "typeID": "Tristeon::TestBehaviour"
                         },
                         {
@@ -470,7 +474,7 @@
                     "width": 256
                 }
             ],
-            "name": "",
+            "name": "ActorLayer",
             "typeID": "Tristeon::ActorLayer"
         }
     ],

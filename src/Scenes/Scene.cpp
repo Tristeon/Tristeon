@@ -65,6 +65,19 @@ namespace Tristeon
 		return layers.size();
 	}
 
+	void Scene::destroyLayer(Layer* layer)
+	{
+		for (size_t i = 0; i < layers.size(); i++)
+		{
+			if (layers[i].get() == layer)
+			{
+				layers[i].reset();
+				layers.removeAt(i);
+				break;
+			}
+		}
+	}
+
 	HUD* Scene::getHUD() const
 	{
 		return hud.get();

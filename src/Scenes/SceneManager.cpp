@@ -13,7 +13,6 @@
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/TileLayer.h>
 
-#include <Physics/BoxCollider.h>
 #include <Physics/PhysicsBody.h>
 
 #include "Physics/CircleCollider.h"
@@ -22,7 +21,8 @@
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
-
+	Delegate<Scene*> SceneManager::sceneLoaded;
+	
 	Scene* SceneManager::current()
 	{
 		return currentScene.get();
@@ -41,6 +41,8 @@ namespace Tristeon
 		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
 
 		for (auto start : Collector<IStart>::all()) start->start();
+
+		sceneLoaded.invoke(currentScene.get());
 	}
 
 	void SceneManager::save(Scene* scene, String const& filepath)
@@ -74,18 +76,9 @@ namespace Tristeon
 		currentScene = std::make_unique<Scene>();
 
 		auto* tileLayer = new TileLayer();
+		tileLayer->name = "TileLayer";
 		tileLayer->w = 10;
 		tileLayer->h = 6;
-		//->
-		//tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, nullptr, 256, 256);
-		//tileLayer->data = Unique<int[]>(new int[60] {
-		//		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-		//		4, 4, -1, -1, -1, -1, -1, -1, -1, -1,
-		//		9, 10, -1, -1, -1, -1, 4, 4, 14, 14,
-		//		-1, -1, -1, -1, -1, 4, 10, 9, 4, 14,
-		//		0, 1, 2, 0, 8, 3, 6, 3, 6, 8,
-		//		3, 6, 3, 6, 3, 6, 3, 6, 3, 6
-		//	});
 
 		Tile tileInfo[48];
 		tileInfo[13].hasCollider = true;
@@ -104,10 +97,11 @@ namespace Tristeon
 
 		currentScene->camera = std::make_unique<Camera>();
 		currentScene->camera->zoom = 0.3;
-		currentScene->camera->size = Vector2Int(800, 800);
+		currentScene->camera->size = Vector2Int(1920, 1080);
 		currentScene->camera->position = Vector2Int(0, 0);
 
 		auto* layer = new ActorLayer();
+		layer->name = "ActorLayer";
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
 
 		auto* actor = new Sprite();
@@ -136,20 +130,6 @@ namespace Tristeon
 		actor2->width = 256;
 		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
-
-		//auto* actor3 = new Sprite();
-		//actor3->setTexture("", true);
-		//actor3->name = "Ground";
-		//actor3->width = 2048;
-		//actor3->height = 256;
-		//actor3->position.x = 0;
-		//actor3->position.y = 0;
-		//BoxCollider* floor = actor3->addBehaviour<BoxCollider>();
-		//floor->width(2048);
-		//floor->height(256);
-		//floor->density(0.0f);
-		//floor->restitution(0);
-		//layer->actors.push_back(std::unique_ptr<Actor>(actor3));
 
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
