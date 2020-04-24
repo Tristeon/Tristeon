@@ -1,6 +1,5 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include <QDockWidget>
 #include <Scenes/Scene.h>
 
 namespace TristeonEditor

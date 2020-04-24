@@ -31,6 +31,8 @@
 #include <QtUiTools/QtUiTools>
 #include <QWidget>
 
+
+#include "Editor/TopBar.h"
 #include "Window.h"
 
 #ifdef TRISTEON_EDITOR
@@ -57,6 +59,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		auto* gameView = new Tristeon::GameView(engine.get(), parent); //Gets childed to aspect_ratio, don't worry about ownership
 		auto* aspect_ratio = new TristeonEditor::AspectRatioWidget(gameView->widget(), parent->width(), parent->height(), parent);
 		return aspect_ratio;
+	}
+
+	if (name == "topbar")
+	{
+		auto* topBar = new TristeonEditor::TopBar(parent);
+		editor->addWindow(topBar);
+		return topBar;
 	}
 	
 	if (name == "layers")

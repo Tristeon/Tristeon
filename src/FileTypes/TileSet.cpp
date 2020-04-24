@@ -56,7 +56,12 @@ namespace Tristeon
 
 		auto info = json::array_t();
 		for (size_t i = 0; i < cols * rows; i++)
-			info.emplace_back(tileInfo[i]);
+		{
+			if (tileInfo)
+				info.emplace_back(tileInfo[i]);
+			else
+				info.emplace_back(Tile{});
+		}
 		j["tileInfo"] = info;
 		
 		return j;
