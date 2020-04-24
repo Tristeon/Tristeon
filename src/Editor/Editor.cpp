@@ -1,3 +1,4 @@
+#include "Window.h"
 #ifdef TRISTEON_EDITOR
 #include "Editor.h"
 #include <Scenes/SceneManager.h>
@@ -9,6 +10,7 @@ namespace TristeonEditor
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
+			selectedLayer(nullptr);
 			for (auto window : windows)
 				window->loadScene(scene);
 		};
@@ -16,6 +18,25 @@ namespace TristeonEditor
 		//Initialize windows
 		for (auto window : windows)
 			window->initialize();
+	}
+
+	void Editor::addWindow(EditorWindow* window)
+	{
+		windows.add(window);
+		window->editor = this;
+	}
+
+	Tristeon::Layer* Editor::selectedLayer() const
+	{
+		return _selectedLayer;
+	}
+
+	void Editor::selectedLayer(Tristeon::Layer* value)
+	{
+		_selectedLayer = value;
+
+		for (auto window : windows)
+			window->selectedLayerChanged(value);
 	}
 }
 #endif

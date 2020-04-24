@@ -39,7 +39,8 @@ namespace Tristeon
 		}
 		
 		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
-
+		currentScene->path = path;
+		
 		for (auto start : Collector<IStart>::all()) start->start();
 
 		sceneLoaded.invoke(currentScene.get());
@@ -75,6 +76,7 @@ namespace Tristeon
 		
 		currentScene = std::make_unique<Scene>();
 
+		//Layer 1
 		auto* tileLayer = new TileLayer();
 		tileLayer->name = "TileLayer";
 		tileLayer->w = 10;
@@ -83,7 +85,8 @@ namespace Tristeon
 		Tile tileInfo[48];
 		tileInfo[13].hasCollider = true;
 		
-		tileLayer->tileSet = std::make_unique<TileSet>("Project/GoldBricks.png", 7, 7, tileInfo, 256, 256, 2, 2, 2, 2, 2, 2);
+		tileLayer->tileSet = std::make_unique<TileSet>("Project/TilesetTest.png", 3, 5, tileInfo, 256, 256);
+
 		tileLayer->data = Unique<int[]>(new int[60]{
 				13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
 				4, 2, 3, 1, -1, -1, -1, -1, -1, -1,
@@ -100,6 +103,7 @@ namespace Tristeon
 		currentScene->camera->size = Vector2Int(1920, 1080);
 		currentScene->camera->position = Vector2Int(0, 0);
 
+		//Layer 2
 		auto* layer = new ActorLayer();
 		layer->name = "ActorLayer";
 		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(layer));
@@ -131,13 +135,24 @@ namespace Tristeon
 		actor2->height = 256;
 		layer->actors.push_back(std::unique_ptr<Actor>(actor2));
 
+		//Layer 3
+		auto* actorLayer2 = new ActorLayer();
+		actorLayer2->name = "Decoration";
+		currentScene->layers.push_back(std::unique_ptr<ActorLayer>(actorLayer2));
+
+		auto* actor3 = new Sprite();
+		actor3->position.x = 2000;
+		actor3->position.y = 1250;
+		actor3->name = "Penguin 2";
+		actor3->setTexture("Project/Penguin.png", false);
+		actor3->width = 256;
+		actor3->height = 256;
+		actorLayer2->actors.push_back(std::unique_ptr<Actor>(actor3));
+		
 		//Proof of creation using json, scene is reset and then loaded in through json data
 		json data = currentScene->serialize();
-		std::cout << "Scene: " << currentScene->serialize().dump(4) << std::endl;
 		JsonSerializer::save("Project/Scene.scene", data);
 		currentScene.reset();
-
-		std::cout << "Physics body count: " << PhysicsWorld::instance()->world->GetBodyCount() << std::endl;
 	}
 
 	void SceneManager::destroyActor(Actor* actor)

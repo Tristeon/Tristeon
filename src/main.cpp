@@ -36,6 +36,7 @@
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
 #include <Editor/LayerListEditor.h>
+#include <Editor/LayerEditor.h>
 #include <Editor/QtPlugins/AspectRatioWidget.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
@@ -54,8 +55,6 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 	if (name == "game")
 	{
 		auto* gameView = new Tristeon::GameView(engine.get(), parent); //Gets childed to aspect_ratio, don't worry about ownership
-		gameView->widget()->setObjectName(name);
-
 		auto* aspect_ratio = new TristeonEditor::AspectRatioWidget(gameView->widget(), parent->width(), parent->height(), parent);
 		return aspect_ratio;
 	}
@@ -63,8 +62,15 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 	if (name == "layers")
 	{
 		auto* layerList = new TristeonEditor::LayerListEditor(parent);
-		editor->windows.add(layerList);
+		editor->addWindow(layerList);
 		return layerList;
+	}
+
+	if (name == "layereditor")
+	{
+		auto* layerEditor = new TristeonEditor::LayerEditor(parent);
+		editor->addWindow(layerEditor);
+		return layerEditor;
 	}
 
 	return QUiLoader::createWidget(className, parent, name);

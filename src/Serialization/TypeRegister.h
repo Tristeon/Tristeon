@@ -11,7 +11,7 @@ namespace Tristeon
 	template <typename T> Unique<Serializable> CreateInstance() { return std::make_unique<T>(); }
 
 	/**
-	 * The typeregister pretty much is a map that is used to create instances of registered types
+	 * The typeregister is a map that is used to create instances of registered types
 	 * In order to create instances you can call createInstance()
 	 */
 	struct TypeRegister

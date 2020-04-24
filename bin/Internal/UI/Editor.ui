@@ -514,6 +514,9 @@
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" colspan="2">
       <widget class="QListWidget" name="layerList">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -521,7 +524,10 @@
         </sizepolicy>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::AllEditTriggers</set>
+        <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+       </property>
+       <property name="tabKeyNavigation">
+        <bool>true</bool>
        </property>
        <property name="dragDropMode">
         <enum>QAbstractItemView::DragDrop</enum>
@@ -530,6 +536,9 @@
         <enum>Qt::MoveAction</enum>
        </property>
        <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionRectVisible">
         <bool>true</bool>
        </property>
        <item>
@@ -574,6 +583,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="layereditor">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="minimumSize">
     <size>
      <width>300</width>
@@ -596,7 +608,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2"/>
+   <widget class="QWidget" name="contents"/>
   </widget>
   <widget class="QDockWidget" name="console">
    <property name="minimumSize">
@@ -621,7 +633,7 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_5"/>
+   <widget class="QWidget" name="contents_2"/>
   </widget>
   <widget class="QDockWidget" name="files">
    <property name="minimumSize">
@@ -646,7 +658,7 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_9"/>
+   <widget class="QWidget" name="contents_3"/>
   </widget>
   <widget class="QDockWidget" name="properties">
    <property name="minimumSize">
@@ -672,7 +684,7 @@ border-color: rgb(0, 0, 0);
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_10"/>
+   <widget class="QWidget" name="contents_4"/>
   </widget>
   <widget class="QDockWidget" name="preview">
    <property name="minimumSize">
@@ -697,7 +709,7 @@ border-color: rgb(0, 0, 0);
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_11"/>
+   <widget class="QWidget" name="contents_5"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

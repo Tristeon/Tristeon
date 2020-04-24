@@ -106,10 +106,22 @@ namespace Tristeon
 		 * Returns the Scene Camera.
 		 */
 		Camera* getCamera() const;
+
+		/**
+		 * Sets the index of the given layer. This removes the layer from its current position in the list and inserts it at the given index.
+		 * Other layers will be moved down or up because of this.
+		 */
+		void setIndex(Layer* layer, int const& i);
+
+		/**
+		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
+		 */
+		int indexOf(Layer* layer);
 	private:
 		Unique<Camera> camera = nullptr;
 		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;
+		std::string path;
 	};
 
 	template <typename T>

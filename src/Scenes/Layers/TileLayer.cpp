@@ -141,6 +141,7 @@ namespace Tristeon
 		//Upload texture & tileset info
 		f->glActiveTexture(GL_TEXTURE0);
 		tileSet->texture->bind();
+
 		program->setUniformValue("tileSet.texture", 0);
 
 		program->setUniformValue("tileSet.cols", tileSet->cols);
@@ -193,12 +194,20 @@ namespace Tristeon
 		{
 			for (int y = 0; y < h; y++)
 			{
+				bool const colliderExists = fixtures.find(Vector2Int{ x, y }) != fixtures.end();
+
 				int const index = y * w + x;
 				if (data[index] == -1)
+				{
+					if (colliderExists)
+					{
+						PhysicsWorld::instance()->staticBody->DestroyFixture(fixtures[{ x, y }]);
+						fixtures.erase(fixtures.find({ x, y }));
+					}
 					continue;
+				}
 				
 				Tile const tile = tileSet->tileInfo[data[index]];
-				bool const colliderExists = fixtures.find(Vector2Int{ x, y }) != fixtures.end();
 
 				//No collider exists but the tile wants a collider
 				if (tile.hasCollider && !colliderExists)

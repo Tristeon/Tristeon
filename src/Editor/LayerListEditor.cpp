@@ -1,9 +1,11 @@
 #ifdef TRISTEON_EDITOR
-#include <Scenes/SceneManager.h>
 #include "LayerListEditor.h"
+
+#include <Editor/Editor.h>
 
 #include <iostream>
 #include <Scenes/Scene.h>
+#include <Scenes/SceneManager.h>
 
 #include <Scenes/Layers/Layer.h>
 #include <Scenes/Layers/ActorLayer.h>
@@ -24,7 +26,10 @@ namespace TristeonEditor
 
 		connect(add, &QPushButton::pressed, this, &LayerListEditor::addButtonPressed);
 		connect(remove, &QPushButton::pressed, this, &LayerListEditor::removeButtonPressed);
-		connect(list, &QListWidget::indexesMoved, this, [&](const QModelIndexList & indexes) { std::cout << "Hello there, indices got changed" << std::endl; });
+		
+		connect(list->model(), &QAbstractItemModel::rowsMoved, this, &LayerListEditor::rowsMoved);
+		connect(list, &QListWidget::currentItemChanged, this, &LayerListEditor::selectionChanged);
+		connect(list, &QListWidget::itemChanged, this, &LayerListEditor::itemRenamed);
 	}
 
 	void LayerListEditor::loadScene(Tristeon::Scene* scene)
@@ -35,21 +40,23 @@ namespace TristeonEditor
 		for (size_t i = 0; i < scene->getLayerCount(); i++)
 		{
 			Tristeon::Layer* layer = scene->getLayer(i);
-			list->addItem(QString(layer->name.c_str()));
+
+			QListWidgetItem* item = new QListWidgetItem(layer->name.c_str());
+			item->setFlags(item->flags() | Qt::ItemIsEditable);
+			list->addItem(item);
 			layers[list->item(i)] = layer;
 		}
 	}
 
 	void LayerListEditor::addButtonPressed()
 	{
-		std::cout << "Hello there, I'd like to add a new layer" << std::endl;
-
 		QMenu contextMenu(tr("Context menu"), this);
 
 		QAction action1("ActorLayer", this);
 		connect(&action1, &QAction::triggered, this, [&](bool checked)
 			{
 				auto* item = new QListWidgetItem(QString("New ActorLayer"));
+				item->setFlags(item->flags() | Qt::ItemIsEditable);
 				list->addItem(item);
 
 				auto* layer = Tristeon::SceneManager::current()->addLayer<Tristeon::ActorLayer>();
@@ -62,6 +69,7 @@ namespace TristeonEditor
 		connect(&action2, &QAction::triggered, this, [&](bool checked)
 			{
 				auto* item = new QListWidgetItem(QString("New TileLayer"));
+				item->setFlags(item->flags() | Qt::ItemIsEditable);
 				list->addItem(item);
 
 				auto* layer = Tristeon::SceneManager::current()->addLayer<Tristeon::TileLayer>();
@@ -82,6 +90,22 @@ namespace TristeonEditor
 		Tristeon::SceneManager::current()->destroyLayer(layers[remove]);
 		list->takeItem(list->currentRow());
 		layers.erase(remove);
+	}
+
+	void LayerListEditor::rowsMoved(const QModelIndex& parent, int start, int end, const QModelIndex& destination, int row)
+	{
+		for (int i = 0; i < list->count(); i++)
+			Tristeon::SceneManager::current()->setIndex(layers[list->item(i)], i);
+	}
+
+	void LayerListEditor::selectionChanged(QListWidgetItem* current, QListWidgetItem* previous)
+	{
+		editor->selectedLayer(layers[current]);
+	}
+
+	void LayerListEditor::itemRenamed(QListWidgetItem* item)
+	{
+		layers[item]->name = item->text().toStdString();
 	}
 }
 #endif

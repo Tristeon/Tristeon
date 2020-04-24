@@ -86,6 +86,11 @@ namespace Tristeon
 		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
 		 */
 		int tile(Vector2Int const& coords);
+
+		/**
+		 * Gets a pointer to the layer's tileset.
+		 */
+		TileSet* set() const { return tileSet.get(); }
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
 	private:

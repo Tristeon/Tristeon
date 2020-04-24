@@ -19,7 +19,10 @@ namespace TristeonEditor
 
 		void addButtonPressed();
 		void removeButtonPressed();
-
+		void rowsMoved(const QModelIndex& parent, int start, int end, const QModelIndex& destination, int row);
+		void selectionChanged(QListWidgetItem* current, QListWidgetItem* previous);
+		void itemRenamed(QListWidgetItem* item);
+		
 		QListWidget* list = nullptr;
 		std::map<QListWidgetItem*, Tristeon::Layer*> layers;
 	};

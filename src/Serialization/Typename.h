@@ -27,7 +27,7 @@ namespace Tristeon
 		return result;
 	}
 
-#define TRISTEON_TYPENAME(T) getTypename<T>()
+#define TRISTEON_TYPENAME(T) Tristeon::getTypename<T>()
 
 #else
 #include <cxxabi.h>

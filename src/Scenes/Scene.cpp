@@ -67,15 +67,11 @@ namespace Tristeon
 
 	void Scene::destroyLayer(Layer* layer)
 	{
-		for (size_t i = 0; i < layers.size(); i++)
-		{
-			if (layers[i].get() == layer)
-			{
-				layers[i].reset();
-				layers.removeAt(i);
-				break;
-			}
-		}
+		int const index = indexOf(layer);
+		if (index == -1)
+			return;
+		layers[index].reset();
+		layers.removeAt(index);
 	}
 
 	HUD* Scene::getHUD() const
@@ -86,5 +82,28 @@ namespace Tristeon
 	Camera* Scene::getCamera() const
 	{
 		return camera.get();
+	}
+
+	void Scene::setIndex(Layer* layer, int const& i)
+	{
+		int const old = indexOf(layer);
+		if (old == -1)
+			return;
+
+		auto unique = std::move(layers[old]);
+		layers.removeAt(old);
+		layers.insert(layers.begin() + i, std::move(unique));
+	}
+
+	int Scene::indexOf(Layer* layer)
+	{
+		for (size_t i = 0; i < layers.size(); i++)
+		{
+			if (layers[i].get() == layer)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 }
