@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include "EditorWindow.h"
-#include <QDockWidget>
+#include <QtWidgets>
 
 namespace TristeonEditor
 {
@@ -16,6 +16,10 @@ namespace TristeonEditor
 		void startGame();
 		void stopGame();
 		void pauseGame();
+
+		QPushButton* start = nullptr;
+		QPushButton* pause = nullptr;
+		QPushButton* stop = nullptr;
 	};
 }
 #endif

@@ -15,13 +15,13 @@ namespace TristeonEditor
 
 	void TopBar::initialize()
 	{
-		auto* play = findChild<QPushButton*>("start");
-		connect(play, &QPushButton::clicked, this, &TopBar::startGame);
+		start = findChild<QPushButton*>("start");
+		connect(start, &QPushButton::clicked, this, &TopBar::startGame);
 		
-		auto* pause = findChild<QPushButton*>("pause");
+		pause = findChild<QPushButton*>("pause");
 		connect(pause, &QPushButton::clicked, this, &TopBar::pauseGame);
 
-		auto* stop = findChild<QPushButton*>("stop");
+		stop = findChild<QPushButton*>("stop");
 		connect(stop, &QPushButton::clicked, this, &TopBar::stopGame);
 	}
 
@@ -33,7 +33,11 @@ namespace TristeonEditor
 	void TopBar::startGame()
 	{
 		if (!Tristeon::Engine::playMode())
+		{
 			Tristeon::Engine::playMode(true);
+			pause->setChecked(false);
+			start->setChecked(true);
+		}
 		else
 			stopGame();
 	}
@@ -42,11 +46,20 @@ namespace TristeonEditor
 	{
 		Tristeon::Engine::playMode(false);
 		Tristeon::SceneManager::reload();
+
+		start->setChecked(false);
+		pause->setChecked(false);
 	}
 
 	void TopBar::pauseGame()
 	{
-		Tristeon::Engine::playMode(false);
+		if (!start->isChecked())
+		{
+			pause->setChecked(false);
+			return;
+		}
+
+		Tristeon::Engine::playMode(!pause->isChecked());
 	}
 }
 #endif
