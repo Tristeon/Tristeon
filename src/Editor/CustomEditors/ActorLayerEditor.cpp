@@ -26,6 +26,22 @@ namespace TristeonEditor
 			list->addItem(item);
 			actors[item] = actor;
 		}
+
+		auto* buttonsParent = new QWidget(this);
+		layout->addWidget(buttonsParent);
+
+		auto* horizontal = new QHBoxLayout(buttonsParent);
+		buttonsParent->setLayout(horizontal);
+		
+		auto* add = new QPushButton("+", this);
+		add->setStyleSheet("background-color: rgb(0, 170, 0);");
+		horizontal->addWidget(add);
+		connect(add, &QPushButton::clicked, this, &ActorLayerEditor::addActor);
+		
+		auto* remove = new QPushButton("-", this);
+		remove->setStyleSheet("background-color: rgb(170, 0, 0);");
+		horizontal->addWidget(remove);
+		connect(remove, &QPushButton::clicked, this, &ActorLayerEditor::removeActor);
 	}
 
 	void ActorLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
@@ -42,6 +58,20 @@ namespace TristeonEditor
 	void ActorLayerEditor::actorRenamed(QListWidgetItem* item)
 	{
 		actors[item]->name = item->text().toStdString();
+	}
+
+	void ActorLayerEditor::addActor()
+	{
+		
+	}
+
+	void ActorLayerEditor::removeActor()
+	{
+		Tristeon::Actor* actor = actors[list->currentItem()];
+		actor->destroy();
+
+		actors.erase(list->currentItem());
+		list->takeItem(list->currentRow());
 	}
 }
 #endif

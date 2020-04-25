@@ -9,6 +9,7 @@ namespace TristeonEditor
 	void LayerEditor::initialize()
 	{
 		layout = new QGridLayout();
+		layout->setContentsMargins(0, 0, 0, 0);
 		contents = findChild<QWidget*>("contents");
 		contents->setLayout(layout);
 		contents->show();

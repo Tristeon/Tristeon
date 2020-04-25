@@ -130,7 +130,7 @@ namespace TristeonEditor
 				if (x < oldWidth && y < oldHeight)
 					j["data"][index] = oldData[y * oldWidth + x];
 				else
-					j["data"][index] = 1;
+					j["data"][index] = -1;
 			}
 		}
 		targetLayer->deserialize(j);

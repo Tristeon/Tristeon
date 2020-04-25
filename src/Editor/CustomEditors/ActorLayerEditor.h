@@ -16,6 +16,9 @@ namespace TristeonEditor
 	private:
 		void selectedActorChanged(int index);
 		void actorRenamed(QListWidgetItem* item);
+
+		void addActor();
+		void removeActor();
 		
 		Tristeon::ActorLayer* targetLayer = nullptr;
 		QListWidget* list = nullptr;
