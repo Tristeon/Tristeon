@@ -60,6 +60,19 @@ namespace Tristeon
 		return nullptr;
 	}
 
+	Layer* Scene::addLayer(String const& type)
+	{
+		Unique<Serializable> serializable = TypeRegister::createInstance(type);
+		auto* layer = dynamic_cast<Layer*>(serializable.get());
+		if (layer != nullptr)
+		{
+			layer = (Layer*)serializable.release();
+			layers.push_back(std::unique_ptr<Layer>(layer));
+			return layer;
+		}
+		return nullptr;
+	}
+
 	unsigned int Scene::getLayerCount() const
 	{
 		return layers.size();

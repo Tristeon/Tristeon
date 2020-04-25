@@ -15,6 +15,7 @@
 
 namespace Tristeon
 {
+	REGISTER_LAYER_CPP(TileLayer);
 	REGISTER_TYPE_CPP(TileLayer);
 
 	TileLayer::TileLayer()

@@ -31,6 +31,8 @@ namespace Tristeon
 		 * Adds item t to vector
 		 */
 		void add(_Ty t);
+
+		_Ty last();
 	};
 
 	template <class _Ty, class _Alloc>
@@ -49,6 +51,12 @@ namespace Tristeon
 	void Vector<_Ty, _Alloc>::add(_Ty t)
 	{
 		base::push_back(t);
+	}
+
+	template <class _Ty, class _Alloc>
+	_Ty Vector<_Ty, _Alloc>::last()
+	{
+		return base::operator[](base::size() - 1);
 	}
 
 	template <class _Ty, class _Alloc>

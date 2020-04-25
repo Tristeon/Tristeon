@@ -13,7 +13,7 @@ namespace Tristeon
 		return string;
 	}
 
-	Vector<String> StringHelper::split(String& string, char const& delim)
+	Vector<String> StringHelper::split(String const& string, char const& delim)
 	{
 		Vector<String> elems;
 		internalSplit(string, delim, elems);

@@ -3,6 +3,7 @@
 
 #include <Actors/Actor.h>
 #include <Serialization/TypeRegister.h>
+#include <Registers/LayerRegister.h>
 #include <vector>
 
 namespace Tristeon
@@ -18,6 +19,7 @@ namespace Tristeon
 	 */
 	class ActorLayer : public Layer
 	{
+		REGISTER_LAYER_H(ActorLayer);
 		REGISTER_TYPE_H(ActorLayer);
 
 		friend SceneManager;
@@ -64,6 +66,18 @@ namespace Tristeon
 		template<typename T>
 		Vector<T*> findAllActorsOfType() const;
 
+		/**
+		 * Creates and returns a new actor of type T.
+		 */
+		template<typename T>
+		T* createActor();
+
+		/**
+		 * Creates and returns a new Actor of the given type.
+		 *
+		 * Can return nullptr if no such type was registered.
+		 */
+		Actor* createActor(String const& type);
 	protected:
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
@@ -101,5 +115,16 @@ namespace Tristeon
 				result.push_back((T*)actor.get());
 		}
 		return result;
+	}
+
+	template <typename T>
+	T* ActorLayer::createActor()
+	{
+		static_assert(std::is_base_of<Actor, T>::value, "Can't add a new Actor if it isn't of type Actor");
+		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Actor!");
+		
+		T* actor = new T();
+		actors.push_back(std::unique_ptr<T>(actor));
+		return actor;
 	}
 }

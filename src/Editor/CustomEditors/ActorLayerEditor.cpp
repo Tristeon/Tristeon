@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Registers/ActorRegister.h"
 #include "ActorLayerEditor.h"
 #include "Editor/Editor.h"
 #include <QtWidgets>
@@ -62,7 +63,41 @@ namespace TristeonEditor
 
 	void ActorLayerEditor::addActor()
 	{
+		QMenu contextMenu(tr("Context menu"));
+
+		QAction* actor = new QAction(TRISTEON_TYPENAME(Tristeon::Actor).c_str(), this);
+		connect(actor, &QAction::triggered, this, [&](bool checked)
+			{
+				Tristeon::Actor* a = targetLayer->createActor(TRISTEON_TYPENAME(Tristeon::Actor));
+				a->name = "New Actor";
+
+				auto* item = new QListWidgetItem(QString::fromStdString(a->name));
+				item->setFlags(item->flags() | Qt::ItemIsEditable);
+				list->addItem(item);
+
+				actors[item] = a;
+			});
+		contextMenu.addAction(actor);
 		
+		auto* map = Tristeon::ActorRegister::getMap();
+		for (auto const& pair : *map)
+		{
+			QAction* action = new QAction(pair.first.c_str(), this);
+			connect(action, &QAction::triggered, this, [&](bool checked)
+				{
+					Tristeon::Actor* a = targetLayer->createActor(pair.first);
+					a->name = "New " + Tristeon::StringHelper::split(pair.first, ':').last();
+
+					auto* item = new QListWidgetItem(QString::fromStdString(a->name));
+					item->setFlags(item->flags() | Qt::ItemIsEditable);
+					list->addItem(item);
+
+					actors[item] = a;
+				});
+			contextMenu.addAction(action);
+		}
+		
+		contextMenu.exec(QCursor::pos());
 	}
 
 	void ActorLayerEditor::removeActor()

@@ -69,6 +69,13 @@ namespace Tristeon
 		T* addLayer();
 
 		/**
+		 * Adds a new layer of the given type and returns it.
+		 *
+		 * Can return nullptr if no such type was registered.
+		 */
+		Layer* addLayer(String const& type);
+		
+		/**
 		 * Finds the first layer of the given type.
 		 * Returns nullptr if no layer is found.
 		 *

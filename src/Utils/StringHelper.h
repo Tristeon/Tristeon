@@ -15,7 +15,7 @@ namespace Tristeon
 		/**
 		 * Splits a string into separate strings based on the given delimiter.
 		 */
-		static Vector<String> split(String& string, char const& delim);
+		static Vector<String> split(String const& string, char const& delim);
 
 		/**
 		 * Generates a string with random characters with a given length.

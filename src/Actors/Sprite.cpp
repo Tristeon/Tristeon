@@ -9,6 +9,7 @@
 
 namespace Tristeon
 {
+	REGISTER_ACTOR_CPP(Sprite)
 	REGISTER_TYPE_CPP(Sprite)
 	
 	Sprite::Sprite()

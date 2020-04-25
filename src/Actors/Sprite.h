@@ -4,6 +4,7 @@
 #include <Rendering/Graphic.h>
 #include <Rendering/Texture.h>
 #include <Serialization/TypeRegister.h>
+#include <Registers/ActorRegister.h>
 
 #include <Rendering/Shader.h>
 
@@ -20,6 +21,7 @@ namespace Tristeon
 	 */
 	class Sprite : public Graphic
 	{
+		REGISTER_ACTOR_H(Sprite)
 		REGISTER_TYPE_H(Sprite)
 		
 		friend ActorLayer;

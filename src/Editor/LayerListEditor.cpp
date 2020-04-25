@@ -10,6 +10,7 @@
 #include <Scenes/Layers/Layer.h>
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/TileLayer.h>
+#include <Registers/LayerRegister.h>
 
 namespace TristeonEditor
 {
@@ -46,37 +47,31 @@ namespace TristeonEditor
 			list->addItem(item);
 			layers[list->item(i)] = layer;
 		}
+
+		list->setCurrentRow(0);
 	}
 
 	void LayerListEditor::addButtonPressed()
 	{
-		QMenu contextMenu(tr("Context menu"), this);
+		QMenu contextMenu(tr("Context menu"));
 
-		QAction action1("ActorLayer", this);
-		connect(&action1, &QAction::triggered, this, [&](bool checked)
-			{
-				auto* item = new QListWidgetItem(QString("New ActorLayer"));
-				item->setFlags(item->flags() | Qt::ItemIsEditable);
-				list->addItem(item);
+		auto* map = Tristeon::LayerRegister::getMap();
+		for (auto const& pair : *map)
+		{
+			QAction* action = new QAction(pair.first.c_str(), this);
+			connect(action, &QAction::triggered, this, [&](bool checked)
+				{
+					auto* layer = Tristeon::SceneManager::current()->addLayer(pair.first);
+					layer->name = "New " + Tristeon::StringHelper::split(pair.first, ':').last();
 
-				auto* layer = Tristeon::SceneManager::current()->addLayer<Tristeon::ActorLayer>();
-				layer->name = "New ActorLayer";
-				layers[item] = layer;
-			});
-		contextMenu.addAction(&action1);
+					auto* item = new QListWidgetItem(QString::fromStdString(layer->name));
+					item->setFlags(item->flags() | Qt::ItemIsEditable);
+					list->addItem(item);
 
-		QAction action2("TileLayer", this);
-		connect(&action2, &QAction::triggered, this, [&](bool checked)
-			{
-				auto* item = new QListWidgetItem(QString("New TileLayer"));
-				item->setFlags(item->flags() | Qt::ItemIsEditable);
-				list->addItem(item);
-
-				auto* layer = Tristeon::SceneManager::current()->addLayer<Tristeon::TileLayer>();
-				layer->name = "New TileLayer";
-				layers[item] = layer;
-			});
-		contextMenu.addAction(&action2);
+					layers[item] = layer;
+				});
+			contextMenu.addAction(action);
+		}
 		
 		contextMenu.exec(QCursor::pos());
 	}

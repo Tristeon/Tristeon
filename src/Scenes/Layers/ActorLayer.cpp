@@ -12,6 +12,7 @@
 
 namespace Tristeon
 {
+	REGISTER_LAYER_CPP(ActorLayer);
 	REGISTER_TYPE_CPP(ActorLayer);
 
 	ActorLayer::~ActorLayer()
@@ -69,6 +70,19 @@ namespace Tristeon
 				return actor.get();
 		}
 
+		return nullptr;
+	}
+
+	Actor* ActorLayer::createActor(String const& type)
+	{
+		Unique<Serializable> serializable = TypeRegister::createInstance(type);
+		auto* actor = dynamic_cast<Actor*>(serializable.get());
+		if (actor != nullptr)
+		{
+			actor = (Actor*)serializable.release();
+			actors.push_back(std::unique_ptr<Actor>(actor));
+			return actor;
+		}
 		return nullptr;
 	}
 

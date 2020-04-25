@@ -6,6 +6,7 @@
 
 #include <TypeDefinitions.h>
 #include <Serialization/TypeRegister.h>
+#include <Registers/LayerRegister.h>
 
 #include <Math/Vector2Int.h>
 
@@ -27,6 +28,7 @@ namespace Tristeon
 	 */
 	class TileLayer : public Layer
 	{
+		REGISTER_LAYER_H(TileLayer);
 		REGISTER_TYPE_H(TileLayer);
 		friend SceneManager;
 		friend class CollisionListener;
