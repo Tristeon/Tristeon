@@ -31,7 +31,7 @@ namespace Tristeon
 		/**
 		 * Unloads the current scene and then loads a scene with the given name (no file extension).
 		 */
-		static void load(String name);
+		static void load(String const name);
 
 		/**
 		 * Reloads the current scene from file.

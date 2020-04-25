@@ -28,7 +28,7 @@ namespace Tristeon
 		return currentScene.get();
 	}
 
-	void SceneManager::load(String name)
+	void SceneManager::load(String const name)
 	{
 		String const path = findPath(name);
 		if (path.empty())
