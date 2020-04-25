@@ -55,14 +55,14 @@ namespace TristeonEditor
 		form->addRow(name, button);
 		connect(button, &QPushButton::clicked, this, &TileLayerEditor::browse);
 
-		QFrame* frame = new QFrame(this);
+		auto* frame = new QFrame(this);
 		frame->setMinimumSize(250, 250);
 		frame->setFrameStyle(QFrame::Box | QFrame::Raised);
 		frame->setLineWidth(2);
 		frame->show();
 		layout->addWidget(frame);
 		
-		QGridLayout* frameLayout = new QGridLayout();
+		auto* frameLayout = new QGridLayout();
 		frame->setLayout(frameLayout);
 
 		image = new QLabel(frame);

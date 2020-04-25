@@ -874,13 +874,13 @@ border-color: rgb(0, 0, 0);
    <property name="minimumSize">
     <size>
      <width>192</width>
-     <height>60</height>
+     <height>65</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>524287</width>
-     <height>60</height>
+     <height>65</height>
     </size>
    </property>
    <property name="palette">
@@ -1013,6 +1013,12 @@ border-color: rgb(0, 0, 0);
      </item>
      <item>
       <widget class="QPushButton" name="pause">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -1023,12 +1029,28 @@ border-color: rgb(0, 0, 0);
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>||</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Internal/Icons/pause.png</normaloff>Internal/Icons/pause.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="start">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -1039,12 +1061,28 @@ border-color: rgb(0, 0, 0);
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>&gt;</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Internal/Icons/play.png</normaloff>Internal/Icons/play.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="stop">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -1055,7 +1093,17 @@ border-color: rgb(0, 0, 0);
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>[  ]</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Internal/Icons/stop.png</normaloff>Internal/Icons/stop.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </item>

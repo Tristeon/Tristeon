@@ -105,9 +105,9 @@ QWidget* loadUIFile()
 {
 	CustomLoader loader;
 #if TRISTEON_EDITOR
-	QFile file("Internal/UI/Editor.ui");
+	QFile file("Editor.ui");
 #else
-	QFile file("Internal/UI/Game.ui");
+	QFile file("Game.ui");
 #endif
 	file.open(QFile::ReadOnly);
 	
