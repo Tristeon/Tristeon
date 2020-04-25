@@ -14,9 +14,14 @@ namespace TristeonEditor
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 
-	private:
+	Q_SLOTS
+		void mapWidthChanged(int width);
+		void mapHeightChanged(int height);
 		void browse();
 
+	private:
+		void resizeMap(int width, int height);
+		
 		Tristeon::TileLayer* targetLayer = nullptr;
 		
 		QLabel* name = nullptr;

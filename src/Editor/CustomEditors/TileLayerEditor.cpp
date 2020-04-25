@@ -1,6 +1,6 @@
-#include "Serialization/JsonSerializer.h"
 #ifdef TRISTEON_EDITOR
 #include "TileLayerEditor.h"
+#include <Serialization/JsonSerializer.h>
 
 namespace TristeonEditor
 {
@@ -28,6 +28,7 @@ namespace TristeonEditor
 		widthField->setSingleStep(1);
 		widthField->setValue(targetLayer->width());
 		widthField->show();
+		connect(widthField, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged) /* connect can't infer without the cast coz of ambiguity*/, this, &TileLayerEditor::mapWidthChanged);
 
 		form->addRow(widthText, widthField);
 		
@@ -39,8 +40,9 @@ namespace TristeonEditor
 		heightField->setMinimum(1);
 		heightField->setMaximum(std::numeric_limits<int>::max());
 		heightField->setSingleStep(1);
-		heightField->setValue(targetLayer->width());
+		heightField->setValue(targetLayer->height());
 		heightField->show();
+		connect(heightField, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TileLayerEditor::mapHeightChanged);
 
 		form->addRow(heightText, heightField);
 
@@ -79,6 +81,16 @@ namespace TristeonEditor
 		targetLayer = dynamic_cast<Tristeon::TileLayer*>(current);
 	}
 
+	void TileLayerEditor::mapWidthChanged(int width)
+	{
+		resizeMap(width, targetLayer->height());
+	}
+
+	void TileLayerEditor::mapHeightChanged(int height)
+	{
+		resizeMap(targetLayer->width(), height);
+	}
+
 	void TileLayerEditor::browse()
 	{
 		QDir const baseDir(QDir::currentPath());
@@ -95,22 +107,36 @@ namespace TristeonEditor
 		{
 			image->setPixmap(QPixmap(QString(tileset->texture->getPath().c_str())).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 
-			int data[60]{
-			13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
-			4, 2, 3, 1, -1, -1, -1, -1, -1, -1,
-			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-			-1, -1, -1, 13, 13, 13, -1, -1, -1, -1,
-			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-			};
-			
 			json j = targetLayer->serialize();
-			j["data"] = json::array_t(j["width"].get<int>() * j["height"].get<int>());
-			for (int i = 0; i < j["width"].get<int>() * j["height"].get<int>(); i++)
-				j["data"][i] = data[i];
 			j["tileSet"] = tileset->serialize();
 			targetLayer->deserialize(j);
 		}
+	}
+
+	void TileLayerEditor::resizeMap(int width, int height)
+	{
+		json j = targetLayer->serialize();
+
+		int const oldWidth = j["width"];
+		int const oldHeight = j["height"];
+		json oldData = j["data"];
+		
+		j["data"] = json::array_t(width * height);
+		j["width"] = width;
+		j["height"] = height;
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < height; y++)
+			{
+				int const index = y * width + x;
+
+				if (x < oldWidth && y < oldHeight)
+					j["data"][index] = oldData[y * oldWidth + x];
+				else
+					j["data"][index] = 1;
+			}
+		}
+		targetLayer->deserialize(j);
 	}
 }
 #endif

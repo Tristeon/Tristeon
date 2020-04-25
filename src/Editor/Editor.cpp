@@ -1,6 +1,6 @@
-#include "Window.h"
 #ifdef TRISTEON_EDITOR
 #include "Editor.h"
+#include <Window.h>
 #include <Scenes/SceneManager.h>
 
 namespace TristeonEditor

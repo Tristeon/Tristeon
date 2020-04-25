@@ -56,12 +56,10 @@ namespace Tristeon
 		h = j["height"];
 		tileSet->deserialize(j["tileSet"]);
 
-		data = std::make_unique<int[]>(j["data"].size());
-		for (unsigned int i = 0; i < j["data"].size(); i++)
+		data = std::make_unique<int[]>(w * h);
+		for (unsigned int i = 0; i < w * h; i++)
 			data[i] = j["data"][i];
 		
-		std::cout << data.get() << std::endl;
-
 		createTBO();
 		createColliders();
 	}
@@ -206,7 +204,6 @@ namespace Tristeon
 					}
 					continue;
 				}
-				
 				Tile const tile = tileSet->tileInfo[data[index]];
 
 				//No collider exists but the tile wants a collider
