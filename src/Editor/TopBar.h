@@ -12,6 +12,10 @@ namespace TristeonEditor
 	protected:
 		void initialize() override;
 		void loadScene(Tristeon::Scene* scene) override;
+
+		void startGame();
+		void stopGame();
+		void pauseGame();
 	};
 }
 #endif

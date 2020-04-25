@@ -27,11 +27,21 @@ namespace Tristeon
 		Engine(Engine const& other) = delete;
 		void operator=(Engine const& other) = delete;
 		void run();
+
+		/**
+		 * Enables or disables the play-mode, usually adjusted by the editor.
+		 */
+		static void playMode(bool const& enabled);
+
+		/**
+		 * Gets if the engine is in play-mode or not.
+		 */
+		static bool playMode();
 		
 		void destroyLater(Actor* actor);
 		void destroyLater(Behaviour* behaviour);
 	private:
-		bool inPlayMode = true;
+		bool inPlayMode = false;
 		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;

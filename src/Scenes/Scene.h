@@ -117,11 +117,22 @@ namespace Tristeon
 		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
 		 */
 		int indexOf(Layer* layer);
+
+		/**
+		 * Gets the filepath if the Scene was loaded through SceneManager::load().
+		 */
+		String getPath() const { return path; }
+
+		/**
+		 * Gets the file name if the Scene was loaded through SceneManager::load().
+		 */
+		String getName() const { return name; }
 	private:
 		Unique<Camera> camera = nullptr;
 		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;
-		std::string path;
+		String name;
+		String path;
 	};
 
 	template <typename T>

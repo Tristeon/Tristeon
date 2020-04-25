@@ -29,7 +29,7 @@ namespace Tristeon
 		_physics = std::make_unique<PhysicsWorld>();
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
-		SceneManager::saveTestScene();
+		//SceneManager::saveTestScene();
 		SceneManager::load("Scene");
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
@@ -55,7 +55,6 @@ namespace Tristeon
 			//FPS counter
 			frames++;
 			time += deltaTime;
-			fixedUpdateTime += deltaTime;
 			if (time >= 1)
 			{
 				GameView::instance()->_fps = frames;
@@ -65,6 +64,7 @@ namespace Tristeon
 
 			if (inPlayMode)
 			{
+				fixedUpdateTime += deltaTime;
 				while (fixedUpdateTime > fixedDeltaTime) 
 				{
 					_physics->update();
@@ -88,6 +88,16 @@ namespace Tristeon
 			
 			QApplication::sendPostedEvents();
 		}
+	}
+
+	void Engine::playMode(bool const& enabled)
+	{
+		instance()->inPlayMode = enabled;
+	}
+
+	bool Engine::playMode()
+	{
+		return instance()->inPlayMode;
 	}
 
 	void Engine::destroyLater(Actor* actor)

@@ -28,22 +28,32 @@ namespace Tristeon
 		return currentScene.get();
 	}
 
-	void SceneManager::load(String const& name)
+	void SceneManager::load(String name)
 	{
 		String const path = findPath(name);
 		if (path.empty())
 		{
 			std::cout << "Couldn't find scene: " << name << std::endl;
 			currentScene.reset();
+			sceneLoaded.invoke(nullptr);
 			return;
 		}
 		
 		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
+		currentScene->name = name;
 		currentScene->path = path;
 		
 		for (auto start : Collector<IStart>::all()) start->start();
 
 		sceneLoaded.invoke(currentScene.get());
+	}
+
+	void SceneManager::reload()
+	{
+		if (currentScene == nullptr)
+			return;
+		
+		load(currentScene->name);
 	}
 
 	void SceneManager::save(Scene* scene, String const& filepath)
