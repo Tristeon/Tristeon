@@ -17,7 +17,7 @@ namespace TristeonEditor
 			selectedLayerChanged(editor->selectedLayer());
 	}
 
-	void LayerEditor::loadScene(Tristeon::Scene* scene)
+	void LayerEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
 		
 	}
@@ -37,6 +37,7 @@ namespace TristeonEditor
 		current = EditorRegister::createInstance(layer->serialize()["typeID"]);
 		if (current != nullptr)
 		{
+			current->editor(editor);
 			current->target(layer);
 			current->setParent(contents);
 			current->initialize();

@@ -8,9 +8,6 @@ namespace TristeonEditor
 
 	void TileLayerEditor::initialize()
 	{
-		auto* layout = new QVBoxLayout();
-		setLayout(layout);
-
 		auto* formParent = new QWidget(this);
 		formParent->show();
 		layout->addWidget(formParent);

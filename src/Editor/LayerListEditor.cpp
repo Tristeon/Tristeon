@@ -32,7 +32,7 @@ namespace TristeonEditor
 		connect(list, &QListWidget::itemChanged, this, &LayerListEditor::itemRenamed);
 	}
 
-	void LayerListEditor::loadScene(Tristeon::Scene* scene)
+	void LayerListEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
 		list->clear();
 		layers.clear();

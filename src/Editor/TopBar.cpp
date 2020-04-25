@@ -25,7 +25,7 @@ namespace TristeonEditor
 		connect(stop, &QPushButton::clicked, this, &TopBar::stopGame);
 	}
 
-	void TopBar::loadScene(Tristeon::Scene* scene)
+	void TopBar::sceneLoaded(Tristeon::Scene* scene)
 	{
 		//Empty
 	}

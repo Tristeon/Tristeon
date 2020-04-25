@@ -14,7 +14,7 @@ namespace TristeonEditor
 
 	protected:
 		void initialize() override;
-		void loadScene(Tristeon::Scene* scene) override;
+		void sceneLoaded(Tristeon::Scene* scene) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
 
 		CustomEditor* current = nullptr;

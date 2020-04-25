@@ -12,7 +12,7 @@ namespace TristeonEditor
 		{
 			selectedLayer(nullptr);
 			for (auto window : windows)
-				window->loadScene(scene);
+				window->sceneLoaded(scene);
 		};
 
 		//Initialize windows
@@ -35,8 +35,23 @@ namespace TristeonEditor
 	{
 		_selectedLayer = value;
 
+		selectedActor(nullptr);
+		
 		for (auto window : windows)
 			window->selectedLayerChanged(value);
+	}
+
+	Tristeon::Actor* Editor::selectedActor() const
+	{
+		return _selectedActor;
+	}
+
+	void Editor::selectedActor(Tristeon::Actor* value)
+	{
+		_selectedActor = value;
+
+		for (auto window : windows)
+			window->selectedActorChanged(value);
 	}
 }
 #endif

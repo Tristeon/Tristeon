@@ -11,7 +11,7 @@ namespace TristeonEditor
 		explicit TopBar(QWidget* parent = nullptr);
 	protected:
 		void initialize() override;
-		void loadScene(Tristeon::Scene* scene) override;
+		void sceneLoaded(Tristeon::Scene* scene) override;
 
 		void startGame();
 		void stopGame();

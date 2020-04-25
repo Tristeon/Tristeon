@@ -15,7 +15,7 @@ namespace TristeonEditor
 
 	protected:
 		void initialize() override;
-		void loadScene(Tristeon::Scene* scene) override;
+		void sceneLoaded(Tristeon::Scene* scene) override;
 
 		void addButtonPressed();
 		void removeButtonPressed();
