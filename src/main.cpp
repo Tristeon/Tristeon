@@ -23,23 +23,22 @@
 */
 
 #include "Engine.h"
+#include "Window.h"
 
 #ifndef TRISTEON_LOGENABLED
 #include <Windows.h>
 #endif
 
+#include <QtWidgets>
 #include <QtUiTools/QtUiTools>
-#include <QWidget>
-
-
-#include "Editor/TopBar.h"
-#include "Window.h"
 
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
 #include <Editor/LayerListEditor.h>
 #include <Editor/LayerEditor.h>
 #include <Editor/QtPlugins/AspectRatioWidget.h>
+#include <Editor/MenuBar.h>
+#include <Editor/TopBar.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -80,6 +79,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		auto* layerEditor = new TristeonEditor::LayerEditor(parent);
 		editor->addWindow(layerEditor);
 		return layerEditor;
+	}
+
+	if (name == "menubar")
+	{
+		auto* menuBar = new TristeonEditor::MenuBar(parent);
+		editor->setMenuBar(menuBar);
+		return menuBar;
 	}
 
 	return QUiLoader::createWidget(className, parent, name);

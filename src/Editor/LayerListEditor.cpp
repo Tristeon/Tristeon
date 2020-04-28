@@ -69,6 +69,8 @@ namespace TristeonEditor
 					list->addItem(item);
 
 					layers[item] = layer;
+
+					list->setCurrentRow(list->count() - 1);
 				});
 			contextMenu.addAction(action);
 		}

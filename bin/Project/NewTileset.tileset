@@ -1,0 +1,22 @@
+{
+    "height": 1,
+    "horizontalSpacing": 0,
+    "spacingBottom": 0,
+    "spacingLeft": 0,
+    "spacingRight": 0,
+    "spacingTop": 0,
+    "texturePath": "Internal/Textures/white.jpg",
+    "tileInfo": [
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": false,
+            "restitution": 0.0
+        }
+    ],
+    "tileRenderHeight": 0,
+    "tileRenderWidth": 0,
+    "typeID": "Tristeon::TileSet",
+    "verticalSpacing": 0,
+    "width": 1
+}

@@ -10,11 +10,16 @@ namespace TristeonEditor
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
+			Tristeon::Window::instance()->setWindowTitle(QString::fromStdString("Tristeon2D | " + scene->getName()));
+			
 			selectedLayer(nullptr);
 			for (auto window : windows)
 				window->sceneLoaded(scene);
 		};
 
+		if (menuBar != nullptr)
+			menuBar->initialize();
+		
 		//Initialize windows
 		for (auto window : windows)
 			window->initialize();
@@ -52,6 +57,11 @@ namespace TristeonEditor
 
 		for (auto window : windows)
 			window->selectedActorChanged(value);
+	}
+
+	void Editor::setMenuBar(MenuBar* menu_bar)
+	{
+		menuBar = menu_bar;
 	}
 }
 #endif

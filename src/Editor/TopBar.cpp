@@ -1,3 +1,4 @@
+#include "Window.h"
 #ifdef TRISTEON_EDITOR
 #include "TopBar.h"
 #include <Engine.h>
@@ -23,6 +24,9 @@ namespace TristeonEditor
 
 		stop = findChild<QPushButton*>("stop");
 		connect(stop, &QPushButton::clicked, this, &TopBar::stopGame);
+
+		QShortcut* shortcut = new QShortcut(QKeySequence(tr("Ctrl+S", "File|Save")), this);
+		connect(shortcut, &QShortcut::activated, this, [&]() { Tristeon::SceneManager::saveCurrent(); });
 	}
 
 	void TopBar::sceneLoaded(Tristeon::Scene* scene)
@@ -34,6 +38,7 @@ namespace TristeonEditor
 	{
 		if (!Tristeon::Engine::playMode())
 		{
+			Tristeon::SceneManager::saveCurrent();
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
 			start->setChecked(true);

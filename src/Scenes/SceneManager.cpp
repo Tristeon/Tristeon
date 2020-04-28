@@ -35,7 +35,8 @@ namespace Tristeon
 		{
 			std::cout << "Couldn't find scene: " << name << std::endl;
 			currentScene.reset();
-			sceneLoaded.invoke(nullptr);
+			currentScene = std::make_unique<Scene>(); // load empty scene
+			sceneLoaded.invoke(currentScene.get());
 			return;
 		}
 		
@@ -63,6 +64,21 @@ namespace Tristeon
 		
 		json data = scene->serialize();
 		JsonSerializer::save(filepath, data);
+
+		AssetDatabase::add(filepath);
+	}
+
+	void SceneManager::saveCurrent()
+	{
+		if (current() == nullptr)
+			return;
+
+		if (current()->getPath().empty())
+		{
+			std::cout << "Current scene doesn't have a path therefore it can't be saved automatically. Use save(current(), filePath) instead" << std::endl;
+			return;
+		}
+		save(current(), current()->getPath());
 	}
 
 	String SceneManager::findPath(String const& name)

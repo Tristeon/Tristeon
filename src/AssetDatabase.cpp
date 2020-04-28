@@ -14,9 +14,13 @@ namespace Tristeon
 		QFile const file{ QString(path.c_str()) };
 		QFileInfo const info{ file };
 
-		if (assets.find(info.suffix().toStdString()) == assets.end())
-			assets[info.suffix().toStdString()] = Vector<String>();
-		assets[info.suffix().toStdString()].push_back(info.path().toStdString());
+		String const suffix = info.suffix().toStdString();
+		
+		if (assets.find(suffix) == assets.end())
+			assets[suffix] = Vector<String>();
+
+		if (!assets[suffix].contains(path))
+			assets[suffix].push_back(path);
 	}
 
 	void AssetDatabase::remove(String const& path)

@@ -43,6 +43,11 @@ namespace Tristeon
 		 */
 		static void save(Scene* scene, String const& filepath);
 
+		/**
+		 * Saves the current scene if it has a filepath. If not, nothing happens.
+		 */
+		static void saveCurrent();
+
 		static Delegate<Scene*> sceneLoaded;
 	private:
 		/**

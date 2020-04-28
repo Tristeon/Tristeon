@@ -268,6 +268,30 @@
                     "texturePath": "Project/SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
+                },
+                {
+                    "behaviours": [],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0
+                    },
+                    "height": 64,
+                    "name": "New Sprite",
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "tag": "",
+                    "texturePath": "Internal/Textures/white.jpg",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 64
                 }
             ],
             "name": "ActorLayer",

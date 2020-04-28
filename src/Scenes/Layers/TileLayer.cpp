@@ -117,6 +117,7 @@ namespace Tristeon
 			isDirty = false;
 		}
 
+		//TODO: Camera movement should really be in a behaviour
 		if (Keyboard::held(Keyboard::Left))
 			scene->getCamera()->position.x -= 1;
 		if (Keyboard::held(Keyboard::Right))

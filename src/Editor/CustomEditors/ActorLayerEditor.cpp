@@ -76,6 +76,8 @@ namespace TristeonEditor
 				list->addItem(item);
 
 				actors[item] = a;
+
+				list->setCurrentRow(list->count() - 1);
 			});
 		contextMenu.addAction(actor);
 		
