@@ -67,6 +67,7 @@ namespace Tristeon
 		 */
 		bool loaded() const { return succeeded; }
 
+		static const std::string defaultPath;
 	private:
 		void load();
 

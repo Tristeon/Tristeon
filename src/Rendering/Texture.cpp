@@ -3,6 +3,8 @@
 
 namespace Tristeon
 {
+	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
+	
 	Texture::Texture(QString const& path) : imagePath(path)
 	{
 		load();

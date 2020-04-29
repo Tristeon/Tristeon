@@ -91,4 +91,25 @@ namespace Tristeon
 		for (size_t i = 0; i < cols * rows; i++)
 			tileInfo[i] = j["tileInfo"][i];
 	}
+
+	Tile TileSet::info(int const& index) const
+	{
+		assert(index >= 0);
+		assert(index < cols * rows);
+		
+		return tileInfo[index];
+	}
+
+	int TileSet::tile(int const& x, int const& y) const
+	{
+		assert(x >= 0);
+		assert(y >= 0);
+
+		return y * cols + x;
+	}
+
+	Tile TileSet::info(int const& x, int const& y) const
+	{
+		return tileInfo[tile(x, y)];
+	}
 }

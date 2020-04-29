@@ -66,6 +66,21 @@ namespace Tristeon
 		void deserialize(json j) override;
 
 		/**
+		 * Gets the Tile data struct of the tile at {x, y}
+		 */
+		Tile info(int const& x, int const& y) const;
+
+		/**
+		 * Gets the Tile data struct of the tile at the given index.
+		 */
+		Tile info(int const& index) const;
+
+		/**
+		 * Converts x,y coordinates to the tile index.
+		 */
+		int tile(int const& x, int const& y) const;
+		
+		/**
 		 * The amount of columns the tileset has.
 		 * Can otherwise be described as how many tiles the tileset is split up in horizontally.
 		 */

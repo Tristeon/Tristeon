@@ -19,6 +19,9 @@ namespace TristeonEditor
 		void mapHeightChanged(int height);
 		void browse();
 
+	protected:
+		void mousePressEvent(QMouseEvent* event) override;
+
 	private:
 		void resizeMap(int width, int height);
 		
@@ -27,6 +30,9 @@ namespace TristeonEditor
 		QLabel* name = nullptr;
 		QPushButton* button = nullptr;
 		QLabel* image = nullptr;
+
+		QLabel* tileHighlight = nullptr;
+		int selectedTile = -1;
 	};
 }
 #endif
