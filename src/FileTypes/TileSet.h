@@ -3,6 +3,7 @@
 #include <Rendering/Texture.h>
 #include <Serialization/Serializable.h>
 #include <Serialization/TypeRegister.h>
+#include <Math/Vector2Int.h>
 
 namespace Tristeon
 {
@@ -71,14 +72,91 @@ namespace Tristeon
 		Tile info(int const& x, int const& y) const;
 
 		/**
+		 * Gets the Tile data struct of the tile at {x, y}
+		 */
+		Tile info(Vector2Int const& coords) const;
+		
+		/**
 		 * Gets the Tile data struct of the tile at the given index.
 		 */
 		Tile info(int const& index) const;
 
 		/**
+		 * Gets the size of a tile in pixels.
+		 */
+		Vector2Int tileSize() const;
+
+		/**
+		 * Gets the size of the tiles in 0..1 range
+		 */
+		Vector2 tileSizeNormalized() const;
+
+		/**
+		 * Gets the top-left corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMin(int const& index) const;
+		/**
+		 * Gets the top-left corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMin(int const& x, int const& y) const;
+		/**
+		 * Gets the top-left corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMin(Vector2 const& coords) const;
+
+		/**
+		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMinNormalized(int const& x, int const& y) const;
+		/**
+		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMinNormalized(int const& index) const;
+		/**
+		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMinNormalized(Vector2Int const& coords) const;
+		
+		/**
+		 * Gets the bottom-right corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMax(int const& index) const;
+		/**
+		 * Gets the bottom-right corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMax(int const& x, int const& y) const;
+		/**
+		 * Gets the bottom-right corner of the tile on the image in pixels.
+		 */
+		Vector2Int tileMax(Vector2Int const& coords) const;
+
+		/**
+		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMaxNormalized(int const& x, int const& y) const;
+		/**
+		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMaxNormalized(int const& index) const;
+		/**
+		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
+		 */
+		Vector2 tileMaxNormalized(Vector2Int const& coords) const;
+		
+		/**
 		 * Converts x,y coordinates to the tile index.
 		 */
 		int tile(int const& x, int const& y) const;
+
+		/**
+		 * Converts x,y coordinates to the tile index.
+		 */
+		int tile(Vector2Int const& coords) const;
+		
+		/**
+		 * Converts a tile index to x,y coordinates.
+		 */
+		Vector2Int tileCoords(int const& index) const;
 		
 		/**
 		 * The amount of columns the tileset has.

@@ -5,6 +5,8 @@
 #include <QString>
 #include <string>
 
+#include "Math/Vector2Int.h"
+
 namespace Tristeon
 {
 	/**
@@ -61,6 +63,11 @@ namespace Tristeon
 		 * Returns the height of the texture in pixels.
 		 */
 		int height() const;
+
+		/**
+		 * Returns the width and height of the texture in pixels.
+		 */
+		Vector2Int size() const;
 
 		/**
 		 * Returns true if the texture was successfully loaded from the given filepath.

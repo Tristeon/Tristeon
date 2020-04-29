@@ -30,6 +30,11 @@ namespace Tristeon
 		return texture->height();
 	}
 
+	Vector2Int Texture::size() const
+	{
+		return Vector2Int(texture->width(), texture->height());
+	}
+
 	void Texture::load()
 	{
 		QImage image;

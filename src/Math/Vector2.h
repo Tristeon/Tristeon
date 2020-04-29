@@ -82,6 +82,18 @@ namespace Tristeon
 		*/
 		float getSqrLength() const;
 		/**
+		 * Floors the vector's values to the nearest integer downwards.
+		 */
+		static Vector2 floor(Vector2 const& vec);
+		/**
+		 * Ceils the vector's values to the nearest integer upwards.
+		 */
+		static Vector2 ceil(Vector2 const& vec);
+		/**
+		 * Rounds the vector's values to the nearest integer.
+		 */
+		static Vector2 round(Vector2 const& vec);
+		/**
 		*Returns the distance between the two given vectors
 		*/
 		static float distance(Vector2 vec, Vector2 vec2);

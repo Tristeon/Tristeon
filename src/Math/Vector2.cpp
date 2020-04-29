@@ -1,5 +1,6 @@
 ﻿#include "Vector2.h"
 #include <string>
+#include <cmath>
 
 namespace Tristeon
 {
@@ -53,6 +54,21 @@ namespace Tristeon
 	float Vector2::getSqrLength() const
 	{
 		return x * x + y * y;
+	}
+
+	Vector2 Vector2::floor(Vector2 const& vec)
+	{
+		return Vector2(floorf(vec.x), floorf(vec.y));
+	}
+
+	Vector2 Vector2::ceil(Vector2 const& vec)
+	{
+		return Vector2(ceilf(vec.x), ceilf(vec.y));
+	}
+
+	Vector2 Vector2::round(Vector2 const& vec)
+	{
+		return Vector2(roundf(vec.x), roundf(vec.y));
 	}
 
 	float Vector2::dot(Vector2 a, Vector2 b)

@@ -1,5 +1,5 @@
-#include "Window.h"
 #ifdef TRISTEON_EDITOR
+#include <Window.h>
 #include "TileLayerEditor.h"
 #include <Serialization/JsonSerializer.h>
 
@@ -82,9 +82,8 @@ namespace TristeonEditor
 		tileHighlight->setPixmap(QPixmap("Internal/Textures/selection.png"));
 		tileHighlight->setScaledContents(true);
 		tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
-		tileHighlight->setMinimumSize(image->width() / targetLayer->set()->cols, image->height() / targetLayer->set()->rows);
-		tileHighlight->adjustSize();
-		tileHighlight->hide();
+
+		loadTileset(targetLayer->set());
 	}
 
 	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
@@ -124,17 +123,13 @@ namespace TristeonEditor
 			j["tileSet"] = tileset->serialize();
 			targetLayer->deserialize(j);
 
-			size_t const cols = tileset->cols;
-			size_t const rows = tileset->rows;
-			tileHighlight->setMinimumSize(image->width() / cols, image->height() / rows);
-			tileHighlight->adjustSize();
-			tileHighlight->hide();
+			loadTileset(tileset);
 		}
 	}
 
 	void TileLayerEditor::mousePressEvent(QMouseEvent* event)
 	{
-		QPoint position = event->globalPos();
+		QPoint const position = event->globalPos();
 		QRect rect = image->geometry();
 		rect.moveTopLeft(image->parentWidget()->mapToGlobal(rect.topLeft()));
 
@@ -154,9 +149,9 @@ namespace TristeonEditor
 			}
 			else
 			{
-				Vector2Int const tilePos = Vector2Int(tileIndex.x * tileSize.x, tileIndex.y * tileSize.y);
 				selectedTile = newTile;
-				tileHighlight->move(tilePos.x, tilePos.y);
+				Vector2 const tilePos = targetLayer->set()->tileMinNormalized(newTile) * Vector2(image->width(), image->height());
+				tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 				tileHighlight->show();
 			}
 		}
@@ -191,6 +186,15 @@ namespace TristeonEditor
 			}
 		}
 		targetLayer->deserialize(j);
+	}
+
+	void TileLayerEditor::loadTileset(Tristeon::TileSet* set)
+	{
+		Vector2 const size = set->tileSizeNormalized() * Vector2(image->width(), image->height());
+		tileHighlight->setMinimumSize((int)size.x, (int)size.y);
+		tileHighlight->setMaximumSize((int)size.x, (int)size.y);
+		tileHighlight->adjustSize();
+		tileHighlight->hide();
 	}
 }
 #endif

@@ -24,6 +24,7 @@ namespace TristeonEditor
 
 	private:
 		void resizeMap(int width, int height);
+		void loadTileset(Tristeon::TileSet* set);
 		
 		Tristeon::TileLayer* targetLayer = nullptr;
 		
