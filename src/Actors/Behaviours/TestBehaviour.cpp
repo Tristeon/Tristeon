@@ -24,10 +24,10 @@ namespace Tristeon
 	void TestBehaviour::update()
 	{
 		bool grounded = PhysicsWorld::raycast(owner()->position, Vector2::down(), groundedDistance);
-		if (Gamepad::pressed(Gamepad::X) && grounded)
+		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->velocity({ body->velocity().x, jumpVelocity });
 
-		float const horizontal = Gamepad::axisLeft().x;
+		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
 	}
 	

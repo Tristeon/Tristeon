@@ -7,8 +7,8 @@
 
 namespace Tristeon
 {
-	template<typename T>
-	using Unique = std::unique_ptr<T>;
+	template<typename T, typename D = std::default_delete<T>>
+	using Unique = std::unique_ptr<T, D>;
 
 	using String = std::string;
 }

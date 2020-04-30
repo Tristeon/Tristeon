@@ -81,13 +81,13 @@
             "height": 6,
             "name": "TileLayer",
             "tileSet": {
-                "height": 5,
-                "horizontalSpacing": 0,
-                "spacingBottom": 0,
-                "spacingLeft": 0,
-                "spacingRight": 0,
-                "spacingTop": 0,
-                "texturePath": "Project/TilesetTest.png",
+                "height": 7,
+                "horizontalSpacing": 2,
+                "spacingBottom": 2,
+                "spacingLeft": 2,
+                "spacingRight": 2,
+                "spacingTop": 2,
+                "texturePath": "Project/GoldBricks.png",
                 "tileInfo": [
                     {
                         "density": 1.0,
@@ -178,13 +178,217 @@
                         "friction": 0.0,
                         "hasCollider": false,
                         "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": 1.0,
+                        "friction": 0.0,
+                        "hasCollider": false,
+                        "restitution": 0.0
+                    },
+                    {
+                        "density": -107374176.0,
+                        "friction": -107374176.0,
+                        "hasCollider": true,
+                        "restitution": -107374176.0
                     }
                 ],
                 "tileRenderHeight": 256,
                 "tileRenderWidth": 256,
                 "typeID": "Tristeon::TileSet",
-                "verticalSpacing": 0,
-                "width": 3
+                "verticalSpacing": 2,
+                "width": 7
             },
             "typeID": "Tristeon::TileLayer",
             "width": 10
@@ -196,7 +400,7 @@
                         {
                             "groundedDistance": 256.0,
                             "jumpVelocity": 1500.0,
-                            "runSpeed": 250.0,
+                            "runSpeed": 100.0,
                             "typeID": "Tristeon::TestBehaviour"
                         },
                         {

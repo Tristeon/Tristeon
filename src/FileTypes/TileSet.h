@@ -102,7 +102,7 @@ namespace Tristeon
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMin(Vector2 const& coords) const;
+		Vector2Int tileMin(Vector2Int const& coords) const;
 
 		/**
 		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.

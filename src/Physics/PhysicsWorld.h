@@ -87,7 +87,7 @@ namespace Tristeon
 		
 		Unique<b2World> world;
 
-		std::unique_ptr<b2Body, PhysicsBody::BodyDeleter> staticBody;
+		Unique<b2Body, PhysicsBody::BodyDeleter> staticBody;
 		std::map<Collider*, b2Fixture*> fixtures;
 		
 		CollisionListener listener;

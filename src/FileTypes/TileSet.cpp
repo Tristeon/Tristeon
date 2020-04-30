@@ -138,7 +138,7 @@ namespace Tristeon
 		return tileMin(tileCoords(index));
 	}
 	
-	Vector2Int TileSet::tileMin(Vector2 const& coords) const
+	Vector2Int TileSet::tileMin(Vector2Int const& coords) const
 	{
 		return tileMin(coords.x, coords.y);
 	}
