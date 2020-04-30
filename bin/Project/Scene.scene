@@ -436,10 +436,10 @@
                     "height": 256,
                     "name": "Penguin Test 2",
                     "position": {
-                        "x": 421.9548645019531,
-                        "y": 684.2798461914063
+                        "x": 750.0,
+                        "y": 1200.0
                     },
-                    "rotation": -4.9001235311152413e-05,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -480,10 +480,10 @@
                         "r": 1.0
                     },
                     "height": 64,
-                    "name": "New Sprite",
+                    "name": "My White Square",
                     "position": {
-                        "x": 0.0,
-                        "y": 0.0
+                        "x": 200.0,
+                        "y": 1000.0
                     },
                     "rotation": 0.0,
                     "scale": {

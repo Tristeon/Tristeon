@@ -39,6 +39,7 @@ namespace TristeonEditor
 		if (!Tristeon::Engine::playMode())
 		{
 			Tristeon::SceneManager::saveCurrent();
+			Tristeon::SceneManager::reload();
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
 			start->setChecked(true);

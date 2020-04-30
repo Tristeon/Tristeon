@@ -49,8 +49,8 @@ void main()
     x = rotX;
     y = rotY;
 
-    x = x / float(camera.pixelsX / camera.zoom) * sprite.width;
-    y = y / float(camera.pixelsY / camera.zoom) * sprite.height;
+    x = x / float(camera.pixelsX / camera.zoom) * sprite.width * actor.scale.x;
+    y = y / float(camera.pixelsY / camera.zoom) * sprite.height * actor.scale.y;
 
     x -= float(camera.posX) / camera.pixelsX * camera.zoom * 2;
     y -= float(camera.posY) / camera.pixelsY * camera.zoom * 2;
