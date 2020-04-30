@@ -6,6 +6,7 @@ namespace TristeonEditor
 	CustomEditor::CustomEditor()
 	{
 		layout = new QVBoxLayout(this);
+		layout->setAlignment(Qt::AlignTop);
 		setLayout(layout);
 	}
 

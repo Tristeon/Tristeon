@@ -196,7 +196,7 @@
                         {
                             "groundedDistance": 256.0,
                             "jumpVelocity": 1500.0,
-                            "runSpeed": 100.0,
+                            "runSpeed": 250.0,
                             "typeID": "Tristeon::TestBehaviour"
                         },
                         {
@@ -230,7 +230,7 @@
                         "r": 1.0
                     },
                     "height": 256,
-                    "name": "Penguin ABC",
+                    "name": "Penguin Test 2",
                     "position": {
                         "x": 421.9548645019531,
                         "y": 684.2798461914063
@@ -240,7 +240,6 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "tag": "",
                     "texturePath": "Project/penguin.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 256
@@ -264,7 +263,6 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "tag": "",
                     "texturePath": "Project/SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
@@ -288,7 +286,6 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "tag": "",
                     "texturePath": "Internal/Textures/white.jpg",
                     "typeID": "Tristeon::Sprite",
                     "width": 64
@@ -318,7 +315,6 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "tag": "",
                     "texturePath": "Project/Penguin.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 256

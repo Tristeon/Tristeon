@@ -1,7 +1,7 @@
 #pragma once
-#include "Actors/Behaviours/Behaviour.h"
 #ifdef TRISTEON_EDITOR
 #include <Scenes/Scene.h>
+#include <Actors/Actor.h>
 
 namespace TristeonEditor
 {
@@ -17,7 +17,6 @@ namespace TristeonEditor
 		virtual void sceneLoaded(Tristeon::Scene* scene) = 0;
 		virtual void selectedLayerChanged(Tristeon::Layer* layer) { /* Empty */ }
 		virtual void selectedActorChanged(Tristeon::Actor* actor) { /* Empty */ }
-
 		Editor* editor = nullptr;
 	};
 }

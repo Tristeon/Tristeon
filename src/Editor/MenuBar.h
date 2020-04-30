@@ -10,6 +10,7 @@ namespace TristeonEditor
 	public:
 		MenuBar(QWidget* parent = nullptr) : QMenuBar(parent) {}
 		void initialize();
+
 	private:
 		void createScene();
 		void createTileset();

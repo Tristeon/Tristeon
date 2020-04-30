@@ -39,6 +39,7 @@
 #include <Editor/QtPlugins/AspectRatioWidget.h>
 #include <Editor/MenuBar.h>
 #include <Editor/TopBar.h>
+#include <Editor/PropertyWindow.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -81,6 +82,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		return layerEditor;
 	}
 
+	if (name == "properties")
+	{
+		auto* properties = new TristeonEditor::PropertyWindow(parent);
+		editor->addWindow(properties);
+		return properties;
+	}
+	
 	if (name == "menubar")
 	{
 		auto* menuBar = new TristeonEditor::MenuBar(parent);

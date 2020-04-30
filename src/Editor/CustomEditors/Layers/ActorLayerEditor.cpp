@@ -15,6 +15,7 @@ namespace TristeonEditor
 		list->setDefaultDropAction(Qt::DropAction::IgnoreAction);
 		list->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
 		list->setAlternatingRowColors(true);
+		list->setStyleSheet("alternate-background-color: rgb(139, 139, 139);");
 		layout->addWidget(list);
 
 		connect(list, &QListWidget::currentRowChanged, this, &ActorLayerEditor::selectedActorChanged);
@@ -27,7 +28,7 @@ namespace TristeonEditor
 			list->addItem(item);
 			actors[item] = actor;
 		}
-
+		
 		auto* buttonsParent = new QWidget(this);
 		layout->addWidget(buttonsParent);
 
@@ -43,6 +44,17 @@ namespace TristeonEditor
 		remove->setStyleSheet("background-color: rgb(170, 0, 0);");
 		horizontal->addWidget(remove);
 		connect(remove, &QPushButton::clicked, this, &ActorLayerEditor::removeActor);
+
+		nameChangedCallback = editor()->onSelectedActorNameChanged += [&](Tristeon::String const name)
+		{
+			list->currentItem()->setText(QString::fromStdString(name));
+		};
+	}
+
+	ActorLayerEditor::~ActorLayerEditor()
+	{
+		if (editor())
+			editor()->onSelectedActorNameChanged -= nameChangedCallback;
 	}
 
 	void ActorLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
@@ -58,7 +70,11 @@ namespace TristeonEditor
 
 	void ActorLayerEditor::actorRenamed(QListWidgetItem* item)
 	{
+		if (actors[item]->name == item->text().toStdString())
+			return;
+		
 		actors[item]->name = item->text().toStdString();
+		editor()->onSelectedActorNameChanged.invoke(item->text().toStdString());
 	}
 
 	void ActorLayerEditor::addActor()

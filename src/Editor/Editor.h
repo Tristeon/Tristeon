@@ -1,9 +1,11 @@
 #pragma once
-#include "MenuBar.h"
 #ifdef TRISTEON_EDITOR
-#include "EditorWindow.h"
+#include <Editor/EditorWindow.h>
+#include <Editor/MenuBar.h>
 
 #include <Actors/Actor.h>
+#include <Utils/Delegate.h>
+
 namespace TristeonEditor
 {
 	class Editor
@@ -17,6 +19,9 @@ namespace TristeonEditor
 
 		Tristeon::Actor* selectedActor() const;
 		void selectedActor(Tristeon::Actor* value);
+
+		Tristeon::Delegate<Tristeon::String> onSelectedActorNameChanged;
+		
 		void setMenuBar(MenuBar* menu_bar);
 	private:
 		Tristeon::Layer* _selectedLayer = nullptr;

@@ -63,10 +63,10 @@ namespace TristeonEditor
 	/**
 	 * Binds a custom editor to a given type.
 	 */
-	#define CUSTOM_EDITOR_H(type, editor) static DerivedRegister<type, editor> reg;
+	#define CUSTOM_EDITOR_H(type, editor) static DerivedRegister<type, editor> editor_reg;
 	 /**
 	  * Binds a custom editor to a given type.
 	  */
-	#define CUSTOM_EDITOR_CPP(type, editor) DerivedRegister<type, editor> editor::reg;
+	#define CUSTOM_EDITOR_CPP(type, editor) DerivedRegister<type, editor> editor::editor_reg;
 }
 #endif

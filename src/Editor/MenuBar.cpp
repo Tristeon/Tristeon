@@ -1,7 +1,8 @@
+#ifdef TRISTEON_EDITOR
 #include "Animations/AnimationClip.h"
 #include "AssetDatabase.h"
 #include "Serialization/JsonSerializer.h"
-#ifdef TRISTEON_EDITOR
+#include "Window.h"
 #include "MenuBar.h"
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>

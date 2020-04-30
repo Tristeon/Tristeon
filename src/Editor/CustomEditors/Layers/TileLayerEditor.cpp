@@ -54,7 +54,7 @@ namespace TristeonEditor
 		name->show();
 
 		button = new QPushButton("Load tileset", formParent);
-		button->setStyleSheet("background-color: rgb(255, 255, 255);");
+		button->setStyleSheet("background-color: rgb(255, 255, 255);\ncolor: rgb(0, 0, 0);");
 		button->show();
 
 		form->addRow(name, button);

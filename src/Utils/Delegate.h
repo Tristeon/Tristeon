@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <unordered_map>
 #include <functional>
 #include <algorithm> //Required in GNU GCC
 
@@ -25,15 +25,16 @@ namespace Tristeon
 
 		/**
 		 * Adds a function to the delegate. The function must have the same template as the Delegate.
+		 *
+		 * \returns Returns an ID integer which can be used to remove the callback again (with the -= operator)
 		 */
-		void operator+=(std::function<void(P...)> f);
+		int operator+=(std::function<void(P...)> f);
 
 		/**
-		 * Removes the given function from the delegate.
-		 * The function must have the same parameters as the delegate.
-		 * If this delegate doesn't contain the given function this will be ignored.
+		 * Removes the function at the given ID from the delegate.
+		 * If this delegate doesn't contain the given ID this will be ignored.
 		 */
-		void operator-=(std::function<void(P...)> f);
+		void operator-=(int id);
 
 		/**
 		 * Resets the delegate and assigns it to the specific given function.
@@ -46,14 +47,14 @@ namespace Tristeon
 		void clear();
 
 	private:
-		std::vector<std::function<void(P...)>> events;
+		std::unordered_map<int, std::function<void(P...)>> events;
 	};
 
 	template <typename ... P>
 	void Delegate<P...>::invoke(P... params)
 	{
-		for (unsigned int i = 0; i < events.size(); i++)
-			events[i](params...);
+		for (auto& p : events)
+			p.second(params...);
 	}
 
 	template <typename ... P>
@@ -63,25 +64,26 @@ namespace Tristeon
 	}
 
 	template <typename ... P>
-	void Delegate<P...>::operator+=(std::function<void(P...)> f)
+	int Delegate<P...>::operator+=(std::function<void(P...)> f)
 	{
-		events.push_back(f);
+		int id = rand(); // TODO: Make more safe by generating a nr that wont be replicated 
+		assert(events.find(id) == events.end()); 
+		events[id] = f;
+		return id;
 	}
 
 	template <typename ... P>
-	void Delegate<P...>::operator-=(std::function<void(P...)> f)
+	void Delegate<P...>::operator-=(int id)
 	{
-		//Try to find the given function
-		auto itr = std::find(events.begin(), events.end(), events);
-		if (itr != std::end(events))
-			events.erase(itr);
+		if (events.find(id) != events.end())
+			events.erase(id);
 	}
 
 	template <typename ... P>
 	void Delegate<P...>::operator=(std::function<void(P...)> f)
 	{
-		events.clear();
-		events.push_back(f);
+		clear();
+		operator+=(f);
 	}
 
 	template <typename ... P>

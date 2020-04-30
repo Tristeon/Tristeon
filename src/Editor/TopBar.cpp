@@ -1,5 +1,5 @@
-#include "Window.h"
 #ifdef TRISTEON_EDITOR
+#include "Window.h"
 #include "TopBar.h"
 #include <Engine.h>
 #include <Scenes/SceneManager.h>

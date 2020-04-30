@@ -25,7 +25,6 @@ namespace Tristeon
 		j["scale"] = scale;
 		j["rotation"] = rotation;
 		j["name"] = name;
-		j["tag"] = tag;
 
 		json serializedBehaviours = json::array_t();
 		for (size_t i = 0; i < _behaviours.size(); i++)
@@ -40,7 +39,6 @@ namespace Tristeon
 		scale = j["scale"];
 		rotation = j["rotation"];
 		name = j["name"].get<std::string>();
-		tag = j["tag"].get<std::string>();
 
 		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
@@ -71,6 +69,14 @@ namespace Tristeon
 				break;
 			}
 		}
+	}
+
+	Vector<Behaviour*> Actor::behaviours()
+	{
+		Vector<Behaviour*> result;
+		for (size_t i = 0; i < _behaviours.size(); i++)
+			result.add(_behaviours[i].get());
+		return result;
 	}
 
 	void Actor::destroy()

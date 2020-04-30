@@ -15,7 +15,7 @@ namespace Tristeon
 	 * Window inherits from QMainWindow and handles all the input callbacks.
 	 * It collects the events in a queue and plays them whenever the update loop calls pollEvents()
 	 */
-	class Window final : public QMainWindow, public Singleton<Window>
+	class Window : public QMainWindow, public Singleton<Window>
 	{
 		friend Engine;
 	public:

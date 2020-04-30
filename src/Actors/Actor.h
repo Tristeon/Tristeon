@@ -60,12 +60,6 @@ namespace Tristeon
 		void deserialize(json j) override;
 
 		/**
-		 * Returns the actor's tag.
-		 * Tags are an additional way to identify actors. Unlike names, tags are chosen from a list of pre-defined tags to simplify checking.
-		 */
-		std::string getTag() const { return tag; }
-
-		/**
 		 * Gets the first behaviour of type T. nullptr if no behaviour of type T was found.
 		 */
 		template<typename T>
@@ -76,6 +70,11 @@ namespace Tristeon
 		 */
 		template<typename T>
 		Vector<T*> behaviours();
+
+		/**
+		 * Gets a list with all of the actor's behaviours.
+		 */
+		Vector<Behaviour*> behaviours();
 		
 		/**
 		 * Adds a new behaviour of type T and returns the new behaviour.
@@ -88,9 +87,9 @@ namespace Tristeon
 		 * destroy() should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.
 		 */
 		void destroy();
+
 	private:
 		Vector<Unique<Behaviour>> _behaviours;
-		std::string tag = "";
 
 		/**
 		 * Removes and destroys the given behaviour.
