@@ -120,6 +120,7 @@ namespace TristeonEditor
 		scroll->setWidget(behavioursArea);
 
 		QPushButton* addBehaviour = new QPushButton(this);
+		addBehaviour->setStyleSheet("background-color: rgb(0, 170, 0);");
 		addBehaviour->setText("Add Behaviour");
 		layout->addWidget(addBehaviour);
 		connect(addBehaviour, &QPushButton::clicked, this, &ActorEditor::addButtonPressed);
@@ -141,7 +142,7 @@ namespace TristeonEditor
 			QAction* action = new QAction(pair.first.c_str(), this);
 			connect(action, &QAction::triggered, this, [&](bool checked)
 			{
-				auto* behaviour = actor->addBehaviour(pair.first.c_str());
+				auto* behaviour = actor->addBehaviour(pair.first);
 				addBehaviour(behaviour);
 			});
 			contextMenu.addAction(action);

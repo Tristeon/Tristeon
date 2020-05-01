@@ -66,6 +66,28 @@ namespace TristeonEditor
 				colorButton->setStyleSheet(QString::fromStdString(newColorStyle));
 			});
 		});
+
+		textureButton();
+	}
+
+	void SpriteEditor::textureButton()
+	{
+		QPushButton* changeTexture = new QPushButton("Change Texture", this);
+		layout->addWidget(changeTexture);
+		connect(changeTexture, &QPushButton::clicked, this, &SpriteEditor::changeTexturePressed);
+	}
+
+	void SpriteEditor::changeTexturePressed()
+	{
+		QDir const baseDir(QDir::currentPath());
+
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), QDir::currentPath() + "/Project", tr("Image Files (*.png *.jpg *.bmp)"));
+		QString const localPath = baseDir.relativeFilePath(path);
+		QString const fileName = QFileInfo(path).baseName();
+		if (path.isEmpty() || localPath.isEmpty())
+			return;
+
+		sprite->setTexture(localPath.toStdString(), false);
 	}
 }
 #endif

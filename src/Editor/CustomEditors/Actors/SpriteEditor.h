@@ -15,7 +15,9 @@ namespace TristeonEditor
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	protected:
 		void displayProperties() override;
+		virtual void textureButton();
 
+		void changeTexturePressed();
 		Tristeon::Sprite* sprite = nullptr;
 
 		QPushButton* colorButton = nullptr;
