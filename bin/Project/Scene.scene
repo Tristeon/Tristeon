@@ -398,7 +398,7 @@
                 {
                     "behaviours": [
                         {
-                            "groundedDistance": 256.0,
+                            "groundedDistance": 250.0,
                             "jumpVelocity": 1500.0,
                             "runSpeed": 100.0,
                             "typeID": "Tristeon::TestBehaviour"

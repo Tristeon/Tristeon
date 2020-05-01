@@ -16,7 +16,7 @@ namespace Tristeon
 	{
 		auto* polygon = new b2PolygonShape();
 
-		Vector2 const size = PhysicsWorld::pixelsToMeters({ _width, _height });
+		Vector2 const size = PhysicsWorld::pixelsToMeters({ _width * owner()->scale.x, _height * owner()->scale.y });
 		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
 		float rotationOffset = Math::toRadians(_rotationOffset);
 		if (includeBodyTransform)

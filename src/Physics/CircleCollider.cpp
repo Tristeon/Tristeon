@@ -39,7 +39,7 @@ namespace Tristeon
 	{
 		auto* circle = new b2CircleShape();
 
-		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius);
+		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius * std::max(owner()->scale.x, owner()->scale.y));
 		
 		if (includeBodyTransform)
 			circle->m_p = PhysicsWorld::pixelsToMeters(owner()->position + _offset).convert<b2Vec2>();
