@@ -9,6 +9,8 @@ namespace Tristeon
 	template <typename T>
 	struct DerivedActorRegister : Register<Actor>
 	{
+		static_assert(std::is_base_of<Actor, T>::value, "T has to be a type of Actor!");
+
 		DerivedActorRegister()
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Actor>);

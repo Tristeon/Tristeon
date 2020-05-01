@@ -11,6 +11,8 @@
 #include "Physics/Callbacks/ITileContactBegin.h"
 #include "Physics/Callbacks/ITileContactEnd.h"
 
+#include <Registers/BehaviourRegister.h>
+
 namespace Tristeon
 {
 	class PhysicsBody;
@@ -20,6 +22,7 @@ namespace Tristeon
 	 */
 	class TestBehaviour : public Behaviour, public IUpdate, public IStart, public IContactBegin, public IContactEnd, public ITileContactBegin, public ITileContactEnd
 	{
+		REGISTER_BEHAVIOUR_H(TestBehaviour)
 		REGISTER_TYPE_H(TestBehaviour)
 	public:
 		void start() override;

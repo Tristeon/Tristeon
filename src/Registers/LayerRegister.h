@@ -9,6 +9,8 @@ namespace Tristeon
 	template <typename T>
 	struct DerivedLayerRegister : Register<Layer>
 	{
+		static_assert(std::is_base_of<Layer, T>::value, "T has to be a type of Layer!");
+
 		DerivedLayerRegister()
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Layer>);

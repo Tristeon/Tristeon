@@ -1,5 +1,6 @@
 #pragma once
 #include <Physics/Collider.h>
+#include <Registers/BehaviourRegister.h>
 
 namespace Tristeon
 {
@@ -8,6 +9,7 @@ namespace Tristeon
 	 */
 	class CircleCollider : public Collider
 	{
+		REGISTER_BEHAVIOUR_H(CircleCollider)
 		REGISTER_TYPE_H(CircleCollider)
 	public:
 		virtual ~CircleCollider() = default;

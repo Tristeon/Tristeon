@@ -79,6 +79,24 @@ namespace Tristeon
 		return result;
 	}
 
+	Behaviour* Actor::addBehaviour(std::string type)
+	{
+		Behaviour* result = BehaviourRegister::createInstance(type).release();
+
+		if (result == nullptr)
+			return nullptr;
+		
+		result->_owner = this;
+		_behaviours.push_back(Unique<Behaviour>(result));
+
+		//Call start callback if available.
+		IStart* istart = dynamic_cast<IStart*>(result);
+		if (istart != nullptr)
+			istart->start();
+
+		return result;
+	}
+
 	void Actor::destroy()
 	{
 		Engine::instance()->destroyLater(this);

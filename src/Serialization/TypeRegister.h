@@ -9,6 +9,8 @@ namespace Tristeon
 	template <typename T>
 	struct SerializableRegister : Register<Serializable>
 	{
+		static_assert(std::is_base_of<Serializable, T>::value, "T has to be a type of Serializable!");
+
 		SerializableRegister()
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Serializable>);

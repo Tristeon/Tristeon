@@ -54,6 +54,8 @@ namespace TristeonEditor
 	template <typename Type, typename EditorType>
 	struct DerivedRegister : EditorRegister
 	{
+		static_assert(std::is_base_of<CustomEditor, EditorType>::value, "T has to be a type of CustomEditor!");
+
 		DerivedRegister()
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(Type), &createEditor<EditorType>);

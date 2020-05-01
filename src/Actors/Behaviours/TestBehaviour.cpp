@@ -14,6 +14,7 @@
 
 namespace Tristeon
 {
+	REGISTER_BEHAVIOUR_CPP(TestBehaviour)
 	REGISTER_TYPE_CPP(TestBehaviour)
 
 	void TestBehaviour::start()

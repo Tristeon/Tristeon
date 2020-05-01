@@ -7,6 +7,7 @@
 
 namespace Tristeon
 {
+	REGISTER_BEHAVIOUR_CPP(CircleCollider)
 	REGISTER_TYPE_CPP(CircleCollider)
 
 		json CircleCollider::serialize()

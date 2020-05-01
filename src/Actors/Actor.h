@@ -82,6 +82,8 @@ namespace Tristeon
 		template<typename T>
 		IsBehaviour<T>* addBehaviour();
 
+		Behaviour* addBehaviour(std::string type);
+
 		/**
 		 * Destroy removes the actor from the scene and deletes the Actor's instance.
 		 * destroy() should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.

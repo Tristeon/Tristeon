@@ -11,6 +11,8 @@
 #include <Callbacks/IFixedUpdate.h>
 #include <Callbacks/IPreDestroy.h>
 
+#include <Registers/BehaviourRegister.h>
+
 namespace Tristeon
 {
 	/**
@@ -25,7 +27,8 @@ namespace Tristeon
 		friend class SceneManager;
 		friend struct RaycastResult;
 		friend class CollisionListener;
-		
+
+		REGISTER_BEHAVIOUR_H(PhysicsBody)
 		REGISTER_TYPE_H(PhysicsBody)
 	public:
 		json serialize() override;

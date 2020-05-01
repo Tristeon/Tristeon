@@ -63,9 +63,11 @@ namespace TristeonEditor
 				case detail::value_t::number_float:
 				{
 					auto* floatField = new QDoubleSpinBox(formWidget);
+					floatField->setFocusPolicy(Qt::StrongFocus);
+					floatField->setSingleStep(0);
+					floatField->setButtonSymbols(QDoubleSpinBox::NoButtons);
 					floatField->setMinimum(std::numeric_limits<float>::min());
 					floatField->setMaximum(std::numeric_limits<float>::max());
-					floatField->setSingleStep(1);
 					floatField->setValue(iterator.value().get<float>());
 					floatField->show();
 
@@ -80,9 +82,11 @@ namespace TristeonEditor
 				case detail::value_t::number_integer:
 				{
 					auto* intField = new QSpinBox(formWidget);
+					intField->setFocusPolicy(Qt::StrongFocus);
 					intField->setMinimum(std::numeric_limits<int>::min());
 					intField->setMaximum(std::numeric_limits<int>::max());
-					intField->setSingleStep(1);
+					intField->setSingleStep(0);
+					intField->setButtonSymbols(QDoubleSpinBox::NoButtons);
 					intField->setValue(iterator.value().get<int>());
 					intField->show();
 
@@ -99,9 +103,11 @@ namespace TristeonEditor
 				case detail::value_t::number_unsigned:
 				{
 					auto* unsignedField = new QSpinBox(formWidget);
+					unsignedField->setFocusPolicy(Qt::StrongFocus);
 					unsignedField->setMinimum(0);
 					unsignedField->setMaximum(std::numeric_limits<int>::max());
-					unsignedField->setSingleStep(1);
+					unsignedField->setSingleStep(0);
+					unsignedField->setButtonSymbols(QDoubleSpinBox::NoButtons);
 					unsignedField->setValue(iterator.value().get<int>());
 					unsignedField->show();
 
@@ -131,6 +137,17 @@ namespace TristeonEditor
 	void BehaviourEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		behaviour = dynamic_cast<Tristeon::Behaviour*>(current);
+	}
+
+	bool BehaviourEditor::eventFilter(QObject* o, QEvent* e)
+	{
+		if (e->type() == QEvent::Wheel &&
+			qobject_cast<QDoubleSpinBox*>(o))
+		{
+			e->ignore();
+			return true;
+		}
+		return QWidget::eventFilter(o, e);
 	}
 }
 #endif

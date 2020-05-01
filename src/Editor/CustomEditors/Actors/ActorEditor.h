@@ -18,7 +18,11 @@ namespace TristeonEditor
 
 		void actorNameChanged(const QString& name);
 
-		Tristeon::Vector<QWidget*> behaviourWidgets;
+		void addButtonPressed();
+
+		void addBehaviour(Tristeon::Behaviour* behaviour);
+
+		QWidget* behavioursArea = nullptr;
 		Tristeon::Actor* actor = nullptr;
 	};
 }
