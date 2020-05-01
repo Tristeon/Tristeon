@@ -38,6 +38,7 @@ namespace TristeonEditor
 	{
 		if (!Tristeon::Engine::playMode())
 		{
+			Tristeon::Window::instance()->centralWidget()->setFocus();
 			Tristeon::SceneManager::saveCurrent();
 			Tristeon::SceneManager::reload();
 			Tristeon::Engine::playMode(true);
@@ -66,6 +67,8 @@ namespace TristeonEditor
 		}
 
 		Tristeon::Engine::playMode(!pause->isChecked());
+		if (!pause->isChecked())
+			Tristeon::Window::instance()->centralWidget()->setFocus();
 	}
 }
 #endif
