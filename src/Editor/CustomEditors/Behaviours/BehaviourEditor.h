@@ -13,7 +13,8 @@ namespace TristeonEditor
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	protected:
-		bool eventFilter(QObject* o, QEvent* e) override;
+		virtual void displayContents();
+		void removeButtonPressed();
 	private:
 		Tristeon::Behaviour* behaviour = nullptr;
 		json data;

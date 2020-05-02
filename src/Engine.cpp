@@ -78,7 +78,9 @@ namespace Tristeon
 			}
 
 			for (auto const& behaviour : destroyedBehaviours) behaviour->owner()->removeBehaviour(behaviour);
+			destroyedBehaviours.clear();
 			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
+			destroyedActors.clear();
 			
 			_view->paintGL();
 

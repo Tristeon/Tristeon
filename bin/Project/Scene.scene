@@ -398,12 +398,6 @@
                 {
                     "behaviours": [
                         {
-                            "groundedDistance": 250.0,
-                            "jumpVelocity": 1500.0,
-                            "runSpeed": 100.0,
-                            "typeID": "Tristeon::TestBehaviour"
-                        },
-                        {
                             "angularDamping": 0.009999999776482582,
                             "continuous": true,
                             "enabled": true,
@@ -425,6 +419,12 @@
                             "rotationOffset": 0.0,
                             "sensor": false,
                             "typeID": "Tristeon::CircleCollider"
+                        },
+                        {
+                            "groundedDistance": 256.0,
+                            "jumpVelocity": 1500.0,
+                            "runSpeed": 100.0,
+                            "typeID": "Tristeon::TestBehaviour"
                         }
                     ],
                     "colour": {
