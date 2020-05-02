@@ -14,6 +14,8 @@ namespace Tristeon
 		static void remove(String const& path);
 
 		static Vector<String> get(String const& extension);
+		static String findByName(String const& name);
+		static String findByName(String const& name, String const& extension);
 		
 		static void save();
 		static void load();

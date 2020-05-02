@@ -51,11 +51,6 @@ namespace Tristeon
 		static Delegate<Scene*> sceneLoaded;
 	private:
 		/**
-		 * Finds the path of the first scene with the given name.
-		 */
-		static String findPath(String const& name);
-
-		/**
 		 * TODO: Remove once we have an editor and this becomes unnecessary.
 		 */
 		static void saveTestScene();

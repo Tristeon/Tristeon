@@ -1,17 +1,17 @@
 {
-    "cols": 0,
-    "endIndex": 0,
-    "loops": false,
-    "rows": 0,
+    "cols": 4,
+    "endIndex": 8,
+    "loops": true,
+    "rows": 4,
     "spacing": {
-        "bottom": 0,
-        "horizontalFrame": 0,
-        "left": 0,
-        "right": 0,
-        "top": 0,
-        "verticalFrame": 0
+        "bottom": 1,
+        "horizontalFrame": 1,
+        "left": 1,
+        "right": 1,
+        "top": 1,
+        "verticalFrame": 1
     },
     "startIndex": 0,
-    "texturePath": "",
+    "texturePath": "Project/SpriteSheet.png",
     "typeID": "Tristeon::AnimationClip"
 }

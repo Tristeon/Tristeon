@@ -450,6 +450,7 @@
                 },
                 {
                     "behaviours": [],
+                    "clipPath": "Project/AnimClip.clip",
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,

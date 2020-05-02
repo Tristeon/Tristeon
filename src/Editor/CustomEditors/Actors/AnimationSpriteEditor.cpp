@@ -11,13 +11,25 @@ namespace TristeonEditor
 		animSprite = (Tristeon::AnimationSprite*)current;
 	}
 
-	void AnimationSpriteEditor::displayProperties()
+	void AnimationSpriteEditor::textureButton()
 	{
-		SpriteEditor::displayProperties();
+		QPushButton* button = new QPushButton(this);
+		button->setText("Load Animation Clip");
+		connect(button, &QPushButton::clicked, this, &AnimationSpriteEditor::loadAnimationClip);
+		layout->addWidget(button);
+	}
 
-		//QWidget* formWidget = new QWidget(this);
-		//QFormLayout* form = new QFormLayout(formWidget);
-		//formWidget->setLayout(form);
+	void AnimationSpriteEditor::loadAnimationClip()
+	{
+		QDir const baseDir(QDir::currentPath());
+
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Animation Clip"), QDir::currentPath() + "/Project", "*.clip");
+		QString const localPath = baseDir.relativeFilePath(path);
+		QString const fileName = QFileInfo(path).baseName();
+		if (path.isEmpty() || localPath.isEmpty())
+			return;
+
+		animSprite->setAnimationClip(localPath.toStdString());
 	}
 }
 #endif

@@ -23,13 +23,13 @@ namespace Tristeon
 		/**
 		 * Sets the current AnimationClip. Resets the frame counter to 0.
 		 */
-		void setAnimationClip(AnimationClip* clip);
+		void setAnimationClip(String const& clipPath);
 	protected:
 		virtual void render(QOpenGLShaderProgram* program) override;
 		virtual void update() override;
 		virtual Shader* getShader() override;
 
 		float currentFrame = 0;
-		AnimationClip* clip = nullptr;
+		Unique<AnimationClip> clip;
 	};
 }

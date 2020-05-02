@@ -40,6 +40,37 @@ namespace Tristeon
 		return Vector<String>();
 	}
 
+	String AssetDatabase::findByName(String const& name)
+	{
+		for (auto pair : assets)
+		{
+			for (String path : pair.second)
+			{
+				QFile const file{ QString(path.c_str()) };
+				QFileInfo info{ file };
+
+				if (info.baseName().toStdString() == name)
+					return path;
+			}
+		}
+		return "";
+	}
+
+	String AssetDatabase::findByName(String const& name, String const& extension)
+	{
+		Vector<String> paths = get(extension);
+		for (String path : paths)
+		{
+			QFile const file{ QString(path.c_str()) };
+			QFileInfo info{ file };
+
+			if (info.baseName().toStdString() == name)
+				return path;
+		}
+
+		return "";
+	}
+
 	void AssetDatabase::save()
 	{
 		json j = json::array_t();

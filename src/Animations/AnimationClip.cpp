@@ -1,17 +1,28 @@
 #include "AnimationClip.h"
 
+#include "Serialization/JsonSerializer.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(AnimationClip)
 
+	AnimationClip::AnimationClip(String const& path)
+	{
+		json const j = JsonSerializer::load(path);
+		filePath = path;
+		if (j.empty())
+			return;
+		deserialize(j);
+	}
+
 	AnimationClip::AnimationClip(std::string const& texturePath, 
-		uint const& cols, 
-		uint const& rows,
-		bool const& loops, 
-		int const& startIndex, 
-		int const& endIndex,
-		Spacing const& spacing,
-		float const& playbackRate) : cols(cols), rows(rows), spacing(spacing), loops(loops), texturePath(texturePath), playbackRate(playbackRate)
+	                             uint const& cols, 
+	                             uint const& rows,
+	                             bool const& loops, 
+	                             int const& startIndex, 
+	                             int const& endIndex,
+	                             Spacing const& spacing,
+	                             float const& playbackRate) : cols(cols), rows(rows), spacing(spacing), loops(loops), texturePath(texturePath), playbackRate(playbackRate)
 	{
 		this->startIndex = startIndex == -1 ? 0 : startIndex;
 		this->endIndex = endIndex == -1 ? cols * rows : endIndex;

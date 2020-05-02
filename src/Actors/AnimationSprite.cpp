@@ -3,6 +3,7 @@
 #include <QOpenGLShaderProgram>
 #include <Animations/AnimationClip.h>
 
+#include "AssetDatabase.h"
 #include "Rendering/GameView.h"
 
 namespace Tristeon
@@ -14,25 +15,20 @@ namespace Tristeon
 	{
 		json j = Sprite::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(AnimationSprite);
-
-		//TODO: Animation clips from file
-
+		j["clipPath"] = clip ? clip->filePath : "";
 		return j;
 	}
 
 	void AnimationSprite::deserialize(json j)
 	{
 		Sprite::deserialize(j);
-		
-		//TODO load animation clips from file
-
-		//TODO: Memory leak here
-		clip = new AnimationClip("Project/SpriteSheet.png", 4, 4, true, 0, 8, AnimationClip::Spacing{ 1, 1, 1, 1, 1, 1 });
+		if (j.contains("clipPath") && clip == nullptr || clip->filePath != j["clipPath"].get<String>())
+			setAnimationClip(j["clipPath"]);
 	}
 
-	void AnimationSprite::setAnimationClip(AnimationClip* clip)
+	void AnimationSprite::setAnimationClip(String const& clipPath)
 	{
-		this->clip = clip;
+		this->clip = std::make_unique<AnimationClip>(clipPath);
 		setTexture(clip->texturePath, false);
 		currentFrame = 0;
 	}

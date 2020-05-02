@@ -11,8 +11,9 @@ namespace TristeonEditor
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	protected:
-		void displayProperties() override;
-
+		void textureButton() override;
+		void loadAnimationClip();
+		
 		Tristeon::AnimationSprite* animSprite = nullptr;
 	};
 }
