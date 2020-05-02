@@ -147,6 +147,7 @@ namespace Tristeon
 	inline void to_json(nlohmann::json& j, const Vector2Int& p) {
 		j["x"] = p.x;
 		j["y"] = p.y;
+		j["typeID"] = TRISTEON_TYPENAME(Vector2Int);
 	}
 
 	inline void from_json(const nlohmann::json& j, Vector2Int& p) {

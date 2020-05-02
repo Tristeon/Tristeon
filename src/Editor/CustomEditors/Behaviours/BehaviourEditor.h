@@ -1,4 +1,5 @@
 #pragma once
+#include <qspinbox.h>
 #ifdef TRISTEON_EDITOR
 #include <Editor/CustomEditors/CustomEditor.h>
 #include <Editor/CustomEditors/EditorRegister.h>
@@ -15,6 +16,11 @@ namespace TristeonEditor
 	protected:
 		virtual void displayContents();
 		void removeButtonPressed();
+
+		QDoubleSpinBox* displayFloat(QWidget* parent, float value, std::function<void(float)> changeCallback);
+		QDoubleSpinBox* displayFloat(QWidget* parent, float value, float minValue, float maxValue, std::function<void(float)> changeCallback);
+		QSpinBox* displayInt(QWidget* parent, int value, std::function<void(int)> changeCallback);
+		QSpinBox* displayInt(QWidget* parent, int value, int minValue, int maxValue, std::function<void(int)> changeCallback);
 	private:
 		Tristeon::Behaviour* behaviour = nullptr;
 		json data;

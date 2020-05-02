@@ -23,6 +23,7 @@ namespace TristeonEditor
 		Tristeon::Delegate<Tristeon::String> onSelectedActorNameChanged;
 		
 		void setMenuBar(MenuBar* menu_bar);
+
 	private:
 		Tristeon::Layer* _selectedLayer = nullptr;
 		Tristeon::Actor* _selectedActor = nullptr;

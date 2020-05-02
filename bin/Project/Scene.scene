@@ -1,10 +1,12 @@
 {
     "camera": {
         "position": {
+            "typeID": "Tristeon::Vector2Int",
             "x": 99,
             "y": -69
         },
         "size": {
+            "typeID": "Tristeon::Vector2Int",
             "x": 1920,
             "y": 1080
         },
@@ -411,6 +413,7 @@
                             "density": 1.0,
                             "friction": 0.30000001192092896,
                             "offset": {
+                                "typeID": "Tristeon::Vector2",
                                 "x": 0.0,
                                 "y": 0.0
                             },
@@ -431,16 +434,19 @@
                         "a": 1.0,
                         "b": 1.0,
                         "g": 1.0,
-                        "r": 1.0
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
                     },
                     "height": 256,
                     "name": "Penguin Test 2",
                     "position": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 750.0,
                         "y": 1200.0
                     },
                     "rotation": 0.0,
                     "scale": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 1.0,
                         "y": 1.0
                     },
@@ -449,22 +455,51 @@
                     "width": 256
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": false,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 1.0,
+                            "friction": 0.0,
+                            "height": 256.0,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 1.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::BoxCollider",
+                            "width": 256.0
+                        }
+                    ],
                     "clipPath": "Project/AnimClip.clip",
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
                         "g": 1.0,
-                        "r": 1.0
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
                     },
                     "height": 256,
                     "name": "Animated numbers",
                     "position": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 2000.0,
                         "y": 1250.0
                     },
                     "rotation": 0.0,
                     "scale": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 1.0,
                         "y": 1.0
                     },
@@ -478,16 +513,19 @@
                         "a": 1.0,
                         "b": 1.0,
                         "g": 1.0,
-                        "r": 1.0
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
                     },
                     "height": 64,
                     "name": "My White Square",
                     "position": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 200.0,
                         "y": 1000.0
                     },
                     "rotation": 0.0,
                     "scale": {
+                        "typeID": "Tristeon::Vector2",
                         "x": 1.0,
                         "y": 1.0
                     },
@@ -497,35 +535,6 @@
                 }
             ],
             "name": "ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0
-                    },
-                    "height": 256,
-                    "name": "Penguin 2",
-                    "position": {
-                        "x": 2000.0,
-                        "y": 1250.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Project/Penguin.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 256
-                }
-            ],
-            "name": "Decoration",
             "typeID": "Tristeon::ActorLayer"
         }
     ],
