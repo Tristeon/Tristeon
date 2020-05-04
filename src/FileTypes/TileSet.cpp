@@ -86,7 +86,6 @@ namespace Tristeon
 		horizontalSpacing = j["horizontalSpacing"];
 		verticalSpacing = j["verticalSpacing"];
 
-		//TODO: Deserialize tileset tile info
 		this->tileInfo = std::make_unique<Tile[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
 			tileInfo[i] = j["tileInfo"][i];

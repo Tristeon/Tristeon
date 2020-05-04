@@ -13,94 +13,30 @@ namespace TristeonEditor
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
 		
-		QSpinBox* cols = EditorFields::intField(formWidget, data["cols"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["cols"] = (unsigned int)value;
-				saveData();
-			});
-		form->addRow(new QLabel("Columns"), cols);
+		EditorFields::uintField(form, "Columns", data["cols"], [&](uint value) { data["cols"] = value; saveData(); });
+		EditorFields::uintField(form, "Rows", data["rows"], [&](uint value) { data["rows"] = value; saveData(); });
 
-		QSpinBox* rows = EditorFields::intField(formWidget, data["rows"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["rows"] = (unsigned int)value;
-				saveData();
-			});
-		form->addRow(new QLabel("Rows"), rows);
-
-		QWidget* spacing = new QWidget(formWidget);
-		QFormLayout* spacingLayout = new QFormLayout(spacing);
+		auto* spacing = new QWidget(formWidget);
+		layout->addWidget(spacing);
+		auto* spacingLayout = new QFormLayout(spacing);
 		spacing->setLayout(spacingLayout);
-
-		QSpinBox* spacingLeft = EditorFields::intField(formWidget, data["spacing"]["left"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["left"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Left"), spacingLeft);
-		QSpinBox* spacingRight = EditorFields::intField(formWidget, data["spacing"]["right"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["right"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Right"), spacingRight);
-		QSpinBox* spacingTop = EditorFields::intField(formWidget, data["spacing"]["top"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["top"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Top"), spacingTop);
-		QSpinBox* spacingBottom = EditorFields::intField(formWidget, data["spacing"]["bottom"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["bottom"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Bottom"), spacingBottom);
-		QSpinBox* spacingHorizontalFrame = EditorFields::intField(formWidget, data["spacing"]["horizontalFrame"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["horizontalFrame"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Bottom"), spacingHorizontalFrame);
-		QSpinBox* spacingVerticalFrame = EditorFields::intField(formWidget, data["spacing"]["verticalFrame"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["spacing"]["verticalFrame"] = (unsigned int)value;
-				saveData();
-			});
-		spacingLayout->addRow(new QLabel("Bottom"), spacingVerticalFrame);
 		
+		EditorFields::uintField(spacingLayout, "Left", data["spacing"]["left"], [&](uint value) { data["spacing"]["left"] = value; saveData(); });
+		EditorFields::uintField(spacingLayout, "Right", data["spacing"]["right"], [&](uint value) { data["spacing"]["right"] = value; saveData(); });
+		EditorFields::uintField(spacingLayout, "Top", data["spacing"]["top"], [&](uint value) { data["spacing"]["top"] = value; saveData(); });
+		EditorFields::uintField(spacingLayout, "Bottom", data["spacing"]["bottom"], [&](uint value) { data["spacing"]["bottom"] = value; saveData(); });
+		EditorFields::uintField(spacingLayout, "Horizontal", data["spacing"]["horizontalFrame"], [&](uint value) { data["spacing"]["horizontalFrame"] = value; saveData(); });
+		EditorFields::uintField(spacingLayout, "Vertical", data["spacing"]["verticalFrame"], [&](uint value) { data["spacing"]["verticalFrame"] = value; saveData(); });
 		form->addRow(new QLabel("Spacing"), spacing);
 
-		QSpinBox* start = EditorFields::intField(formWidget, data["startIndex"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["startIndex"] = (unsigned int)value;
-				saveData();
-			});
-		form->addRow(new QLabel("Start Index"), start);
+		EditorFields::uintField(form, "Start Index", data["startIndex"], [&](uint value) { data["startIndex"] = value; saveData(); });
+		EditorFields::uintField(form, "End Index", data["endIndex"], [&](uint value) { data["endIndex"] = value; saveData(); });
 
-		QSpinBox* end = EditorFields::intField(formWidget, data["endIndex"].get<int>(), 0, std::numeric_limits<int>::max(), [&](int value)
-			{
-				data["endIndex"] = (unsigned int)value;
-				saveData();
-			});
-		form->addRow(new QLabel("End Index"), end);
+		EditorFields::boolField(form, "Loops", data["loops"], [&](int value) { data["loops"] = bool((Qt::CheckState)value == Qt::Checked); saveData(); });
 
-		auto* loops = new QCheckBox(formWidget);
-		loops->setCheckState(data["loops"].get<bool>() ? Qt::Checked : Qt::Unchecked);
-		connect(loops, &QCheckBox::stateChanged, this, [&](int state)
-			{
-				data["loops"] = bool((Qt::CheckState)state == Qt::Checked);
-				saveData();
-			});
-		form->addRow(new QLabel("Loops"), loops);
+		EditorFields::floatField(form, "Playback Rate", data["playbackRate"], [&](float value) { data["playbackRate"] = value; saveData(); });
 
-		QDoubleSpinBox* playbackRate = EditorFields::floatField(formWidget, data["playbackRate"].get<float>(), [&](float value)
-			{
-				data["playbackRate"] = value;
-				saveData();
-			});
-		form->addRow(new QLabel("Playback Rate"), playbackRate);
-
-		QPushButton* changeTexture = new QPushButton("Change Texture", this);
+		auto* changeTexture = new QPushButton("Change Texture", this);
 		layout->addWidget(changeTexture);
 		connect(changeTexture, &QPushButton::clicked, this, [&]()
 			{

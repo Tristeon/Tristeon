@@ -52,201 +52,98 @@ namespace TristeonEditor
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
 
-		for (auto iterator = data.begin(); iterator != data.end(); ++iterator)
+		for (auto it = data.begin(); it != data.end(); ++it)
 		{
-			if (iterator.key() == "typeID") continue;
+			if (it.key() == "typeID") continue;
 
-			auto * name = new QLabel(QString::fromStdString(iterator.key()), formWidget);
-			QWidget * field = nullptr;
-
-			switch (iterator.value().type())
+			switch (it.value().type())
 			{
-			case detail::value_t::boolean:
-			{
-				auto* box = new QCheckBox(formWidget);
-				field = box;
-				box->setCheckState(iterator.value().get<bool>() ? Qt::Checked : Qt::Unchecked);
-				connect(box, &QCheckBox::stateChanged, this, [=](int state)
-					{
-						data[iterator.key()] = (Qt::CheckState)state == Qt::Checked;
-						behaviour->deserialize(data);
-					});
-				break;
-			}
-			case detail::value_t::string:
-			{
-				auto line = new QLineEdit(formWidget);
-				field = line;
-				line->setText(QString::fromStdString(iterator.value()));
-				connect(line, &QLineEdit::textChanged, this, [=](const QString & value)
-					{
-						data[iterator.key()] = value.toStdString();
-						behaviour->deserialize(data);
-					});
-				break;
-			}
-			case detail::value_t::object:
-			{
-				if (iterator.value().contains("typeID"))
+				case detail::value_t::boolean:
 				{
-					Tristeon::String type = iterator.value()["typeID"];
-					if (type == TRISTEON_TYPENAME(Tristeon::Vector2))
+					EditorFields::boolField(form, it.key(), data[it.key()], [&](int state) { data[it.key()] = (bool)((Qt::CheckState)state == Qt::Checked); behaviour->deserialize(data); });
+					break;
+				}
+				case detail::value_t::string:
+				{
+					EditorFields::stringField(form, it.key(), data[it.key()], [&](std::string value) { data[it.key()] = value; behaviour->deserialize(data); });
+					break;
+				}
+				case detail::value_t::object:
+				{
+					Tristeon::String const type = it.value().contains("typeID") ? it.value()["typeID"] : "";
+
+					bool const isVector2 = type == TRISTEON_TYPENAME(Tristeon::Vector2);
+					bool const isVector2Int = type == TRISTEON_TYPENAME(Tristeon::Vector2Int);
+					bool const isVector3 = type == TRISTEON_TYPENAME(Tristeon::Vector3);
+					bool const isVector4 = type == TRISTEON_TYPENAME(Tristeon::Vector4);
+
+					QWidget* field;
+					if (isVector2 || isVector2Int || isVector3 || isVector4)
 					{
-						field = new QWidget(formWidget);
+						field = new QWidget();
 						auto* layout = new QHBoxLayout(field);
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
-							{
-								data[iterator.key()]["x"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
-							{
-								data[iterator.key()]["y"] = value;
-								behaviour->deserialize(data);
-							});
+						if (isVector2 || isVector3 || isVector4)
+						{
+							auto* x = EditorFields::floatField(field, it.value()["x"], [&](float value) { data[it.key()]["x"] = value; behaviour->deserialize(data); });
+							auto* y = EditorFields::floatField(field, it.value()["y"], [&](float value) { data[it.key()]["y"] = value; behaviour->deserialize(data); });
+							layout->addWidget(x);
+							layout->addWidget(y);
+						}
+						if (isVector3 || isVector4)
+						{
+							auto* z = EditorFields::floatField(field, it.value()["z"], [&](float value) { data[it.key()]["z"] = value; behaviour->deserialize(data); });
+							layout->addWidget(z);
+						}
+						if (isVector4)
+						{
+							auto* w = EditorFields::floatField(field, it.value()["w"], [&](float value) { data[it.key()]["w"] = value; behaviour->deserialize(data); });
+							layout->addWidget(w);
+						}
 
-						layout->addWidget(x);
-						layout->addWidget(y);
-					}
-					else if (type == TRISTEON_TYPENAME(Tristeon::Vector3))
-					{
-						field = new QWidget(formWidget);
-						auto* layout = new QHBoxLayout(field);
-						layout->setContentsMargins(0, 0, 0, 0);
-						field->setLayout(layout);
-
-						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
-							{
-								data[iterator.key()]["x"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
-							{
-								data[iterator.key()]["y"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* z = EditorFields::floatField(field, iterator.value()["z"], [=](float value)
-							{
-								data[iterator.key()]["z"] = value;
-								behaviour->deserialize(data);
-							});
-
-						layout->addWidget(x);
-						layout->addWidget(y);
-						layout->addWidget(z);
-					}
-					else if (type == TRISTEON_TYPENAME(Tristeon::Vector4))
-					{
-						field = new QWidget(formWidget);
-						auto* layout = new QHBoxLayout(field);
-						layout->setContentsMargins(0, 0, 0, 0);
-						field->setLayout(layout);
-
-						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
-							{
-								data[iterator.key()]["x"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
-							{
-								data[iterator.key()]["y"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* z = EditorFields::floatField(field, iterator.value()["z"], [=](float value)
-							{
-								data[iterator.key()]["z"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* w = EditorFields::floatField(field, iterator.value()["w"], [=](float value)
-							{
-								data[iterator.key()]["w"] = value;
-								behaviour->deserialize(data);
-							});
-
-						layout->addWidget(x);
-						layout->addWidget(y);
-						layout->addWidget(z);
-						layout->addWidget(w);
-					}
-					else if (type == TRISTEON_TYPENAME(Tristeon::Vector2Int))
-					{
-						field = new QWidget(formWidget);
-						auto* layout = new QHBoxLayout(field);
-						layout->setContentsMargins(0, 0, 0, 0);
-						field->setLayout(layout);
-
-						auto* x = EditorFields::intField(field, iterator.value()["x"], [=](int value)
-							{
-								data[iterator.key()]["x"] = value;
-								behaviour->deserialize(data);
-							});
-						auto* y = EditorFields::intField(field, iterator.value()["y"], [=](int value)
-							{
-								data[iterator.key()]["y"] = value;
-								behaviour->deserialize(data);
-							});
-
-						layout->addWidget(x);
-						layout->addWidget(y);
+						if (isVector2Int)
+						{
+							auto* x = EditorFields::intField(field, it.value()["x"], [&](int value) { data[it.key()]["x"] = value; behaviour->deserialize(data); });
+							auto* y = EditorFields::intField(field, it.value()["y"], [&](int value) { data[it.key()]["y"] = value; behaviour->deserialize(data); });
+							layout->addWidget(x);
+							layout->addWidget(y);
+						}
 					}
 					else
 					{
-						field = new QLabel(QString::fromStdString(std::string("Object of type: ") + type + " has no editor (yet)!"));
+						//TODO: Support nested objects in behaviour editor
+						field = new QLabel("Nested objects aren't supported yet");
 					}
-				}
-				else
-				{
-					field = new QLabel("Objects not supported yet", formWidget);
-				}
-				//TODO: Support nested objects in property editor
-				break;
-			}
-			case detail::value_t::array:
-			{
-				//TODO: Support arrays in property editor
-				field = new QLabel("Arrays not supported yet", formWidget);
-				break;
-			}
-			case detail::value_t::number_float:
-			{
-				field = EditorFields::floatField(formWidget, iterator.value(), [=](float value)
-					{
-						data[iterator.key()] = value;
-						behaviour->deserialize(data);
-					});
-				break;
-			}
-			case detail::value_t::number_integer:
-			{
-				field = EditorFields::intField(formWidget, iterator.value(), [=](int value)
-					{
-						data[iterator.key()] = value;
-						behaviour->deserialize(data);
-					});
-				break;
-			}
-			case detail::value_t::number_unsigned:
-			{
-				field = EditorFields::intField(formWidget, iterator.value(), 0, std::numeric_limits<int>::max(), [=](int value)
-					{
-						data[iterator.key()] = (unsigned int)value;
-						behaviour->deserialize(data);
-					});
-				break;
-			}
-			default:
-				break;
-			}
 
-			if (field != nullptr)
-				form->addRow(name, field);
-			else
-			{
-				name->deleteLater();
-				name->hide();
+					if (field != nullptr)
+						form->addRow(new QLabel(QString::fromStdString(it.key())), field);
+					break;
+				}
+				case detail::value_t::array:
+				{
+					//TODO: Support arrays in behaviour editor
+					EditorFields::labelField(form, it.key(), "Arrays not supported yet");
+					break;
+				}
+				case detail::value_t::number_float:
+				{
+					EditorFields::floatField(form, it.key(), it.value(), [=](float value){ data[it.key()] = value; behaviour->deserialize(data); });
+					break;
+				}
+				case detail::value_t::number_integer:
+				{
+					EditorFields::intField(form, it.key(), it.value(), [=](int value) { data[it.key()] = value; behaviour->deserialize(data); });
+					break;
+				}
+				case detail::value_t::number_unsigned:
+				{
+					EditorFields::intField(form, it.key(), it.value(), 0, std::numeric_limits<int>::max(), [=](int value) { data[it.key()] = (unsigned int)value; behaviour->deserialize(data); });
+					break;
+				}
+				default:
+					break;
 			}
 		}
 	}
