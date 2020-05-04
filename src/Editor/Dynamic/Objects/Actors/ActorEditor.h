@@ -1,26 +1,24 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include <Editor/CustomEditors/CustomEditor.h>
-#include <Editor/CustomEditors/EditorRegister.h>
+#include <Editor/Dynamic/Objects/ObjectEditor.h>
+#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 #include <Actors/Actor.h>
 namespace TristeonEditor
 {
-	class ActorEditor : public CustomEditor
+	class ActorEditor : public ObjectEditor
 	{
-		CUSTOM_EDITOR_H(Tristeon::Actor, ActorEditor)
+		OBJECT_EDITOR_H(Tristeon::Actor, ActorEditor)
 	public:
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
-
-	protected:
 		virtual void displayProperties();
+
+	private:
 		void displayBehaviours();
+		void addBehaviour(Tristeon::Behaviour* behaviour);
 
 		void actorNameChanged(const QString& name);
-
 		void addButtonPressed();
-
-		void addBehaviour(Tristeon::Behaviour* behaviour);
 
 		QWidget* behavioursArea = nullptr;
 		Tristeon::Actor* actor = nullptr;

@@ -2,6 +2,7 @@
 #include "Editor.h"
 #include <Window.h>
 #include <Scenes/SceneManager.h>
+#include "TypeDefinitions.h"
 
 namespace TristeonEditor
 {
@@ -57,6 +58,19 @@ namespace TristeonEditor
 
 		for (auto window : windows)
 			window->selectedActorChanged(value);
+	}
+
+	FileItem* Editor::selectedFileItem() const
+	{
+		return _selectedFileItem;
+	}
+
+	void Editor::selectedFileItem(FileItem* value)
+	{
+		_selectedFileItem = value;
+
+		for (auto window : windows)
+			window->selectedFilePathChanged(value);
 	}
 
 	void Editor::setMenuBar(MenuBar* menu_bar)

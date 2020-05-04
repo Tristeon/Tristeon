@@ -2,14 +2,14 @@
 #include "ActorEditor.h"
 #include <QtWidgets>
 #include <Editor/Editor.h>
-#include <Editor/CustomEditors/Behaviours/BehaviourEditor.h>
 #include <Registers/BehaviourRegister.h>
+#include <Editor/Dynamic/Objects/Behaviours/BehaviourEditor.h>
 
 using Tristeon::Actor;
 
 namespace TristeonEditor
 {
-	CUSTOM_EDITOR_CPP(Tristeon::Actor, ActorEditor)
+	OBJECT_EDITOR_CPP(Tristeon::Actor, ActorEditor)
 	
 	void ActorEditor::initialize()
 	{
@@ -163,7 +163,7 @@ namespace TristeonEditor
 
 		json j = behaviour->serialize();
 
-		CustomEditor * widget = EditorRegister::createInstance(j["typeID"]);
+		ObjectEditor * widget = ObjectEditorRegister::createInstance(j["typeID"]);
 
 		if (widget == nullptr)
 			widget = new BehaviourEditor(); //Default editor for behaviours as fallback.

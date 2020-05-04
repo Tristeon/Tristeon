@@ -2,7 +2,7 @@
 #include "Scenes/Layers/Layer.h"
 #include "LayerEditor.h"
 #include "Editor.h"
-#include "CustomEditors/EditorRegister.h"
+#include "Dynamic/Objects/ObjectEditorRegister.h"
 
 namespace TristeonEditor
 {
@@ -35,7 +35,7 @@ namespace TristeonEditor
 		if (layer == nullptr)
 			return;
 
-		current = EditorRegister::createInstance(layer->serialize()["typeID"]);
+		current = ObjectEditorRegister::createInstance(layer->serialize()["typeID"]);
 		if (current != nullptr)
 		{
 			current->editor(editor);

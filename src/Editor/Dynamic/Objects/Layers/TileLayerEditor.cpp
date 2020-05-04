@@ -1,5 +1,4 @@
 #ifdef TRISTEON_EDITOR
-#include <Window.h>
 #include "TileLayerEditor.h"
 #include <Serialization/JsonSerializer.h>
 
@@ -8,7 +7,7 @@ using Tristeon::Vector2Int;
 
 namespace TristeonEditor
 {
-	CUSTOM_EDITOR_CPP(Tristeon::TileLayer, TileLayerEditor)
+	OBJECT_EDITOR_CPP(Tristeon::TileLayer, TileLayerEditor)
 
 	void TileLayerEditor::initialize()
 	{

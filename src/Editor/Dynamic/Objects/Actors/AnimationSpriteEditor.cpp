@@ -3,7 +3,7 @@
 
 namespace TristeonEditor
 {
-	CUSTOM_EDITOR_CPP(Tristeon::AnimationSprite, AnimationSpriteEditor)
+	OBJECT_EDITOR_CPP(Tristeon::AnimationSprite, AnimationSpriteEditor);
 
 	void AnimationSpriteEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{

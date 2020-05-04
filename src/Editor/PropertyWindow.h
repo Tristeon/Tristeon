@@ -2,7 +2,7 @@
 #ifdef TRISTEON_EDITOR
 #include <QtWidgets>
 #include <Editor/EditorWindow.h>
-#include <Editor/CustomEditors/CustomEditor.h>
+#include <Editor/Dynamic/AbstractEditor.h>
 namespace TristeonEditor
 {
 	class PropertyWindow : public QDockWidget, public EditorWindow
@@ -15,8 +15,9 @@ namespace TristeonEditor
 		void sceneLoaded(Tristeon::Scene* scene) override;
 		void selectedActorChanged(Tristeon::Actor* actor) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
+		void selectedFilePathChanged(FileItem* item) override;
 
-		CustomEditor* current = nullptr;
+		AbstractEditor* current = nullptr;
 		QWidget* contents = nullptr;
 		QGridLayout* layout = nullptr;
 	};

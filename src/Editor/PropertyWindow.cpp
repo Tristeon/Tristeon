@@ -1,8 +1,11 @@
 #ifdef TRISTEON_EDITOR
 #include "PropertyWindow.h"
+#include "Dynamic/Files/FileEditorRegister.h"
+#include <Editor/Dynamic/Objects/Actors/ActorEditor.h>
+#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 #include <Editor/Editor.h>
-#include <Editor/CustomEditors/EditorRegister.h>
-#include <Editor/CustomEditors/Actors/ActorEditor.h>
+#include "Scenes/Layers/Layer.h"
+#include "Scenes/Layers/TileLayer.h"
 
 namespace TristeonEditor
 {
@@ -20,7 +23,7 @@ namespace TristeonEditor
 
 	void PropertyWindow::sceneLoaded(Tristeon::Scene * scene)
 	{
-
+		//Empty
 	}
 
 	void PropertyWindow::selectedActorChanged(Tristeon::Actor * actor)
@@ -35,7 +38,7 @@ namespace TristeonEditor
 		if (actor == nullptr)
 			return;
 
-		current = EditorRegister::createInstance(actor->serialize()["typeID"]);
+		current = ObjectEditorRegister::createInstance(actor->serialize()["typeID"]);
 		if (current == nullptr)
 			current = new ActorEditor(); //Default editor for actors as fallback
 
@@ -55,6 +58,28 @@ namespace TristeonEditor
 			current->deleteLater();
 		}
 		current = nullptr;
+	}
+
+	void PropertyWindow::selectedFilePathChanged(FileItem* item)
+	{
+		if (current != nullptr)
+		{
+			layout->removeWidget(current);
+			current->deleteLater();
+		}
+		current = nullptr;
+
+		current = FileEditorRegister::createInstance(item->extension);
+
+		if (current != nullptr) 
+		{
+			current->editor(editor);
+			current->target(item);
+			current->setParent(contents);
+			current->initialize();
+			layout->addWidget(current);
+			current->show();
+		}
 	}
 }
 #endif

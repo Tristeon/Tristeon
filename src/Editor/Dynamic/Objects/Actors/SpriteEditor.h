@@ -3,20 +3,19 @@
 #include <QtWidgets>
 #include "ActorEditor.h"
 #include <Actors/Sprite.h>
-#include <Editor/CustomEditors/EditorRegister.h>
+#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 
 namespace TristeonEditor
 {
 	class SpriteEditor : public ActorEditor
 	{
-		CUSTOM_EDITOR_H(Tristeon::Sprite, SpriteEditor)
-
+		OBJECT_EDITOR_H(Tristeon::Sprite, SpriteEditor);
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
-	protected:
 		void displayProperties() override;
-		virtual void textureButton();
 
+	protected:
+		virtual void textureButton();
 		void changeTexturePressed();
 		Tristeon::Sprite* sprite = nullptr;
 

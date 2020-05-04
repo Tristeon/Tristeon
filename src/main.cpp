@@ -40,6 +40,7 @@
 #include <Editor/MenuBar.h>
 #include <Editor/TopBar.h>
 #include <Editor/PropertyWindow.h>
+#include <Editor/FileExplorer.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -96,6 +97,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		return menuBar;
 	}
 
+	if (name == "fileexplorer")
+	{
+		auto* explorer = new TristeonEditor::FileExplorer(parent);
+		editor->addWindow(explorer);
+		return explorer;
+	}
+	
 	return QUiLoader::createWidget(className, parent, name);
 }
 #else

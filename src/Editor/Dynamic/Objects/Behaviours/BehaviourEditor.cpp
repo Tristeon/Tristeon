@@ -1,17 +1,17 @@
 #ifdef TRISTEON_EDITOR
 #include "BehaviourEditor.h"
+#include "Editor/EditorFields.h"
 
 #include <QtWidgets>
 #include <Editor/Editor.h>
 #include <Math/Vector3.h>
 #include <Math/Vector4.h>
-#include <Utils/Colour.h>
 
 namespace TristeonEditor
 {
-	CUSTOM_EDITOR_CPP(Tristeon::Behaviour, BehaviourEditor)
+	OBJECT_EDITOR_CPP(Tristeon::Behaviour, BehaviourEditor);
 
-		void BehaviourEditor::initialize()
+	void BehaviourEditor::initialize()
 	{
 		data = behaviour->serialize();
 
@@ -97,12 +97,12 @@ namespace TristeonEditor
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						auto* x = displayFloat(field, iterator.value()["x"], [=](float value)
+						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
 							{
 								data[iterator.key()]["x"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* y = displayFloat(field, iterator.value()["y"], [=](float value)
+						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
 							{
 								data[iterator.key()]["y"] = value;
 								behaviour->deserialize(data);
@@ -118,22 +118,22 @@ namespace TristeonEditor
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						auto* x = displayFloat(field, iterator.value()["x"], [=](float value)
+						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
 							{
 								data[iterator.key()]["x"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* y = displayFloat(field, iterator.value()["y"], [=](float value)
+						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
 							{
 								data[iterator.key()]["y"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* z = displayFloat(field, iterator.value()["z"], [=](float value)
+						auto* z = EditorFields::floatField(field, iterator.value()["z"], [=](float value)
 							{
 								data[iterator.key()]["z"] = value;
 								behaviour->deserialize(data);
 							});
-						
+
 						layout->addWidget(x);
 						layout->addWidget(y);
 						layout->addWidget(z);
@@ -145,22 +145,22 @@ namespace TristeonEditor
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						auto* x = displayFloat(field, iterator.value()["x"], [=](float value)
+						auto* x = EditorFields::floatField(field, iterator.value()["x"], [=](float value)
 							{
 								data[iterator.key()]["x"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* y = displayFloat(field, iterator.value()["y"], [=](float value)
+						auto* y = EditorFields::floatField(field, iterator.value()["y"], [=](float value)
 							{
 								data[iterator.key()]["y"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* z = displayFloat(field, iterator.value()["z"], [=](float value)
+						auto* z = EditorFields::floatField(field, iterator.value()["z"], [=](float value)
 							{
 								data[iterator.key()]["z"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* w = displayFloat(field, iterator.value()["w"], [=](float value)
+						auto* w = EditorFields::floatField(field, iterator.value()["w"], [=](float value)
 							{
 								data[iterator.key()]["w"] = value;
 								behaviour->deserialize(data);
@@ -178,12 +178,12 @@ namespace TristeonEditor
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						auto* x = displayInt(field, iterator.value()["x"], [=](int value)
+						auto* x = EditorFields::intField(field, iterator.value()["x"], [=](int value)
 							{
 								data[iterator.key()]["x"] = value;
 								behaviour->deserialize(data);
 							});
-						auto* y = displayInt(field, iterator.value()["y"], [=](int value)
+						auto* y = EditorFields::intField(field, iterator.value()["y"], [=](int value)
 							{
 								data[iterator.key()]["y"] = value;
 								behaviour->deserialize(data);
@@ -212,7 +212,7 @@ namespace TristeonEditor
 			}
 			case detail::value_t::number_float:
 			{
-				field = displayFloat(formWidget, iterator.value(), [=](float value)
+				field = EditorFields::floatField(formWidget, iterator.value(), [=](float value)
 					{
 						data[iterator.key()] = value;
 						behaviour->deserialize(data);
@@ -221,7 +221,7 @@ namespace TristeonEditor
 			}
 			case detail::value_t::number_integer:
 			{
-				field = displayInt(formWidget, iterator.value(), [=](int value)
+				field = EditorFields::intField(formWidget, iterator.value(), [=](int value)
 					{
 						data[iterator.key()] = value;
 						behaviour->deserialize(data);
@@ -230,7 +230,7 @@ namespace TristeonEditor
 			}
 			case detail::value_t::number_unsigned:
 			{
-				field = displayInt(formWidget, iterator.value(), 0, std::numeric_limits<int>::max(), [=](int value)
+				field = EditorFields::intField(formWidget, iterator.value(), 0, std::numeric_limits<int>::max(), [=](int value)
 					{
 						data[iterator.key()] = (unsigned int)value;
 						behaviour->deserialize(data);
@@ -255,45 +255,6 @@ namespace TristeonEditor
 	{
 		behaviour->destroy();
 		parent()->deleteLater();
-	}
-
-	QDoubleSpinBox* BehaviourEditor::displayFloat(QWidget * parent, float value,
-		std::function<void(float)> changeCallback)
-	{
-		return displayFloat(parent, value, std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), changeCallback);
-	}
-
-	QDoubleSpinBox* BehaviourEditor::displayFloat(QWidget* parent, float value, float minValue, float maxValue,
-		std::function<void(float)> changeCallback)
-	{
-		auto* field = new QDoubleSpinBox(parent);
-		field->setFocusPolicy(Qt::StrongFocus);
-		field->setSingleStep(0);
-		field->setButtonSymbols(QDoubleSpinBox::NoButtons);
-		field->setMinimum(minValue);
-		field->setMaximum(maxValue);
-		field->setValue(value);
-		connect(field, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, changeCallback);
-		return field;
-	}
-
-	QSpinBox* BehaviourEditor::displayInt(QWidget* parent, int value, std::function<void(int)> changeCallback)
-	{
-		return displayInt(parent, value, std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), changeCallback);
-	}
-
-	QSpinBox* BehaviourEditor::displayInt(QWidget* parent, int value, int minValue, int maxValue,
-		std::function<void(int)> changeCallback)
-	{
-		auto* field = new QSpinBox(parent);
-		field->setFocusPolicy(Qt::StrongFocus);
-		field->setMinimum(minValue);
-		field->setMaximum(maxValue);
-		field->setSingleStep(0);
-		field->setButtonSymbols(QDoubleSpinBox::NoButtons);
-		field->setValue(value);
-		connect(field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, changeCallback);
-		return field;
 	}
 }
 #endif

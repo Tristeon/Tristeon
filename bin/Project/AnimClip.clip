@@ -2,6 +2,7 @@
     "cols": 4,
     "endIndex": 8,
     "loops": true,
+    "playbackRate": 0.25,
     "rows": 4,
     "spacing": {
         "bottom": 1,

@@ -8,6 +8,8 @@
 
 namespace TristeonEditor
 {
+	struct FileItem;
+
 	class Editor
 	{
 	public:
@@ -20,6 +22,9 @@ namespace TristeonEditor
 		Tristeon::Actor* selectedActor() const;
 		void selectedActor(Tristeon::Actor* value);
 
+		FileItem* selectedFileItem() const;
+		void selectedFileItem(FileItem* value);
+
 		Tristeon::Delegate<Tristeon::String> onSelectedActorNameChanged;
 		
 		void setMenuBar(MenuBar* menu_bar);
@@ -27,6 +32,7 @@ namespace TristeonEditor
 	private:
 		Tristeon::Layer* _selectedLayer = nullptr;
 		Tristeon::Actor* _selectedActor = nullptr;
+		FileItem* _selectedFileItem = nullptr;
 		MenuBar* menuBar = nullptr;
 		Tristeon::Vector<EditorWindow*> windows;
 	};

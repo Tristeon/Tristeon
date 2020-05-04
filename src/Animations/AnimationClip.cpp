@@ -38,6 +38,7 @@ namespace Tristeon
 		j["endIndex"] = endIndex;
 		j["loops"] = loops;
 		j["texturePath"] = texturePath;
+		j["playbackRate"] = playbackRate;
 
 		j["spacing"]["left"] = spacing.left;
 		j["spacing"]["right"] = spacing.right;
@@ -57,6 +58,7 @@ namespace Tristeon
 		endIndex = j["endIndex"];
 		loops = j["loops"];
 		texturePath = j["texturePath"].get<std::string>();
+		playbackRate = j.contains("playbackRate") ? j["playbackRate"] : 1;
 
 		spacing.left = j["spacing"]["left"];
 		spacing.right = j["spacing"]["right"];

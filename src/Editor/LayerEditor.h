@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include "EditorWindow.h"
-#include <Editor/CustomEditors/CustomEditor.h>
+#include <Editor/Dynamic/Objects/ObjectEditor.h>
 
 #include <QtWidgets>
 
@@ -17,7 +17,7 @@ namespace TristeonEditor
 		void sceneLoaded(Tristeon::Scene* scene) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
 
-		CustomEditor* current = nullptr;
+		ObjectEditor* current = nullptr;
 		QWidget* contents = nullptr;
 		QGridLayout* layout = nullptr;
 	};

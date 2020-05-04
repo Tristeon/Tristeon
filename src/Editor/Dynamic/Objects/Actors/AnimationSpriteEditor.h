@@ -7,7 +7,7 @@ namespace TristeonEditor
 {
 	class AnimationSpriteEditor : public SpriteEditor
 	{
-		CUSTOM_EDITOR_H(Tristeon::AnimationSprite, AnimationSpriteEditor)
+		OBJECT_EDITOR_H(Tristeon::AnimationSprite, AnimationSpriteEditor);
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	protected:

@@ -42,11 +42,11 @@ void main()
     ivec2 texSize = textureSize(mainTex, 0);
 
     int frameX = animation.frame % animation.cols;
-    int frameY = animation.rows - 1 - (animation.frame / animation.rows);
+    int frameY = animation.rows - 1 - (animation.frame / animation.cols);
 
     //Determine the amount of pixels per tile
-    int framePixelsX = (texSize.x - ((spacing.left + spacing.right) + animation.cols - 1)) / animation.cols;
-    int framePixelsY = (texSize.y - ((spacing.top + spacing.bottom) + animation.rows - 1)) / animation.rows;
+    int framePixelsX = (texSize.x - ((spacing.left + spacing.right) + ((animation.cols - 1) * spacing.horizontalFrame))) / animation.cols;
+    int framePixelsY = (texSize.y - ((spacing.top + spacing.bottom) + ((animation.rows - 1) * spacing.verticalFrame))) / animation.rows;
 
     //Determine the start point of the tile depending on spacing
     int startX = spacing.left + (frameX * framePixelsX) + (frameX * spacing.horizontalFrame);

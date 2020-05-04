@@ -1,0 +1,18 @@
+{
+    "cols": 13,
+    "endIndex": 20,
+    "loops": true,
+    "playbackRate": 1.0,
+    "rows": 8,
+    "spacing": {
+        "bottom": 0,
+        "horizontalFrame": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "verticalFrame": 0
+    },
+    "startIndex": 13,
+    "texturePath": "Project/Character.png",
+    "typeID": "Tristeon::AnimationClip"
+}

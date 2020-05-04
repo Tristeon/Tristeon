@@ -1,12 +1,12 @@
 #ifdef TRISTEON_EDITOR
-#include "Registers/ActorRegister.h"
 #include "ActorLayerEditor.h"
-#include "Editor/Editor.h"
+#include <Registers/ActorRegister.h>
+#include <Editor/Editor.h>
 #include <QtWidgets>
 
 namespace TristeonEditor
 {
-	CUSTOM_EDITOR_CPP(Tristeon::ActorLayer, ActorLayerEditor)
+	OBJECT_EDITOR_CPP(Tristeon::ActorLayer, ActorLayerEditor)
 
 	void ActorLayerEditor::initialize()
 	{
