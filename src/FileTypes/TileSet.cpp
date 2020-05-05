@@ -88,13 +88,21 @@ namespace Tristeon
 
 		this->tileInfo = std::make_unique<Tile[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
-			tileInfo[i] = j["tileInfo"][i];
+			tileInfo[i] = Tile();
+		
+		if (j.contains("tileInfo") && j["tileInfo"].is_array())
+		{
+			for (size_t i = 0; i < cols * rows && i < j["tileInfo"].size(); i++)
+			{
+				tileInfo[i] = j["tileInfo"][i];
+			}
+		}
 	}
 
 	Tile TileSet::info(int const& index) const
 	{
-		assert(index >= 0);
-		assert(index < cols * rows);
+		if (index < 0 || index > cols * rows)
+			return {};
 		
 		return tileInfo[index];
 	}

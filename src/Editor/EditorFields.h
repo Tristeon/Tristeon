@@ -22,8 +22,8 @@ namespace TristeonEditor
 		static QSpinBox* uintField(QWidget* parent, uint value, std::function<void(uint)> changeCallback);
 		static QSpinBox* uintField(QWidget* parent, uint value, uint minValue, uint maxValue, std::function<void(uint)> changeCallback);
 		
-		static void boolField(QFormLayout* layout, std::string label, bool value, std::function<void(int)> changeCallback);
-		static QCheckBox* boolField(QWidget* parent, bool value, std::function<void(int)> changeCallback);
+		static void boolField(QFormLayout* layout, std::string label, bool value, std::function<void(bool)> changeCallback);
+		static QCheckBox* boolField(QWidget* parent, bool value, std::function<void(bool)> changeCallback);
 
 		static void stringField(QFormLayout* layout, std::string label, std::string value, std::function<void(const std::string&)> changeCallback);
 		static QLineEdit* stringField(QWidget* parent, std::string value, std::function<void(const std::string&)> changeCallback);

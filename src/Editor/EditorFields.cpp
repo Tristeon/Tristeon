@@ -83,13 +83,13 @@ namespace TristeonEditor
 		return intField(parent, value, minValue, maxValue, changeCallback);
 	}
 
-	void EditorFields::boolField(QFormLayout* layout, std::string label, bool value, std::function<void(int)> changeCallback)
+	void EditorFields::boolField(QFormLayout* layout, std::string label, bool value, std::function<void(bool)> changeCallback)
 	{
 		auto* field = boolField(nullptr, value, changeCallback);
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
 	}
 
-	QCheckBox* EditorFields::boolField(QWidget* parent, bool value, std::function<void(int)> changeCallback)
+	QCheckBox* EditorFields::boolField(QWidget* parent, bool value, std::function<void(bool)> changeCallback)
 	{
 		auto* field = new QCheckBox();
 		field->setCheckState(value ? Qt::Checked : Qt::Unchecked);

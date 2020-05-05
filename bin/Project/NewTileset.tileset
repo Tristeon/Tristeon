@@ -1,11 +1,11 @@
 {
-    "height": 1,
-    "horizontalSpacing": 0,
-    "spacingBottom": 0,
-    "spacingLeft": 0,
-    "spacingRight": 0,
-    "spacingTop": 0,
-    "texturePath": "Internal/Textures/white.jpg",
+    "height": 7,
+    "horizontalSpacing": 2,
+    "spacingBottom": 2,
+    "spacingLeft": 2,
+    "spacingRight": 2,
+    "spacingTop": 2,
+    "texturePath": "Project/GoldBricks.png",
     "tileInfo": [
         {
             "density": 1.0,
@@ -14,9 +14,9 @@
             "restitution": 0.0
         }
     ],
-    "tileRenderHeight": 0,
-    "tileRenderWidth": 0,
+    "tileRenderHeight": 256,
+    "tileRenderWidth": 256,
     "typeID": "Tristeon::TileSet",
-    "verticalSpacing": 0,
-    "width": 1
+    "verticalSpacing": 2,
+    "width": 7
 }
