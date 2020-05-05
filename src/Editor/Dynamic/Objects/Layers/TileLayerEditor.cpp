@@ -119,7 +119,7 @@ namespace TristeonEditor
 			image->adjustSize();
 			
 			json j = targetLayer->serialize();
-			j["tileSet"] = tileset->serialize();
+			j["tileSetPath"] = path.toStdString();
 			targetLayer->deserialize(j);
 
 			loadTileset(tileset);

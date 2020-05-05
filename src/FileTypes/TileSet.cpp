@@ -1,5 +1,7 @@
 #include "TileSet.h"
 
+#include "Serialization/JsonSerializer.h"
+
 namespace Tristeon
 {
 	REGISTER_TYPE_CPP(TileSet)
@@ -10,19 +12,26 @@ namespace Tristeon
 		//Empty
 	}
 
-	TileSet::TileSet(std::string const& imagePath,
-		uint const& cols,
-		uint const& rows,
-		Tile tileInfo[],
-		int const& tileRenderWidth, 
-		int const& tileRenderHeight,
+	TileSet::TileSet(std::string const& path)
+	{
+		json j = JsonSerializer::load(path);
+		deserialize(j);
+		filePath = path;
+	}
 
-		uint const& spacingLeft,
-		uint const& spacingRight,
-		uint const& spacingTop,
-		uint const& spacingBottom,
-		uint const& horizontalSpacing,
-		uint const& verticalSpacing) : cols(cols), rows(rows), spacingLeft(spacingLeft), spacingRight(spacingRight), spacingTop(spacingTop), spacingBottom(spacingBottom), horizontalSpacing(horizontalSpacing), verticalSpacing(verticalSpacing)
+	TileSet::TileSet(std::string const& imagePath,
+	                 uint const& cols,
+	                 uint const& rows,
+	                 Tile tileInfo[],
+	                 int const& tileRenderWidth, 
+	                 int const& tileRenderHeight,
+
+	                 uint const& spacingLeft,
+	                 uint const& spacingRight,
+	                 uint const& spacingTop,
+	                 uint const& spacingBottom,
+	                 uint const& horizontalSpacing,
+	                 uint const& verticalSpacing) : cols(cols), rows(rows), spacingLeft(spacingLeft), spacingRight(spacingRight), spacingTop(spacingTop), spacingBottom(spacingBottom), horizontalSpacing(horizontalSpacing), verticalSpacing(verticalSpacing)
 	{
 		this->tileInfo = std::make_unique<Tile[]>(cols * rows);
 		if (tileInfo != nullptr)

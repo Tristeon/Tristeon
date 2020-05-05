@@ -46,6 +46,11 @@ namespace Tristeon
 		explicit TileSet();
 
 		/**
+		 * Creates a tileset from a given tileset file.
+		 */
+		explicit TileSet(std::string const& path);
+
+		/**
 		 * Creates a tileset with the given values, this is shorthand for simply assigning the values after creation.
 		 */
 		explicit TileSet(std::string const& imagePath, 
@@ -219,5 +224,7 @@ namespace Tristeon
 		 * The texture used by the tileset.
 		 */
 		std::unique_ptr<Texture> texture = nullptr;
+
+		std::string filePath = "";
 	};
 }

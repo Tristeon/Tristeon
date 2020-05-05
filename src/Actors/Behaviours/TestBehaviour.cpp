@@ -51,21 +51,17 @@ namespace Tristeon
 
 	void TestBehaviour::contactBegin(Collider* other)
 	{
-		std::cout << "Penguin collided with: " + other->owner()->name << std::endl;
 	}
 
 	void TestBehaviour::contactEnd(Collider* other)
 	{
-		std::cout << "Penguin stopped colliding with: " + other->owner()->name << std::endl;
 	}
 
 	void TestBehaviour::tileContactBegin(TileContact const& contact)
 	{
-		std::cout << "Penguin collided with tile " << contact.tileIndex.toString() << std::endl;
 	}
 
 	void TestBehaviour::tileContactEnd(TileContact const& contact)
 	{
-		std::cout << "Penguin stopped colliding with tile " << contact.tileIndex.toString() << std::endl;
 	}
 }

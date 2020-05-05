@@ -40,7 +40,7 @@ namespace Tristeon
 		j["typeID"] = TRISTEON_TYPENAME(TileLayer);
 		j["width"] = w;
 		j["height"] = h;
-		j["tileSet"] = tileSet->serialize();
+		j["tileSetPath"] = tileSet->filePath;
 
 		json d = json::array();
 		for (unsigned int i = 0; i < w * h; i++)
@@ -55,8 +55,12 @@ namespace Tristeon
 		
 		w = j["width"];
 		h = j["height"];
-		tileSet->deserialize(j["tileSet"]);
 
+		if (j.contains("tileSetPath") && j["tileSetPath"].is_string())
+			tileSet = std::make_unique<TileSet>(j["tileSetPath"]);
+		else
+			tileSet = std::make_unique<TileSet>();
+		
 		data = std::make_unique<int[]>(w * h);
 		for (unsigned int i = 0; i < w * h; i++)
 			data[i] = j["data"][i];
@@ -190,6 +194,9 @@ namespace Tristeon
 
 	void TileLayer::createColliders()
 	{
+		if (!tileSet->tileInfo)
+			return;
+		
 		for (int x = 0; x < w; x++)
 		{
 			for (int y = 0; y < h; y++)
