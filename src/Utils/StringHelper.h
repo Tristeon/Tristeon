@@ -10,7 +10,7 @@ namespace Tristeon
 		/**
 		 * Changes all of the string's characters to lowercase characters.
 		 */
-		static String toLower(String& string);
+		static String toLower(String string);
 
 		/**
 		 * Splits a string into separate strings based on the given delimiter.

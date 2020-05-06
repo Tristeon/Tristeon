@@ -7,9 +7,6 @@ struct TileSet
     int cols;
     int rows;
 
-    int renderWidth;
-    int renderHeight;
-
     int spacingLeft;
     int spacingRight;
     int spacingTop;
@@ -17,6 +14,8 @@ struct TileSet
 
     int horizontalSpacing;
     int verticalSpacing;
+
+    int id;
 };
 uniform TileSet tileSet;
 
@@ -25,6 +24,9 @@ struct Level
     samplerBuffer data;
     int width;
     int height;
+    
+    int tileRenderWidth;
+    int tileRenderHeight;
 };
 uniform Level level;
 
@@ -48,8 +50,8 @@ void main()
 {
     //Determine which tile we're on using the camera's properties
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
-    float normalizedTileWidth = (float)tileSet.renderWidth / (camera.pixelsX / camera.zoom); 
-    float normalizedTileHeight = (float)tileSet.renderHeight / (camera.pixelsY / camera.zoom);
+    float normalizedTileWidth = (float)level.tileRenderWidth / (camera.pixelsX / camera.zoom); 
+    float normalizedTileHeight = (float)level.tileRenderHeight / (camera.pixelsY / camera.zoom);
 
     vec2 coords = texCoord;
     //Move the coords by -0.5 to center the tiles for accurate zooming
@@ -78,8 +80,11 @@ void main()
     if (dataX >= level.width || dataY >= level.height || dataX < 0 || dataY < 0) 
         discard; //Discard all out of map tiles
 
-    //Convert data tile to tileset index
-    int dataValue = floatBitsToInt(texelFetch(level.data, dataIndex).r);
+    //Convert data tile to tileset index (data stored in a 1D array of 2 integers per tile, first describes the index, the second describes the tileset id)
+    int tileSetValue = floatBitsToInt(texelFetch(level.data, dataIndex * 2 + 1).r);
+    if (tileSetValue != tileSet.id)
+        discard;
+    int dataValue = floatBitsToInt(texelFetch(level.data, dataIndex * 2).r);
     ivec2 tileIndex = tileTo2DIndex(dataValue);
     if (tileIndex.x == -1 || tileIndex.y == -1)
         discard; //Discard empty tiles

@@ -30,6 +30,6 @@ namespace Tristeon
 		virtual Shader* getShader() override;
 
 		float currentFrame = 0;
-		Unique<AnimationClip> clip;
+		AnimationClip* clip = nullptr;
 	};
 }

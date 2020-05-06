@@ -32,6 +32,7 @@
 #include <QtWidgets>
 #include <QtUiTools/QtUiTools>
 
+#include <ctime>
 
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
@@ -152,6 +153,8 @@ QWidget* loadUIFile()
 
 int main(int argc, char** argv)
 {
+	srand(std::time(nullptr));
+	
 #ifndef TRISTEON_LOGENABLED
 	FreeConsole();
 #endif

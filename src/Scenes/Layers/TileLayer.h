@@ -1,5 +1,6 @@
 #pragma once
 #include "Layer.h"
+#include "Tile.h"
 
 #include <FileTypes/TileSet.h>
 #include <Rendering/Shader.h>
@@ -32,6 +33,7 @@ namespace Tristeon
 		REGISTER_TYPE_H(TileLayer);
 		friend SceneManager;
 		friend class CollisionListener;
+
 	public:
 		TileLayer();
 		virtual ~TileLayer();
@@ -49,21 +51,12 @@ namespace Tristeon
 		uint height() const { return h; }
 
 		/**
-		 * Gets a reference to a tile at coords.x, coords.y.
-		 * This can be used to either get or set the value of the tile.
-		 *
-		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
-		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
-		 */
-		int& operator[](Vector2Int const& coords);
-
-		/**
 		 * Sets the tile at x, y to the given value.
 		 *
 		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than width() or y is more than height()
 		 */
-		void tile(int const& x, int const& y, int const& value);
+		void tile(int const& x, int const& y, Tile const& value);
 
 		/**
 		 * Sets the tile at coords.x, coords.y to the given value.
@@ -71,7 +64,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
 		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
 		 */
-		void tile(Vector2Int const& coords, int const& value);
+		void tile(Vector2Int const& coords, Tile const& value);
 
 		/**
 		 * Gets the tile at x, y.
@@ -79,7 +72,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than width() or y is more than height()
 		 */
-		int tile(int const& x, int const& y);
+		Tile tile(int const& x, int const& y) const;
 
 		/**
 		 * Gets the tile at coords.x, coords.y.
@@ -87,22 +80,27 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
 		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
 		 */
-		int tile(Vector2Int const& coords);
+		Tile tile(Vector2Int const& coords);
 
 		/**
-		 * Gets a pointer to the layer's tileset.
+		 * Gets the tileset with the given ID.
 		 */
-		TileSet* set() const { return tileSet.get(); }
+		TileSet* tileset(int id);
+		
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
 	private:
 		GLuint tbo = 0;
 		GLuint tbo_tex = 0;
 
-		Unique<TileSet> tileSet = nullptr;
 		Unique<Shader> shader;
-		Unique<int[]> data = nullptr;
+
+		Unique<Tile[]> tiles = nullptr;
+		Vector<TileSet*> tilesets;
+
 		unsigned int w = 0, h = 0;
+		unsigned int tileRenderWidth = 0;
+		unsigned int tileRenderHeight = 0;
 
 		bool isDirty = false;
 

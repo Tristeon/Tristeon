@@ -5,6 +5,7 @@
 
 #include "AssetDatabase.h"
 #include "Rendering/GameView.h"
+#include "Resources.h"
 
 namespace Tristeon
 {
@@ -22,15 +23,18 @@ namespace Tristeon
 	void AnimationSprite::deserialize(json j)
 	{
 		Sprite::deserialize(j);
-		if (j.contains("clipPath") && clip == nullptr || clip->filePath != j["clipPath"].get<String>())
-			setAnimationClip(j["clipPath"]);
+		setAnimationClip(j["clipPath"]);
 	}
 
 	void AnimationSprite::setAnimationClip(String const& clipPath)
 	{
-		this->clip = std::make_unique<AnimationClip>(clipPath);
-		setTexture(clip->texturePath, false);
-		currentFrame = 0;
+		this->clip = Resources::load<AnimationClip>(clipPath);
+		if (clip != nullptr)
+		{
+			clip->filePath = clipPath;
+			setTexture(clip->texturePath, false);
+			currentFrame = 0;
+		}
 	}
 
 	void AnimationSprite::render(QOpenGLShaderProgram* program)

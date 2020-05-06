@@ -1,3 +1,4 @@
+#include "Resources.h"
 #ifdef TRISTEON_EDITOR
 #include "TileSetFileEditor.h"
 #include "Editor/EditorFields.h"
@@ -78,6 +79,15 @@ namespace TristeonEditor
 		tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
 
 		loadTileset();
+	}
+
+	void TileSetFileEditor::saveData()
+	{
+		JsonFileEditor::saveData();
+
+		//Update Instance if it's currently in use
+		if (Tristeon::Resources::loaded(item->path))
+			Tristeon::Resources::load<Tristeon::TileSet>(item->path)->deserialize(data);
 	}
 
 	void TileSetFileEditor::loadTileset()

@@ -7,7 +7,7 @@
 
 namespace Tristeon
 {
-	struct Tile
+	struct TileSettings
 	{
 		bool hasCollider = false;
 		float density = 1.0f;
@@ -15,14 +15,14 @@ namespace Tristeon
 		float restitution = 0.0f;
 	};
 
-	inline void to_json(json& j, const Tile& p) {
+	inline void to_json(json& j, const TileSettings& p) {
 		j["hasCollider"] = p.hasCollider;
 		j["density"] = p.density;
 		j["friction"] = p.friction;
 		j["restitution"] = p.restitution;
 	}
 
-	inline void from_json(const json& j, Tile& p) {
+	inline void from_json(const json& j, TileSettings& p) {
 		p.hasCollider = j["hasCollider"];
 		p.density = j["density"];
 		p.friction = j["friction"];
@@ -56,9 +56,7 @@ namespace Tristeon
 		explicit TileSet(std::string const& imagePath, 
 			uint const& cols, 
 			uint const& rows, 
-			Tile tileInfo[], 
-			int const& tileRenderWidth = -1, 
-			int const& tileRenderHeight = -1,
+			TileSettings tileInfo[], 
 
 			uint const& spacingLeft = 0,
 			uint const& spacingRight = 0,
@@ -74,17 +72,17 @@ namespace Tristeon
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		Tile info(int const& x, int const& y) const;
+		TileSettings info(int const& x, int const& y) const;
 
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		Tile info(Vector2Int const& coords) const;
+		TileSettings info(Vector2Int const& coords) const;
 		
 		/**
 		 * Gets the Tile data struct of the tile at the given index.
 		 */
-		Tile info(int const& index) const;
+		TileSettings info(int const& index) const;
 
 		/**
 		 * Gets the size of a tile in pixels.
@@ -176,16 +174,6 @@ namespace Tristeon
 		unsigned int rows = 1;
 
 		/**
-		 * The width in pixels that the tiles are to be rendered at on screen.
-		 */
-		unsigned int tileRenderWidth = 0;
-
-		/**
-		 * The height in pixels that the tiles are to be rendered at on screen.
-		 */
-		unsigned int tileRenderHeight = 0;
-
-		/**
 		 * The spacing/cutoff in pixels on the left of the texture.
 		 */
 		unsigned int spacingLeft = 0;
@@ -218,7 +206,7 @@ namespace Tristeon
 		/**
 		 * Tile specific information to help inform the engine about collisions or other tile-based behaviour. 
 		 */
-		std::unique_ptr<Tile[]> tileInfo = nullptr;
+		std::unique_ptr<TileSettings[]> tileInfo = nullptr;
 
 		/**
 		 * The texture used by the tileset.
@@ -226,5 +214,7 @@ namespace Tristeon
 		std::unique_ptr<Texture> texture = nullptr;
 
 		std::string filePath = "";
+
+		int id = 0;
 	};
 }

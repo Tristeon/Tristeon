@@ -1,12 +1,11 @@
 #pragma once
-#include <TObject.h>
-
 #include <QOpenGLTexture>
 #include <QString>
 #include <string>
 
 #include "Math/Vector2Int.h"
-
+#include <Serialization/Serializable.h>
+#include <Serialization/TypeRegister.h>
 namespace Tristeon
 {
 	/**
@@ -14,12 +13,15 @@ namespace Tristeon
 	 *
 	 * Textures are created with a filepath in the form of a string.
 	 * This path is relative to the bin/ folder in the Tristeon project.
-	 *
-	 * TODO: Textures are currently not batched, multiple objects with the same texture could be more performant
 	 */
-	class Texture : public TObject
+	class Texture : public Serializable
 	{
+		REGISTER_TYPE_H(Texture);
+		
 	public:
+		json serialize() override;
+		void deserialize(json j) override;
+
 		/**
 		 * Creates a default (white) texture.
 		 */

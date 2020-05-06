@@ -18,18 +18,10 @@ namespace TristeonEditor
 		void mapWidthChanged(int width);
 		void mapHeightChanged(int height);
 		void browse();
-		void mousePressEvent(QMouseEvent* event) override;
 		void resizeMap(int width, int height);
 		void loadTileset(Tristeon::TileSet* set);
 		
 		Tristeon::TileLayer* targetLayer = nullptr;
-		
-		QLabel* name = nullptr;
-		QPushButton* button = nullptr;
-		QLabel* image = nullptr;
-
-		QLabel* tileHighlight = nullptr;
-		int selectedTile = -1;
 	};
 }
 #endif

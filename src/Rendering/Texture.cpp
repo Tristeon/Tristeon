@@ -3,8 +3,29 @@
 
 namespace Tristeon
 {
-	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
+	REGISTER_TYPE_CPP(Texture);
 	
+	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
+
+	json Texture::serialize()
+	{
+		json j;
+		j["typeID"] = TRISTEON_TYPENAME(Texture);
+		j["filePath"] = imagePath.toStdString();
+		return j;
+	}
+
+	void Texture::deserialize(json j)
+	{
+		imagePath = QString::fromStdString(j["filePath"].get<std::string>());
+		if (texture != nullptr)
+		{
+			delete texture;
+			texture = nullptr;
+		}
+		load();
+	}
+
 	Texture::Texture(QString const& path) : imagePath(path)
 	{
 		load();
@@ -32,7 +53,7 @@ namespace Tristeon
 
 	Vector2Int Texture::size() const
 	{
-		return Vector2Int(texture->width(), texture->height());
+		return { texture->width(), texture->height() };
 	}
 
 	void Texture::load()

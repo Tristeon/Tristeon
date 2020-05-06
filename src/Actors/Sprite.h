@@ -64,6 +64,6 @@ namespace Tristeon
 		/**
 		 * The 2D texture of the sprite.
 		 */
-		std::unique_ptr<Texture> texture = nullptr;
+		Texture* texture = nullptr;
 	};
 }
