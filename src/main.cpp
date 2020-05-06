@@ -32,7 +32,6 @@
 #include <QtWidgets>
 #include <QtUiTools/QtUiTools>
 
-#include "Editor/GameViewEditor.h"
 
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
@@ -43,6 +42,8 @@
 #include <Editor/TopBar.h>
 #include <Editor/PropertyWindow.h>
 #include <Editor/FileExplorer.h>
+#include <Editor/GameViewEditor.h>
+#include <Editor/TileSetEditor.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -105,6 +106,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		auto* explorer = new TristeonEditor::FileExplorer(parent);
 		editor->addWindow(explorer);
 		return explorer;
+	}
+
+	if (name == "tilesets")
+	{
+		auto* tilesets = new TristeonEditor::TileSetEditor(parent);
+		editor->addWindow(tilesets);
+		return tilesets;
 	}
 	
 	return QUiLoader::createWidget(className, parent, name);
