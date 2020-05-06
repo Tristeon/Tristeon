@@ -1,10 +1,12 @@
 {
     "camera": {
         "position": {
+            "typeID": "Tristeon::Vector2Int",
             "x": 0,
             "y": 0
         },
         "size": {
+            "typeID": "Tristeon::Vector2Int",
             "x": 0,
             "y": 0
         },

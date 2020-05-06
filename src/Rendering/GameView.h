@@ -13,7 +13,7 @@ namespace Tristeon
 	/**
 	 * GameView is a OpenGL Widget, created by Qt to which the scene/game is rendered. 
 	 */
-	class GameView : private QOpenGLWidget, public Singleton<GameView>
+	class GameView : protected QOpenGLWidget, public Singleton<GameView>
 	{
 		Q_OBJECT;
 		friend Engine;
@@ -23,6 +23,8 @@ namespace Tristeon
 		 */
 		GameView(Engine* engine, QWidget* parent);
 
+		virtual ~GameView() = default;
+		
 		/**
 		 * Sets the clear colour of the GameView.
 		 */
@@ -66,7 +68,7 @@ namespace Tristeon
 		 * The amount of frames per second the program is running at.
 		 */
 		static uint fps() { return instance()->_fps; }
-	private:
+	protected:
 		Engine* engine = nullptr;
 
 		uint _fps = 0;
