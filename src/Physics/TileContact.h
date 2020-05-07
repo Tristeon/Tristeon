@@ -8,7 +8,7 @@ namespace Tristeon
 	{
 		TileLayer* layer = nullptr;
 		Vector2Int tileIndex = {};
-		int tile = -1;
-		Tile tileInfo = {};
+		Tile tile = { -1, -1 };
+		TileSettings tileInfo = {};
 	};
 }

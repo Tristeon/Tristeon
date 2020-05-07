@@ -7,6 +7,8 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
+#include <Resources.h>
+
 namespace Tristeon
 {
 	REGISTER_ACTOR_CPP(Sprite)
@@ -14,7 +16,7 @@ namespace Tristeon
 	
 	Sprite::Sprite()
 	{
-		texture = std::make_unique<Texture>();
+		texture = Resources::load<Texture>("Internal/Textures/white.jpg");
 	}
 
 	json Sprite::serialize()
@@ -39,12 +41,12 @@ namespace Tristeon
 
 		std::string texturePath = j["texturePath"];
 		if (texturePath != texture->getPath()) //Update if new path
-			texture = std::make_unique<Texture>(texturePath);
+			texture = Resources::load<Texture>(texturePath);
 	}
 
 	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
-		texture = std::make_unique<Texture>(path); //TODO: Texture caching through an asset loader of some sorts
+		texture = Resources::load<Texture>(path);
 
 		if (setSize)
 		{

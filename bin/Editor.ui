@@ -520,6 +520,9 @@ color: rgb(255, 255, 255);</string>
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>Layers</string>
    </property>
@@ -620,6 +623,9 @@ color: rgb(255, 255, 255);</string>
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>Layer Editor</string>
    </property>
@@ -647,6 +653,9 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Console</string>
@@ -676,6 +685,9 @@ color: rgb(255, 255, 255);</string>
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>File Explorer</string>
    </property>
@@ -704,6 +716,9 @@ border-color: rgb(0, 0, 0);
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Properties</string>
@@ -1363,6 +1378,26 @@ color:rgb(0, 0, 0);</string>
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="tilesets">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(70, 70, 70);
+border-color: rgb(0, 0, 0);
+</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Tilesets</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>
   <action name="actionScene">
    <property name="text">

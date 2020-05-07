@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 99,
-            "y": -69
+            "x": 1436,
+            "y": -117
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -17,75 +17,6 @@
         "typeID": "Tristeon::HUD"
     },
     "layers": [
-        {
-            "data": [
-                13,
-                13,
-                13,
-                13,
-                13,
-                13,
-                13,
-                13,
-                13,
-                13,
-                4,
-                2,
-                3,
-                1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                13,
-                13,
-                13,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1
-            ],
-            "height": 6,
-            "name": "TileLayer",
-            "tileSetPath": "D:/Documents/Projects/Tristeon-Group/Tristeon2D/Source/bin/Project/GoldBricks.tileset",
-            "typeID": "Tristeon::TileLayer",
-            "width": 10
-        },
         {
             "actors": [
                 {
@@ -133,7 +64,7 @@
                     "position": {
                         "typeID": "Tristeon::Vector2",
                         "x": 750.0,
-                        "y": 1200.0
+                        "y": 1025.258544921875
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -141,7 +72,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "Project/penguin.png",
+                    "texturePath": "project/penguin.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 256
                 },
@@ -167,7 +98,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "Internal/Textures/white.jpg",
+                    "texturePath": "internal/textures/white.jpg",
                     "typeID": "Tristeon::Sprite",
                     "width": 64
                 },
@@ -194,7 +125,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "Project/Character.png",
+                    "texturePath": "project/character.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 512
                 },
@@ -239,7 +170,7 @@
                     "position": {
                         "typeID": "Tristeon::Vector2",
                         "x": 2000.0,
-                        "y": 1500.0
+                        "y": 1147.2889404296875
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -247,13 +178,427 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "Project/SpriteSheet.png",
+                    "texturePath": "project/spritesheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
                 }
             ],
             "name": "ActorLayer",
             "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "height": 10,
+            "name": "TileLayer",
+            "tileRenderHeight": 256,
+            "tileRenderWidth": 256,
+            "tileSets": [
+                "Project/TilesetTest.tileSet",
+                "Project/GoldBricks.tileset"
+            ],
+            "tiles": [
+                {
+                    "index": 13,
+                    "tileSetID": 1242115487
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 1242115487
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 1242115487
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 1242115487
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 1242115487
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                }
+            ],
+            "typeID": "Tristeon::TileLayer",
+            "width": 10
         }
     ],
     "typeID": "Tristeon::Scene"

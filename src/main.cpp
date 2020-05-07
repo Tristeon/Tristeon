@@ -32,6 +32,8 @@
 #include <QtWidgets>
 #include <QtUiTools/QtUiTools>
 
+#include <ctime>
+
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
 #include <Editor/LayerListEditor.h>
@@ -41,6 +43,8 @@
 #include <Editor/TopBar.h>
 #include <Editor/PropertyWindow.h>
 #include <Editor/FileExplorer.h>
+#include <Editor/GameViewEditor.h>
+#include <Editor/TileSetEditor.h>
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -57,7 +61,8 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 {
 	if (name == "game")
 	{
-		auto* gameView = new Tristeon::GameView(engine.get(), parent); //Gets childed to aspect_ratio, don't worry about ownership
+		auto* gameView = new TristeonEditor::GameViewEditor(engine.get(), parent); //Qt Child, no ownership
+		editor->addWindow(gameView);
 		auto* aspect_ratio = new TristeonEditor::AspectRatioWidget(gameView->widget(), parent->width(), parent->height(), parent);
 		return aspect_ratio;
 	}
@@ -103,6 +108,13 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 		editor->addWindow(explorer);
 		return explorer;
 	}
+
+	if (name == "tilesets")
+	{
+		auto* tilesets = new TristeonEditor::TileSetEditor(parent);
+		editor->addWindow(tilesets);
+		return tilesets;
+	}
 	
 	return QUiLoader::createWidget(className, parent, name);
 }
@@ -141,6 +153,8 @@ QWidget* loadUIFile()
 
 int main(int argc, char** argv)
 {
+	srand(std::time(nullptr));
+	
 #ifndef TRISTEON_LOGENABLED
 	FreeConsole();
 #endif

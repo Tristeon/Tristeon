@@ -7,7 +7,7 @@
 
 namespace Tristeon
 {
-	String StringHelper::toLower(String & string)
+	String StringHelper::toLower(String string)
 	{
 		std::transform(string.begin(), string.end(), string.begin(), ::tolower);
 		return string;

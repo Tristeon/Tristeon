@@ -11,6 +11,7 @@ namespace TristeonEditor
 		FILE_EDITOR_H("tileset", TileSetFileEditor)
 	public:
 		void initialize() override;
+		void saveData() override;
 	private:
 		void loadTileset();
 		void mousePressEvent(QMouseEvent* event) override;
@@ -22,7 +23,7 @@ namespace TristeonEditor
 		QLabel* image = nullptr;
 		QLabel* tileHighlight = nullptr;
 		int selectedTile = -1;
-		Tristeon::Tile selectedTileInfo{};
+		Tristeon::TileSettings selectedTileInfo{};
 		QFrame* selectedTileData = nullptr;
 
 		Tristeon::TileSet set;

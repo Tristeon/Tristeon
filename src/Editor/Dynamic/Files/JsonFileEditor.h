@@ -14,7 +14,7 @@ namespace TristeonEditor
 		void initialize() override;
 
 		void displayJson(nlohmann::json& data, QWidget* parent, QFormLayout* form);
-		void saveData();
+		virtual void saveData();
 	protected:
 		nlohmann::json data;
 	};

@@ -1,11 +1,12 @@
 {
-    "height": 7,
+    "height": 5,
     "horizontalSpacing": 0,
+    "id": 670680868,
     "spacingBottom": 0,
     "spacingLeft": 0,
     "spacingRight": 0,
     "spacingTop": 0,
-    "texturePath": "Project/GoldBricks.png",
+    "texturePath": "Project/TilesetTest.png",
     "tileInfo": [
         {
             "density": 1.0,
@@ -40,13 +41,13 @@
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": false,
+            "hasCollider": true,
             "restitution": 0.0
         },
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": true,
+            "hasCollider": false,
             "restitution": 0.0
         },
         {
@@ -102,5 +103,5 @@
     "tileRenderWidth": 256,
     "typeID": "Tristeon::TileSet",
     "verticalSpacing": 0,
-    "width": 7
+    "width": 3
 }
