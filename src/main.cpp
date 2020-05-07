@@ -188,7 +188,9 @@ int main(int argc, char** argv)
 	//}
 
 	QApplication::processEvents();
+#ifdef TRISTEON_EDITOR
 	editor->initialize();
+#endif
 	engine->run();
 	return 0;
 }
