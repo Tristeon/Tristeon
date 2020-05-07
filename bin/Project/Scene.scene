@@ -181,6 +181,22 @@
                     "texturePath": "project/spritesheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
+                },
+                {
+                    "behaviours": [],
+                    "name": "Empty Actor",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "typeID": "Tristeon::Actor"
                 }
             ],
             "name": "ActorLayer",
