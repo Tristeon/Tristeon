@@ -1380,13 +1380,22 @@ color:rgb(0, 0, 0);</string>
    </widget>
   </widget>
   <widget class="QDockWidget" name="tilesets">
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(70, 70, 70);
 border-color: rgb(0, 0, 0);
 </string>
    </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
    <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -1395,7 +1404,7 @@ border-color: rgb(0, 0, 0);
     <string>Tilesets</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>

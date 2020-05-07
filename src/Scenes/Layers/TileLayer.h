@@ -51,6 +51,24 @@ namespace Tristeon
 		uint height() const { return h; }
 
 		/**
+		 * The width at which tiles are rendered.
+		 */
+		uint renderWidth() const { return tileRenderWidth; }
+		/**
+		 * Sets the tile render width.
+		 */
+		void renderWidth(const uint& value) { tileRenderWidth = value; isDirty = true; }
+
+		/**
+		 * The height at which tiles are rendered.
+		 */
+		uint renderHeight() const { return tileRenderHeight; }
+		/**
+		 * Sets the tile render height.
+		 */
+		void renderHeight(const uint& value) { tileRenderHeight = value; isDirty = true; }
+		
+		/**
 		 * Sets the tile at x, y to the given value.
 		 *
 		 * \exception invalid_argument Throws if x or y is less than 0

@@ -2,7 +2,6 @@
 #include "Editor.h"
 #include <Window.h>
 #include <Scenes/SceneManager.h>
-#include "TypeDefinitions.h"
 
 namespace TristeonEditor
 {
