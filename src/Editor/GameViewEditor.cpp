@@ -12,6 +12,14 @@ namespace TristeonEditor
 		setLayout(layout);
 	}
 
+	void GameViewEditor::paintGL()
+	{
+		if (layerView != nullptr)
+			layerView->updateView();
+
+		GameView::paintGL();
+	}
+
 	void GameViewEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
 		
@@ -40,6 +48,7 @@ namespace TristeonEditor
 			layerView->editor(editor);
 			layerView->target(layer);
 			layerView->setParent(this);
+			layerView->resize(width(), height());
 			layerView->initialize();
 			layerView->setAttribute(Qt::WA_TranslucentBackground);
 			layout->addWidget(layerView);

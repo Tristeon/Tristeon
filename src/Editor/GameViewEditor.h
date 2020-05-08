@@ -14,6 +14,7 @@ namespace TristeonEditor
 		virtual ~GameViewEditor() = default;
 	protected:
 		void initialize() override;
+		void paintGL() override;
 		void sceneLoaded(Tristeon::Scene* scene) override;
 		void mouseMoveEvent(QMouseEvent* event) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;

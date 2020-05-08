@@ -117,6 +117,7 @@ namespace Tristeon
 		void operator+=(const Vector2Int & vector);
 		void operator *=(const Vector2Int & vector);
 		void operator *=(const int& value);
+		void operator *=(const float& value);
 
 		/**
 		 * Operator used to order vectors in maps/dictionaries.

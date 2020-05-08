@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1436,
-            "y": -117
+            "x": 1670,
+            "y": 257
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -17,191 +17,6 @@
         "typeID": "Tristeon::HUD"
     },
     "layers": [
-        {
-            "actors": [
-                {
-                    "behaviours": [
-                        {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": true,
-                            "enabled": true,
-                            "fixedRotation": false,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
-                            "density": 1.0,
-                            "friction": 0.30000001192092896,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "radius": 128.0,
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::CircleCollider"
-                        },
-                        {
-                            "groundedDistance": 256.0,
-                            "jumpVelocity": 1500.0,
-                            "runSpeed": 100.0,
-                            "typeID": "Tristeon::TestBehaviour"
-                        }
-                    ],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "height": 256,
-                    "name": "Penguin Test 2",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 750.0,
-                        "y": 1025.258544921875
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "project/penguin.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 256
-                },
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "height": 64,
-                    "name": "My White Square",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 200.0,
-                        "y": 1000.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "internal/textures/white.jpg",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 64
-                },
-                {
-                    "behaviours": [],
-                    "clipPath": "Project/CharacterWalk.clip",
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "height": 512,
-                    "name": "Character",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 500.0,
-                        "y": 350.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "project/character.png",
-                    "typeID": "Tristeon::AnimationSprite",
-                    "width": 512
-                },
-                {
-                    "behaviours": [
-                        {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": false,
-                            "enabled": true,
-                            "fixedRotation": false,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
-                            "density": 1.0,
-                            "friction": 0.0,
-                            "height": 256.0,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "restitution": 1.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 256.0
-                        }
-                    ],
-                    "clipPath": "Project/AnimClip.clip",
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "height": 256,
-                    "name": "Animated Numbers",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 2000.0,
-                        "y": 1147.2889404296875
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "project/spritesheet.png",
-                    "typeID": "Tristeon::AnimationSprite",
-                    "width": 256
-                },
-                {
-                    "behaviours": [],
-                    "name": "Empty Actor",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "typeID": "Tristeon::Actor"
-                }
-            ],
-            "name": "ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
         {
             "height": 10,
             "name": "TileLayer",
@@ -615,6 +430,191 @@
             ],
             "typeID": "Tristeon::TileLayer",
             "width": 10
+        },
+        {
+            "actors": [
+                {
+                    "behaviours": [
+                        {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": true,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "radius": 128.0,
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::CircleCollider"
+                        },
+                        {
+                            "groundedDistance": 256.0,
+                            "jumpVelocity": 1500.0,
+                            "runSpeed": 100.0,
+                            "typeID": "Tristeon::TestBehaviour"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "height": 256,
+                    "name": "Penguin Test 2",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "project/penguin.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 256
+                },
+                {
+                    "behaviours": [],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "height": 64,
+                    "name": "My White Square",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 200.0,
+                        "y": 1000.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "internal/textures/white.jpg",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 64
+                },
+                {
+                    "behaviours": [],
+                    "clipPath": "Project/CharacterWalk.clip",
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "height": 512,
+                    "name": "Character",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 500.0,
+                        "y": 350.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "project/character.png",
+                    "typeID": "Tristeon::AnimationSprite",
+                    "width": 512
+                },
+                {
+                    "behaviours": [
+                        {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": false,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 1.0,
+                            "friction": 0.0,
+                            "height": 256.0,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 1.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::BoxCollider",
+                            "width": 256.0
+                        }
+                    ],
+                    "clipPath": "Project/AnimClip.clip",
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "height": 256,
+                    "name": "Animated Numbers",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 2000.0,
+                        "y": 1147.2889404296875
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "project/spritesheet.png",
+                    "typeID": "Tristeon::AnimationSprite",
+                    "width": 256
+                },
+                {
+                    "behaviours": [],
+                    "name": "Empty Actor",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "typeID": "Tristeon::Actor"
+                }
+            ],
+            "name": "ActorLayer",
+            "typeID": "Tristeon::ActorLayer"
         }
     ],
     "typeID": "Tristeon::Scene"

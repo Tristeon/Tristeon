@@ -8,6 +8,7 @@ namespace TristeonEditor
 	class SceneEditor : public AbstractEditor
 	{
 	public:
+		virtual void updateView() = 0;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	protected:
 		Tristeon::Layer* currentLayer = nullptr;

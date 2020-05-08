@@ -77,6 +77,7 @@ namespace TristeonEditor
 		tileHighlight->setPixmap(QPixmap("Internal/Textures/selection.png"));
 		tileHighlight->setScaledContents(true);
 		tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
+		tileHighlight->setFocusPolicy(Qt::NoFocus);
 
 		loadTileset();
 	}
