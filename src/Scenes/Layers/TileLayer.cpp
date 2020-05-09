@@ -159,23 +159,7 @@ namespace Tristeon
 			createColliders();
 			isDirty = false;
 		}
-
-		//TODO: Camera movement should really be in a behaviour
-		if (Keyboard::held(Keyboard::Left))
-			scene->getCamera()->position.x -= 1;
-		if (Keyboard::held(Keyboard::Right))
-			scene->getCamera()->position.x += 1;
-
-		if (Keyboard::held(Keyboard::Up))
-			scene->getCamera()->position.y += 1;
-		if (Keyboard::held(Keyboard::Down))
-			scene->getCamera()->position.y -= 1;
-
-		if (Keyboard::held(Keyboard::Minus))
-			scene->getCamera()->zoom -= 0.01f;
-		if (Keyboard::held(Keyboard::Equal))
-			scene->getCamera()->zoom += 0.01f;
-
+		
 		//Shader
 		QOpenGLContext* context = GameView::context();
 		QOpenGLFunctions* f = context->functions();

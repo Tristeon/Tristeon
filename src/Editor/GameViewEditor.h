@@ -4,6 +4,7 @@
 #include "Dynamic/Scene/SceneEditor.h"
 #include "EditorWindow.h"
 #include "Rendering/GameView.h"
+#include "EditorCameraController.h"
 
 namespace TristeonEditor
 {
@@ -21,6 +22,7 @@ namespace TristeonEditor
 
 		QGridLayout* layout = nullptr;
 		SceneEditor* layerView = nullptr;
+		Tristeon::Unique<EditorCameraController> cameraController;
 	};
 }
 #endif

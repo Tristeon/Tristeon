@@ -13,10 +13,15 @@ namespace TristeonEditor
 		layout = new QGridLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);
+
+		cameraController = std::make_unique<EditorCameraController>();
 	}
 
 	void GameViewEditor::paintGL()
 	{
+		if (cameraController != nullptr)
+			cameraController->update();
+
 		if (layerView != nullptr)
 			layerView->updateView();
 

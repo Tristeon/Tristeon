@@ -37,7 +37,8 @@ namespace TristeonEditor
 			cameraZoom = Camera::main()->zoom;
 
 			updateTileSize();
-			updateTilePosition(lastMousePos);
+			auto pos = mapFromGlobal(QCursor::pos());
+			updateTilePosition(Vector2Int(pos.x(), pos.y()));
 		}
 	}
 
@@ -53,8 +54,10 @@ namespace TristeonEditor
 	{
 		SceneEditor::mousePressEvent(event);
 		
-		if (tileLayer->withinBounds(lastTileIndex))
+		if (event->button() == Qt::MouseButton::LeftButton && tileLayer->withinBounds(lastTileIndex))
 			Brushes::current()->draw(tileLayer, (Vector2Int)lastTileIndex);
+		else if (event->button() == Qt::MouseButton::RightButton && tileLayer->withinBounds(lastTileIndex))
+			Brushes::current()->erase(tileLayer, (Vector2Int)lastTileIndex);
 	}
 
 	void TileLayerSceneView::resizeEvent(QResizeEvent* event)
@@ -87,6 +90,8 @@ namespace TristeonEditor
 
 		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->withinBounds(tileIndex))
 			Brushes::current()->draw(tileLayer, (Vector2Int)tileIndex);
+		else if ((Mouse::pressed(Mouse::Right) || Mouse::held(Mouse::Right)) && tileLayer->withinBounds(tileIndex))
+			Brushes::current()->erase(tileLayer, (Vector2Int)tileIndex);
 		
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
 		position -= Vector2{ tileLayer->renderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } * scalar; //Adjust center 

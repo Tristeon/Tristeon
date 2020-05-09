@@ -25,4 +25,13 @@ namespace Tristeon
 	{
 		return radians * toDeg;
 	}
+
+	float Math::clamp(float const& value, float const& min, float const& max)
+	{
+		if (value < min)
+			return min;
+		if (value > max)
+			return max;
+		return value;
+	}
 }

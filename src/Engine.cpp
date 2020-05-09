@@ -85,6 +85,8 @@ namespace Tristeon
 			
 			_view->update();
 
+			QApplication::sendPostedEvents();
+			
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();

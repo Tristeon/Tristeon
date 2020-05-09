@@ -37,7 +37,6 @@ namespace Tristeon
 		void mousePressEvent(QMouseEvent* event) override;
 		void mouseReleaseEvent(QMouseEvent* event) override;
 		void mouseDoubleClickEvent(QMouseEvent* event) override;
-		void mouseMoveEvent(QMouseEvent* event) override;
 		void wheelEvent(QWheelEvent* event) override;
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;
@@ -54,6 +53,8 @@ namespace Tristeon
 		std::queue<QKeyEvent> keyPressEvents;
 		std::queue<QKeyEvent> keyReleaseEvents;
 		std::queue<QWheelEvent> mouseWheelEvents;
+
+		QPoint oldMousePos;
 
 		QGamepad* activeGamepad = nullptr;
 		/**

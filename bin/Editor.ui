@@ -452,6 +452,9 @@
     </disabled>
    </palette>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
@@ -481,12 +484,18 @@ color: rgb(255, 255, 255);</string>
      <height>270</height>
     </size>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
    <property name="focusPolicy">
     <enum>Qt::StrongFocus</enum>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <widget class="QWidget" name="game" native="true">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
       <property name="focusPolicy">
        <enum>Qt::StrongFocus</enum>
       </property>
@@ -743,72 +752,72 @@ border-color: rgb(0, 0, 0);
       <colorrole role="WindowText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Text">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="ButtonText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="HighlightedText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>193</red>
-         <green>193</green>
-         <blue>193</blue>
+         <red>90</red>
+         <green>90</green>
+         <blue>90</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="PlaceholderText">
        <brush brushstyle="NoBrush">
         <color alpha="128">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -817,72 +826,72 @@ border-color: rgb(0, 0, 0);
       <colorrole role="WindowText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Text">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="ButtonText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="HighlightedText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>193</red>
-         <green>193</green>
-         <blue>193</blue>
+         <red>90</red>
+         <green>90</green>
+         <blue>90</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="PlaceholderText">
        <brush brushstyle="NoBrush">
         <color alpha="128">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -891,72 +900,72 @@ border-color: rgb(0, 0, 0);
       <colorrole role="WindowText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Button">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Text">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="ButtonText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Base">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="Window">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>255</red>
-         <green>255</green>
-         <blue>255</blue>
+         <red>50</red>
+         <green>50</green>
+         <blue>50</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="HighlightedText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
-         <red>193</red>
-         <green>193</green>
-         <blue>193</blue>
+         <red>90</red>
+         <green>90</green>
+         <blue>90</blue>
         </color>
        </brush>
       </colorrole>
       <colorrole role="PlaceholderText">
        <brush brushstyle="NoBrush">
         <color alpha="128">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
         </color>
        </brush>
       </colorrole>
@@ -967,9 +976,9 @@ border-color: rgb(0, 0, 0);
     <enum>Qt::NoContextMenu</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);
-selection-color: rgb(193, 193, 193);
-color:rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(50, 50, 50);
+selection-color: rgb(90, 90, 90);
+color:rgb(255, 255, 255);</string>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">

@@ -25,6 +25,11 @@ namespace Tristeon
 		 * Converts a value in radians to a value in degrees.
 		 */
 		static float toDegrees(float const& radians);
+
+		/**
+		 * Clamps the given value between min [inclusive] and max [inclusive].
+		 */
+		static float clamp(float const& value, float const& min, float const& max);
 		
 		constexpr static float PI = 3.14159265;
 		constexpr static float toRad = PI / 180.0f;
