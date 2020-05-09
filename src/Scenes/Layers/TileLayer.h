@@ -98,14 +98,25 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
 		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
 		 */
-		Tile tile(Vector2Int const& coords);
+		Tile tile(Vector2Int const& coords) const;
 
 		/**
 		 * Gets the tileset with the given ID.
 		 */
 		TileSet* tileset(int id);
 
-		Vector2Int tileRenderSize() const { return { (int)tileRenderWidth, (int)tileRenderHeight }; };
+		/**
+		 * Returns true if the given index is within the bounds of the TileLayer
+		 */
+		bool withinBounds(Vector2 const& index) const;
+
+		/**
+		 * The size of the tiles when rendered.
+		 */
+		Vector2Int tileRenderSize() const { return { (int)tileRenderWidth, (int)tileRenderHeight }; }
+		/**
+		 * Sets the size of the tiles when rendered.
+		 */
 		void tileRenderSize(Vector2Int const& value) { renderWidth(value.x); renderHeight(value.y); };
 
 	protected:

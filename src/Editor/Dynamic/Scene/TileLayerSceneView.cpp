@@ -1,6 +1,8 @@
 #ifdef TRISTEON_EDITOR
+#include "Input/Mouse.h"
 #include "Scenes/Camera.h"
 #include "TileLayerSceneView.h"
+#include "Editor/Brushes/Brushes.h"
 
 using namespace Tristeon;
 
@@ -41,8 +43,18 @@ namespace TristeonEditor
 
 	void TileLayerSceneView::mouseMoveEvent(QMouseEvent* event)
 	{
+		SceneEditor::mouseMoveEvent(event);
+		
 		lastMousePos = Vector2Int { event->pos().x(), event->pos().y() };
 		updateTilePosition(lastMousePos);
+	}
+
+	void TileLayerSceneView::mousePressEvent(QMouseEvent* event)
+	{
+		SceneEditor::mousePressEvent(event);
+		
+		if (tileLayer->withinBounds(lastTileIndex))
+			Brushes::current()->draw(tileLayer, (Vector2Int)lastTileIndex);
 	}
 
 	void TileLayerSceneView::resizeEvent(QResizeEvent* event)
@@ -72,6 +84,9 @@ namespace TristeonEditor
 		tileIndex.x = (-0.5f * width() / scalar.x + camera->position.x + 0.5 * tileLayer->renderWidth() + mousePos.x / scalar.x) / tileLayer->renderWidth();
 		tileIndex.y = (-0.5f * height() / scalar.y + camera->position.y + 0.5 * tileLayer->renderHeight() + mousePos.y / scalar.y) / tileLayer->renderHeight();
 		tileIndex = Vector2::floor(tileIndex);
+
+		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->withinBounds(tileIndex))
+			Brushes::current()->draw(tileLayer, (Vector2Int)tileIndex);
 		
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
 		position -= Vector2{ tileLayer->renderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } * scalar; //Adjust center 
@@ -79,6 +94,8 @@ namespace TristeonEditor
 		
 		highlight->move(position.x - cameraPos.x, position.y + cameraPos.y);
 		highlight->show();
+
+		lastTileIndex = (Vector2Int)tileIndex;
 	}
 }
 #endif

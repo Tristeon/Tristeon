@@ -83,13 +83,11 @@ namespace Tristeon
 			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 			destroyedActors.clear();
 			
-			_view->paintGL();
+			_view->update();
 
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();
-			
-			QApplication::sendPostedEvents();
 		}
 	}
 

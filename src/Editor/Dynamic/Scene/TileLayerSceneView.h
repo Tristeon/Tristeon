@@ -21,8 +21,10 @@ namespace TristeonEditor
 		float cameraZoom = 1.0f;
 		Tristeon::Vector2Int cameraPos{};
 		Tristeon::Vector2Int lastMousePos{};
+		Tristeon::Vector2Int lastTileIndex{};
 		
 		void mouseMoveEvent(QMouseEvent* event) override;
+		void mousePressEvent(QMouseEvent* event) override;
 		void resizeEvent(QResizeEvent* event) override;
 		void updateTileSize();
 		void updateTilePosition(Tristeon::Vector2Int mousePos);

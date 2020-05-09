@@ -66,6 +66,7 @@ namespace Tristeon
 		tileRenderWidth = j["tileRenderWidth"];
 		tileRenderHeight = j["tileRenderHeight"];
 
+		tilesets.clear();
 		if (j.contains("tileSets"))
 		{
 			for (size_t i = 0; i < j["tileSets"].size(); i++)
@@ -114,7 +115,7 @@ namespace Tristeon
 		return tiles[y * (int)w + x];
 	}
 
-	Tile TileLayer::tile(Vector2Int const& coords)
+	Tile TileLayer::tile(Vector2Int const& coords) const
 	{
 		return tile(coords.x, coords.y);
 	}
@@ -127,6 +128,17 @@ namespace Tristeon
 				return tileset;
 		}
 		return nullptr;
+	}
+
+	bool TileLayer::withinBounds(Vector2 const& index) const
+	{
+		if (index.x < 0 || index.y < 0)
+			return false;
+		
+		if (index.x * index.y > w * h || index.x > w || index.y > h)
+			return false;
+
+		return true;
 	}
 
 	void TileLayer::render(Renderer * renderer, Scene * scene)
@@ -215,6 +227,8 @@ namespace Tristeon
 			f->glDeleteBuffers(1, &tbo);
 		if (tbo_tex != 0)
 			f->glDeleteTextures(1, &tbo_tex);
+		tbo = 0;
+		tbo_tex = 0;
 
 		f->glGenBuffers(1, &tbo);
 		f->glBindBuffer(GL_TEXTURE_BUFFER, tbo);
