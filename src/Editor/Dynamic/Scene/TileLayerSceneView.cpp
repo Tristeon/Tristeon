@@ -64,16 +64,18 @@ namespace TristeonEditor
 	{
 		mousePos.y = height() - mousePos.y;
 		
-		Vector2 scalar = Vector2{ width() / 1920.0f, height() / 1080.0f } *Camera::main()->zoom;
+		Camera* camera = Camera::main();
+		Vector2 const scalar = Vector2{ width() / (float)camera->size.x, height() / (float)camera->size.y } *Camera::main()->zoom;
 		Vector2 cameraPos = (Vector2)Camera::main()->position * scalar;
 
-		Vector2Int tileIndex; //Hi future me don't doubt this math it works
-		tileIndex.x = floor((mousePos.x - width() / 2.0f) / (tileLayer->renderWidth() * scalar.x)) + 7;
-		tileIndex.y = floor((mousePos.y - height() / 2.0f + tileLayer->renderHeight()) / (tileLayer->renderHeight() * scalar.y)) - 4;
-
+		Vector2 tileIndex; //Don't doubt the math it works
+		tileIndex.x = (-0.5f * width() / scalar.x + camera->position.x + 0.5 * tileLayer->renderWidth() + mousePos.x / scalar.x) / tileLayer->renderWidth();
+		tileIndex.y = (-0.5f * height() / scalar.y + camera->position.y + 0.5 * tileLayer->renderHeight() + mousePos.y / scalar.y) / tileLayer->renderHeight();
+		tileIndex = Vector2::floor(tileIndex);
+		
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
 		position -= Vector2{ tileLayer->renderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } * scalar; //Adjust center 
-		position += Vector2{ tileLayer->renderWidth() * (float)tileIndex.x, tileLayer->renderHeight() * -(float)tileIndex.y } *scalar; //Adjust based on tile index
+		position += Vector2{ tileLayer->renderWidth() * tileIndex.x, tileLayer->renderHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
 		
 		highlight->move(position.x - cameraPos.x, position.y + cameraPos.y);
 		highlight->show();

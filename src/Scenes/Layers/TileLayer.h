@@ -104,7 +104,10 @@ namespace Tristeon
 		 * Gets the tileset with the given ID.
 		 */
 		TileSet* tileset(int id);
-		
+
+		Vector2Int tileRenderSize() const { return { (int)tileRenderWidth, (int)tileRenderHeight }; };
+		void tileRenderSize(Vector2Int const& value) { renderWidth(value.x); renderHeight(value.y); };
+
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
 	private:
