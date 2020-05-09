@@ -2,11 +2,14 @@
 #include "Dynamic/Scene/SceneEditorRegister.h"
 #include "Scenes/Layers/TileLayer.h"
 #include "GameViewEditor.h"
+#include "Rendering/Renderer.h"
 
 namespace TristeonEditor
 {
 	void GameViewEditor::initialize()
 	{
+		Tristeon::Renderer::showGrid = true;
+		
 		layout = new QGridLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);

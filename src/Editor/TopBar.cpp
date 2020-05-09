@@ -44,6 +44,8 @@ namespace TristeonEditor
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
 			start->setChecked(true);
+
+			Tristeon::Renderer::showGrid = false;
 		}
 		else
 			stopGame();
@@ -56,6 +58,8 @@ namespace TristeonEditor
 
 		start->setChecked(false);
 		pause->setChecked(false);
+
+		Tristeon::Renderer::showGrid = true;
 	}
 
 	void TopBar::pauseGame()
@@ -69,6 +73,8 @@ namespace TristeonEditor
 		Tristeon::Engine::playMode(!pause->isChecked());
 		if (!pause->isChecked())
 			Tristeon::Window::instance()->centralWidget()->setFocus();
+
+		Tristeon::Renderer::showGrid = pause->isChecked();
 	}
 }
 #endif

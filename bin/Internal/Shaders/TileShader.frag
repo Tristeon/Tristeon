@@ -38,16 +38,26 @@ struct CameraData
     int pixelsX;
     int pixelsY;
 
+    //The actual width/height of the game view
+    int displayPixelsX;
+    int displayPixelsY;
+
     float zoom;
+
+    bool showGrid;
 };
 uniform CameraData camera;
 
 out vec4 FragColor;
 
+bool showGrid();
 vec2 getTileUV(vec2 uv, int x, int y);
 ivec2 tileTo2DIndex(int tile);
 void main()
 {
+    if (camera.showGrid && showGrid())
+        return;
+
     //Determine which tile we're on using the camera's properties
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
     float normalizedTileWidth = (float)level.tileRenderWidth / (camera.pixelsX / camera.zoom); 
@@ -92,6 +102,43 @@ void main()
     //Convert UVs to tileset space
     vec2 tileSetUV = getTileUV(vec2(tileU, tileV), tileIndex.x, tileIndex.y);
     FragColor = texture2D(tileSet.texture, tileSetUV);
+}
+
+bool showGrid()
+{
+    float normalizedTileWidth = (float)level.tileRenderWidth / (camera.pixelsX / camera.zoom); 
+    float normalizedTileHeight = (float)level.tileRenderHeight / (camera.pixelsY / camera.zoom);
+
+    vec2 coords = texCoord;
+    //Move the coords by -0.5 to center the tiles for accurate zooming
+    coords.x -= 0.5f;
+    coords.y -= 0.5f;
+    //Then slightly adjust to make tiles centered again
+    coords.x += normalizedTileWidth / 2.0f;
+    coords.y += normalizedTileHeight / 2.0f;
+
+    int x = abs(int(coords.x * camera.pixelsX + camera.posX * camera.zoom));
+    int y = abs(int(coords.y * camera.pixelsY + camera.posY * camera.zoom));
+
+    float errorMarginX = 1.0f / (camera.displayPixelsX / float(camera.pixelsX)) * 2;
+    float errorMarginY = 1.0f / (camera.displayPixelsY / float(camera.pixelsY)) * 2;
+
+    int pixelIntervalX = int(level.tileRenderWidth * camera.zoom);
+    int pixelIntervalY = int(level.tileRenderHeight * camera.zoom);
+    bool result = false;
+    
+    if (x < errorMarginX || (x % pixelIntervalX < errorMarginX && y % (pixelIntervalY / 10) < errorMarginX))
+    {
+        FragColor = vec4(1, 1, 1, 1);
+        result = true;
+    }
+    if (y < errorMarginY ||(y % pixelIntervalY < errorMarginY && x % (pixelIntervalX / 10) < errorMarginY))
+    {
+        FragColor = vec4(1, 1, 1, 1);
+        result = true;      
+    }
+
+    return result;
 }
 
 ivec2 tileTo2DIndex(int tile)
