@@ -17,7 +17,7 @@ namespace Tristeon
 		REGISTER_TYPE_H(Camera)
 	public:
 		/**
-		 * The position of the camera, in where (0, 0) is the bottom left of the scene.
+		 * The position of the camera
 		 */
 		Vector2Int position;
 		/**

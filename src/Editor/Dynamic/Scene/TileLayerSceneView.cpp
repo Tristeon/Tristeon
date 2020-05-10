@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Engine.h"
 #include "Input/Mouse.h"
 #include "Scenes/Camera.h"
 #include "TileLayerSceneView.h"
@@ -31,6 +32,11 @@ namespace TristeonEditor
 
 	void TileLayerSceneView::updateView()
 	{
+		if (Engine::playMode())
+			highlight->hide();
+		else
+			highlight->show();
+		
 		if (Camera::main()->position != cameraPos || Camera::main()->zoom != cameraZoom)
 		{
 			cameraPos = Camera::main()->position;

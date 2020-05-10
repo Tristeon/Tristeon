@@ -11,6 +11,7 @@
 
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
+#include "Scenes/Camera.h"
 
 namespace Tristeon
 {
@@ -30,6 +31,8 @@ namespace Tristeon
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
+
+		Camera::main()->position = (Vector2Int)owner()->position;
 	}
 	
 	json TestBehaviour::serialize()
