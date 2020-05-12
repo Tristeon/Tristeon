@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.335699200630188
+        "zoom": 0.31730201840400696
     },
     "hud": {
         "typeID": "Tristeon::HUD"

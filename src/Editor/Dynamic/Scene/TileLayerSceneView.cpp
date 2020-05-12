@@ -33,9 +33,11 @@ namespace TristeonEditor
 	void TileLayerSceneView::updateView()
 	{
 		if (Engine::playMode())
+		{
 			highlight->hide();
-		else
-			highlight->show();
+			return;
+		}
+		highlight->show();
 		
 		if (Camera::main()->position != cameraPos || Camera::main()->zoom != cameraZoom)
 		{
@@ -51,6 +53,9 @@ namespace TristeonEditor
 	void TileLayerSceneView::mouseMoveEvent(QMouseEvent* event)
 	{
 		SceneEditor::mouseMoveEvent(event);
+
+		if (Engine::playMode())
+			return;
 		
 		lastMousePos = Vector2Int { event->pos().x(), event->pos().y() };
 		updateTilePosition(lastMousePos);
@@ -59,6 +64,9 @@ namespace TristeonEditor
 	void TileLayerSceneView::mousePressEvent(QMouseEvent* event)
 	{
 		SceneEditor::mousePressEvent(event);
+
+		if (Engine::playMode())
+			return;
 		
 		if (event->button() == Qt::MouseButton::LeftButton && tileLayer->withinBounds(lastTileIndex))
 			Brushes::current()->draw(tileLayer, (Vector2Int)lastTileIndex);

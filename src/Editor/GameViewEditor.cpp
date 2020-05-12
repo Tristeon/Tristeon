@@ -10,7 +10,7 @@ namespace TristeonEditor
 	void GameViewEditor::initialize()
 	{
 		Tristeon::Renderer::showGrid = true;
-		
+
 		layout = new QGridLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);
@@ -24,22 +24,19 @@ namespace TristeonEditor
 		{
 			if (cameraController != nullptr)
 				cameraController->update();
-
-			if (layerView != nullptr)
-				layerView->updateView();
 		}
+		if (layerView != nullptr)
+			layerView->updateView();
 
 		GameView::paintGL();
 	}
 
 	void GameViewEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
-		
 	}
 
 	void GameViewEditor::mouseMoveEvent(QMouseEvent* event)
 	{
-		
 	}
 
 	void GameViewEditor::selectedLayerChanged(Tristeon::Layer* layer)
@@ -53,7 +50,7 @@ namespace TristeonEditor
 
 		if (layer == nullptr)
 			return;
-		
+
 		layerView = SceneEditorRegister::createInstance(layer->serialize()["typeID"]);
 		if (layerView != nullptr)
 		{
