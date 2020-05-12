@@ -59,7 +59,7 @@ namespace Tristeon
 			{
 				GameView::instance()->_fps = frames;
 				frames = 0;
-				time = (int)time % 1000;
+				time = fmod(time, 1000.0f);
 			}
 
 			if (inPlayMode)
