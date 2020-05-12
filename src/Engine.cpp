@@ -57,7 +57,6 @@ namespace Tristeon
 			time += deltaTime;
 			if (time >= 1000)
 			{
-				std::cout << "Time: " << time << " frames: " << frames << std::endl;
 				GameView::instance()->_fps = frames;
 				frames = 0;
 				time = (int)time % 1000;

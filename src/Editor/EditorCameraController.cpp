@@ -38,7 +38,6 @@ namespace TristeonEditor
 		float const scrollingSpeed = Tristeon::Math::clamp(-pow(Tristeon::Camera::main()->zoom - 1, 2) * 2 + 1, 0.1f, 10);
 		Tristeon::Camera::main()->zoom += Tristeon::Mouse::deltaScroll().y * scrollingSpeed * 0.001f;
 		Tristeon::Camera::main()->zoom = Tristeon::Math::clamp(Tristeon::Camera::main()->zoom, 0.03, 1.7);
-		std::cout << Tristeon::Camera::main()->zoom << std::endl;
 	}
 }
 #endif
