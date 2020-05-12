@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Engine.h"
 #include "Dynamic/Scene/SceneEditorRegister.h"
 #include "Scenes/Layers/TileLayer.h"
 #include "GameViewEditor.h"
@@ -19,11 +20,14 @@ namespace TristeonEditor
 
 	void GameViewEditor::paintGL()
 	{
-		if (cameraController != nullptr)
-			cameraController->update();
+		if (Tristeon::Engine::playMode() == false)
+		{
+			if (cameraController != nullptr)
+				cameraController->update();
 
-		if (layerView != nullptr)
-			layerView->updateView();
+			if (layerView != nullptr)
+				layerView->updateView();
+		}
 
 		GameView::paintGL();
 	}
