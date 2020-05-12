@@ -190,6 +190,9 @@ int main(int argc, char** argv)
 	QApplication::processEvents();
 #ifdef TRISTEON_EDITOR
 	editor->initialize();
+#else
+	window.showFullScreen();
+	engine->playMode(true);
 #endif
 	engine->run();
 	return 0;

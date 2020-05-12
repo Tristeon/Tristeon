@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1950,
-            "y": 898
+            "x": 1542,
+            "y": 1198
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.31476297974586487
+        "zoom": 0.335699200630188
     },
     "hud": {
         "typeID": "Tristeon::HUD"
