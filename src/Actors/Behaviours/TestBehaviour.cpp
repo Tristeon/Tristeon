@@ -10,6 +10,7 @@
 
 
 #include "Input/Mouse.h"
+#include "Math/Math.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Scenes/Camera.h"
@@ -24,9 +25,12 @@ namespace Tristeon
 		body = owner()->behaviour<PhysicsBody>();
 	}
 
+	int r = 0;
+	
 	void TestBehaviour::update()
 	{
-		owner()->position = GameView::screenToWorld(Mouse::position());
+		owner()->position = Math::orbit(GameView::screenToWorld(Mouse::position()), Vector2{ 500, 500 }, r++);
+		//owner()->position = GameView::screenToWorld(Mouse::position());
 		//std::cout
 		//	<< "Mouse: " << Mouse::position().toString() << std::endl
 		//	<< "Mouse to world: " << GameView::screenToWorld(Mouse::position()).toString() << std::endl

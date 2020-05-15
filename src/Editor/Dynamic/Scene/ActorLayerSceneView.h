@@ -1,5 +1,6 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include <QtWidgets>
 #include "SceneEditor.h"
 #include "SceneEditorRegister.h"
 #include "Scenes/Layers/ActorLayer.h"
@@ -12,6 +13,10 @@ namespace TristeonEditor
 	public:
 		void initialize() override;
 		void updateView() override;
+
+	private:
+		Tristeon::ActorLayer* actorLayer = nullptr;
+		QLabel* highlight = nullptr;
 	};
 }
 #endif

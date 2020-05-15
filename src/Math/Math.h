@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 
+#include "Vector2.h"
+
 namespace Tristeon
 {
 	/**
@@ -30,7 +32,12 @@ namespace Tristeon
 		 * Clamps the given value between min [inclusive] and max [inclusive].
 		 */
 		static float clamp(float const& value, float const& min, float const& max);
-		
+
+		/**
+		 * Returns a position that orbits around the given center with the given offset using the rotation (degrees).
+		 */
+		static Vector2 orbit(Vector2 const& center, Vector2 const& offset, float const& rotation);
+
 		constexpr static float PI = 3.14159265;
 		constexpr static float toRad = PI / 180.0f;
 		constexpr static float toDeg = 180.0f / PI;
