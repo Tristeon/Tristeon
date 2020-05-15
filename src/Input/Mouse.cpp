@@ -3,6 +3,11 @@
 #include <Math/Math.h>
 #include <Math/Vector2Int.h>
 
+#include <QApplication>
+#include <QCommonStyle>
+
+#include "Window.h"
+
 namespace Tristeon
 {
 	bool Mouse::buttons[Last];
@@ -73,7 +78,9 @@ namespace Tristeon
 
 	void Mouse::onMove(QMouseEvent const& event)
 	{
-		Vector2Int const newPos = Vector2Int(event.pos().x(), event.pos().y());
+		Vector2Int newPos = Vector2Int(event.pos().x(), Window::height() - event.pos().y());
+		if (!Window::fullScreen())
+			newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		mouseDelta += newPos - mousePos;
 		mousePos = newPos;
 	}

@@ -1,5 +1,5 @@
-#include "Resources.h"
 #ifdef TRISTEON_EDITOR
+#include "Resources.h"
 #include "TileSetFileEditor.h"
 #include "Editor/EditorFields.h"
 #include "FileTypes/TileSet.h"

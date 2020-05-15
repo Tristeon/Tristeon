@@ -32,7 +32,11 @@ namespace Tristeon
 		 * For rendering purposes, it is recommended to use GameView::height()
 		 */
 		static unsigned int height() { return instance()->QMainWindow::height(); }
-		
+
+		/**
+		 * Returns true if the window is fullscreen, false if it's not
+		 */
+		static bool fullScreen() { return instance()->isFullScreen(); }
 	protected:
 		void mousePressEvent(QMouseEvent* event) override;
 		void mouseReleaseEvent(QMouseEvent* event) override;

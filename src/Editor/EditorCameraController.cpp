@@ -24,6 +24,7 @@ namespace TristeonEditor
 		if (dragging)
 		{
 			Tristeon::Vector2Int delta = Tristeon::Mouse::position() - dragMousePos;
+			delta.y *= -1;
 			delta.x *= -1;
 			delta *= 3;
 			delta *= 1.0f / Tristeon::Camera::main()->zoom;

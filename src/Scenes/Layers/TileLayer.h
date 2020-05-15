@@ -41,48 +41,83 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 
+#pragma region Core
 		/**
 		 * The width of the level defined by this tile layer.
 		 */
-		uint width() const { return w; }
+		uint width() const { return _width; }
 		/**
 		 * The height of the level defined by this tile layer.
 		 */
-		uint height() const { return h; }
+		uint height() const { return _height; }
+#pragma endregion
+
+#pragma region TileSets
+		/**
+		 * Gets the tileset with the given ID.
+		 */
+		TileSet* tileset(int const& id);
 
 		/**
 		 * The width at which tiles are rendered.
 		 */
-		uint renderWidth() const { return tileRenderWidth; }
+		uint tileRenderWidth() const { return _tileRenderWidth; }
 		/**
 		 * Sets the tile render width.
 		 */
-		void renderWidth(const uint& value) { tileRenderWidth = value; isDirty = true; }
+		void setTileRenderWidth(const uint& value) { _tileRenderWidth = value; isDirty = true; }
 
 		/**
 		 * The height at which tiles are rendered.
 		 */
-		uint renderHeight() const { return tileRenderHeight; }
+		uint renderHeight() const { return _tileRenderHeight; }
 		/**
 		 * Sets the tile render height.
 		 */
-		void renderHeight(const uint& value) { tileRenderHeight = value; isDirty = true; }
+		void setRenderHeight(const uint& value) { _tileRenderHeight = value; isDirty = true; }
 		
+		/**
+		 * The size of the tiles when rendered.
+		 */
+		Vector2Int tileRenderSize() const { return { (int)_tileRenderWidth, (int)_tileRenderHeight }; }
+		/**
+		 * Sets the size of the tiles when rendered.
+		 */
+		void setTileRenderSize(Vector2Int const& value) { setTileRenderWidth(value.x); setRenderHeight(value.y); };
+#pragma endregion
+
+#pragma region Tile Modification
 		/**
 		 * Sets the tile at x, y to the given value.
 		 *
 		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than width() or y is more than height()
 		 */
-		void tile(int const& x, int const& y, Tile const& value);
+		void setTileByIndex(int const& ix, int const& iy, Tile const& value);
 
 		/**
-		 * Sets the tile at coords.x, coords.y to the given value.
+		 * Sets the tile at index.x, index.y to the given value.
 		 *
-		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
-		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
+		 * \exception invalid_argument Throws if index.x or index.y is less than 0
+		 * \exception out_of_range Throws if index.x is more than width() or index.y is more than height()
 		 */
-		void tile(Vector2Int const& coords, Tile const& value);
+		void setTileByIndex(Vector2Int const& index, Tile const& value);
+
+		/**
+		 * Sets the tile at the given world position to the given value.
+		 *
+		 * \exception invalid_argument Throws if position is under 0
+		 * \exception out_of_range Throws if the position is outside of the tilemap
+		 */
+		void setTileByPosition(Vector2 const& position, Tile const& value);
+
+		/**
+		 * Sets the tile at the given world position to the given value.
+		 *
+		 * \exception invalid_argument Throws if position is under 0
+		 * \exception out_of_range Throws if the position is outside of the tilemap
+		 */
+		void setTileByPosition(float const& wx, float const& wy, Tile const& value);
 
 		/**
 		 * Gets the tile at x, y.
@@ -90,7 +125,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than width() or y is more than height()
 		 */
-		Tile tile(int const& x, int const& y) const;
+		Tile tileByIndex(int const& ix, int const& iy) const;
 
 		/**
 		 * Gets the tile at coords.x, coords.y.
@@ -98,27 +133,45 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
 		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
 		 */
-		Tile tile(Vector2Int const& coords) const;
+		Tile tileByIndex(Vector2Int const& index) const;
 
 		/**
-		 * Gets the tileset with the given ID.
+		 * Gets the tile at the given world position.
+		 *
+		 * \exception invalid_argument Throws if position is under 0
+		 * \exception out_of_range Throws if the position is outside of the tilemap
 		 */
-		TileSet* tileset(int id);
+		Tile tileByPosition(Vector2 const& position) const;
 
+		/**
+		 * Gets the tile at the given world position.
+		 *
+		 * \exception invalid_argument Throws if position is under 0
+		 * \exception out_of_range Throws if the position is outside of the tilemap
+		 */
+		Tile tileByPosition(float const& wx, float const& wy) const;
+
+		/**
+		 * Gets the index of the tile by the given world position.
+		 */
+		Vector2Int indexByPosition(Vector2 const& position) const;
+
+		/**
+		 * Gets the index of the tile by the given world position.
+		 */
+		Vector2Int indexByPosition(float const& wx, float const& wy) const;
+		
 		/**
 		 * Returns true if the given index is within the bounds of the TileLayer
 		 */
-		bool withinBounds(Vector2 const& index) const;
+		bool checkBoundsByIndex(Vector2Int const& index) const;
 
 		/**
-		 * The size of the tiles when rendered.
+		 * Returns true if the world position is within the bounds of the TileLayer
 		 */
-		Vector2Int tileRenderSize() const { return { (int)tileRenderWidth, (int)tileRenderHeight }; }
-		/**
-		 * Sets the size of the tiles when rendered.
-		 */
-		void tileRenderSize(Vector2Int const& value) { renderWidth(value.x); renderHeight(value.y); };
-
+		bool checkBoundsByPosition(Vector2 const& position) const;
+#pragma endregion
+		
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
 	private:
@@ -130,9 +183,9 @@ namespace Tristeon
 		Unique<Tile[]> tiles = nullptr;
 		Vector<TileSet*> tilesets;
 
-		unsigned int w = 0, h = 0;
-		unsigned int tileRenderWidth = 0;
-		unsigned int tileRenderHeight = 0;
+		unsigned int _width = 0, _height = 0;
+		unsigned int _tileRenderWidth = 0;
+		unsigned int _tileRenderHeight = 0;
 
 		bool isDirty = false;
 

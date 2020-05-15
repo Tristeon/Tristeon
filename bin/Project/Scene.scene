@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1542,
-            "y": 1198
+            "x": 1211,
+            "y": 742
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.31730201840400696
+        "zoom": 0.35843589901924133
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10035,30 +10035,6 @@
             "actors": [
                 {
                     "behaviours": [
-                        {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": true,
-                            "enabled": true,
-                            "fixedRotation": false,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
-                            "density": 1.0,
-                            "friction": 0.30000001192092896,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "radius": 128.0,
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::CircleCollider"
-                        },
                         {
                             "groundedDistance": 256.0,
                             "jumpVelocity": 2000.0,

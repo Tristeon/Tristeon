@@ -10,12 +10,12 @@ namespace TristeonEditor
 		//if (Brushes::selectedTile().tileSetID != -1)
 		//	layer->tile(index, Brushes::selectedTile());
 		
-		layer->tile(index, Tristeon::Tile{ 13, 1242115487 });
+		layer->setTileByIndex(index, Tristeon::Tile{ 13, 1242115487 });
 	}
 
 	void Stamp::erase(Tristeon::TileLayer* layer, Tristeon::Vector2Int const& index)
 	{
-		layer->tile(index, Tristeon::Tile{});
+		layer->setTileByIndex(index, Tristeon::Tile{});
 	}
 }
 #endif

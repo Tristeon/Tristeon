@@ -24,8 +24,8 @@ namespace TristeonEditor
 		EditorFields::uintField(form, "Width", targetLayer->width(), 1, std::numeric_limits<int>::max(), [&](int value) { mapWidthChanged(value); });
 		EditorFields::uintField(form, "Height", targetLayer->height(), 1, std::numeric_limits<int>::max(), [&](int value) { mapHeightChanged(value); });
 
-		EditorFields::uintField(form, "Tile Render Width", targetLayer->renderWidth(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->renderWidth(value); });
-		EditorFields::uintField(form, "Tile Render Height", targetLayer->renderHeight(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->renderHeight(value); });
+		EditorFields::uintField(form, "Tile Render Width", targetLayer->tileRenderWidth(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->setTileRenderWidth(value); });
+		EditorFields::uintField(form, "Tile Render Height", targetLayer->renderHeight(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->setRenderHeight(value); });
 	}
 
 	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
