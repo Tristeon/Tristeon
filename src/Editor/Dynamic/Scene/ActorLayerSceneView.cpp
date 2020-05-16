@@ -31,26 +31,20 @@ namespace TristeonEditor
 			return;
 		}
 
-		if (Mouse::released(Mouse::Left))
+		if (Mouse::pressed(Mouse::Left))
 		{
-			Vector2 const world = GameView::screenToWorld(Mouse::position());
-			for (size_t i = 0; i < actorLayer->getActorCount(); i++)
-			{
-				auto* graphic = dynamic_cast<Graphic*>(actorLayer->getActor(i));
-				if (graphic != nullptr && graphic != editor()->selectedActor())
-				{
-					if (graphic->withinBounds(world))
-					{
-						editor()->selectedActor(graphic);
-						return;
-					}
-				}
-			}
-
-			highlight->hide();
-			editor()->selectedActor(nullptr);
+			clickActor();
 		}
-
+		else if (Mouse::held(Mouse::Left))
+		{
+			if (dragging && editor()->selectedActor() != nullptr)
+				editor()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+		}
+		else if (Mouse::released(Mouse::Left))
+		{
+			dragging = false;
+		}
+		
 		auto* graphic = dynamic_cast<Graphic*>(editor()->selectedActor());
 		if (graphic != nullptr)
 		{
@@ -65,10 +59,34 @@ namespace TristeonEditor
 			position += graphic->position * scalar; //Adjust based on tile index
 
 			highlight->move(position.x - cameraPos.x, height() - position.y + cameraPos.y);
-			
 			highlight->resize(size.x, size.y);
 			highlight->show();
 		}
+	}
+
+	void ActorLayerSceneView::clickActor()
+	{
+		Vector2 const world = GameView::screenToWorld(Mouse::position());
+		for (size_t i = 0; i < actorLayer->getActorCount(); i++)
+		{
+			auto* graphic = dynamic_cast<Graphic*>(actorLayer->getActor(i));
+
+			if (graphic != nullptr)
+			{
+				if (graphic->withinBounds(world))
+				{
+					if (graphic == editor()->selectedActor())
+						dragging = true;
+
+					editor()->selectedActor(graphic);
+					return;
+				}
+			}
+		}
+
+		dragging = false;
+		highlight->hide();
+		editor()->selectedActor(nullptr);
 	}
 }
 

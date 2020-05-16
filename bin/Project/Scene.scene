@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1211,
-            "y": 742
+            "x": 2869,
+            "y": 892
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.35843589901924133
+        "zoom": 0.34441331028938293
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10053,8 +10053,8 @@
                     "name": "Penguin Test 2",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 0.0,
-                        "y": 500.0
+                        "x": 2840.17578125,
+                        "y": 1279.4033203125
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10079,8 +10079,8 @@
                     "name": "My White Square",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 200.0,
-                        "y": 1000.0
+                        "x": 1550.49560546875,
+                        "y": 1494.7943115234375
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10159,8 +10159,8 @@
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 2000.0,
-                        "y": 1147.2889404296875
+                        "x": 4748.43310546875,
+                        "y": 1538.9781494140625
                     },
                     "rotation": 0.0,
                     "scale": {

@@ -15,8 +15,12 @@ namespace TristeonEditor
 		void updateView() override;
 
 	private:
+		void clickActor();
+		
 		Tristeon::ActorLayer* actorLayer = nullptr;
+
 		QLabel* highlight = nullptr;
+		bool dragging = false;
 	};
 }
 #endif
