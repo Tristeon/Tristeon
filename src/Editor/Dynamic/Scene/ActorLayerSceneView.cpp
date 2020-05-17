@@ -21,6 +21,11 @@ namespace TristeonEditor
 		highlight->setScaledContents(true);
 		highlight->setAttribute(Qt::WA_TranslucentBackground);
 		highlight->hide();
+
+		corner = new QLabel(this);
+		corner->setPixmap(QPixmap("Internal/Textures/selection.png"));
+		corner->setScaledContents(true);
+		corner->hide();
 	}
 
 	void ActorLayerSceneView::updateView()
@@ -28,21 +33,50 @@ namespace TristeonEditor
 		if (Engine::playMode())
 		{
 			highlight->hide();
+			corner->hide();
+
+			dragging = false;
+			draggingCorner = false;
 			return;
 		}
 
 		if (Mouse::pressed(Mouse::Left))
 		{
-			clickActor();
+			if (corner->isHidden() || !corner->underMouse())
+				clickActor();
+			else if (!corner->isHidden() && corner->underMouse())
+			{
+				draggingCorner = true;
+			}
 		}
 		else if (Mouse::held(Mouse::Left))
 		{
 			if (dragging && editor()->selectedActor() != nullptr)
 				editor()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+			if (draggingCorner && editor()->selectedActor() != nullptr)
+			{
+				Sprite* sprite = dynamic_cast<Sprite*>(editor()->selectedActor());
+
+				if (sprite != nullptr)
+				{
+					Vector2 position = editor()->selectedActor()->position;
+					Vector2 topRight = GameView::screenToWorld(Mouse::position());
+					Vector2 difference = topRight - position;
+					if (difference.x < 0 || difference.y < 0)
+						return;
+
+					Vector2 size = difference / sprite->scale * 2;
+					sprite->width = size.x;
+					sprite->height = size.y;
+
+					editor()->selectedActor(sprite);
+				}
+			}
 		}
 		else if (Mouse::released(Mouse::Left))
 		{
 			dragging = false;
+			draggingCorner = false;
 		}
 		
 		auto* graphic = dynamic_cast<Graphic*>(editor()->selectedActor());
@@ -61,6 +95,10 @@ namespace TristeonEditor
 			highlight->move(position.x - cameraPos.x, height() - position.y + cameraPos.y);
 			highlight->resize(size.x, size.y);
 			highlight->show();
+
+			corner->move(highlight->pos() + highlight->rect().topRight() - QPoint(size.x / 10.0f, size.y / 10.0f));
+			corner->resize(size.x / 5.0f, size.y / 5.0f);
+			corner->show();
 		}
 	}
 
@@ -85,7 +123,9 @@ namespace TristeonEditor
 		}
 
 		dragging = false;
+		draggingCorner = false;
 		highlight->hide();
+		corner->hide();
 		editor()->selectedActor(nullptr);
 	}
 }
