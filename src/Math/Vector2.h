@@ -98,19 +98,36 @@ namespace Tristeon
 		/**
 		*Returns the distance between the two given vectors
 		*/
-		static float distance(Vector2 vec, Vector2 vec2);
+		static float distance(Vector2 const& vec, Vector2 const& vec2);
 		/**
 		* Dot product of the two given vectors
 		*/
-		static float dot(Vector2 vec, Vector2 vec2);
+		static float dot(Vector2 const& vec, Vector2 const& vec2);
+		/**
+		 * Calculates the angle between 2 vectors in degrees.
+		 */
+		static float angle(Vector2 const& vec, Vector2 const& vec2);
 		/**
 		* Returns the distance between the vector and the given vector
 		*/
-		float distance(Vector2 vec) const;
+		float distance(Vector2 const& vec) const;
 		/**
 		* Dot product between the vector and the given vector
 		*/
-		float dot(Vector2 vec) const;
+		float dot(Vector2 const& vec) const;
+		/**
+		 * Rotate the vector by a given amount in degrees in clockwise direction.
+		 */
+		void rotate(float const& degrees);
+		/**
+		 * Gets the rotation of the vector in degrees.
+		 */
+		float getAngle() const;
+		/**
+		 * Creates a unit vector with the given rotation in degrees.
+		 */
+		static Vector2 unit(float const& degrees);
+		
 		/**
 		* Linearly interpolates between two vectors.
 		* \param a The start point

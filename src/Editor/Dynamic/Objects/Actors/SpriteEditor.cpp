@@ -23,7 +23,7 @@ namespace TristeonEditor
 		layout->addWidget(formWidget);
 
 		auto* width = new QSpinBox(formWidget);
-		width->setMinimum(std::numeric_limits<int>::min());
+		width->setMinimum(0);
 		width->setMaximum(std::numeric_limits<int>::max());
 		width->setSingleStep(0);
 		width->setButtonSymbols(QDoubleSpinBox::NoButtons);
@@ -32,7 +32,7 @@ namespace TristeonEditor
 		form->addRow(new QLabel("Width", formWidget), width);
 
 		auto* height = new QSpinBox(formWidget);
-		height->setMinimum(std::numeric_limits<int>::min());
+		height->setMinimum(0);
 		height->setMaximum(std::numeric_limits<int>::max());
 		height->setSingleStep(0);
 		height->setButtonSymbols(QDoubleSpinBox::NoButtons);
