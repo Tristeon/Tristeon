@@ -9,7 +9,8 @@ namespace TristeonEditor
 	class TileSetTab : public QWidget
 	{
 	public:
-		explicit TileSetTab(QWidget* parent, const Tristeon::String& path);
+		///<summary>Specify the path of the tileset png. It doesn't allow you to set a parent as tabs that get added to a QTabWidget shouldn't have a parent when constructed as they get added later</summary>
+		explicit TileSetTab(const Tristeon::String& tileSetPath);
 	private:
 		Tristeon::TileSet* tileSet;
 	};

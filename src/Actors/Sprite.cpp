@@ -18,7 +18,7 @@ namespace Tristeon
 	
 	Sprite::Sprite()
 	{
-		texture = Resources::load<Texture>("Internal/Textures/white.jpg");
+		texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
 	}
 
 	json Sprite::serialize()
@@ -43,12 +43,12 @@ namespace Tristeon
 
 		std::string texturePath = j["texturePath"];
 		if (texturePath != texture->getPath()) //Update if new path
-			texture = Resources::load<Texture>(texturePath);
+			texture = Resources::assetLoad<Texture>(texturePath);
 	}
 
 	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
-		texture = Resources::load<Texture>(path);
+		texture = Resources::assetLoad<Texture>(path);
 
 		if (setSize)
 		{

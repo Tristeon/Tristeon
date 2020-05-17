@@ -13,18 +13,34 @@ namespace Tristeon
 		//TODO replace path dependency to ID dependency
 	public:
 		template<typename T>
-		static T* load(String const& path)
+		static T* jsonLoad(String const& path)
 		{
 			if (path.empty())
 				return nullptr;
 
 			String const lower = StringHelper::toLower(path);
-			
+
 			if (loadedResources.find(lower) != loadedResources.end())
 				return (T*)loadedResources[lower].get();
 
 			T* resource = JsonSerializer::deserialize<T>(lower);
-			loadedResources[lower] = std::move(std::unique_ptr<T>(resource));
+			loadedResources[lower] = std::move(Unique<T>(resource));
+			return (T*)loadedResources[lower].get();
+		}
+
+		///<summary>Expects T to contain a constructor that takes a string without having other parameters</summary>
+		template<typename T>
+		static T* assetLoad(String const& path)
+		{
+			if (path.empty())
+				return nullptr;
+
+			String const lower = StringHelper::toLower(path);
+
+			if (loadedResources.find(lower) != loadedResources.end())
+				return (T*)loadedResources[lower].get();
+
+			loadedResources[lower] = std::make_unique<T>(lower);
 			return (T*)loadedResources[lower].get();
 		}
 
@@ -42,21 +58,6 @@ namespace Tristeon
 		}
 
 	private:
-		static std::map<std::string, std::unique_ptr<Serializable>> loadedResources;
+		static std::map<String, Unique<Serializable>> loadedResources;
 	};
-
-	template<>
-	inline Texture* Resources::load(String const& path)
-	{
-		String const lower = StringHelper::toLower(path);
-
-		if (lower.empty())
-			return nullptr;
-		
-		if (loadedResources.find(lower) != loadedResources.end())
-			return (Texture*)loadedResources[lower].get();
-
-		loadedResources[lower] = std::make_unique<Texture>(lower);
-		return (Texture*)loadedResources[lower].get();
-	}
 }

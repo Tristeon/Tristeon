@@ -88,7 +88,7 @@ namespace TristeonEditor
 
 		//Update Instance if it's currently in use
 		if (Tristeon::Resources::loaded(item->path))
-			Tristeon::Resources::load<Tristeon::TileSet>(item->path)->deserialize(data);
+			Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path)->deserialize(data);
 	}
 
 	void TileSetFileEditor::loadTileset()

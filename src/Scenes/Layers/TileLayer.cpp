@@ -71,7 +71,7 @@ namespace Tristeon
 		{
 			for (size_t i = 0; i < j["tileSets"].size(); i++)
 			{
-				TileSet* tileset = Resources::load<TileSet>(j["tileSets"][i]);
+				TileSet* tileset = Resources::jsonLoad<TileSet>(j["tileSets"][i]);
 				tileset->filePath = j["tileSets"][i].get<std::string>();
 				tilesets.push_back(tileset);
 			}

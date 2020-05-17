@@ -9,21 +9,20 @@
 
 using namespace Tristeon;
 
-TristeonEditor::TileSetTab::TileSetTab(QWidget* parent, const String& path) : QWidget(parent)
+TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
 {
 	//Setup grid layout
-	auto* layout = new QGridLayout();
-	setLayout(layout);
+	auto* layout = new QVBoxLayout();
 
 	//Load tileset
-	tileSet = Resources::load<TileSet>(path);
+	tileSet = Resources::jsonLoad<TileSet>(tileSetPath);
 	
 	//Display tileset
 	auto* image = new QLabel(this);
 	layout->addWidget(image);
 
 	image->show();
-	image->setPixmap(QPixmap(path.c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+	image->setPixmap(QPixmap(tileSetPath.c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 
 	//Create transparent highlight
 	auto* tileHighlight = new QLabel(image);
@@ -38,6 +37,8 @@ TristeonEditor::TileSetTab::TileSetTab(QWidget* parent, const String& path) : QW
 	tileHighlight->adjustSize();
 	tileHighlight->hide();
 	
-	//image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
-	//image->adjustSize();
+	image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
+	image->adjustSize();
+	
+	setLayout(layout);
 }

@@ -12,6 +12,10 @@ namespace TristeonEditor
 	protected:
 		void initialize() override;
 		void sceneLoaded(Tristeon::Scene* scene) override;
+
+	private:
+		QTabWidget* tileSetTabs = nullptr;
+		QWidget* contents = nullptr;
 	};
 }
 #endif
