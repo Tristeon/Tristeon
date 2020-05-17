@@ -1,8 +1,8 @@
 #include "GameView.h"
 
-#include <QOpenGLFunctions>
-
 #include <Engine.h>
+#include <QApplication>
+#include <QCommonStyle>
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>
 #include <Window.h>
@@ -32,7 +32,55 @@ namespace Tristeon
 
 	void GameView::makeContextCurrent()
 	{
-		instance()->context()->makeCurrent(instance()->context()->surface());
+		context()->makeCurrent(context()->surface());
+	}
+
+	Vector2 GameView::screenToWorld(Vector2Int screenPoint)
+	{
+		//Convert into Qt coords
+		if (!Window::fullScreen())
+			screenPoint.y -= QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
+		screenPoint = Vector2Int(screenPoint.x, Window::height() - screenPoint.y);
+
+		//Convert into local coords
+		QPoint local = instance()->mapFromGlobal(QPoint(screenPoint.x, screenPoint.y));
+		//Flip Y and remove area below gameview because apparently mapFromGlobal() doesnt handle that space?
+		local.setY(Window::height() - (Window::height() - instance()->rect().bottom()) - local.y());
+
+		//Scale with gameview screen 
+		Vector2 const screenSize = Vector2(Window::width(), Window::height());
+		Vector2 const viewSize = Vector2(width(), height());
+
+		//Adjust for center
+		Vector2 const halfSize = Vector2(width() / 2.0f, height() / 2.0f);
+
+		Vector2 result = Vector2(local.x(), local.y()) - halfSize;
+		//Adjust for camera
+		result *= screenSize / viewSize;
+		result *= 1.0f / Camera::main()->zoom;
+		result += Camera::main()->position;
+		return result;
+	}
+
+	Vector2Int GameView::worldToScreen(Vector2 worldPoint)
+	{
+		Vector2 const screenSize = Vector2(Window::width(), Window::height());
+		Vector2 const viewSize = Vector2(width(), height());
+		Vector2 const halfSize = Vector2(width() / 2.0f, height() / 2.0f);
+
+		worldPoint -= Camera::main()->position;
+		worldPoint /= (1.0f / Camera::main()->zoom);
+		worldPoint /= (screenSize / viewSize);
+
+		worldPoint += halfSize;
+
+		worldPoint.y = Window::height() - (Window::height() - instance()->rect().bottom()) - worldPoint.y;
+		QPoint global = instance()->mapToGlobal(QPoint(worldPoint.x, worldPoint.y));
+
+		Vector2Int result = Vector2Int(global.x(), Window::height() - global.y());
+		if (!Window::fullScreen())
+			result.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
+		return result;
 	}
 
 	void GameView::initializeGL()
@@ -70,7 +118,5 @@ namespace Tristeon
 			engine->_renderer->renderScene(scene);
 			engine->_renderer->renderHUD(scene->getHUD());
 		}
-
-		update();
 	}
 }

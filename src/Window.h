@@ -32,12 +32,15 @@ namespace Tristeon
 		 * For rendering purposes, it is recommended to use GameView::height()
 		 */
 		static unsigned int height() { return instance()->QMainWindow::height(); }
-		
+
+		/**
+		 * Returns true if the window is fullscreen, false if it's not
+		 */
+		static bool fullScreen() { return instance()->isFullScreen(); }
 	protected:
 		void mousePressEvent(QMouseEvent* event) override;
 		void mouseReleaseEvent(QMouseEvent* event) override;
 		void mouseDoubleClickEvent(QMouseEvent* event) override;
-		void mouseMoveEvent(QMouseEvent* event) override;
 		void wheelEvent(QWheelEvent* event) override;
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;
@@ -54,6 +57,8 @@ namespace Tristeon
 		std::queue<QKeyEvent> keyPressEvents;
 		std::queue<QKeyEvent> keyReleaseEvents;
 		std::queue<QWheelEvent> mouseWheelEvents;
+
+		QPoint oldMousePos;
 
 		QGamepad* activeGamepad = nullptr;
 		/**

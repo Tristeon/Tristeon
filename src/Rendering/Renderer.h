@@ -16,6 +16,8 @@ namespace Tristeon
 	{
 		friend GameView;
 		friend Shader;
+	public:
+		static bool showGrid;
 	private:
 		/**
 		 * Renders the given scene, runs a prepass for each shader in Renderer::prepass first

@@ -13,6 +13,8 @@ namespace TristeonEditor
 	
 	void ActorEditor::initialize()
 	{
+		layout->addWidget(new QLabel(QString::fromStdString(actor->serialize()["typeID"].get<std::string>())));
+		
 		displayProperties();
 		displayBehaviours();
 	}

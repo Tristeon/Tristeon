@@ -1,3 +1,4 @@
+#include "Editor/EditorFields.h"
 #ifdef TRISTEON_EDITOR
 #include "TileLayerEditor.h"
 #include <Serialization/JsonSerializer.h>
@@ -20,33 +21,11 @@ namespace TristeonEditor
 		auto* form = new QFormLayout();
 		formParent->setLayout(form);
 		
-		//Width Field
-		auto* widthText = new QLabel("Width", formParent);
-		widthText->show();
+		EditorFields::uintField(form, "Width", targetLayer->width(), 1, std::numeric_limits<int>::max(), [&](int value) { mapWidthChanged(value); });
+		EditorFields::uintField(form, "Height", targetLayer->height(), 1, std::numeric_limits<int>::max(), [&](int value) { mapHeightChanged(value); });
 
-		auto* widthField = new QSpinBox(formParent);
-		widthField->setMinimum(1);
-		widthField->setMaximum(std::numeric_limits<int>::max());
-		widthField->setSingleStep(1);
-		widthField->setValue(targetLayer->width());
-		widthField->show();
-		connect(widthField, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged) /* connect can't infer without the cast coz of ambiguity*/, this, &TileLayerEditor::mapWidthChanged);
-
-		form->addRow(widthText, widthField);
-		
-		//Height Field
-		auto* heightText = new QLabel("Height", formParent);
-		heightText->show();
-
-		auto* heightField = new QSpinBox(formParent);
-		heightField->setMinimum(1);
-		heightField->setMaximum(std::numeric_limits<int>::max());
-		heightField->setSingleStep(1);
-		heightField->setValue(targetLayer->height());
-		heightField->show();
-		connect(heightField, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &TileLayerEditor::mapHeightChanged);
-
-		form->addRow(heightText, heightField);
+		EditorFields::uintField(form, "Tile Render Width", targetLayer->tileRenderWidth(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->setTileRenderWidth(value); });
+		EditorFields::uintField(form, "Tile Render Height", targetLayer->renderHeight(), 1, std::numeric_limits<int>::max(), [&](int value) { targetLayer->setRenderHeight(value); });
 	}
 
 	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)

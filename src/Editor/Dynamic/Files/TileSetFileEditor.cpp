@@ -1,5 +1,5 @@
-#include "Resources.h"
 #ifdef TRISTEON_EDITOR
+#include "Resources.h"
 #include "TileSetFileEditor.h"
 #include "Editor/EditorFields.h"
 #include "FileTypes/TileSet.h"
@@ -77,6 +77,7 @@ namespace TristeonEditor
 		tileHighlight->setPixmap(QPixmap("Internal/Textures/selection.png"));
 		tileHighlight->setScaledContents(true);
 		tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
+		tileHighlight->setFocusPolicy(Qt::NoFocus);
 
 		loadTileset();
 	}

@@ -175,6 +175,18 @@ namespace Tristeon
 		y *= value;
 	}
 
+	void Vector2::operator/=(const Vector2& vector)
+	{
+		x /= vector.x;
+		y /= vector.y;
+	}
+
+	void Vector2::operator/=(const float& value)
+	{
+		x /= value;
+		y /= value;
+	}
+
 	bool Vector2::operator<(const Vector2& vec) const
 	{
 		if (x < vec.x) return true;

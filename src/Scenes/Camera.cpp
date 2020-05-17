@@ -26,6 +26,9 @@ namespace Tristeon
 
 	Camera* Camera::main()
 	{
+		if (SceneManager::current() == nullptr)
+			return nullptr;
+		
 		return SceneManager::current()->getCamera();
 	}
 }

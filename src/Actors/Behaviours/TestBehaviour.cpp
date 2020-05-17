@@ -1,4 +1,3 @@
-// ReSharper disable All
 #include <Actors/Behaviours/TestBehaviour.h>
 #include <Actors/Actor.h>
 
@@ -9,8 +8,12 @@
 
 #include <Physics/PhysicsBody.h>
 
+
+#include "Input/Mouse.h"
+#include "Math/Math.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
+#include "Scenes/Camera.h"
 
 namespace Tristeon
 {
@@ -22,14 +25,26 @@ namespace Tristeon
 		body = owner()->behaviour<PhysicsBody>();
 	}
 
+	int r = 0;
+	
 	void TestBehaviour::update()
 	{
+		owner()->position = Math::orbit(GameView::screenToWorld(Mouse::position()), Vector2{ 500, 500 }, r++);
+		//owner()->position = GameView::screenToWorld(Mouse::position());
+		//std::cout
+		//	<< "Mouse: " << Mouse::position().toString() << std::endl
+		//	<< "Mouse to world: " << GameView::screenToWorld(Mouse::position()).toString() << std::endl
+		//	<< "World to mouse: " << GameView::worldToScreen(GameView::screenToWorld(Mouse::position())).toString() << std::endl;
+		return;
+		
 		bool grounded = PhysicsWorld::raycast(owner()->position, Vector2::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->velocity({ body->velocity().x, jumpVelocity });
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
+
+		Camera::main()->position = (Vector2Int)owner()->position;
 	}
 	
 	json TestBehaviour::serialize()

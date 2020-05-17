@@ -6,6 +6,8 @@
 #include <Utils/Singleton.h>
 #include <Utils/Colour.h>
 
+#include "Math/Vector2Int.h"
+
 namespace Tristeon
 {
 	class Engine;
@@ -68,6 +70,17 @@ namespace Tristeon
 		 * The amount of frames per second the program is running at.
 		 */
 		static uint fps() { return instance()->_fps; }
+
+		/**
+		 * Converts a screen point (Like Mouse::position() into world coordinates.
+		 * This function takes into account that gameview might not always be fullscreen.
+		 */
+		static Vector2 screenToWorld(Vector2Int screenPoint);
+		/**
+		 * Converts a world coordinate into a screen point.
+		 * This function takes into account that gameview might not always be fullscreen.
+		 */
+		static Vector2Int worldToScreen(Vector2 worldPoint);
 	protected:
 		Engine* engine = nullptr;
 

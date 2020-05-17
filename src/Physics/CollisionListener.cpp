@@ -53,7 +53,7 @@ namespace Tristeon
 			TileContact tileContact;
 			tileContact.layer = layer;
 			tileContact.tileIndex = tileIndex;
-			tileContact.tile = layer->tile(tileIndex);
+			tileContact.tile = layer->tileByIndex(tileIndex);
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tileSetID)->tileInfo[tileContact.tile.index];
 
 			for (auto* cb : collider->owner()->behaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
@@ -127,7 +127,7 @@ namespace Tristeon
 			TileContact tileContact;
 			tileContact.layer = layer;
 			tileContact.tileIndex = tileIndex;
-			tileContact.tile = layer->tile(tileIndex);
+			tileContact.tile = layer->tileByIndex(tileIndex);
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tileSetID)->tileInfo[tileContact.tile.index];
 
 			for (auto* cb : collider->owner()->behaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);

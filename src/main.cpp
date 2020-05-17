@@ -162,9 +162,10 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 
 	Tristeon::Window window;
+	window.setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+	window.setCorner(Qt::TopRightCorner, Qt::TopDockWidgetArea);
 	window.resize(1920, 1080);
 	window.showMaximized();
-	
 	engine = std::make_unique<Tristeon::Engine>();
 
 #ifdef TRISTEON_EDITOR
@@ -177,9 +178,21 @@ int main(int argc, char** argv)
 	window.setCentralWidget(widget);
 	window.show();
 
+	//TODO: Docking doesn't respect corner wishes
+	//for (QDockWidget* dock : widget->findChildren<QDockWidget*>())
+	//{
+	//	dock->setParent(&window);
+	//	window.removeDockWidget(dock);
+	//	window.addDockWidget(Qt::RightDockWidgetArea, dock);
+	//	dock->show();
+	//}
+
 	QApplication::processEvents();
 #ifdef TRISTEON_EDITOR
 	editor->initialize();
+#else
+	window.showFullScreen();
+	engine->playMode(true);
 #endif
 	engine->run();
 	return 0;

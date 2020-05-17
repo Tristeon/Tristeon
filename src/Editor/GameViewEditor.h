@@ -4,6 +4,7 @@
 #include "Dynamic/Scene/SceneEditor.h"
 #include "EditorWindow.h"
 #include "Rendering/GameView.h"
+#include "EditorCameraController.h"
 
 namespace TristeonEditor
 {
@@ -14,12 +15,14 @@ namespace TristeonEditor
 		virtual ~GameViewEditor() = default;
 	protected:
 		void initialize() override;
+		void paintGL() override;
 		void sceneLoaded(Tristeon::Scene* scene) override;
 		void mouseMoveEvent(QMouseEvent* event) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
 
 		QGridLayout* layout = nullptr;
 		SceneEditor* layerView = nullptr;
+		Tristeon::Unique<EditorCameraController> cameraController;
 	};
 }
 #endif

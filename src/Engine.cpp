@@ -55,11 +55,11 @@ namespace Tristeon
 			//FPS counter
 			frames++;
 			time += deltaTime;
-			if (time >= 1)
+			if (time >= 1000)
 			{
 				GameView::instance()->_fps = frames;
 				frames = 0;
-				time--;
+				time = fmod(time, 1000.0f);
 			}
 
 			if (inPlayMode)
@@ -82,13 +82,13 @@ namespace Tristeon
 			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 			destroyedActors.clear();
 			
-			_view->paintGL();
+			_view->update();
 
+			QApplication::sendPostedEvents();
+			
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();
-			
-			QApplication::sendPostedEvents();
 		}
 	}
 

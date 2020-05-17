@@ -5,7 +5,7 @@
 namespace Tristeon
 {
 	class ActorLayer;
-	
+
 	/**
 	 * Graphic is the base class for 2D renderable actors.
 	 *
@@ -14,6 +14,29 @@ namespace Tristeon
 	class Graphic : public Actor
 	{
 		friend ActorLayer;
+	public:
+		struct AABB
+		{
+			Vector2 min;
+			Vector2 max;
+
+			bool contains(Vector2 const& position) const
+			{
+				return position.x > min.x&& position.x < max.x&& position.y > min.y&& position.y < max.y;
+			}
+		};
+		
+		/**
+		 * Returns true if the world position is within the bounds of the Graphic.
+		 * This function is overridden in inherited classes to accurately represent its bounds
+		 */
+		virtual bool withinBounds(Vector2 const& worldPos) = 0;
+
+		/**
+		 * Returns the Graphic's AABB.
+		 * The AABB is a square defined by a min and max value, this does not have to accurately reflect the shape of the object (e.g. the bounds of a circle are still simply a square)
+		 */
+		virtual AABB getAABB() = 0;
 	protected:
 		/**
 		 * Render the graphic to the GameView, called for each graphic by the ActorLayer.

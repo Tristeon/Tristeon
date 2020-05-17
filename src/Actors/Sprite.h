@@ -57,10 +57,23 @@ namespace Tristeon
 		 * \param setSize If true, the sprite will take on the size of the texture.
 		 */
 		virtual void setTexture(std::string const& path, bool const& setSize);
+
+		/**
+		 * Returns true if the world position is within the bounds of the Sprite.
+		 */
+		bool withinBounds(Vector2 const& worldPos) override;
+
+		/**
+		 * Returns the Sprite's AABB.
+		 * This is a square, defined using the position, rotation, scale, width and height of the sprite.
+		 * This function handles rotation by calculating the smallest AABB fit around the rotated Sprite.
+		 */
+		AABB getAABB() override;
+
 	protected:
 		virtual void render(QOpenGLShaderProgram* program) override;
 		virtual Shader* getShader() override;
-
+	protected:
 		/**
 		 * The 2D texture of the sprite.
 		 */

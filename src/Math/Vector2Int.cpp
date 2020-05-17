@@ -129,6 +129,12 @@ namespace Tristeon
 		y *= value;
 	}
 
+	void Vector2Int::operator*=(const float& value)
+	{
+		x *= value;
+		y *= value;
+	}
+
 	bool Vector2Int::operator<(const Vector2Int& vec) const
 	{
 		if (x < vec.x) return true;

@@ -34,6 +34,11 @@ namespace Tristeon
 			mouseDoubleClickEvents.pop();
 		}
 
+		if (oldMousePos != QCursor::pos())
+		{
+			mouseMoveEvents.push(QMouseEvent(QEvent::MouseMove, QCursor::pos(), Qt::NoButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+			oldMousePos = QCursor::pos();
+		}
 		while (!mouseMoveEvents.empty())
 		{
 			Mouse::onMove(mouseMoveEvents.front());
@@ -69,7 +74,11 @@ namespace Tristeon
 
 	Window::Window()
 	{
+		setMouseTracking(true);
+		setWindowIcon(QIcon("Internal/Icons/logo.png"));
 		connectGamepads();
+
+		oldMousePos = QCursor::pos();
 	}
 
 	void Window::mousePressEvent(QMouseEvent* event)
@@ -85,11 +94,6 @@ namespace Tristeon
 	void Window::mouseDoubleClickEvent(QMouseEvent* event)
 	{
 		mouseDoubleClickEvents.push(*event);
-	}
-
-	void Window::mouseMoveEvent(QMouseEvent* event)
-	{
-		mouseMoveEvents.push(*event);
 	}
 
 	void Window::wheelEvent(QWheelEvent* event)
