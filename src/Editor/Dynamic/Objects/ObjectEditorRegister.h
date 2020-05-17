@@ -32,7 +32,6 @@ namespace TristeonEditor
 			const auto it = getMap()->find(s);
 			if (it == getMap()->end())
 			{
-				std::cout << "Couldn't find ObjectEditor for type " << s << std::endl;
 				return nullptr;
 			}
 			return it->second();

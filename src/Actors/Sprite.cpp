@@ -57,6 +57,11 @@ namespace Tristeon
 		}
 	}
 
+	Texture* Sprite::getTexture()
+	{
+		return texture;
+	}
+
 	void Sprite::render(QOpenGLShaderProgram* program)
 	{
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();

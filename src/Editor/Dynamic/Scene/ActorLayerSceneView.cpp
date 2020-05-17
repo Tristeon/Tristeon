@@ -1,3 +1,4 @@
+#include "Input/Keyboard.h"
 #ifdef TRISTEON_EDITOR
 #include "Actors/Sprite.h"
 #include "Engine.h"
@@ -57,7 +58,7 @@ namespace TristeonEditor
 			{
 				Sprite* sprite = dynamic_cast<Sprite*>(editor()->selectedActor());
 
-				if (sprite != nullptr)
+				if (sprite != nullptr && sprite->getTexture() != nullptr)
 				{
 					Vector2 position = editor()->selectedActor()->position;
 					Vector2 topRight = GameView::screenToWorld(Mouse::position());
@@ -66,6 +67,18 @@ namespace TristeonEditor
 						return;
 
 					Vector2 size = difference / sprite->scale * 2;
+
+					//Snap to aspect ratio
+					if (Keyboard::held(Keyboard::Shift))
+					{
+						Vector2 imageSize = sprite->getTexture()->size();
+						
+						if (size.x > size.y) //Prioritize X
+							size.x = imageSize.x / imageSize.y * size.y;
+						else //Prioritize Y
+							size.y = imageSize.y / imageSize.x * size.x;
+					}
+					
 					sprite->width = size.x;
 					sprite->height = size.y;
 
