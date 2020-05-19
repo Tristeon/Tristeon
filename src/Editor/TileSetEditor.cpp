@@ -13,7 +13,11 @@ namespace TristeonEditor
 		std::string path = (QDir::currentPath() + "/Project/TilesetTest.tileset").toStdString();
 		auto testTab = new TileSetTab(path);
 		
-		tileSetTabs->addTab(testTab,"Test");
+		std::string path2 = (QDir::currentPath() + "/Project/GoldBricks.tileset").toStdString();
+		auto testTab2 = new TileSetTab(path2);
+		
+		tileSetTabs->addTab(testTab,"TilesetTest");
+		tileSetTabs->addTab(testTab2,"Gold Bricks");
 
 		auto layout = new QVBoxLayout();
 		layout->addWidget(tileSetTabs);

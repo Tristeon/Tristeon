@@ -23,7 +23,7 @@ namespace TristeonEditor
 		QLabel* image = nullptr;
 		QLabel* tileHighlight = nullptr;
 		int selectedTile = -1;
-		Tristeon::TileSettings selectedTileInfo{};
+		Tristeon::TileInfo selectedTileInfo{};
 		QFrame* selectedTileData = nullptr;
 
 		Tristeon::TileSet set;

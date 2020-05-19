@@ -7,7 +7,7 @@
 
 namespace Tristeon
 {
-	struct TileSettings
+	struct TileInfo
 	{
 		bool hasCollider = false;
 		float density = 1.0f;
@@ -15,14 +15,14 @@ namespace Tristeon
 		float restitution = 0.0f;
 	};
 
-	inline void to_json(json& j, const TileSettings& p) {
+	inline void to_json(json& j, const TileInfo& p) {
 		j["hasCollider"] = p.hasCollider;
 		j["density"] = p.density;
 		j["friction"] = p.friction;
 		j["restitution"] = p.restitution;
 	}
 
-	inline void from_json(const json& j, TileSettings& p) {
+	inline void from_json(const json& j, TileInfo& p) {
 		p.hasCollider = j["hasCollider"];
 		p.density = j["density"];
 		p.friction = j["friction"];
@@ -48,15 +48,15 @@ namespace Tristeon
 		/**
 		 * Creates a tileset from a given tileset file.
 		 */
-		explicit TileSet(std::string const& path);
+		explicit TileSet(String const& path);
 
 		/**
 		 * Creates a tileset with the given values, this is shorthand for simply assigning the values after creation.
 		 */
-		explicit TileSet(std::string const& imagePath, 
+		explicit TileSet(String const& imagePath, 
 			uint const& cols, 
 			uint const& rows, 
-			TileSettings tileInfo[], 
+			TileInfo tileInfo[], 
 
 			uint const& spacingLeft = 0,
 			uint const& spacingRight = 0,
@@ -72,17 +72,17 @@ namespace Tristeon
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		TileSettings info(int const& x, int const& y) const;
+		TileInfo info(int const& x, int const& y) const;
 
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		TileSettings info(Vector2Int const& coords) const;
+		TileInfo info(Vector2Int const& coords) const;
 		
 		/**
 		 * Gets the Tile data struct of the tile at the given index.
 		 */
-		TileSettings info(int const& index) const;
+		TileInfo info(int const& index) const;
 
 		/**
 		 * Gets the size of a tile in pixels.
@@ -108,15 +108,15 @@ namespace Tristeon
 		Vector2Int tileMin(Vector2Int const& coords) const;
 
 		/**
-		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
 		Vector2 tileMinNormalized(int const& x, int const& y) const;
 		/**
-		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
 		Vector2 tileMinNormalized(int const& index) const;
 		/**
-		 * Gets the top-left corner of the tile on the image in normalized 0..1 range.
+		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
 		Vector2 tileMinNormalized(Vector2Int const& coords) const;
 		
@@ -206,14 +206,14 @@ namespace Tristeon
 		/**
 		 * Tile specific information to help inform the engine about collisions or other tile-based behaviour. 
 		 */
-		std::unique_ptr<TileSettings[]> tileInfo = nullptr;
+		Unique<TileInfo[]> tileInfo = nullptr;
 
 		/**
 		 * The texture used by the tileset.
 		 */
-		std::unique_ptr<Texture> texture = nullptr;
+		Unique<Texture> texture = nullptr;
 
-		std::string filePath = "";
+		String filePath = "";
 
 		int id = 0;
 	};

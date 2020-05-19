@@ -12,17 +12,17 @@ namespace Tristeon
 		//Empty
 	}
 
-	TileSet::TileSet(std::string const& path)
+	TileSet::TileSet(String const& path)
 	{
 		json j = JsonSerializer::load(path);
 		deserialize(j);
 		filePath = path;
 	}
 
-	TileSet::TileSet(std::string const& imagePath,
+	TileSet::TileSet(String const& imagePath,
 	                 uint const& cols,
 	                 uint const& rows,
-	                 TileSettings tileInfo[],
+	                 TileInfo tileInfo[],
 
 	                 uint const& spacingLeft,
 	                 uint const& spacingRight,
@@ -31,9 +31,9 @@ namespace Tristeon
 	                 uint const& horizontalSpacing,
 	                 uint const& verticalSpacing) : cols(cols), rows(rows), spacingLeft(spacingLeft), spacingRight(spacingRight), spacingTop(spacingTop), spacingBottom(spacingBottom), horizontalSpacing(horizontalSpacing), verticalSpacing(verticalSpacing)
 	{
-		this->tileInfo = std::make_unique<TileSettings[]>(cols * rows);
+		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		if (tileInfo != nullptr)
-			memcpy(this->tileInfo.get(), tileInfo, int(cols * rows) * sizeof(TileSettings));
+			memcpy(this->tileInfo.get(), tileInfo, int(cols * rows) * sizeof(TileInfo));
 
 		texture = std::make_unique<Texture>(imagePath);
 	}
@@ -47,7 +47,7 @@ namespace Tristeon
 		
 		j["width"] = cols;
 		j["height"] = rows;
-		j["texturePath"] = texture->getPath();
+		j["texturePath"] = filePath;
 		
 		j["spacingLeft"] = spacingLeft;
 		j["spacingRight"] = spacingRight;
@@ -63,7 +63,7 @@ namespace Tristeon
 			if (tileInfo)
 				info.emplace_back(tileInfo[i]);
 			else
-				info.emplace_back(TileSettings{});
+				info.emplace_back(TileInfo{});
 		}
 		j["tileInfo"] = info;
 		
@@ -79,6 +79,7 @@ namespace Tristeon
 		
 		std::string texturePath = j["texturePath"];
 		texture = std::make_unique<Texture>(texturePath);
+		filePath = texturePath;
 
 		spacingLeft = j["spacingLeft"];
 		spacingRight = j["spacingRight"];
@@ -88,9 +89,9 @@ namespace Tristeon
 		horizontalSpacing = j["horizontalSpacing"];
 		verticalSpacing = j["verticalSpacing"];
 
-		this->tileInfo = std::make_unique<TileSettings[]>(cols * rows);
+		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
-			tileInfo[i] = TileSettings();
+			tileInfo[i] = TileInfo();
 		
 		if (j.contains("tileInfo") && j["tileInfo"].is_array())
 		{
@@ -101,7 +102,7 @@ namespace Tristeon
 		}
 	}
 
-	TileSettings TileSet::info(int const& index) const
+	TileInfo TileSet::info(int const& index) const
 	{
 		if (index < 0 || index > cols * rows)
 			return {};
@@ -221,12 +222,12 @@ namespace Tristeon
 		return { (int)index % (int)cols, (int)(index / (float)cols) };
 	}
 
-	TileSettings TileSet::info(int const& x, int const& y) const
+	TileInfo TileSet::info(int const& x, int const& y) const
 	{
 		return tileInfo[tile(x, y)];
 	}
 
-	TileSettings TileSet::info(Vector2Int const& coords) const
+	TileInfo TileSet::info(Vector2Int const& coords) const
 	{
 		return tileInfo[tile(coords.x, coords.y)];
 	}

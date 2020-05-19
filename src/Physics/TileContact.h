@@ -9,6 +9,6 @@ namespace Tristeon
 		TileLayer* layer = nullptr;
 		Vector2Int tileIndex = {};
 		Tile tile = { -1, -1 };
-		TileSettings tileInfo = {};
+		TileInfo tileInfo = {};
 	};
 }

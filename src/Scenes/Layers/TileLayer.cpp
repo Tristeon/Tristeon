@@ -289,7 +289,7 @@ namespace Tristeon
 				if (set == nullptr)
 					continue;
 				
-				TileSettings const settings = set->info(tile.index);
+				TileInfo const settings = set->info(tile.index);
 
 				//No collider exists but the tile wants a collider
 				if (settings.hasCollider && !colliderExists)
