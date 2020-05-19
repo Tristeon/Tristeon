@@ -59,6 +59,11 @@ namespace Tristeon
 		virtual void setTexture(std::string const& path, bool const& setSize);
 
 		/**
+		 * Returns the current texture of the sprite. May be nullptr.
+		 */
+		virtual Texture* getTexture();
+		
+		/**
 		 * Returns true if the world position is within the bounds of the Sprite.
 		 */
 		bool withinBounds(Vector2 const& worldPos) override;

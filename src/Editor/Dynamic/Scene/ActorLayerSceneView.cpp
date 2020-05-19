@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Input/Keyboard.h"
 #include "Actors/Sprite.h"
 #include "Engine.h"
 #include "ActorLayerSceneView.h"
@@ -16,67 +17,100 @@ namespace TristeonEditor
 	{
 		actorLayer = dynamic_cast<ActorLayer*>(target());
 
-		highlight = new QLabel(this);
-		highlight->setPixmap(QPixmap("Internal/Textures/outline.png"));
-		highlight->setScaledContents(true);
-		highlight->setAttribute(Qt::WA_TranslucentBackground);
-		highlight->hide();
+		outline = new QLabel(this);
+		outline->setPixmap(QPixmap("Internal/Textures/outline.png"));
+		outline->setScaledContents(true);
+		outline->setAttribute(Qt::WA_TranslucentBackground);
+		outline->hide();
 
 		corner = new QLabel(this);
 		corner->setPixmap(QPixmap("Internal/Textures/selection.png"));
 		corner->setScaledContents(true);
 		corner->hide();
+
+		rotate = new QLabel(this);
+		rotate->setPixmap(QPixmap("Internal/Textures/rotate.png"));
+		rotate->setScaledContents(true);
+		rotate->setAttribute(Qt::WA_TranslucentBackground);
+		rotate->hide();
 	}
 
 	void ActorLayerSceneView::updateView()
 	{
 		if (Engine::playMode())
 		{
-			highlight->hide();
+			outline->hide();
 			corner->hide();
-
+			rotate->hide();
+			
 			dragging = false;
 			draggingCorner = false;
+			draggingRotate = false;
 			return;
 		}
 
 		if (Mouse::pressed(Mouse::Left))
 		{
-			if (corner->isHidden() || !corner->underMouse())
+			if ((corner->isHidden() || !corner->underMouse()) && (rotate->isHidden() || !rotate->underMouse()))
 				clickActor();
 			else if (!corner->isHidden() && corner->underMouse())
 			{
 				draggingCorner = true;
 			}
-		}
-		else if (Mouse::held(Mouse::Left))
-		{
-			if (dragging && editor()->selectedActor() != nullptr)
-				editor()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
-			if (draggingCorner && editor()->selectedActor() != nullptr)
+			else if (!rotate->isHidden() && rotate->underMouse())
 			{
-				Sprite* sprite = dynamic_cast<Sprite*>(editor()->selectedActor());
+				draggingRotate = true;
+			}
+		}
+		else if (Mouse::held(Mouse::Left) && editor()->selectedActor() != nullptr)
+		{
+			if (dragging)
+				editor()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+			else if (draggingCorner)
+			{
+				auto* sprite = dynamic_cast<Sprite*>(editor()->selectedActor());
 
-				if (sprite != nullptr)
+				if (sprite != nullptr && sprite->getTexture() != nullptr)
 				{
-					Vector2 position = editor()->selectedActor()->position;
-					Vector2 topRight = GameView::screenToWorld(Mouse::position());
-					Vector2 difference = topRight - position;
+					Vector2 const position = editor()->selectedActor()->position;
+					Vector2 const topRight = GameView::screenToWorld(Mouse::position());
+					Vector2 const difference = topRight - position;
 					if (difference.x < 0 || difference.y < 0)
 						return;
 
 					Vector2 size = difference / sprite->scale * 2;
+
+					//Snap to aspect ratio
+					if (Keyboard::held(Keyboard::Shift))
+					{
+						Vector2 const imageSize = sprite->getTexture()->size();
+						
+						if (size.x > size.y) //Prioritize X
+							size.x = imageSize.x / imageSize.y * size.y;
+						else //Prioritize Y
+							size.y = imageSize.y / imageSize.x * size.x;
+					}
+					
 					sprite->width = size.x;
 					sprite->height = size.y;
 
 					editor()->selectedActor(sprite);
 				}
 			}
+			else if (draggingRotate)
+			{
+				Vector2 const position = editor()->selectedActor()->position;
+				Vector2 const mouse = (GameView::screenToWorld(Mouse::position()) - position).getNormalized();
+				
+				editor()->selectedActor()->rotation = mouse.getAngle();
+				editor()->selectedActor(editor()->selectedActor());
+			}
 		}
 		else if (Mouse::released(Mouse::Left))
 		{
 			dragging = false;
 			draggingCorner = false;
+			draggingRotate = false;
 		}
 		
 		auto* graphic = dynamic_cast<Graphic*>(editor()->selectedActor());
@@ -92,13 +126,18 @@ namespace TristeonEditor
 			position -= Vector2{ size.x / 2.0f, -size.y / 2.0f }; //Adjust center 
 			position += graphic->position * scalar; //Adjust based on tile index
 
-			highlight->move(position.x - cameraPos.x, height() - position.y + cameraPos.y);
-			highlight->resize(size.x, size.y);
-			highlight->show();
-
-			corner->move(highlight->pos() + highlight->rect().topRight() - QPoint(size.x / 10.0f, size.y / 10.0f));
+			outline->move(position.x - cameraPos.x, height() - position.y + cameraPos.y);
+			outline->resize(size.x, size.y);
+			outline->show();
+			
+			corner->move(outline->pos() + outline->rect().topRight() - QPoint(size.x / 10.0f, size.y / 10.0f));
 			corner->resize(size.x / 5.0f, size.y / 5.0f);
 			corner->show();
+
+			Vector2 const unit = Vector2::unit(graphic->rotation);
+			rotate->move(outline->pos() + outline->rect().center() - QPoint(size.x / 10.0f, size.y / 10.0f) + QPoint(unit.x * outline->rect().width(), unit.y * outline->rect().height()));
+			rotate->resize(size.x / 5.0f, size.y / 5.0f);
+			rotate->show();
 		}
 	}
 
@@ -124,10 +163,12 @@ namespace TristeonEditor
 
 		dragging = false;
 		draggingCorner = false;
-		highlight->hide();
+		draggingRotate = false;
+		
+		outline->hide();
 		corner->hide();
+		rotate->hide();
 		editor()->selectedActor(nullptr);
 	}
 }
-
 #endif

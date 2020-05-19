@@ -5,7 +5,7 @@ namespace TristeonEditor
 {
 	void EditorFields::floatField(QFormLayout* layout, std::string label, float value, std::function<void(float)> changeCallback)
 	{
-		floatField(layout, label, value, std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), changeCallback);
+		floatField(layout, label, value, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), changeCallback);
 	}
 
 	void EditorFields::floatField(QFormLayout* layout, std::string label, float value, float minValue, float maxValue, std::function<void(float)> changeCallback)
@@ -16,7 +16,7 @@ namespace TristeonEditor
 
 	QDoubleSpinBox* EditorFields::floatField(QWidget* parent, float value, std::function<void(float)> changeCallback)
 	{
-		return floatField(parent, value, std::numeric_limits<float>::min(), std::numeric_limits<float>::max(), changeCallback);
+		return floatField(parent, value, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), changeCallback);
 	}
 
 	QDoubleSpinBox* EditorFields::floatField(QWidget* parent, float value, float minValue, float maxValue, std::function<void(float)> changeCallback)
@@ -34,7 +34,7 @@ namespace TristeonEditor
 
 	void EditorFields::intField(QFormLayout* layout, std::string label, int value, std::function<void(int)> changeCallback)
 	{
-		intField(layout, label, value, std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), changeCallback);
+		intField(layout, label, value, std::numeric_limits<int>::lowest(), std::numeric_limits<int>::max(), changeCallback);
 	}
 
 	void EditorFields::intField(QFormLayout* layout, std::string label, int value, int minValue, int maxValue, std::function<void(int)> changeCallback)
@@ -45,7 +45,7 @@ namespace TristeonEditor
 
 	QSpinBox* EditorFields::intField(QWidget* parent, int value, std::function<void(int)> changeCallback)
 	{
-		return intField(parent, value, std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), changeCallback);
+		return intField(parent, value, std::numeric_limits<int>::lowest(), std::numeric_limits<int>::max(), changeCallback);
 	}
 
 	QSpinBox* EditorFields::intField(QWidget* parent, int value, int minValue, int maxValue, std::function<void(int)> changeCallback)

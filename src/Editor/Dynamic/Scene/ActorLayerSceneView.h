@@ -19,10 +19,13 @@ namespace TristeonEditor
 		
 		Tristeon::ActorLayer* actorLayer = nullptr;
 
-		QLabel* highlight = nullptr;
+		QLabel* outline = nullptr;
 		QLabel* corner = nullptr;
+		QLabel* rotate = nullptr;
+		
 		bool dragging = false;
 		bool draggingCorner = false;
+		bool draggingRotate = false;
 	};
 }
 #endif

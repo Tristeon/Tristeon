@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 
+#include "Math.h"
+
 namespace Tristeon
 {
 	Vector2::Vector2(float xy) : x(xy), y(xy) {}
@@ -71,26 +73,49 @@ namespace Tristeon
 		return Vector2(roundf(vec.x), roundf(vec.y));
 	}
 
-	float Vector2::dot(Vector2 a, Vector2 b)
+	float Vector2::dot(Vector2 const& vec, Vector2 const& vec2)
 	{
-		return a.x* b.x + a.y * b.y;
+		return vec.x* vec2.x + vec.y * vec2.y;
 	}
 
-	float Vector2::distance(Vector2 a, Vector2 b)
+	float Vector2::angle(Vector2 const& vec, Vector2 const& vec2)
 	{
-		Vector2 const difference = b - a;
+		return Math::toDegrees(acos(dot(vec, vec2) / (vec.getLength() * vec2.getLength())));
+	}
+
+	float Vector2::distance(Vector2 const& vec, Vector2 const& vec2)
+	{
+		Vector2 const difference = vec2 - vec;
 		return difference.getLength();
 	}
 
-	float Vector2::distance(Vector2 vec) const
+	float Vector2::distance(Vector2 const& vec) const
 	{
 		Vector2 const difference = vec - Vector2(x, y);
 		return difference.getLength();
 	}
 
-	float Vector2::dot(Vector2 vec) const
+	float Vector2::dot(Vector2 const& vec) const
 	{
 		return x * vec.x + y * vec.y;
+	}
+
+	void Vector2::rotate(float const& degrees)
+	{
+		float const radians = Math::toRadians(degrees);
+		x = cos(radians - acos(x));
+		y = sin(radians - asin(y));
+	}
+
+	float Vector2::getAngle() const
+	{
+		return -Math::toDegrees(atan2(y, x));
+	}
+
+	Vector2 Vector2::unit(float const& degrees)
+	{
+		float const radians = Math::toRadians(degrees);
+		return { cos(radians), sin(radians) };
 	}
 
 	Vector2 Vector2::lerp(Vector2 a, Vector2 b, float t)
