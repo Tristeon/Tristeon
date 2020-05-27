@@ -11,18 +11,14 @@ namespace TristeonEditor
 		tileSetTabs->setStyleSheet(
 			"background-color: rgb(255, 255, 255);\nborder-color: rgb(0, 0, 0);\ncolor: rgb(00, 00, 00);");
 
-		std::string path = (QDir::currentPath() + "/Project/ParalaxTiles.tileset").toStdString();
+		std::string path = (QDir::currentPath() + "/Project/TilesetTest.tileset").toStdString();
 		auto testTab = new TileSetTab(path);
 
-		std::string path2 = (QDir::currentPath() + "/Project/Tiles.tileset").toStdString();
+		std::string path2 = (QDir::currentPath() + "/Project/GoldBricks.tileset").toStdString();
 		auto testTab2 = new TileSetTab(path2);
 
-		std::string path3 = (QDir::currentPath() + "/Project/SolidTiles.tileset").toStdString();
-		auto testTab3 = new TileSetTab(path3);
-
-		tileSetTabs->addTab(testTab, "Paralax Tiles");
-		tileSetTabs->addTab(testTab2, "Tiles");
-		tileSetTabs->addTab(testTab3, "Solid Tiles");
+		tileSetTabs->addTab(testTab, "Tileset Test");
+		tileSetTabs->addTab(testTab2, "Gold Bricks");
 
 		auto layout = new QVBoxLayout();
 		layout->addWidget(tileSetTabs);

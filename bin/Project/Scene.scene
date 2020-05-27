@@ -10049,6 +10049,9 @@
                         "r": 1.0,
                         "typeID": "Tristeon::Colour"
                     },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
                     "height": 234,
                     "name": "Penguin Test 2",
                     "position": {
@@ -10075,6 +10078,9 @@
                         "r": 1.0,
                         "typeID": "Tristeon::Colour"
                     },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
                     "height": 64,
                     "name": "My White Square",
                     "position": {
@@ -10102,6 +10108,9 @@
                         "r": 1.0,
                         "typeID": "Tristeon::Colour"
                     },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
                     "height": 512,
                     "name": "Character",
                     "position": {
@@ -10155,6 +10164,9 @@
                         "r": 1.0,
                         "typeID": "Tristeon::Colour"
                     },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
                     "height": 256,
                     "name": "Animated Numbers",
                     "position": {
