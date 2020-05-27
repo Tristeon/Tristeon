@@ -23,11 +23,11 @@ namespace Tristeon
 	/**
 	 * Registers the given type into the BehaviourRegister for editor recognition & dynamic creation
 	 */
-#define REGISTER_BEHAVIOUR_H(t) static DerivedBehaviourRegister<t> behaviour_reg;
+#define REGISTER_BEHAVIOUR_H(t) static Tristeon::DerivedBehaviourRegister<t> behaviour_reg;
 	 /**
 	  * Registers the given type into the BehaviourRegister for editor recognition & dynamic creation
 	  */
-#define REGISTER_BEHAVIOUR_CPP(t) DerivedBehaviourRegister<t> t::behaviour_reg;
+#define REGISTER_BEHAVIOUR_CPP(t) Tristeon::DerivedBehaviourRegister<t> t::behaviour_reg;
 #else //behaviour registers are only useful in the editor
 #define REGISTER_BEHAVIOUR_H(t)
 #define REGISTER_BEHAVIOUR_CPP(t)

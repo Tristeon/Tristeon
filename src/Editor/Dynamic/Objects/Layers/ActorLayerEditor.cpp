@@ -45,16 +45,16 @@ namespace TristeonEditor
 		horizontal->addWidget(remove);
 		connect(remove, &QPushButton::clicked, this, &ActorLayerEditor::removeActor);
 
-		nameChangedCallback = editor()->onSelectedActorNameChanged += [&](Tristeon::String const name)
+		nameChangedCallback = Editor::instance()->onSelectedActorNameChanged += [&](Tristeon::String const name)
 		{
-			list->currentItem()->setText(QString::fromStdString(name));
+			list->currentItem()->setText(!name.empty() ? QString::fromStdString(name) : "No Name");
 		};
 	}
 
 	ActorLayerEditor::~ActorLayerEditor()
 	{
-		if (editor())
-			editor()->onSelectedActorNameChanged -= nameChangedCallback;
+		if (Editor::instance())
+			Editor::instance()->onSelectedActorNameChanged -= nameChangedCallback;
 	}
 
 	void ActorLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
@@ -65,7 +65,7 @@ namespace TristeonEditor
 	void ActorLayerEditor::selectedActorChanged(int index)
 	{
 		QListWidgetItem* item = list->item(index);
-		editor()->selectedActor(actors[item]);
+		Editor::instance()->selectedActor(actors[item]);
 	}
 
 	void ActorLayerEditor::actorRenamed(QListWidgetItem* item)
@@ -74,7 +74,7 @@ namespace TristeonEditor
 			return;
 		
 		actors[item]->name = item->text().toStdString();
-		editor()->onSelectedActorNameChanged.invoke(item->text().toStdString());
+		Editor::instance()->onSelectedActorNameChanged.invoke(item->text().toStdString());
 	}
 
 	void ActorLayerEditor::addActor()

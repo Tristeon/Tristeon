@@ -9,6 +9,8 @@
 
 #include <Scenes/HUD.h>
 
+#include "Layers/Layer.h"
+
 namespace Tristeon
 {
 	class SceneManager;
@@ -85,6 +87,15 @@ namespace Tristeon
 		IsLayer<T>* findLayerOfType();
 
 		/**
+		 * Finds the first layer of the given type and name.
+		 * Returns nullptr if no layer is found.
+		 *
+		 * Compilation fails if T does not derive from Layer.
+		 */
+		template<typename T>
+		IsLayer<T>* findLayerOfType(String const& name) const;
+
+		/**
 		 * Returns a vector with all the layers of the given type.
 		 * Returns an empty vector if no layer is found.
 		 *
@@ -159,6 +170,17 @@ namespace Tristeon
 		for (size_t i = 0; i < layers.size(); i++)
 		{
 			if (dynamic_cast<T*>(layers[i].get()) != nullptr)
+				return dynamic_cast<T*>(layers[i].get());
+		}
+		return nullptr;
+	}
+
+	template <typename T>
+	IsLayer<T>* Scene::findLayerOfType(String const& name) const
+	{
+		for (size_t i = 0; i < layers.size(); i++)
+		{
+			if (name == layers[i]->name && dynamic_cast<T*>(layers[i].get()) != nullptr)
 				return dynamic_cast<T*>(layers[i].get());
 		}
 		return nullptr;

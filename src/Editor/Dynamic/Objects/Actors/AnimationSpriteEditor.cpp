@@ -11,12 +11,19 @@ namespace TristeonEditor
 		animSprite = (Tristeon::AnimationSprite*)current;
 	}
 
+	bool AnimationSpriteEditor::shouldDisplay(Tristeon::String const& propertyName)
+	{
+		if (propertyName == "clipPath")
+			return false;
+		return SpriteEditor::shouldDisplay(propertyName);
+	}
+
 	void AnimationSpriteEditor::textureButton()
 	{
 		QPushButton* button = new QPushButton(this);
 		button->setText("Load Animation Clip");
 		connect(button, &QPushButton::clicked, this, &AnimationSpriteEditor::loadAnimationClip);
-		layout->addWidget(button);
+		scrollLayout->addWidget(button);
 	}
 
 	void AnimationSpriteEditor::loadAnimationClip()

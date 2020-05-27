@@ -170,8 +170,6 @@ int main(int argc, char** argv)
 
 #ifdef TRISTEON_EDITOR
 	editor = std::make_unique<TristeonEditor::Editor>();
-#else
-	//TODO: Auto start game with the starting scene loaded in in game/release mode
 #endif
 	
 	QWidget* widget = loadUIFile();

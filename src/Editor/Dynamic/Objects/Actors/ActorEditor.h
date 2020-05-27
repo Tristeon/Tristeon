@@ -11,17 +11,29 @@ namespace TristeonEditor
 	public:
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+
+		void displayActorProperties();
 		virtual void displayProperties();
-
-	private:
+		void displayAutoProperties();
 		void displayBehaviours();
-		void addBehaviour(Tristeon::Behaviour* behaviour);
 
+		/**
+		 * If true, the actor editor automatically displays the property after all other properties have been displayed
+		 */
+		virtual bool shouldDisplay(Tristeon::String const& propertyName);
+
+	protected:
+		QLayout* scrollLayout = nullptr;
+		QWidget* scrollArea = nullptr;
+		
+	private:
+		void addBehaviour(Tristeon::Behaviour* behaviour);
 		void actorNameChanged(const QString& name);
 		void addButtonPressed();
 
-		QWidget* behavioursArea = nullptr;
 		Tristeon::Actor* actor = nullptr;
+
+		json data;
 	};
 }
 #endif

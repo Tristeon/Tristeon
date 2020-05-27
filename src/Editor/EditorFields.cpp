@@ -85,7 +85,7 @@ namespace TristeonEditor
 
 	void EditorFields::boolField(QFormLayout* layout, std::string label, bool value, std::function<void(bool)> changeCallback)
 	{
-		auto* field = boolField(nullptr, value, changeCallback);
+		auto* field = boolField(nullptr, value, std::move(changeCallback));
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
 	}
 
@@ -93,7 +93,7 @@ namespace TristeonEditor
 	{
 		auto* field = new QCheckBox();
 		field->setCheckState(value ? Qt::Checked : Qt::Unchecked);
-		QWidget::connect(field, &QCheckBox::stateChanged, changeCallback);
+		QWidget::connect(field, &QCheckBox::stateChanged, std::move(changeCallback));
 		return field;
 	}
 

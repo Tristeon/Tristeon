@@ -7,11 +7,13 @@
 #include <Actors/Collector.h>
 #include <Callbacks/IStart.h>
 #include <Scenes/Layers/ActorLayer.h>
+#include "Engine.h"
 
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
 	Delegate<Scene*> SceneManager::sceneLoaded;
+	String SceneManager::cachedSceneName;
 	
 	Scene* SceneManager::current()
 	{
@@ -20,23 +22,7 @@ namespace Tristeon
 
 	void SceneManager::load(String const name)
 	{
-		String const path = AssetDatabase::findByName(name, "scene");
-		if (path.empty())
-		{
-			std::cout << "Couldn't find scene: " << name << std::endl;
-			currentScene.reset();
-			currentScene = std::make_unique<Scene>(); // load empty scene
-			sceneLoaded.invoke(currentScene.get());
-			return;
-		}
-		
-		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
-		currentScene->name = name;
-		currentScene->path = path;
-		
-		for (auto start : Collector<IStart>::all()) start->start();
-
-		sceneLoaded.invoke(currentScene.get());
+		cachedSceneName = name;
 	}
 
 	void SceneManager::reload()
@@ -76,6 +62,33 @@ namespace Tristeon
 		Vector<ActorLayer*> actorLayers = current()->findLayersOfType<ActorLayer>();
 		for (const auto& layer : actorLayers)
 			layer->destroyActor(actor);
+	}
+
+	void SceneManager::processCachedLoad()
+	{
+		if (cachedSceneName.empty())
+			return;
+		
+		String const path = AssetDatabase::findByName(cachedSceneName, "scene");
+		if (path.empty())
+		{
+			std::cout << "Couldn't find scene: " << cachedSceneName << std::endl;
+			currentScene.reset();
+			currentScene = std::make_unique<Scene>(); // load empty scene
+			sceneLoaded.invoke(currentScene.get());
+			return;
+		}
+
+		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
+		currentScene->name = cachedSceneName;
+		currentScene->path = path;
+
+		if (Engine::playMode())
+			for (auto start : Collector<IStart>::all()) start->start();
+
+		sceneLoaded.invoke(currentScene.get());
+
+		cachedSceneName = "";
 	}
 
 	void SceneManager::reset()

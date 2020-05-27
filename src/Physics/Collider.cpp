@@ -14,7 +14,7 @@ namespace Tristeon
 	{
 		if (body == nullptr)
 		{
-			PhysicsBody* pb = owner()->behaviour<PhysicsBody>();
+			PhysicsBody* pb = getOwner()->getBehaviour<PhysicsBody>();
 			if (pb != nullptr)
 				body = pb->getBody();
 			else

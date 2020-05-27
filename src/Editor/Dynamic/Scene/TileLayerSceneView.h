@@ -28,6 +28,9 @@ namespace TristeonEditor
 		void resizeEvent(QResizeEvent* event) override;
 		void updateTileSize();
 		void updateTilePosition(Tristeon::Vector2Int mousePos);
+
+	private:
+		void drawTile(Tristeon::Vector2Int tileIndex);
 	};
 }
 #endif

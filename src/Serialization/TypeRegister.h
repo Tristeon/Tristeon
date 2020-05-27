@@ -22,9 +22,9 @@ namespace Tristeon
 	/**
 	 * Registers the given type into the SerializableRegister for object creation through serialization.
 	 */
-#define REGISTER_TYPE_H(t) static SerializableRegister<t> reg;
+#define REGISTER_TYPE_H(t) static Tristeon::SerializableRegister<t> reg;
 	 /**
 	  * Registers the given type into the SerializableRegister for object creation through serialization.
 	  */
-#define REGISTER_TYPE_CPP(t) SerializableRegister<t> t::reg;
+#define REGISTER_TYPE_CPP(t) Tristeon::SerializableRegister<t> t::reg;
 }

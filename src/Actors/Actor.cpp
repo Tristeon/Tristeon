@@ -9,7 +9,7 @@ namespace Tristeon
 
 	Actor::~Actor()
 	{
-		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
+		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
 			_behaviours[i].reset();
@@ -40,7 +40,7 @@ namespace Tristeon
 		rotation = j["rotation"];
 		name = j["name"].get<std::string>();
 
-		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
+		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
 		for (auto serializedBehaviour : j["behaviours"])
@@ -71,7 +71,7 @@ namespace Tristeon
 		}
 	}
 
-	Vector<Behaviour*> Actor::behaviours()
+	Vector<Behaviour*> Actor::getBehaviours()
 	{
 		Vector<Behaviour*> result;
 		for (size_t i = 0; i < _behaviours.size(); i++)
@@ -100,5 +100,17 @@ namespace Tristeon
 	void Actor::destroy()
 	{
 		Engine::instance()->destroyLater(this);
+	}
+
+	Actor* Actor::find(String const& name)
+	{
+		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
+		for (auto layer : layers)
+		{
+			auto* actor = layer->findActor(name);
+			if (actor)
+				return actor;
+		}
+		return nullptr;
 	}
 }

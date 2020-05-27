@@ -1,4 +1,6 @@
 ﻿#pragma once
+#ifdef TRISTEON_EDITOR
+
 #include <qboxlayout.h>
 #include <qlabel.h>
 #include <QWidget>
@@ -33,3 +35,5 @@ namespace TristeonEditor
 		Tristeon::Tile selectedTile;
 	};
 }
+
+#endif

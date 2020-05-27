@@ -18,10 +18,6 @@ namespace TristeonEditor
 
 		Tristeon::TObject* target() const { return _target; }
 		void target(Tristeon::TObject* value) { Tristeon::TObject* old = _target; _target = value; targetChanged(_target, old); }
-
-		Editor* editor() const { return _editor; }
-		void editor(Editor* value) { _editor = value; }
-
 	private:
 		Tristeon::TObject* _target = nullptr;
 		Editor* _editor = nullptr;

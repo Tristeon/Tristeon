@@ -708,7 +708,7 @@ color: rgb(255, 255, 255);</string>
   <widget class="QDockWidget" name="properties">
    <property name="minimumSize">
     <size>
-     <width>400</width>
+     <width>450</width>
      <height>150</height>
     </size>
    </property>
@@ -1391,8 +1391,14 @@ color:rgb(255, 255, 255);</string>
   <widget class="QDockWidget" name="tilesets">
    <property name="minimumSize">
     <size>
-     <width>300</width>
-     <height>300</height>
+     <width>450</width>
+     <height>350</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>450</width>
+     <height>400</height>
     </size>
    </property>
    <property name="styleSheet">

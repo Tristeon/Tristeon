@@ -13,10 +13,12 @@ namespace TristeonEditor
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 		void displayProperties() override;
+		bool shouldDisplay(Tristeon::String const& propertyName) override;
 
 	protected:
 		virtual void textureButton();
 		void changeTexturePressed();
+
 		Tristeon::Sprite* sprite = nullptr;
 
 		QPushButton* colorButton = nullptr;

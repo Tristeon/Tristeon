@@ -17,8 +17,8 @@ namespace TristeonEditor
 		contents->setLayout(layout);
 		contents->show();
 
-		if (editor->selectedLayer() != nullptr)
-			selectedLayerChanged(editor->selectedLayer());
+		if (Editor::instance()->selectedLayer() != nullptr)
+			selectedLayerChanged(Editor::instance()->selectedLayer());
 	}
 
 	void PropertyWindow::sceneLoaded(Tristeon::Scene * scene)
@@ -42,7 +42,6 @@ namespace TristeonEditor
 		if (current == nullptr)
 			current = new ActorEditor(); //Default editor for actors as fallback
 
-		current->editor(editor);
 		current->target(actor);
 		current->setParent(contents);
 		current->initialize();
@@ -73,7 +72,6 @@ namespace TristeonEditor
 
 		if (current != nullptr) 
 		{
-			current->editor(editor);
 			current->target(item);
 			current->setParent(contents);
 			current->initialize();

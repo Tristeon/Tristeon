@@ -42,6 +42,7 @@ namespace Tristeon
 		void destroyLater(Behaviour* behaviour);
 	private:
 		bool inPlayMode = false;
+		bool playModeDirty = false;
 		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;

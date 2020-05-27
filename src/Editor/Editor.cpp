@@ -28,7 +28,6 @@ namespace TristeonEditor
 	void Editor::addWindow(EditorWindow* window)
 	{
 		windows.add(window);
-		window->editor = this;
 	}
 
 	Tristeon::Layer* Editor::selectedLayer() const

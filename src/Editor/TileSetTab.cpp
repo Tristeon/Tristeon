@@ -1,5 +1,6 @@
-﻿#include "TileSetTab.h"
+﻿#ifdef TRISTEON_EDITOR
 
+#include "TileSetTab.h"
 
 #include <qformlayout.h>
 #include <qgridlayout.h>
@@ -22,7 +23,7 @@ TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
 	//Display tileset
 	image = new QLabel(this);
 	image->setAlignment(Qt::AlignCenter);
-	image->setPixmap(QPixmap(tileSet->filePath.c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+	image->setPixmap(QPixmap(tileSet->texture->getPath().c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 	image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 	image->adjustSize();
 
@@ -97,3 +98,5 @@ void TristeonEditor::TileSetTab::clearSelection()
 	selectedTile.index = -1;
 	tileHighlight->hide();
 }
+
+#endif

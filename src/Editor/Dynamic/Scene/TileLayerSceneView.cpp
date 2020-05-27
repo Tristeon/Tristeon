@@ -1,3 +1,4 @@
+#include "Input/Keyboard.h"
 #ifdef TRISTEON_EDITOR
 #include "Engine.h"
 #include "Input/Mouse.h"
@@ -10,7 +11,7 @@ using namespace Tristeon;
 namespace TristeonEditor
 {
 	SCENE_EDITOR_CPP(Tristeon::TileLayer, TileLayerSceneView);
-	
+
 	void TileLayerSceneView::targetChanged(TObject* current, TObject* old)
 	{
 		SceneEditor::targetChanged(current, old);
@@ -38,7 +39,7 @@ namespace TristeonEditor
 			return;
 		}
 		highlight->show();
-		
+
 		if (Camera::main()->position != cameraPos || Camera::main()->zoom != cameraZoom)
 		{
 			cameraPos = Camera::main()->position;
@@ -46,7 +47,9 @@ namespace TristeonEditor
 
 			updateTileSize();
 			updateTilePosition(lastMousePos);
+
 		}
+		drawTile(lastTileIndex);
 	}
 
 	void TileLayerSceneView::mouseMoveEvent(QMouseEvent* event)
@@ -55,7 +58,7 @@ namespace TristeonEditor
 
 		if (Engine::playMode())
 			return;
-		
+
 		lastMousePos = Mouse::position();
 		updateTilePosition(lastMousePos);
 	}
@@ -66,11 +69,8 @@ namespace TristeonEditor
 
 		if (Engine::playMode())
 			return;
-		
-		if (event->button() == Qt::MouseButton::LeftButton && tileLayer->checkBoundsByIndex(lastTileIndex))
-			Brushes::current()->draw(tileLayer, (Vector2Int)lastTileIndex);
-		else if (event->button() == Qt::MouseButton::RightButton && tileLayer->checkBoundsByIndex(lastTileIndex))
-			Brushes::current()->erase(tileLayer, (Vector2Int)lastTileIndex);
+
+		drawTile(lastTileIndex);
 	}
 
 	void TileLayerSceneView::resizeEvent(QResizeEvent* event)
@@ -96,19 +96,27 @@ namespace TristeonEditor
 
 		Vector2Int const tileIndex = tileLayer->indexByPosition(GameView::screenToWorld(mousePos));
 
-		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->checkBoundsByIndex((Vector2Int)tileIndex))
-			Brushes::current()->draw(tileLayer, (Vector2Int)tileIndex);
-		else if ((Mouse::pressed(Mouse::Right) || Mouse::held(Mouse::Right)) && tileLayer->checkBoundsByIndex((Vector2Int)tileIndex))
-			Brushes::current()->erase(tileLayer, (Vector2Int)tileIndex);
-		
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
-		position -= Vector2{ tileLayer->tileRenderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } * scalar; //Adjust center 
+		position -= Vector2{ tileLayer->tileRenderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } *scalar; //Adjust center 
 		position += Vector2{ (float)tileLayer->tileRenderWidth() * tileIndex.x, (float)tileLayer->renderHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
-		
+
 		highlight->move(position.x - cameraPos.x, position.y + cameraPos.y);
 		highlight->show();
 
-		lastTileIndex = (Vector2Int)tileIndex;
+		lastTileIndex = tileIndex;
+	}
+
+	void TileLayerSceneView::drawTile(Tristeon::Vector2Int tileIndex)
+	{
+		if (!underMouse())
+			return;
+		
+		if (Keyboard::held(Keyboard::Alt)) return;
+		
+		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->checkBoundsByIndex(tileIndex))
+			Brushes::current()->draw(tileLayer, tileIndex);
+		else if ((Mouse::pressed(Mouse::Right) || Mouse::held(Mouse::Right)) && tileLayer->checkBoundsByIndex(tileIndex))
+			Brushes::current()->erase(tileLayer, tileIndex);
 	}
 }
 #endif

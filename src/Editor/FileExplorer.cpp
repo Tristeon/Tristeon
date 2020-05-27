@@ -53,7 +53,7 @@ namespace TristeonEditor
 		current.extension = info.suffix().toStdString();
 		current.name = info.baseName().toStdString();
 		
-		editor->selectedFileItem(&current);
+		Editor::instance()->selectedFileItem(&current);
 	}
 }
 #endif

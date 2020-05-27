@@ -7,6 +7,9 @@ struct Sprite
     int height;
 
     vec4 colour;
+
+    bool flipX;
+    bool flipY;
 };
 uniform Sprite sprite;
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <Actors/Behaviours/Behaviour.h>
-#include <Serialization/TypeRegister.h>
 #include <Math/Vector2.h>
 
 #include <box2d/b2_shape.h>
@@ -12,8 +11,6 @@
 
 namespace Tristeon
 {
-	class Rigidbody;
-
 	/**
 	 * Base class for 2D Physics shape definitions.
 	 *
@@ -26,10 +23,10 @@ namespace Tristeon
 		friend class PhysicsWorld;
 	public:
 		virtual ~Collider() = default;
-		
-		virtual void start() override;
-		virtual void lateUpdate() override;
-		virtual void preDestroy() override;
+
+		void start() override;
+		void lateUpdate() override;
+		void preDestroy() override;
 		
 		json serialize() override;
 		void deserialize(json j) override;
@@ -86,17 +83,17 @@ namespace Tristeon
 		void rotationOffset(float const& value);
 		
 	protected:
-		Vector2 _offset = {};
+		Vector2 _offset;
 		float _rotationOffset = 0;
 		
 		//Simulation values
-		float _density = 0;
+		float _density = 1;
 		float _friction = 0;
 		float _restitution = 0;
 
 		bool _sensor = false;
 		
-		std::unique_ptr<b2Shape> shape;
+		Unique<b2Shape> shape;
 		b2Body* body = nullptr;
 		bool isDirty = false;
 		

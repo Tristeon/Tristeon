@@ -54,18 +54,23 @@ namespace TristeonEditor
 
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
-			if (it.key() == "typeID") continue;
+			std::string key = it.key();
 
+			if (key == "typeID") continue;
+			
 			switch (it.value().type())
 			{
 				case detail::value_t::boolean:
 				{
-					EditorFields::boolField(form, it.key(), data[it.key()], [&](int state) { data[it.key()] = (bool)((Qt::CheckState)state == Qt::Checked); behaviour->deserialize(data); });
+					EditorFields::boolField(form, key, data[key], [=](int state)
+						{
+							data[key] = (bool)((Qt::CheckState)state == Qt::Checked || (Qt::CheckState)state == Qt::PartiallyChecked); behaviour->deserialize(data);
+					});
 					break;
 				}
 				case detail::value_t::string:
 				{
-					EditorFields::stringField(form, it.key(), data[it.key()], [&](std::string value) { data[it.key()] = value; behaviour->deserialize(data); });
+					EditorFields::stringField(form, key, data[key], [=](std::string value) { data[key] = value; behaviour->deserialize(data); });
 					break;
 				}
 				case detail::value_t::object:
@@ -87,26 +92,26 @@ namespace TristeonEditor
 
 						if (isVector2 || isVector3 || isVector4)
 						{
-							auto* x = EditorFields::floatField(field, it.value()["x"], [&](float value) { data[it.key()]["x"] = value; behaviour->deserialize(data); });
-							auto* y = EditorFields::floatField(field, it.value()["y"], [&](float value) { data[it.key()]["y"] = value; behaviour->deserialize(data); });
+							auto* x = EditorFields::floatField(field, it.value()["x"], [=](float value) { data[key]["x"] = value; behaviour->deserialize(data); });
+							auto* y = EditorFields::floatField(field, it.value()["y"], [=](float value) { data[key]["y"] = value; behaviour->deserialize(data); });
 							layout->addWidget(x);
 							layout->addWidget(y);
 						}
 						if (isVector3 || isVector4)
 						{
-							auto* z = EditorFields::floatField(field, it.value()["z"], [&](float value) { data[it.key()]["z"] = value; behaviour->deserialize(data); });
+							auto* z = EditorFields::floatField(field, it.value()["z"], [=](float value) { data[key]["z"] = value; behaviour->deserialize(data); });
 							layout->addWidget(z);
 						}
 						if (isVector4)
 						{
-							auto* w = EditorFields::floatField(field, it.value()["w"], [&](float value) { data[it.key()]["w"] = value; behaviour->deserialize(data); });
+							auto* w = EditorFields::floatField(field, it.value()["w"], [=](float value) { data[key]["w"] = value; behaviour->deserialize(data); });
 							layout->addWidget(w);
 						}
 
 						if (isVector2Int)
 						{
-							auto* x = EditorFields::intField(field, it.value()["x"], [&](int value) { data[it.key()]["x"] = value; behaviour->deserialize(data); });
-							auto* y = EditorFields::intField(field, it.value()["y"], [&](int value) { data[it.key()]["y"] = value; behaviour->deserialize(data); });
+							auto* x = EditorFields::intField(field, it.value()["x"], [=](int value) { data[key]["x"] = value; behaviour->deserialize(data); });
+							auto* y = EditorFields::intField(field, it.value()["y"], [=](int value) { data[key]["y"] = value; behaviour->deserialize(data); });
 							layout->addWidget(x);
 							layout->addWidget(y);
 						}
@@ -118,28 +123,28 @@ namespace TristeonEditor
 					}
 
 					if (field != nullptr)
-						form->addRow(new QLabel(QString::fromStdString(it.key())), field);
+						form->addRow(new QLabel(QString::fromStdString(key)), field);
 					break;
 				}
 				case detail::value_t::array:
 				{
 					//TODO: Support arrays in behaviour editor
-					EditorFields::labelField(form, it.key(), "Arrays not supported yet");
+					EditorFields::labelField(form, key, "Arrays not supported yet");
 					break;
 				}
 				case detail::value_t::number_float:
 				{
-					EditorFields::floatField(form, it.key(), it.value(), [=](float value){ data[it.key()] = value; behaviour->deserialize(data); });
+					EditorFields::floatField(form, key, it.value(), [=](float value){ data[key] = value; behaviour->deserialize(data); });
 					break;
 				}
 				case detail::value_t::number_integer:
 				{
-					EditorFields::intField(form, it.key(), it.value(), [=](int value) { data[it.key()] = value; behaviour->deserialize(data); });
+					EditorFields::intField(form, key, it.value(), [=](int value) { data[key] = value; behaviour->deserialize(data); });
 					break;
 				}
 				case detail::value_t::number_unsigned:
 				{
-					EditorFields::intField(form, it.key(), it.value(), 0, std::numeric_limits<int>::max(), [=](int value) { data[it.key()] = (unsigned int)value; behaviour->deserialize(data); });
+					EditorFields::intField(form, key, it.value(), 0, std::numeric_limits<int>::max(), [=](int value) { data[key] = (unsigned int)value; behaviour->deserialize(data); });
 					break;
 				}
 				default:

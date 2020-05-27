@@ -23,11 +23,11 @@ namespace Tristeon
 	/**
 	 * Registers the given type into the ActorRegister for editor recognition & dynamic creation
 	 */
-#define REGISTER_ACTOR_H(t) static DerivedActorRegister<t> actor_reg;
+#define REGISTER_ACTOR_H(t) static Tristeon::DerivedActorRegister<t> actor_reg;
 	 /**
 	  * Registers the given type into the ActorRegister for editor recognition & dynamic creation
 	  */
-#define REGISTER_ACTOR_CPP(t) DerivedActorRegister<t> t::actor_reg;
+#define REGISTER_ACTOR_CPP(t) Tristeon::DerivedActorRegister<t> t::actor_reg;
 #else //Actor registers are only useful in the editor
 #define REGISTER_ACTOR_H(t)
 #define REGISTER_ACTOR_CPP(t)

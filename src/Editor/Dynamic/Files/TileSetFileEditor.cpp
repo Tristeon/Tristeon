@@ -18,11 +18,8 @@ namespace TristeonEditor
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
 
-		EditorFields::uintField(form, "Columns", data["width"], [&](uint value) { data["width"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(form, "Rows", data["height"], [&](uint value) { data["height"] = value; saveData(); tilesetChanged(); });
-
-		EditorFields::uintField(form, "Tile render width", data["tileRenderWidth"], [&](uint value) { data["tileRenderWidth"] = value; saveData(); });
-		EditorFields::uintField(form, "Tile render height", data["tileRenderHeight"], [&](uint value) { data["tileRenderHeight"] = value; saveData(); });
+		EditorFields::uintField(form, "Columns", data["width"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["width"] = value; saveData(); tilesetChanged(); });
+		EditorFields::uintField(form, "Rows", data["height"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["height"] = value; saveData(); tilesetChanged(); });
 		
 		auto* spacing = new QWidget(formWidget);
 		layout->addWidget(spacing);
@@ -88,7 +85,18 @@ namespace TristeonEditor
 
 		//Update Instance if it's currently in use
 		if (Tristeon::Resources::loaded(item->path))
-			Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path)->deserialize(data);
+		{
+			auto* tileset = Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path);
+			if (tileset != nullptr)
+				tileset->deserialize(data);
+		}
+	}
+
+	void TileSetFileEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
+	{
+		JsonFileEditor::targetChanged(current, old);
+		set = Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path);
+		data = set->serialize();
 	}
 
 	void TileSetFileEditor::loadTileset()
@@ -117,7 +125,7 @@ namespace TristeonEditor
 			QPoint const local = image->mapFromGlobal(position);
 
 			Vector2Int const tileIndex = Vector2Int(local.x() / tileSize.x, local.y() / tileSize.y);
-			int const newTile = set.tile(tileIndex.x, tileIndex.y);
+			int const newTile = set->tile(tileIndex.x, tileIndex.y);
 			if (newTile == selectedTile)
 			{
 				selectedTile = -1;
@@ -126,7 +134,7 @@ namespace TristeonEditor
 			else
 			{
 				selectedTile = newTile;
-				Vector2 const tilePos = set.tileMinNormalized(newTile) * Vector2(image->width(), image->height());
+				Vector2 const tilePos = set->tileMinNormalized(newTile) * Vector2(image->width(), image->height());
 				tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 				tileHighlight->show();
 			}
@@ -161,7 +169,7 @@ namespace TristeonEditor
 		auto* frameLayout = new QFormLayout(selectedTileData);
 		selectedTileData->setLayout(frameLayout);
 
-		selectedTileInfo = set.info(selectedTile);
+		selectedTileInfo = set->info(selectedTile);
 
 		EditorFields::boolField(frameLayout, "Has Collider", selectedTileInfo.hasCollider, [&](bool value) { selectedTileInfo.hasCollider = value; saveCurrentTile(); });
 		EditorFields::floatField(frameLayout, "Density", selectedTileInfo.density, [&](float value) { selectedTileInfo.density = value; saveCurrentTile(); });
@@ -177,9 +185,9 @@ namespace TristeonEditor
 
 	void TileSetFileEditor::tilesetChanged()
 	{
-		set.deserialize(data);
+		set->deserialize(data);
 
-		Vector2 const size = set.tileSizeNormalized() * Tristeon::Vector2(image->width(), image->height());
+		Vector2 const size = set->tileSizeNormalized() * Tristeon::Vector2(image->width(), image->height());
 		tileHighlight->setMinimumSize((int)size.x, (int)size.y);
 		tileHighlight->setMaximumSize((int)size.x, (int)size.y);
 		tileHighlight->adjustSize();

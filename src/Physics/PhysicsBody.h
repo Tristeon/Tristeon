@@ -98,7 +98,11 @@ namespace Tristeon
 		/**
 		 * Sets the velocity to the given value.
 		 */
-		void velocity(Vector2 const& value);
+		void setVelocity(Vector2 const& value);
+		/**
+		 * Sets the velocity to the given value.
+		 */
+		void setVelocity(float const& x, float const& y);
 
 		/**
 		 * Gets the gravity scale. This is a multiplier, defaulted to 1.
@@ -107,7 +111,7 @@ namespace Tristeon
 		/**
 		 * Sets the gravity scale.
 		 */
-		void gravityScale(float const& value);
+		void setGravityScale(float const& value);
 
 		/**
 		 * Gets whether or not the rotation of the PhysicsBody is fixed.
@@ -118,7 +122,7 @@ namespace Tristeon
 		/**
 		 * Sets whether or not the rotation of the PhysicsBody is fixed.
 		 */
-		void fixedRotation(bool const& value);
+		void setFixedRotation(bool const& value);
 
 		/**
 		 * Gets the linear damping. Linear damping is used to reduce the linear velocity. Usually between 0.0f and 1.0f.
@@ -127,7 +131,7 @@ namespace Tristeon
 		/**
 		 * Sets the linear damping.
 		 */
-		void linearDamping(float const& value);
+		void setLinearDamping(float const& value);
 
 		/**
 		 * Gets the angular damping. Angular damping is used to reduce the angular velocity. Usually between 0.0f an 1.0f.
@@ -136,7 +140,7 @@ namespace Tristeon
 		/**
 		 * Sets the angular damping.
 		 */
-		void angularDamping(float const& value);
+		void setAngularDamping(float const& value);
 
 		/**
 		 * Gets the position in pixels.
@@ -145,7 +149,7 @@ namespace Tristeon
 		/**
 		 * Sets the position.
 		 */
-		void position(Vector2 const& value);
+		void setPosition(Vector2 const& value);
 
 		/**
 		 * The rotation in degrees.
@@ -154,7 +158,7 @@ namespace Tristeon
 		/**
 		 * Sets the rotation.
 		 */
-		void rotation(float const& value);
+		void setRotation(float const& value);
 
 		/**
 		 * Gets if the body has enabled continuous collision detection.
@@ -164,7 +168,7 @@ namespace Tristeon
 		/**
 		 * Enables/Disables continuous collision detection.
 		 */
-		void continuous(bool const& value);
+		void setContinuous(bool const& value);
 
 		/**
 		 * Gets if the body is enabled/simulated.
@@ -175,7 +179,7 @@ namespace Tristeon
 		/**
 		 * Enables/Disables the body.
 		 */
-		void enabled(bool const& value);
+		void setEnabled(bool const& value);
 		
 	protected:
 		Type type = Dynamic;

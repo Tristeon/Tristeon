@@ -4,6 +4,7 @@
 #include <Animations/AnimationClip.h>
 
 #include "AssetDatabase.h"
+#include "Math/Math.h"
 #include "Rendering/GameView.h"
 #include "Resources.h"
 
@@ -26,8 +27,16 @@ namespace Tristeon
 		setAnimationClip(j["clipPath"]);
 	}
 
+	void AnimationSprite::setPaused(bool const& value)
+	{
+		paused = value;
+	}
+
 	void AnimationSprite::setAnimationClip(String const& clipPath)
 	{
+		if (clip != nullptr && clipPath == clip->filePath)
+			return;
+		
 		this->clip = Resources::jsonLoad<AnimationClip>(clipPath);
 		if (clip != nullptr)
 		{
@@ -35,6 +44,11 @@ namespace Tristeon
 			setTexture(clip->texturePath, false);
 			currentFrame = 0;
 		}
+	}
+
+	void AnimationSprite::setFrame(unsigned int const& frame)
+	{
+		currentFrame = Math::clamp(frame, clip->startIndex, clip->endIndex);
 	}
 
 	void AnimationSprite::render(QOpenGLShaderProgram* program)
@@ -61,7 +75,10 @@ namespace Tristeon
 		if (clip == nullptr)
 			return;
 
-		if (clip->startIndex + floor(currentFrame) > clip->endIndex)
+		if (paused)
+			return;
+
+		if (clip->startIndex + floor(currentFrame) >= clip->endIndex)
 		{
 			if (clip->loops)
 				currentFrame = 0;

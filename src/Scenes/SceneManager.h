@@ -30,6 +30,8 @@ namespace Tristeon
 
 		/**
 		 * Unloads the current scene and then loads a scene with the given name (no file extension).
+		 *
+		 * This change gets applied after the full frame has finished.
 		 */
 		static void load(String const name);
 
@@ -51,11 +53,6 @@ namespace Tristeon
 		static Delegate<Scene*> sceneLoaded;
 	private:
 		/**
-		 * TODO: Remove once we have an editor and this becomes unnecessary.
-		 */
-		static void saveTestScene();
-
-		/**
 		 * Finds the actor's layer and removes the actor from said layer.
 		 * Then destroys the actor itself.
 		 * Used internally by Engine to avoid deleting actors within critical loops.
@@ -63,10 +60,17 @@ namespace Tristeon
 		static void destroyActor(Actor* actor);
 
 		/**
+		 * Loads the scene after the frame has finished.
+		 * This is to prevent incorrect destruction mid-loop
+		 */
+		static void processCachedLoad();
+		
+		/**
 		 * Clears the current scene.
 		 */
 		static void reset();
 		
 		static Unique<Scene> currentScene;
+		static String cachedSceneName;
 	};
 }

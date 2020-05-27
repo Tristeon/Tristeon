@@ -24,7 +24,7 @@ namespace Tristeon
 		 * The render-size of the camera, this can be different than the resolution to adjust for scaling behaviour
 		 * TODO: Implement more complex scaling behaviour 
 		 */
-		Vector2Int size;
+		Vector2Int size = Vector2Int(1920, 1080);
 		/**
 		 * THe zoom of the camera. This value is 1 by default but can be adjusted to zoom in/out
 		 * of the scene without having to adjust the size variable.

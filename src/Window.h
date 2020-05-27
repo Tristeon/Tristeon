@@ -37,6 +37,8 @@ namespace Tristeon
 		 * Returns true if the window is fullscreen, false if it's not
 		 */
 		static bool fullScreen() { return instance()->isFullScreen(); }
+
+		static void close() { ((QMainWindow*)instance())->close(); }
 	protected:
 		void mousePressEvent(QMouseEvent* event) override;
 		void mouseReleaseEvent(QMouseEvent* event) override;

@@ -1,6 +1,7 @@
 #pragma once
 #include <Physics/Collider.h>
 #include <Registers/BehaviourRegister.h>
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {

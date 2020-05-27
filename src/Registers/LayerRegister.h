@@ -23,11 +23,11 @@ namespace Tristeon
 	/**
 	 * Registers the given type into the LayerRegister for editor recognition & dynamic creation
 	 */
-#define REGISTER_LAYER_H(t) static DerivedLayerRegister<t> layer_reg;
+#define REGISTER_LAYER_H(t) static Tristeon::DerivedLayerRegister<t> layer_reg;
 	 /**
 	  * Registers the given type into the LayerRegister for editor recognition & dynamic creation
 	  */
-#define REGISTER_LAYER_CPP(t) DerivedLayerRegister<t> t::layer_reg;
+#define REGISTER_LAYER_CPP(t) Tristeon::DerivedLayerRegister<t> t::layer_reg;
 #else //layer registers are only useful in the editor
 #define REGISTER_LAYER_H(t)
 #define REGISTER_LAYER_CPP(t)

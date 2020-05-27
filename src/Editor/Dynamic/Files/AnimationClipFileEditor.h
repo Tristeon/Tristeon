@@ -10,6 +10,7 @@ namespace TristeonEditor
 	{
 	public:
 		void initialize() override;
+		void saveData() override;
 	private:
 		FILE_EDITOR_H("clip", AnimationClipFileEditor)
 	};

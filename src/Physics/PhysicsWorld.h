@@ -20,7 +20,6 @@ namespace Tristeon
 	class PhysicsWorld : public Singleton<PhysicsWorld>
 	{
 		friend class Collider;
-		friend class Rigidbody;
 		friend class PhysicsBody;
 		friend class Engine;
 		friend class TileLayer;

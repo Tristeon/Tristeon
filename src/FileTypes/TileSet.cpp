@@ -10,6 +10,10 @@ namespace Tristeon
 	{
 		texture = std::make_unique<Texture>();
 		//Empty
+
+		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
+		for (size_t i = 0; i < cols * rows; i++)
+			tileInfo[i] = TileInfo{};
 	}
 
 	TileSet::TileSet(String const& path)
@@ -34,7 +38,12 @@ namespace Tristeon
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		if (tileInfo != nullptr)
 			memcpy(this->tileInfo.get(), tileInfo, int(cols * rows) * sizeof(TileInfo));
-
+		else
+		{
+			for (size_t i = 0; i < cols * rows; i++)
+				this->tileInfo[i] = TileInfo{};
+		}
+		
 		texture = std::make_unique<Texture>(imagePath);
 	}
 
@@ -47,7 +56,7 @@ namespace Tristeon
 		
 		j["width"] = cols;
 		j["height"] = rows;
-		j["texturePath"] = filePath;
+		j["texturePath"] = texture->getPath();
 		
 		j["spacingLeft"] = spacingLeft;
 		j["spacingRight"] = spacingRight;
@@ -60,13 +69,11 @@ namespace Tristeon
 		auto info = json::array_t();
 		for (size_t i = 0; i < cols * rows; i++)
 		{
+			info.emplace_back(TileInfo{ false, 1, 0, 0 });
 			if (tileInfo)
-				info.emplace_back(tileInfo[i]);
-			else
-				info.emplace_back(TileInfo{});
+				info[i] = tileInfo[i];
 		}
 		j["tileInfo"] = info;
-		
 		return j;
 	}
 
@@ -76,22 +83,21 @@ namespace Tristeon
 		rows = j["height"];
 
 		id = j["id"];
-		
+
 		std::string texturePath = j["texturePath"];
 		texture = std::make_unique<Texture>(texturePath);
-		filePath = texturePath;
 
 		spacingLeft = j["spacingLeft"];
 		spacingRight = j["spacingRight"];
 		spacingTop = j["spacingTop"];
 		spacingBottom = j["spacingBottom"];
-		
+
 		horizontalSpacing = j["horizontalSpacing"];
 		verticalSpacing = j["verticalSpacing"];
 
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
-			tileInfo[i] = TileInfo();
+			tileInfo[i] = TileInfo{};
 		
 		if (j.contains("tileInfo") && j["tileInfo"].is_array())
 		{

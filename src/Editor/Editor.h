@@ -1,5 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include "Utils/Singleton.h"
+
 #include <Editor/EditorWindow.h>
 #include <Editor/MenuBar.h>
 
@@ -10,7 +12,7 @@ namespace TristeonEditor
 {
 	struct FileItem;
 
-	class Editor
+	class Editor : public Tristeon::Singleton<Editor>
 	{
 	public:
 		void initialize();

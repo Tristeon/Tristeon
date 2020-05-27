@@ -12,6 +12,7 @@ namespace TristeonEditor
 	public:
 		void initialize() override;
 		void saveData() override;
+		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 	private:
 		void loadTileset();
 		void mousePressEvent(QMouseEvent* event) override;
@@ -26,7 +27,7 @@ namespace TristeonEditor
 		Tristeon::TileInfo selectedTileInfo{};
 		QFrame* selectedTileData = nullptr;
 
-		Tristeon::TileSet set;
+		Tristeon::TileSet* set = nullptr;
 	};
 }
 #endif

@@ -17,7 +17,6 @@
 
 #include "Actors/Actor.h"
 
-
 namespace Tristeon
 {
 	void Engine::run()
@@ -30,7 +29,7 @@ namespace Tristeon
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
 		//SceneManager::saveTestScene();
-		SceneManager::load("Scene");
+		SceneManager::load("Menu");
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		uint frames = 0;
@@ -64,6 +63,12 @@ namespace Tristeon
 
 			if (inPlayMode)
 			{
+				if (playModeDirty)
+				{
+					for (auto start : Collector<IStart>::all()) start->start();
+					playModeDirty = false;
+				}
+				
 				fixedUpdateTime += deltaTime;
 				while (fixedUpdateTime > fixedDeltaTime) 
 				{
@@ -77,7 +82,7 @@ namespace Tristeon
 				for (auto late : Collector<ILateUpdate>::all()) late->lateUpdate();
 			}
 
-			for (auto const& behaviour : destroyedBehaviours) behaviour->owner()->removeBehaviour(behaviour);
+			for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
 			destroyedBehaviours.clear();
 			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 			destroyedActors.clear();
@@ -89,12 +94,15 @@ namespace Tristeon
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();
+
+			SceneManager::processCachedLoad();
 		}
 	}
 
 	void Engine::playMode(bool const& enabled)
 	{
 		instance()->inPlayMode = enabled;
+		instance()->playModeDirty = true;
 	}
 
 	bool Engine::playMode()

@@ -23,10 +23,12 @@ namespace Tristeon
 
 	json Sprite::serialize()
 	{
-		json j = Actor::serialize();
+		json j = Graphic::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Sprite);
 		j["width"] = width;
 		j["height"] = height;
+		j["flipX"] = flipX;
+		j["flipY"] = flipY;
 		j["colour"] = colour;
 		j["texturePath"] = texture->getPath();
 		return j;
@@ -36,20 +38,29 @@ namespace Tristeon
 	{
 		Actor::deserialize(j);
 		
-		width = j["width"];
-		height = j["height"];
+		width = j.value("width", 1);
+		height = j.value("height", 1);
 
-		colour = j["colour"];
+		flipX = j.value("flipX", false);
+		flipY = j.value("flipY", false);
 
-		std::string texturePath = j["texturePath"];
+		colour = j.value("colour", Colour());
+
+		std::string texturePath = j.value("texturePath", "");
 		if (texturePath != texture->getPath()) //Update if new path
 			texture = Resources::assetLoad<Texture>(texturePath);
+		
+		if (!texture)
+			texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
 	}
 
 	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
 		texture = Resources::assetLoad<Texture>(path);
 
+		if (!texture)
+			texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
+		
 		if (setSize)
 		{
 			width = texture->width();
@@ -72,6 +83,9 @@ namespace Tristeon
 		program->setUniformValue("sprite.width", width);
 		program->setUniformValue("sprite.height", height);
 		program->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
+
+		program->setUniformValue("sprite.flipX", flipX);
+		program->setUniformValue("sprite.flipY", flipY);
 		
 		program->setUniformValue("actor.position", position.x, position.y);
 		program->setUniformValue("actor.scale", scale.x, scale.y);

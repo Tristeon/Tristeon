@@ -21,9 +21,19 @@ namespace Tristeon
 		void deserialize(json j) override;
 
 		/**
+		 * Sets if the animation is paused.
+		 */
+		void setPaused(bool const& value);
+		
+		/**
 		 * Sets the current AnimationClip. Resets the frame counter to 0.
 		 */
 		void setAnimationClip(String const& clipPath);
+
+		/**
+		 * Sets the frame of the animation. Clamped to animationclip start and end.
+		 */
+		void setFrame(unsigned int const& frame);
 	protected:
 		virtual void render(QOpenGLShaderProgram* program) override;
 		virtual void update() override;
@@ -31,5 +41,7 @@ namespace Tristeon
 
 		float currentFrame = 0;
 		AnimationClip* clip = nullptr;
+
+		bool paused = false;
 	};
 }

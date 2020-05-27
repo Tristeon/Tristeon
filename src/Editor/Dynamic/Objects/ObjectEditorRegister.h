@@ -64,10 +64,10 @@ namespace TristeonEditor
 	/**
 	 * Binds a custom editor to a given type.
 	 */
-	#define OBJECT_EDITOR_H(type, editor) static DerivedObjectEditorRegister<type, editor> object_editor_reg;
+	#define OBJECT_EDITOR_H(type, editor) static TristeonEditor::DerivedObjectEditorRegister<type, editor> object_editor_reg;
 	 /**
 	  * Binds a custom editor to a given type.
 	  */
-	#define OBJECT_EDITOR_CPP(type, editor) DerivedObjectEditorRegister<type, editor> editor::object_editor_reg;
+	#define OBJECT_EDITOR_CPP(type, editor) TristeonEditor::DerivedObjectEditorRegister<type, editor> editor::object_editor_reg;
 }
 #endif

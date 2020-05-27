@@ -22,14 +22,14 @@ namespace Tristeon
 
 	void TestBehaviour::start()
 	{
-		body = owner()->behaviour<PhysicsBody>();
+		body = getOwner<Actor>()->getBehaviour<PhysicsBody>();
 	}
 
 	int r = 0;
 	
 	void TestBehaviour::update()
 	{
-		owner()->position = Math::orbit(GameView::screenToWorld(Mouse::position()), Vector2{ 500, 500 }, r++);
+		getOwner<Actor>()->position = Math::orbit(GameView::screenToWorld(Mouse::position()), Vector2{ 500, 500 }, r++);
 		//owner()->position = GameView::screenToWorld(Mouse::position());
 		//std::cout
 		//	<< "Mouse: " << Mouse::position().toString() << std::endl
@@ -37,14 +37,14 @@ namespace Tristeon
 		//	<< "World to mouse: " << GameView::worldToScreen(GameView::screenToWorld(Mouse::position())).toString() << std::endl;
 		return;
 		
-		bool grounded = PhysicsWorld::raycast(owner()->position, Vector2::down(), groundedDistance);
+		bool grounded = PhysicsWorld::raycast(getOwner<Actor>()->position, Vector2::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
-			body->velocity({ body->velocity().x, jumpVelocity });
+			body->setVelocity({ body->velocity().x, jumpVelocity });
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
 
-		Camera::main()->position = (Vector2Int)owner()->position;
+		Camera::main()->position = (Vector2Int)getOwner<Actor>()->position;
 	}
 	
 	json TestBehaviour::serialize()

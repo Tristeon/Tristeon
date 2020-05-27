@@ -1,10 +1,11 @@
 #pragma once
 #include "Layer.h"
 
-#include <Actors/Actor.h>
 #include <Serialization/TypeRegister.h>
 #include <Registers/LayerRegister.h>
 #include <vector>
+
+#include "Actors/Actor.h"
 
 namespace Tristeon
 {
@@ -57,6 +58,14 @@ namespace Tristeon
 		T* findActorOfType() const;
 
 		/**
+		 * Finds the first actor of the given type and name within this layer.
+		 *
+		 * Returns nullptr if no actor was found.
+		 */
+		template<typename T>
+		T* findActorOfType(String const& name) const;
+
+		/**
 		 * Returns a vector of all the actors of the given type within this layer.
 		 *
 		 * Returns an empty vector if no actors were found.
@@ -99,6 +108,17 @@ namespace Tristeon
 		for (auto& actor : actors)
 		{
 			if (dynamic_cast<T*>(actor.get()) != nullptr)
+				return (T*)actor.get();
+		}
+		return nullptr;
+	}
+
+	template <typename T>
+	T* ActorLayer::findActorOfType(String const& name) const
+	{
+		for (auto& actor : actors)
+		{
+			if (actor->name == name && dynamic_cast<T*>(actor.get()) != nullptr)
 				return (T*)actor.get();
 		}
 		return nullptr;

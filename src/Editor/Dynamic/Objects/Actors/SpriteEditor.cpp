@@ -1,3 +1,4 @@
+#include "Editor/EditorFields.h"
 #ifdef TRISTEON_EDITOR
 #include "SpriteEditor.h"
 #include <QtWidgets>
@@ -17,28 +18,14 @@ namespace TristeonEditor
 	{
 		ActorEditor::displayProperties();
 
-		auto* formWidget = new QWidget(this);
+		auto* formWidget = new QWidget(scrollArea);
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
-		layout->addWidget(formWidget);
+		scrollLayout->addWidget(formWidget);
 
-		auto* width = new QSpinBox(formWidget);
-		width->setMinimum(0);
-		width->setMaximum(std::numeric_limits<int>::max());
-		width->setSingleStep(0);
-		width->setButtonSymbols(QDoubleSpinBox::NoButtons);
-		width->setValue(sprite->width);
-		connect(width, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [=](int value) { sprite->width = value; });
-		form->addRow(new QLabel("Width", formWidget), width);
-
-		auto* height = new QSpinBox(formWidget);
-		height->setMinimum(0);
-		height->setMaximum(std::numeric_limits<int>::max());
-		height->setSingleStep(0);
-		height->setButtonSymbols(QDoubleSpinBox::NoButtons);
-		height->setValue(sprite->height);
-		connect(height, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [=](int value) { sprite->height = value; });
-		form->addRow(new QLabel("Height", formWidget), height);
+		EditorFields::boolField(form, "Display", sprite->display, [=](int value) { sprite->display = value; });
+		EditorFields::uintField(form, "Width", sprite->width, [=](int value) { sprite->width = value; });
+		EditorFields::uintField(form, "Height", sprite->height, [=](int value) { sprite->height = value; });
 
 		QColor spriteColor = QColor(
 			(int)(sprite->colour.r * 255),
@@ -67,13 +54,23 @@ namespace TristeonEditor
 			});
 		});
 
+		EditorFields::boolField(form, "Flip X", sprite->flipX, [=](bool value) { sprite->flipX = value; });
+		EditorFields::boolField(form, "Flip Y", sprite->flipY, [=](bool value) { sprite->flipY = value; });
+		
 		textureButton();
+	}
+
+	bool SpriteEditor::shouldDisplay(Tristeon::String const& propertyName)
+	{
+		if (propertyName == "display" || propertyName == "width" || propertyName == "height" || propertyName == "colour" || propertyName == "texturePath" || propertyName == "flipX" || propertyName == "flipY")
+			return false;
+		return ActorEditor::shouldDisplay(propertyName);
 	}
 
 	void SpriteEditor::textureButton()
 	{
 		QPushButton* changeTexture = new QPushButton("Change Texture", this);
-		layout->addWidget(changeTexture);
+		scrollLayout->addWidget(changeTexture);
 		connect(changeTexture, &QPushButton::clicked, this, &SpriteEditor::changeTexturePressed);
 	}
 

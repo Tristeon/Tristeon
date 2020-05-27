@@ -49,7 +49,7 @@ namespace TristeonEditor
 			return;
 		}
 
-		if (Mouse::pressed(Mouse::Left))
+		if (Mouse::pressed(Mouse::Left) && GameView::instance()->widget()->underMouse())
 		{
 			if ((corner->isHidden() || !corner->underMouse()) && (rotate->isHidden() || !rotate->underMouse()))
 				clickActor();
@@ -62,17 +62,19 @@ namespace TristeonEditor
 				draggingRotate = true;
 			}
 		}
-		else if (Mouse::held(Mouse::Left) && editor()->selectedActor() != nullptr)
+		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr)
 		{
 			if (dragging)
-				editor()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+			{
+				Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+			}
 			else if (draggingCorner)
 			{
-				auto* sprite = dynamic_cast<Sprite*>(editor()->selectedActor());
+				auto* sprite = dynamic_cast<Sprite*>(Editor::instance()->selectedActor());
 
 				if (sprite != nullptr && sprite->getTexture() != nullptr)
 				{
-					Vector2 const position = editor()->selectedActor()->position;
+					Vector2 const position = Editor::instance()->selectedActor()->position;
 					Vector2 const topRight = GameView::screenToWorld(Mouse::position());
 					Vector2 const difference = topRight - position;
 					if (difference.x < 0 || difference.y < 0)
@@ -93,17 +95,14 @@ namespace TristeonEditor
 					
 					sprite->width = size.x;
 					sprite->height = size.y;
-
-					editor()->selectedActor(sprite);
 				}
 			}
 			else if (draggingRotate)
 			{
-				Vector2 const position = editor()->selectedActor()->position;
+				Vector2 const position = Editor::instance()->selectedActor()->position;
 				Vector2 const mouse = (GameView::screenToWorld(Mouse::position()) - position).getNormalized();
 				
-				editor()->selectedActor()->rotation = mouse.getAngle();
-				editor()->selectedActor(editor()->selectedActor());
+				Editor::instance()->selectedActor()->rotation = mouse.getAngle();
 			}
 		}
 		else if (Mouse::released(Mouse::Left))
@@ -111,9 +110,10 @@ namespace TristeonEditor
 			dragging = false;
 			draggingCorner = false;
 			draggingRotate = false;
+			Editor::instance()->selectedActor(Editor::instance()->selectedActor());
 		}
 		
-		auto* graphic = dynamic_cast<Graphic*>(editor()->selectedActor());
+		auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
 		if (graphic != nullptr)
 		{
 			Graphic::AABB const aabb = graphic->getAABB();
@@ -139,6 +139,16 @@ namespace TristeonEditor
 			rotate->resize(size.x / 5.0f, size.y / 5.0f);
 			rotate->show();
 		}
+		else
+		{
+			outline->hide();
+			corner->hide();
+			rotate->hide();
+
+			dragging = false;
+			draggingCorner = false;
+			draggingRotate = false;
+		}
 	}
 
 	void ActorLayerSceneView::clickActor()
@@ -152,23 +162,14 @@ namespace TristeonEditor
 			{
 				if (graphic->withinBounds(world))
 				{
-					if (graphic == editor()->selectedActor())
+					if (graphic == Editor::instance()->selectedActor())
 						dragging = true;
 
-					editor()->selectedActor(graphic);
+					Editor::instance()->selectedActor(graphic);
 					return;
 				}
 			}
 		}
-
-		dragging = false;
-		draggingCorner = false;
-		draggingRotate = false;
-		
-		outline->hide();
-		corner->hide();
-		rotate->hide();
-		editor()->selectedActor(nullptr);
 	}
 }
 #endif

@@ -14,13 +14,13 @@ namespace TristeonEditor
 		contents->setLayout(layout);
 		contents->show();
 		
-		if (editor->selectedLayer() != nullptr)
-			selectedLayerChanged(editor->selectedLayer());
+		if (Editor::instance()->selectedLayer() != nullptr)
+			selectedLayerChanged(Editor::instance()->selectedLayer());
 	}
 
 	void LayerEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
-		
+		selectedLayerChanged(nullptr);
 	}
 
 	void LayerEditor::selectedLayerChanged(Tristeon::Layer* layer)
@@ -38,7 +38,6 @@ namespace TristeonEditor
 		current = ObjectEditorRegister::createInstance(layer->serialize()["typeID"]);
 		if (current != nullptr)
 		{
-			current->editor(editor);
 			current->target(layer);
 			current->setParent(contents);
 			current->initialize();

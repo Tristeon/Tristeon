@@ -46,4 +46,13 @@ namespace Tristeon
 		result.y = center.y - (offset.x) * s + (offset.y) * c;
 		return result;
 	}
+
+	int Math::sign(float const& value)
+	{
+		if (value > 0)
+			return 1;
+		if (value < 0)
+			return -1;
+		return 0;
+	}
 }

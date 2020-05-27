@@ -38,6 +38,11 @@ namespace Tristeon
 		 */
 		static Vector2 orbit(Vector2 const& center, Vector2 const& offset, float const& rotation);
 
+		/**
+		 * Returns -1 if the value is less than 0, 0 if the value == 0, 1 if the value is more than 0.
+		 */
+		static int sign(float const& value);
+
 		constexpr static float PI = 3.14159265;
 		constexpr static float toRad = PI / 180.0f;
 		constexpr static float toDeg = 180.0f / PI;

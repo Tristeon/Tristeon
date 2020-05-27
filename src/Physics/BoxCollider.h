@@ -1,6 +1,7 @@
 #pragma once
 #include <Physics/Collider.h>
 #include <Registers/BehaviourRegister.h>
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {
@@ -36,8 +37,8 @@ namespace Tristeon
 		void height(float const& value);
 		
 	protected:
-		float _width = 0;
-		float _height = 0;
+		float _width = 1;
+		float _height = 1;
 		
 		void createShape(bool const& includeBodyTransform) override;
 	};

@@ -8,6 +8,10 @@
 
 #include <Callbacks/IStart.h>
 
+#include "Scenes/Scene.h"
+#include "Scenes/SceneManager.h"
+#include <Scenes/Layers/ActorLayer.h>
+
 namespace Tristeon
 {
 	class ActorLayer;
@@ -63,18 +67,18 @@ namespace Tristeon
 		 * Gets the first behaviour of type T. nullptr if no behaviour of type T was found.
 		 */
 		template<typename T>
-		IsBehaviour<T>* behaviour();
+		IsBehaviour<T>* getBehaviour();
 
 		/**
 		 * Gets a list of all the behaviours of type T. Returns an empty list if no behaviour of type T was found.
 		 */
 		template<typename T>
-		Vector<T*> behaviours();
+		Vector<T*> getBehaviours();
 
 		/**
 		 * Gets a list with all of the actor's behaviours.
 		 */
-		Vector<Behaviour*> behaviours();
+		Vector<Behaviour*> getBehaviours();
 		
 		/**
 		 * Adds a new behaviour of type T and returns the new behaviour.
@@ -90,6 +94,31 @@ namespace Tristeon
 		 */
 		void destroy();
 
+		/**
+		 * Looks through every actor layer,
+		 * returns the first actor with the given name.
+		 *
+		 * Returns nullptr if no actor was found.
+		 */
+		static Actor* find(String const& name);
+
+		/**
+		 * Looks through every actor layer,
+		 * returns the first actor with the given type.
+		 *
+		 * Returns nullptr if no actor was found.
+		 */
+		template<typename T>
+		static T* findOfType();
+
+		/**
+		 * Looks through every actor layer,
+		 * returns the first actor with the given type AND name.
+		 *
+		 * Returns nullptr if no actor was found.
+		 */
+		template<typename T>
+		static T* findOfType(String name);
 	private:
 		Vector<Unique<Behaviour>> _behaviours;
 
@@ -101,7 +130,7 @@ namespace Tristeon
 	};
 
 	template <typename T>
-	IsBehaviour<T>* Actor::behaviour()
+	IsBehaviour<T>* Actor::getBehaviour()
 	{
 		for (auto const& behaviour : _behaviours)
 		{
@@ -113,7 +142,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Actor::behaviours()
+	Vector<T*> Actor::getBehaviours()
 	{
 		Vector<T*> behaviours;
 
@@ -140,5 +169,31 @@ namespace Tristeon
 			istart->start();
 		
 		return result;
+	}
+
+	template <typename T>
+	T* Actor::findOfType()
+	{
+		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
+		for (auto layer : layers)
+		{
+			auto* actor = layer->findActorOfType<T>();
+			if (actor)
+				return actor;
+		}
+		return nullptr;
+	}
+
+	template <typename T>
+	T* Actor::findOfType(String name)
+	{
+		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
+		for (auto layer : layers)
+		{
+			auto* actor = layer->findActorOfType<T>(name);
+			if (actor)
+				return actor;
+		}
+		return nullptr;
 	}
 }

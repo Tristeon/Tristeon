@@ -11,7 +11,6 @@ namespace TristeonEditor
 	{
 	public:
 		explicit LayerEditor(QWidget* parent) : QDockWidget(parent) { }
-
 	protected:
 		void initialize() override;
 		void sceneLoaded(Tristeon::Scene* scene) override;

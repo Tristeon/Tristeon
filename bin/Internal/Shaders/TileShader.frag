@@ -55,9 +55,6 @@ vec2 getTileUV(vec2 uv, int x, int y);
 ivec2 tileTo2DIndex(int tile);
 void main()
 {
-    if (camera.showGrid && showGrid())
-        return;
-
     //Determine which tile we're on using the camera's properties
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
     float normalizedTileWidth = (float)level.tileRenderWidth / (camera.pixelsX / camera.zoom); 
@@ -79,16 +76,15 @@ void main()
     float tileX = (coords.x / normalizedTileWidth);
     float tileY = (coords.y / normalizedTileHeight);
 
-    //Calculate tile u,v by taking the leftover decimals in tileX and tileY
-    float tileU = mod(tileX, 1);
-    float tileV = mod(tileY, 1);
-
     //Calculate data index based on tileX and tileY
     int dataX = (int)floor(tileX);
     int dataY = (int)floor(tileY);
     int dataIndex = dataY * level.width + dataX;
     if (dataX >= level.width || dataY >= level.height || dataX < 0 || dataY < 0) 
         discard; //Discard all out of map tiles
+
+    if (camera.showGrid && showGrid())
+        return;
 
     //Convert data tile to tileset index (data stored in a 1D array of 2 integers per tile, first describes the index, the second describes the tileset id)
     int tileSetValue = floatBitsToInt(texelFetch(level.data, dataIndex * 2 + 1).r);
@@ -98,6 +94,10 @@ void main()
     ivec2 tileIndex = tileTo2DIndex(dataValue);
     if (tileIndex.x == -1 || tileIndex.y == -1)
         discard; //Discard empty tiles
+
+    //Calculate tile u,v by taking the leftover decimals in tileX and tileY
+    float tileU = mod(tileX, 1);
+    float tileV = mod(tileY, 1);
 
     //Convert UVs to tileset space
     vec2 tileSetUV = getTileUV(vec2(tileU, tileV), tileIndex.x, tileIndex.y);
@@ -159,7 +159,7 @@ ivec2 tileTo2DIndex(int tile)
         return ivec2(-1, -1);
 
     int x = tile % tileSet.cols;
-    int y = tile / tileSet.rows;
+    int y = tile / tileSet.cols;
 
     return ivec2(x, y);
 }
@@ -172,8 +172,8 @@ vec2 getTileUV(vec2 uv, int tileX, int tileY)
     ivec2 texSize = textureSize(tileSet.texture, 0);
 
     //Determine the amount of pixels per tile
-    int tilePixelsX = (texSize.x - ((tileSet.spacingLeft + tileSet.spacingRight) + tileSet.cols - 1)) / tileSet.cols;
-    int tilePixelsY = (texSize.y - ((tileSet.spacingTop + tileSet.spacingBottom) + tileSet.rows - 1)) / tileSet.rows;
+    int tilePixelsX = (texSize.x - ((tileSet.spacingLeft + tileSet.spacingRight) + ((tileSet.cols - 1) * tileSet.horizontalSpacing))) / tileSet.cols;
+    int tilePixelsY = (texSize.y - ((tileSet.spacingTop + tileSet.spacingBottom) + ((tileSet.rows - 1) * tileSet.verticalSpacing))) / tileSet.rows;
 
     //Determine the start point of the tile depending on spacing
     int startX = tileSet.spacingLeft + (tileX * tilePixelsX) + (tileX * tileSet.horizontalSpacing);
@@ -188,13 +188,4 @@ vec2 getTileUV(vec2 uv, int tileX, int tileY)
     float v = y + (startY / (float)texSize.y);
     
     return vec2(u, v);
-
-    //Previous approach simply scaled the UVs by the cols/rows
-    // float x = uv.x / tileSet.cols;
-    // float y = uv.y / tileSet.rows;
-
-    // float u = (tileX * 1.0 / tileSet.cols) + x;
-    // float v = (tileY * 1.0 / tileSet.rows) + y;
-
-    // return vec2(u, v);
 }

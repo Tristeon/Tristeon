@@ -97,7 +97,7 @@ namespace TristeonEditor
 
 	void LayerListEditor::selectionChanged(QListWidgetItem* current, QListWidgetItem* previous)
 	{
-		editor->selectedLayer(layers[current]);
+		Editor::instance()->selectedLayer(layers[current]);
 	}
 
 	void LayerListEditor::itemRenamed(QListWidgetItem* item)

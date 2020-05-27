@@ -1,4 +1,6 @@
 #ifdef TRISTEON_EDITOR
+#include "Animations/AnimationClip.h"
+#include "Resources.h"
 #include "AnimationClipFileEditor.h"
 #include "Editor/EditorFields.h"
 
@@ -32,7 +34,7 @@ namespace TristeonEditor
 		EditorFields::uintField(form, "Start Index", data["startIndex"], [&](uint value) { data["startIndex"] = value; saveData(); });
 		EditorFields::uintField(form, "End Index", data["endIndex"], [&](uint value) { data["endIndex"] = value; saveData(); });
 
-		EditorFields::boolField(form, "Loops", data["loops"], [&](int value) { data["loops"] = bool((Qt::CheckState)value == Qt::Checked); saveData(); });
+		EditorFields::boolField(form, "Loops", data["loops"], [&](int value) { data["loops"] = bool((Qt::CheckState)value != Qt::Unchecked); saveData(); });
 
 		EditorFields::floatField(form, "Playback Rate", data["playbackRate"], [&](float value) { data["playbackRate"] = value; saveData(); });
 
@@ -51,6 +53,14 @@ namespace TristeonEditor
 				data["texturePath"] = localPath.toStdString();
 				saveData();
 			});
+	}
+
+	void AnimationClipFileEditor::saveData()
+	{
+		JsonFileEditor::saveData();
+
+		if (Tristeon::Resources::loaded(item->path))
+			Tristeon::Resources::assetLoad<Tristeon::AnimationClip>(item->path)->deserialize(data);
 	}
 }
 #endif

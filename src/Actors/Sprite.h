@@ -46,6 +46,16 @@ namespace Tristeon
 		int height = 64;
 
 		/**
+		 * If true, the sprite is flipped horizontally
+		 */
+		bool flipX = false;
+
+		/**
+		 * If true, the sprite is flipped vertically
+		 */
+		bool flipY = false;
+
+		/**
 		 * The colour of the sprite, this acts as a multiplier on top of the existing texture.
 		 */
 		Colour colour = Colour::white();

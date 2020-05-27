@@ -198,7 +198,7 @@ namespace Tristeon
 
 		if (isDirty)
 		{
-			createTBO(); //TODO: Reloading data is faster than recreating the object
+			createTBO();
 			createColliders();
 			isDirty = false;
 		}
@@ -248,6 +248,8 @@ namespace Tristeon
 
 	void TileLayer::createTBO()
 	{
+		//TODO: Updating TBO could be optimized by updating data as opposed to recreating the TBO
+		//TODO: Updating TBO could be optimized by using glBufferSubData()
 		QOpenGLFunctions* f = GameView::context()->functions();
 
 		if (tbo != 0)

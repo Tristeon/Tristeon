@@ -213,6 +213,9 @@ namespace Tristeon
 		 */
 		Unique<Texture> texture = nullptr;
 
+		/**
+		 * The filepath of the tileset (not the texture)
+		 */
 		String filePath = "";
 
 		int id = 0;

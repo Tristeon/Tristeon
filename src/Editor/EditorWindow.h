@@ -19,7 +19,6 @@ namespace TristeonEditor
 		virtual void selectedLayerChanged(Tristeon::Layer* layer) { /* Empty */ }
 		virtual void selectedActorChanged(Tristeon::Actor* actor) { /* Empty */ }
 		virtual void selectedFilePathChanged(FileItem* item) { /* Empty */ }
-		Editor* editor = nullptr;
 	};
 }
 #endif

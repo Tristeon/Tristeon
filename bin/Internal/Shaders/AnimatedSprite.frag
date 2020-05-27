@@ -22,6 +22,9 @@ struct Sprite
     int height;
 
     vec4 colour;
+
+    bool flipX;
+    bool flipY;
 };
 uniform Sprite sprite;
 
@@ -54,7 +57,11 @@ void main()
 
     //Scale UV to tile coords, then normalize into texture coords
     float x = ((texCoord.x * framePixelsX) / (float)texSize.x);
+    if (sprite.flipX)
+        x = (framePixelsX / (float)texSize.x) - x;
     float y = ((texCoord.y * framePixelsY) / (float)texSize.y);
+    if (sprite.flipY)
+        y = (framePixelsY / (float)texSize.y) - y;
 
     //Add start pixels, also scaled into normalized texture coords
     float u = x + (startX / (float)texSize.x);

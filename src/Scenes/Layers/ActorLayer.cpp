@@ -1,5 +1,7 @@
 #include "ActorLayer.h"
 
+#include "Actors/Actor.h"
+
 #include <Rendering/Renderer.h>
 #include <Scenes/Scene.h>
 
@@ -92,9 +94,9 @@ namespace Tristeon
 		for (auto& actor : actors)
 		{
 			auto* graphic = dynamic_cast<Graphic*>(actor.get());
-			if (graphic == nullptr)
+			if (graphic == nullptr || !graphic->display)
 				continue;
-
+			
 			Shader * shader = graphic->getShader();
 			shader->bind();
 			graphic->render(shader->getShaderProgram());

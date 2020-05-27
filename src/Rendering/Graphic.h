@@ -37,6 +37,11 @@ namespace Tristeon
 		 * The AABB is a square defined by a min and max value, this does not have to accurately reflect the shape of the object (e.g. the bounds of a circle are still simply a square)
 		 */
 		virtual AABB getAABB() = 0;
+
+		bool display = true;
+
+		json serialize() override;
+		void deserialize(json j) override;
 	protected:
 		/**
 		 * Render the graphic to the GameView, called for each graphic by the ActorLayer.
@@ -60,4 +65,17 @@ namespace Tristeon
 		 */
 		virtual Shader* getShader() = 0;
 	};
+
+	inline json Graphic::serialize()
+	{
+		json j = Actor::serialize();
+		j["display"] = display;
+		return j;
+	}
+
+	inline void Graphic::deserialize(json j)
+	{
+		Actor::deserialize(j);
+		display = j.value("display", true);
+	}
 }
