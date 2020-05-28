@@ -18,7 +18,7 @@ namespace Tristeon
 	
 	Sprite::Sprite()
 	{
-		texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
+		texture = Resources::assetLoad<Texture>(Texture::defaultPath);
 	}
 
 	json Sprite::serialize()
@@ -30,7 +30,7 @@ namespace Tristeon
 		j["flipX"] = flipX;
 		j["flipY"] = flipY;
 		j["colour"] = colour;
-		j["texturePath"] = texture->getPath();
+		j["texturePath"] = texturePath;
 		return j;
 	}
 
@@ -46,20 +46,27 @@ namespace Tristeon
 
 		colour = j.value("colour", Colour());
 
-		std::string texturePath = j.value("texturePath", "");
-		if (texturePath != texture->getPath()) //Update if new path
-			texture = Resources::assetLoad<Texture>(texturePath);
+		std::string const newPath = j.value("texturePath", "");
+		if (newPath != texturePath) //Update if new path
+		{
+			texture = Resources::assetLoad<Texture>(newPath);
+			texturePath = newPath;
+		}
 		
 		if (!texture)
-			texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
+			texture = Resources::assetLoad<Texture>(Texture::defaultPath);
 	}
 
 	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
 		texture = Resources::assetLoad<Texture>(path);
-
+		texturePath = path;
+		
 		if (!texture)
-			texture = Resources::assetLoad<Texture>("Internal/Textures/white.jpg");
+		{
+			texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+			texturePath = Texture::defaultPath;
+		}
 		
 		if (setSize)
 		{

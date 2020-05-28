@@ -4,7 +4,8 @@
 #include <Serialization/Serializable.h>
 #include <Serialization/JsonSerializer.h>
 #include <Utils/StringHelper.h>
-#include "Rendering/Texture.h"
+
+#include "Project.h"
 
 namespace Tristeon
 {
@@ -18,7 +19,8 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const lower = StringHelper::toLower(path);
+			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const lower = StringHelper::toLower(globalPath);
 
 			if (loadedResources.find(lower) != loadedResources.end())
 				return (T*)loadedResources[lower].get();
@@ -35,7 +37,8 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const lower = StringHelper::toLower(path);
+			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const lower = StringHelper::toLower(globalPath);
 
 			if (loadedResources.find(lower) != loadedResources.end())
 				return (T*)loadedResources[lower].get();
@@ -46,7 +49,8 @@ namespace Tristeon
 
 		static bool loaded(String const& path)
 		{
-			String const lower = StringHelper::toLower(path);
+			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const lower = StringHelper::toLower(globalPath);
 
 			if (lower.empty())
 				return false;
@@ -58,6 +62,6 @@ namespace Tristeon
 		}
 
 	private:
-		static std::map<String, Unique<Serializable>> loadedResources;
+		static std::map<String, Unique<TObject>> loadedResources;
 	};
 }

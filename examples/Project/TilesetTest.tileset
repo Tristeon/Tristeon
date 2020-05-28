@@ -6,7 +6,7 @@
     "spacingLeft": 0,
     "spacingRight": 0,
     "spacingTop": 0,
-    "texturePath": "Project/TilesetTest.png",
+    "texturePath": "TilesetTest.png",
     "tileInfo": [
         {
             "density": 1.0,

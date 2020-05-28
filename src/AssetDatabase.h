@@ -17,7 +17,6 @@ namespace Tristeon
 		static String findByName(String const& name);
 		static String findByName(String const& name, String const& extension);
 		
-		static void save();
 		static void load();
 	private:
 		

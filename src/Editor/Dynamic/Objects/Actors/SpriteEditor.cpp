@@ -1,5 +1,6 @@
-#include "Editor/EditorFields.h"
 #ifdef TRISTEON_EDITOR
+#include "Editor/EditorFields.h"
+#include "Project.h"
 #include "SpriteEditor.h"
 #include <QtWidgets>
 
@@ -76,9 +77,9 @@ namespace TristeonEditor
 
 	void SpriteEditor::changeTexturePressed()
 	{
-		QDir const baseDir(QDir::currentPath());
+		QDir const baseDir(Tristeon::Project::assetPath().c_str());
 
-		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), QDir::currentPath() + "/Project", tr("Image Files (*.png *.jpg *.bmp)"));
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Project::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())

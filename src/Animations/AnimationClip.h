@@ -101,21 +101,10 @@ namespace Tristeon
 		 */
 		float playbackRate = 1;
 
-		std::string filePath = "";
 		/**
 		 * Creates an empty animationclip.
 		 */
 		AnimationClip() = default;
-
-		/**
-		 * Creates an animationclip from a file
-		 */
-		explicit AnimationClip(String const& path);
-
-		/**
-		 * Creates an animationclip with the given values, this is shorthand for simply assigning the values after creation.
-		 */
-		AnimationClip(String const& texturePath, uint const& cols, uint const& rows, bool const& loops, int const& startIndex = -1, int const& endIndex = -1, Spacing const& spacing = { 0, 0, 0, 0, 0, 0 }, float const& playbackRate = 1);
 
 		json serialize() override;
 		void deserialize(json j) override;

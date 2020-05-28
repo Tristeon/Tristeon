@@ -45,27 +45,6 @@ namespace Tristeon
 		 */
 		explicit TileSet();
 
-		/**
-		 * Creates a tileset from a given tileset file.
-		 */
-		explicit TileSet(String const& path);
-
-		/**
-		 * Creates a tileset with the given values, this is shorthand for simply assigning the values after creation.
-		 */
-		explicit TileSet(String const& imagePath, 
-			uint const& cols, 
-			uint const& rows, 
-			TileInfo tileInfo[], 
-
-			uint const& spacingLeft = 0,
-			uint const& spacingRight = 0,
-			uint const& spacingTop = 0,
-			uint const& spacingBottom = 0,
-			uint const& horizontalSpacing = 0, 
-			uint const& verticalSpacing = 0
-		);
-
 		json serialize() override;
 		void deserialize(json j) override;
 
@@ -211,13 +190,18 @@ namespace Tristeon
 		/**
 		 * The texture used by the tileset.
 		 */
-		Unique<Texture> texture = nullptr;
+		Texture* texture = nullptr;
 
 		/**
 		 * The filepath of the tileset (not the texture)
 		 */
 		String filePath = "";
 
+		/**
+		 * The filepath of the texture
+		 */
+		String texturePath = "";
+		
 		int id = 0;
 	};
 }

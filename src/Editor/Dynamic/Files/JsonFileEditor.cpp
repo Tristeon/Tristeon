@@ -1,3 +1,4 @@
+#include "Project.h"
 #ifdef TRISTEON_EDITOR
 #include "JsonFileEditor.h"
 #include "Serialization/JsonSerializer.h"
@@ -13,7 +14,7 @@ namespace TristeonEditor
 	void JsonFileEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		FileEditor::targetChanged(current, old);
-		data = Tristeon::JsonSerializer::load(item->path);
+		data = Tristeon::JsonSerializer::load(item->globalPath);
 	}
 
 	void JsonFileEditor::initialize()

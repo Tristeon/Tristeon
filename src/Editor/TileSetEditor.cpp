@@ -1,3 +1,4 @@
+#include "Project.h"
 #ifdef TRISTEON_EDITOR
 #include "TileSetTab.h"
 #include "TileSetEditor.h"
@@ -11,10 +12,10 @@ namespace TristeonEditor
 		tileSetTabs->setStyleSheet(
 			"background-color: rgb(255, 255, 255);\nborder-color: rgb(0, 0, 0);\ncolor: rgb(00, 00, 00);");
 
-		std::string path = (QDir::currentPath() + "/Project/TilesetTest.tileset").toStdString();
+		std::string const path = "TilesetTest.tileset";
 		auto testTab = new TileSetTab(path);
 
-		std::string path2 = (QDir::currentPath() + "/Project/GoldBricks.tileset").toStdString();
+		std::string path2 = "GoldBricks.tileset";
 		auto testTab2 = new TileSetTab(path2);
 
 		tileSetTabs->addTab(testTab, "Tileset Test");

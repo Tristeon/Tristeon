@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 2869,
-            "y": 892
+            "x": 4531,
+            "y": 1716
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.32587486505508423
+        "zoom": 0.2896363437175751
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -23,8 +23,8 @@
             "tileRenderHeight": 256,
             "tileRenderWidth": 256,
             "tileSets": [
-                "Project/TilesetTest.tileSet",
-                "Project/GoldBricks.tileset"
+                "TilesetTest.tileSet",
+                "GoldBricks.tileset"
             ],
             "tiles": [
                 {
@@ -10065,7 +10065,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "project/penguin.png",
+                    "texturePath": "penguin.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 269
                 },
@@ -10094,13 +10094,13 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "internal/textures/white.jpg",
+                    "texturePath": "penguin.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 64
                 },
                 {
                     "behaviours": [],
-                    "clipPath": "Project/CharacterWalk.clip",
+                    "clipPath": "CharacterWalk.clip",
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -10124,7 +10124,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "project/character.png",
+                    "texturePath": "Character.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 512
                 },
@@ -10156,7 +10156,7 @@
                             "width": 256.0
                         }
                     ],
-                    "clipPath": "Project/AnimClip.clip",
+                    "clipPath": "AnimClip.clip",
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -10171,8 +10171,8 @@
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 4771.78466796875,
-                        "y": 1612.8551025390625
+                        "x": 4559.2333984375,
+                        "y": 2163.322509765625
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10180,7 +10180,7 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "project/spritesheet.png",
+                    "texturePath": "SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
                     "width": 256
                 },

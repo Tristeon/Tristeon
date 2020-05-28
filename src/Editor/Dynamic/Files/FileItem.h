@@ -9,6 +9,7 @@ namespace TristeonEditor
 	{
 		Tristeon::String name;
 		Tristeon::String path;
+		Tristeon::String globalPath;
 		Tristeon::String extension;
 	};
 }

@@ -16,20 +16,25 @@
 #include <Callbacks/IUpdate.h>
 
 #include "Actors/Actor.h"
+#include "Project.h"
 
 namespace Tristeon
 {
 	void Engine::run()
 	{
 		QApplication::processEvents();
+
+#ifndef TRISTEON_EDITOR //In Build mode, we assume the .exe is in the same folder as a build.json file.
+		Project::loadBuild();
+#endif
+		
 		AssetDatabase::load();
 		
 		_renderer = std::make_unique<Renderer>();
 		_physics = std::make_unique<PhysicsWorld>();
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
-		//SceneManager::saveTestScene();
-		SceneManager::load("Scene");
+		SceneManager::load(Project::firstSceneName());
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		uint frames = 0;

@@ -3,9 +3,9 @@
 #include <QString>
 #include <string>
 
+#include "TObject.h"
 #include "Math/Vector2Int.h"
-#include <Serialization/Serializable.h>
-#include <Serialization/TypeRegister.h>
+
 namespace Tristeon
 {
 	/**
@@ -14,18 +14,13 @@ namespace Tristeon
 	 * Textures are created with a filepath in the form of a string.
 	 * This path is relative to the bin/ folder in the Tristeon project.
 	 */
-	class Texture : public Serializable
+	class Texture : public TObject
 	{
-		REGISTER_TYPE_H(Texture);
-		
 	public:
-		json serialize() override;
-		void deserialize(json j) override;
-
 		/**
 		 * Creates a default (white) texture.
 		 */
-		explicit Texture() : Texture("Internal/Textures/white.jpg") { }
+		explicit Texture() : Texture(defaultPath) { }
 		/**
 		 * Creates a texture with an image at the given filepath.
 		 */
@@ -45,11 +40,6 @@ namespace Tristeon
 		 * Returns the QOpenGLTexture, used internally with interactions with Qt
 		 */
 		QOpenGLTexture* getQTexture() const { return texture; }
-
-		/**
-		 * Returns the filepath, set in the constructor
-		 */
-		std::string getPath() const { return imagePath.toStdString(); }
 
 		/**
 		 * Binds the texture to prepare it for usage within rendering.
@@ -78,10 +68,7 @@ namespace Tristeon
 
 		static const std::string defaultPath;
 	private:
-		void load();
-
 		bool succeeded = false;
-		QString imagePath = "";
 		QOpenGLTexture* texture = nullptr;
 	};
 }

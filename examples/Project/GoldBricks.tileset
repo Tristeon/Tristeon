@@ -5,7 +5,7 @@
     "spacingLeft": 2,
     "spacingRight": 2,
     "spacingTop": 2,
-    "texturePath": "Project/GoldBricks.png",
+    "texturePath": "GoldBricks.png",
     "tileInfo": [
         {
             "density": 1.0,

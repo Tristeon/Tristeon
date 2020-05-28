@@ -88,10 +88,15 @@ namespace Tristeon
 	protected:
 		virtual void render(QOpenGLShaderProgram* program) override;
 		virtual Shader* getShader() override;
-	protected:
+
 		/**
 		 * The 2D texture of the sprite.
 		 */
 		Texture* texture = nullptr;
+
+		/**
+		 * The path to the texture.
+		 */
+		String texturePath;
 	};
 }

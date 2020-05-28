@@ -42,9 +42,9 @@ namespace TristeonEditor
 		layout->addWidget(changeTexture);
 		connect(changeTexture, &QPushButton::clicked, this, [&]()
 			{
-				QDir const baseDir(QDir::currentPath());
+				QDir const baseDir(Tristeon::Project::assetPath().c_str());
 
-				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), QDir::currentPath() + "/Project", tr("Image Files (*.png *.jpg *.bmp)"));
+				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Project::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
 				QString const localPath = baseDir.relativeFilePath(path);
 				QString const fileName = QFileInfo(path).baseName();
 				if (path.isEmpty() || localPath.isEmpty())
@@ -60,7 +60,7 @@ namespace TristeonEditor
 		JsonFileEditor::saveData();
 
 		if (Tristeon::Resources::loaded(item->path))
-			Tristeon::Resources::assetLoad<Tristeon::AnimationClip>(item->path)->deserialize(data);
+			Tristeon::Resources::jsonLoad<Tristeon::AnimationClip>(item->path)->deserialize(data);
 	}
 }
 #endif

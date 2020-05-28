@@ -2,5 +2,5 @@
 
 namespace Tristeon
 {
-	std::map<std::string, std::unique_ptr<Serializable>> Resources::loadedResources{};
+	std::map<std::string, std::unique_ptr<TObject>> Resources::loadedResources{};
 }

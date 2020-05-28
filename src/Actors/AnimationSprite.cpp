@@ -17,7 +17,7 @@ namespace Tristeon
 	{
 		json j = Sprite::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(AnimationSprite);
-		j["clipPath"] = clip ? clip->filePath : "";
+		j["clipPath"] = clipPath;
 		return j;
 	}
 
@@ -34,13 +34,15 @@ namespace Tristeon
 
 	void AnimationSprite::setAnimationClip(String const& clipPath)
 	{
-		if (clip != nullptr && clipPath == clip->filePath)
+		if (clip != nullptr && clipPath == this->clipPath)
 			return;
-		
-		this->clip = Resources::jsonLoad<AnimationClip>(clipPath);
+
+		auto* clip = Resources::jsonLoad<AnimationClip>(clipPath);
 		if (clip != nullptr)
 		{
-			clip->filePath = clipPath;
+			this->clip = clip;
+			this->clipPath = clipPath;
+			
 			setTexture(clip->texturePath, false);
 			currentFrame = 0;
 		}

@@ -1,5 +1,7 @@
 #include "TileSet.h"
 
+
+#include "Resources.h"
 #include "Serialization/JsonSerializer.h"
 
 namespace Tristeon
@@ -8,43 +10,12 @@ namespace Tristeon
 	
 	TileSet::TileSet()
 	{
-		texture = std::make_unique<Texture>();
-		//Empty
-
+		texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+		texturePath = Texture::defaultPath;
+		
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
 			tileInfo[i] = TileInfo{};
-	}
-
-	TileSet::TileSet(String const& path)
-	{
-		json j = JsonSerializer::load(path);
-		deserialize(j);
-		filePath = path;
-	}
-
-	TileSet::TileSet(String const& imagePath,
-	                 uint const& cols,
-	                 uint const& rows,
-	                 TileInfo tileInfo[],
-
-	                 uint const& spacingLeft,
-	                 uint const& spacingRight,
-	                 uint const& spacingTop,
-	                 uint const& spacingBottom,
-	                 uint const& horizontalSpacing,
-	                 uint const& verticalSpacing) : cols(cols), rows(rows), spacingLeft(spacingLeft), spacingRight(spacingRight), spacingTop(spacingTop), spacingBottom(spacingBottom), horizontalSpacing(horizontalSpacing), verticalSpacing(verticalSpacing)
-	{
-		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
-		if (tileInfo != nullptr)
-			memcpy(this->tileInfo.get(), tileInfo, int(cols * rows) * sizeof(TileInfo));
-		else
-		{
-			for (size_t i = 0; i < cols * rows; i++)
-				this->tileInfo[i] = TileInfo{};
-		}
-		
-		texture = std::make_unique<Texture>(imagePath);
 	}
 
 	json TileSet::serialize()
@@ -56,7 +27,7 @@ namespace Tristeon
 		
 		j["width"] = cols;
 		j["height"] = rows;
-		j["texturePath"] = texture->getPath();
+		j["texturePath"] = texturePath;
 		
 		j["spacingLeft"] = spacingLeft;
 		j["spacingRight"] = spacingRight;
@@ -84,8 +55,8 @@ namespace Tristeon
 
 		id = j["id"];
 
-		std::string texturePath = j["texturePath"];
-		texture = std::make_unique<Texture>(texturePath);
+		texturePath = j["texturePath"].get<String>();
+		texture = Resources::assetLoad<Texture>(texturePath);
 
 		spacingLeft = j["spacingLeft"];
 		spacingRight = j["spacingRight"];

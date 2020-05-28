@@ -5,6 +5,8 @@
 
 #include <Serialization/JsonSerializer.h>
 
+#include "Project.h"
+
 namespace Tristeon
 {
 	std::map<String, Vector<String>> AssetDatabase::assets;
@@ -42,7 +44,7 @@ namespace Tristeon
 
 	String AssetDatabase::findByName(String const& name)
 	{
-		for (auto pair : assets)
+		for (const auto& pair : assets)
 		{
 			for (String path : pair.second)
 			{
@@ -71,54 +73,15 @@ namespace Tristeon
 		return "";
 	}
 
-	void AssetDatabase::save()
-	{
-		json j = json::array_t();
-
-		for(auto const& asset : assets)
-		{
-			json subJ;
-			subJ["name"] = asset.first;
-			
-			json contents = json::array_t();
-			for (auto const& filepath : asset.second)
-				contents.push_back(filepath);
-			
-			subJ["contents"] = contents;
-
-			j.push_back(subJ);
-		}
-
-		JsonSerializer::save("Project/AssetDatabase.json", j);
-	}
-
 	void AssetDatabase::load()
 	{
 		assets.clear();
 		detectAll();
-		//if (!QFile::exists("Project/AssetDatabase.json"))
-		//{
-		//	detectAll();
-		//}
-		//else
-		//{
-		//	json j = JsonSerializer::load("Project/AssetDatabase.json");
-
-		//	for (auto item : j)
-		//	{
-		//		assets[item["name"]] = Vector<String>();
-
-		//		for (auto const& path : item["contents"])
-		//		{
-		//			assets[item["name"]] = path;
-		//		}
-		//	}
-		//}
 	}
 
 	void AssetDatabase::detectAll()
 	{
-		QDir const dir = QDir("Project");
+		QDir const dir = QDir(QString::fromStdString(Project::assetPath()));
 		readDir(dir);
 	}
 

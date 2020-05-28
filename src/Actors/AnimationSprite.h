@@ -41,7 +41,8 @@ namespace Tristeon
 
 		float currentFrame = 0;
 		AnimationClip* clip = nullptr;
-
+		String clipPath;
+		
 		bool paused = false;
 	};
 }

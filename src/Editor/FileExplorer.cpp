@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Project.h"
 #ifdef TRISTEON_EDITOR
 #include <QtWidgets>
 #include <Editor/FileExplorer.h>
@@ -17,7 +18,7 @@ namespace TristeonEditor
 		contents->setLayout(grid);
 		model = new QFileSystemModel(this);
 
-		model->setRootPath(QApplication::applicationDirPath() + "/Project/");
+		model->setRootPath(QString::fromStdString(Tristeon::Project::assetPath()));
 		view = new QTreeView(this);
 		view->setModel(model);
 		view->show();
@@ -25,7 +26,7 @@ namespace TristeonEditor
 		view->setAnimated(true);
 		view->setIndentation(20);
 		view->setSortingEnabled(true);
-		view->setRootIndex(model->index(QApplication::applicationDirPath() + "/Project/"));
+		view->setRootIndex(model->index(QString::fromStdString(Tristeon::Project::assetPath())));
 		connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FileExplorer::selectionChanged);
 		
 		auto* header = view->findChild<QHeaderView*>();
@@ -43,13 +44,14 @@ namespace TristeonEditor
 		QModelIndex const selection = selected.indexes()[0];
 		QString const path = model->filePath(selection);
 
-		QDir const baseDir(QDir::currentPath());
+		QDir const baseDir(Tristeon::Project::assetPath().c_str());
 		QString const localPath = baseDir.relativeFilePath(path);
 
 		QFile const file{ QString(localPath) };
 		QFileInfo const info{ file };
 
 		current.path = localPath.toStdString();
+		current.globalPath = Tristeon::Project::assetPath() + localPath.toStdString();
 		current.extension = info.suffix().toStdString();
 		current.name = info.baseName().toStdString();
 		

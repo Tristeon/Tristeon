@@ -3,32 +3,21 @@
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(Texture);
-	
 	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
 
-	json Texture::serialize()
+	Texture::Texture(QString const& path)
 	{
-		json j;
-		j["typeID"] = TRISTEON_TYPENAME(Texture);
-		j["filePath"] = imagePath.toStdString();
-		return j;
-	}
+		QImage image;
+		bool const loaded = image.load(path);
 
-	void Texture::deserialize(json j)
-	{
-		imagePath = QString::fromStdString(j["filePath"].get<std::string>());
-		if (texture != nullptr)
-		{
-			delete texture;
-			texture = nullptr;
-		}
-		load();
-	}
+		if (!loaded)
+			image.load(QString::fromStdString(defaultPath));
+		else
+			succeeded = true;
 
-	Texture::Texture(QString const& path) : imagePath(path)
-	{
-		load();
+		texture = new QOpenGLTexture(image.mirrored());
+		texture->setWrapMode(QOpenGLTexture::Repeat);
+		texture->setMinMagFilters(QOpenGLTexture::Nearest, QOpenGLTexture::Nearest);
 	}
 
 	Texture::~Texture()
@@ -54,20 +43,5 @@ namespace Tristeon
 	Vector2Int Texture::size() const
 	{
 		return { texture->width(), texture->height() };
-	}
-
-	void Texture::load()
-	{
-		QImage image;
-		bool const loaded = image.load(imagePath);
-
-		if (!loaded)
-			image.load(QString("Internal/Textures/white.jpg"));
-		else
-			succeeded = true;
-		
-		texture = new QOpenGLTexture(image.mirrored());
-		texture->setWrapMode(QOpenGLTexture::Repeat);
-		texture->setMinMagFilters(QOpenGLTexture::Nearest, QOpenGLTexture::Nearest);
 	}
 }

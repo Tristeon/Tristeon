@@ -13,6 +13,6 @@
         "verticalFrame": 0
     },
     "startIndex": 13,
-    "texturePath": "Project/Character.png",
+    "texturePath": "Character.png",
     "typeID": "Tristeon::AnimationClip"
 }
