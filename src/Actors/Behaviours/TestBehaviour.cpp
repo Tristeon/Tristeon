@@ -5,15 +5,14 @@
 #include <Input/Keyboard.h>
 
 #include <Rendering/GameView.h>
-
 #include <Physics/PhysicsBody.h>
-
 
 #include "Input/Mouse.h"
 #include "Math/Math.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Scenes/Camera.h"
+#include "Utils/Time.h"
 
 namespace Tristeon
 {
@@ -42,7 +41,7 @@ namespace Tristeon
 			body->setVelocity({ body->velocity().x, jumpVelocity });
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
-		body->applyForce(Vector2(horizontal, 0) * GameView::deltaTime() * runSpeed);
+		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
 
 		Camera::main()->position = (Vector2Int)getOwner<Actor>()->position;
 	}

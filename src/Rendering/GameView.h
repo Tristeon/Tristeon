@@ -62,16 +62,6 @@ namespace Tristeon
 		static QOpenGLContext* context() { return instance()->widget()->context(); }
 
 		/**
-		 * The time it took for a single frame to execute in ms.
-		 */
-		static float deltaTime() { return instance()->_deltaTime; }
-
-		/**
-		 * The amount of frames per second the program is running at.
-		 */
-		static uint fps() { return instance()->_fps; }
-
-		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that gameview might not always be fullscreen.
 		 */
@@ -84,9 +74,6 @@ namespace Tristeon
 	protected:
 		Engine* engine = nullptr;
 
-		uint _fps = 0;
-		float _deltaTime = 0;
-		
 		void initializeGL() override;
 		void resizeGL(int w, int h) override;
 		void paintGL() override;

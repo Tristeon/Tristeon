@@ -17,6 +17,7 @@
 
 #include "Actors/Actor.h"
 #include "Project.h"
+#include "Utils/Time.h"
 
 namespace Tristeon
 {
@@ -50,7 +51,7 @@ namespace Tristeon
 			auto now = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(now - lastTime);
 			float const deltaTime = duration.count() / 1000.0f; //Convert to ms
-			GameView::instance()->_deltaTime = deltaTime;
+			Time::m_deltaTime = deltaTime;
 			lastTime = now;
 
 			//FPS counter
@@ -58,7 +59,7 @@ namespace Tristeon
 			time += deltaTime;
 			if (time >= 1000)
 			{
-				GameView::instance()->_fps = frames;
+				Time::m_fps = frames;
 				frames = 0;
 				time = fmod(time, 1000.0f);
 			}

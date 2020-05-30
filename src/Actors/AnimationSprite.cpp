@@ -5,8 +5,8 @@
 
 #include "AssetDatabase.h"
 #include "Math/Math.h"
-#include "Rendering/GameView.h"
 #include "Resources.h"
+#include "Utils/Time.h"
 
 namespace Tristeon
 {
@@ -87,7 +87,7 @@ namespace Tristeon
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		currentFrame += 0.01f * clip->playbackRate * GameView::deltaTime();
+		currentFrame += 0.01f * clip->playbackRate * Time::deltaTime();
 	}
 
 	Shader* AnimationSprite::getShader()

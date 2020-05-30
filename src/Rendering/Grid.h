@@ -4,6 +4,9 @@
 
 namespace Tristeon
 {
+	/**
+	 * An interface for interacting with the project-wide 2D grid in Tristeon.
+	 */
 	class Grid
 	{
 		friend class Renderer;
