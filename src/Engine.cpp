@@ -41,9 +41,6 @@ namespace Tristeon
 		float time = 0;
 		float fixedUpdateTime = 0;
 
-		uint fixedUpdateFrames = 60; //TODO: Make fixed update frames available to be modified
-		float fixedDeltaTime = (1.0f / fixedUpdateFrames) * 1000.0f; 
-		
 		while (!QApplication::closingDown())
 		{
 			QApplication::processEvents();
@@ -75,11 +72,11 @@ namespace Tristeon
 				}
 				
 				fixedUpdateTime += deltaTime;
-				while (fixedUpdateTime > fixedDeltaTime) 
+				while (fixedUpdateTime > Project::Physics::fixedDeltaTime()) 
 				{
 					_physics->update();
 					for (auto fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
-					fixedUpdateTime -= fixedDeltaTime;
+					fixedUpdateTime -= Project::Physics::fixedDeltaTime();
 				}
 
 				for (auto early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();

@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 4531,
-            "y": 1716
+            "x": 3802,
+            "y": 1449
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.2896363437175751
+        "zoom": 0.3520056903362274
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10056,8 +10056,8 @@
                     "name": "Penguin Test 2",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 3501.075439453125,
-                        "y": 1655.8358154296875
+                        "x": 3552.578125,
+                        "y": 4205.2900390625
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10171,10 +10171,10 @@
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 4559.2333984375,
-                        "y": 2163.322509765625
+                        "x": 4534.07275390625,
+                        "y": 2178.24951171875
                     },
-                    "rotation": 0.0,
+                    "rotation": -0.0,
                     "scale": {
                         "typeID": "Tristeon::Vector2",
                         "x": 1.0,

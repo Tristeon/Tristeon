@@ -3,6 +3,8 @@
 #include <Physics/RaycastResult.h>
 #include <Rendering/GameView.h>
 
+#include "Project.h"
+
 namespace Tristeon
 {
 	PhysicsWorld::PhysicsWorld()
@@ -22,27 +24,27 @@ namespace Tristeon
 
 	void PhysicsWorld::update()
 	{
-		world->Step(1.0f / 60.0f, velocityIterations, positionIterations);
+		world->Step(Project::Physics::fixedDeltaTime() / 1000.0f, velocityIterations, positionIterations);
 	}
 
 	float PhysicsWorld::pixelsToMeters(uint32 const& pixels)
 	{
-		return pixels / 64.0f; //256 pixels is 1 meter
+		return pixels / Project::Physics::pixelsPerMeter();
 	}
 
 	Vector2 PhysicsWorld::pixelsToMeters(Vector2 const& pixels)
 	{
-		return pixels / 64.0f;
+		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
 
 	uint32 PhysicsWorld::metersToPixels(float const& meters)
 	{
-		return meters * 64.0f;
+		return meters * (float)Project::Physics::pixelsPerMeter();
 	}
 
 	Vector2 PhysicsWorld::metersToPixels(Vector2 const& meters)
 	{
-		return meters * 64.0f;
+		return meters * (float)Project::Physics::pixelsPerMeter();
 	}
 
 	bool PhysicsWorld::raycast(Vector2 const& origin, Vector2 const& direction, float const& distance)
