@@ -10,6 +10,7 @@ namespace TristeonEditor
 		explicit ProjectWindow(QWidget* parent = nullptr);
 
 	protected:
+		void mousePressEvent(QMouseEvent* event) override;
 		void mouseDoubleClickEvent(QMouseEvent* event) override;
 		void mouseMoveEvent(QMouseEvent* event) override;
 
@@ -22,8 +23,13 @@ namespace TristeonEditor
 		void projectClicked(Tristeon::String path);
 
 		void loadProject(Tristeon::String path);
+
+		void loadSettingsWidget(QWidget* projectWidget);
 		
 		Tristeon::Vector<QWidget*> projectWidgets;
+		Tristeon::Vector<QMetaObject::Connection> activeConnections;
+
+		QWidget* selectedProject = nullptr;
 	};
 }
 

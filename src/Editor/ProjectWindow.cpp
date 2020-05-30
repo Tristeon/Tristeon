@@ -1,3 +1,4 @@
+#include "EditorFields.h"
 #ifdef TRISTEON_EDITOR
 #include "Scenes/Scene.h"
 #include "Project.h"
@@ -28,6 +29,21 @@ namespace TristeonEditor
 
 		auto* open_project = widget->findChild<QToolButton*>("open_project");
 		connect(open_project, &QToolButton::clicked, this, &ProjectWindow::openProject);
+
+		auto* contents = findChild<QWidget*>("settings_contents");
+		contents->hide();
+	}
+
+	void ProjectWindow::mousePressEvent(QMouseEvent* event)
+	{
+		for (auto const& projectWidget : projectWidgets)
+		{
+			if (!projectWidget->isVisible())
+				continue;
+
+			if (projectWidget->underMouse() && event->button() == Qt::LeftButton)
+				loadSettingsWidget(projectWidget);
+		}
 	}
 
 	void ProjectWindow::mouseDoubleClickEvent(QMouseEvent* event)
@@ -185,6 +201,101 @@ namespace TristeonEditor
 		}
 
 		close();
+	}
+
+	void ProjectWindow::loadSettingsWidget(QWidget* projectWidget)
+	{
+		if (selectedProject != nullptr)
+			selectedProject->findChild<QWidget*>("frame")->setStyleSheet("");
+		selectedProject = projectWidget;
+		selectedProject->findChild<QWidget*>("frame")->setStyleSheet("background-color: rgb(50, 50, 50)");
+		
+		//Load current settings
+		Tristeon::String const path = projectWidget->objectName().toStdString();
+		json const settings = Tristeon::JsonSerializer::load(path);
+
+		//Disconnect and clear all active connections
+		for (auto const& connection : activeConnections)
+			disconnect(connection);
+		activeConnections.clear();
+		
+		auto* contents = findChild<QWidget*>("settings_contents");
+		contents->show();
+
+		//Scene
+		auto* scene_field = findChild<QLineEdit*>("scene_field");
+		scene_field->setText(QString::fromStdString(settings["firstScene"]));
+		activeConnections.push_back(connect(scene_field, &QLineEdit::textChanged, [=](const QString & val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["firstScene"] = val.toStdString();
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		//Graphics
+		auto* tile_width_field = findChild<QSpinBox*>("tile_width_field");
+		tile_width_field->setValue(settings["graphics"]["tileWidth"]);
+		activeConnections.push_back(connect(tile_width_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int & val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["tileWidth"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* tile_height_field = findChild<QSpinBox*>("tile_height_field");
+		tile_height_field->setValue(settings["graphics"]["tileHeight"]);
+		activeConnections.push_back(connect(tile_height_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["tileHeight"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* vsync_field = findChild<QCheckBox*>("vsync_field");
+		vsync_field->setChecked(settings["graphics"]["vsync"]);
+		activeConnections.push_back(connect(vsync_field, &QCheckBox::stateChanged, [=](const int& state)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["vsync"] = ((Qt::CheckState)state != Qt::Unchecked);
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* triple_buffering_field = findChild<QCheckBox*>("triple_buffering_field");
+		triple_buffering_field->setChecked(settings["graphics"]["tripleBuffering"]);
+		activeConnections.push_back(connect(triple_buffering_field, &QCheckBox::stateChanged, [=](const int& state)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["tripleBuffering"] = ((Qt::CheckState)state != Qt::Unchecked);
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* fullscreen_field = findChild<QCheckBox*>("fullscreen_field");
+		fullscreen_field->setChecked(settings["graphics"]["fullscreen"]);
+		activeConnections.push_back(connect(fullscreen_field, &QCheckBox::stateChanged, [=](const int& state)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["fullscreen"] = ((Qt::CheckState)state != Qt::Unchecked);
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		//Physics
+		auto* fixed_delta_time_field = findChild<QDoubleSpinBox*>("fixed_delta_time_field");
+		fixed_delta_time_field->setValue(settings["physics"]["fixedDeltaTime"]);
+		activeConnections.push_back(connect(fixed_delta_time_field, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), [=](const double& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["physics"]["fixedDeltaTime"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+		
+		auto* pixels_per_meter_field = findChild<QSpinBox*>("pixels_per_meter_field");
+		pixels_per_meter_field->setValue(settings["physics"]["pixelsPerMeter"]);
+		activeConnections.push_back(connect(pixels_per_meter_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["physics"]["pixelsPerMeter"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
 	}
 }
 #endif

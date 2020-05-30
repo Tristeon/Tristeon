@@ -1,5 +1,5 @@
-#include "Project.h"
 #ifdef TRISTEON_EDITOR
+#include "Project.h"
 #include "TileSetTab.h"
 #include "TileSetEditor.h"
 
