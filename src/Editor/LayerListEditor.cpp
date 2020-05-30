@@ -30,6 +30,7 @@ namespace TristeonEditor
 		
 		connect(list->model(), &QAbstractItemModel::rowsMoved, this, &LayerListEditor::rowsMoved);
 		connect(list, &QListWidget::currentItemChanged, this, &LayerListEditor::selectionChanged);
+		connect(list, &QListWidget::itemClicked, this, [=](QListWidgetItem* item) { Editor::instance()->selectedLayer(layers[item]); });
 		connect(list, &QListWidget::itemChanged, this, &LayerListEditor::itemRenamed);
 	}
 

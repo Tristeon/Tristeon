@@ -27,8 +27,10 @@ namespace TristeonEditor
 		view->setIndentation(20);
 		view->setSortingEnabled(true);
 		view->setRootIndex(model->index(QString::fromStdString(Tristeon::Project::assetPath())));
+
 		connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &FileExplorer::selectionChanged);
-		
+		connect(view, &QTreeView::clicked, this, [=](QModelIndex const& item) { this->selectionChanged(QItemSelection(item, item), {}); });
+
 		auto* header = view->findChild<QHeaderView*>();
 		if (header != nullptr)
 			header->setStyleSheet("color: rgb(0, 0, 0);");

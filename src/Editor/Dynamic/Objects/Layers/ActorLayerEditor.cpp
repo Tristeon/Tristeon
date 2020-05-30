@@ -20,6 +20,7 @@ namespace TristeonEditor
 
 		connect(list, &QListWidget::currentRowChanged, this, &ActorLayerEditor::selectedActorChanged);
 		connect(list, &QListWidget::itemChanged, this, &ActorLayerEditor::actorRenamed);
+		connect(list, &QListWidget::itemClicked, this, [=](QListWidgetItem * item) { Editor::instance()->selectedActor(actors[item]); });
 		for (size_t i = 0; i < targetLayer->getActorCount(); i++)
 		{
 			Tristeon::Actor* actor = targetLayer->getActor(i);
