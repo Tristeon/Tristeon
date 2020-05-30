@@ -1,5 +1,6 @@
-#include "Input/Keyboard.h"
 #ifdef TRISTEON_EDITOR
+#include "Input/Keyboard.h"
+#include "Rendering/Grid.h"
 #include "Engine.h"
 #include "Input/Mouse.h"
 #include "Scenes/Camera.h"
@@ -82,7 +83,7 @@ namespace TristeonEditor
 	void TileLayerSceneView::updateTileSize()
 	{
 		Vector2 const screenScale = Vector2(width(), height()) / Vector2(1920, 1080);
-		Vector2 const size = Vector2(tileLayer->tileRenderWidth(), tileLayer->renderHeight()) * screenScale * Camera::main()->zoom;
+		Vector2 const size = Vector2((float)Grid::tileWidth(), (float)Grid::tileHeight()) * screenScale * Camera::main()->zoom;
 		highlight->setMinimumSize((int)size.x, (int)size.y);
 		highlight->setMaximumSize((int)size.x, (int)size.y);
 		highlight->adjustSize();
@@ -94,11 +95,11 @@ namespace TristeonEditor
 		Vector2 const scalar = Vector2{ width() / (float)camera->size.x, height() / (float)camera->size.y } *Camera::main()->zoom;
 		Vector2 const cameraPos = (Vector2)Camera::main()->position * scalar;
 
-		Vector2Int const tileIndex = tileLayer->indexByPosition(GameView::screenToWorld(mousePos));
+		Vector2Int const tileIndex = Grid::indexByPosition(GameView::screenToWorld(mousePos));
 
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
-		position -= Vector2{ tileLayer->tileRenderWidth() / 2.0f, tileLayer->renderHeight() / 2.0f } *scalar; //Adjust center 
-		position += Vector2{ (float)tileLayer->tileRenderWidth() * tileIndex.x, (float)tileLayer->renderHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
+		position -= Vector2{ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f } *scalar; //Adjust center 
+		position += Vector2{ (float)Grid::tileWidth() * tileIndex.x, (float)Grid::tileHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
 
 		highlight->move(position.x - cameraPos.x, position.y + cameraPos.y);
 		highlight->show();

@@ -4,6 +4,7 @@
 #include <Scenes/Layers/Layer.h>
 
 #include "GameView.h"
+#include "Grid.h"
 
 namespace Tristeon
 {
@@ -50,6 +51,8 @@ namespace Tristeon
 			Layer* layer = scene->getLayer(i);
 			layer->render(this, scene);
 		}
+
+		Grid::render();
 	}
 
 	void Renderer::renderHUD(HUD* hud)

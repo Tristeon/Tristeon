@@ -1,4 +1,3 @@
-#include "Project.h"
 #ifdef TRISTEON_EDITOR
 #include "JsonFileEditor.h"
 #include "Serialization/JsonSerializer.h"

@@ -1,7 +1,7 @@
 {
 	"graphics": {
-		"tileWidth": 64,
-		"tileHeight": 64,
+		"tileWidth": 256,
+		"tileHeight": 256,
 		"vsync": false,
 		"tripleBuffering": true,
 		"fullscreen": true
@@ -9,7 +9,7 @@
 
 	"physics": {
 		"fixedDeltaTime": 20,
-		"pixelsPerMeter": 64
+		"pixelsPerMeter": 256
 	},
 
 	"firstScene": "Scene"

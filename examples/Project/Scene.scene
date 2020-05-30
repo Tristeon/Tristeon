@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 3802,
-            "y": 1449
+            "x": 2997,
+            "y": 671
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.3520056903362274
+        "zoom": 0.22010046243667603
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -20,8 +20,6 @@
         {
             "height": 50,
             "name": "TileLayer",
-            "tileRenderHeight": 256,
-            "tileRenderWidth": 256,
             "tileSets": [
                 "TilesetTest.tileSet",
                 "GoldBricks.tileset"
@@ -10056,8 +10054,8 @@
                     "name": "Penguin Test 2",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 3552.578125,
-                        "y": 4205.2900390625
+                        "x": 2969.591064453125,
+                        "y": 1747.14501953125
                     },
                     "rotation": 0.0,
                     "scale": {

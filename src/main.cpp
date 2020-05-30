@@ -201,7 +201,8 @@ int main(int argc, char** argv)
 #ifdef TRISTEON_EDITOR
 	editor->initialize();
 #else
-	window.showFullScreen();
+	if (Tristeon::Project::Graphics::fullscreen())
+		window.showFullScreen();
 	engine->playMode(true);
 #endif
 	engine->run();

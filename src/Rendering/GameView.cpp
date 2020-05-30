@@ -7,6 +7,8 @@
 #include <Scenes/SceneManager.h>
 #include <Window.h>
 
+#include "Project.h"
+
 namespace Tristeon
 {
 	GameView::GameView(Engine* engine, QWidget* parent) : QOpenGLWidget(parent), engine(engine)
@@ -19,7 +21,7 @@ namespace Tristeon
 		format.setRenderableType(QSurfaceFormat::OpenGL);
 		format.setProfile(QSurfaceFormat::CoreProfile);
 		format.setSamples(0);
-		format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
+		format.setSwapBehavior(Project::Graphics::tripleBuffering() ? QSurfaceFormat::TripleBuffer : QSurfaceFormat::SwapBehavior::DoubleBuffer);
 		format.setSwapInterval(0);
 		setFormat(format);
 	}

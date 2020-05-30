@@ -14,6 +14,8 @@
 
 #include <Resources.h>
 
+#include "Rendering/Grid.h"
+
 namespace Tristeon
 {
 	REGISTER_LAYER_CPP(TileLayer);
@@ -41,9 +43,6 @@ namespace Tristeon
 		j["width"] = _width;
 		j["height"] = _height;
 
-		j["tileRenderWidth"] = _tileRenderWidth;
-		j["tileRenderHeight"] = _tileRenderHeight;
-
 		json sets = json::array();
 		for (auto tileset : tilesets)
 			sets.push_back(tileset->filePath);
@@ -62,9 +61,6 @@ namespace Tristeon
 		
 		_width = j["width"];
 		_height = j["height"];
-
-		_tileRenderWidth = j["tileRenderWidth"];
-		_tileRenderHeight = j["tileRenderHeight"];
 
 		tilesets.clear();
 		if (j.contains("tileSets"))
@@ -111,7 +107,7 @@ namespace Tristeon
 
 	void TileLayer::setTileByPosition(float const& wx, float const& wy, Tile const& value)
 	{
-		Vector2Int const index = indexByPosition(wx, wy);
+		Vector2Int const index = Grid::indexByPosition(wx, wy);
 		setTileByIndex(index.x, index.y, value);
 	}
 
@@ -138,18 +134,8 @@ namespace Tristeon
 
 	Tile TileLayer::tileByPosition(float const& wx, float const& wy) const
 	{
-		Vector2Int const index = indexByPosition(wx, wy);
+		Vector2Int const index = Grid::indexByPosition(wx, wy);
 		return tileByIndex(index);
-	}
-
-	Vector2Int TileLayer::indexByPosition(Vector2 const& position) const
-	{
-		return indexByPosition(position.x, position.y);
-	}
-
-	Vector2Int TileLayer::indexByPosition(float const& wx, float const& wy) const
-	{
-		return (Vector2Int)Vector2::floor({ (wx + _tileRenderWidth / 2.0f) / _tileRenderWidth, (wy + _tileRenderHeight / 2.0f) / _tileRenderHeight });
 	}
 
 	TileSet* TileLayer::tileset(int const& id)
@@ -178,7 +164,7 @@ namespace Tristeon
 		if (position.x < 0 || position.y < 0)
 			return false;
 
-		if (position.x > _width * _tileRenderWidth || position.y > _height * _tileRenderHeight)
+		if (position.x > _width * Grid::tileWidth() || position.y > _height * Grid::tileHeight())
 			return false;
 
 		return true;
@@ -189,11 +175,9 @@ namespace Tristeon
 		if (tbo == 0 || tbo_tex == 0)
 			return;
 
-		if (Keyboard::pressed(Keyboard::R))
-			shader->reload();
-
 		if (!shader->isReady())
 			return;
+		
 		shader->bind();
 
 		if (isDirty)
@@ -217,8 +201,8 @@ namespace Tristeon
 		program->setUniformValue("level.width", _width);
 		program->setUniformValue("level.height", _height);
 
-		program->setUniformValue("level.tileRenderWidth", _tileRenderWidth);
-		program->setUniformValue("level.tileRenderHeight", _tileRenderHeight);
+		program->setUniformValue("level.tileRenderWidth", Grid::tileWidth());
+		program->setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
 		f->glActiveTexture(GL_TEXTURE0);
 		for (TileSet* tileSet : tilesets)
@@ -296,8 +280,8 @@ namespace Tristeon
 				//No collider exists but the tile wants a collider
 				if (settings.hasCollider && !colliderExists)
 				{
-					Vector2 position = Vector2(x * _tileRenderWidth, y * _tileRenderHeight);
-					Vector2 const meterSize = PhysicsWorld::pixelsToMeters({ _tileRenderWidth / 2.0f, _tileRenderHeight / 2.0f });
+					Vector2 position = Vector2(x * Grid::tileWidth(), y * Grid::tileHeight());
+					Vector2 const meterSize = PhysicsWorld::pixelsToMeters({ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f });
 					Vector2 meterPosition = PhysicsWorld::pixelsToMeters(position);
 
 					b2PolygonShape shape;

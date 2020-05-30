@@ -57,33 +57,6 @@ namespace Tristeon
 		 * Gets the tileset with the given ID.
 		 */
 		TileSet* tileset(int const& id);
-
-		/**
-		 * The width at which tiles are rendered.
-		 */
-		uint tileRenderWidth() const { return _tileRenderWidth; }
-		/**
-		 * Sets the tile render width.
-		 */
-		void setTileRenderWidth(const uint& value) { _tileRenderWidth = value; isDirty = true; }
-
-		/**
-		 * The height at which tiles are rendered.
-		 */
-		uint renderHeight() const { return _tileRenderHeight; }
-		/**
-		 * Sets the tile render height.
-		 */
-		void setRenderHeight(const uint& value) { _tileRenderHeight = value; isDirty = true; }
-		
-		/**
-		 * The size of the tiles when rendered.
-		 */
-		Vector2Int tileRenderSize() const { return { (int)_tileRenderWidth, (int)_tileRenderHeight }; }
-		/**
-		 * Sets the size of the tiles when rendered.
-		 */
-		void setTileRenderSize(Vector2Int const& value) { setTileRenderWidth(value.x); setRenderHeight(value.y); };
 #pragma endregion
 
 #pragma region Tile Modification
@@ -152,16 +125,6 @@ namespace Tristeon
 		Tile tileByPosition(float const& wx, float const& wy) const;
 
 		/**
-		 * Gets the index of the tile by the given world position.
-		 */
-		Vector2Int indexByPosition(Vector2 const& position) const;
-
-		/**
-		 * Gets the index of the tile by the given world position.
-		 */
-		Vector2Int indexByPosition(float const& wx, float const& wy) const;
-		
-		/**
 		 * Returns true if the given index is within the bounds of the TileLayer
 		 */
 		bool checkBoundsByIndex(Vector2Int const& index) const;
@@ -184,8 +147,6 @@ namespace Tristeon
 		Vector<TileSet*> tilesets;
 
 		unsigned int _width = 0, _height = 0;
-		unsigned int _tileRenderWidth = 0;
-		unsigned int _tileRenderHeight = 0;
 
 		bool isDirty = false;
 
