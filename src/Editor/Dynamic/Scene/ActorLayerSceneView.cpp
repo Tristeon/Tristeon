@@ -1,5 +1,5 @@
-#include "Rendering/Grid.h"
 #ifdef TRISTEON_EDITOR
+#include "Rendering/Grid.h"
 #include "Input/Keyboard.h"
 #include "Actors/Sprite.h"
 #include "Engine.h"
@@ -63,7 +63,7 @@ namespace TristeonEditor
 				draggingRotate = true;
 			}
 		}
-		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr)
+		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::Alt))
 		{
 			if (dragging)
 			{

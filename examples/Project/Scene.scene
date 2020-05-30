@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 3145,
-            "y": 1350
+            "x": 3010,
+            "y": 1706
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -10054,8 +10054,8 @@
                     "name": "Penguin Test 2",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 2969.591064453125,
-                        "y": 1747.14501953125
+                        "x": 2980.01953125,
+                        "y": 1679.586669921875
                     },
                     "rotation": 0.0,
                     "scale": {
