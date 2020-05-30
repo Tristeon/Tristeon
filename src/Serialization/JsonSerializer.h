@@ -32,7 +32,7 @@ namespace Tristeon
 		 *
 		 * \exception invalid_argument Throws if the json data is empty.
 		 */
-		static void save(const std::string& path, json& obj);
+		static void save(const std::string& path, json const& obj);
 
 		/**
 		 * Create an instance with type T from a json file at the given filepath.

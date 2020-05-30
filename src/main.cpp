@@ -34,6 +34,9 @@
 
 #include <ctime>
 
+
+#include "Project.h"
+
 #ifdef TRISTEON_EDITOR
 #include <Editor/Editor.h>
 #include <Editor/LayerListEditor.h>
@@ -45,6 +48,7 @@
 #include <Editor/FileExplorer.h>
 #include <Editor/GameViewEditor.h>
 #include <Editor/TileSetEditor.h>
+#include "Editor/ProjectWindow.h"
 
 std::unique_ptr<TristeonEditor::Editor> editor;
 #endif
@@ -151,8 +155,25 @@ QWidget* loadUIFile()
 	return formWidget;
 }
 
+#ifdef TRISTEON_EDITOR
+void showProjectWindow(int argc, char** argv)
+{
+	QApplication projectApp(argc, argv);
+	TristeonEditor::ProjectWindow projectWindow;
+	QApplication::exec();
+
+	if (Tristeon::Project::assetPath().empty())
+		exit(0);
+}
+#endif
+
+
 int main(int argc, char** argv)
 {
+#ifdef TRISTEON_EDITOR
+	showProjectWindow(argc, argv);
+#endif
+	
 	srand(std::time(nullptr));
 	
 #ifndef TRISTEON_LOGENABLED
@@ -175,15 +196,6 @@ int main(int argc, char** argv)
 	QWidget* widget = loadUIFile();
 	window.setCentralWidget(widget);
 	window.show();
-
-	//TODO: Docking doesn't respect corner wishes
-	//for (QDockWidget* dock : widget->findChildren<QDockWidget*>())
-	//{
-	//	dock->setParent(&window);
-	//	window.removeDockWidget(dock);
-	//	window.addDockWidget(Qt::RightDockWidgetArea, dock);
-	//	dock->show();
-	//}
 
 	QApplication::processEvents();
 #ifdef TRISTEON_EDITOR

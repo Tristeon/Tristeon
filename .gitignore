@@ -88,3 +88,4 @@ Tristeon.dir
 *.lastcodeanalysissucceeded
 *.autosave
 enc_temp_folder
+bin/Local/

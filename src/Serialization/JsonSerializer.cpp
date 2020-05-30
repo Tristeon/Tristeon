@@ -24,7 +24,7 @@ namespace Tristeon
 		return input;
 	}
 
-	void JsonSerializer::save(const std::string& path, json& obj)
+	void JsonSerializer::save(const std::string& path, json const& obj)
 	{
 		//check if json isn't empty
 		if (obj.is_null())

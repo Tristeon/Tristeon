@@ -4,7 +4,7 @@
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor
 {
-	class Editor;
+	class ProjectWindow;
 }
 #endif
 
@@ -17,7 +17,7 @@ namespace Tristeon
 		friend class Physics;
 		
 #ifdef TRISTEON_EDITOR
-		friend TristeonEditor::Editor;
+		friend TristeonEditor::ProjectWindow;
 #endif
 
 	public:

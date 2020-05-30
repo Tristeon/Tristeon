@@ -12,16 +12,7 @@ namespace TristeonEditor
 {
 	Editor::Editor()
 	{
-		QString const path = QFileDialog::getOpenFileName(Tristeon::Window::instance(), QWidget::tr("Open Project File"),
-		                                                  "C:/", QWidget::tr("Tristeon Project Files (*.tristeon)"));
 
-		if (path.isEmpty() || !QFile::exists(path))
-		{
-			QMessageBox::warning(Tristeon::Window::instance(), QWidget::tr("Error"), QWidget::tr("No valid project file was selected!"), "Okay");
-			Tristeon::Window::close();
-		}
-
-		Tristeon::Project::load(QFileInfo(path).dir().path().toStdString() + "/");
 	}
 
 	void Editor::initialize()
