@@ -1,3 +1,4 @@
+#include "Rendering/Grid.h"
 #ifdef TRISTEON_EDITOR
 #include "Input/Keyboard.h"
 #include "Actors/Sprite.h"
@@ -66,7 +67,10 @@ namespace TristeonEditor
 		{
 			if (dragging)
 			{
-				Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+				if (Keyboard::held(Keyboard::Shift))
+					Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()));
+				else
+					Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
 			}
 			else if (draggingCorner)
 			{
