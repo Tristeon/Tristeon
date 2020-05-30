@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 2997,
-            "y": 671
+            "x": 3145,
+            "y": 1350
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.22010046243667603
+        "zoom": 0.30265507102012634
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10129,16 +10129,6 @@
                 {
                     "behaviours": [
                         {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": false,
-                            "enabled": true,
-                            "fixedRotation": false,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 256.0,
@@ -10152,6 +10142,16 @@
                             "sensor": false,
                             "typeID": "Tristeon::BoxCollider",
                             "width": 256.0
+                        },
+                        {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": false,
+                            "enabled": true,
+                            "fixedRotation": true,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
                         }
                     ],
                     "clipPath": "AnimClip.clip",

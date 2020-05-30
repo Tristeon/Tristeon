@@ -21,6 +21,9 @@ namespace Tristeon
 	{
 		for (auto const& actor : findAllActorsOfType<IPreDestroy>())
 			actor->preDestroy();
+
+		for (auto const& actor : actors)
+			actor->destroyed = true;
 	}
 
 	json ActorLayer::serialize()

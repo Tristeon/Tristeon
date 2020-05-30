@@ -9,9 +9,12 @@ namespace Tristeon
 
 	Actor::~Actor()
 	{
+		assert(destroyed == true);
+		
 		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
+			_behaviours[i]->destroyed = true;
 			_behaviours[i].reset();
 			_behaviours.removeAt(i);
 		}
@@ -99,6 +102,7 @@ namespace Tristeon
 
 	void Actor::destroy()
 	{
+		destroyed = true;
 		Engine::instance()->destroyLater(this);
 	}
 

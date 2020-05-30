@@ -13,6 +13,7 @@ namespace Tristeon
 
 	Behaviour::~Behaviour()
 	{
+		assert(destroyed == true);
 		Collector<Behaviour>::remove(this);
 	}
 
@@ -31,6 +32,7 @@ namespace Tristeon
 
 	void Behaviour::destroy()
 	{
+		destroyed = true;
 		Engine::instance()->destroyLater(this);
 	}
 }

@@ -753,7 +753,7 @@ color: rgb(255, 255, 255);</string>
            <string notr="true">color: rgb(00, 00, 00);</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="graphics">
            <property name="styleSheet">

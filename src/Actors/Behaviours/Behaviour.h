@@ -39,6 +39,7 @@ namespace Tristeon
 		T* getOwner() const;
 
 	private:
+		bool destroyed = false;
 		Actor* _owner = nullptr;
 	};
 

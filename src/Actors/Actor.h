@@ -121,6 +121,7 @@ namespace Tristeon
 		static T* findOfType(String name);
 	private:
 		Vector<Unique<Behaviour>> _behaviours;
+		bool destroyed = false;
 
 		/**
 		 * Removes and destroys the given behaviour.

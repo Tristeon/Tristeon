@@ -12,6 +12,7 @@ namespace Tristeon
 {
 	void Collider::start()
 	{
+		removeSelf();
 		if (body == nullptr)
 		{
 			PhysicsBody* pb = getOwner()->getBehaviour<PhysicsBody>();
@@ -20,8 +21,6 @@ namespace Tristeon
 			else
 				body = PhysicsWorld::instance()->staticBody.get();
 		}
-
-		removeSelf();
 		addSelf();
 	}
 
@@ -148,10 +147,14 @@ namespace Tristeon
 		
 		body->DestroyFixture(fixture);
 		fixture = nullptr;
+		body = nullptr;
 	}
 
 	void Collider::setPhysicsBody(b2Body* newBody)
 	{
+		if (body == nullptr)
+			return;
+		
 		removeSelf();
 		body = newBody;
 		if (body == nullptr)
