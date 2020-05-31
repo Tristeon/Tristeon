@@ -12,6 +12,8 @@ namespace Tristeon
 {
 	void Collider::start()
 	{
+		cachedScale = getOwner()->scale;
+		
 		removeSelf();
 		if (body == nullptr)
 		{
@@ -26,6 +28,12 @@ namespace Tristeon
 
 	void Collider::lateUpdate()
 	{
+		if (cachedScale != getOwner()->scale)
+		{
+			isDirty = true;
+			cachedScale = getOwner()->scale;
+		}
+		
 		if (isDirty)
 		{
 			removeSelf();
@@ -129,6 +137,15 @@ namespace Tristeon
 
 	void Collider::addSelf()
 	{
+		if (body == nullptr)
+		{
+			PhysicsBody* pb = getOwner()->getBehaviour<PhysicsBody>();
+			if (pb != nullptr)
+				body = pb->getBody();
+			else
+				body = PhysicsWorld::instance()->staticBody.get();
+		}
+		
 		b2FixtureDef def;
 		def.shape = getShape(body->GetType() == b2_staticBody);
 		def.density = density();

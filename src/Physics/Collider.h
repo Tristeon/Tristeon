@@ -83,6 +83,7 @@ namespace Tristeon
 		void rotationOffset(float const& value);
 		
 	protected:
+		Vector2 cachedScale;
 		Vector2 _offset;
 		float _rotationOffset = 0;
 		

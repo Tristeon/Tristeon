@@ -95,7 +95,7 @@ namespace TristeonEditor
 
 		auto* scaleX = new QDoubleSpinBox(formWidget);
 		scaleX->setFocusPolicy(Qt::StrongFocus);
-		scaleX->setMinimum(0);
+		scaleX->setMinimum(0.01);
 		scaleX->setMaximum(std::numeric_limits<float>::max());
 		scaleX->setSingleStep(0);
 		scaleX->setButtonSymbols(QDoubleSpinBox::NoButtons);
@@ -105,7 +105,7 @@ namespace TristeonEditor
 
 		auto* scaleY = new QDoubleSpinBox(formWidget);
 		scaleY->setFocusPolicy(Qt::StrongFocus);
-		scaleY->setMinimum(0);
+		scaleY->setMinimum(0.01);
 		scaleY->setMaximum(std::numeric_limits<float>::max());
 		scaleY->setSingleStep(0);
 		scaleY->setButtonSymbols(QDoubleSpinBox::NoButtons);
