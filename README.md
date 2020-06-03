@@ -4,20 +4,24 @@ Tristeon2D is an open-source game engine built for 2D tile-based platformers.
 ![logo](https://i.imgur.com/0nUq7XL.png)
 
 ## Getting started
-The project can be build using CMake. Currently we only support visual studio 2019.
-It might be possible that other builds work but are not tested.
-When building for visual studio 2019 you will get the following error "Error in configuration process, project files may be invalid"
-This is due to the "Qt5_DIR" not being set. This should reference your Qt directory. More specifically it needs to redirect to
-`Qt/5.14.2/msvc2017_64/lib/cmake/Qt5`
+We aim to simplify building Tristeon as much as we possibly can. This process is stil a work in progress so please bear with us for the time being.
 
-## Design
-Our engine is designed to benefit a variety of different users, no matter if you prefer LUA, C#, C++, OOP design or a behaviour approach, we've got it all. Our current engine architecture looks like this:
-![engine uml](https://i.imgur.com/wocghCz.png)
+### Supported programming environments:
+- MSVC 2019 | x64
+
+### Building the project
+Tristeon uses CMake as its building software. To be able to build Tristeon, please make sure that you've got CMake 3.7 or higher installed [https://cmake.org/download/].
+
+Tristeon's editor uses the Qt5 framework for editor tooling. Our tests are currently done with Qt 5.14.1, but other versions should work fine. Please make sure you have Qt5 installed [https://www.qt.io/download-qt-installer].
+
+Steps:
+- Use CMake to build Tristeon's source code using the CMakeLists.txt file
+- Fully build the solution. Trying to run the application at this point will result in missing dll errors.
+- Run CMake a second time. CMake will detect the built .exe file and will use it to import Qt dlls. 
+After this, the engine should be ready to run.
 
 ## Features
 (WIP)
-
-## Getting started
 
 ## Releases
 //TODO: Release this game engine 
