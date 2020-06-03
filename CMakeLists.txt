@@ -7,7 +7,7 @@ set (Tristeon_VERSION_MINOR 1)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #CMake lookup path for modules (find_package)
-set(CMAKE_MODULE_PATH ${MAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 #Qt reflection
@@ -65,6 +65,7 @@ endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
 #include Qt
+include(${CMAKE_MODULE_PATH}/QtLocator.cmake)
 find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml Gamepad REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
