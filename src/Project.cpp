@@ -95,10 +95,12 @@ namespace Tristeon
 
 		if (file.empty() || file.is_null())
 		{
-			std::cout << "Failed to load project" << std::endl;
+			std::cout << "Failed to load project at folder " << folder << std::endl;
 			return;
 		}
 
+		std::cout << "Loaded project folder " << folder << std::endl;
+		
 		m_assetPath = folder;
 		m_firstScene = file.value("firstScene", "");
 		

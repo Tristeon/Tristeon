@@ -33,9 +33,6 @@ IF(MSVC)
         MATH(EXPR QT_MSVC "2000 + (${MSVC_VERSION} - 600) / 100")
     endif ()
 
-    message(${QT_MSVC})
-    message(${MSVC_VERSION})
-
     # check for 64-bit os
     # may need to be removed for older compilers as it wasn't always offered
     IF(CMAKE_SYSTEM_PROCESSOR MATCHES 64)
@@ -45,7 +42,6 @@ IF(MSVC)
     SET(QT_MISSING False)
 ENDIF()
 
-# use Qt_DIR approach so you can find Qt after cmake has been invoked
 IF(NOT QT_MISSING)
     MESSAGE("-- Qt found: ${QT_PATH}")
     SET(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${QT_PATH}/lib/cmake/Qt5/")
