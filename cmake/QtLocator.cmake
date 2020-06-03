@@ -18,11 +18,6 @@ IF(MSVC)
 
     # fix any double slashes which seem to be common
     STRING(REPLACE "//" "/"  QT_VERSION "${QT_VERSION}")
-
-    # do some math trickery to guess folder
-    # - qt uses (e.g.) "msvc2012"
-    # - cmake uses (e.g.) "1800"
-    # - see also https://cmake.org/cmake/help/v3.0/variable/MSVC_VERSION.html
         
     if (${MSVC_VERSION} GREATER_EQUAL 1920)
         SET(QT_MSVC 2017) # Qt doesnt have libraries for VS 2019 yet
@@ -31,6 +26,10 @@ IF(MSVC)
     elseif (${MSVC_VERSION} GREATER_EQUAL 1900)
         SET(QT_MSVC 2015)
     else ()
+        # do some math trickery to guess folder
+        # - qt uses (e.g.) "msvc2012"
+        # - cmake uses (e.g.) "1800"
+        # - see also https://cmake.org/cmake/help/v3.0/variable/MSVC_VERSION.html
         MATH(EXPR QT_MSVC "2000 + (${MSVC_VERSION} - 600) / 100")
     endif ()
 
