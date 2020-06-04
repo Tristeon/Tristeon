@@ -77,7 +77,7 @@ namespace Tristeon
 		if (j.contains("tiles"))
 		{
 			for (unsigned int i = 0; i < _width * _height && i < j["tiles"].size(); i++)
-				tiles[i] = j["tiles"][i];
+				tiles[i] = j["tiles"].at(i);
 		}
 		createTBO();
 		createColliders();

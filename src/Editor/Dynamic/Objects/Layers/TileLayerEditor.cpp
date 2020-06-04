@@ -46,9 +46,9 @@ namespace TristeonEditor
 
 		int const oldWidth = j["width"];
 		int const oldHeight = j["height"];
-		json oldData = j["data"];
+		json oldData = j["tiles"];
 		
-		j["data"] = json::array_t(width * height);
+		json::array_t data = json::array_t(width * height);
 		j["width"] = width;
 		j["height"] = height;
 		for (int x = 0; x < width; x++)
@@ -58,11 +58,12 @@ namespace TristeonEditor
 				int const index = y * width + x;
 
 				if (x < oldWidth && y < oldHeight)
-					j["data"][index] = oldData[y * oldWidth + x];
+					data.at(index) = oldData[y * oldWidth + x];
 				else
-					j["data"][index] = -1;
+					data.at(index) = Tristeon::Tile{ -1, -1 };
 			}
 		}
+		j["tiles"] = data;
 		targetLayer->deserialize(j);
 	}
 }
