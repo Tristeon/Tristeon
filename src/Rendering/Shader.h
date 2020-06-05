@@ -48,6 +48,11 @@ namespace Tristeon
 		void bind() const;
 
 		/**
+		 * Unbinds the shader program.
+		 */
+		void unbind() const;
+		
+		/**
 		 * Gets the QOpenGLShaderProgram for further rendering use.
 		 */
 		QOpenGLShaderProgram* getShaderProgram() const { return program; }

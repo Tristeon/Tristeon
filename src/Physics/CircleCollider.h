@@ -3,20 +3,23 @@
 #include <Registers/BehaviourRegister.h>
 #include <Serialization/TypeRegister.h>
 
+#include "Callbacks/IDrawGizmos.h"
+
 namespace Tristeon
 {
 	/**
 	 * CircleCollider is a Collider that defines its shape as a circle with a single radius.
 	 */
-	class CircleCollider : public Collider
+	class CircleCollider : public Collider, public IDrawGizmos
 	{
-		REGISTER_BEHAVIOUR_H(CircleCollider)
-		REGISTER_TYPE_H(CircleCollider)
+		REGISTER_BEHAVIOUR_H(CircleCollider);
+		REGISTER_TYPE_H(CircleCollider);
 	public:
 		virtual ~CircleCollider() = default;
 		
 		json serialize() override;
 		void deserialize(json j) override;
+		void drawGizmos() override;
 
 		/**
 		 * Gets the radius of the circle in pixels.

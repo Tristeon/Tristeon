@@ -4,6 +4,7 @@
 #include <Scenes/Layers/Layer.h>
 
 #include "GameView.h"
+#include "Gizmos.h"
 #include "Grid.h"
 
 namespace Tristeon
@@ -42,7 +43,6 @@ namespace Tristeon
 			program->setUniformValue("camera.displayPixelsX", (int)GameView::width());
 			program->setUniformValue("camera.displayPixelsY", (int)GameView::height());
 			program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
-			program->setUniformValue("camera.showGrid", showGrid);
 		}
 
 		//Render each layer
@@ -52,7 +52,9 @@ namespace Tristeon
 			layer->render(this, scene);
 		}
 
-		Grid::render();
+		if (showGrid)
+			Grid::render();
+		Gizmos::render();
 	}
 
 	void Renderer::renderHUD(HUD* hud)

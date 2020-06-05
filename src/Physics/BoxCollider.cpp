@@ -6,6 +6,7 @@
 #include <box2d/b2_polygon_shape.h>
 
 #include "Actors/Actor.h"
+#include "Rendering/Gizmos.h"
 
 namespace Tristeon
 {
@@ -44,6 +45,11 @@ namespace Tristeon
 
 		_width = j["width"];
 		_height = j["height"];
+	}
+
+	void BoxCollider::drawGizmos()
+	{
+		Gizmos::drawSquare(getOwner()->position, Vector2(width(), height()), getOwner()->rotation, Colour::green());
 	}
 
 	float BoxCollider::width() const

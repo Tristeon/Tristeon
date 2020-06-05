@@ -36,7 +36,7 @@ namespace Tristeon
 
 	void Sprite::deserialize(json j)
 	{
-		Actor::deserialize(j);
+		Graphic::deserialize(j);
 		
 		width = j.value("width", 1);
 		height = j.value("height", 1);

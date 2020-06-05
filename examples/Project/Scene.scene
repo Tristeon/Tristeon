@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 3010,
-            "y": 1706
+            "x": 2797,
+            "y": 1272
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.30265507102012634
+        "zoom": 0.2127476930618286
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10038,6 +10038,30 @@
                             "jumpVelocity": 2000.0,
                             "runSpeed": 100.0,
                             "typeID": "Tristeon::TestBehaviour"
+                        },
+                        {
+                            "angularDamping": 0.009999999776482582,
+                            "continuous": false,
+                            "enabled": true,
+                            "fixedRotation": false,
+                            "gravityScale": 1.0,
+                            "linearDamping": 0.0,
+                            "type": 2,
+                            "typeID": "Tristeon::PhysicsBody"
+                        },
+                        {
+                            "density": 1.0,
+                            "friction": 0.0,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "radius": 130.0,
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::CircleCollider"
                         }
                     ],
                     "colour": {
@@ -10050,12 +10074,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 234,
+                    "height": 260,
                     "name": "Penguin Test 2",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 2980.01953125,
-                        "y": 1679.586669921875
+                        "x": 3072.0,
+                        "y": 1792.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10065,7 +10089,7 @@
                     },
                     "texturePath": "penguin.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 269
+                    "width": 260
                 },
                 {
                     "behaviours": [],

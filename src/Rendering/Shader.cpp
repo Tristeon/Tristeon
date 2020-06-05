@@ -35,6 +35,11 @@ namespace Tristeon
 		program->bind();
 	}
 
+	void Shader::unbind() const
+	{
+		program->release();
+	}
+
 	bool Shader::isEmpty() const
 	{
 		return empty;

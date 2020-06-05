@@ -43,7 +43,14 @@ namespace Tristeon
 		 */
 		static int sign(float const& value);
 
-		constexpr static float PI = 3.14159265;
+		constexpr static float PI = 3.14159265f;
+		
+		constexpr static float twoPI = PI * 2.0f;
+		constexpr static float fourPI = PI * 4.0f;
+		
+		constexpr static float halfPI = PI / 2.0f;
+		constexpr static float quarterPI = PI / 4.0f;
+		
 		constexpr static float toRad = PI / 180.0f;
 		constexpr static float toDeg = 180.0f / PI;
 	};

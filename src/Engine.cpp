@@ -13,6 +13,7 @@
 #include <Callbacks/IEarlyUpdate.h>
 #include <Callbacks/IFixedUpdate.h>
 #include <Callbacks/ILateUpdate.h>
+#include <Callbacks/IDrawGizmos.h>
 #include <Callbacks/IUpdate.h>
 
 #include "Actors/Actor.h"
@@ -84,6 +85,8 @@ namespace Tristeon
 				for (auto update : Collector<IUpdate>::all()) update->update();
 				for (auto late : Collector<ILateUpdate>::all()) late->lateUpdate();
 			}
+
+			for (auto gizmos : Collector<IDrawGizmos>::all()) gizmos->drawGizmos();
 
 			for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
 			destroyedBehaviours.clear();

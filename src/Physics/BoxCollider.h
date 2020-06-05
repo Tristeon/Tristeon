@@ -3,6 +3,8 @@
 #include <Registers/BehaviourRegister.h>
 #include <Serialization/TypeRegister.h>
 
+#include "Callbacks/IDrawGizmos.h"
+
 namespace Tristeon
 {
 	/**
@@ -10,13 +12,14 @@ namespace Tristeon
 	 *
 	 * The box is defined using a width and height for x min-max and y min-max respectively.
 	 */
-	class BoxCollider : public Collider
+	class BoxCollider : public Collider, public IDrawGizmos
 	{
 		REGISTER_BEHAVIOUR_H(BoxCollider)
 		REGISTER_TYPE_H(BoxCollider)
 	public:
 		json serialize() override;
 		void deserialize(json j) override;
+		void drawGizmos() override;
 
 		/**
 		 * Gets the width of the box in pixels.

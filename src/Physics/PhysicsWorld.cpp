@@ -29,7 +29,7 @@ namespace Tristeon
 
 	float PhysicsWorld::pixelsToMeters(uint32 const& pixels)
 	{
-		return pixels / Project::Physics::pixelsPerMeter();
+		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
 
 	Vector2 PhysicsWorld::pixelsToMeters(Vector2 const& pixels)

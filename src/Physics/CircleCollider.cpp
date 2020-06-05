@@ -4,13 +4,14 @@
 #include "Actors/Actor.h"
 #include "box2d/b2_circle_shape.h"
 #include "PhysicsWorld.h"
+#include "Rendering/Gizmos.h"
 
 namespace Tristeon
 {
-	REGISTER_BEHAVIOUR_CPP(CircleCollider)
-	REGISTER_TYPE_CPP(CircleCollider)
+	REGISTER_BEHAVIOUR_CPP(CircleCollider);
+	REGISTER_TYPE_CPP(CircleCollider);
 
-		json CircleCollider::serialize()
+	json CircleCollider::serialize()
 	{
 		json j = Collider::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(CircleCollider);
@@ -22,6 +23,11 @@ namespace Tristeon
 	{
 		Collider::deserialize(j);
 		_radius = j["radius"];
+	}
+
+	void CircleCollider::drawGizmos()
+	{
+		Gizmos::drawCircle(getOwner()->position, radius(), Colour::green());
 	}
 
 	float CircleCollider::radius() const
