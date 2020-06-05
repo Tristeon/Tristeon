@@ -26,6 +26,8 @@ namespace TristeonEditor
 		bool dragging = false;
 		bool draggingCorner = false;
 		bool draggingRotate = false;
+
+		Tristeon::Vector2 draggingOffset;
 	};
 }
 #endif

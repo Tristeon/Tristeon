@@ -68,9 +68,9 @@ namespace TristeonEditor
 			if (dragging)
 			{
 				if (Keyboard::held(Keyboard::Shift))
-					Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()));
+					Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset);
 				else
-					Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position());
+					Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position()) - draggingOffset;
 			}
 			else if (draggingCorner)
 			{
@@ -167,7 +167,10 @@ namespace TristeonEditor
 				if (graphic->withinBounds(world))
 				{
 					if (graphic == Editor::instance()->selectedActor())
+					{
 						dragging = true;
+						draggingOffset = world - graphic->position;
+					}
 
 					Editor::instance()->selectedActor(graphic);
 					return;
