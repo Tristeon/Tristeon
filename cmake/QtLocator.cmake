@@ -40,7 +40,7 @@ IF(MSVC)
     endif ()
 
     ENDIF()
-    SET(QT_PATH "${QT_VERSION}/msvc${QT_MSVC}")
+    SET(QT_PATH "${QT_VERSION}/msvc${QT_MSVC}${QT_MSVC_POSTFIX}")
     SET(QT_MISSING False)
 ENDIF()
 
