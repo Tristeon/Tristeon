@@ -185,7 +185,7 @@ namespace TristeonEditor
 		Tristeon::Project::load(QFileInfo(path.c_str()).dir().path().toStdString() + "/");
 
 		json cache = Tristeon::JsonSerializer::load("Local/Projects.json");
-		json::array_t projects = cache["projects"].get<json::array_t>();
+		json::array_t projects = cache.is_null() ? json::array_t() : cache.value("projects", json::array_t());
 		bool newProject = true;
 		for (const auto& project : projects)
 		{

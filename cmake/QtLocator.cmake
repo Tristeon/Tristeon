@@ -19,11 +19,17 @@ IF(MSVC)
     # fix any double slashes which seem to be common
     STRING(REPLACE "//" "/"  QT_VERSION "${QT_VERSION}")
         
-    if (${MSVC_VERSION} GREATER_EQUAL 1920)
-        SET(QT_MSVC 2017) # Qt doesnt have libraries for VS 2019 yet
-    elseif (${MSVC_VERSION} GREATER_EQUAL 1910)
+
+    # check for 64-bit os
+    # may need to be removed for older compilers as it wasn't always offered
+    IF(CMAKE_SYSTEM_PROCESSOR MATCHES 64)
+        SET(QT_MSVC_POSTFIX "_64")
+
+    if ((${MSVC_VERSION} GREATER_EQUAL 1920) AND (EXISTS ${QT_VERSION}/msvc2019${QT_MSVC_POSTFIX}/))
+        SET(QT_MSVC 2019)
+    elseif ((${MSVC_VERSION} GREATER_EQUAL 1910) AND (EXISTS ${QT_VERSION}/msvc2017${QT_MSVC_POSTFIX}/))
         SET(QT_MSVC 2017)
-    elseif (${MSVC_VERSION} GREATER_EQUAL 1900)
+    elseif ((${MSVC_VERSION} GREATER_EQUAL 1900) AND (EXISTS ${QT_VERSION}/msvc2015${QT_MSVC_POSTFIX}/))
         SET(QT_MSVC 2015)
     else ()
         # do some math trickery to guess folder
@@ -33,10 +39,6 @@ IF(MSVC)
         MATH(EXPR QT_MSVC "2000 + (${MSVC_VERSION} - 600) / 100")
     endif ()
 
-    # check for 64-bit os
-    # may need to be removed for older compilers as it wasn't always offered
-    IF(CMAKE_SYSTEM_PROCESSOR MATCHES 64)
-        SET(QT_MSVC "${QT_MSVC}_64")
     ENDIF()
     SET(QT_PATH "${QT_VERSION}/msvc${QT_MSVC}")
     SET(QT_MISSING False)
