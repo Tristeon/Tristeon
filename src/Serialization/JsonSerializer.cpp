@@ -1,6 +1,14 @@
 #include "JsonSerializer.h"
 #include <fstream>
 
+#ifdef _WIN32
+#include <windows.h>
+#define SYSERROR()  GetLastError()
+#else
+#include <errno.h>
+#define SYSERROR()  errno
+#endif
+
 namespace Tristeon
 {
 	json JsonSerializer::load(const std::string& path)
@@ -20,10 +28,9 @@ namespace Tristeon
 			std::cout << "file is either a non-json file or corrupted" << std::endl;
 			throw std::invalid_argument("file is either a non-json file or corrupted");
 		}
-
 		return input;
 	}
-
+	
 	void JsonSerializer::save(const std::string& path, json const& obj)
 	{
 		//check if json isn't empty
@@ -32,7 +39,9 @@ namespace Tristeon
 
 		//Write to file
 		std::ofstream stream;
-		stream.open(path, std::fstream::out);
+		stream.open(path, std::ios::trunc);
+		if (!stream.is_open())
+			std::cout << "Failed to write to path " << path << ", system error code: " << SYSERROR() << std::endl;
 		stream << obj.dump(4);
 	}
 }

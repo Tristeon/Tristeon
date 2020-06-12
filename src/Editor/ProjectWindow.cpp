@@ -186,6 +186,8 @@ namespace TristeonEditor
 
 		json cache = Tristeon::JsonSerializer::load("Local/Projects.json");
 		json::array_t projects = cache.is_null() ? json::array_t() : cache.value("projects", json::array_t());
+		if (cache.is_null())
+			cache = json{};
 		bool newProject = true;
 		for (const auto& project : projects)
 		{
