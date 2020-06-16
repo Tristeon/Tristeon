@@ -39,7 +39,7 @@ namespace TristeonEditor
 
 	void EditorFields::intField(QFormLayout* layout, std::string label, int value, int minValue, int maxValue, std::function<void(int)> changeCallback)
 	{
-		auto* field = intField(nullptr, value, changeCallback);
+		auto* field = intField(nullptr, value, minValue, maxValue, changeCallback);
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
 	}
 

@@ -21,8 +21,8 @@ namespace TristeonEditor
 		auto* form = new QFormLayout();
 		formParent->setLayout(form);
 		
-		EditorFields::uintField(form, "Width", targetLayer->width(), 1, std::numeric_limits<int>::max(), [&](int value) { mapWidthChanged(value); });
-		EditorFields::uintField(form, "Height", targetLayer->height(), 1, std::numeric_limits<int>::max(), [&](int value) { mapHeightChanged(value); });
+		EditorFields::uintField(form, "Columns", targetLayer->width(), 1, 1000, [&](int value) { mapWidthChanged(value); });
+		EditorFields::uintField(form, "Rows", targetLayer->height(), 1, 1000, [&](int value) { mapHeightChanged(value); });
 	}
 
 	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
