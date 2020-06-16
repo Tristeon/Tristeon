@@ -8,10 +8,12 @@
 #include <Physics/Callbacks/IContactBegin.h>
 #include <Physics/Callbacks/IContactEnd.h>
 
-#include "Physics/Callbacks/ITileContactBegin.h"
-#include "Physics/Callbacks/ITileContactEnd.h"
+#include <Physics/Callbacks/ITileContactBegin.h>
+#include <Physics/Callbacks/ITileContactEnd.h>
+#include <Physics/Callbacks/IPreContact.h>
 
 #include <Registers/BehaviourRegister.h>
+
 
 namespace Tristeon
 {
@@ -20,7 +22,7 @@ namespace Tristeon
 	/**
 	 * Temporary test behaviour used to test our behaviour system. Will be removed at release.
 	 */
-	class TestBehaviour : public Behaviour, public IUpdate, public IStart, public IContactBegin, public IContactEnd, public ITileContactBegin, public ITileContactEnd
+	class TestBehaviour : public Behaviour, public IPreContact, public IUpdate, public IStart
 	{
 		REGISTER_BEHAVIOUR_H(TestBehaviour)
 		REGISTER_TYPE_H(TestBehaviour)
@@ -31,11 +33,7 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 
-		void contactBegin(Collider* other) override;
-		void contactEnd(Collider* other) override;
-		
-		void tileContactBegin(TileContact const& contact) override;
-		void tileContactEnd(TileContact const& contact) override;
+		bool preContact(Contact const& contact) override;
 	protected:
 		PhysicsBody* body = nullptr;
 

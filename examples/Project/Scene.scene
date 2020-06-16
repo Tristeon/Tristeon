@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 2797,
-            "y": 1272
+            "x": 4925,
+            "y": 1746
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.2127476930618286
+        "zoom": 0.341221421957016
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10221,6 +10221,51 @@
                         "y": 1.0
                     },
                     "typeID": "Tristeon::Actor"
+                },
+                {
+                    "behaviours": [
+                        {
+                            "density": 1.0,
+                            "friction": 0.0,
+                            "height": 247.0,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::BoxCollider",
+                            "width": 1898.0
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 247,
+                    "name": "A",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 5647.3369140625,
+                        "y": 1795.9461669921875
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "TilesetTest2.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 1898
                 }
             ],
             "name": "ActorLayer",

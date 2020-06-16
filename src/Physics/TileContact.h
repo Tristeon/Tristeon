@@ -10,5 +10,6 @@ namespace Tristeon
 		Vector2Int tileIndex = {};
 		Tile tile = { -1, -1 };
 		TileInfo tileInfo = {};
+		Vector2 normal;
 	};
 }

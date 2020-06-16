@@ -1,4 +1,5 @@
 #pragma once
+#include <Physics/Contact.h>
 
 namespace Tristeon
 {
@@ -13,6 +14,6 @@ namespace Tristeon
 	class IContactEnd
 	{
 	public:
-		virtual void contactEnd(Collider* other) = 0;
+		virtual void contactEnd(Contact const& contact) = 0;
 	};
 }

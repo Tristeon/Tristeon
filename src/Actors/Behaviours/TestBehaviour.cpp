@@ -6,8 +6,10 @@
 #include <Physics/PhysicsBody.h>
 
 #include "Actors/Sprite.h"
+#include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
+#include "Rendering/Gizmos.h"
 #include "Scenes/Camera.h"
 #include "Utils/Time.h"
 
@@ -21,18 +23,16 @@ namespace Tristeon
 		body = getOwner<Actor>()->getBehaviour<PhysicsBody>();
 	}
 
-	int r = 0;
-	
 	void TestBehaviour::update()
 	{
-		bool grounded = PhysicsWorld::raycast(getOwner<Actor>()->position, Vector2::down(), groundedDistance);
+		const auto grounded = PhysicsWorld::raycast(getOwner<Actor>()->position, Vector2::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->setVelocity({ body->velocity().x, jumpVelocity });
 
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
 
-		Camera::main()->position = (Vector2Int)getOwner<Actor>()->position;
+		Camera::main()->position = static_cast<Vector2Int>(getOwner<Actor>()->position);
 	}
 	
 	json TestBehaviour::serialize()
@@ -52,19 +52,16 @@ namespace Tristeon
 		runSpeed = j["runSpeed"];
 	}
 
-	void TestBehaviour::contactBegin(Collider* other)
+	bool TestBehaviour::preContact(Contact const& contact)
 	{
-	}
+		if (contact.other->getOwner()->name == "A")
+		{
+			const auto box = dynamic_cast<BoxCollider*>(contact.other);
 
-	void TestBehaviour::contactEnd(Collider* other)
-	{
-	}
+			if (getOwner()->position.y < (contact.other->getOwner()->position.y + box->height()))
+				return false;
+		}
 
-	void TestBehaviour::tileContactBegin(TileContact const& contact)
-	{
-	}
-
-	void TestBehaviour::tileContactEnd(TileContact const& contact)
-	{
+		return true;
 	}
 }

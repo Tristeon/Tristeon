@@ -1,4 +1,5 @@
 #pragma once
+#include <Physics/Contact.h>
 
 namespace Tristeon
 {
@@ -13,6 +14,6 @@ namespace Tristeon
 	class ISensorBegin
 	{
 	public:
-		virtual void sensorBegin(Collider* other) = 0;
+		virtual void sensorBegin(Contact const& contact) = 0;
 	};
 }
