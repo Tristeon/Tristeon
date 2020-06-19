@@ -11,13 +11,15 @@
 namespace Tristeon
 {
 	REGISTER_BEHAVIOUR_CPP(BoxCollider)
-	REGISTER_TYPE_CPP(BoxCollider)
-	
+	REGISTER_TYPE_CPP(BoxCollider);
+
 	void BoxCollider::createShape(bool const& includeBodyTransform)
 	{
 		auto* polygon = new b2PolygonShape();
 
-		Vector2 const size = PhysicsWorld::pixelsToMeters({ _width * getOwner()->scale.x, _height * getOwner()->scale.y });
+		Vector2 const size = PhysicsWorld::pixelsToMeters({
+			_width * getOwner()->scale.x, _height * getOwner()->scale.y
+		});
 		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
 		float rotationOffset = Math::toRadians(_rotationOffset);
 		if (includeBodyTransform)
@@ -25,7 +27,7 @@ namespace Tristeon
 			offset = PhysicsWorld::pixelsToMeters(getOwner()->position) + offset;
 			rotationOffset = Math::toRadians(getOwner()->rotation) + rotationOffset;
 		}
-		
+
 		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), -rotationOffset);
 		shape = std::unique_ptr<b2Shape>(polygon);
 	}
@@ -49,7 +51,8 @@ namespace Tristeon
 
 	void BoxCollider::drawGizmos()
 	{
-		Gizmos::drawSquare(getOwner()->position, Vector2(width(), height()), getOwner()->rotation, Colour::green());
+		Gizmos::drawSquare(getOwner()->position, Vector2(width(), height()), getOwner()->rotation,
+		                   {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
 	}
 
 	float BoxCollider::width() const

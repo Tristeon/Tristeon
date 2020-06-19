@@ -1,6 +1,6 @@
+#ifdef TRISTEON_EDITOR
 #include "Editor.h"
 #include "Project.h"
-#ifdef TRISTEON_EDITOR
 #include <QtWidgets>
 #include <Editor/FileExplorer.h>
 #include <QApplication>

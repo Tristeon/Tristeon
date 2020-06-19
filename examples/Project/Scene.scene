@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 4925,
-            "y": 1746
+            "x": 3813,
+            "y": 1370
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.341221421957016
+        "zoom": 0.32712894678115845
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -1514,12 +1514,12 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -10093,35 +10093,6 @@
                 },
                 {
                     "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 64,
-                    "name": "My White Square",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1550.49560546875,
-                        "y": 1494.7943115234375
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "penguin.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 64
-                },
-                {
-                    "behaviours": [],
                     "clipPath": "CharacterWalk.clip",
                     "colour": {
                         "a": 1.0,
@@ -10193,8 +10164,8 @@
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 4534.07275390625,
-                        "y": 2178.24951171875
+                        "x": 7001.9453125,
+                        "y": 2157.234130859375
                     },
                     "rotation": -0.0,
                     "scale": {
@@ -10227,7 +10198,7 @@
                         {
                             "density": 1.0,
                             "friction": 0.0,
-                            "height": 247.0,
+                            "height": 254.0,
                             "offset": {
                                 "typeID": "Tristeon::Vector2",
                                 "x": 0.0,
@@ -10237,7 +10208,7 @@
                             "rotationOffset": 0.0,
                             "sensor": false,
                             "typeID": "Tristeon::BoxCollider",
-                            "width": 1898.0
+                            "width": 930.0
                         }
                     ],
                     "colour": {
@@ -10250,12 +10221,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 247,
+                    "height": 254,
                     "name": "A",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 5647.3369140625,
-                        "y": 1795.9461669921875
+                        "x": 5452.47998046875,
+                        "y": 1793.2110595703125
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10263,13 +10234,57 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "TilesetTest2.png",
+                    "texturePath": "Ground.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 1898
+                    "width": 930
                 }
             ],
             "name": "ActorLayer",
             "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "actors": [],
+            "name": "New ActorLayer",
+            "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "actors": [],
+            "name": "New ActorLayer",
+            "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "height": 0,
+            "name": "New TileLayer",
+            "tileSets": [],
+            "tiles": [],
+            "typeID": "Tristeon::TileLayer",
+            "width": 0
+        },
+        {
+            "height": 0,
+            "name": "New TileLayer",
+            "tileSets": [],
+            "tiles": [],
+            "typeID": "Tristeon::TileLayer",
+            "width": 0
+        },
+        {
+            "actors": [],
+            "name": "New ActorLayer",
+            "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "actors": [],
+            "name": "New ActorLayer",
+            "typeID": "Tristeon::ActorLayer"
+        },
+        {
+            "height": 0,
+            "name": "New TileLayer",
+            "tileSets": [],
+            "tiles": [],
+            "typeID": "Tristeon::TileLayer",
+            "width": 0
         }
     ],
     "typeID": "Tristeon::Scene"

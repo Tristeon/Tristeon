@@ -250,7 +250,7 @@ namespace TristeonEditor
 			addBehaviour(behaviour);
 
 		QPushButton* addBehaviour = new QPushButton(this);
-		addBehaviour->setStyleSheet("background-color: rgb(0, 170, 0);");
+		addBehaviour->setStyleSheet("background-color: rgb(46, 204, 113);");
 		addBehaviour->setText("Add Behaviour");
 		layout->addWidget(addBehaviour);
 		connect(addBehaviour, &QPushButton::clicked, this, &ActorEditor::addButtonPressed);

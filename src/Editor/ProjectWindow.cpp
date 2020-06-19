@@ -1,5 +1,6 @@
-#include "EditorFields.h"
 #ifdef TRISTEON_EDITOR
+#include "Palette.h"
+#include "EditorFields.h"
 #include "Scenes/Scene.h"
 #include "Project.h"
 #include "ProjectWindow.h"
@@ -64,7 +65,7 @@ namespace TristeonEditor
 		{
 			if (projectWidget->underMouse())
 			{
-				projectWidget->setStyleSheet("background-color: rgb(60, 60, 60)");
+				projectWidget->setStyleSheet(Palette::getRGBString("background-color", Palette::background));
 			}
 			else
 			{
@@ -210,7 +211,8 @@ namespace TristeonEditor
 		if (selectedProject != nullptr)
 			selectedProject->findChild<QWidget*>("frame")->setStyleSheet("");
 		selectedProject = projectWidget;
-		selectedProject->findChild<QWidget*>("frame")->setStyleSheet("background-color: rgb(50, 50, 50)");
+
+		selectedProject->findChild<QWidget*>("frame")->setStyleSheet(Palette::getRGBString("background-color", Palette::background));
 		
 		//Load current settings
 		Tristeon::String const path = projectWidget->objectName().toStdString();

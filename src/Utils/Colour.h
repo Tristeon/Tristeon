@@ -29,8 +29,8 @@ namespace Tristeon
 		/**
 		 * Creates a colour with the given rgba values.
 		 */
-		Colour(float const& r = 1, float const& g = 1, float const& b = 1, float const& a = 1) : r(r), g(g), b(b), a(a) { }
-
+		constexpr Colour(float const& r = 1, float const& g = 1, float const& b = 1, float const& a = 1) : r(r), g(g), b(b), a(a) { }
+		
 		static Colour white() { return { 1, 1, 1, 1 }; }
 		static Colour black() { return { 0, 0, 0, 1 }; }
 		

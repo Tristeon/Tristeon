@@ -1,3 +1,4 @@
+#include "Editor/Palette.h"
 #ifdef TRISTEON_EDITOR
 #include "ActorLayerEditor.h"
 #include <Registers/ActorRegister.h>
@@ -15,7 +16,7 @@ namespace TristeonEditor
 		list->setDefaultDropAction(Qt::DropAction::IgnoreAction);
 		list->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
 		list->setAlternatingRowColors(true);
-		list->setStyleSheet("alternate-background-color: rgb(139, 139, 139);");
+		list->setStyleSheet(Palette::getRGBString("alternate-background-color", Palette::background));
 		layout->addWidget(list);
 
 		connect(list, &QListWidget::currentRowChanged, this, &ActorLayerEditor::selectedActorChanged);
@@ -37,12 +38,12 @@ namespace TristeonEditor
 		buttonsParent->setLayout(horizontal);
 		
 		auto* add = new QPushButton("+", this);
-		add->setStyleSheet("background-color: rgb(0, 170, 0);");
+		add->setStyleSheet(Palette::getRGBString("background-color", Palette::add));
 		horizontal->addWidget(add);
 		connect(add, &QPushButton::clicked, this, &ActorLayerEditor::addActor);
 		
 		auto* remove = new QPushButton("-", this);
-		remove->setStyleSheet("background-color: rgb(170, 0, 0);");
+		remove->setStyleSheet(Palette::getRGBString("background-color", Palette::remove));
 		horizontal->addWidget(remove);
 		connect(remove, &QPushButton::clicked, this, &ActorLayerEditor::removeActor);
 
@@ -122,6 +123,8 @@ namespace TristeonEditor
 	void ActorLayerEditor::removeActor()
 	{
 		Tristeon::Actor* actor = actors[list->currentItem()];
+		if (actor == nullptr)
+			return;
 		actor->destroy();
 
 		actors.erase(list->currentItem());

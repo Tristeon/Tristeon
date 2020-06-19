@@ -27,7 +27,7 @@ namespace TristeonEditor
 		titleLayout->addWidget(typeName);
 
 		auto* closeButton = new QToolButton(titleBar);
-		closeButton->setIcon(QIcon(QPixmap(QString("Internal/Icons/cross.png"))));
+		closeButton->setIcon(QIcon(QPixmap(QString("Internal/Icons/cross.jpg"))));
 		closeButton->setMaximumSize(15, 15);
 		titleLayout->addWidget(closeButton);
 		connect(closeButton, &QToolButton::clicked, this, &BehaviourEditor::removeButtonPressed);

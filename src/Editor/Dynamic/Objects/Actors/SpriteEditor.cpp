@@ -1,3 +1,4 @@
+#include "Editor/Palette.h"
 #ifdef TRISTEON_EDITOR
 #include "Editor/EditorFields.h"
 #include "Project.h"
@@ -49,9 +50,7 @@ namespace TristeonEditor
 				sprite->colour.g = color.greenF();
 				sprite->colour.b = color.blueF();
 				sprite->colour.a = color.alphaF();
-
-				Tristeon::String const newColorStyle = "background-color: rgb(" + std::to_string(color.red()) + ", " + std::to_string(color.green()) + ", " + std::to_string(color.blue()) + ");";
-				colorButton->setStyleSheet(QString::fromStdString(newColorStyle));
+				colorButton->setStyleSheet(Palette::getRGBString("background-color", sprite->colour));
 			});
 		});
 
