@@ -1,7 +1,4 @@
-#include <qmessagebox.h>
-
 #ifdef TRISTEON_EDITOR
-#include "Project.h"
 #include "Editor.h"
 #include <Window.h>
 #include <Scenes/SceneManager.h>
@@ -10,20 +7,17 @@
 
 namespace TristeonEditor
 {
-	Editor::Editor()
-	{
-
-	}
-
 	void Editor::initialize()
 	{
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
 			Tristeon::Window::instance()->setWindowTitle(QString::fromStdString("Tristeon2D | " + scene->getName()));
-			
-			selectedLayer(nullptr);
-			for (auto window : windows)
+
+			if (_selectedLayer == nullptr || !scene->findLayer(_selectedLayer->name))
+				selectedLayer(nullptr);
+
+			for (auto* window : windows)
 				window->sceneLoaded(scene);
 		};
 
@@ -31,7 +25,7 @@ namespace TristeonEditor
 			menuBar->initialize();
 		
 		//Initialize windows
-		for (auto window : windows)
+		for (auto* window : windows)
 			window->initialize();
 	}
 
@@ -51,7 +45,7 @@ namespace TristeonEditor
 
 		selectedActor(nullptr);
 		
-		for (auto window : windows)
+		for (auto* window : windows)
 			window->selectedLayerChanged(value);
 	}
 
@@ -64,7 +58,7 @@ namespace TristeonEditor
 	{
 		_selectedActor = value;
 
-		for (auto window : windows)
+		for (auto* window : windows)
 			window->selectedActorChanged(value);
 	}
 
@@ -77,7 +71,7 @@ namespace TristeonEditor
 	{
 		_selectedFileItem = value;
 
-		for (auto window : windows)
+		for (auto* window : windows)
 			window->selectedFilePathChanged(value);
 	}
 

@@ -33,6 +33,12 @@ namespace TristeonEditor
 
 	void GameViewEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
+		if (layerView != nullptr)
+		{
+			layout->removeWidget(layerView);
+			delete layerView;
+			layerView = nullptr;
+		}
 	}
 
 	void GameViewEditor::mouseMoveEvent(QMouseEvent* event)
@@ -44,7 +50,7 @@ namespace TristeonEditor
 		if (layerView != nullptr)
 		{
 			layout->removeWidget(layerView);
-			layerView->deleteLater();
+			delete layerView;
 			layerView = nullptr;
 		}
 

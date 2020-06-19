@@ -15,8 +15,6 @@ namespace TristeonEditor
 	class Editor : public Tristeon::Singleton<Editor>
 	{
 	public:
-		explicit Editor();
-		
 		void initialize();
 		void addWindow(EditorWindow* window);
 
