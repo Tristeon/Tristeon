@@ -1,3 +1,4 @@
+#include "AssetDatabase.h"
 #ifdef TRISTEON_EDITOR
 #include "Input/Keyboard.h"
 #include "Rendering/Grid.h"
@@ -113,7 +114,10 @@ namespace TristeonEditor
 			return;
 		
 		if (Keyboard::held(Keyboard::Alt)) return;
-		
+
+		if (tileLayer->tileset(Brushes::selectedTile().tileSetID) == nullptr)
+			tileLayer->addTileSet(Brushes::selectedTileSet());
+
 		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->checkBoundsByIndex(tileIndex))
 			Brushes::current()->draw(tileLayer, tileIndex);
 		else if ((Mouse::pressed(Mouse::Right) || Mouse::held(Mouse::Right)) && tileLayer->checkBoundsByIndex(tileIndex))

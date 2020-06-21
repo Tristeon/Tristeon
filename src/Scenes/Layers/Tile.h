@@ -15,7 +15,7 @@ namespace Tristeon
 	}
 
 	inline void from_json(const nlohmann::json& j, Tile& p) {
-		p.index = j["index"];
-		p.tileSetID = j["tileSetID"];
+		p.index = j.value("index", -1);
+		p.tileSetID = j.value("tileSetID", -1);
 	}
 }

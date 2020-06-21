@@ -11,6 +11,6 @@ namespace Tristeon
 
 	void Layer::deserialize(json j)
 	{
-		name = j["name"].get<std::string>();
+		name = j.value("name", "");
 	}
 }

@@ -1,3 +1,4 @@
+#include "Project.h"
 #ifdef TRISTEON_EDITOR
 #include "JsonFileEditor.h"
 #include "Serialization/JsonSerializer.h"
@@ -124,7 +125,7 @@ namespace TristeonEditor
 
 	void JsonFileEditor::saveData()
 	{
-		Tristeon::JsonSerializer::save(item->path, data);
+		Tristeon::JsonSerializer::save(item->globalPath, data);
 	}
 }
 #endif

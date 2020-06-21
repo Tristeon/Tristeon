@@ -22,7 +22,7 @@ namespace Tristeon
 	void CircleCollider::deserialize(json j)
 	{
 		Collider::deserialize(j);
-		_radius = j["radius"];
+		_radius = j.value("radius", PhysicsWorld::metersToPixels(1));
 	}
 
 	void CircleCollider::drawGizmos()

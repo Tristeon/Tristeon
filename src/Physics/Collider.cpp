@@ -65,14 +65,14 @@ namespace Tristeon
 
 	void Collider::deserialize(json j)
 	{
-		_offset = j["offset"];
-		_rotationOffset = j["rotationOffset"];
+		_offset = j.value("offset", Vector2::zero());
+		_rotationOffset = j.value("rotationOffset", 0);
 		
-		_density = j["density"];
-		_friction = j["friction"];
-		_restitution = j["restitution"];
+		_density = j.value("density", 1.0f);
+		_friction = j.value("friction", 0.0f);
+		_restitution = j.value("restitution", 0.0f);
 		
-		_sensor = j["sensor"];
+		_sensor = j.value("sensor", false);
 	}
 
 	float Collider::density() const

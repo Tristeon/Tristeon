@@ -38,15 +38,15 @@ namespace Tristeon
 
 	void Actor::deserialize(json j)
 	{
-		position = j["position"];
-		scale = j["scale"];
-		rotation = j["rotation"];
-		name = j["name"].get<std::string>();
+		position = j.value("position", Vector2());
+		scale = j.value("scale", Vector2::one());
+		rotation = j.value("rotation", 0);
+		name = j.value("name", "");
 
 		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
-		for (auto serializedBehaviour : j["behaviours"])
+		for (auto serializedBehaviour : j.value("behaviours", json::array_t()))
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
 			auto* behaviour = dynamic_cast<Behaviour*>(serializable.release());

@@ -17,6 +17,7 @@ TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
 {
 	//Load tileset
 	tileSet = Resources::jsonLoad<TileSet>(tileSetPath);
+	tileSet->filePath = tileSetPath;
 	selectedTile.tileSetID = tileSet->id;
 	
 	//Display tileset
@@ -88,7 +89,7 @@ void TristeonEditor::TileSetTab::setSelectedTile(const int tileIndex)
 		tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 		tileHighlight->show();
 
-		Brushes::selectTile(selectedTile);
+		Brushes::selectTile(selectedTile, tileSet);
 	}
 }
 

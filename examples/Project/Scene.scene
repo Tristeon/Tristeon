@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 3813,
-            "y": 1370
+            "x": 1084,
+            "y": 972
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.32712894678115845
+        "zoom": 0.3327312469482422
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -19,79 +19,78 @@
     "layers": [
         {
             "height": 50,
-            "name": "TileLayer",
+            "name": "Tiles",
             "tileSets": [
-                "TilesetTest.tileSet",
-                "GoldBricks.tileset"
+                "TilesetTest.tileset"
             ],
             "tiles": [
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -230,44 +229,44 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -280,58 +279,42 @@
                 {
                     "index": -1,
                     "tileSetID": -1
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -446,44 +429,44 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -528,10 +511,6 @@
                 {
                     "index": -1,
                     "tileSetID": -1
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
                 },
                 {
                     "index": -1,
@@ -670,24 +649,24 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -698,12 +677,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -730,8 +713,8 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -870,20 +853,20 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -894,16 +877,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 9,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -928,16 +911,8 @@
                 {
                     "index": -1,
                     "tileSetID": -1
-                },
-                {
-                    "index": 13,
-                    "tileSetID": 1242115487
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
-                },
-                {
                     "index": -1,
                     "tileSetID": -1
                 },
@@ -1080,30 +1055,54 @@
                 {
                     "index": -1,
                     "tileSetID": -1
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
                     "index": -1,
                     "tileSetID": -1
                 },
                 {
                     "index": -1,
                     "tileSetID": -1
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -1134,16 +1133,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
-                    "index": 13,
-                    "tileSetID": 1242115487
+                    "index": -1,
+                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -10034,34 +10033,35 @@
                 {
                     "behaviours": [
                         {
-                            "groundedDistance": 256.0,
-                            "jumpVelocity": 2000.0,
-                            "runSpeed": 100.0,
-                            "typeID": "Tristeon::TestBehaviour"
+                            "density": 1.0,
+                            "friction": 0.0,
+                            "height": 386.0,
+                            "offset": {
+                                "typeID": "Tristeon::Vector2",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "restitution": 0.0,
+                            "rotationOffset": 0.0,
+                            "sensor": false,
+                            "typeID": "Tristeon::BoxCollider",
+                            "width": 386.0
                         },
                         {
                             "angularDamping": 0.009999999776482582,
                             "continuous": false,
                             "enabled": true,
-                            "fixedRotation": false,
+                            "fixedRotation": true,
                             "gravityScale": 1.0,
                             "linearDamping": 0.0,
                             "type": 2,
                             "typeID": "Tristeon::PhysicsBody"
                         },
                         {
-                            "density": 1.0,
-                            "friction": 0.0,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "radius": 130.0,
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::CircleCollider"
+                            "groundedDistance": 256.0,
+                            "jumpVelocity": 1500.0,
+                            "runSpeed": 100.0,
+                            "typeID": "Tristeon::TestBehaviour"
                         }
                     ],
                     "colour": {
@@ -10074,12 +10074,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 260,
-                    "name": "Penguin Test 2",
+                    "height": 386,
+                    "name": "Penguin",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 3072.0,
-                        "y": 1792.0
+                        "x": 513.3646240234375,
+                        "y": 836.384521484375
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10089,7 +10089,37 @@
                     },
                     "texturePath": "penguin.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 260
+                    "width": 386
+                },
+                {
+                    "behaviours": [],
+                    "clipPath": "AnimClip.clip",
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 614,
+                    "name": "Animated Numbers",
+                    "position": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1061.810791015625,
+                        "y": 2121.53662109375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::Vector2",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "SpriteSheet.png",
+                    "typeID": "Tristeon::AnimationSprite",
+                    "width": 614
                 },
                 {
                     "behaviours": [],
@@ -10104,12 +10134,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 512,
-                    "name": "Character",
+                    "height": 349,
+                    "name": "Walking Character",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 500.0,
-                        "y": 350.0
+                        "x": 3487.025146484375,
+                        "y": 1588.15966796875
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10119,172 +10149,11 @@
                     },
                     "texturePath": "Character.png",
                     "typeID": "Tristeon::AnimationSprite",
-                    "width": 512
-                },
-                {
-                    "behaviours": [
-                        {
-                            "density": 1.0,
-                            "friction": 0.0,
-                            "height": 256.0,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "restitution": 1.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 256.0
-                        },
-                        {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": false,
-                            "enabled": true,
-                            "fixedRotation": true,
-                            "gravityScale": 1.0,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        }
-                    ],
-                    "clipPath": "AnimClip.clip",
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 256,
-                    "name": "Animated Numbers",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 7001.9453125,
-                        "y": 2157.234130859375
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "SpriteSheet.png",
-                    "typeID": "Tristeon::AnimationSprite",
-                    "width": 256
-                },
-                {
-                    "behaviours": [],
-                    "name": "Empty Actor",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "typeID": "Tristeon::Actor"
-                },
-                {
-                    "behaviours": [
-                        {
-                            "density": 1.0,
-                            "friction": 0.0,
-                            "height": 254.0,
-                            "offset": {
-                                "typeID": "Tristeon::Vector2",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 930.0
-                        }
-                    ],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 254,
-                    "name": "A",
-                    "position": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 5452.47998046875,
-                        "y": 1793.2110595703125
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::Vector2",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Ground.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 930
+                    "width": 361
                 }
             ],
-            "name": "ActorLayer",
+            "name": "Objects",
             "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [],
-            "name": "New ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [],
-            "name": "New ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "height": 0,
-            "name": "New TileLayer",
-            "tileSets": [],
-            "tiles": [],
-            "typeID": "Tristeon::TileLayer",
-            "width": 0
-        },
-        {
-            "height": 0,
-            "name": "New TileLayer",
-            "tileSets": [],
-            "tiles": [],
-            "typeID": "Tristeon::TileLayer",
-            "width": 0
-        },
-        {
-            "actors": [],
-            "name": "New ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [],
-            "name": "New ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "height": 0,
-            "name": "New TileLayer",
-            "tileSets": [],
-            "tiles": [],
-            "typeID": "Tristeon::TileLayer",
-            "width": 0
         }
     ],
     "typeID": "Tristeon::Scene"

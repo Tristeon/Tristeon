@@ -44,7 +44,7 @@ namespace Tristeon
 		j["height"] = _height;
 
 		json sets = json::array();
-		for (auto tileset : tilesets)
+		for (auto* tileset : tilesets)
 			sets.push_back(tileset->filePath);
 		j["tileSets"] = sets;
 
@@ -59,16 +59,18 @@ namespace Tristeon
 	{
 		Layer::deserialize(j);
 		
-		_width = j["width"];
-		_height = j["height"];
+		_width = j.value("width", 1);
+		_height = j.value("height", 1);
 
 		tilesets.clear();
 		if (j.contains("tileSets"))
 		{
-			for (size_t i = 0; i < j["tileSets"].size(); i++)
+			for (auto& i : j["tileSets"])
 			{
-				TileSet* tileset = Resources::jsonLoad<TileSet>(j["tileSets"][i]);
-				tileset->filePath = j["tileSets"][i].get<std::string>();
+				TileSet* tileset = Resources::jsonLoad<TileSet>(i);
+				if (tileset == nullptr)
+					continue;
+				tileset->filePath = i.get<std::string>();
 				tilesets.push_back(tileset);
 			}
 		}
@@ -146,6 +148,20 @@ namespace Tristeon
 				return tileset;
 		}
 		return nullptr;
+	}
+
+	void TileLayer::addTileSet(TileSet* tileset)
+	{
+		if (tileset == nullptr)
+			return;
+		
+		for (auto* t : tilesets)
+		{
+			if (t->id == tileset->id)
+				return;
+		}
+
+		tilesets.add(tileset);
 	}
 
 	bool TileLayer::checkBoundsByIndex(Vector2Int const& index) const

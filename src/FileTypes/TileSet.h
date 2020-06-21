@@ -23,10 +23,10 @@ namespace Tristeon
 	}
 
 	inline void from_json(const json& j, TileInfo& p) {
-		p.hasCollider = j["hasCollider"];
-		p.density = j["density"];
-		p.friction = j["friction"];
-		p.restitution = j["restitution"];
+		p.hasCollider = j.value("hasCollider", false);
+		p.density = j.value("density", 1.0f);
+		p.friction = j.value("friction", 0.0f);
+		p.restitution = j.value("restitution", 0.0f);
 	}
 
 	/**

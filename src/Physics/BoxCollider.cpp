@@ -45,8 +45,8 @@ namespace Tristeon
 	{
 		Collider::deserialize(j);
 
-		_width = j["width"];
-		_height = j["height"];
+		_width = j.value("width", PhysicsWorld::metersToPixels(1));
+		_height = j.value("height", PhysicsWorld::metersToPixels(1));
 	}
 
 	void BoxCollider::drawGizmos()

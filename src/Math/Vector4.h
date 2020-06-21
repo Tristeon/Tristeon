@@ -136,10 +136,10 @@ namespace Tristeon
 	}
 
 	inline void from_json(const nlohmann::json& j, Vector4& p) {
-		p.x = j["x"];
-		p.y = j["y"];
-		p.z = j["z"];
-		p.w = j["w"];
+		p.x = j.value("x", 0);
+		p.y = j.value("y", 0);
+		p.z = j.value("z", 0);
+		p.w = j.value("w", 0);
 	}
 	
 	/**

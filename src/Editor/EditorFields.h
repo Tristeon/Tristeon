@@ -29,6 +29,7 @@ namespace TristeonEditor
 		static QLineEdit* stringField(QWidget* parent, std::string value, std::function<void(const std::string&)> changeCallback);
 
 		static void labelField(QFormLayout* layout, std::string label, std::string value);
+		static void header(QFormLayout* layout, std::string label);
 	};
 }
 #endif

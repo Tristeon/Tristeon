@@ -19,9 +19,9 @@ namespace Tristeon
 
 	void Camera::deserialize(json j)
 	{
-		position = j["position"];
-		size = j["size"];
-		zoom = j["zoom"];
+		position = j.value("position", Vector2Int::zero());
+		size = j.value("size", Vector2Int::zero());
+		zoom = j.value("zoom", 1.0f);
 	}
 
 	Camera* Camera::main()

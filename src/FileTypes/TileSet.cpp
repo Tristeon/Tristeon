@@ -50,21 +50,21 @@ namespace Tristeon
 
 	void TileSet::deserialize(json j)
 	{
-		cols = j["width"];
-		rows = j["height"];
+		cols = j.value("width", 1);
+		rows = j.value("height", 1);
 
-		id = j["id"];
+		id = j.value("id", 0);
 
-		texturePath = j["texturePath"].get<String>();
+		texturePath = j.value("texturePath", "");
 		texture = Resources::assetLoad<Texture>(texturePath);
 
-		spacingLeft = j["spacingLeft"];
-		spacingRight = j["spacingRight"];
-		spacingTop = j["spacingTop"];
-		spacingBottom = j["spacingBottom"];
+		spacingLeft = j.value("spacingLeft", 0);
+		spacingRight = j.value("spacingRight", 0);
+		spacingTop = j.value("spacingTop", 0);
+		spacingBottom = j.value("spacingBottom", 0);
 
-		horizontalSpacing = j["horizontalSpacing"];
-		verticalSpacing = j["verticalSpacing"];
+		horizontalSpacing = j.value("horizontalSpacing", 0);
+		verticalSpacing = j.value("verticalSpacing", 0);
 
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)

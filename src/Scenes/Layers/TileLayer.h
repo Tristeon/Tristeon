@@ -57,6 +57,11 @@ namespace Tristeon
 		 * Gets the tileset with the given ID.
 		 */
 		TileSet* tileset(int const& id);
+
+		/**
+		 * Adds a tileset if it hasn't already been added.
+		 */
+		void addTileSet(TileSet* tileset);
 #pragma endregion
 
 #pragma region Tile Modification

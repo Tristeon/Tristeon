@@ -44,9 +44,9 @@ namespace TristeonEditor
 	{
 		json j = targetLayer->serialize();
 
-		int const oldWidth = j["width"];
-		int const oldHeight = j["height"];
-		json oldData = j["tiles"];
+		int const oldWidth = j.value("width", 1);
+		int const oldHeight = j.value("height", 1);
+		json oldData = j.value("tiles", json());
 		
 		json::array_t data = json::array_t(width * height);
 		j["width"] = width;

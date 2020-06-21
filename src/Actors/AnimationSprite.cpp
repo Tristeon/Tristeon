@@ -24,7 +24,7 @@ namespace Tristeon
 	void AnimationSprite::deserialize(json j)
 	{
 		Sprite::deserialize(j);
-		setAnimationClip(j["clipPath"]);
+		setAnimationClip(j.value("clipPath", ""));
 	}
 
 	void AnimationSprite::setPaused(bool const& value)

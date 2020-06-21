@@ -50,10 +50,10 @@ namespace Tristeon
 	}
 
 	inline void from_json(const nlohmann::json& j, Colour& p) {
-		p.r = j["r"];
-		p.g = j["g"];
-		p.b = j["b"];
-		p.a = j["a"];
+		p.r = j.value("r", 1.0f);
+		p.g = j.value("g", 1.0f);
+		p.b = j.value("b", 1.0f);
+		p.a = j.value("a", 1.0f);
 	}
 
 	static_assert(sizeof(Colour) == sizeof(float) * 4, "Colour can not be bigger than 4 floats!");

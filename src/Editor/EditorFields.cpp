@@ -116,5 +116,12 @@ namespace TristeonEditor
 	{
 		layout->addRow(new QLabel(QString::fromStdString(label)), new QLabel(QString::fromStdString(value)));
 	}
+
+	void EditorFields::header(QFormLayout* layout, std::string label)
+	{
+		QLabel* widget = new QLabel(label.data());
+		widget->setStyleSheet("font-weight: bold;");
+		layout->addRow(widget, new QWidget());
+	}
 }
 #endif

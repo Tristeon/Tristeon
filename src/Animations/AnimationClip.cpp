@@ -29,19 +29,20 @@ namespace Tristeon
 
 	void AnimationClip::deserialize(json j)
 	{
-		rows = j["rows"];
-		cols = j["cols"];
-		startIndex = j["startIndex"];
-		endIndex = j["endIndex"];
-		loops = j["loops"];
-		texturePath = j["texturePath"].get<std::string>();
-		playbackRate = j.contains("playbackRate") ? j["playbackRate"] : 1;
+		rows = j.value("rows", 1);
+		cols = j.value("cols", 1);
+		startIndex = j.value("startIndex", 0);
+		endIndex = j.value("endIndex", rows * cols);
+		loops = j.value("loops", true);
+		texturePath = j.value("texturePath", "");
+		playbackRate = j.value("playbackRate", 1);
 
-		spacing.left = j["spacing"]["left"];
-		spacing.right = j["spacing"]["right"];
-		spacing.top = j["spacing"]["top"];
-		spacing.bottom = j["spacing"]["bottom"];
-		spacing.horizontalFrame = j["spacing"]["horizontalFrame"];
-		spacing.verticalFrame = j["spacing"]["verticalFrame"];
+		const json s = j.value("spacing", json());
+		spacing.left = s.value("left", 0);
+		spacing.right = s.value("right", 0);
+		spacing.top = s.value("top", 0);
+		spacing.bottom = s.value("bottom", 0);
+		spacing.horizontalFrame = s.value("horizontalFrame", 0);
+		spacing.verticalFrame = s.value("verticalFrame", 0);
 	}
 }

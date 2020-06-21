@@ -28,13 +28,13 @@ namespace Tristeon
 
 	void PhysicsBody::deserialize(json j)
 	{
-		type = j["type"];
-		_gravityScale = j["gravityScale"];
-		_fixedRotation = j["fixedRotation"];
-		_linearDamping = j["linearDamping"];
-		_angularDamping = j["angularDamping"];
-		_enabled = j["enabled"];
-		_continuous = j["continuous"];
+		type = j.value("type", Dynamic);
+		_gravityScale = j.value("gravityScale", 1.0f);
+		_fixedRotation = j.value("fixedRotation", false);
+		_linearDamping = j.value("linearDamping", 0.0f);
+		_angularDamping = j.value("angularDamping", 0.01f);
+		_enabled = j.value("enabled", true);
+		_continuous = j.value("continuous", false);
 	}
 
 	void PhysicsBody::start()

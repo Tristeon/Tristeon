@@ -47,9 +47,9 @@ namespace Tristeon
 
 	void TestBehaviour::deserialize(json j)
 	{
-		jumpVelocity = j["jumpVelocity"];
-		groundedDistance = j["groundedDistance"];
-		runSpeed = j["runSpeed"];
+		jumpVelocity = j.value("jumpVelocity", 1500);
+		groundedDistance = j.value("groundedDistance", 256);
+		runSpeed = j.value("runSpeed", 100);
 	}
 
 	bool TestBehaviour::preContact(Contact const& contact)
