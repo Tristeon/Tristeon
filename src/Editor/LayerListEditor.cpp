@@ -36,6 +36,7 @@ namespace TristeonEditor
 
 	void LayerListEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
+		int const row = list->currentRow();
 		list->clear();
 		layers.clear();
 
@@ -49,7 +50,10 @@ namespace TristeonEditor
 			layers[list->item(i)] = layer;
 		}
 
-		list->setCurrentRow(0);
+		if (row < scene->getLayerCount())
+			list->setCurrentRow(row);
+		else
+			list->setCurrentRow(0);
 	}
 
 	void LayerListEditor::addButtonPressed()

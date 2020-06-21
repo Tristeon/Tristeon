@@ -13,9 +13,7 @@ namespace TristeonEditor
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
 			Tristeon::Window::instance()->setWindowTitle(QString::fromStdString("Tristeon2D | " + scene->getName()));
-
-			if (_selectedLayer == nullptr || !scene->findLayer(_selectedLayer->name))
-				selectedLayer(nullptr);
+			selectedLayer(nullptr);
 
 			for (auto* window : windows)
 				window->sceneLoaded(scene);
