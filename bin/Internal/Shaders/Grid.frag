@@ -50,24 +50,27 @@ void main()
     int pixelIntervalY = int(grid.tileHeight * camera.zoom);
 
     bool is0Line = x < (errorMarginX * 2) || y < (errorMarginX * 2);
+    if (is0Line)
+    {
+        FragColor = vec4(1, 1, 1, 1);
+        return;
+    }
+    
     bool is10Line = x % (pixelIntervalX * 10) < errorMarginX || y % (pixelIntervalY * 10) < errorMarginY;
-    if (is0Line || is10Line)
+    if (is10Line)
     {
-        FragColor = vec4(1, 1, 1, 1);
+        FragColor = vec4(1, 1, 1, camera.zoom * 10);
         return;
     }
 
-    if (camera.zoom < 0.15f)
-        discard;
-
-    if (x % pixelIntervalX < errorMarginX && y % (pixelIntervalY / 10) < errorMarginX)
+    if (x % pixelIntervalX < errorMarginX)
     {
-        FragColor = vec4(1, 1, 1, 1);
+        FragColor = vec4(1, 1, 1, camera.zoom);
         return;
     }
-    if (y % pixelIntervalY < errorMarginY && x % (pixelIntervalX / 10) < errorMarginY)
+    if (y % pixelIntervalY < errorMarginY)
     {
-        FragColor = vec4(1, 1, 1, 1);
+        FragColor = vec4(1, 1, 1, camera.zoom);
         return;
     }
 
