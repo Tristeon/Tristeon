@@ -46,14 +46,17 @@ void main()
     texCoord.x = (x+1.0)*0.5;
     texCoord.y = (y+1.0)*0.5;
 
+    x *= actor.scale.x * sprite.width;
+    y *= actor.scale.y * sprite.height;
+
     float rad = actor.rotation * toRAD;
     float rotX = x * cos(rad) - y * sin(rad);
     float rotY = y * cos(rad) + x * sin(rad);
     x = rotX;
     y = rotY;
 
-    x = x / float(camera.pixelsX / camera.zoom) * sprite.width * actor.scale.x;
-    y = y / float(camera.pixelsY / camera.zoom) * sprite.height * actor.scale.y;
+    x = x / float(camera.pixelsX / camera.zoom);
+    y = y / float(camera.pixelsY / camera.zoom);
 
     x -= float(camera.posX) / camera.pixelsX * camera.zoom * 2;
     y -= float(camera.posY) / camera.pixelsY * camera.zoom * 2;
