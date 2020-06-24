@@ -2,6 +2,9 @@
 #include "Actors/Actor.h"
 #include <Rendering/Shader.h>
 
+#include "GameView.h"
+#include "Input/Mouse.h"
+
 namespace Tristeon
 {
 	class ActorLayer;
@@ -23,6 +26,16 @@ namespace Tristeon
 			bool contains(Vector2 const& position) const
 			{
 				return position.x > min.x&& position.x < max.x&& position.y > min.y&& position.y < max.y;
+			}
+
+			Vector2 size() const
+			{
+				return (max - min);
+			}
+
+			bool underMouse() const
+			{
+				return contains(GameView::screenToWorld(Mouse::position()));
 			}
 		};
 		

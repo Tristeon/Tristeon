@@ -13,6 +13,7 @@ namespace Tristeon
 	public:
 		static unsigned int tileWidth();
 		static unsigned int tileHeight();
+		static Vector2Int tileSize();
 
 		/**
 		 * Snaps the given world position to grid cell positions

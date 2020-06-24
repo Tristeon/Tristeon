@@ -1,6 +1,5 @@
 #pragma once
 #include <QOpenGLWidget>
-#include <QResizeEvent>
 #include <QTimer>
 
 #include <Utils/Singleton.h>

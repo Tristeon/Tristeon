@@ -104,6 +104,7 @@ namespace Tristeon
 
 			//draw
 			shader.getShaderProgram()->setUniformValue("colour", shape.colour.r, shape.colour.g, shape.colour.b, shape.colour.a);
+			f->glLineWidth(2);
 			f->glDrawArrays(GL_LINES, 0, shape.vertices.size());
 
 			//cleanup

@@ -1,3 +1,5 @@
+#include "Math/Math.h"
+#include "Rendering/Gizmos.h"
 #ifdef TRISTEON_EDITOR
 #include "Rendering/Grid.h"
 #include "Input/Keyboard.h"
@@ -17,63 +19,45 @@ namespace TristeonEditor
 	void ActorLayerSceneView::initialize()
 	{
 		actorLayer = dynamic_cast<ActorLayer*>(target());
-
-		outline = new QLabel(this);
-		outline->setPixmap(QPixmap("Internal/Textures/outline.png"));
-		outline->setScaledContents(true);
-		outline->setAttribute(Qt::WA_TranslucentBackground);
-		outline->hide();
-
-		corner = new QLabel(this);
-		corner->setPixmap(QPixmap("Internal/Textures/selection.png"));
-		corner->setScaledContents(true);
-		corner->hide();
-
-		rotate = new QLabel(this);
-		rotate->setPixmap(QPixmap("Internal/Textures/rotate.png"));
-		rotate->setScaledContents(true);
-		rotate->setAttribute(Qt::WA_TranslucentBackground);
-		rotate->hide();
 	}
 
 	void ActorLayerSceneView::updateView()
 	{
 		if (Engine::playMode())
 		{
-			outline->hide();
-			corner->hide();
-			rotate->hide();
-			
 			dragging = false;
-			draggingCorner = false;
+			dragginScale = false;
 			draggingRotate = false;
 			return;
 		}
 
 		if (Mouse::pressed(Mouse::Left) && GameView::instance()->widget()->underMouse())
 		{
-			if ((corner->isHidden() || !corner->underMouse()) && (rotate->isHidden() || !rotate->underMouse()))
-				clickActor();
-			else if (!corner->isHidden() && corner->underMouse())
-			{
-				draggingCorner = true;
-			}
-			else if (!rotate->isHidden() && rotate->underMouse())
-			{
+			if (scalar.underMouse())
+				dragginScale = true;
+			else if (rotator.underMouse())
 				draggingRotate = true;
-			}
+			else
+				clickActor();
 		}
 		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::Alt))
 		{
 			if (dragging)
 			{
 				if (Keyboard::held(Keyboard::Shift))
-					Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset);
+				{
+					auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
+					if (graphic == nullptr)
+						Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset);
+					else
+						graphic->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset) + graphic->getAABB().size() / 2.0f - Grid::tileSize() / 2.0f;
+				}
 				else
 					Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position()) - draggingOffset;
 			}
-			else if (draggingCorner)
+			else if (dragginScale)
 			{
+				//TODO: Make graphic resizing more generic
 				auto* sprite = dynamic_cast<Sprite*>(Editor::instance()->selectedActor());
 
 				if (sprite != nullptr && sprite->getTexture() != nullptr)
@@ -112,7 +96,7 @@ namespace TristeonEditor
 		else if (Mouse::released(Mouse::Left))
 		{
 			dragging = false;
-			draggingCorner = false;
+			dragginScale = false;
 			draggingRotate = false;
 			Editor::instance()->selectedActor(Editor::instance()->selectedActor());
 		}
@@ -121,36 +105,21 @@ namespace TristeonEditor
 		if (graphic != nullptr)
 		{
 			Graphic::AABB const aabb = graphic->getAABB();
-			Vector2 const screenScale = Vector2(width(), height()) / Vector2(1920, 1080);
-			Vector2 const scalar = screenScale * Camera::main()->zoom;
-			Vector2 const size = (aabb.max - aabb.min) * scalar;
-			Vector2 const cameraPos = (Vector2)Camera::main()->position * scalar;
+			Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Colour(0.5, 0.5, 1, 1));
 
-			Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
-			position -= Vector2{ size.x / 2.0f, -size.y / 2.0f }; //Adjust center 
-			position += graphic->position * scalar; //Adjust based on tile index
+			const Vector2 handleSize = Vector2(Math::clamp(32 / Camera::main()->zoom, 8, 256), Math::clamp(32 / Camera::main()->zoom, 8, 256));
+			const Vector2 cpos = Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
+			Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Colour(0.5, 0.5, 0.5));
+			scalar = Graphic::AABB{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };
 
-			outline->move(position.x - cameraPos.x, height() - position.y + cameraPos.y);
-			outline->resize(size.x, size.y);
-			outline->show();
-			
-			corner->move(outline->pos() + outline->rect().topRight() - QPoint(size.x / 10.0f, size.y / 10.0f));
-			corner->resize(size.x / 5.0f, size.y / 5.0f);
-			corner->show();
-
-			Vector2 const unit = Vector2::unit(graphic->rotation);
-			rotate->move(outline->pos() + outline->rect().center() - QPoint(size.x / 10.0f, size.y / 10.0f) + QPoint(unit.x * outline->rect().width(), unit.y * outline->rect().height()));
-			rotate->resize(size.x / 5.0f, size.y / 5.0f);
-			rotate->show();
+			const Vector2 rpos = Math::orbit(graphic->position, Vector2(aabb.size().x, 0), graphic->rotation);
+			Gizmos::drawSquare(rpos, handleSize, graphic->rotation, Colour(0, 0.5, 0.5));
+			rotator = Graphic::AABB{ rpos - handleSize / 2.0f, rpos + handleSize / 2.0f };
 		}
 		else
 		{
-			outline->hide();
-			corner->hide();
-			rotate->hide();
-
 			dragging = false;
-			draggingCorner = false;
+			dragginScale = false;
 			draggingRotate = false;
 		}
 	}

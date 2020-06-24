@@ -109,26 +109,12 @@ namespace Tristeon
 
 	bool Sprite::withinBounds(Vector2 const& worldPos)
 	{
-		Vector2 const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
-		return AABB{ position - halfSize, position + halfSize }.contains(worldPos);
+		return getAABB().contains(worldPos);
 	}
 
 	Graphic::AABB Sprite::getAABB()
 	{
-		float const halfW = width / 2.0f * scale.x;
-		float const halfH = height / 2.0f * scale.y;
-
-		Vector2 const bottomLeft = Math::orbit(position, Vector2(-halfW, -halfH), rotation);
-		Vector2 const bottomRight = Math::orbit(position, Vector2(halfW, -halfH), rotation);
-		Vector2 const topLeft = Math::orbit(position, Vector2(-halfW, halfH), rotation);
-		Vector2 const topRight = Math::orbit(position, Vector2(halfW, halfH), rotation);
-
-		float const minX = std::min({ bottomLeft.x, bottomRight.x, topLeft.x, topRight.x });
-		float const minY = std::min({ bottomLeft.y, bottomRight.y, topLeft.y, topRight.y });
-
-		float const maxX = std::max({ bottomLeft.x, bottomRight.x, topLeft.x, topRight.x });
-		float const maxY = std::max({ bottomLeft.y, bottomRight.y, topLeft.y, topRight.y });
-
-		return AABB{ { minX, minY }, { maxX, maxY } };
+		Vector2 const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
+		return AABB{ position - halfSize, position + halfSize };
 	}
 }

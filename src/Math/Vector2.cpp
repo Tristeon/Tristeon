@@ -6,8 +6,6 @@
 
 namespace Tristeon
 {
-	Vector2::Vector2(float xy) : x(xy), y(xy) {}
-
 	Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
 	float Vector2::getAxis(const int& axis) const

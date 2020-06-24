@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1084,
-            "y": 972
+            "x": 1592,
+            "y": 1609
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.3327312469482422
+        "zoom": 0.5689215064048767
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -10035,7 +10035,7 @@
                         {
                             "density": 1.0,
                             "friction": 0.0,
-                            "height": 386.0,
+                            "height": 256.0,
                             "offset": {
                                 "typeID": "Tristeon::Vector2",
                                 "x": 0.0,
@@ -10045,7 +10045,7 @@
                             "rotationOffset": 0.0,
                             "sensor": false,
                             "typeID": "Tristeon::BoxCollider",
-                            "width": 386.0
+                            "width": 256.0
                         },
                         {
                             "angularDamping": 0.009999999776482582,
@@ -10074,12 +10074,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 386,
+                    "height": 256,
                     "name": "Penguin",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 513.3646240234375,
-                        "y": 836.384521484375
+                        "x": 512.0,
+                        "y": 768.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10089,7 +10089,7 @@
                     },
                     "texturePath": "penguin.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 386
+                    "width": 256
                 },
                 {
                     "behaviours": [],
@@ -10104,12 +10104,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 614,
+                    "height": 512,
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 1061.810791015625,
-                        "y": 2121.53662109375
+                        "x": 1301.0,
+                        "y": 1877.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10119,7 +10119,7 @@
                     },
                     "texturePath": "SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
-                    "width": 614
+                    "width": 512
                 },
                 {
                     "behaviours": [],
@@ -10138,8 +10138,8 @@
                     "name": "Walking Character",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 3487.025146484375,
-                        "y": 1588.15966796875
+                        "x": 3487.0,
+                        "y": 1588.0
                     },
                     "rotation": 0.0,
                     "scale": {

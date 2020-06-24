@@ -19,12 +19,11 @@ namespace TristeonEditor
 		
 		Tristeon::ActorLayer* actorLayer = nullptr;
 
-		QLabel* outline = nullptr;
-		QLabel* corner = nullptr;
-		QLabel* rotate = nullptr;
+		Tristeon::Graphic::AABB scalar;
+		Tristeon::Graphic::AABB rotator;
 		
 		bool dragging = false;
-		bool draggingCorner = false;
+		bool dragginScale = false;
 		bool draggingRotate = false;
 
 		Tristeon::Vector2 draggingOffset;

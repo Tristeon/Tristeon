@@ -19,6 +19,11 @@ namespace Tristeon
 		return Project::Graphics::tileHeight();
 	}
 
+	Vector2Int Grid::tileSize()
+	{
+		return Vector2Int(tileWidth(), tileHeight());
+	}
+
 	Vector2 Grid::snap(Vector2 const& position)
 	{
 		return positionByIndex(indexByPosition(position));

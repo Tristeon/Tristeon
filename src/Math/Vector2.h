@@ -12,11 +12,6 @@ namespace Tristeon
 	struct Vector2 final
 	{
 		/**
-		 * Creates a (xy, xy) Vector2
-		 * \param xy The x and y of this vector
-		 */
-		Vector2(float xy);
-		/**
 		 * Creates a (x, y) Vector2
 		 * \param x The x of this vector
 		 * \param y The y of this vector
