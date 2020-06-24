@@ -1,6 +1,6 @@
+#ifdef TRISTEON_EDITOR
 #include "Math/Math.h"
 #include "Rendering/Gizmos.h"
-#ifdef TRISTEON_EDITOR
 #include "Rendering/Grid.h"
 #include "Input/Keyboard.h"
 #include "Actors/Sprite.h"
@@ -89,8 +89,12 @@ namespace TristeonEditor
 			{
 				Vector2 const position = Editor::instance()->selectedActor()->position;
 				Vector2 const mouse = (GameView::screenToWorld(Mouse::position()) - position).getNormalized();
-				
-				Editor::instance()->selectedActor()->rotation = mouse.getAngle();
+				const float angle = mouse.getAngle();
+
+				if (Keyboard::held(Keyboard::Shift))
+					Editor::instance()->selectedActor()->rotation = roundf(angle / 45.0f) * 45.0f;
+				else
+					Editor::instance()->selectedActor()->rotation = angle;
 			}
 		}
 		else if (Mouse::released(Mouse::Left))
