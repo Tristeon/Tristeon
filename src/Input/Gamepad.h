@@ -102,6 +102,10 @@ namespace Tristeon
 		 * Called every frame by the main Engine loop.
 		 */
 		static void reset();
+		/**
+		 * Clears all input.
+		 */
+		static void clearAll();
 
 		static void buttonChanged(GamepadButton const& button, bool const& pressed);
 	};

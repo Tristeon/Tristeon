@@ -53,6 +53,13 @@ namespace Tristeon
 		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
 	}
 
+	void Gamepad::clearAll()
+	{
+		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
+		std::fill(std::begin(buttons), std::end(buttons), false);
+		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
+	}
+
 	void Gamepad::buttonChanged(GamepadButton const& button, bool const& pressed)
 	{
 		if (pressed)

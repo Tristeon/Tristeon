@@ -36,7 +36,8 @@ namespace Tristeon
 
 		if (oldMousePos != QCursor::pos())
 		{
-			mouseMoveEvents.push(QMouseEvent(QEvent::MouseMove, QCursor::pos(), Qt::NoButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+			mouseMoveEvents.push(QMouseEvent(QEvent::MouseMove, QCursor::pos(), Qt::NoButton, Qt::NoButton,
+			                                 Qt::KeyboardModifier::NoModifier));
 			oldMousePos = QCursor::pos();
 		}
 		while (!mouseMoveEvents.empty())
@@ -69,7 +70,8 @@ namespace Tristeon
 	{
 		QLoggingCategory::setFilterRules(QStringLiteral("qt.gamepad.debug=true"));
 
-		connect(QGamepadManager::instance(), &QGamepadManager::connectedGamepadsChanged, this, &Window::gamepadsChanged);
+		connect(QGamepadManager::instance(), &QGamepadManager::connectedGamepadsChanged, this,
+		        &Window::gamepadsChanged);
 	}
 
 	Window::Window()
@@ -79,6 +81,25 @@ namespace Tristeon
 		connectGamepads();
 
 		oldMousePos = QCursor::pos();
+	}
+
+	bool Window::event(QEvent* e)
+	{
+		switch (e->type())
+		{
+		case QEvent::WindowActivate:
+			Keyboard::clearAll();
+			Mouse::clearAll();
+			Gamepad::clearAll();
+			break;
+
+		case QEvent::WindowDeactivate:
+			Keyboard::clearAll();
+			Mouse::clearAll();
+			Gamepad::clearAll();
+			break;
+		};
+		return QMainWindow::event(e);
 	}
 
 	void Window::mousePressEvent(QMouseEvent* event)
@@ -112,7 +133,7 @@ namespace Tristeon
 	{
 		if (event->isAutoRepeat())
 			return;
-		
+
 		keyReleaseEvents.push(*event);
 	}
 
@@ -122,14 +143,14 @@ namespace Tristeon
 		QApplication::quit();
 		exit(0);
 	}
-
+	
 	void Window::gamepadsChanged()
 	{
 		auto gamepads = QGamepadManager::instance()->connectedGamepads();
 		if (gamepads.isEmpty())
 		{
 			std::cout << "Gamepad disconnected: " << activeGamepad->name().toStdString() << std::endl;
-			
+
 			activeGamepad->deleteLater();
 			activeGamepad = nullptr;
 
@@ -148,28 +169,64 @@ namespace Tristeon
 
 		activeGamepad = new QGamepad(gamepads[0]);
 		std::cout << "Selected Gamepad: " << activeGamepad->name().toStdString() << std::endl;
-		
+
 		connect(activeGamepad, &QGamepad::axisLeftXChanged, this, [](double const& value) { Gamepad::left.x = value; });
-		connect(activeGamepad, &QGamepad::axisLeftYChanged, this, [](double const& value) { Gamepad::left.y = -value; });
+		connect(activeGamepad, &QGamepad::axisLeftYChanged, this,
+		        [](double const& value) { Gamepad::left.y = -value; });
 
-		connect(activeGamepad, &QGamepad::axisRightXChanged, this, [](double const& value) { Gamepad::right.x = value; });
-		connect(activeGamepad, &QGamepad::axisRightYChanged, this, [](double const& value) { Gamepad::right.y = -value; });
+		connect(activeGamepad, &QGamepad::axisRightXChanged, this,
+		        [](double const& value) { Gamepad::right.x = value; });
+		connect(activeGamepad, &QGamepad::axisRightYChanged, this,
+		        [](double const& value) { Gamepad::right.y = -value; });
 
-		connect(activeGamepad, &QGamepad::buttonAChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::A, pressed); });
-		connect(activeGamepad, &QGamepad::buttonBChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::B, pressed); });
-		connect(activeGamepad, &QGamepad::buttonXChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::X, pressed); });
-		connect(activeGamepad, &QGamepad::buttonYChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::Y, pressed); });
+		connect(activeGamepad, &QGamepad::buttonAChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::A, pressed);
+		});
+		connect(activeGamepad, &QGamepad::buttonBChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::B, pressed);
+		});
+		connect(activeGamepad, &QGamepad::buttonXChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::X, pressed);
+		});
+		connect(activeGamepad, &QGamepad::buttonYChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::Y, pressed);
+		});
 
-		connect(activeGamepad, &QGamepad::buttonL1Changed, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::L1, pressed); });
+		connect(activeGamepad, &QGamepad::buttonL1Changed, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::L1, pressed);
+		});
 		connect(activeGamepad, &QGamepad::buttonL2Changed, this, [](float const& value) { Gamepad::l2 = value; });
-		connect(activeGamepad, &QGamepad::buttonL3Changed, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::L3, pressed); });
+		connect(activeGamepad, &QGamepad::buttonL3Changed, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::L3, pressed);
+		});
 
-		connect(activeGamepad, &QGamepad::buttonR1Changed, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::R1, pressed); });
+		connect(activeGamepad, &QGamepad::buttonR1Changed, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::R1, pressed);
+		});
 		connect(activeGamepad, &QGamepad::buttonR2Changed, this, [](float const& value) { Gamepad::r2 = value; });
-		connect(activeGamepad, &QGamepad::buttonR3Changed, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::R3, pressed); });
+		connect(activeGamepad, &QGamepad::buttonR3Changed, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::R3, pressed);
+		});
 
-		connect(activeGamepad, &QGamepad::buttonSelectChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::Select, pressed); });
-		connect(activeGamepad, &QGamepad::buttonStartChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::Start, pressed); });
-		connect(activeGamepad, &QGamepad::buttonGuideChanged, this, [](bool const& pressed) { Gamepad::buttonChanged(Gamepad::Guide, pressed); });
+		connect(activeGamepad, &QGamepad::buttonSelectChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::Select, pressed);
+		});
+		connect(activeGamepad, &QGamepad::buttonStartChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::Start, pressed);
+		});
+		connect(activeGamepad, &QGamepad::buttonGuideChanged, this, [](bool const& pressed)
+		{
+			Gamepad::buttonChanged(Gamepad::Guide, pressed);
+		});
 	}
 }

@@ -106,6 +106,10 @@ namespace Tristeon
 		 * Called every frame by the main Engine loop.
 		 */
 		static void reset();
+		/**
+		 * Clears all input.
+		 */
+		static void clearAll();
 
 		static bool buttons[];
 		static bool buttonsPressed[];

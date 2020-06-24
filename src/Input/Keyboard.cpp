@@ -46,4 +46,11 @@ namespace Tristeon
 		keysPressed.clear();
 		keysReleased.clear();
 	}
+
+	void Keyboard::clearAll()
+	{
+		keys.clear();
+		keysPressed.clear();
+		keysReleased.clear();
+	}
 }

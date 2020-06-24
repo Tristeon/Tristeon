@@ -554,6 +554,10 @@ namespace Tristeon
 		 * Called every frame by the main Engine loop.
 		 */
 		static void reset();
+		/**
+		 * Clears all input.
+		 */
+		static void clearAll();
 
 		static std::map<int, bool> keys;
 		static std::map<int, bool> keysPressed;

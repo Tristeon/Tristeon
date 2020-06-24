@@ -40,6 +40,7 @@ namespace Tristeon
 
 		static void close() { ((QMainWindow*)instance())->close(); }
 	protected:
+		bool event(QEvent* e) override;
 		void mousePressEvent(QMouseEvent* event) override;
 		void mouseReleaseEvent(QMouseEvent* event) override;
 		void mouseDoubleClickEvent(QMouseEvent* event) override;
@@ -47,7 +48,6 @@ namespace Tristeon
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;
 		void closeEvent(QCloseEvent* event) override;
-
 		void gamepadsChanged();
 		
 	private:

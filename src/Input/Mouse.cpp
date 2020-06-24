@@ -99,4 +99,15 @@ namespace Tristeon
 		mouseDelta = Vector2Int::zero();
 		scrollDelta = Vector2Int::zero();
 	}
+
+	void Mouse::clearAll()
+	{
+		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
+		std::fill(std::begin(buttons), std::end(buttons), false);
+		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
+		std::fill(std::begin(buttonsDoubleClicked), std::end(buttonsDoubleClicked), false);
+
+		mouseDelta = Vector2Int::zero();
+		scrollDelta = Vector2Int::zero();
+	}
 }
