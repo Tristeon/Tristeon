@@ -206,19 +206,19 @@ namespace Tristeon
 		//Shader
 		QOpenGLContext* context = GameView::context();
 		QOpenGLFunctions* f = context->functions();
-		QOpenGLShaderProgram* program = shader->getShaderProgram();
 
 		//Bind level data
 		f->glActiveTexture(GL_TEXTURE1);
 		f->glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
 		context->extraFunctions()->glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
-		program->setUniformValue("level.data", 1);
 
-		program->setUniformValue("level.width", _width);
-		program->setUniformValue("level.height", _height);
+		shader->setUniformValue("level.data", 1);
 
-		program->setUniformValue("level.tileRenderWidth", Grid::tileWidth());
-		program->setUniformValue("level.tileRenderHeight", Grid::tileHeight());
+		shader->setUniformValue("level.width", _width);
+		shader->setUniformValue("level.height", _height);
+
+		shader->setUniformValue("level.tileRenderWidth", Grid::tileWidth());
+		shader->setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
 		f->glActiveTexture(GL_TEXTURE0);
 		for (TileSet* tileSet : tilesets)
@@ -226,20 +226,20 @@ namespace Tristeon
 			tileSet->texture->bind();
 
 			//Upload texture & tileset info
-			program->setUniformValue("tileSet.texture", 0);
+			shader->setUniformValue("tileSet.texture", 0);
 
-			program->setUniformValue("tileSet.cols", tileSet->cols);
-			program->setUniformValue("tileSet.rows", tileSet->rows);
+			shader->setUniformValue("tileSet.cols", tileSet->cols);
+			shader->setUniformValue("tileSet.rows", tileSet->rows);
 
-			program->setUniformValue("tileSet.id", tileSet->id);
+			shader->setUniformValue("tileSet.id", tileSet->id);
 
 			//Spacing
-			program->setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
-			program->setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
-			program->setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
-			program->setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
-			program->setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
-			program->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
+			shader->setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
+			shader->setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
+			shader->setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
+			shader->setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
+			shader->setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
+			shader->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
 
 			//Draw
 			f->glDrawArrays(GL_TRIANGLES, 0, 3);

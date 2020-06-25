@@ -2,12 +2,14 @@
 #include <string>
 #include <TObject.h>
 
-class QOpenGLShaderProgram;
+#include "GameView.h"
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
 
 namespace Tristeon
 {
 	/**
-	 * Shader is a wrapper around QOpenGLShaderProgram that simplifies its implementation.
+	 * Shaders are what define the visual appearance of an object in the scene.
 	 *
 	 * Graphic objects can use this class to create shader programs with vertex & fragment shaders.
 	 */
@@ -53,14 +55,30 @@ namespace Tristeon
 		void unbind() const;
 		
 		/**
-		 * Gets the QOpenGLShaderProgram for further rendering use.
+		 * Gets the shader program's ID for advanced rendering use.
 		 */
-		QOpenGLShaderProgram* getShaderProgram() const { return program; }
+		unsigned int getShaderProgram() const { return program; }
 
 		/**
 		 * Reloads the shader using the same vertex and fragment paths as before.
 		 */
 		void reload();
+
+		void setUniformValue(std::string const& name, int const& v0);
+		void setUniformValue(std::string const& name, int const& v0, int const& v1);
+		void setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2);
+		void setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2, int const& v3);
+
+		void setUniformValue(std::string const& name, unsigned int const& v0);
+		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1);
+		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1, unsigned int const& v2);
+		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1, unsigned int const& v2, unsigned int const& v3);
+
+		void setUniformValue(std::string name, float v0);
+		void setUniformValue(std::string name, float v0, float v1);
+		void setUniformValue(std::string name, float v0, float v1, float v2);
+		void setUniformValue(std::string name, float v0, float v1, float v2, float v3);
+
 	private:
 		void initialize();
 		
@@ -74,6 +92,6 @@ namespace Tristeon
 		bool failed = false;
 		bool empty = false;
 
-		QOpenGLShaderProgram* program = nullptr;
+		unsigned int program = 0;
 	};
 }

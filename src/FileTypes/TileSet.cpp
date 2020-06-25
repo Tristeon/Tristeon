@@ -1,6 +1,4 @@
 #include "TileSet.h"
-
-
 #include "Resources.h"
 #include "Serialization/JsonSerializer.h"
 

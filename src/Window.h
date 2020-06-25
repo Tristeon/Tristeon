@@ -1,6 +1,5 @@
 #pragma once
 #include <QMainWindow>
-#include <QMouseEvent>
 #include <QtGamepad/QtGamepad>
 
 #include <Utils/Singleton.h>

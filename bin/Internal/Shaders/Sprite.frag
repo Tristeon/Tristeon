@@ -6,8 +6,8 @@ out vec4 FragColor;
 uniform sampler2D mainTex;
 struct Sprite
 {
-    int width;
-    int height;
+    uint width;
+    uint height;
 
     vec4 colour;
 

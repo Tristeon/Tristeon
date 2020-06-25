@@ -1,6 +1,5 @@
 #pragma once
 #include <Serialization/Serializable.h>
-#include <Utils/Vector.h>
 
 namespace Tristeon
 {

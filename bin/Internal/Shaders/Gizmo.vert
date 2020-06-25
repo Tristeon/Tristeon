@@ -6,8 +6,11 @@ struct CameraData
     int posX;
     int posY;
 
-    int pixelsX;
-    int pixelsY;
+    uint pixelsX;
+    uint pixelsY;
+
+    uint displayPixelsX;
+    uint displayPixelsY;
 
     float zoom;
 };

@@ -2,8 +2,8 @@
     "camera": {
         "position": {
             "typeID": "Tristeon::Vector2Int",
-            "x": 1592,
-            "y": 1609
+            "x": 1612,
+            "y": 1188
         },
         "size": {
             "typeID": "Tristeon::Vector2Int",
@@ -11,7 +11,7 @@
             "y": 1080
         },
         "typeID": "Tristeon::Camera",
-        "zoom": 0.5689215064048767
+        "zoom": 0.20892809331417084
     },
     "hud": {
         "typeID": "Tristeon::HUD"
@@ -25,8 +25,144 @@
             ],
             "tiles": [
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 0,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 1,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 2,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 0,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 1,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 2,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 0,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 1,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 2,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 10,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": 3,
@@ -45,7 +181,11 @@
                     "tileSetID": 670680868
                 },
                 {
-                    "index": 3,
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
                     "tileSetID": 670680868
                 },
                 {
@@ -77,159 +217,19 @@
                     "tileSetID": 670680868
                 },
                 {
-                    "index": 5,
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 6,
                     "tileSetID": 670680868
                 },
                 {
-                    "index": 5,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 5,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 5,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": 3,
+                    "index": 6,
                     "tileSetID": 670680868
                 },
                 {
@@ -249,7 +249,11 @@
                     "tileSetID": 670680868
                 },
                 {
-                    "index": 3,
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
                     "tileSetID": 670680868
                 },
                 {
@@ -263,550 +267,6 @@
                 {
                     "index": 3,
                     "tileSetID": 670680868
-                },
-                {
-                    "index": 3,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 4,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": 9,
-                    "tileSetID": 670680868
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
                 },
                 {
                     "index": -1,
@@ -861,6 +321,142 @@
                     "tileSetID": 670680868
                 },
                 {
+                    "index": 12,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 10,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
                     "index": 9,
                     "tileSetID": 670680868
                 },
@@ -869,6 +465,410 @@
                     "tileSetID": 670680868
                 },
                 {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 10,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 7,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 13,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": -1,
+                    "tileSetID": -1
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 9,
+                    "tileSetID": 670680868
+                },
+                {
                     "index": -1,
                     "tileSetID": -1
                 },
@@ -925,8 +925,80 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 4,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 6,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 3,
+                    "tileSetID": 670680868
+                },
+                {
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -953,84 +1025,12 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
-                },
-                {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1133,68 +1133,68 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1225,12 +1225,12 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1281,12 +1281,12 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 14,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 14,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1337,60 +1337,60 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1425,12 +1425,12 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 8,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1485,8 +1485,8 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 14,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1541,56 +1541,56 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1625,8 +1625,8 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1697,16 +1697,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 11,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 11,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 11,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1745,52 +1745,52 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1825,8 +1825,8 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -1953,44 +1953,44 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -2161,32 +2161,32 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -2361,32 +2361,32 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -2561,32 +2561,32 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -2765,24 +2765,24 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -2965,20 +2965,20 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -3165,20 +3165,20 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -3369,16 +3369,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 6,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -3569,16 +3569,16 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 3,
+                    "tileSetID": 670680868
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -3773,8 +3773,8 @@
                     "tileSetID": -1
                 },
                 {
-                    "index": -1,
-                    "tileSetID": -1
+                    "index": 5,
+                    "tileSetID": 670680868
                 },
                 {
                     "index": -1,
@@ -10079,7 +10079,7 @@
                     "position": {
                         "typeID": "Tristeon::Vector2",
                         "x": 512.0,
-                        "y": 768.0
+                        "y": 771.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10104,12 +10104,12 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 512,
+                    "height": 516,
                     "name": "Animated Numbers",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 1301.0,
-                        "y": 1877.0
+                        "x": 2178.0,
+                        "y": 1666.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -10119,7 +10119,7 @@
                     },
                     "texturePath": "SpriteSheet.png",
                     "typeID": "Tristeon::AnimationSprite",
-                    "width": 512
+                    "width": 516
                 },
                 {
                     "behaviours": [],
@@ -10138,8 +10138,8 @@
                     "name": "Walking Character",
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 3487.0,
-                        "y": 1588.0
+                        "x": 6452.0,
+                        "y": 1326.0
                     },
                     "rotation": 0.0,
                     "scale": {

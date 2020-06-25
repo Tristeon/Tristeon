@@ -3,8 +3,8 @@ in vec2 texCoord;
 
 struct Grid 
 {
-    int tileWidth;
-    int tileHeight;
+    uint tileWidth;
+    uint tileHeight;
 };
 
 struct CameraData
@@ -12,12 +12,11 @@ struct CameraData
     int posX;
     int posY;
 
-    int pixelsX;
-    int pixelsY;
+    uint pixelsX;
+    uint pixelsY;
 
-    //The actual width/height of the game view
-    int displayPixelsX;
-    int displayPixelsY;
+    uint displayPixelsX;
+    uint displayPixelsY;
 
     float zoom;
 };
@@ -29,8 +28,8 @@ out vec4 FragColor;
 
 void main()
 {
-    float normalizedTileWidth = (float)grid.tileWidth / (camera.pixelsX / camera.zoom); 
-    float normalizedTileHeight = (float)grid.tileHeight / (camera.pixelsY / camera.zoom);
+    float normalizedTileWidth = float(grid.tileWidth) / (camera.pixelsX / camera.zoom); 
+    float normalizedTileHeight = float(grid.tileHeight) / (camera.pixelsY / camera.zoom);
 
     vec2 coords = texCoord;
     //Move the coords by -0.5 to center the tiles for accurate zooming

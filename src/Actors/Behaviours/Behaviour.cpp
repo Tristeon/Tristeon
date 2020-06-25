@@ -1,7 +1,5 @@
 #include "Behaviour.h"
-
 #include <Actors/Collector.h>
-
 #include "Engine.h"
 
 namespace Tristeon

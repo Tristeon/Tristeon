@@ -35,7 +35,7 @@ namespace Tristeon
 		 */
 		void setFrame(unsigned int const& frame);
 	protected:
-		virtual void render(QOpenGLShaderProgram* program) override;
+		virtual void render() override;
 		virtual void update() override;
 		virtual Shader* getShader() override;
 

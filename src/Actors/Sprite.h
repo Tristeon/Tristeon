@@ -10,8 +10,6 @@
 
 #include "Utils/Colour.h"
 
-class QOpenGLShaderProgram;
-
 namespace Tristeon
 {
 	class ActorLayer;
@@ -38,12 +36,12 @@ namespace Tristeon
 		/**
 		 * The width of the sprite in pixels.
 		 */
-		int width = 64;
+		unsigned int width = 64;
 
 		/**
 		 * The height of the sprite in pixels.
 		 */
-		int height = 64;
+		unsigned int height = 64;
 
 		/**
 		 * If true, the sprite is flipped horizontally
@@ -86,7 +84,7 @@ namespace Tristeon
 		AABB getAABB() override;
 
 	protected:
-		virtual void render(QOpenGLShaderProgram* program) override;
+		virtual void render() override;
 		virtual Shader* getShader() override;
 
 		/**

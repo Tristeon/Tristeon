@@ -1,6 +1,5 @@
 #include "AnimationSprite.h"
 
-#include <QOpenGLShaderProgram>
 #include <Animations/AnimationClip.h>
 
 #include "AssetDatabase.h"
@@ -53,23 +52,23 @@ namespace Tristeon
 		currentFrame = Math::clamp(frame, clip->startIndex, clip->endIndex);
 	}
 
-	void AnimationSprite::render(QOpenGLShaderProgram* program)
+	void AnimationSprite::render()
 	{
+		auto* shader = getShader();
 		if (clip != nullptr)
 		{
-			program->setUniformValue("animation.frame", static_cast<int>(floor(currentFrame)) + clip->startIndex);
-			program->setUniformValue("animation.cols", clip->cols);
-			program->setUniformValue("animation.rows", clip->rows);
-
-			program->setUniformValue("spacing.left", clip->spacing.left);
-			program->setUniformValue("spacing.right", clip->spacing.right);
-			program->setUniformValue("spacing.top", clip->spacing.top);
-			program->setUniformValue("spacing.bottom", clip->spacing.bottom);
-			program->setUniformValue("spacing.horizontalFrame", clip->spacing.horizontalFrame);
-			program->setUniformValue("spacing.verticalFrame", clip->spacing.verticalFrame);
+			shader->setUniformValue("animation.frame", static_cast<unsigned int>(floor(currentFrame)) + clip->startIndex);
+			shader->setUniformValue("animation.cols", clip->cols);
+			shader->setUniformValue("animation.rows", clip->rows);
+			
+			shader->setUniformValue("spacing.left", clip->spacing.left);
+			shader->setUniformValue("spacing.right", clip->spacing.right);
+			shader->setUniformValue("spacing.top", clip->spacing.top);
+			shader->setUniformValue("spacing.bottom", clip->spacing.bottom);
+			shader->setUniformValue("spacing.horizontalFrame", clip->spacing.horizontalFrame);
+			shader->setUniformValue("spacing.verticalFrame", clip->spacing.verticalFrame);
 		}
-
-		Sprite::render(program);
+		Sprite::render();
 	}
 
 	void AnimationSprite::update()
@@ -87,6 +86,7 @@ namespace Tristeon
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
+		std::cout << "Current frame: " << currentFrame << ". Playbackrate: " << clip->playbackRate << std::endl;
 		currentFrame += 0.01f * clip->playbackRate * Time::deltaTime();
 	}
 

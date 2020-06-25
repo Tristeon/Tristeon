@@ -3,10 +3,6 @@
 #include <Actors/Actor.h>
 #include <Rendering/Texture.h>
 
-#include <QOpenGLContext>
-#include <QOpenGLFunctions>
-#include <QOpenGLShaderProgram>
-
 #include <Resources.h>
 
 #include "Math/Math.h"
@@ -80,23 +76,25 @@ namespace Tristeon
 		return texture;
 	}
 
-	void Sprite::render(QOpenGLShaderProgram* program)
+	void Sprite::render()
 	{
+		auto shader = getShader();
+		
 		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 		f->glActiveTexture(GL_TEXTURE0);
 		texture->bind();
 
 		//Sprite info
-		program->setUniformValue("sprite.width", width);
-		program->setUniformValue("sprite.height", height);
-		program->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
-
-		program->setUniformValue("sprite.flipX", flipX);
-		program->setUniformValue("sprite.flipY", flipY);
+		shader->setUniformValue("sprite.width", width);
+		shader->setUniformValue("sprite.height", height);
+		shader->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
 		
-		program->setUniformValue("actor.position", position.x, position.y);
-		program->setUniformValue("actor.scale", scale.x, scale.y);
-		program->setUniformValue("actor.rotation", -rotation);
+		shader->setUniformValue("sprite.flipX", flipX);
+		shader->setUniformValue("sprite.flipY", flipY);
+		
+		shader->setUniformValue("actor.position", position.x, position.y);
+		shader->setUniformValue("actor.scale", scale.x, scale.y);
+		shader->setUniformValue("actor.rotation", -rotation);
 
 		f->glDrawArrays(GL_TRIANGLES, 0, 3);
 	}

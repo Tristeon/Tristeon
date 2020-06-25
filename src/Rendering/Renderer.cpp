@@ -1,11 +1,13 @@
 #include "Renderer.h"
-#include <QOpenGLShaderProgram>
+
 #include <Scenes/Scene.h>
 #include <Scenes/Layers/Layer.h>
 
 #include "GameView.h"
 #include "Gizmos.h"
 #include "Grid.h"
+
+#include <QOpenGLFunctions>
 
 namespace Tristeon
 {
@@ -31,18 +33,14 @@ namespace Tristeon
 		for (size_t i = 0; i < prepass.size() ; i++)
 		{
 			Shader* shader = prepass[i];
-			QOpenGLShaderProgram* program = shader->getShaderProgram();
-
-			program->bind();
-			
-			//Upload camera settings to the shader
-			program->setUniformValue("camera.posX", scene->getCamera()->position.x);
-			program->setUniformValue("camera.posY", scene->getCamera()->position.y);
-			program->setUniformValue("camera.pixelsX", (int)scene->getCamera()->size.x);
-			program->setUniformValue("camera.pixelsY", (int)scene->getCamera()->size.y);
-			program->setUniformValue("camera.displayPixelsX", (int)GameView::width());
-			program->setUniformValue("camera.displayPixelsY", (int)GameView::height());
-			program->setUniformValue("camera.zoom", scene->getCamera()->zoom);
+			shader->bind();
+			shader->setUniformValue("camera.posX", scene->getCamera()->position.x);
+			shader->setUniformValue("camera.posY", scene->getCamera()->position.y);
+			shader->setUniformValue("camera.pixelsX", (unsigned int)scene->getCamera()->size.x);
+			shader->setUniformValue("camera.pixelsY", (unsigned int)scene->getCamera()->size.y);
+			shader->setUniformValue("camera.displayPixelsX", GameView::width());
+			shader->setUniformValue("camera.displayPixelsY", GameView::height());
+			shader->setUniformValue("camera.zoom", scene->getCamera()->zoom);
 		}
 
 		//Render each layer

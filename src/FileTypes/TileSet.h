@@ -202,6 +202,6 @@ namespace Tristeon
 		 */
 		String texturePath = "";
 		
-		int id = 0;
+		unsigned int id = 0;
 	};
 }

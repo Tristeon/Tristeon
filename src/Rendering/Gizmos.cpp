@@ -1,14 +1,10 @@
 #include "Gizmos.h"
 
-#include <qopenglbuffer.h>
-#include <QOpenGLContext>
-#include <QOpenGLFunctions>
-#include <QOpenGLShaderProgram>
-
-
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "Shader.h"
+
+#include <QOpenGLFunctions>
 
 namespace Tristeon
 {
@@ -103,7 +99,7 @@ namespace Tristeon
 			f->glEnableVertexAttribArray(0);
 
 			//draw
-			shader.getShaderProgram()->setUniformValue("colour", shape.colour.r, shape.colour.g, shape.colour.b, shape.colour.a);
+			shader.setUniformValue("colour", shape.colour.r, shape.colour.g, shape.colour.b, shape.colour.a);
 			f->glLineWidth(2);
 			f->glDrawArrays(GL_LINES, 0, shape.vertices.size());
 

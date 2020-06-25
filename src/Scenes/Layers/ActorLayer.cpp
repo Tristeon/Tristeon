@@ -102,7 +102,7 @@ namespace Tristeon
 			
 			Shader * shader = graphic->getShader();
 			shader->bind();
-			graphic->render(shader->getShaderProgram());
+			graphic->render();
 		}
 	}
 

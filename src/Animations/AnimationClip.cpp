@@ -35,7 +35,7 @@ namespace Tristeon
 		endIndex = j.value("endIndex", rows * cols);
 		loops = j.value("loops", true);
 		texturePath = j.value("texturePath", "");
-		playbackRate = j.value("playbackRate", 1);
+		playbackRate = j.value("playbackRate", 1.0f);
 
 		const json s = j.value("spacing", json());
 		spacing.left = s.value("left", 0);

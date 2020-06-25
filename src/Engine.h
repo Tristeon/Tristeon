@@ -1,8 +1,6 @@
 #pragma once
 #include <memory>
 
-#include <QObject>
-
 #include <Rendering/GameView.h>
 #include <Rendering/Renderer.h>
 #include <Physics/PhysicsWorld.h>
@@ -16,7 +14,7 @@ namespace Tristeon
 	 * Engine is the absolute core of Tristeon. It owns engine subsystems such as Renderer, GameView, Physics, etc.
 	 * It manages the creation and destruction of the engine subsystems. Subsystems may be accessible through their own Singleton instances.
 	 */
-	class Engine final : public QObject, private Singleton<Engine>
+	class Engine final : Singleton<Engine>
 	{
 		friend GameView;
 		friend Actor;
