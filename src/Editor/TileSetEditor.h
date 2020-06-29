@@ -1,11 +1,11 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include "DockWidget.h"
 #include <QtWidgets>
-#include "EditorWindow.h"
 
 namespace TristeonEditor
 {
-	class TileSetEditor : public QDockWidget, public EditorWindow
+	class TileSetEditor : public QDockWidget, public DockWidget
 	{
 	public:
 		explicit TileSetEditor(QWidget* parent = nullptr) : QDockWidget(parent) {}

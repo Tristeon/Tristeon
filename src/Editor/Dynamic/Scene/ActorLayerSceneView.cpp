@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Editor/GameView.h"
 #include "Math/Math.h"
 #include "Rendering/Gizmos.h"
 #include "Rendering/Grid.h"
@@ -6,7 +7,6 @@
 #include "Actors/Sprite.h"
 #include "Engine.h"
 #include "ActorLayerSceneView.h"
-#include "Rendering/GameView.h"
 #include "Rendering/Graphic.h"
 #include "Editor/Editor.h"
 #include <Input/Mouse.h>
@@ -31,7 +31,7 @@ namespace TristeonEditor
 			return;
 		}
 
-		if (Mouse::pressed(Mouse::Left) && GameView::instance()->widget()->underMouse())
+		if (Mouse::pressed(Mouse::Left) && GameView::instance()->underMouse())
 		{
 			if (scalar.underMouse())
 				dragginScale = true;
@@ -40,20 +40,20 @@ namespace TristeonEditor
 			else
 				clickActor();
 		}
-		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::Alt))
+		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::LeftAlt))
 		{
 			if (dragging)
 			{
-				if (Keyboard::held(Keyboard::Shift))
+				if (Keyboard::held(Keyboard::LeftShift))
 				{
 					auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
 					if (graphic == nullptr)
-						Editor::instance()->selectedActor()->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset);
+						Editor::instance()->selectedActor()->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset);
 					else
-						graphic->position = Grid::snap(GameView::screenToWorld(Mouse::position()) - draggingOffset) + graphic->getAABB().size() / 2.0f - Grid::tileSize() / 2.0f;
+						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset) + graphic->getAABB().size() / 2.0f - Grid::tileSize() / 2.0f;
 				}
 				else
-					Editor::instance()->selectedActor()->position = GameView::screenToWorld(Mouse::position()) - draggingOffset;
+					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position()) - draggingOffset;
 			}
 			else if (dragginScale)
 			{
@@ -63,7 +63,7 @@ namespace TristeonEditor
 				if (sprite != nullptr && sprite->getTexture() != nullptr)
 				{
 					Vector2 const position = Editor::instance()->selectedActor()->position;
-					Vector2 const topRight = GameView::screenToWorld(Mouse::position());
+					Vector2 const topRight = Window::screenToWorld(Mouse::position());
 					Vector2 const difference = topRight - position;
 					if (difference.x < 0 || difference.y < 0)
 						return;
@@ -71,7 +71,7 @@ namespace TristeonEditor
 					Vector2 size = difference / sprite->scale * 2;
 
 					//Snap to aspect ratio
-					if (Keyboard::held(Keyboard::Shift))
+					if (Keyboard::held(Keyboard::LeftShift))
 					{
 						Vector2 const imageSize = sprite->getTexture()->size();
 						
@@ -88,10 +88,10 @@ namespace TristeonEditor
 			else if (draggingRotate)
 			{
 				Vector2 const position = Editor::instance()->selectedActor()->position;
-				Vector2 const mouse = (GameView::screenToWorld(Mouse::position()) - position).getNormalized();
+				Vector2 const mouse = (Window::screenToWorld(Mouse::position()) - position).getNormalized();
 				const float angle = mouse.getAngle();
 
-				if (Keyboard::held(Keyboard::Shift))
+				if (Keyboard::held(Keyboard::LeftShift))
 					Editor::instance()->selectedActor()->rotation = roundf(angle / 45.0f) * 45.0f;
 				else
 					Editor::instance()->selectedActor()->rotation = angle;
@@ -130,7 +130,7 @@ namespace TristeonEditor
 
 	void ActorLayerSceneView::clickActor()
 	{
-		Vector2 const world = GameView::screenToWorld(Mouse::position());
+		Vector2 const world = Window::screenToWorld(Mouse::position());
 		for (size_t i = 0; i < actorLayer->getActorCount(); i++)
 		{
 			auto* graphic = dynamic_cast<Graphic*>(actorLayer->getActor(i));

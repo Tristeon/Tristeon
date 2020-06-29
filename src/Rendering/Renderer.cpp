@@ -3,11 +3,12 @@
 #include <Scenes/Scene.h>
 #include <Scenes/Layers/Layer.h>
 
-#include "GameView.h"
+#include "Window.h"
+#include "Shader.h"
 #include "Gizmos.h"
 #include "Grid.h"
 
-#include <QOpenGLFunctions>
+#include "Scenes/SceneManager.h"
 
 namespace Tristeon
 {
@@ -24,8 +25,9 @@ namespace Tristeon
 		prepass.remove(shader);
 	}
 
-	void Renderer::renderScene(Scene* scene)
+	void Renderer::render(unsigned int const& framebuffer) 
 	{
+		Scene* scene = SceneManager::current();
 		if (scene == nullptr)
 			return;
 
@@ -38,8 +40,8 @@ namespace Tristeon
 			shader->setUniformValue("camera.posY", scene->getCamera()->position.y);
 			shader->setUniformValue("camera.pixelsX", (unsigned int)scene->getCamera()->size.x);
 			shader->setUniformValue("camera.pixelsY", (unsigned int)scene->getCamera()->size.y);
-			shader->setUniformValue("camera.displayPixelsX", GameView::width());
-			shader->setUniformValue("camera.displayPixelsY", GameView::height());
+			shader->setUniformValue("camera.displayPixelsX", Window::gameWidth());
+			shader->setUniformValue("camera.displayPixelsY", Window::gameHeight());
 			shader->setUniformValue("camera.zoom", scene->getCamera()->zoom);
 		}
 
@@ -53,10 +55,5 @@ namespace Tristeon
 		if (showGrid)
 			Grid::render();
 		Gizmos::render();
-	}
-
-	void Renderer::renderHUD(HUD* hud)
-	{
-		//TODO: HUD rendering
 	}
 }

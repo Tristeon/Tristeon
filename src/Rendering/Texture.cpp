@@ -1,47 +1,70 @@
 #include "Texture.h"
-#include <QImage>
+#include <GL/glew.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 namespace Tristeon
 {
 	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
 
-	Texture::Texture(QString const& path)
+	Texture::Texture(std::string const& path)
 	{
-		QImage image;
-		bool const loaded = image.load(path);
+		stbi_set_flip_vertically_on_load(true);
+		auto* pixels = stbi_load(path.c_str(), &w, &h, &c, STBI_rgb_alpha);
+		
+		if (!pixels || w == 0 || h == 0)
+		{
+			succeeded = false;
+			std::cout << "Failed to load texture " << path << "\n";
+			return;
+		}
 
-		if (!loaded)
-			image.load(QString::fromStdString(defaultPath));
-		else
-			succeeded = true;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
-		texture = new QOpenGLTexture(image.mirrored());
-		texture->setWrapMode(QOpenGLTexture::Repeat);
-		texture->setMinMagFilters(QOpenGLTexture::Nearest, QOpenGLTexture::Nearest);
+		float borderColor[] = { 1, 1, 1, 1 };
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glGenTextures(1, &texture);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		stbi_image_free(pixels);
 	}
 
 	Texture::~Texture()
 	{
-		delete texture;
+		glDeleteTextures(1, &texture);
 	}
 
 	void Texture::bind() const
 	{
-		texture->bind();
+		glBindTexture(GL_TEXTURE_2D, texture);
 	}
 
 	int Texture::width() const
 	{
-		return texture->width();
+		return w;
 	}
 
 	int Texture::height() const
 	{
-		return texture->height();
+		return h;
 	}
 
 	Vector2Int Texture::size() const
 	{
-		return { texture->width(), texture->height() };
+		return { w, h };
+	}
+
+	bool Texture::loaded() const
+	{
+		return succeeded;
 	}
 }

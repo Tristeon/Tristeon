@@ -3,12 +3,12 @@
 
 #include <QtWidgets>
 
-#include <Editor/EditorWindow.h>
+#include <Editor/DockWidget.h>
 #include <Scenes/Layers/Layer.h>
 
 namespace TristeonEditor
 {
-	class LayerListEditor : public QDockWidget, public EditorWindow
+	class LayerListEditor : public QDockWidget, public DockWidget
 	{
 	public:
 		explicit LayerListEditor(QWidget* parent = nullptr);

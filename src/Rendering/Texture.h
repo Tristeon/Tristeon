@@ -1,6 +1,4 @@
 #pragma once
-#include <QOpenGLTexture>
-#include <QString>
 #include <string>
 
 #include "TObject.h"
@@ -24,22 +22,9 @@ namespace Tristeon
 		/**
 		 * Creates a texture with an image at the given filepath.
 		 */
-		explicit Texture(std::string const& path) : Texture(QString(path.c_str())) { }
-		/**
-		 * Creates a texture with an image at the given filepath.
-		 */
-		explicit Texture(char* const& path) : Texture(QString(path)) { }
-		/**
-		 * Creates a texture with an image at the given filepath.
-		 */
-		explicit Texture(QString const& path);
+		explicit Texture(std::string const& path);
 
 		virtual ~Texture();
-
-		/**
-		 * Returns the QOpenGLTexture, used internally with interactions with Qt
-		 */
-		QOpenGLTexture* getQTexture() const { return texture; }
 
 		/**
 		 * Binds the texture to prepare it for usage within rendering.
@@ -64,11 +49,15 @@ namespace Tristeon
 		/**
 		 * Returns true if the texture was successfully loaded from the given filepath.
 		 */
-		bool loaded() const { return succeeded; }
+		bool loaded() const;
 
 		static const std::string defaultPath;
 	private:
+		int w = 0;
+		int h = 0;
+		int c = 0;
+		
 		bool succeeded = false;
-		QOpenGLTexture* texture = nullptr;
+		unsigned int texture = 0;
 	};
 }

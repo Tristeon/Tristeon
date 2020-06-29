@@ -1,11 +1,12 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include <Editor/DockWidget.h>
+
 #include <QtWidgets>
-#include <Editor/EditorWindow.h>
 #include <Editor/Dynamic/AbstractEditor.h>
 namespace TristeonEditor
 {
-	class PropertyWindow : public QDockWidget, public EditorWindow
+	class PropertyWindow : public QDockWidget, public DockWidget
 	{
 	public:
 		explicit PropertyWindow(QWidget* parent) : QDockWidget(parent) { }

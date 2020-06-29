@@ -1,10 +1,9 @@
 #include "Gizmos.h"
 
+#include <GL/glew.h>
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "Shader.h"
-
-#include <QOpenGLFunctions>
 
 namespace Tristeon
 {
@@ -82,31 +81,30 @@ namespace Tristeon
 		static Shader shader = Shader("Internal/Shaders/Gizmo.vert", "Internal/Shaders/Gizmo.frag");
 		shader.bind();
 		
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 		while (!shapes.empty())
 		{
 			auto shape = shapes.front();
 			shapes.pop();
 
 			//create buffer
-			GLuint buffer = 0;
-			f->glGenBuffers(1, &buffer);
-			f->glBindBuffer(GL_ARRAY_BUFFER, buffer);
-			f->glBufferData(GL_ARRAY_BUFFER, shape.vertices.size() * sizeof(Vector2), shape.vertices.data(), GL_STATIC_DRAW);
+			unsigned int buffer = 0;
+			glGenBuffers(1, &buffer);
+			glBindBuffer(GL_ARRAY_BUFFER, buffer);
+			glBufferData(GL_ARRAY_BUFFER, shape.vertices.size() * sizeof(Vector2), shape.vertices.data(), GL_STATIC_DRAW);
 
 			//bind vertex attrib pointer
-			f->glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-			f->glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glEnableVertexAttribArray(0);
 
 			//draw
 			shader.setUniformValue("colour", shape.colour.r, shape.colour.g, shape.colour.b, shape.colour.a);
-			f->glLineWidth(2);
-			f->glDrawArrays(GL_LINES, 0, shape.vertices.size());
+			glLineWidth(2);
+			glDrawArrays(GL_LINES, 0, shape.vertices.size());
 
 			//cleanup
-			f->glDisableVertexAttribArray(0);
-			f->glBindBuffer(GL_ARRAY_BUFFER, 0);
-			f->glDeleteBuffers(1, &buffer);
+			glDisableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDeleteBuffers(1, &buffer);
 		}
 	}
 }

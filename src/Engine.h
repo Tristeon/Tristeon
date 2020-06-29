@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 
-#include <Rendering/GameView.h>
 #include <Rendering/Renderer.h>
 #include <Physics/PhysicsWorld.h>
 
@@ -16,7 +15,6 @@ namespace Tristeon
 	 */
 	class Engine final : Singleton<Engine>
 	{
-		friend GameView;
 		friend Actor;
 		friend Behaviour;
 		
@@ -41,13 +39,10 @@ namespace Tristeon
 	private:
 		bool inPlayMode = false;
 		bool playModeDirty = false;
-		GameView* _view = nullptr; //Non-owning, it's created and destroyed by the Qt loader. GameView sets this variable in its constructor.
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;
 
-		QTimer* timer = nullptr; //Qt objects can't be unique_ptr so we delete it manually
-
-		Vector<Actor*> destroyedActors;
-		Vector<Behaviour*> destroyedBehaviours;
+		Vector<Actor*> destroyedActors{};
+		Vector<Behaviour*> destroyedBehaviours{};
 	};
 }

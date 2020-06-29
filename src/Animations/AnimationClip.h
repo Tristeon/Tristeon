@@ -23,58 +23,58 @@ namespace Tristeon
 			/**
 			 * The spacing/cutoff in pixels on the left of the texture.
 			 */
-			uint left = 0;
+			unsigned int left = 0;
 
 			/**
 			 * The spacing/cutoff in pixels on the right of the texture.
 			 */
-			uint right = 0;
+			unsigned int right = 0;
 
 			/**
 			 * The spacing/cutoff in pixels on the top of the texture.
 			 */
-			uint top = 0;
+			unsigned int top = 0;
 
 			/**
 			 * The spacing/cutoff in pixels on the bottom of the texture.
 			 */
-			uint bottom = 0;
+			unsigned int bottom = 0;
 
 			/**
 			 * The horizontal spacing in pixels between frames.
 			 */
-			uint horizontalFrame = 0;
+			unsigned int horizontalFrame = 0;
 
 			/**
 			 * The vertical spacing in pixels between frames.
 			 */
-			uint verticalFrame = 0;
+			unsigned int verticalFrame = 0;
 		};
 
 		/**
 		 * The amount of columns the animationclip has.
 		 * Can otherwise be described as how many frames the animationclip is split up in horizontally.
 		 */
-		uint cols = 0;
+		unsigned int cols = 0;
 
 		/**
 		 * The amount of rows the animationclip has.
 		 * Can otherwise be described as how many frames the animationclip is split up in vertically.
 		 */
-		uint rows = 0;
+		unsigned int rows = 0;
 
 		/**
 		 * The first frame of the animationclip.
 		 * Sometimes animationclips have more frames in one texture than the ones needed for the animation,
 		 * so startIndex and endIndex allow you to define where the animation starts and ends.
 		 */
-		uint startIndex = 0;
+		unsigned int startIndex = 0;
 		/**
 		 * The last frame of the animationclip.
 		 * Sometimes animationclips have more frames in one texture than the ones needed for the animation,
 		 * so startIndex and endIndex allow you to define where the animation starts and ends.
 		 */
-		uint endIndex = 0;
+		unsigned int endIndex = 0;
 
 		/**
 		 * The AnimationClip spacing, in case animation frames have extra space between each other.

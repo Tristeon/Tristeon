@@ -1,34 +1,33 @@
 #pragma once
 #include <Utils/Singleton.h>
-#include <Rendering/Shader.h>
 #include "TypeDefinitions.h"
 
 namespace Tristeon
 {
+	class Shader;
 	class Scene;
 	class HUD;
-	class GameView;
 
 	/**
 	 * The Renderer is an engine subysystem that manages rendering objects within a Scene.
 	 */
 	class Renderer final : public Singleton<Renderer>
 	{
-		friend GameView;
 		friend Shader;
 	public:
 		static bool showGrid;
+		/**
+		 * Renders the current scene to the given framebuffer. The render function executes a set of steps in the following order:
+		 *
+		 * 1) Shader prepass sends camera data to each shader
+		 * 2) Render each layer individually
+		 * 3) Render Scene HUD
+		 * 4) Render Grid if enabled
+		 * 5) Render Gizmos if enabled
+		 */
+		void render(unsigned int const& framebuffer);
+
 	private:
-		/**
-		 * Renders the given scene, runs a prepass for each shader in Renderer::prepass first
-		 */
-		void renderScene(Scene* scene);
-
-		/**
-		 * Renders the HUD and all of its child elements.
-		 */
-		void renderHUD(HUD* hud);
-
 		/**
 		 * Registers a shader to the prepass call.
 		 *

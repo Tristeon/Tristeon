@@ -69,7 +69,7 @@ namespace Tristeon
 		if (cachedSceneName.empty())
 			return;
 		
-		String const path = AssetDatabase::findByName(cachedSceneName, "scene");
+		String const path = AssetDatabase::findByName(cachedSceneName, ".scene");
 		if (path.empty())
 		{
 			std::cout << "Couldn't find scene: " << cachedSceneName << std::endl;

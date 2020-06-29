@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "GameView.h"
 #include "Window.h"
 #include "TopBar.h"
 #include <Engine.h>
@@ -38,7 +39,7 @@ namespace TristeonEditor
 	{
 		if (!Tristeon::Engine::playMode())
 		{
-			Tristeon::Window::instance()->centralWidget()->setFocus();
+			GameView::instance()->setFocus();
 			if (!pause->isChecked())
 			{
 				Tristeon::SceneManager::saveCurrent();
@@ -75,7 +76,7 @@ namespace TristeonEditor
 
 		Tristeon::Engine::playMode(!pause->isChecked());
 		if (!pause->isChecked())
-			Tristeon::Window::instance()->centralWidget()->setFocus();
+			GameView::instance()->setFocus();
 
 		Tristeon::Renderer::showGrid = pause->isChecked();
 	}

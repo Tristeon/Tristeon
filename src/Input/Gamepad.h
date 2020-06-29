@@ -1,11 +1,18 @@
 #pragma once
 #include <Math/Vector2.h>
 
+#ifdef TRISTEON_EDITOR
+namespace TristeonEditor { class EditorWindow; }
+#endif
+
 namespace Tristeon
 {
 	class Window;
 	class Engine;
-
+	
+#ifndef TRISTEON_EDITOR
+	class GameWindow;
+#endif
 	/**
 	 * Interface to interact with the OS Gamepad/Controller.
 	 *
@@ -16,6 +23,12 @@ namespace Tristeon
 		friend Window;
 		friend Engine;
 
+#ifdef TRISTEON_EDITOR
+		friend TristeonEditor::EditorWindow;
+#else
+		friend GameWindow;
+#endif
+		
 	public:
 		enum GamepadButton
 		{

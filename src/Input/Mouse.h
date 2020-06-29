@@ -1,12 +1,18 @@
 #pragma once
 #include <Math/Vector2Int.h>
-#include <QMouseEvent>
+
+#ifdef TRISTEON_EDITOR
+namespace TristeonEditor { class EditorWindow; }
+#endif
 
 namespace Tristeon
 {
 	class Window;
 	class Engine;
-
+#ifndef TRISTEON_EDITOR
+	class GameWindow;
+#endif
+	
 	/**
 	 * Interface to interact with the OS Mouse.
 	 *
@@ -18,14 +24,18 @@ namespace Tristeon
 		friend Window;
 		friend Engine;
 
+#ifdef TRISTEON_EDITOR
+		friend TristeonEditor::EditorWindow;
+#else
+		friend GameWindow;
+#endif
+		
 	public:
-		//Slightly adjusted Qt::MouseButton, copied into the Tristeon namespace to keep the API consistent
 		enum MouseButton
 		{
 			Left = 1,
 			Right = 2,
-			Mid = 3,
-			Middle = Mid,
+			Middle = 3,
 			Back = 4,
 			Extra1 = Back,
 			Forward = 5,
@@ -33,27 +43,7 @@ namespace Tristeon
 			Task = 6,
 			Extra3 = 7,
 			Extra4 = 8,
-			Extra5 = 9,
-			Extra6 = 10,
-			Extra7 = 11,
-			Extra8 = 12,
-			Extra9 = 13,
-			Extra10 = 14,
-			Extra11 = 15,
-			Extra12 = 16,
-			Extra13 = 17,
-			Extra14 = 18,
-			Extra15 = 19,
-			Extra16 = 20,
-			Extra17 = 21,
-			Extra18 = 22,
-			Extra19 = 23,
-			Extra20 = 24,
-			Extra21 = 25,
-			Extra22 = 26,
-			Extra23 = 27,
-			Extra24 = 28,
-			Last = Extra24,
+			Last = Extra4
 		};
 
 		/**
@@ -70,11 +60,6 @@ namespace Tristeon
 		 * Was this button released on the current frame?
 		 */
 		static bool released(MouseButton const& button);
-
-		/**
-		 * Did a double click event occur with this mouse button?
-		 */
-		static bool doubleClicked(MouseButton const& button);
 
 		/**
 		 * The position of the mouse, local to the Window.
@@ -95,11 +80,10 @@ namespace Tristeon
 		static Vector2Int deltaScroll();
 
 	private:
-		static void onPress(QMouseEvent const& event);
-		static void onRelease(QMouseEvent const& event);
-		static void onDoubleClick(QMouseEvent const& event);
-		static void onMove(QMouseEvent const& event);
-		static void onScroll(QWheelEvent const& event);
+		static void onPress(MouseButton const& button);
+		static void onRelease(MouseButton const& button);
+		static void onMove(Vector2Int const& pos);
+		static void onScroll(Vector2Int const& change);
 
 		/**
 		 * Clears frame-based data structures.
@@ -114,7 +98,6 @@ namespace Tristeon
 		static bool buttons[];
 		static bool buttonsPressed[];
 		static bool buttonsReleased[];
-		static bool buttonsDoubleClicked[];
 
 		static Vector2Int mousePos;
 		static Vector2Int mouseDelta;

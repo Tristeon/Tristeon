@@ -1,9 +1,6 @@
 #ifdef TRISTEON_EDITOR
 #include "Editor.h"
-#include <Window.h>
-#include <Scenes/SceneManager.h>
-
-#include <qfiledialog.h>
+#include "Window.h"
 
 namespace TristeonEditor
 {
@@ -12,7 +9,7 @@ namespace TristeonEditor
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
-			Tristeon::Window::instance()->setWindowTitle(QString::fromStdString("Tristeon2D | " + scene->getName()));
+			Tristeon::Window::setWindowTitle("Tristeon2D | " + scene->getName());
 			selectedLayer(nullptr);
 
 			for (auto* window : windows)
@@ -27,7 +24,7 @@ namespace TristeonEditor
 			window->initialize();
 	}
 
-	void Editor::addWindow(EditorWindow* window)
+	void Editor::addWidget(DockWidget* window)
 	{
 		windows.add(window);
 	}

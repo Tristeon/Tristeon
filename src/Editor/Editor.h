@@ -2,7 +2,7 @@
 #ifdef TRISTEON_EDITOR
 #include "Utils/Singleton.h"
 
-#include <Editor/EditorWindow.h>
+#include <Editor/DockWidget.h>
 #include <Editor/MenuBar.h>
 
 #include <Actors/Actor.h>
@@ -16,7 +16,7 @@ namespace TristeonEditor
 	{
 	public:
 		void initialize();
-		void addWindow(EditorWindow* window);
+		void addWidget(DockWidget* window);
 
 		Tristeon::Layer* selectedLayer() const;
 		void selectedLayer(Tristeon::Layer* value);
@@ -36,7 +36,7 @@ namespace TristeonEditor
 		Tristeon::Actor* _selectedActor = nullptr;
 		FileItem* _selectedFileItem = nullptr;
 		MenuBar* menuBar = nullptr;
-		Tristeon::Vector<EditorWindow*> windows;
+		Tristeon::Vector<DockWidget*> windows;
 	};
 }
 #endif

@@ -45,11 +45,11 @@ namespace Tristeon
 		/**
 		 * The width of the level defined by this tile layer.
 		 */
-		uint width() const { return _width; }
+		unsigned int width() const { return _width; }
 		/**
 		 * The height of the level defined by this tile layer.
 		 */
-		uint height() const { return _height; }
+		unsigned int height() const { return _height; }
 #pragma endregion
 
 #pragma region TileSets
@@ -143,8 +143,8 @@ namespace Tristeon
 	protected:
 		void render(Renderer* renderer, Scene* scene) override;
 	private:
-		GLuint tbo = 0;
-		GLuint tbo_tex = 0;
+		unsigned int tbo = 0;
+		unsigned int tbo_tex = 0;
 
 		Unique<Shader> shader;
 

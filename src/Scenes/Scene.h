@@ -16,7 +16,6 @@ namespace Tristeon
 	class SceneManager;
 	class Layer;
 	class Engine;
-	class GameView;
 
 	template<typename T>
 	using IsLayer = std::enable_if_t<std::is_base_of<Layer, T>::value, T>;
@@ -36,7 +35,6 @@ namespace Tristeon
 	class Scene final : public Serializable
 	{
 		friend Engine;
-		friend GameView;
 		friend SceneManager;
 
 		REGISTER_TYPE_H(Scene)

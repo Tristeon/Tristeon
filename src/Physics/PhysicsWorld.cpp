@@ -1,7 +1,6 @@
 #include "PhysicsWorld.h"
 
 #include <Physics/RaycastResult.h>
-#include <Rendering/GameView.h>
 
 #include "Project.h"
 

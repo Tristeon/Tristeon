@@ -1,13 +1,13 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include "EditorWindow.h"
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-
+#include "DockWidget.h"
 #include <QtWidgets>
 
 namespace TristeonEditor
 {
-	class LayerEditor : public QDockWidget, public EditorWindow
+	class ObjectEditor;
+	
+	class LayerEditor : public QDockWidget, public DockWidget
 	{
 	public:
 		explicit LayerEditor(QWidget* parent) : QDockWidget(parent) { }

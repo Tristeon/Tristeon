@@ -1,9 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
-
 #include <TypeDefinitions.h>
-#include <QDir>
 
 namespace Tristeon
 {
@@ -13,6 +11,9 @@ namespace Tristeon
 		static void add(String const& path);
 		static void remove(String const& path);
 
+		/**
+		 * Gets all assets with the given extension. The extension is expected to be as follows: .extension
+		 */
 		static Vector<String> get(String const& extension);
 		static String findByName(String const& name);
 		static String findByName(String const& name, String const& extension);
@@ -21,7 +22,7 @@ namespace Tristeon
 	private:
 		
 		static void detectAll();
-		static void readDir(QDir const& dir);
+		static void readDir(std::string const& dir);
 		static std::map<String, Vector<String>> assets;
 	};
 }

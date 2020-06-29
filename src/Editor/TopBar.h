@@ -1,11 +1,11 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include "EditorWindow.h"
+#include "DockWidget.h"
 #include <QtWidgets>
 
 namespace TristeonEditor
 {
-	class TopBar : public QDockWidget, public EditorWindow
+	class TopBar : public QDockWidget, public DockWidget
 	{
 	public:
 		explicit TopBar(QWidget* parent = nullptr);

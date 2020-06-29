@@ -1,10 +1,10 @@
 #include "Grid.h"
 
-#include "GameView.h"
 #include "Project.h"
 #include "Shader.h"
 
-#include <QOpenGLFunctions>
+#include <GL/glew.h>
+#include "Editor/GameView.h" 
 
 namespace Tristeon
 {
@@ -57,14 +57,11 @@ namespace Tristeon
 
 		shader.bind();
 
-		//Shader
-		QOpenGLFunctions* f = GameView::context()->functions();
-
 		//Pass grid properties
 		shader.setUniformValue("grid.tileWidth", tileWidth());
 		shader.setUniformValue("grid.tileHeight", tileHeight());
 		
 		//Draw
-		f->glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 }

@@ -5,10 +5,7 @@
 #include <Rendering/Renderer.h>
 #include <Scenes/Scene.h>
 
-#include <Actors/Collector.h>
 #include <Actors/Sprite.h>
-
-#include <Rendering/GameView.h>
 
 #include <Callbacks/IPreDestroy.h>
 

@@ -27,18 +27,18 @@ namespace Tristeon
 		return keysReleased[key];
 	}
 
-	void Keyboard::onPress(QKeyEvent const& event)
+	void Keyboard::onPress(Key const& key)
 	{
-		keys[event.key()] = true;
-		keysPressed[event.key()] = true;
-		keysReleased[event.key()] = false;
+		keys[key] = true;
+		keysPressed[key] = true;
+		keysReleased[key] = false;
 	}
 
-	void Keyboard::onRelease(QKeyEvent const& event)
+	void Keyboard::onRelease(Key const& key)
 	{
-		keys[event.key()] = false;
-		keysPressed[event.key()] = false;
-		keysReleased[event.key()] = true;
+		keys[key] = false;
+		keysPressed[key] = false;
+		keysReleased[key] = true;
 	}
 
 	void Keyboard::reset()

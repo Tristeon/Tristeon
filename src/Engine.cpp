@@ -1,5 +1,6 @@
 #include "Engine.h"
 
+#include <chrono>
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>
 #include <Window.h>
@@ -7,7 +8,6 @@
 #include <Input/Keyboard.h>
 #include <Input/Mouse.h>
 #include <Input/Gamepad.h>
-#include <QApplication>
 
 #include "AssetDatabase.h"
 #include <Callbacks/IEarlyUpdate.h>
@@ -24,7 +24,7 @@ namespace Tristeon
 {
 	void Engine::run()
 	{
-		QApplication::processEvents();
+		Window::pollEvents();
 
 #ifndef TRISTEON_EDITOR //In Build mode, we assume the .exe is in the same folder as a build.json file.
 		Project::loadBuild();
@@ -39,14 +39,13 @@ namespace Tristeon
 		SceneManager::load(Project::firstSceneName());
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
-		uint frames = 0;
+		unsigned int frames = 0;
 		float time = 0;
 		float fixedUpdateTime = 0;
 
-		while (!QApplication::closingDown())
+		while (!Window::closingDown())
 		{
-			QApplication::processEvents();
-			Window::instance()->pollEvents();
+			Window::pollEvents();
 
 			//Keep track of elapsed time to calculate deltaTime (used in gameplay/physics systems to account for FPS differences)
 			auto now = std::chrono::high_resolution_clock::now();
@@ -69,7 +68,7 @@ namespace Tristeon
 			{
 				if (playModeDirty)
 				{
-					for (auto start : Collector<IStart>::all()) start->start();
+					for (auto* start : Collector<IStart>::all()) start->start();
 					playModeDirty = false;
 				}
 				
@@ -77,26 +76,24 @@ namespace Tristeon
 				while (fixedUpdateTime > Project::Physics::fixedDeltaTime()) 
 				{
 					_physics->update();
-					for (auto fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
+					for (auto* fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
 					fixedUpdateTime -= Project::Physics::fixedDeltaTime();
 				}
 
-				for (auto early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();
-				for (auto update : Collector<IUpdate>::all()) update->update();
-				for (auto late : Collector<ILateUpdate>::all()) late->lateUpdate();
+				for (auto* early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();
+				for (auto* update : Collector<IUpdate>::all()) update->update();
+				for (auto* late : Collector<ILateUpdate>::all()) late->lateUpdate();
 			}
 
-			for (auto gizmos : Collector<IDrawGizmos>::all()) gizmos->drawGizmos();
+			for (auto* gizmos : Collector<IDrawGizmos>::all()) gizmos->drawGizmos();
 
 			for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
 			destroyedBehaviours.clear();
 			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 			destroyedActors.clear();
-			
-			_view->update();
 
-			QApplication::sendPostedEvents();
-			
+			Window::draw();
+
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();

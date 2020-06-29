@@ -1,13 +1,10 @@
 #include "TileLayer.h"
+#include <GL/glew.h>
 
 #include <Engine.h>
 #include <FileTypes/TileSet.h>
 #include <Input/Keyboard.h>
 #include <Scenes/Scene.h>
-
-#include <QOpenGLContext>
-#include <QOpenGLExtraFunctions>
-#include <QOpenGLShaderProgram>
 
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
@@ -29,8 +26,7 @@ namespace Tristeon
 
 	TileLayer::~TileLayer()
 	{
-		QOpenGLFunctions* f = GameView::context()->functions();
-		f->glDeleteBuffers(1, &tbo);
+		glDeleteBuffers(1, &tbo);
 
 		for (auto const& pair: fixtures)
 			PhysicsWorld::instance()->staticBody->DestroyFixture(pair.second);
@@ -204,13 +200,10 @@ namespace Tristeon
 		}
 		
 		//Shader
-		QOpenGLContext* context = GameView::context();
-		QOpenGLFunctions* f = context->functions();
-
 		//Bind level data
-		f->glActiveTexture(GL_TEXTURE1);
-		f->glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
-		context->extraFunctions()->glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
+		glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
 
 		shader->setUniformValue("level.data", 1);
 
@@ -220,7 +213,7 @@ namespace Tristeon
 		shader->setUniformValue("level.tileRenderWidth", Grid::tileWidth());
 		shader->setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
-		f->glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		for (TileSet* tileSet : tilesets)
 		{
 			tileSet->texture->bind();
@@ -242,7 +235,7 @@ namespace Tristeon
 			shader->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
 
 			//Draw
-			f->glDrawArrays(GL_TRIANGLES, 0, 3);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
 		}
 	}
 
@@ -250,21 +243,19 @@ namespace Tristeon
 	{
 		//TODO: Updating TBO could be optimized by updating data as opposed to recreating the TBO
 		//TODO: Updating TBO could be optimized by using glBufferSubData()
-		QOpenGLFunctions* f = GameView::context()->functions();
-
 		if (tbo != 0)
-			f->glDeleteBuffers(1, &tbo);
+			glDeleteBuffers(1, &tbo);
 		if (tbo_tex != 0)
-			f->glDeleteTextures(1, &tbo_tex);
+			glDeleteTextures(1, &tbo_tex);
 		tbo = 0;
 		tbo_tex = 0;
 
-		f->glGenBuffers(1, &tbo);
-		f->glBindBuffer(GL_TEXTURE_BUFFER, tbo);
-		f->glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _width * _height, tiles.get(), GL_STATIC_DRAW);
+		glGenBuffers(1, &tbo);
+		glBindBuffer(GL_TEXTURE_BUFFER, tbo);
+		glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _width * _height, tiles.get(), GL_STATIC_DRAW);
 
-		f->glGenTextures(1, &tbo_tex);
-		f->glBindBuffer(GL_TEXTURE_BUFFER, 0);
+		glGenTextures(1, &tbo_tex);
+		glBindBuffer(GL_TEXTURE_BUFFER, 0);
 	}
 
 	void TileLayer::createColliders()

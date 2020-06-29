@@ -6,6 +6,7 @@
 #include <Resources.h>
 
 #include "Math/Math.h"
+#include <GL/glew.h>
 
 namespace Tristeon
 {
@@ -80,8 +81,7 @@ namespace Tristeon
 	{
 		auto shader = getShader();
 		
-		QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
-		f->glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		texture->bind();
 
 		//Sprite info
@@ -96,7 +96,7 @@ namespace Tristeon
 		shader->setUniformValue("actor.scale", scale.x, scale.y);
 		shader->setUniformValue("actor.rotation", -rotation);
 
-		f->glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
 	Shader* Sprite::getShader()

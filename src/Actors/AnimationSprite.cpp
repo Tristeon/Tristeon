@@ -86,7 +86,6 @@ namespace Tristeon
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		std::cout << "Current frame: " << currentFrame << ". Playbackrate: " << clip->playbackRate << std::endl;
 		currentFrame += 0.01f * clip->playbackRate * Time::deltaTime();
 	}
 

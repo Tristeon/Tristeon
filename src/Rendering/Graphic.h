@@ -2,7 +2,7 @@
 #include "Actors/Actor.h"
 #include <Rendering/Shader.h>
 
-#include "GameView.h"
+#include "Window.h"
 #include "Input/Mouse.h"
 
 namespace Tristeon
@@ -35,7 +35,7 @@ namespace Tristeon
 
 			bool underMouse() const
 			{
-				return contains(GameView::screenToWorld(Mouse::position()));
+				return contains(Window::screenToWorld(Mouse::position()));
 			}
 		};
 		

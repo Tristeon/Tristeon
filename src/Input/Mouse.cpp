@@ -3,17 +3,11 @@
 #include <Math/Math.h>
 #include <Math/Vector2Int.h>
 
-#include <QApplication>
-#include <QCommonStyle>
-
-#include "Window.h"
-
 namespace Tristeon
 {
 	bool Mouse::buttons[Last];
 	bool Mouse::buttonsPressed[Last];
 	bool Mouse::buttonsReleased[Last];
-	bool Mouse::buttonsDoubleClicked[Last];
 	
 	Vector2Int Mouse::mousePos = Vector2Int::zero();
 	Vector2Int Mouse::mouseDelta = Vector2Int::zero();
@@ -34,11 +28,6 @@ namespace Tristeon
 		return buttonsReleased[button];
 	}
 
-	bool Mouse::doubleClicked(MouseButton const& button)
-	{
-		return buttonsDoubleClicked[button];
-	}
-
 	Vector2Int Mouse::position()
 	{
 		return mousePos;
@@ -54,47 +43,39 @@ namespace Tristeon
 		return scrollDelta;
 	}
 
-	void Mouse::onPress(QMouseEvent const& event)
+	void Mouse::onPress(MouseButton const& button)
 	{
-		int const index = Math::maskToIndex(event.button());
-		buttonsPressed[index] = true;
-		buttons[index] = true;
-		buttonsReleased[index] = false;
+		buttonsPressed[button] = true;
+		buttons[button] = true;
+		buttonsReleased[button] = false;
 	}
 
-	void Mouse::onRelease(QMouseEvent const& event)
+	void Mouse::onRelease(MouseButton const& button)
 	{
-		int const index = Math::maskToIndex(event.button());
-		buttonsPressed[index] = false;
-		buttons[index] = false;
-		buttonsReleased[index] = true;
+		buttonsPressed[button] = false;
+		buttons[button] = false;
+		buttonsReleased[button] = true;
 	}
 
-	void Mouse::onDoubleClick(QMouseEvent const& event)
+	void Mouse::onMove(Vector2Int const& pos)
 	{
-		int const index = Math::maskToIndex(event.button());
-		buttonsDoubleClicked[index] = true;
+		//Vector2Int newPos = Vector2Int(event.pos().x(), Window::height() - event.pos().y());
+		//if (!Window::isFullscreen())
+		//	newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
+
+		mouseDelta += pos - mousePos;
+		mousePos = pos;
 	}
 
-	void Mouse::onMove(QMouseEvent const& event)
+	void Mouse::onScroll(Vector2Int const& change)
 	{
-		Vector2Int newPos = Vector2Int(event.pos().x(), Window::height() - event.pos().y());
-		if (!Window::fullScreen())
-			newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
-		mouseDelta += newPos - mousePos;
-		mousePos = newPos;
-	}
-
-	void Mouse::onScroll(QWheelEvent const& event)
-	{
-		scrollDelta += Vector2Int(event.angleDelta().x(), event.angleDelta().y());
+		scrollDelta += change;
 	}
 
 	void Mouse::reset()
 	{
 		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
 		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
-		std::fill(std::begin(buttonsDoubleClicked), std::end(buttonsDoubleClicked), false);
 
 		mouseDelta = Vector2Int::zero();
 		scrollDelta = Vector2Int::zero();
@@ -105,7 +86,6 @@ namespace Tristeon
 		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
 		std::fill(std::begin(buttons), std::end(buttons), false);
 		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
-		std::fill(std::begin(buttonsDoubleClicked), std::end(buttonsDoubleClicked), false);
 
 		mouseDelta = Vector2Int::zero();
 		scrollDelta = Vector2Int::zero();

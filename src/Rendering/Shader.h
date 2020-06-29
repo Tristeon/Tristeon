@@ -2,10 +2,6 @@
 #include <string>
 #include <TObject.h>
 
-#include "GameView.h"
-#include <QOpenGLContext>
-#include <QOpenGLFunctions>
-
 namespace Tristeon
 {
 	/**

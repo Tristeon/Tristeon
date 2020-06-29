@@ -1,11 +1,9 @@
 #include <AssetDatabase.h>
-
-#include <QFileSystemModel>
-#include <QFile>
-
 #include <Serialization/JsonSerializer.h>
-
 #include "Project.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace Tristeon
 {
@@ -13,10 +11,8 @@ namespace Tristeon
 
 	void AssetDatabase::add(String const& path)
 	{
-		QFile const file{ QString(path.c_str()) };
-		QFileInfo const info{ file };
-
-		String const suffix = info.suffix().toStdString();
+		auto const p = fs::path(path);
+		auto const suffix = p.extension().string();
 		
 		if (assets.find(suffix) == assets.end())
 			assets[suffix] = Vector<String>();
@@ -27,12 +23,10 @@ namespace Tristeon
 
 	void AssetDatabase::remove(String const& path)
 	{
-		QFile const file{ QString(path.c_str()) };
-		QFileInfo const info{ file };
-
-		if (assets.find(info.suffix().toStdString()) == assets.end())
-			assets[info.suffix().toStdString()] = Vector<String>();
-		assets[info.suffix().toStdString()].remove(info.path().toStdString());
+		auto const p = fs::path(path);
+		if (assets.find(p.extension().string()) == assets.end())
+			assets[p.extension().string()] = Vector<String>();
+		assets[p.extension().string()].remove(path);
 	}
 
 	Vector<String> AssetDatabase::get(String const& extension)
@@ -48,10 +42,7 @@ namespace Tristeon
 		{
 			for (String path : pair.second)
 			{
-				QFile const file{ QString(path.c_str()) };
-				QFileInfo info{ file };
-
-				if (info.baseName().toStdString() == name)
+				if (fs::path(path).stem() == name)
 					return path;
 			}
 		}
@@ -63,10 +54,7 @@ namespace Tristeon
 		Vector<String> paths = get(extension);
 		for (String path : paths)
 		{
-			QFile const file{ QString(path.c_str()) };
-			QFileInfo info{ file };
-
-			if (info.baseName().toStdString() == name)
+			if (fs::path(path).stem() == name)
 				return path;
 		}
 
@@ -81,27 +69,26 @@ namespace Tristeon
 
 	void AssetDatabase::detectAll()
 	{
-		QDir const dir = QDir(QString::fromStdString(Project::assetPath()));
-		readDir(dir);
+		readDir(Project::assetPath());
 	}
 
-	void AssetDatabase::readDir(QDir const& dir)
+	void AssetDatabase::readDir(std::string const& dir)
 	{
-		for (auto const& entry : dir.entryInfoList())
+		for (auto const& entry : fs::directory_iterator(dir))
 		{
-			if (entry.isDir())
+			if (entry.is_directory())
 			{
-				if (entry.fileName() == "." || entry.fileName() == ".." || entry.fileName().toLower().contains("tmp"))
+				if (entry.path().filename().string() == "." || entry.path().filename().string() == ".." || entry.path().filename().string().find("tmp"))
 					continue;
-				std::cout << "Path: " << entry.filePath().toStdString() << std::endl;
-				readDir(entry.filePath());
+				std::cout << "Path: " << entry.path() << std::endl;
+				readDir(entry.path().string());
 			}
 			else
 			{
-				if (assets.find(entry.suffix().toStdString()) == assets.end())
-					assets[entry.suffix().toStdString()] = Vector<String>();
+				if (assets.find(entry.path().extension().string()) == assets.end())
+					assets[entry.path().extension().string()] = Vector<String>();
 
-				assets[entry.suffix().toStdString()].push_back(entry.filePath().toStdString());
+				assets[entry.path().extension().string()].push_back(entry.path().string());
 			}
 		}
 	}

@@ -1,11 +1,12 @@
 #pragma once
 #include <memory>
-
 #include <TypeDefinitions.h>
-
 #include <Actors/Behaviours/Behaviour.h>
+#include <Utils/Delegate.h>
 
-#include "Utils/Delegate.h"
+#ifdef TRISTEON_EDITOR
+namespace TristeonEditor { class EditorWindow; }
+#endif
 
 namespace Tristeon
 {
@@ -21,6 +22,11 @@ namespace Tristeon
 	{
 		friend Engine;
 		friend Window;
+
+#ifdef TRISTEON_EDITOR
+		friend TristeonEditor::EditorWindow;
+#endif
+
 	public:
 		/**
 		 * Returns the currently active scene.

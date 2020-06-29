@@ -1,5 +1,6 @@
-#include "AssetDatabase.h"
 #ifdef TRISTEON_EDITOR
+#include "AssetDatabase.h"
+#include "Window.h"
 #include "Input/Keyboard.h"
 #include "Rendering/Grid.h"
 #include "Engine.h"
@@ -96,7 +97,7 @@ namespace TristeonEditor
 		Vector2 const scalar = Vector2{ width() / (float)camera->size.x, height() / (float)camera->size.y } *Camera::main()->zoom;
 		Vector2 const cameraPos = (Vector2)Camera::main()->position * scalar;
 
-		Vector2Int const tileIndex = Grid::indexByPosition(GameView::screenToWorld(mousePos));
+		Vector2Int const tileIndex = Grid::indexByPosition(Window::screenToWorld(mousePos));
 
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
 		position -= Vector2{ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f } *scalar; //Adjust center 
@@ -113,7 +114,7 @@ namespace TristeonEditor
 		if (!underMouse())
 			return;
 		
-		if (Keyboard::held(Keyboard::Alt)) return;
+		if (Keyboard::held(Keyboard::LeftAlt)) return;
 
 		if (tileLayer->tileset(Brushes::selectedTile().tileSetID) == nullptr)
 			tileLayer->addTileSet(Brushes::selectedTileSet());

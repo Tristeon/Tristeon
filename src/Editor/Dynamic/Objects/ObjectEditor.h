@@ -1,6 +1,6 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include <Editor/Dynamic/AbstractEditor.h>
+#include "Editor/Dynamic/AbstractEditor.h"
 #include <QWidget>
 #include <QLayout>
 
