@@ -114,7 +114,7 @@ namespace TristeonEditor
 		if (!underMouse())
 			return;
 		
-		if (Keyboard::held(Keyboard::LeftAlt)) return;
+		if (Keyboard::held(Keyboard::Alt)) return;
 
 		if (tileLayer->tileset(Brushes::selectedTile().tileSetID) == nullptr)
 			tileLayer->addTileSet(Brushes::selectedTileSet());

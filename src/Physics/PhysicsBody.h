@@ -49,6 +49,10 @@ namespace Tristeon
 		enum Type
 		{
 			/**
+			 * Used for non-moving colliders, although this is usually unnecessary as Tristeon resolves static colliders without manually added PhysicsBodies.
+			 */
+			Static = b2BodyType::b2_staticBody,
+			/**
 			 * A kinematic PhysicsBody does not get affected by forces, collisions or joints, but unlike a
 			 * plain static collider, it can be moved around freely.
 			 *
@@ -103,7 +107,15 @@ namespace Tristeon
 		 * Sets the velocity to the given value.
 		 */
 		void setVelocity(float const& x, float const& y);
-
+		/**
+		 * Sets the x value of the velocity to the given value.
+		 */
+		void setVelocityX(float const& value);
+		/**
+		 * Sets the y value of the velocity to the given value.
+		 */
+		void setVelocityY(float const& value);
+		
 		/**
 		 * Gets the gravity scale. This is a multiplier, defaulted to 1.
 		 */
@@ -180,9 +192,19 @@ namespace Tristeon
 		 * Enables/Disables the body.
 		 */
 		void setEnabled(bool const& value);
+
+		/**
+		 * Sets the body type (Static, Kinematic, Dynamic).
+		 */
+		void setType(Type type);
+
+		/**
+		 * Gets the body type (Static, Kinematic, Dynamic).
+		 */
+		Type type() const;
 		
 	protected:
-		Type type = Dynamic;
+		Type _type = Dynamic;
 
 		float _gravityScale = 1;
 		bool _fixedRotation = false;

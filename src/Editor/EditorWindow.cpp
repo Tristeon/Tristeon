@@ -75,13 +75,13 @@ namespace TristeonEditor
 		//Keyboard handling
 		while (!keyPressEvents.empty())
 		{
-			Keyboard::onPress(static_cast<Keyboard::Key>(keyPressEvents.front().key()));
+			Keyboard::onPress(static_cast<Keyboard::Key>(mapToTristeonKey((Qt::Key) keyPressEvents.front().key())));
 			keyPressEvents.pop();
 		}
 
 		while (!keyReleaseEvents.empty())
 		{
-			Keyboard::onRelease(static_cast<Keyboard::Key>(keyReleaseEvents.front().key()));
+			Keyboard::onRelease(static_cast<Keyboard::Key>(mapToTristeonKey((Qt::Key)keyReleaseEvents.front().key())));
 			keyReleaseEvents.pop();
 		}
 	}
@@ -178,6 +178,127 @@ namespace TristeonEditor
 		if (!isFullscreen())
 			result.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		return result;
+	}
+
+	Keyboard::Key EditorWindow::mapToTristeonKey(Qt::Key key)
+	{
+		switch(key)
+		{
+		case Qt::Key::Key_unknown: return Keyboard::Unknown;
+		case Qt::Key::Key_Space: return Keyboard::Space;
+		case Qt::Key::Key_Apostrophe: return Keyboard::Apostrophe;
+		case Qt::Key::Key_Comma: return Keyboard::Comma;
+		case Qt::Key::Key_Minus: return Keyboard::Minus;
+		case Qt::Key::Key_Period: return Keyboard::Period;
+		case Qt::Key::Key_Slash: return Keyboard::Slash;
+
+		case Qt::Key::Key_0: return Keyboard::Number0;
+		case Qt::Key::Key_1: return Keyboard::Number1;
+		case Qt::Key::Key_2: return Keyboard::Number2;
+		case Qt::Key::Key_3: return Keyboard::Number3;
+		case Qt::Key::Key_4: return Keyboard::Number4;
+		case Qt::Key::Key_5: return Keyboard::Number5;
+		case Qt::Key::Key_6: return Keyboard::Number6;
+		case Qt::Key::Key_7: return Keyboard::Number7;
+		case Qt::Key::Key_8: return Keyboard::Number8;
+		case Qt::Key::Key_9: return Keyboard::Number9;
+
+		case Qt::Key::Key_Semicolon: return Keyboard::Semicolon;
+		case Qt::Key::Key_Equal: return Keyboard::Equals;
+
+		case Qt::Key::Key_A: return Keyboard::A;
+		case Qt::Key::Key_B: return Keyboard::B;
+		case Qt::Key::Key_C: return Keyboard::C;
+		case Qt::Key::Key_D: return Keyboard::D;
+		case Qt::Key::Key_E: return Keyboard::E;
+		case Qt::Key::Key_F: return Keyboard::F;
+		case Qt::Key::Key_G: return Keyboard::G;
+		case Qt::Key::Key_H: return Keyboard::H;
+		case Qt::Key::Key_I: return Keyboard::I;
+		case Qt::Key::Key_J: return Keyboard::J;
+		case Qt::Key::Key_K: return Keyboard::K;
+		case Qt::Key::Key_L: return Keyboard::L;
+		case Qt::Key::Key_M: return Keyboard::M;
+		case Qt::Key::Key_N: return Keyboard::N;
+		case Qt::Key::Key_O: return Keyboard::O;
+		case Qt::Key::Key_P: return Keyboard::P;
+		case Qt::Key::Key_Q: return Keyboard::Q;
+		case Qt::Key::Key_R: return Keyboard::R;
+		case Qt::Key::Key_S: return Keyboard::S;
+		case Qt::Key::Key_T: return Keyboard::T;
+		case Qt::Key::Key_U: return Keyboard::U;
+		case Qt::Key::Key_V: return Keyboard::V;
+		case Qt::Key::Key_W: return Keyboard::W;
+		case Qt::Key::Key_X: return Keyboard::X;
+		case Qt::Key::Key_Y: return Keyboard::Y;
+		case Qt::Key::Key_Z: return Keyboard::Z;
+
+		case Qt::Key::Key_BracketLeft: return Keyboard::LeftBracket;
+		case Qt::Key::Key_Backslash: return Keyboard::Backslash;
+		case Qt::Key::Key_BracketRight: return Keyboard::RightBracket;
+		//case Qt::Key::Key_GraveAccent: return Keyboard::GraveAccent; //TODO: Qt Key Grave binding
+
+		case Qt::Key::Key_Escape: return Keyboard::Escape;
+		case Qt::Key::Key_Enter: return Keyboard::Enter;
+		case Qt::Key::Key_Tab: return Keyboard::Tab;
+		case Qt::Key::Key_Backspace: return Keyboard::Backspace;
+		case Qt::Key::Key_Insert: return Keyboard::Insert;
+		case Qt::Key::Key_Delete: return Keyboard::Delete;
+
+		case Qt::Key::Key_Left: return Keyboard::Left;
+		case Qt::Key::Key_Right: return Keyboard::Right;
+		case Qt::Key::Key_Up: return Keyboard::Up;
+		case Qt::Key::Key_Down: return Keyboard::Down;
+
+		case Qt::Key::Key_PageUp: return Keyboard::PageUp;
+		case Qt::Key::Key_PageDown: return Keyboard::PageDown;
+
+		case Qt::Key::Key_Home: return Keyboard::Home;
+		case Qt::Key::Key_End: return Keyboard::End;
+
+		case Qt::Key::Key_CapsLock: return Keyboard::CapsLock;
+		case Qt::Key::Key_ScrollLock: return Keyboard::ScrollLock;
+		case Qt::Key::Key_NumLock: return Keyboard::NumLock;
+
+		case Qt::Key::Key_Print: return Keyboard::PrintScreen;
+		case Qt::Key::Key_Pause: return Keyboard::Pause;
+
+		case Qt::Key::Key_F1: return Keyboard::F1;
+		case Qt::Key::Key_F2: return Keyboard::F2;
+		case Qt::Key::Key_F3: return Keyboard::F3;
+		case Qt::Key::Key_F4: return Keyboard::F4;
+		case Qt::Key::Key_F5: return Keyboard::F5;
+		case Qt::Key::Key_F6: return Keyboard::F6;
+		case Qt::Key::Key_F7: return Keyboard::F7;
+		case Qt::Key::Key_F8: return Keyboard::F8;
+		case Qt::Key::Key_F9: return Keyboard::F9;
+		case Qt::Key::Key_F10: return Keyboard::F10;
+		case Qt::Key::Key_F11: return Keyboard::F11;
+		case Qt::Key::Key_F12: return Keyboard::F12;
+		case Qt::Key::Key_F13: return Keyboard::F13;
+		case Qt::Key::Key_F14: return Keyboard::F14;
+		case Qt::Key::Key_F15: return Keyboard::F15;
+		case Qt::Key::Key_F16: return Keyboard::F16;
+		case Qt::Key::Key_F17: return Keyboard::F17;
+		case Qt::Key::Key_F18: return Keyboard::F18;
+		case Qt::Key::Key_F19: return Keyboard::F19;
+		case Qt::Key::Key_F20: return Keyboard::F20;
+		case Qt::Key::Key_F21: return Keyboard::F21;
+		case Qt::Key::Key_F22: return Keyboard::F22;
+		case Qt::Key::Key_F23: return Keyboard::F23;
+		case Qt::Key::Key_F24: return Keyboard::F24;
+		case Qt::Key::Key_F25: return Keyboard::F25;
+
+		case Qt::Key::Key_Shift: return Keyboard::Shift;
+		case Qt::Key::Key_Control: return Keyboard::Control;
+		case Qt::Key::Key_Alt: return Keyboard::Alt;
+		case Qt::Key::Key_Menu: return Keyboard::Menu;
+
+		case Qt::Key::Key_Super_L: return Keyboard::LeftSuper;
+		case Qt::Key::Key_Super_R: return Keyboard::RightSuper;
+		}
+
+		return Keyboard::Unknown;
 	}
 
 	void EditorWindow::connectGamepads()

@@ -43,13 +43,27 @@ namespace Tristeon
 		rotation = j.value("rotation", 0);
 		name = j.value("name", "");
 
+		for (auto& b : _behaviours)
+			b->destroyed = true;
 		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
 		for (auto serializedBehaviour : j.value("behaviours", json::array_t()))
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
-			auto* behaviour = dynamic_cast<Behaviour*>(serializable.release());
+			if (serializable == nullptr)
+			{
+				std::cout << "Attempted to create behaviour of type " << serializedBehaviour["typeID"] << ", but failed. It will be ignored upon creation and removed from the save file. \n";
+				continue;
+			}
+			auto* behaviour = dynamic_cast<Behaviour*>(serializable.get());
+			if (behaviour == nullptr)
+			{
+				std::cout << "Failed to cast type " << serializedBehaviour["typeID"] << ", to Tristeon::Behaviour. The object will be ignored upon creation and removed from the save file. \n";
+				serializable.reset();
+				continue;
+			}
+			serializable.release();
 			behaviour->_owner = this;
 			_behaviours.push_back(Unique<Behaviour>(behaviour));
 

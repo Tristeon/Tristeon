@@ -1,5 +1,7 @@
 #include "Keyboard.h"
 
+#include <iostream>
+
 namespace Tristeon
 {
 	std::map<int, bool> Keyboard::keys;

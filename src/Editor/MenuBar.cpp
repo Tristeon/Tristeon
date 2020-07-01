@@ -46,7 +46,7 @@ namespace TristeonEditor
 			return;
 		
 		auto* scene = new Tristeon::Scene();
-		Tristeon::SceneManager::save(scene, path.toStdString());
+		Tristeon::SceneManager::save(scene, localPath.toStdString());
 
 		saveCurrentSceneDialog(fileName.toStdString());
 	}
@@ -64,7 +64,7 @@ namespace TristeonEditor
 		Tristeon::TileSet tileset{};
 		json j = tileset.serialize();
 		j["id"] = rand();
-		Tristeon::JsonSerializer::save(localPath.toStdString(), j);
+		Tristeon::JsonSerializer::save(path.toStdString(), j);
 		Tristeon::AssetDatabase::add(localPath.toStdString());
 	}
 
@@ -80,7 +80,7 @@ namespace TristeonEditor
 
 		Tristeon::AnimationClip anim{};
 		json j = anim.serialize();
-		Tristeon::JsonSerializer::save(localPath.toStdString(), j);
+		Tristeon::JsonSerializer::save(path.toStdString(), j);
 		Tristeon::AssetDatabase::add(localPath.toStdString());
 	}
 

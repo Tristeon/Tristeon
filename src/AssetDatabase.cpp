@@ -88,7 +88,7 @@ namespace Tristeon
 				if (assets.find(entry.path().extension().string()) == assets.end())
 					assets[entry.path().extension().string()] = Vector<String>();
 
-				assets[entry.path().extension().string()].push_back(entry.path().string());
+				assets[entry.path().extension().string()].push_back(relative(entry.path(), std::filesystem::path(Project::assetPath())).string());
 			}
 		}
 	}

@@ -8,6 +8,7 @@
 #include <Callbacks/IStart.h>
 #include <Scenes/Layers/ActorLayer.h>
 #include "Engine.h"
+#include "Project.h"
 
 namespace Tristeon
 {
@@ -39,7 +40,7 @@ namespace Tristeon
 			throw std::invalid_argument("Filepath can't be empty!");
 		
 		json data = scene->serialize();
-		JsonSerializer::save(filepath, data);
+		JsonSerializer::save(Project::assetPath() + filepath, data);
 
 		AssetDatabase::add(filepath);
 	}
@@ -79,7 +80,7 @@ namespace Tristeon
 			return;
 		}
 
-		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(path));
+		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(Project::assetPath() + path));
 		currentScene->name = cachedSceneName;
 		currentScene->path = path;
 

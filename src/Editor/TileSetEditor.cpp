@@ -1,8 +1,9 @@
 #ifdef TRISTEON_EDITOR
+#include "AssetDatabase.h"
 #include "Project.h"
 #include "TileSetTab.h"
 #include "TileSetEditor.h"
-
+#include <filesystem>
 namespace TristeonEditor
 {
 	void TileSetEditor::initialize()
@@ -12,14 +13,11 @@ namespace TristeonEditor
 		tileSetTabs->setStyleSheet(
 			"background-color: rgb(255, 255, 255);\nborder-color: rgb(0, 0, 0);\ncolor: rgb(00, 00, 00);");
 
-		std::string const path = "TilesetTest.tileset";
-		auto testTab = new TileSetTab(path);
-
-		std::string path2 = "GoldBricks.tileset";
-		auto testTab2 = new TileSetTab(path2);
-
-		tileSetTabs->addTab(testTab, "Tileset Test");
-		tileSetTabs->addTab(testTab2, "Gold Bricks");
+		for (auto tileset : Tristeon::AssetDatabase::get(".tileset"))
+		{
+			auto* tab = new TileSetTab(tileset);
+			tileSetTabs->addTab(tab, QString::fromStdString(std::filesystem::path(tileset).stem().string()));
+		}
 
 		auto layout = new QVBoxLayout();
 		layout->addWidget(tileSetTabs);

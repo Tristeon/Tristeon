@@ -23,7 +23,7 @@ namespace TristeonEditor
 		Tristeon::Graphic::AABB rotator;
 		
 		bool dragging = false;
-		bool dragginScale = false;
+		bool draggingScalar = false;
 		bool draggingRotate = false;
 
 		Tristeon::Vector2 draggingOffset;

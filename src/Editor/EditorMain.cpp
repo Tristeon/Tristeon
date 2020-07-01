@@ -1,6 +1,7 @@
 #ifdef TRISTEON_EDITOR
 #include <GL/glew.h>
 #include "Engine.h"
+#include "AssetDatabase.h"
 
 #include <QtWidgets>
 #include <QtUiTools/QtUiTools>
@@ -142,6 +143,8 @@ int main(int argc, char** argv)
 	srand(std::time(nullptr)); //TODO: Replace rand()
 
 	showProjectWindow(argc, argv);
+
+	Tristeon::AssetDatabase::load();
 
 	showEditorWindow(argc, argv);
 	return 0;

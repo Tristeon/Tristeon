@@ -25,7 +25,7 @@ namespace TristeonEditor
 	{
 		if (!dragging)
 			dragMousePos = Mouse::position();
-		dragging = Mouse::held(Mouse::Middle) || (Mouse::held(Mouse::Left) && Keyboard::held(Keyboard::LeftAlt));
+		dragging = Mouse::held(Mouse::Middle) || (Mouse::held(Mouse::Left) && Keyboard::held(Keyboard::Alt));
 
 		if (dragging)
 		{

@@ -184,6 +184,7 @@ namespace Tristeon
 
 	void GameWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
+		//TODO: Handle Right shift, control, alt and super
 		if (action == GLFW_PRESS)
 			Keyboard::onPress((Keyboard::Key)key);
 		else if (action == GLFW_RELEASE)

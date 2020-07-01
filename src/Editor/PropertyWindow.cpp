@@ -23,7 +23,12 @@ namespace TristeonEditor
 
 	void PropertyWindow::sceneLoaded(Tristeon::Scene * scene)
 	{
-		//Empty
+		if (current != nullptr)
+		{
+			layout->removeWidget(current);
+			delete current;
+		}
+		current = nullptr;
 	}
 
 	void PropertyWindow::selectedActorChanged(Tristeon::Actor * actor)
@@ -31,7 +36,7 @@ namespace TristeonEditor
 		if (current != nullptr)
 		{
 			layout->removeWidget(current);
-			current->deleteLater();
+			delete current;
 		}
 		current = nullptr;
 
@@ -54,7 +59,7 @@ namespace TristeonEditor
 		if (current != nullptr)
 		{
 			layout->removeWidget(current);
-			current->deleteLater();
+			delete current;
 		}
 		current = nullptr;
 	}
@@ -64,7 +69,7 @@ namespace TristeonEditor
 		if (current != nullptr)
 		{
 			layout->removeWidget(current);
-			current->deleteLater();
+			delete current;
 		}
 		current = nullptr;
 

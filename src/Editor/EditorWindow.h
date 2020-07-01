@@ -1,4 +1,5 @@
 #pragma once
+#include "Input/Keyboard.h"
 #ifdef TRISTEON_EDITOR
 #include "GameView.h"
 #include <queue>
@@ -48,6 +49,7 @@ namespace TristeonEditor
 		Tristeon::Vector2 _screenToWorld(Tristeon::Vector2Int const& screenPoint) override;
 		Tristeon::Vector2Int _worldToScreen(Tristeon::Vector2 const& worldPoint) override;
 
+		Tristeon::Keyboard::Key mapToTristeonKey(Qt::Key key);
 	private:
 		std::queue<QMouseEvent> mousePressEvents;
 		std::queue<QMouseEvent> mouseReleaseEvents;

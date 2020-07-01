@@ -44,5 +44,7 @@ namespace Tristeon
 
 		Vector<Actor*> destroyedActors{};
 		Vector<Behaviour*> destroyedBehaviours{};
+
+		void processDestroyedObjects();
 	};
 }

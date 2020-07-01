@@ -16,7 +16,7 @@ namespace Tristeon
 	{
 		json j;
 		j["typeID"] = TRISTEON_TYPENAME(PhysicsBody);
-		j["type"] = type;
+		j["type"] = _type;
 		j["gravityScale"] = _gravityScale;
 		j["fixedRotation"] = _fixedRotation;
 		j["linearDamping"] = _linearDamping;
@@ -28,7 +28,7 @@ namespace Tristeon
 
 	void PhysicsBody::deserialize(json j)
 	{
-		type = j.value("type", Dynamic);
+		_type = j.value("type", Dynamic);
 		_gravityScale = j.value("gravityScale", 1.0f);
 		_fixedRotation = j.value("fixedRotation", false);
 		_linearDamping = j.value("linearDamping", 0.0f);
@@ -129,6 +129,16 @@ namespace Tristeon
 		setVelocity({ x, y });
 	}
 
+	void PhysicsBody::setVelocityX(float const& value)
+	{
+		setVelocity(value, velocity().y);
+	}
+
+	void PhysicsBody::setVelocityY(float const& value)
+	{
+		setVelocity(velocity().x, value);
+	}
+
 	float PhysicsBody::gravityScale() const
 	{
 		return _gravityScale;
@@ -220,6 +230,16 @@ namespace Tristeon
 		_enabled = value;
 	}
 
+	void PhysicsBody::setType(Type type)
+	{
+		body->SetType(static_cast<b2BodyType>(type));
+	}
+
+	PhysicsBody::Type PhysicsBody::type() const
+	{
+		return _type;
+	}
+
 	b2Body* PhysicsBody::getBody()
 	{
 		if (body == nullptr)
@@ -235,7 +255,7 @@ namespace Tristeon
 		b2BodyDef bodyDef;
 		bodyDef.position = meterPosition.convert<b2Vec2>();
 		bodyDef.angle = Math::toRadians(-getOwner()->rotation);
-		bodyDef.type = (b2BodyType)type;
+		bodyDef.type = (b2BodyType)_type;
 		bodyDef.fixedRotation = _fixedRotation;
 		bodyDef.gravityScale = _gravityScale;
 		bodyDef.allowSleep = true;

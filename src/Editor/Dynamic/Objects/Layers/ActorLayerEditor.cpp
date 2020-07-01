@@ -49,7 +49,8 @@ namespace TristeonEditor
 
 		nameChangedCallback = Editor::instance()->onSelectedActorNameChanged += [&](Tristeon::String const name)
 		{
-			list->currentItem()->setText(!name.empty() ? QString::fromStdString(name) : "No Name");
+			if (list->currentItem())
+				list->currentItem()->setText(!name.empty() ? QString::fromStdString(name) : "No Name");
 		};
 	}
 

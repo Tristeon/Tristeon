@@ -6,6 +6,7 @@
 #include <Utils/StringHelper.h>
 
 #include "Project.h"
+#include <filesystem>
 
 namespace Tristeon
 {
@@ -21,6 +22,9 @@ namespace Tristeon
 
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
 			String const lower = StringHelper::toLower(globalPath);
+
+			if (!std::filesystem::exists(lower))
+				return nullptr;
 
 			if (loadedResources.find(lower) != loadedResources.end())
 				return (T*)loadedResources[lower].get();
@@ -39,6 +43,9 @@ namespace Tristeon
 
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
 			String const lower = StringHelper::toLower(globalPath);
+
+			if (!std::filesystem::exists(lower))
+				return nullptr;
 
 			if (loadedResources.find(lower) != loadedResources.end())
 				return (T*)loadedResources[lower].get();

@@ -26,17 +26,17 @@ namespace Tristeon
 	{
 		Window::pollEvents();
 
-#ifndef TRISTEON_EDITOR //In Build mode, we assume the .exe is in the same folder as a build.json file.
+#ifndef TRISTEON_EDITOR
 		Project::loadBuild();
-#endif
-		
 		AssetDatabase::load();
-		
+#endif
+
 		_renderer = std::make_unique<Renderer>();
 		_physics = std::make_unique<PhysicsWorld>();
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
 		SceneManager::load(Project::firstSceneName());
+		processDestroyedObjects();
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		unsigned int frames = 0;
@@ -70,28 +70,31 @@ namespace Tristeon
 				{
 					for (auto* start : Collector<IStart>::all()) start->start();
 					playModeDirty = false;
+					processDestroyedObjects();
 				}
 				
 				fixedUpdateTime += deltaTime;
 				while (fixedUpdateTime > Project::Physics::fixedDeltaTime()) 
 				{
 					_physics->update();
+					processDestroyedObjects();
 					for (auto* fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
+					processDestroyedObjects();
 					fixedUpdateTime -= Project::Physics::fixedDeltaTime();
 				}
 
 				for (auto* early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();
+				processDestroyedObjects();
 				for (auto* update : Collector<IUpdate>::all()) update->update();
+				processDestroyedObjects();
 				for (auto* late : Collector<ILateUpdate>::all()) late->lateUpdate();
+				processDestroyedObjects();
 			}
 
 			for (auto* gizmos : Collector<IDrawGizmos>::all()) gizmos->drawGizmos();
 
-			for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
-			destroyedBehaviours.clear();
-			for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
-			destroyedActors.clear();
-
+			processDestroyedObjects();
+			
 			Window::draw();
 
 			Mouse::reset();
@@ -121,5 +124,13 @@ namespace Tristeon
 	void Engine::destroyLater(Behaviour* behaviour)
 	{
 		destroyedBehaviours.add(behaviour);
+	}
+
+	void Engine::processDestroyedObjects()
+	{
+		for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
+		destroyedBehaviours.clear();
+		for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
+		destroyedActors.clear();
 	}
 }

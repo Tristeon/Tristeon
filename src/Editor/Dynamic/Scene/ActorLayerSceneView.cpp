@@ -26,7 +26,7 @@ namespace TristeonEditor
 		if (Engine::playMode())
 		{
 			dragging = false;
-			dragginScale = false;
+			draggingScalar = false;
 			draggingRotate = false;
 			return;
 		}
@@ -34,17 +34,17 @@ namespace TristeonEditor
 		if (Mouse::pressed(Mouse::Left) && GameView::instance()->underMouse())
 		{
 			if (scalar.underMouse())
-				dragginScale = true;
+				draggingScalar = true;
 			else if (rotator.underMouse())
 				draggingRotate = true;
 			else
 				clickActor();
 		}
-		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::LeftAlt))
+		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::Alt))
 		{
 			if (dragging)
 			{
-				if (Keyboard::held(Keyboard::LeftShift))
+				if (Keyboard::held(Keyboard::Shift))
 				{
 					auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
 					if (graphic == nullptr)
@@ -55,7 +55,7 @@ namespace TristeonEditor
 				else
 					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position()) - draggingOffset;
 			}
-			else if (dragginScale)
+			else if (draggingScalar)
 			{
 				//TODO: Make graphic resizing more generic
 				auto* sprite = dynamic_cast<Sprite*>(Editor::instance()->selectedActor());
@@ -71,7 +71,7 @@ namespace TristeonEditor
 					Vector2 size = difference / sprite->scale * 2;
 
 					//Snap to aspect ratio
-					if (Keyboard::held(Keyboard::LeftShift))
+					if (Keyboard::held(Keyboard::Shift))
 					{
 						Vector2 const imageSize = sprite->getTexture()->size();
 						
@@ -91,7 +91,7 @@ namespace TristeonEditor
 				Vector2 const mouse = (Window::screenToWorld(Mouse::position()) - position).getNormalized();
 				const float angle = mouse.getAngle();
 
-				if (Keyboard::held(Keyboard::LeftShift))
+				if (Keyboard::held(Keyboard::Shift))
 					Editor::instance()->selectedActor()->rotation = roundf(angle / 45.0f) * 45.0f;
 				else
 					Editor::instance()->selectedActor()->rotation = angle;
@@ -100,7 +100,7 @@ namespace TristeonEditor
 		else if (Mouse::released(Mouse::Left))
 		{
 			dragging = false;
-			dragginScale = false;
+			draggingScalar = false;
 			draggingRotate = false;
 			Editor::instance()->selectedActor(Editor::instance()->selectedActor());
 		}
@@ -123,7 +123,7 @@ namespace TristeonEditor
 		else
 		{
 			dragging = false;
-			dragginScale = false;
+			draggingScalar = false;
 			draggingRotate = false;
 		}
 	}
@@ -150,6 +150,11 @@ namespace TristeonEditor
 				}
 			}
 		}
+
+		Editor::instance()->selectedActor(nullptr);
+		dragging = false;
+		draggingScalar = false;
+		draggingRotate = false;
 	}
 }
 #endif
