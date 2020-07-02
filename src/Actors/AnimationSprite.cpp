@@ -9,9 +9,6 @@
 
 namespace Tristeon
 {
-	REGISTER_ACTOR_CPP(AnimationSprite)
-	REGISTER_TYPE_CPP(AnimationSprite)
-
 	json AnimationSprite::serialize()
 	{
 		json j = Sprite::serialize();

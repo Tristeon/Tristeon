@@ -9,9 +9,6 @@
 
 namespace Tristeon
 {
-	REGISTER_BEHAVIOUR_CPP(PhysicsBody)
-	REGISTER_TYPE_CPP(PhysicsBody)
-
 	json PhysicsBody::serialize()
 	{
 		json j;

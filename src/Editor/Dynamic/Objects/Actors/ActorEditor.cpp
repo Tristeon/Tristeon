@@ -5,8 +5,8 @@
 #include <QtWidgets>
 #include <Editor/Editor.h>
 #include "Editor/EditorFields.h"
-#include <Registers/BehaviourRegister.h>
 #include <Editor/Dynamic/Objects/Behaviours/BehaviourEditor.h>
+#include "Serialization/Register.h"
 
 using Tristeon::Actor;
 
@@ -279,7 +279,7 @@ namespace TristeonEditor
 	{
 		QMenu contextMenu(tr("Context menu"));
 
-		auto* map = Tristeon::BehaviourRegister::getMap();
+		auto* map = Tristeon::Register<Tristeon::Behaviour>::getMap();
 		for (auto const& pair : *map)
 		{
 			QAction* action = new QAction(pair.first.c_str(), this);

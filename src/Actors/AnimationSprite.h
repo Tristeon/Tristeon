@@ -14,8 +14,6 @@ namespace Tristeon
 	 */
 	class AnimationSprite : public Sprite, public IUpdate
 	{
-		REGISTER_ACTOR_H(AnimationSprite)
-		REGISTER_TYPE_H(AnimationSprite)
 	public:
 		json serialize() override;
 		void deserialize(json j) override;
@@ -45,4 +43,6 @@ namespace Tristeon
 		
 		bool paused = false;
 	};
+
+	REGISTER_TYPE(AnimationSprite);
 }

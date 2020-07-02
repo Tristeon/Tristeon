@@ -15,8 +15,6 @@ namespace Tristeon
 	 */
 	class AnimationClip : public Serializable
 	{
-		REGISTER_TYPE_H(AnimationClip)
-		
 	public:
 		struct Spacing
 		{
@@ -109,4 +107,6 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 	};
+
+	REGISTER_TYPE(AnimationClip);
 }

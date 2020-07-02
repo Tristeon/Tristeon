@@ -5,8 +5,6 @@
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(Camera)
-	
 	json Camera::serialize()
 	{
 		json j;

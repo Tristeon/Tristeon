@@ -3,8 +3,6 @@
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(AnimationClip)
-
 	json AnimationClip::serialize()
 	{
 		json j;

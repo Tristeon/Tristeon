@@ -5,11 +5,7 @@
 #include <Callbacks/IUpdate.h>
 #include <Callbacks/IStart.h>
 
-#include <Physics/Callbacks/ITileContactEnd.h>
 #include <Physics/Callbacks/IPreContact.h>
-
-#include <Registers/BehaviourRegister.h>
-
 
 namespace Tristeon
 {
@@ -20,8 +16,6 @@ namespace Tristeon
 	 */
 	class TestBehaviour : public Behaviour, public IPreContact, public IUpdate, public IStart
 	{
-		REGISTER_BEHAVIOUR_H(TestBehaviour)
-		REGISTER_TYPE_H(TestBehaviour)
 	public:
 		void start() override;
 		void update() override;
@@ -37,4 +31,6 @@ namespace Tristeon
 		float groundedDistance = 256;
 		float runSpeed = 100;
 	};
+
+	REGISTER_TYPE(TestBehaviour);
 }

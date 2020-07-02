@@ -1,7 +1,6 @@
 #pragma once
 #include <Math/Vector2Int.h>
 #include <Serialization/Serializable.h>
-#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {
@@ -14,7 +13,6 @@ namespace Tristeon
 	 */
 	class Camera : public Serializable
 	{
-		REGISTER_TYPE_H(Camera)
 	public:
 		/**
 		 * The position of the camera

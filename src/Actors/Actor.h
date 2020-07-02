@@ -1,20 +1,14 @@
 #pragma once
-#include <Actors/Behaviours/Behaviour.h>
-#include <Math/Vector2Int.h>
-#include <TypeDefinitions.h>
-
 #include <Serialization/Serializable.h>
-#include <Serialization/TypeRegister.h>
+#include <Actors/Behaviours/Behaviour.h>
 
-#include <Callbacks/IStart.h>
-
-#include "Scenes/Scene.h"
-#include "Scenes/SceneManager.h"
-#include <Scenes/Layers/ActorLayer.h>
+#include "Callbacks/IStart.h"
+#include "Math/Vector2.h"
+#include <Scenes/Scene.h>
+#include <Scenes/SceneManager.h>
 
 namespace Tristeon
 {
-	class ActorLayer;
 	class SceneManager;
 
 	template<typename T>
@@ -32,8 +26,6 @@ namespace Tristeon
 	 */
 	class Actor : public Serializable
 	{
-		REGISTER_TYPE_H(Actor)
-		
 		friend ActorLayer;
 		friend SceneManager;
 		friend class Engine;
@@ -58,7 +50,8 @@ namespace Tristeon
 		 */
 		std::string name = "";
 
-		virtual ~Actor();
+		Actor();
+		virtual ~Actor() noexcept;
 		
 		json serialize() override;
 		void deserialize(json j) override;
@@ -175,12 +168,11 @@ namespace Tristeon
 	template <typename T>
 	T* Actor::findOfType()
 	{
-		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
-		for (auto layer : layers)
+		auto actors = Collector<Actor>::all();
+		for (auto actor : actors)
 		{
-			auto* actor = layer->findActorOfType<T>();
-			if (actor)
-				return actor;
+			if (dynamic_cast<T*>(actor))
+				return (T*)actor;
 		}
 		return nullptr;
 	}
@@ -188,12 +180,11 @@ namespace Tristeon
 	template <typename T>
 	T* Actor::findOfType(String name)
 	{
-		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
-		for (auto layer : layers)
+		auto actors = Collector<Actor>::all();
+		for (auto actor : actors)
 		{
-			auto* actor = layer->findActorOfType<T>(name);
-			if (actor)
-				return actor;
+			if (actor->name == name && dynamic_cast<T*>(actor))
+				return (T*)actor;
 		}
 		return nullptr;
 	}

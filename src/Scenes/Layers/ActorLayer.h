@@ -1,8 +1,7 @@
 #pragma once
 #include "Layer.h"
-
 #include <Serialization/TypeRegister.h>
-#include <Registers/LayerRegister.h>
+
 #include <vector>
 
 #include "Actors/Actor.h"
@@ -20,9 +19,6 @@ namespace Tristeon
 	 */
 	class ActorLayer : public Layer
 	{
-		REGISTER_LAYER_H(ActorLayer);
-		REGISTER_TYPE_H(ActorLayer);
-
 		friend SceneManager;
 	public:
 		virtual ~ActorLayer();
@@ -101,6 +97,8 @@ namespace Tristeon
 	private:
 		Vector<Unique<Actor>> actors;
 	};
+
+	REGISTER_TYPE(ActorLayer);
 
 	template <typename T>
 	T* ActorLayer::findActorOfType() const

@@ -10,9 +10,6 @@
 
 namespace Tristeon
 {
-	REGISTER_BEHAVIOUR_CPP(BoxCollider)
-	REGISTER_TYPE_CPP(BoxCollider);
-
 	void BoxCollider::createShape(bool const& includeBodyTransform)
 	{
 		auto* polygon = new b2PolygonShape();

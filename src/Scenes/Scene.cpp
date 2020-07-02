@@ -1,17 +1,15 @@
 #include "Scene.h"
 #include <stdexcept>
 
-#include <Scenes/HUD.h>
 #include <Scenes/Layers/Layer.h>
+
+#include "Serialization/TypeRegister.h"
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(Scene)
-
 	Scene::Scene()
 	{
 		camera = std::make_unique<Camera>();
-		hud = std::make_unique<HUD>();
 	}
 
 	json Scene::serialize()
@@ -19,7 +17,6 @@ namespace Tristeon
 		json j;
 		j["typeID"] = TRISTEON_TYPENAME(Scene);
 		j["camera"] = camera->serialize();
-		j["hud"] = hud->serialize();
 
 		json serializedLayers = json::array_t();
 		for (auto& layer : layers)
@@ -31,7 +28,6 @@ namespace Tristeon
 	void Scene::deserialize(json j)
 	{
 		camera->deserialize(j["camera"]);
-		hud->deserialize(j["hud"]);
 
 		layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
 		for (auto serializedLayer : j["layers"])
@@ -85,11 +81,6 @@ namespace Tristeon
 			return;
 		layers[index].reset();
 		layers.removeAt(index);
-	}
-
-	HUD* Scene::getHUD() const
-	{
-		return hud.get();
 	}
 
 	Camera* Scene::getCamera() const

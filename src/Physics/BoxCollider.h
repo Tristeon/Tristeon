@@ -1,6 +1,5 @@
 #pragma once
 #include <Physics/Collider.h>
-#include <Registers/BehaviourRegister.h>
 #include <Serialization/TypeRegister.h>
 
 #include "Callbacks/IDrawGizmos.h"
@@ -14,8 +13,6 @@ namespace Tristeon
 	 */
 	class BoxCollider : public Collider, public IDrawGizmos
 	{
-		REGISTER_BEHAVIOUR_H(BoxCollider)
-		REGISTER_TYPE_H(BoxCollider)
 	public:
 		json serialize() override;
 		void deserialize(json j) override;
@@ -45,4 +42,6 @@ namespace Tristeon
 		
 		void createShape(bool const& includeBodyTransform) override;
 	};
+
+	REGISTER_TYPE(BoxCollider);
 }

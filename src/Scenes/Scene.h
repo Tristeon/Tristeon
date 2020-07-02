@@ -1,22 +1,16 @@
 #pragma once
-#include <memory>
-#include <vector>
-
-#include <Scenes/Camera.h>
 #include <Serialization/Serializable.h>
-#include <Serialization/TypeRegister.h>
-#include <TypeDefinitions.h>
 
-#include <Scenes/HUD.h>
+#include <Scenes/Layers/Layer.h>
 
-#include "Layers/Layer.h"
+#include "Camera.h"
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
 	class SceneManager;
-	class Layer;
 	class Engine;
-
+	
 	template<typename T>
 	using IsLayer = std::enable_if_t<std::is_base_of<Layer, T>::value, T>;
 	
@@ -36,8 +30,6 @@ namespace Tristeon
 	{
 		friend Engine;
 		friend SceneManager;
-
-		REGISTER_TYPE_H(Scene)
 
 	public:
 		/**
@@ -112,11 +104,6 @@ namespace Tristeon
 		 * \param layer After this function, layer will point to invalid memory.
 		 */
 		void destroyLayer(Layer* layer);
-		
-		/**
-		 * Returns the Scene HUD.
-		 */
-		HUD* getHUD() const;
 
 		/**
 		 * Returns the Scene Camera.
@@ -145,7 +132,6 @@ namespace Tristeon
 		String getName() const { return name; }
 	private:
 		Unique<Camera> camera = nullptr;
-		Unique<HUD> hud = nullptr;
 		Vector<Unique<Layer>> layers;
 		String name;
 		String path;

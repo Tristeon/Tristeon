@@ -4,8 +4,6 @@
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(TileSet)
-	
 	TileSet::TileSet()
 	{
 		texture = Resources::assetLoad<Texture>(Texture::defaultPath);

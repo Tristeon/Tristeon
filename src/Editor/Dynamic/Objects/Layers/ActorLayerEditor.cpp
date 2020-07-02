@@ -1,7 +1,6 @@
-#include "Editor/Palette.h"
 #ifdef TRISTEON_EDITOR
+#include "Editor/Palette.h"
 #include "ActorLayerEditor.h"
-#include <Registers/ActorRegister.h>
 #include <Editor/Editor.h>
 #include <QtWidgets>
 
@@ -100,7 +99,7 @@ namespace TristeonEditor
 			});
 		contextMenu.addAction(actor);
 		
-		auto* map = Tristeon::ActorRegister::getMap();
+		auto* map = Tristeon::Register<Tristeon::Actor>::getMap();
 		for (auto const& pair : *map)
 		{
 			QAction* action = new QAction(pair.first.c_str(), this);

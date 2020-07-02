@@ -15,9 +15,6 @@
 
 namespace Tristeon
 {
-	REGISTER_LAYER_CPP(TileLayer);
-	REGISTER_TYPE_CPP(TileLayer);
-
 	TileLayer::TileLayer()
 	{
 		shader = std::make_unique<Shader>("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");

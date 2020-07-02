@@ -38,7 +38,6 @@ namespace Tristeon
 	 */
 	class TileSet : public Serializable
 	{
-		REGISTER_TYPE_H(TileSet)
 	public:
 		/**
 		 * Creates an empty tileset with a white texture.
@@ -204,4 +203,6 @@ namespace Tristeon
 		
 		unsigned int id = 0;
 	};
+
+	REGISTER_TYPE(TileSet);
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include <Physics/Collider.h>
-#include <Registers/BehaviourRegister.h>
 #include <Serialization/TypeRegister.h>
 
 #include "Callbacks/IDrawGizmos.h"
@@ -12,8 +11,6 @@ namespace Tristeon
 	 */
 	class CircleCollider : public Collider, public IDrawGizmos
 	{
-		REGISTER_BEHAVIOUR_H(CircleCollider);
-		REGISTER_TYPE_H(CircleCollider);
 	public:
 		virtual ~CircleCollider() = default;
 		
@@ -35,4 +32,6 @@ namespace Tristeon
 
 		void createShape(bool const& includeBodyTransform) override;
 	};
+
+	REGISTER_TYPE(CircleCollider);
 }

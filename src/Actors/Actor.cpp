@@ -5,10 +5,15 @@
 
 namespace Tristeon
 {
-	REGISTER_TYPE_CPP(Actor)
-
-	Actor::~Actor()
+	Actor::Actor()
 	{
+		Collector<Actor>::add(this);
+	}
+
+	Actor::~Actor() noexcept
+	{
+		Collector<Actor>::remove(this);
+		
 		assert(destroyed == true);
 		
 		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
@@ -98,7 +103,7 @@ namespace Tristeon
 
 	Behaviour* Actor::addBehaviour(std::string type)
 	{
-		Behaviour* result = BehaviourRegister::createInstance(type).release();
+		Behaviour* result = Register<Behaviour>::createInstance(type).release();
 
 		if (result == nullptr)
 			return nullptr;
@@ -122,11 +127,10 @@ namespace Tristeon
 
 	Actor* Actor::find(String const& name)
 	{
-		auto layers = SceneManager::current()->findLayersOfType<ActorLayer>();
-		for (auto layer : layers)
+		auto actors = Collector<Actor>::all();
+		for (auto actor : actors)
 		{
-			auto* actor = layer->findActor(name);
-			if (actor)
+			if (actor->name == name)
 				return actor;
 		}
 		return nullptr;

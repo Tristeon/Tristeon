@@ -10,7 +10,6 @@
 #include <Scenes/Layers/Layer.h>
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/TileLayer.h>
-#include <Registers/LayerRegister.h>
 
 namespace TristeonEditor
 {
@@ -60,7 +59,7 @@ namespace TristeonEditor
 	{
 		QMenu contextMenu(tr("Context menu"));
 
-		auto* map = Tristeon::LayerRegister::getMap();
+		auto* map = Tristeon::Register<Tristeon::Layer>::getMap();
 		for (auto const& pair : *map)
 		{
 			QAction* action = new QAction(pair.first.c_str(), this);

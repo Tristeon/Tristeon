@@ -39,7 +39,7 @@ namespace Tristeon
 		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
 		
-		json data = scene->serialize();
+		json const data = scene->serialize();
 		JsonSerializer::save(Project::assetPath() + filepath, data);
 
 		AssetDatabase::add(filepath);
@@ -80,12 +80,14 @@ namespace Tristeon
 			return;
 		}
 
-		currentScene = std::unique_ptr<Scene>(JsonSerializer::deserialize<Scene>(Project::assetPath() + path));
+		auto j = JsonSerializer::load(Project::assetPath() + path);
+		currentScene = std::make_unique<Scene>();
+		currentScene->deserialize(j);
 		currentScene->name = cachedSceneName;
 		currentScene->path = path;
 
 		if (Engine::playMode())
-			for (auto start : Collector<IStart>::all()) start->start();
+			for (auto* start : Collector<IStart>::all()) start->start();
 
 		sceneLoaded.invoke(currentScene.get());
 

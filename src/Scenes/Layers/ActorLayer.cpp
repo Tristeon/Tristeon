@@ -11,9 +11,6 @@
 
 namespace Tristeon
 {
-	REGISTER_LAYER_CPP(ActorLayer);
-	REGISTER_TYPE_CPP(ActorLayer);
-
 	ActorLayer::~ActorLayer()
 	{
 		for (auto const& actor : findAllActorsOfType<IPreDestroy>())
