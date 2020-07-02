@@ -21,44 +21,20 @@ namespace Tristeon
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Serializable>);
 
-			registerActor();
-			registerBehaviour();
-			registerLayer();
+			registerAs<Actor, T>();
+			registerAs<Behaviour, T>();
+			registerAs<Layer, T>();
 		}
 
 	private:
-		template<class Q = T>
-		typename std::enable_if<std::is_base_of<Actor, Q>::value, void>::type registerActor()
+		template<typename Base, typename Q>
+		typename std::enable_if<std::is_base_of<Base, Q>::value, void>::type registerAs()
 		{
-			Register<Actor>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Actor>);
+			Register<Base>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Base>);
 		}
 
-		template<class Q = T>
-		typename std::enable_if<!std::is_base_of<Actor, Q>::value, void>::type registerActor()
-		{
-			//Empty
-		}
-
-		template<class Q = T>
-		typename std::enable_if<std::is_base_of<Behaviour, Q>::value, void>::type registerBehaviour()
-		{
-			Register<Behaviour>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Behaviour>);
-		}
-
-		template<class Q = T>
-		typename std::enable_if<!std::is_base_of<Behaviour, Q>::value, void>::type registerBehaviour()
-		{
-			//Empty
-		}
-
-		template<class Q = T>
-		typename std::enable_if<std::is_base_of<Layer, Q>::value, void>::type registerLayer()
-		{
-			Register<Layer>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Layer>);
-		}
-
-		template<class Q = T>
-		typename std::enable_if<!std::is_base_of<Layer, Q>::value, void>::type registerLayer()
+		template<typename Base, typename Q>
+		typename std::enable_if<!std::is_base_of<Base, Q>::value, void>::type registerAs()
 		{
 			//Empty
 		}
