@@ -32,6 +32,12 @@ class CustomLoader : public QUiLoader
 
 QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, const QString& name)
 {
+	if (name == "MainWindow")
+	{
+		auto* window = new TristeonEditor::EditorWindow();
+		return window;
+	}
+	
 	if (name == "game")
 	{
 		auto* gameView = new TristeonEditor::GameView(parent);
@@ -106,7 +112,6 @@ QWidget* loadUIFile()
 
 void showProjectWindow(int argc, char** argv)
 {
-	//Open project window to select a project
 	QApplication projectApp(argc, argv);
 	TristeonEditor::ProjectWindow projectWindow;
 	QApplication::exec();
@@ -117,20 +122,21 @@ void showProjectWindow(int argc, char** argv)
 
 void showEditorWindow(int argc, char** argv)
 {
-	//Open Tristeon Editor
-	QApplication app(argc, argv);
-	TristeonEditor::EditorWindow window;
-	window.setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
-	window.setCorner(Qt::TopRightCorner, Qt::TopDockWidgetArea);
-	window.resize(1920, 1080);
-	window.showMaximized();
-
 	engine = std::make_unique<Tristeon::Engine>();
 	editor = std::make_unique<TristeonEditor::Editor>();
 
+	QApplication app(argc, argv);
 	QWidget* widget = loadUIFile();
-	window.setCentralWidget(widget);
-	window.show();
+	auto* window = static_cast<TristeonEditor::EditorWindow*>(widget);
+	window->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+	window->resize(1920, 1080);
+	window->showMaximized();
+
+	QSettings settings("Tristeon", "Tristeon2D");
+	window->restoreGeometry(settings.value("geometry").toByteArray());
+	window->restoreState(settings.value("windowState").toByteArray());
+	
+	window->show();
 
 	QApplication::processEvents();
 

@@ -1,3 +1,5 @@
+#include <qsettings.h>
+#include <qshortcut.h>
 #ifdef TRISTEON_EDITOR
 #include "EditorWindow.h"
 
@@ -31,6 +33,14 @@ namespace TristeonEditor
 		connectGamepads();
 
 		oldMousePos = QCursor::pos();
+
+		QShortcut* shortcut = new QShortcut(QKeySequence(tr("Ctrl+L", "Layout|Save")), this);
+		connect(shortcut, &QShortcut::activated, this, [&]() 
+			{
+				QSettings settings("Tristeon", "Tristeon2D");
+				settings.setValue("geometry", saveGeometry());
+				settings.setValue("windowState", saveState());
+			});
 	}
 
 	void EditorWindow::_pollEvents()
