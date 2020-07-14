@@ -8,11 +8,8 @@
 
 namespace TristeonEditor
 {
-	TopBar::TopBar(QWidget* parent) : QDockWidget(parent)
+	TopBar::TopBar(QWidget* parent) : QWidget(parent)
 	{
-		auto* title = new QWidget;
-		setTitleBarWidget(title);
-		titleBarWidget()->hide();
 	}
 
 	void TopBar::initialize()

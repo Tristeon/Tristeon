@@ -5,7 +5,7 @@
 
 namespace TristeonEditor
 {
-	class TopBar : public QDockWidget, public DockWidget
+	class TopBar : public QWidget, public DockWidget
 	{
 	public:
 		explicit TopBar(QWidget* parent = nullptr);
