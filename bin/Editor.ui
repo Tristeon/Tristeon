@@ -469,11 +469,14 @@ color: rgb(236, 240, 241);</string>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
   </property>
   <property name="dockOptions">
-   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
+   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="mainWidget">
    <property name="sizePolicy">
@@ -698,7 +701,7 @@ alternate-background-color: rgb(127, 140, 141);</string>
   </widget>
   <widget class="QDockWidget" name="layers">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -722,13 +725,13 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea</set>
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>Layers</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <property name="styleSheet">
@@ -808,6 +811,12 @@ alternate-background-color: rgb(127, 140, 141);</string>
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="minimumSize">
     <size>
      <width>42</width>
@@ -827,7 +836,7 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea</set>
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>Layer Context</string>
@@ -841,44 +850,13 @@ alternate-background-color: rgb(127, 140, 141);</string>
     </property>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="console">
-   <property name="minimumSize">
-    <size>
-     <width>42</width>
-     <height>44</height>
-    </size>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::StrongFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::NoContextMenu</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="floating">
-    <bool>false</bool>
-   </property>
-   <property name="features">
-    <set>QDockWidget::DockWidgetMovable</set>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea</set>
-   </property>
-   <property name="windowTitle">
-    <string>Output</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="contents_2">
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(52, 73, 94);</string>
-    </property>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="fileexplorer">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="minimumSize">
     <size>
      <width>42</width>
@@ -898,7 +876,7 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea</set>
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>File Explorer</string>
@@ -932,7 +910,7 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::RightDockWidgetArea</set>
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>Properties</string>
@@ -1222,7 +1200,21 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <addaction name="gotoGithub"/>
     <addaction name="gotoDocumentation"/>
    </widget>
+   <widget class="QMenu" name="menuPreferences">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuLayout">
+     <property name="title">
+      <string>Layout</string>
+     </property>
+     <addaction name="actionSave"/>
+     <addaction name="actionReset"/>
+    </widget>
+    <addaction name="menuLayout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPreferences"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QDockWidget" name="tilesets">
@@ -1248,15 +1240,52 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::RightDockWidgetArea</set>
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>Tilesets</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="tilesets_contents">
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(52, 73, 94);</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="console">
+   <property name="minimumSize">
+    <size>
+     <width>42</width>
+     <height>44</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllDockWidgetAreas</set>
+   </property>
+   <property name="windowTitle">
+    <string>Output</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="contents_2">
     <property name="styleSheet">
      <string notr="true">background-color: rgb(52, 73, 94);</string>
     </property>
@@ -1325,6 +1354,16 @@ alternate-background-color: rgb(127, 140, 141);</string>
   <action name="saveScene">
    <property name="text">
     <string>Scene</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
    </property>
   </action>
   <zorder>layers</zorder>

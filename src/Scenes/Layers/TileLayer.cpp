@@ -41,10 +41,14 @@ namespace Tristeon
 			sets.push_back(tileset->filePath);
 		j["tileSets"] = sets;
 
-		json t = json::array();
+		std::string tilesSerialized;
 		for (unsigned int i = 0; i < _width * _height; i++)
-			t.push_back(tiles[i]);
-		j["tiles"] = t;
+		{
+			tilesSerialized += std::to_string(tiles[i].index) + "," + std::to_string(tiles[i].tileSetID);
+			if (i < _width * _height - 1)
+				tilesSerialized += ",";
+		}
+		j["tileData"] = tilesSerialized;
 		return j;
 	}
 
@@ -63,12 +67,22 @@ namespace Tristeon
 				TileSet* tileset = Resources::jsonLoad<TileSet>(i);
 				if (tileset == nullptr)
 					continue;
-				tileset->filePath = i.get<std::string>();
+				tileset->filePath = i.get<String>();
 				tilesets.push_back(tileset);
 			}
 		}
 		
 		tiles = std::make_unique<Tile[]>(_width * _height);
+		const String tilesSerialized = j.value("tileData", "");
+		const Vector<String> tileArray = StringHelper::split(tilesSerialized, ',');
+
+		assert(tileArray.size() % 2 == 0);
+
+		for (unsigned int i = 0; i < tileArray.size(); i += 2)
+		{
+			tiles[i / 2] = Tile{ std::stoi(tileArray[i]), std::stoi(tileArray[i + 1]) };
+		}
+		
 		if (j.contains("tiles"))
 		{
 			for (unsigned int i = 0; i < _width * _height && i < j["tiles"].size(); i++)
