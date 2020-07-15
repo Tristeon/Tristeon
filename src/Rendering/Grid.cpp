@@ -3,7 +3,7 @@
 #include "Project.h"
 #include "Shader.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "Editor/GameView.h" 
 
 namespace Tristeon

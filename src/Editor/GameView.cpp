@@ -1,5 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "GameView.h"
 #include <Engine.h>
@@ -47,13 +47,12 @@ namespace TristeonEditor
 	void GameView::initializeGL()
 	{
 		//Load OGL
-		glewExperimental = GL_TRUE;
-		GLenum err = glewInit();
-		if (err != GLEW_OK)
+		if (!gladLoadGL())
 		{
-			std::cout << "Error initializing glew: " << glewGetErrorString(err) << std::endl;
-			throw std::exception("Failed to initialize glew");
+			std::cout << "Error initializing glad." << std::endl;
+			throw std::exception("Failed to initialize glad");
 		}
+		std::cout << "OpenGL " << GLVersion.major << "." << GLVersion.minor << "\n";
 		
 		QOpenGLFunctions* f = context()->functions();
 		f->glClearColor(0, 0, 0, 1);

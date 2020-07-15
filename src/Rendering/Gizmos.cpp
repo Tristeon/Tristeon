@@ -1,6 +1,6 @@
 #include "Gizmos.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "Shader.h"

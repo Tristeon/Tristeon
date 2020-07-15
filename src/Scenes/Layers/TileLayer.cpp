@@ -1,5 +1,5 @@
 #include "TileLayer.h"
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include <Engine.h>
 #include <FileTypes/TileSet.h>

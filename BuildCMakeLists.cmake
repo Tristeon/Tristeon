@@ -51,14 +51,13 @@ add_definitions(-DTRISTEON_LOGENABLED)
 
 #External libraries
 add_subdirectory(external/box2d)
-add_subdirectory(external/glew)
+add_subdirectory(external/glad)
 add_subdirectory(external/glfw)
-include_directories(${CMAKE_SOURCE_DIR}/external/glew/include)
 
 #Libraries
 macro(link_libs targetname)
     target_link_libraries(${targetname} PUBLIC box2d)
-    target_link_libraries(${targetname} PUBLIC libglew_static)
+    target_link_libraries(${targetname} PUBLIC glad)
     target_link_libraries(${targetname} PUBLIC glfw)
 endmacro()
 
