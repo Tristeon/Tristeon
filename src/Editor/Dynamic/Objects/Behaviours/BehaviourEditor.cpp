@@ -15,8 +15,17 @@ namespace TristeonEditor
 	{
 		data = behaviour->serialize();
 
-		auto* titleBar = new QWidget(this);
-		layout->addWidget(titleBar);
+		QFrame* frame = new QFrame(this);
+		frame->setFrameShape(QFrame::Box);
+		frame->setFrameShadow(QFrame::Sunken);
+		
+		frame->setLayout(new QVBoxLayout());
+		frame->layout()->setContentsMargins(0, 0, 0, 0);
+		frame->setStyleSheet("background-color: rgb(22, 160, 133);");
+		layout->addWidget(frame);
+
+		auto* titleBar = new QWidget(frame);
+		frame->layout()->addWidget(titleBar);
 
 		auto* titleLayout = new QHBoxLayout(titleBar);
 		titleLayout->setContentsMargins(0, 0, 0, 0);
@@ -32,11 +41,6 @@ namespace TristeonEditor
 		titleLayout->addWidget(closeButton);
 		connect(closeButton, &QToolButton::clicked, this, &BehaviourEditor::removeButtonPressed);
 
-		auto* line = new QFrame(this);
-		line->setFrameShape(QFrame::HLine);
-		line->setFrameShadow(QFrame::Sunken);
-		layout->addWidget(line);
-
 		displayContents();
 	}
 
@@ -50,6 +54,7 @@ namespace TristeonEditor
 		auto* formWidget = new QWidget(this);
 		layout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
+		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
 
 		for (auto it = data.begin(); it != data.end(); ++it)

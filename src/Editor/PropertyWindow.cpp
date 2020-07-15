@@ -12,7 +12,6 @@ namespace TristeonEditor
 	void PropertyWindow::initialize()
 	{
 		layout = new QGridLayout();
-		layout->setContentsMargins(0, 0, 0, 0);
 		contents = findChild<QWidget*>("properties_contents");
 		contents->setLayout(layout);
 		contents->show();

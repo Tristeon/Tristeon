@@ -27,10 +27,12 @@ namespace TristeonEditor
 		scroll->setWidgetResizable(true);
 		scroll->setFrameShape(QFrame::NoFrame);
 		scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		scroll->setContentsMargins(0, 0, 0, 0);
 
 		scrollArea = new QWidget(scroll);
 		scrollLayout = new QVBoxLayout(scrollArea);
 		scrollLayout->setAlignment(Qt::AlignTop);
+		scrollLayout->setContentsMargins(0, 0, 0, 0);
 		scrollArea->setLayout(scrollLayout);
 		layout->addWidget(scrollArea);
 		scroll->setWidget(scrollArea);
@@ -52,6 +54,7 @@ namespace TristeonEditor
 		auto* formWidget = new QWidget(this);
 		layout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
+		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
 
 		auto* nameField = new QLineEdit(formWidget);
@@ -138,6 +141,7 @@ namespace TristeonEditor
 		auto* formWidget = new QWidget(scrollArea);
 		scrollLayout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
+		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
 
 		data = actor->serialize();
@@ -296,14 +300,6 @@ namespace TristeonEditor
 
 	void ActorEditor::addBehaviour(Tristeon::Behaviour* behaviour)
 	{
-		auto* frame = new QFrame(scrollArea);
-		scrollArea->layout()->addWidget(frame);
-
-		frame->setFrameStyle(QFrame::Box | QFrame::Raised);
-		frame->setLineWidth(2);
-		auto * frameLayout = new QVBoxLayout(frame);
-		frame->setLayout(frameLayout);
-
 		json j = behaviour->serialize();
 
 		ObjectEditor * widget = ObjectEditorRegister::createInstance(j["typeID"]);
@@ -311,10 +307,10 @@ namespace TristeonEditor
 		if (widget == nullptr)
 			widget = new BehaviourEditor(); //Default editor for behaviours as fallback.
 
-		widget->setParent(frame);
+		widget->setParent(scrollArea);
 		widget->target(behaviour);
 		widget->initialize();
-		frameLayout->addWidget(widget);
+		scrollArea->layout()->addWidget(widget);
 	}
 }
 #endif

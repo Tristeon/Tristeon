@@ -18,6 +18,7 @@ namespace TristeonEditor
 		layout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
+		form->setContentsMargins(0, 0, 0, 0);
 		
 		EditorFields::floatField(form, "Radius", circle->radius(), [=](float value) { circle->radius(value); });
 

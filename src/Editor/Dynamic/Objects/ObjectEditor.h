@@ -15,6 +15,7 @@ namespace TristeonEditor
 		{
 			layout = new QVBoxLayout(this);
 			layout->setAlignment(Qt::AlignTop);
+			layout->setContentsMargins(0, 0, 0, 0);
 			setLayout(layout);
 		}
 		virtual ~ObjectEditor() = default;

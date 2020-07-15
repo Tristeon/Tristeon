@@ -17,6 +17,7 @@ namespace TristeonEditor
 		auto* formWidget = new QWidget(this);
 		layout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
+		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
 
 		auto* sizeWidget = new QWidget();
