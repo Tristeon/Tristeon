@@ -27,10 +27,10 @@ namespace Tristeon
 
 	void Scene::deserialize(json j)
 	{
-		camera->deserialize(j["camera"]);
+		camera->deserialize(j.value("camera", json()));
 
 		layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
-		for (auto serializedLayer : j["layers"])
+		for (auto serializedLayer : j.value("layers", json::array_t()))
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedLayer["typeID"]);
 			serializable->deserialize(serializedLayer);

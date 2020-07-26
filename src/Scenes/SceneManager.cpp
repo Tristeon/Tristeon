@@ -15,7 +15,8 @@ namespace Tristeon
 	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
 	Delegate<Scene*> SceneManager::sceneLoaded;
 	String SceneManager::cachedSceneName;
-	
+	json SceneManager::cachedSceneData;
+
 	Scene* SceneManager::current()
 	{
 		return currentScene.get();
@@ -26,11 +27,16 @@ namespace Tristeon
 		cachedSceneName = name;
 	}
 
+	void SceneManager::load(json const data)
+	{
+		cachedSceneData = data;
+	}
+
 	void SceneManager::reload()
 	{
 		if (currentScene == nullptr)
 			return;
-		
+
 		load(currentScene->name);
 	}
 
@@ -38,7 +44,7 @@ namespace Tristeon
 	{
 		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
-		
+
 		json const data = scene->serialize();
 		JsonSerializer::save(Project::assetPath() + filepath, data);
 
@@ -67,22 +73,34 @@ namespace Tristeon
 
 	void SceneManager::processCachedLoad()
 	{
-		if (cachedSceneName.empty())
-			return;
+		json toLoad;
+		String path;
 		
-		String const path = AssetDatabase::findByName(cachedSceneName, ".scene");
-		if (path.empty())
+		if (!cachedSceneData.empty())
 		{
-			std::cout << "Couldn't find scene: " << cachedSceneName << std::endl;
-			currentScene.reset();
-			currentScene = std::make_unique<Scene>(); // load empty scene
-			sceneLoaded.invoke(currentScene.get());
+			toLoad = cachedSceneData;
+			path = "";
+		}
+		else if (!cachedSceneName.empty())
+		{
+			path = AssetDatabase::findByName(cachedSceneName, ".scene");
+			if (path.empty())
+			{
+				std::cout << "Couldn't find scene: " << cachedSceneName << std::endl;
+				currentScene.reset();
+				currentScene = std::make_unique<Scene>(); // load empty scene
+				sceneLoaded.invoke(currentScene.get());
+				return;
+			}
+			toLoad = JsonSerializer::load(Project::assetPath() + path);
+		}
+		else //Don't load a scene if there's nothing to load
+		{
 			return;
 		}
 
-		auto j = JsonSerializer::load(Project::assetPath() + path);
 		currentScene = std::make_unique<Scene>();
-		currentScene->deserialize(j);
+		currentScene->deserialize(toLoad);
 		currentScene->name = cachedSceneName;
 		currentScene->path = path;
 
@@ -92,6 +110,7 @@ namespace Tristeon
 		sceneLoaded.invoke(currentScene.get());
 
 		cachedSceneName = "";
+		cachedSceneData = json();
 	}
 
 	void SceneManager::reset()

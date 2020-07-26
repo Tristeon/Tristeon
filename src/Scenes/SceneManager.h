@@ -17,6 +17,9 @@ namespace Tristeon
 	/**
 	 * SceneManager is a static class that manages scene loading.
 	 * Only one scene can be loaded at the same time and it can be accessed through SceneManager::current()
+	 *
+	 * Scenes can be loaded by name or through json data, using the load() functions.
+	 * For the sake of safety and consistency, scenes are only loaded at the end of the game loop.
 	 */
 	class SceneManager final
 	{
@@ -37,10 +40,17 @@ namespace Tristeon
 		/**
 		 * Unloads the current scene and then loads a scene with the given name (no file extension).
 		 *
-		 * This change gets applied after the full frame has finished.
+		 * This change gets applied at the end of the game loop.
 		 */
 		static void load(String const name);
 
+		/**
+		 * Unloads the current scene and then loads a scene with the given data.
+		 *
+		 * This change gets applied at the end of the game loop.
+		 */
+		static void load(json const data);
+		
 		/**
 		 * Reloads the current scene from file.
 		 */
@@ -78,5 +88,6 @@ namespace Tristeon
 		
 		static Unique<Scene> currentScene;
 		static String cachedSceneName;
+		static json cachedSceneData;
 	};
 }

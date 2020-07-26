@@ -20,6 +20,8 @@ namespace TristeonEditor
 		QPushButton* start = nullptr;
 		QPushButton* pause = nullptr;
 		QPushButton* stop = nullptr;
+
+		json sceneBeforePlay;
 	};
 }
 #endif

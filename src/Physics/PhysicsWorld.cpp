@@ -24,6 +24,13 @@ namespace Tristeon
 	void PhysicsWorld::update()
 	{
 		world->Step(Project::Physics::fixedDeltaTime() / 1000.0f, velocityIterations, positionIterations);
+
+		processCachedCallbacks();
+	}
+
+	void PhysicsWorld::processCachedCallbacks()
+	{
+		
 	}
 
 	float PhysicsWorld::pixelsToMeters(uint32 const& pixels)

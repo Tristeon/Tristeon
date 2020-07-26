@@ -43,6 +43,8 @@ namespace Tristeon
 		{
 			//TODO: Potentially detect existing actors and simply re-deserialize as opposed to recreating them
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedActor["typeID"]);
+			if (serializable == nullptr)
+				continue;
 			serializable->deserialize(serializedActor);
 			actors.push_back(Unique<Actor>((Actor*)serializable.release()));
 		}

@@ -80,6 +80,7 @@ namespace Tristeon
 		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance, RaycastResult& result);
 	private:
 		void update();
+		void processCachedCallbacks();
 
 		int velocityIterations = 8;
 		int positionIterations = 3;

@@ -39,8 +39,7 @@ namespace TristeonEditor
 			GameView::instance()->setFocus();
 			if (!pause->isChecked())
 			{
-				Tristeon::SceneManager::saveCurrent();
-				Tristeon::SceneManager::reload();
+				sceneBeforePlay = Tristeon::SceneManager::current()->serialize();
 			}
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
@@ -61,6 +60,8 @@ namespace TristeonEditor
 		pause->setChecked(false);
 
 		Tristeon::Renderer::showGrid = true;
+
+		Tristeon::SceneManager::load(sceneBeforePlay);
 	}
 
 	void TopBar::pauseGame()
