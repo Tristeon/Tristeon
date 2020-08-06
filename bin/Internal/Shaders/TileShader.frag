@@ -21,7 +21,7 @@ uniform TileSet tileSet;
 
 struct Level
 {
-    samplerBuffer data;
+    isamplerBuffer data;
     uint width;
     uint height;
     
@@ -80,10 +80,10 @@ void main()
     uint dataIndex = dataY * level.width + dataX;
 
     //Convert data tile to tileset index (data stored in a 1D array of 2 integers per tile, first describes the index, the second describes the tileset id)
-    int tileSetValue = floatBitsToInt(texelFetch(level.data, int(dataIndex) * 2 + 1).r);
+    int tileSetValue = texelFetch(level.data, int(dataIndex) * 2 + 1).r;
     if (tileSetValue != int(tileSet.id))
         discard;
-    int dataValue = floatBitsToInt(texelFetch(level.data, int(dataIndex) * 2).r);
+    int dataValue = texelFetch(level.data, int(dataIndex) * 2).r;
     ivec2 tileIndex = tileTo2DIndex(dataValue);
     if (tileIndex.x == -1 || tileIndex.y == -1)
         discard; //Discard empty tiles
