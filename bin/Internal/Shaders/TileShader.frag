@@ -89,12 +89,12 @@ void main()
         discard; //Discard empty tiles
 
     //Calculate tile u,v by taking the leftover decimals in tileX and tileY
-    float tileU = mod(tileX, 1);
-    float tileV = mod(tileY, 1);
+    float tileU = mod(tileX, 1.0f);
+    float tileV = mod(tileY, 1.0f);
 
     //Convert UVs to tileset space
     vec2 tileSetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
-    FragColor = texture2D(tileSet.texture, tileSetUV);
+    FragColor = texture(tileSet.texture, tileSetUV);
 }
 
 ivec2 tileTo2DIndex(int tile)
