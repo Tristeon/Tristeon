@@ -8,6 +8,8 @@
 #include "Project.h"
 #include <filesystem>
 
+#include "AssetManagement/MetaFile.h"
+
 namespace Tristeon
 {
 	class Resources
@@ -54,6 +56,27 @@ namespace Tristeon
 			return (T*)loadedResources[lower].get();
 		}
 
+		template<typename T>
+		static T* load(String const& path)
+		{
+			if (path.empty())
+				return nullptr;
+
+			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const lower = StringHelper::toLower(globalPath);
+
+			if (!std::filesystem::exists(lower))
+				return nullptr;
+
+			MetaFile* metaFile = JsonSerializer::deserialize<MetaFile>(globalPath + ".meta");
+			if (newLoadedResources.find(metaFile->GUID) != newLoadedResources.end())
+				return newLoadedResources[metaFile->GUID].get();
+
+			Unique<TObject> loadedAsset = metaFile->load();
+
+			newLoadedResources[metaFile->GUID] = std::move(loadedAsset);
+		}
+
 		static bool loaded(String const& path)
 		{
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
@@ -69,6 +92,9 @@ namespace Tristeon
 		}
 
 	private:
+		//TODO: Switch to new meta file system
 		static std::map<String, Unique<TObject>> loadedResources;
+
+		static std::map<int,Unique<TObject>> newLoadedResources;
 	};
 }
