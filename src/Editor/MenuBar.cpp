@@ -1,7 +1,7 @@
 #ifdef TRISTEON_EDITOR
 #include "Project.h"
 #include "Animations/AnimationClip.h"
-#include "AssetDatabase.h"
+#include "AssetManagement/AssetDatabase.h"
 #include "Serialization/JsonSerializer.h"
 #include "Window.h"
 #include "MenuBar.h"

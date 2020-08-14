@@ -5,6 +5,7 @@
 json Tristeon::MetaFile::serialize()
 {
 	json j;
+	j["typeID"] = TRISTEON_TYPENAME(MetaFile);
 	j["filepath"] = filepath;
 	j["GUID"] = GUID;
 	return j;

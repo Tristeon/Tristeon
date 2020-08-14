@@ -59,6 +59,7 @@ namespace Tristeon
 		template<typename T>
 		static T* load(String const& path)
 		{
+			//Find complete filepath (path only contains a path relative to the project)
 			if (path.empty())
 				return nullptr;
 
@@ -68,13 +69,18 @@ namespace Tristeon
 			if (!std::filesystem::exists(lower))
 				return nullptr;
 
+			//Load metafile and its associated resource
+			if (!std::filesystem::exists(globalPath + ".meta"))
+				return nullptr;
+			
 			MetaFile* metaFile = JsonSerializer::deserialize<MetaFile>(globalPath + ".meta");
 			if (newLoadedResources.find(metaFile->GUID) != newLoadedResources.end())
-				return newLoadedResources[metaFile->GUID].get();
+				return (T*)newLoadedResources[metaFile->GUID].get();
 
 			Unique<TObject> loadedAsset = metaFile->load();
 
 			newLoadedResources[metaFile->GUID] = std::move(loadedAsset);
+			return (T*)newLoadedResources[metaFile->GUID].get();
 		}
 
 		static bool loaded(String const& path)

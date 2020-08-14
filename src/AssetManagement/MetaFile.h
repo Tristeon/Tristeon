@@ -4,10 +4,13 @@
 
 namespace Tristeon
 {
+	/**
+	 * \brief Default meta file when file extension cannot be recognized
+	 */
 	class MetaFile : public Serializable
 	{
 	public:
-		virtual Unique<TObject> load() = 0;
+		virtual Unique<TObject> load() { return nullptr; }
 
 		json serialize() override;
 
@@ -15,6 +18,6 @@ namespace Tristeon
 		
 		String filepath;
 		
-		int GUID;
+		unsigned int GUID;
 	};
 }

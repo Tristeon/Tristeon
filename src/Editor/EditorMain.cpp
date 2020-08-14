@@ -1,7 +1,7 @@
 #ifdef TRISTEON_EDITOR
 #include <glad/glad.h>
 #include "Engine.h"
-#include "AssetDatabase.h"
+#include "AssetManagement/AssetDatabase.h"
 
 #include <QtWidgets>
 #include <QtUiTools/QtUiTools>
@@ -11,7 +11,7 @@
 
 #include <Editor/Editor.h>
 #include <Editor/EditorWindow.h>
-#include <Editor/FileExplorer.h>
+#include <Editor/AssetExplorer/FileExplorer.h>
 #include <Editor/GameView.h>
 #include <Editor/LayerEditor.h>
 #include <Editor/LayerListEditor.h>

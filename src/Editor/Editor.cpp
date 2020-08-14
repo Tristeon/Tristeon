@@ -6,6 +6,9 @@ namespace TristeonEditor
 {
 	void Editor::initialize()
 	{
+		//Scan meta files
+		importer.scanProject();
+		
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{

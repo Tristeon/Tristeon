@@ -1,5 +1,6 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include "AssetExplorer/Importer.h"
 #include "Utils/Singleton.h"
 
 #include <Editor/DockWidget.h>
@@ -36,6 +37,7 @@ namespace TristeonEditor
 		Tristeon::Actor* _selectedActor = nullptr;
 		FileItem* _selectedFileItem = nullptr;
 		MenuBar* menuBar = nullptr;
+		Importer importer;
 		Tristeon::Vector<DockWidget*> windows;
 	};
 }

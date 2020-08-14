@@ -9,7 +9,6 @@
 #include <Input/Mouse.h>
 #include <Input/Gamepad.h>
 
-#include "AssetDatabase.h"
 #include <Callbacks/IEarlyUpdate.h>
 #include <Callbacks/IFixedUpdate.h>
 #include <Callbacks/ILateUpdate.h>

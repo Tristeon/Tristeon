@@ -1,5 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "AssetDatabase.h"
+#include "AssetManagement/AssetDatabase.h"
 #include "Project.h"
 #include "TileSetTab.h"
 #include "TileSetEditor.h"

@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include "DockWidget.h"
-#include "Dynamic/Files/FileItem.h"
+#include "../DockWidget.h"
+#include "../Dynamic/Files/FileItem.h"
 #include <QFileSystemModel>
 #include <QDockWidget>
 #include <qtreeview.h>
@@ -19,6 +19,7 @@ namespace TristeonEditor
 
 		FileItem current;
 		QFileSystemModel* model = nullptr;
+		QFileSystemWatcher* watcher = nullptr;
 		QTreeView* view = nullptr;
 	};
 }

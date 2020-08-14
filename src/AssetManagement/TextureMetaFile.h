@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "MetaFile.h"
 #include "Serialization/TypeRegister.h"
+#include "FileExtensionRegister.h"
 
 namespace Tristeon
 {
@@ -15,4 +16,5 @@ namespace Tristeon
 	};
 
 	REGISTER_TYPE(TextureMetaFile);
+	FILE_EXTENSION_TYPE(TextureMetaFile,".png");
 }

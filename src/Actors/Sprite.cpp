@@ -12,7 +12,7 @@ namespace Tristeon
 {
 	Sprite::Sprite()
 	{
-		texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+		texture = Resources::load<Texture>(Texture::defaultPath);
 	}
 
 	json Sprite::serialize()

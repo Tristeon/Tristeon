@@ -1,8 +1,8 @@
 #ifdef TRISTEON_EDITOR
-#include "Editor.h"
+#include "../Editor.h"
 #include "Project.h"
 #include <QtWidgets>
-#include <Editor/FileExplorer.h>
+#include <Editor/AssetExplorer/FileExplorer.h>
 #include <QApplication>
 #include <QFileSystemModel>
 #include <qheaderview.h>
@@ -17,6 +17,7 @@ namespace TristeonEditor
 		grid->setContentsMargins(0, 0, 0, 0);
 		contents->setLayout(grid);
 		model = new QFileSystemModel(this);
+		watcher = new QFileSystemWatcher(this);
 
 		model->setRootPath(QString::fromStdString(Tristeon::Project::assetPath()));
 		view = new QTreeView(this);
