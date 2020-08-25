@@ -1,5 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "AssetDatabase.h"
+#include "AssetManagement/AssetDatabase.h"
 #include "Window.h"
 #include "Input/Keyboard.h"
 #include "Rendering/Grid.h"

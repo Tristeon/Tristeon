@@ -90,3 +90,8 @@ Tristeon.dir
 *.autosave
 enc_temp_folder
 bin/Local/
+
+#Temp doc folders
+.jekyll-cache/
+_site/
+run.bat
