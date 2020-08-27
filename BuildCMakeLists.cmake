@@ -62,6 +62,7 @@ macro(link_libs targetname)
 endmacro()
 
 if (MSVC)
+	add_definitions(/MP)
 	add_executable(Tristeon ${tristeonSRC})
 	
 	#Set target output directory
