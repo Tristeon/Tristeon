@@ -1,4 +1,5 @@
 #ifndef TRISTEON_EDITOR
+#include "glad/glad.h"
 #include "GameWindow.h"
 
 #include "Project.h"
@@ -21,21 +22,21 @@ namespace Tristeon
 		window = glfwCreateWindow(1920, 1080, "Tristeon", NULL, NULL);
 		if (!window)
 			throw std::exception("Failed to create GLFW window");
-
-		fullscreen = Project::Graphics::fullscreen();
-		setFullscreen(Project::Graphics::fullscreen());
 		glfwMakeContextCurrent(window);
 
-		setupCallbacks();
-
 		//Load OGL
-		glewExperimental = GL_TRUE;
-		GLenum err = glewInit();
-		if (err != GLEW_OK)
+		if (!gladLoadGL())
 		{
-			std::cout << "Error initializing glew: " << glewGetErrorString(err) << std::endl;
-			throw std::exception("Failed to initialize glew");
+
+			std::cout << "Error initializing glad." << std::endl;
+			throw std::exception("Failed to initialize glad");
 		}
+		std::cout << "OpenGL " << GLVersion.major << "." << GLVersion.minor << "\n";
+		
+		fullscreen = Project::Graphics::fullscreen();
+		setFullscreen(Project::Graphics::fullscreen());
+
+		setupCallbacks();
 
 		glClearColor(0, 0, 0, 1);
 

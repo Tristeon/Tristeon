@@ -18,6 +18,7 @@
 #include "Actors/Actor.h"
 #include "Project.h"
 #include "Utils/Time.h"
+#include "AssetManagement/AssetDatabase.h"
 
 namespace Tristeon
 {
