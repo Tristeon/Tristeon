@@ -45,5 +45,5 @@ namespace Tristeon
 		return result;
 	}
 #define TRISTEON_TYPENAME(T) Tristeon::getTypename<T>()
-#endif()
+#endif
 }
