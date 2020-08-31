@@ -18,7 +18,9 @@ namespace TristeonEditor
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override
 		{
 			item = dynamic_cast<FileItem*>(current);
-			assert(item != nullptr, "FileEditor's target must be of type FileItem");
+
+			if (item == nullptr)
+				throw std::exception("FileEditor's target must be of type FileItem!");
 		}
 	protected:
 		FileItem* item = nullptr;

@@ -4,8 +4,6 @@
 
 namespace Tristeon
 {
-	Vector4::Vector4(float xyzw) : x(xyzw), y(xyzw), z(xyzw), w(xyzw) {}
-
 	Vector4::Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
 	const Vector4 Vector4::zero = Vector4(0, 0, 0, 0);
@@ -92,7 +90,7 @@ namespace Tristeon
 
 	Vector4 Vector4::lerp(Vector4 a, Vector4 b, float t)
 	{
-		if (b - a == Vector4(0, 0, 0)) return b; //Positions are equal
+		if (b - a == Vector4(0, 0, 0, 0)) return b; //Positions are equal
 
 		float const interpolation = a.distance(b) * t; //Get interpolation value
 		Vector4 const linearDirection = (b - a).getNormalized(); //Get direction

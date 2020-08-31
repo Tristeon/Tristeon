@@ -11,12 +11,13 @@ namespace Tristeon
 	 */
 	struct Vector2 final
 	{
+		Vector2() = default;
 		/**
 		 * Creates a (x, y) Vector2
 		 * \param x The x of this vector
 		 * \param y The y of this vector
 		 */
-		Vector2(float x = 0, float y = 0);
+		Vector2(float x, float y);
 
 #pragma region quick vectors
 

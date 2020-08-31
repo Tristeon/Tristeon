@@ -11,15 +11,11 @@ namespace Tristeon
 	struct Vector3 final
 	{
 	public:
-		/**
-		 * Creates a (xyz, xyz, xyz) Vector3
-		 * \param xyz The x, y and z component of this vector
-		 */
-		explicit Vector3(float xyz);
+		Vector3() = default;
 		/**
 		 * Creates a (x, y, z) Vector3
 		 */
-		Vector3(float x = 0, float y = 0, float z = 0);
+		Vector3(float x, float y, float z);
 
 #pragma region const static vectors
 		/**

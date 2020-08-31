@@ -9,17 +9,13 @@ namespace Tristeon
 	 */
 	struct Vector2Int final
 	{
-		/**
-		 * Creates a (xy, xy) Vector2Int
-		 * \param xy The x and y of this vector
-		 */
-		Vector2Int(int xy);
+		Vector2Int() = default;
 		/**
 		 * Creates a (x, y) Vector2Int
 		 * \param x The x of this vector
 		 * \param y The y of this vector
 		 */
-		Vector2Int(int x = 0, int y = 0);
+		Vector2Int(int x, int y);
 
 		/**
 		 * Creates a vector2int with the given Vector2

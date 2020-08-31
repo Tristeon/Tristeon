@@ -10,15 +10,11 @@ namespace Tristeon
 	*/
 	struct Vector4 final
 	{
-		/**
-		 * Creates a (xyzw, xyzw, xyzw) Vector4
-		 * \param xyzw The x, y, z and w component of this vector
-		 */
-		explicit Vector4(float xyzw);
+		Vector4() = default;
 		/**
 		 * Creates a (x, y, z, w) Vector4
 		 */
-		Vector4(float x = 0, float y = 0, float z = 0, float w = 0);
+		Vector4(float x, float y, float z, float w);
 
 #pragma region const static vectors
 		/**

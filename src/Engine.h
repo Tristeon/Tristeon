@@ -13,8 +13,10 @@ namespace Tristeon
 	 * Engine is the absolute core of Tristeon. It owns engine subsystems such as Renderer, GameView, Physics, etc.
 	 * It manages the creation and destruction of the engine subsystems. Subsystems may be accessible through their own Singleton instances.
 	 */
-	class Engine final : Singleton<Engine>
+	class Engine final : private Singleton<Engine>
 	{
+		friend Singleton<Engine>;
+
 		friend Actor;
 		friend Behaviour;
 		

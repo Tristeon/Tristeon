@@ -4,8 +4,6 @@
 
 namespace Tristeon
 {
-	Vector3::Vector3(float xyz) : x(xyz), y(xyz), z(xyz) {}
-
 	Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 
 	const Vector3 Vector3::forward = Vector3(0, 0, 1);

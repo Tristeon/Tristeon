@@ -3,8 +3,6 @@
 
 namespace Tristeon
 {
-	Vector2Int::Vector2Int(int xy) : x(xy), y(xy) {}
-
 	Vector2Int::Vector2Int(int x, int y) : x(x), y(y) {}
 
 	Vector2Int::Vector2Int(Vector2 vec2) : x(static_cast<int>(vec2.x)), y(static_cast<int>(vec2.y)) { }

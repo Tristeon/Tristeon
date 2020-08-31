@@ -15,6 +15,7 @@ namespace Tristeon
 	 */
 	class Window : private Singleton<Window>
 	{
+		friend Singleton<Window>;
 		friend Engine;
 	public:
 		virtual ~Window() = default;
