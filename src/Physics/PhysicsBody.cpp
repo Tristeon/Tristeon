@@ -39,7 +39,7 @@ namespace Tristeon
 		if (body == nullptr)
 			createBody();
 
-		for (auto& col : getOwner()->getBehaviours<Collider>())
+		for (auto* col : getOwner()->getBehaviours<Collider>())
 		{
 			col->setPhysicsBody(body.get());
 		}
@@ -58,7 +58,7 @@ namespace Tristeon
 
 	void PhysicsBody::preDestroy()
 	{
-		for (auto& col : getOwner()->getBehaviours<Collider>())
+		for (auto* col : getOwner()->getBehaviours<Collider>())
 		{
 			col->setPhysicsBody(nullptr);
 		}

@@ -39,13 +39,13 @@ namespace Tristeon
 	template <typename T>
 	void Collector<T>::add(T* t)
 	{
-		collection.push_back(t);
+		collection.add(t);
 	}
 
 	template <typename T>
 	void Collector<T>::remove(T* t)
 	{
-		collection.erase(std::remove(collection.begin(), collection.end(), t), collection.end());
+		collection.remove(t);
 	}
 
 	template <typename T>

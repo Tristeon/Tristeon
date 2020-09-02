@@ -68,7 +68,7 @@ namespace Tristeon
 				if (tileset == nullptr)
 					continue;
 				tileset->filePath = i.get<String>();
-				tilesets.push_back(tileset);
+				tilesets.add(tileset);
 			}
 		}
 		

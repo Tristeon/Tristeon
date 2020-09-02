@@ -144,7 +144,7 @@ namespace Tristeon
 		{
 			T* value = dynamic_cast<T*>(behaviour.get());
 			if (value != nullptr)
-				behaviours.push_back(value);
+				behaviours.add(value);
 		}
 
 		return behaviours;

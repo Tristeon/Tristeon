@@ -178,7 +178,7 @@ namespace Tristeon
 		for (size_t i = 0; i < layers.size(); i++)
 		{
 			if (dynamic_cast<T*>(layers[i].get()) != nullptr)
-				result.push_back(dynamic_cast<T*>(layers[i].get()));
+				result.add(dynamic_cast<T*>(layers[i].get()));
 		}
 		return result;
 	}

@@ -46,7 +46,7 @@ namespace Tristeon
 		ss.str(s);
 		std::string item;
 		while (getline(ss, item, delim)) {
-			result.push_back(item);
+			result.add(item);
 		}
 	}
 }

@@ -29,7 +29,7 @@ void Importer::import(std::filesystem::path assetPath)
 
 void Importer::scanProject()
 {
-	std::vector<fs::path> metaFilesToRemove;
+	Vector<fs::path> metaFilesToRemove;
 	
 	for (auto& directoryEntry : fs::recursive_directory_iterator(Project::assetPath()))
 	{
@@ -37,7 +37,7 @@ void Importer::scanProject()
 		if (path.extension().string() == ".meta")
 		{
 			String assetPath = path.parent_path().string() + path.stem().string();
-			if (!fs::exists(assetPath)) metaFilesToRemove.push_back(path);
+			if (!fs::exists(assetPath)) metaFilesToRemove.add(path);
 			continue;
 		}
 		

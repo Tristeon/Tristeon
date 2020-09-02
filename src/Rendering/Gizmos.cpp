@@ -64,13 +64,13 @@ namespace Tristeon
 			float const x = radius * cosf(theta);
 			float const y = radius * sinf(theta);
 
-			shape.vertices.push_back({ x + worldPosition.x , y + worldPosition.y });
+			shape.vertices.add({ x + worldPosition.x , y + worldPosition.y });
 
 			if (i != 0)
-				shape.vertices.push_back({ x + worldPosition.x , y + worldPosition.y });
+				shape.vertices.add({ x + worldPosition.x , y + worldPosition.y });
 
 			if (i == 31)
-				shape.vertices.push_back({ radius + worldPosition.x, worldPosition.y });
+				shape.vertices.add({ radius + worldPosition.x, worldPosition.y });
 		}
 
 		shapes.push(shape);
@@ -90,7 +90,7 @@ namespace Tristeon
 			unsigned int buffer = 0;
 			glGenBuffers(1, &buffer);
 			glBindBuffer(GL_ARRAY_BUFFER, buffer);
-			glBufferData(GL_ARRAY_BUFFER, shape.vertices.size() * sizeof(Vector2), shape.vertices.data(), GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, shape.vertices.size() * sizeof(Vector2), shape.vertices.ptr(), GL_STATIC_DRAW);
 
 			//bind vertex attrib pointer
 			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);

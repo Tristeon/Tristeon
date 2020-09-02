@@ -17,7 +17,7 @@ namespace Tristeon
 	
 	void Renderer::registerPrePassShader(Shader* shader)
 	{
-		prepass.push_back(shader);
+		prepass.add(shader);
 	}
 
 	void Renderer::deregisterPrePassShader(Shader* shader)

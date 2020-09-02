@@ -130,7 +130,7 @@ namespace Tristeon
 		for (auto& actor : actors)
 		{
 			if (dynamic_cast<T*>(actor.get()) != nullptr)
-				result.push_back((T*)actor.get());
+				result.add((T*)actor.get());
 		}
 		return result;
 	}

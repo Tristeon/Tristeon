@@ -46,7 +46,7 @@ namespace Tristeon
 			if (serializable == nullptr)
 				continue;
 			serializable->deserialize(serializedActor);
-			actors.push_back(Unique<Actor>((Actor*)serializable.release()));
+			actors.add(Unique<Actor>((Actor*)serializable.release()));
 		}
 	}
 
@@ -81,7 +81,7 @@ namespace Tristeon
 		if (actor != nullptr)
 		{
 			actor = (Actor*)serializable.release();
-			actors.push_back(std::unique_ptr<Actor>(actor));
+			actors.add(std::unique_ptr<Actor>(actor));
 			return actor;
 		}
 		return nullptr;

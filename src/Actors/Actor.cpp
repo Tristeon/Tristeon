@@ -70,7 +70,7 @@ namespace Tristeon
 			}
 			serializable.release();
 			behaviour->_owner = this;
-			_behaviours.push_back(Unique<Behaviour>(behaviour));
+			_behaviours.add(Unique<Behaviour>(behaviour));
 
 			behaviour->deserialize(serializedBehaviour);
 		}
@@ -109,7 +109,7 @@ namespace Tristeon
 			return nullptr;
 		
 		result->_owner = this;
-		_behaviours.push_back(Unique<Behaviour>(result));
+		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
 		IStart* istart = dynamic_cast<IStart*>(result);

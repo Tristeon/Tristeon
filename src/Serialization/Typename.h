@@ -12,7 +12,7 @@ namespace Tristeon
 	std::string getTypename()
 	{
 		String name = typeid(T).name();
-		std::vector<String> vec = StringHelper::split(name, ' ');
+		Vector<String> vec = StringHelper::split(name, ' ');
 		if (vec.size() < 2)
 		{
 			std::cout << "[Warning]: Failed to getTypename. Returning empty string!" << std::endl;

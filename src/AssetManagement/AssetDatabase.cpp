@@ -18,7 +18,7 @@ namespace Tristeon
 			assets[suffix] = Vector<String>();
 
 		if (!assets[suffix].contains(path))
-			assets[suffix].push_back(path);
+			assets[suffix].add(path);
 	}
 
 	void AssetDatabase::remove(String const& path)
@@ -88,7 +88,7 @@ namespace Tristeon
 				if (assets.find(entry.path().extension().string()) == assets.end())
 					assets[entry.path().extension().string()] = Vector<String>();
 
-				assets[entry.path().extension().string()].push_back(relative(entry.path(), std::filesystem::path(Project::assetPath())).string());
+				assets[entry.path().extension().string()].add(relative(entry.path(), std::filesystem::path(Project::assetPath())).string());
 			}
 		}
 	}
