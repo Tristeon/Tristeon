@@ -146,8 +146,6 @@ void showEditorWindow(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-	srand(std::time(nullptr)); //TODO: Replace rand()
-
 	showProjectWindow(argc, argv);
 
 	Tristeon::AssetDatabase::load();

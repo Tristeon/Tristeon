@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <sstream>
 
+#include "Random.h"
+
 namespace Tristeon
 {
 	String StringHelper::toLower(String string)
@@ -34,7 +36,7 @@ namespace Tristeon
 		std::string output;
 
 		for (size_t i = 0; i < length; ++i) {
-			output.push_back(alphanum[rand() % (size - 1)]);
+			output.push_back(alphanum[Random::generateInt() % (size - 1)]);
 		}
 
 		return output;

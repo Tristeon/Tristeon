@@ -21,7 +21,7 @@ void Importer::import(std::filesystem::path assetPath)
 
 	if (metaFile == nullptr) metaFile = std::make_unique<MetaFile>();
 
-	metaFile->GUID = Random::randomUInt();
+	metaFile->GUID = Random::generateUInt();
 	metaFile->filepath = assetPath.string();
 	
 	JsonSerializer::serialize<MetaFile>(assetPath.string() + ".meta",*metaFile);

@@ -63,7 +63,7 @@ namespace TristeonEditor
 
 		Tristeon::TileSet tileset{};
 		json j = tileset.serialize();
-		j["id"] = rand();
+		j["id"] = Tristeon::Random::generateUInt();
 		Tristeon::JsonSerializer::save(path.toStdString(), j);
 		Tristeon::AssetDatabase::add(localPath.toStdString());
 	}

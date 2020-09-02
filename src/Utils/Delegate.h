@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <functional>
 #include <algorithm> //Required in GNU GCC
+#include <Utils/Random.h>
 
 namespace Tristeon
 {
@@ -66,7 +67,7 @@ namespace Tristeon
 	template <typename ... P>
 	int Delegate<P...>::operator+=(std::function<void(P...)> f)
 	{
-		int id = rand(); // TODO: Make more safe by generating a nr that wont be replicated 
+		int id = Random::generateInt();
 		assert(events.find(id) == events.end()); 
 		events[id] = f;
 		return id;
