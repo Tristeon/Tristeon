@@ -5,7 +5,7 @@ namespace Tristeon
 {
 	json AnimationClip::serialize()
 	{
-		json j;
+		json j = Serializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(AnimationClip);
 		j["rows"] = rows;
 		j["cols"] = cols;
@@ -27,6 +27,8 @@ namespace Tristeon
 
 	void AnimationClip::deserialize(json j)
 	{
+		Serializable::deserialize(j);
+		
 		rows = j.value("rows", 1);
 		cols = j.value("cols", 1);
 		startIndex = j.value("startIndex", 0);

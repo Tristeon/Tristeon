@@ -116,5 +116,5 @@ else(MSVC)
 endif(MSVC)
 
 #Add Qt binaries to build
-execute_process(COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime .
+execute_process(COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
 				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

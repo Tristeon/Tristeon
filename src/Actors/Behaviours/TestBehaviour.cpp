@@ -34,7 +34,7 @@ namespace Tristeon
 	
 	json TestBehaviour::serialize()
 	{
-		json j;
+		json j = Behaviour::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(TestBehaviour);
 		j["jumpVelocity"] = jumpVelocity;
 		j["groundedDistance"] = groundedDistance;
@@ -44,6 +44,8 @@ namespace Tristeon
 
 	void TestBehaviour::deserialize(json j)
 	{
+		Behaviour::deserialize(j);
+		
 		jumpVelocity = j.value("jumpVelocity", 1500);
 		groundedDistance = j.value("groundedDistance", 256);
 		runSpeed = j.value("runSpeed", 100);

@@ -1,5 +1,5 @@
 #pragma once
-#include <Serialization/Serializable.h>
+#include "Serialization/InstancedSerializable.h"
 
 namespace Tristeon
 {
@@ -11,7 +11,7 @@ namespace Tristeon
 	 * The Scene has a list of layers, each layer is rendered and updated in the order of said list.
 	 * This base-class defines the minimal features of a Layer (a render and update function and a name).
 	 */
-	class Layer : public Serializable
+	class Layer : public InstancedSerializable
 	{
 		friend Renderer;
 		friend Scene;

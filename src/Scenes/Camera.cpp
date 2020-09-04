@@ -7,7 +7,7 @@ namespace Tristeon
 {
 	json Camera::serialize()
 	{
-		json j;
+		json j = Serializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Camera);
 		j["position"] = position;
 		j["size"] = size;
@@ -17,6 +17,8 @@ namespace Tristeon
 
 	void Camera::deserialize(json j)
 	{
+		Serializable::deserialize(j);
+		
 		position = j.value("position", Vector2Int::zero());
 		size = j.value("size", Vector2Int::zero());
 		zoom = j.value("zoom", 1.0f);

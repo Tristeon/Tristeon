@@ -48,7 +48,7 @@ namespace Tristeon
 
 	json Collider::serialize()
 	{
-		json j;
+		json j = Behaviour::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Collider);
 
 		j["offset"] = _offset;
@@ -65,6 +65,8 @@ namespace Tristeon
 
 	void Collider::deserialize(json j)
 	{
+		Behaviour::deserialize(j);
+		
 		_offset = j.value("offset", Vector2::zero());
 		_rotationOffset = j.value("rotationOffset", 0);
 		

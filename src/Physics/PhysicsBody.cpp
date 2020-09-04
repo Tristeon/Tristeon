@@ -11,7 +11,7 @@ namespace Tristeon
 {
 	json PhysicsBody::serialize()
 	{
-		json j;
+		json j = Behaviour::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(PhysicsBody);
 		j["type"] = _type;
 		j["gravityScale"] = _gravityScale;
@@ -25,6 +25,8 @@ namespace Tristeon
 
 	void PhysicsBody::deserialize(json j)
 	{
+		Behaviour::deserialize(j);
+		
 		_type = j.value("type", Dynamic);
 		_gravityScale = j.value("gravityScale", 1.0f);
 		_fixedRotation = j.value("fixedRotation", false);

@@ -1,5 +1,5 @@
 #pragma once
-#include <Serialization/Serializable.h>
+#include <Serialization/InstancedSerializable.h>
 
 namespace Tristeon
 {
@@ -12,7 +12,7 @@ namespace Tristeon
 	 * Behaviours are useful because they can be reused and added to different objects,
 	 * enabling programmers to generalize behaviour, reduce code and simplify the inheritance tree.
 	 */
-	class Behaviour : public Serializable
+	class Behaviour : public InstancedSerializable
 	{
 		friend Actor;
 		friend ActorLayer;
@@ -21,9 +21,6 @@ namespace Tristeon
 		virtual ~Behaviour();
 		Behaviour(const Behaviour& other) = delete;
 		Behaviour& operator=(const Behaviour& other) = delete;
-
-		json serialize() override = 0;
-		void deserialize(json j) override = 0;
 
 		Behaviour(Behaviour&& other) noexcept;
 		Behaviour& operator=(Behaviour&& other) noexcept;

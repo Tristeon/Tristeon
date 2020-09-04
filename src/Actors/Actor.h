@@ -1,5 +1,6 @@
 #pragma once
-#include <Serialization/Serializable.h>
+#include "Serialization/InstancedSerializable.h"
+
 #include <Actors/Behaviours/Behaviour.h>
 
 #include "Callbacks/IStart.h"
@@ -24,7 +25,7 @@ namespace Tristeon
 	 * 
 	 * Unlike Tiles, Actors can move, scale and rotate around the level freely, unbound by the grid or by axis alignment.
 	 */
-	class Actor : public Serializable
+	class Actor : public InstancedSerializable
 	{
 		friend ActorLayer;
 		friend SceneManager;
@@ -97,6 +98,14 @@ namespace Tristeon
 
 		/**
 		 * Looks through every actor layer,
+		 * returns the actor with the given ID.
+		 *
+		 * Returns nullptr if no such actor exists.
+		 */
+		static Actor* find(unsigned int const& id);
+
+		/**
+		 * Looks through every actor layer,
 		 * returns the first actor with the given type.
 		 *
 		 * Returns nullptr if no actor was found.
@@ -113,7 +122,7 @@ namespace Tristeon
 		template<typename T>
 		static T* findOfType(String name);
 	private:
-		Vector<Unique<Behaviour>> _behaviours;
+		Vector<Unique<Behaviour>> _behaviours{};
 		bool destroyed = false;
 
 		/**
@@ -155,7 +164,7 @@ namespace Tristeon
 	{
 		T* result = new T();
 		result->_owner = this;
-		_behaviours.push_back(Unique<Behaviour>(result));
+		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
 		IStart* istart = dynamic_cast<IStart*>(result);

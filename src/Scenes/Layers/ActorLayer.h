@@ -142,7 +142,7 @@ namespace Tristeon
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Actor!");
 		
 		T* actor = new T();
-		actors.push_back(std::unique_ptr<T>(actor));
+		actors.add(std::unique_ptr<T>(actor));
 		return actor;
 	}
 }

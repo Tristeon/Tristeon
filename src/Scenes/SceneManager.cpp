@@ -4,7 +4,7 @@
 #include <Serialization/JsonSerializer.h>
 
 #include "AssetManagement/AssetDatabase.h"
-#include <Actors/Collector.h>
+#include <Collectors/Collector.h>
 #include <Callbacks/IStart.h>
 #include <Scenes/Layers/ActorLayer.h>
 #include "Engine.h"

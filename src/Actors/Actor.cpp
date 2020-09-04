@@ -1,7 +1,12 @@
 #include "Actor.h"
+#include <Scenes/Layers/ActorLayer.h>
 
+#include "Collectors/Collector.h"
 #include "Callbacks/IPreDestroy.h"
+
 #include "Engine.h"
+#include "Collectors/InstanceCollector.h"
+
 
 namespace Tristeon
 {
@@ -13,9 +18,9 @@ namespace Tristeon
 	Actor::~Actor() noexcept
 	{
 		Collector<Actor>::remove(this);
-		
+
 		assert(destroyed == true);
-		
+
 		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
@@ -27,7 +32,7 @@ namespace Tristeon
 
 	json Actor::serialize()
 	{
-		json j;
+		json j = Serializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Actor);
 		j["position"] = position;
 		j["scale"] = scale;
@@ -43,6 +48,8 @@ namespace Tristeon
 
 	void Actor::deserialize(json j)
 	{
+		Serializable::deserialize(j);
+
 		position = j.value("position", Vector2());
 		scale = j.value("scale", Vector2::one());
 		rotation = j.value("rotation", 0);
@@ -85,7 +92,7 @@ namespace Tristeon
 				auto* pre = dynamic_cast<IPreDestroy*>(_behaviours[i].get());
 				if (pre != nullptr)
 					pre->preDestroy();
-				
+
 				_behaviours[i].reset();
 				_behaviours.removeAt(i);
 				break;
@@ -107,7 +114,7 @@ namespace Tristeon
 
 		if (result == nullptr)
 			return nullptr;
-		
+
 		result->_owner = this;
 		_behaviours.add(Unique<Behaviour>(result));
 
@@ -133,6 +140,17 @@ namespace Tristeon
 			if (actor->name == name)
 				return actor;
 		}
+		return nullptr;
+	}
+
+	Actor* Actor::find(unsigned const& id)
+	{
+		auto actorLayers = SceneManager::current()->findLayersOfType<ActorLayer>();
+		auto* serializable = InstanceCollector::find(id);
+		auto* actor = dynamic_cast<Actor*>(serializable);
+
+		if (actor != nullptr)
+			return actor;
 		return nullptr;
 	}
 }

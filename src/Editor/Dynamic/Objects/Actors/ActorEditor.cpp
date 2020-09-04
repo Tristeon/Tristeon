@@ -267,7 +267,8 @@ namespace TristeonEditor
 			propertyName == "scale" ||
 			propertyName == "rotation" ||
 			propertyName == "name" ||
-			propertyName == "behaviours")
+			propertyName == "behaviours" ||
+			propertyName == "instanceID")
 			return false;
 		
 		return true;

@@ -144,7 +144,7 @@ namespace Tristeon
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Layer!");
 		
 		T* newLayer = new T();
-		layers.push_back(std::unique_ptr<T>(newLayer));
+		layers.add(std::unique_ptr<T>(newLayer));
 		return newLayer;
 	}
 
