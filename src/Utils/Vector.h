@@ -100,6 +100,11 @@ namespace Tristeon
 		 * Empties the vector. Leaves the vector empty but with a capacity of 1.
 		 */
 		void clear();
+
+		/**
+		 * Returns true if the vector is empty. This function doesn't modify the vector.
+		 */
+		bool empty() const;
 		/**
 		 * Ensures that the vector's capacity is at least n.
 		 * If n is less than the vector's current capacity, nothing happens.
@@ -266,6 +271,12 @@ namespace Tristeon
 		delete[] _ptr;
 		_ptr = new T[_capacity = 1];
 		_size = 0;
+	}
+
+	template <typename T>
+	bool Vector<T>::empty() const
+	{
+		return _size == 0;
 	}
 
 	template <typename T>
