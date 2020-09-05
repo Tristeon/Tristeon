@@ -22,15 +22,21 @@ namespace Tristeon
 		
 		/**
 		 * The width of the window. This may potentially be different from the world/game size.
-		 * For rendering purposes, it is recommended to use GameView::width()
+		 * For rendering purposes, it is recommended to use Window::gameWidth()
 		 */
 		static unsigned int width() { return instance()->_windowWidth(); }
 
 		/**
 		 * The height of the window. This may potentially be different from the world/game size.
-		 * For rendering purposes, it is recommended to use GameView::height()
+		 * For rendering purposes, it is recommended to use Window::gameHeight()
 		 */
 		static unsigned int height() { return instance()->_windowHeight(); }
+
+		/**
+		 * The size of the window. This may potentially be different from the world/game size.
+		 * For rendering purposes, it is recommended to use Window::gameSize()
+		 */
+		static Vector2Int size() { return { (int)width(), (int)height() }; }
 
 		/**
 		 * Returns the width of the game screen. This may not be the width of the entire Window.
@@ -42,6 +48,11 @@ namespace Tristeon
 		 */
 		static unsigned int gameHeight() { return instance()->_gameHeight(); }
 
+		/**
+		 * Returns the size of the game screen. This may not be the size of the entire Window.
+		 */
+		static Vector2Int gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
+		
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
