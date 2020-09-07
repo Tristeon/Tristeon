@@ -11,18 +11,18 @@ namespace Tristeon
 	Shader::Shader()
 	{
 		empty = true;
+		Collector<Shader>::add(this);
 	}
 
 	Shader::Shader(std::string const& vertexShader, std::string const& fragmentShader) : vertexPath(vertexShader), fragmentPath(fragmentShader)
 	{
 		initialize();
-		Renderer::registerPrePassShader(this);
+		Collector<Shader>::add(this);
 	}
 
 	Shader::~Shader()
 	{
-		if (!empty)
-			Renderer::deregisterPrePassShader(this);
+		Collector<Shader>::remove(this);
 
 		glDeleteProgram(program);
 	}

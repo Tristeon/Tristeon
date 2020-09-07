@@ -1,11 +1,11 @@
 #ifdef TRISTEON_EDITOR
+#include "Actors/Camera.h"
 #include "AssetManagement/AssetDatabase.h"
 #include "Window.h"
 #include "Input/Keyboard.h"
 #include "Rendering/Grid.h"
 #include "Engine.h"
 #include "Input/Mouse.h"
-#include "Scenes/Camera.h"
 #include "TileLayerSceneView.h"
 #include "Editor/Brushes/Brushes.h"
 
@@ -43,14 +43,13 @@ namespace TristeonEditor
 		}
 		highlight->show();
 
-		if (Camera::main()->position != cameraPos || Camera::main()->zoom != cameraZoom)
+		if ((Vector2Int)Renderer::editorCamera()->position != cameraPos || Renderer::editorCamera()->zoom != cameraZoom)
 		{
-			cameraPos = Camera::main()->position;
-			cameraZoom = Camera::main()->zoom;
+			cameraPos = (Vector2Int)Renderer::editorCamera()->position;
+			cameraZoom = Renderer::editorCamera()->zoom;
 
 			updateTileSize();
 			updateTilePosition(lastMousePos);
-
 		}
 		drawTile(lastTileIndex);
 	}
@@ -84,8 +83,8 @@ namespace TristeonEditor
 
 	void TileLayerSceneView::updateTileSize()
 	{
-		Vector2 const screenScale = Vector2(width(), height()) / Vector2(1920, 1080);
-		Vector2 const size = Vector2((float)Grid::tileWidth(), (float)Grid::tileHeight()) * screenScale * Camera::main()->zoom;
+		Vector2 const screenScale = Vector2(width(), height()) / Window::gameSize();
+		Vector2 const size = Vector2((float)Grid::tileWidth(), (float)Grid::tileHeight()) * screenScale * Renderer::editorCamera()->zoom;
 		highlight->setMinimumSize((int)size.x, (int)size.y);
 		highlight->setMaximumSize((int)size.x, (int)size.y);
 		highlight->adjustSize();
@@ -93,9 +92,8 @@ namespace TristeonEditor
 
 	void TileLayerSceneView::updateTilePosition(Vector2Int mousePos)
 	{
-		Camera* camera = Camera::main();
-		Vector2 const scalar = Vector2{ width() / (float)camera->size.x, height() / (float)camera->size.y } *Camera::main()->zoom;
-		Vector2 const cameraPos = (Vector2)Camera::main()->position * scalar;
+		Vector2 const scalar = Vector2{ width() / (float)Window::gameWidth(), height() / (float)Window::gameHeight() } *Renderer::editorCamera()->zoom;
+		Vector2 const cameraPos = (Vector2)(Vector2Int)Renderer::editorCamera()->position * scalar;
 
 		Vector2Int const tileIndex = Grid::indexByPosition(Window::screenToWorld(mousePos));
 

@@ -54,19 +54,21 @@ namespace TristeonEditor
 		}
 		std::cout << "OpenGL " << GLVersion.major << "." << GLVersion.minor << "\n";
 		
-		QOpenGLFunctions* f = context()->functions();
-		f->glClearColor(0, 0, 0, 1);
+		glad_glClearColor(0, 0, 0, 1);
 
 		//Enable culling
-		f->glEnable(GL_CULL_FACE);
-		f->glCullFace(GL_BACK);
+		glad_glEnable(GL_CULL_FACE);
+		glad_glCullFace(GL_BACK);
 
 		//Enable transparency blending
-		f->glEnable(GL_BLEND);
-		f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		glad_glEnable(GL_BLEND);
+		glad_glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		//Disable multisampling because any form of aliasing messes with transparency in 2D
-		f->glDisable(GL_MULTISAMPLE);
+		glad_glDisable(GL_MULTISAMPLE);
+
+		glad_glDisable(GL_DEPTH_TEST);
+		glad_glDisable(GL_STENCIL_TEST);
 	}
 
 	void GameView::resizeGL(int w, int h)

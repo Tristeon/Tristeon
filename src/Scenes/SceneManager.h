@@ -49,7 +49,7 @@ namespace Tristeon
 		 *
 		 * This change gets applied at the end of the game loop.
 		 */
-		static void load(json const data);
+		static void load(json const data, const String& path = "");
 		
 		/**
 		 * Reloads the current scene from file.

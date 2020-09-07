@@ -1,6 +1,9 @@
 #pragma once
 #include <cassert>
+#include <xutility>
 #include <initializer_list>
+#include <algorithm>
+#include <Utils/ClassDefaults.h>
 
 using ull = unsigned long long;
 
@@ -14,6 +17,8 @@ namespace Tristeon
 	template<typename T>
 	class Vector
 	{
+	public:
+
 		/**
 		 * The Iterator used to iterate over the Vector's members.
 		 *
@@ -23,7 +28,18 @@ namespace Tristeon
 		class Iterator
 		{
 		public:
+			using iterator_category = typename std::random_access_iterator_tag;
+			using value_type = T;
+			using difference_type = ull;
+			using pointer = T*;
+			using reference = T&;
+			
 			explicit Iterator() = default;
+			~Iterator() = default;
+			
+			DEFAULT_MOVE(Iterator);
+			DEFAULT_COPY(Iterator);
+			
 			/**
 			 * Constructs an iterator with the given pointer. This pointer is assumed to be a pointer to an array on the heap.
 			 * The pointer may be modified through operators like ++ and --.
@@ -36,10 +52,14 @@ namespace Tristeon
 			T& operator*() const { return *_ptr; }
 
 			Iterator& operator++() { ++_ptr; return *this; }
-			Iterator operator++(int) { Iterator temp(*this); ++*this; return temp; }
-
 			Iterator& operator--() { --_ptr; return *this; }
-			Iterator operator--(int) { Iterator temp(*this); --*this; return temp; }
+
+			difference_type operator-(const Iterator& rhs) const { return _ptr - rhs._ptr; }
+			Iterator operator-(const difference_type& off) const { return Iterator(_ptr - off); }
+			Iterator operator+(const difference_type& off) const { return Iterator(_ptr + off); }
+
+			bool operator<(const Iterator& rhs) const { return _ptr < rhs._ptr; }
+			bool operator>(const Iterator& rhs) const { return _ptr > rhs._ptr; }
 		private:
 			T* _ptr = nullptr;
 		};
@@ -53,7 +73,18 @@ namespace Tristeon
 		class ConstIterator
 		{
 		public:
+			using iterator_category = typename std::random_access_iterator_tag;
+			using value_type = T;
+			using difference_type = ull;
+			using pointer = T*;
+			using reference = T&;
+			
 			explicit ConstIterator() = default;
+			~ConstIterator() = default;
+
+			DEFAULT_COPY(ConstIterator);
+			DEFAULT_MOVE(ConstIterator);
+			
 			/**
 			 * Constructs an iterator with the given pointer. This pointer is assumed to be a pointer to an array on the heap.
 			 * The pointer may be modified through operators like ++ and --.
@@ -66,15 +97,18 @@ namespace Tristeon
 			T& operator*() const { return *_ptr; }
 
 			ConstIterator& operator++() { ++_ptr; return *this; }
-			ConstIterator operator++(int) { ConstIterator temp(*this); ++* this; return temp; }
-
 			ConstIterator& operator--() { --_ptr; return *this; }
-			ConstIterator operator--(int) { ConstIterator temp(*this); --*this; return temp; }
+
+			difference_type operator-(const ConstIterator& rhs) const { return _ptr - rhs._ptr; }
+			ConstIterator operator-(const difference_type& diff) const { return ConstIterator(_ptr - diff); }
+			ConstIterator operator+(const difference_type& diff) const { return ConstIterator(_ptr + diff); }
+
+			bool operator<(const ConstIterator& rhs) const { return _ptr < rhs._ptr; }
+			bool operator>(const ConstIterator& rhs) const { return _ptr > rhs._ptr; }
 		private:
 			const T* _ptr = nullptr;
 		};
 		
-	public:
 		/**
 		 * The default Vector constructor preemptively creates an empty array of capacity 100. This is similar to calling reserve(100);
 		 * This number may be modified by changing the capacity parameter, in which case the array will be of said capacity.
@@ -184,6 +218,9 @@ namespace Tristeon
 		 * If the element wasn't found, it returns size().
 		 */
 		[[nodiscard]] ull indexOf(const T& value);
+
+		template<typename Pred>
+		void sort(Pred predicate);
 	private:
 		T* _ptr = nullptr;
 		ull _capacity = 0;
@@ -433,7 +470,7 @@ namespace Tristeon
 	template <typename T>
 	T& Vector<T>::operator[](const ull& index)
 	{
-		assert(index < _size);
+		assert(index < _capacity);
 		return _ptr[index];
 	}
 
@@ -488,5 +525,12 @@ namespace Tristeon
 				return i;
 		}
 		return _size;
+	}
+
+	template <typename T>
+	template <typename Pred>
+	void Vector<T>::sort(Pred predicate)
+	{
+		std::sort(begin(), end(), predicate);
 	}
 }

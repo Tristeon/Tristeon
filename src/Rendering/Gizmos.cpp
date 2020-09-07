@@ -7,11 +7,11 @@
 
 namespace Tristeon
 {
-	std::queue<Gizmos::Shape> Gizmos::shapes;
+	Vector<Gizmos::Shape> Gizmos::shapes;
 	
 	void Gizmos::drawLine(Vector2 const& worldStart, Vector2 const& worldEnd, Colour const& colour)
 	{
-		shapes.push({ { worldStart, worldEnd }, colour });
+		shapes.add({ { worldStart, worldEnd }, colour });
 	}
 
 	void Gizmos::drawAABB(Vector2 const& worldMin, Vector2 const& worldMax, Colour const& colour)
@@ -21,7 +21,7 @@ namespace Tristeon
 		Vector2 const br = Vector2(worldMax.x, worldMin.y);
 		Vector2 const tr = worldMax;
 		
-		shapes.push(
+		shapes.add(
 			{
 				{
 					bl, tl,
@@ -40,7 +40,7 @@ namespace Tristeon
 		Vector2 const br = Math::orbit(worldPosition, Vector2(size.x / 2.0f, -size.y / 2.0f), rotationDegrees);
 		Vector2 const tr = Math::orbit(worldPosition, size / 2.0f, rotationDegrees);
 
-		shapes.push(
+		shapes.add(
 			{
 				{
 					bl, tl,
@@ -73,7 +73,7 @@ namespace Tristeon
 				shape.vertices.add({ radius + worldPosition.x, worldPosition.y });
 		}
 
-		shapes.push(shape);
+		shapes.add(shape);
 	}
 
 	void Gizmos::render()
@@ -81,11 +81,8 @@ namespace Tristeon
 		static Shader shader = Shader("Internal/Shaders/Gizmo.vert", "Internal/Shaders/Gizmo.frag");
 		shader.bind();
 		
-		while (!shapes.empty())
+		for (auto& shape : shapes)
 		{
-			auto shape = shapes.front();
-			shapes.pop();
-
 			//create buffer
 			unsigned int buffer = 0;
 			glGenBuffers(1, &buffer);
@@ -106,5 +103,10 @@ namespace Tristeon
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glDeleteBuffers(1, &buffer);
 		}
+	}
+
+	void Gizmos::clear()
+	{
+		shapes.clear();
 	}
 }

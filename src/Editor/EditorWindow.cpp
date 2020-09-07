@@ -1,6 +1,8 @@
+#ifdef TRISTEON_EDITOR
+#include "Rendering/Renderer.h"
+#include "Actors/Camera.h"
 #include <qsettings.h>
 #include <qshortcut.h>
-#ifdef TRISTEON_EDITOR
 #include "EditorWindow.h"
 
 #include <QApplication>
@@ -19,7 +21,6 @@
 
 #include <Editor/GameView.h>
 
-#include <Scenes/Camera.h>
 #include <Scenes/SceneManager.h>
 
 using namespace Tristeon;
@@ -153,31 +154,23 @@ namespace TristeonEditor
 		//Flip Y and remove area below gameview because apparently mapFromGlobal() doesnt handle that space?
 		local.setY(Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - local.y());
 
-		//Scale with gameview screen 
-		Vector2 const screenSize = Vector2(Window::width(), Window::height());
-		Vector2 const viewSize = Vector2(GameView::instance()->width(), GameView::instance()->height());
-
 		//Adjust for center
 		Vector2 const halfSize = Vector2(GameView::instance()->width() / 2.0f, GameView::instance()->height() / 2.0f);
 
 		Vector2 result = Vector2(local.x(), local.y()) - halfSize;
 		//Adjust for camera
-		result *= screenSize / viewSize;
-		result *= 1.0f / Camera::main()->zoom;
-		result += Camera::main()->position;
+		result *= 1.0f / Renderer::editorCamera()->zoom;
+		result += (Vector2Int)Renderer::editorCamera()->position;
 		return result;
 	}
 
 	Vector2Int EditorWindow::_worldToScreen(Vector2 const& worldPoint)
 	{
-		Vector2 const screenSize = Vector2(Window::width(), Window::height());
-		Vector2 const viewSize = Vector2(GameView::instance()->width(), GameView::instance()->height());
 		Vector2 const halfSize = Vector2(GameView::instance()->width() / 2.0f, GameView::instance()->height() / 2.0f);
 
 		Vector2 point = worldPoint;
-		point -= Camera::main()->position;
-		point /= (1.0f / Camera::main()->zoom);
-		point /= (screenSize / viewSize);
+		point -= (Vector2Int)Renderer::editorCamera()->position;
+		point /= (1.0f / Renderer::editorCamera()->zoom);
 
 		point += halfSize;
 

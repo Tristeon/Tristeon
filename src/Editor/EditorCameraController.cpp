@@ -1,24 +1,23 @@
+#ifdef TRISTEON_EDITOR
+#include "Rendering/Renderer.h"
+#include "Actors/Camera.h"
 #include "Input/Keyboard.h"
 #include "Math/Math.h"
-#ifdef TRISTEON_EDITOR
 #include "Input/Mouse.h"
-#include "Scenes/Camera.h"
 #include "EditorCameraController.h"
 
 using namespace Tristeon;
 
 namespace TristeonEditor
 {
+	//TODO: Use editor camera instead of Camera::cameras()[0]
 	void EditorCameraController::update()
 	{
-		if (Camera::main() == nullptr)
-			return;
-		
 		handleScrolling();
 		handleDragging();
 
 		if (Keyboard::pressed(Keyboard::F) && Editor::instance()->selectedActor() != nullptr)
-			Camera::main()->position = (Vector2Int)Editor::instance()->selectedActor()->position;
+			Renderer::editorCamera()->position = (Vector2Int)Editor::instance()->selectedActor()->position;
 	}
 
 	void EditorCameraController::handleDragging()
@@ -33,18 +32,21 @@ namespace TristeonEditor
 			delta.y *= -1;
 			delta.x *= -1;
 			delta *= 3;
-			delta *= 1.0f / Camera::main()->zoom;
+			delta *= 1.0f / Renderer::editorCamera()->zoom;
 
-			Camera::main()->position += delta;
+			Renderer::editorCamera()->position += delta;
 			dragMousePos = Mouse::position();
 		}
 	}
 
 	void EditorCameraController::handleScrolling()
 	{
-		float const scrollingSpeed = Math::clamp(-pow(Camera::main()->zoom - 1, 2) * 2 + 1, 0.1f, 10);
-		Camera::main()->zoom += Mouse::deltaScroll().y * scrollingSpeed * 0.001f;
-		Camera::main()->zoom = Math::clamp(Camera::main()->zoom, 0.03, 1.7);
+		if (!Renderer::editorCamera())
+			return;
+		
+		float const scrollingSpeed = Math::clamp(-pow(Renderer::editorCamera()->zoom - 1, 2) * 2 + 1, 0.1f, 10);
+		Renderer::editorCamera()->zoom += Mouse::deltaScroll().y * scrollingSpeed * 0.001f;
+		Renderer::editorCamera()->zoom = Math::clamp(Renderer::editorCamera()->zoom, 0.03, 1.7);
 	}
 }
 #endif

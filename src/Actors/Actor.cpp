@@ -15,6 +15,12 @@ namespace Tristeon
 		Collector<Actor>::add(this);
 	}
 
+	Actor::Actor(const bool& registerSelf)
+	{
+		if (registerSelf)
+			Collector<Actor>::add(this);
+	}
+
 	Actor::~Actor() noexcept
 	{
 		Collector<Actor>::remove(this);

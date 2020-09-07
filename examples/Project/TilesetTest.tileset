@@ -29,7 +29,13 @@
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": false,
+            "hasCollider": true,
+            "restitution": 0.0
+        },
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": true,
             "restitution": 0.0
         },
         {
@@ -47,7 +53,7 @@
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": false,
+            "hasCollider": true,
             "restitution": 0.0
         },
         {
@@ -59,31 +65,7 @@
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": false,
-            "restitution": 0.0
-        },
-        {
-            "density": 1.0,
-            "friction": 0.0,
-            "hasCollider": false,
-            "restitution": 0.0
-        },
-        {
-            "density": 1.0,
-            "friction": 0.0,
-            "hasCollider": false,
-            "restitution": 0.0
-        },
-        {
-            "density": 1.0,
-            "friction": 0.0,
-            "hasCollider": false,
-            "restitution": 0.0
-        },
-        {
-            "density": 1.0,
-            "friction": 0.0,
-            "hasCollider": false,
+            "hasCollider": true,
             "restitution": 0.0
         },
         {
@@ -95,7 +77,25 @@
         {
             "density": 1.0,
             "friction": 0.0,
-            "hasCollider": false,
+            "hasCollider": true,
+            "restitution": 0.0
+        },
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": true,
+            "restitution": 0.0
+        },
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": true,
+            "restitution": 0.0
+        },
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": true,
             "restitution": 0.0
         }
     ],

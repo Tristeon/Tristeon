@@ -5,12 +5,13 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
+
+#include "Actors/Camera.h"
 #include "Actors/Sprite.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Gizmos.h"
-#include "Scenes/Camera.h"
 #include "Utils/Time.h"
 
 namespace Tristeon
@@ -29,7 +30,8 @@ namespace Tristeon
 		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
 		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
 
-		Camera::main()->position = static_cast<Vector2Int>(getOwner<Actor>()->position);
+		if (!Camera::cameras().empty())
+			Camera::cameras()[0]->position = getOwner<Actor>()->position;
 	}
 	
 	json TestBehaviour::serialize()

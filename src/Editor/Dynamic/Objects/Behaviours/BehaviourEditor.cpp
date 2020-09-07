@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Math/Vector2Int.h"
 #include "BehaviourEditor.h"
 #include "Editor/EditorFields.h"
 

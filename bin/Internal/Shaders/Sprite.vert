@@ -24,15 +24,8 @@ uniform Actor actor;
 //Camera
 struct CameraData
 {
-    int posX;
-    int posY;
-
-    uint pixelsX;
-    uint pixelsY;
-
-    uint displayPixelsX;
-    uint displayPixelsY;
-
+    vec2 position;
+    uvec2 displayPixels;
     float zoom;
 };
 uniform CameraData camera;
@@ -58,14 +51,14 @@ void main()
     x = rotX;
     y = rotY;
 
-    x = x / float(camera.pixelsX / camera.zoom);
-    y = y / float(camera.pixelsY / camera.zoom);
+    x = x / float(camera.displayPixels.x / camera.zoom);
+    y = y / float(camera.displayPixels.y / camera.zoom);
 
-    x -= float(camera.posX) / camera.pixelsX * camera.zoom * 2;
-    y -= float(camera.posY) / camera.pixelsY * camera.zoom * 2;
+    x -= float(camera.position.x) / camera.displayPixels.x * camera.zoom * 2;
+    y -= float(camera.position.y) / camera.displayPixels.y * camera.zoom * 2;
 
-    x += actor.position.x / camera.pixelsX * camera.zoom * 2;
-    y += actor.position.y / camera.pixelsY * camera.zoom * 2;
+    x += actor.position.x / camera.displayPixels.x * camera.zoom * 2;
+    y += actor.position.y / camera.displayPixels.y * camera.zoom * 2;
 
     gl_Position = vec4(x, y, 0, 1);
 }

@@ -40,6 +40,7 @@ namespace TristeonEditor
 			if (!pause->isChecked())
 			{
 				sceneBeforePlay = Tristeon::SceneManager::current()->serialize();
+				sceneBeforePlay["path"] = Tristeon::SceneManager::current()->getPath();
 			}
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
@@ -61,7 +62,7 @@ namespace TristeonEditor
 
 		Tristeon::Renderer::showGrid = true;
 
-		Tristeon::SceneManager::load(sceneBeforePlay);
+		Tristeon::SceneManager::load(sceneBeforePlay, sceneBeforePlay["path"]);
 	}
 
 	void TopBar::pauseGame()

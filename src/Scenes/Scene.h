@@ -1,9 +1,6 @@
 #pragma once
 #include <Serialization/Serializable.h>
-
 #include <Scenes/Layers/Layer.h>
-
-#include "Camera.h"
 #include "TypeDefinitions.h"
 
 namespace Tristeon
@@ -21,10 +18,6 @@ namespace Tristeon
 	 * Common layers include:
 	 * - TileLayer -> Renders a tilemap with a given tileset
 	 * - ActorLayer -> Contains actor objects which are free to move off the grid at will.
-	 * 
-	 * Within Tristeon, Scene is constructed out of
-	 * - A camera
-	 * - A HUD
 	 */
 	class Scene final : public Serializable
 	{
@@ -35,7 +28,7 @@ namespace Tristeon
 		/**
 		 * Creates an empty scene with a default camera & hud.
 		 */
-		Scene();
+		Scene() = default;
 		~Scene() = default;
 
 		json serialize() override;
@@ -106,11 +99,6 @@ namespace Tristeon
 		void destroyLayer(Layer* layer);
 
 		/**
-		 * Returns the Scene Camera.
-		 */
-		Camera* getCamera() const;
-
-		/**
 		 * Sets the index of the given layer. This removes the layer from its current position in the list and inserts it at the given index.
 		 * Other layers will be moved down or up because of this.
 		 */
@@ -131,7 +119,6 @@ namespace Tristeon
 		 */
 		String getName() const { return name; }
 	private:
-		Unique<Camera> camera = nullptr;
 		Vector<Unique<Layer>> layers;
 		String name;
 		String path;

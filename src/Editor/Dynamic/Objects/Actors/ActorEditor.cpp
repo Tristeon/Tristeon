@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Math/Vector2Int.h"
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
 #include "ActorEditor.h"

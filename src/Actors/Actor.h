@@ -52,6 +52,7 @@ namespace Tristeon
 		std::string name = "";
 
 		Actor();
+		explicit Actor(const bool& registerSelf);
 		virtual ~Actor() noexcept;
 		
 		json serialize() override;

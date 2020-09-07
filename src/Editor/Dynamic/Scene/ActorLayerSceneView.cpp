@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Actors/Camera.h"
 #include "Editor/GameView.h"
 #include "Math/Math.h"
 #include "Rendering/Gizmos.h"
@@ -111,7 +112,7 @@ namespace TristeonEditor
 			Graphic::AABB const aabb = graphic->getAABB();
 			Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Colour(0.5, 0.5, 1, 1));
 
-			const Vector2 handleSize = Vector2(Math::clamp(32 / Camera::main()->zoom, 8, 256), Math::clamp(32 / Camera::main()->zoom, 8, 256));
+			const Vector2 handleSize = Vector2(Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256), Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256));
 			const Vector2 cpos = Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
 			Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Colour(0.5, 0.5, 0.5));
 			scalar = Graphic::AABB{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };

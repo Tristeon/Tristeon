@@ -7,16 +7,10 @@
 
 namespace Tristeon
 {
-	Scene::Scene()
-	{
-		camera = std::make_unique<Camera>();
-	}
-
 	json Scene::serialize()
 	{
 		json j = Serializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Scene);
-		j["camera"] = camera->serialize();
 
 		json serializedLayers = json::array_t();
 		for (auto& layer : layers)
@@ -29,8 +23,6 @@ namespace Tristeon
 	{
 		Serializable::deserialize(j);
 		
-		camera->deserialize(j.value("camera", json()));
-
 		layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
 		for (auto serializedLayer : j.value("layers", json::array_t()))
 		{
@@ -83,11 +75,6 @@ namespace Tristeon
 			return;
 		layers[index].reset();
 		layers.removeAt(index);
-	}
-
-	Camera* Scene::getCamera() const
-	{
-		return camera.get();
 	}
 
 	void Scene::setIndex(Layer* layer, int const& i)

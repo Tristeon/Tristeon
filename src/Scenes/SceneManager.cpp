@@ -27,9 +27,10 @@ namespace Tristeon
 		cachedSceneName = name;
 	}
 
-	void SceneManager::load(json const data)
+	void SceneManager::load(json const data, const String& path)
 	{
 		cachedSceneData = data;
+		cachedSceneData["path"] = path;
 	}
 
 	void SceneManager::reload()
@@ -79,7 +80,7 @@ namespace Tristeon
 		if (!cachedSceneData.empty())
 		{
 			toLoad = cachedSceneData;
-			path = "";
+			path = cachedSceneData.value("path", "");
 		}
 		else if (!cachedSceneName.empty())
 		{

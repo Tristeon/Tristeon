@@ -32,15 +32,8 @@ uniform Level level;
 
 struct CameraData
 {
-    int posX;
-    int posY;
-
-    uint pixelsX;
-    uint pixelsY;
-
-    uint displayPixelsX;
-    uint displayPixelsY;
-
+    vec2 position;
+    uvec2 displayPixels;
     float zoom;
 };
 uniform CameraData camera;
@@ -53,8 +46,8 @@ void main()
 {
     //Determine which tile we're on using the camera's properties
     //Normalized tile... is the size of tiles within the 0..1 range of the screen
-    float normalizedTileWidth = float(level.tileRenderWidth) / (camera.pixelsX / camera.zoom); 
-    float normalizedTileHeight = float(level.tileRenderHeight) / (camera.pixelsY / camera.zoom);
+    float normalizedTileWidth = float(level.tileRenderWidth) / (camera.displayPixels.x / camera.zoom); 
+    float normalizedTileHeight = float(level.tileRenderHeight) / (camera.displayPixels.y / camera.zoom);
 
     vec2 coords = texCoord;
     //Move the coords by -0.5 to center the tiles for accurate zooming
@@ -65,8 +58,8 @@ void main()
     coords.y += normalizedTileHeight / 2.0f;
 
     //Move the coords by the camera position (scaled by zoom)
-    coords.x += float(camera.posX) / (camera.pixelsX / camera.zoom);
-    coords.y += float(camera.posY) / (camera.pixelsY / camera.zoom);
+    coords.x += float(camera.position.x) / (camera.displayPixels.x / camera.zoom);
+    coords.y += float(camera.position.y) / (camera.displayPixels.y / camera.zoom);
     
     //Calculate tile x,y by dividing the adjusted texcoords by the 0..1 tile size
     float tileX = (coords.x / normalizedTileWidth);

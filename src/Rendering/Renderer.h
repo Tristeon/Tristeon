@@ -1,6 +1,8 @@
 #pragma once
+#include <memory>
 #include <Utils/Singleton.h>
-#include "TypeDefinitions.h"
+
+#include "Actors/Camera.h"
 
 namespace Tristeon
 {
@@ -15,6 +17,9 @@ namespace Tristeon
 	{
 		friend Shader;
 	public:
+		Renderer();
+		~Renderer();
+		
 		static bool showGrid;
 		/**
 		 * Renders the current scene to the given framebuffer. The render function executes a set of steps in the following order:
@@ -27,19 +32,15 @@ namespace Tristeon
 		 */
 		void render(unsigned int const& framebuffer);
 
+#ifdef TRISTEON_EDITOR
+		[[nodiscard]] static Camera* editorCamera()
+		{
+			if (!instance())
+				return nullptr;
+			return instance()->_editorCamera.get();
+		}
 	private:
-		/**
-		 * Registers a shader to the prepass call.
-		 *
-		 * Prepass sends standard engine values to the shader such as camera & lighting data.
-		 */
-		static void registerPrePassShader(Shader* shader);
-
-		/**
-		 * Deregisters a shader from the prepass call.
-		 */
-		static void deregisterPrePassShader(Shader* shader);
-
-		static Vector<Shader*> prepass;
+		std::unique_ptr<Camera> _editorCamera = nullptr;
+#endif
 	};
 }

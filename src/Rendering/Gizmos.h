@@ -38,7 +38,8 @@ namespace Tristeon
 			Colour colour;
 		};
 		
-		static std::queue<Shape> shapes;
+		static Vector<Shape> shapes;
 		static void render();
+		static void clear();
 	};
 }
