@@ -5,89 +5,85 @@
 
 namespace Tristeon
 {
-	bool Mouse::buttons[Last];
-	bool Mouse::buttonsPressed[Last];
-	bool Mouse::buttonsReleased[Last];
+	bool Mouse::_buttons[Last];
+	bool Mouse::_buttonsPressed[Last];
+	bool Mouse::_buttonsReleased[Last];
 	
-	Vector2Int Mouse::mousePos = Vector2Int::zero();
-	Vector2Int Mouse::mouseDelta = Vector2Int::zero();
-	Vector2Int Mouse::scrollDelta = Vector2Int::zero();
+	Vector2Int Mouse::_mousePos = Vector2Int::zero();
+	Vector2Int Mouse::_mouseDelta = Vector2Int::zero();
+	Vector2Int Mouse::_scrollDelta = Vector2Int::zero();
 	
-	bool Mouse::pressed(MouseButton const& button)
+	bool Mouse::pressed(const MouseButton& button)
 	{
-		return buttonsPressed[button];
+		return _buttonsPressed[button];
 	}
 
-	bool Mouse::held(MouseButton const& button)
+	bool Mouse::held(const MouseButton& button)
 	{
-		return buttons[button];
+		return _buttons[button];
 	}
 
-	bool Mouse::released(MouseButton const& button)
+	bool Mouse::released(const MouseButton& button)
 	{
-		return buttonsReleased[button];
+		return _buttonsReleased[button];
 	}
 
 	Vector2Int Mouse::position()
 	{
-		return mousePos;
+		return _mousePos;
 	}
 
 	Vector2Int Mouse::deltaPos()
 	{
-		return mouseDelta;
+		return _mouseDelta;
 	}
 
 	Vector2Int Mouse::deltaScroll()
 	{
-		return scrollDelta;
+		return _scrollDelta;
 	}
 
-	void Mouse::onPress(MouseButton const& button)
+	void Mouse::onPress(const MouseButton& button)
 	{
-		buttonsPressed[button] = true;
-		buttons[button] = true;
-		buttonsReleased[button] = false;
+		_buttonsPressed[button] = true;
+		_buttons[button] = true;
+		_buttonsReleased[button] = false;
 	}
 
-	void Mouse::onRelease(MouseButton const& button)
+	void Mouse::onRelease(const MouseButton& button)
 	{
-		buttonsPressed[button] = false;
-		buttons[button] = false;
-		buttonsReleased[button] = true;
+		_buttonsPressed[button] = false;
+		_buttons[button] = false;
+		_buttonsReleased[button] = true;
 	}
 
-	void Mouse::onMove(Vector2Int const& pos)
+	void Mouse::onMove(const Vector2Int& pos)
 	{
-		//Vector2Int newPos = Vector2Int(event.pos().x(), Window::height() - event.pos().y());
-		//if (!Window::isFullscreen())
-		//	newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
-
-		mouseDelta += pos - mousePos;
-		mousePos = pos;
+		_mouseDelta += pos - _mousePos;
+		_mousePos = pos;
 	}
 
-	void Mouse::onScroll(Vector2Int const& change)
+	void Mouse::onScroll(const Vector2Int& change)
 	{
-		scrollDelta += change;
+		_scrollDelta += change;
 	}
 
 	void Mouse::reset()
 	{
-		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
-		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
+		std::fill(std::begin(_buttonsPressed), std::end(_buttonsPressed), false);
+		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
 
-		mouseDelta = Vector2Int::zero();
-		scrollDelta = Vector2Int::zero();
+		_mouseDelta = Vector2Int::zero();
+		_scrollDelta = Vector2Int::zero();
 	}
 
 	void Mouse::clearAll()
 	{
-		std::fill(std::begin(buttonsPressed), std::end(buttonsPressed), false);
-		std::fill(std::begin(buttons), std::end(buttons), false);
-		std::fill(std::begin(buttonsReleased), std::end(buttonsReleased), false);
+		std::fill(std::begin(_buttonsPressed), std::end(_buttonsPressed), false);
+		std::fill(std::begin(_buttons), std::end(_buttons), false);
+		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
 
-		mouseDelta = Vector2Int::zero();
-		scrollDelta = Vector2Int::zero();
+		_mouseDelta = Vector2Int::zero();
+		_scrollDelta = Vector2Int::zero();
 	}
 }

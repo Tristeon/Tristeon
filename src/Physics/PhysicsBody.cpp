@@ -41,7 +41,7 @@ namespace Tristeon
 		if (body == nullptr)
 			createBody();
 
-		for (auto* col : getOwner()->getBehaviours<Collider>())
+		for (auto* col : actor()->behaviours<Collider>())
 		{
 			col->setPhysicsBody(body.get());
 		}
@@ -52,15 +52,15 @@ namespace Tristeon
 		if (!_enabled)
 			return;
 		
-		getOwner()->position = PhysicsWorld::metersToPixels(Vector2::convert(body->GetPosition()));
+		actor()->position = PhysicsWorld::metersToPixels(Vector2::convert(body->GetPosition()));
 
 		if (!_fixedRotation)
-			getOwner()->rotation = -Math::toDegrees(body->GetAngle());
+			actor()->rotation = -Math::toDegrees(body->GetAngle());
 	}
 
 	void PhysicsBody::preDestroy()
 	{
-		for (auto* col : getOwner()->getBehaviours<Collider>())
+		for (auto* col : actor()->behaviours<Collider>())
 		{
 			col->setPhysicsBody(nullptr);
 		}
@@ -223,7 +223,7 @@ namespace Tristeon
 	void PhysicsBody::setEnabled(bool const& value)
 	{
 		if (value)
-			setPosition(getOwner()->position);
+			setPosition(actor()->position);
 		
 		body->SetEnabled(value);
 		_enabled = value;
@@ -249,11 +249,11 @@ namespace Tristeon
 	void PhysicsBody::createBody()
 	{
 		b2World* world = PhysicsWorld::instance()->world.get();
-		Vector2 const meterPosition = PhysicsWorld::pixelsToMeters(getOwner()->position);
+		Vector2 const meterPosition = PhysicsWorld::pixelsToMeters(actor()->position);
 
 		b2BodyDef bodyDef;
 		bodyDef.position = meterPosition.convert<b2Vec2>();
-		bodyDef.angle = Math::toRadians(-getOwner()->rotation);
+		bodyDef.angle = Math::toRadians(-actor()->rotation);
 		bodyDef.type = (b2BodyType)_type;
 		bodyDef.fixedRotation = _fixedRotation;
 		bodyDef.gravityScale = _gravityScale;

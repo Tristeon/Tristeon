@@ -1,17 +1,14 @@
 #pragma once
 #include "Serialization/InstancedSerializable.h"
-
 #include <Actors/Behaviours/Behaviour.h>
 
-#include "Callbacks/IStart.h"
 #include "Math/Vector2.h"
-#include <Scenes/Scene.h>
-#include <Scenes/SceneManager.h>
+
+#include <Callbacks/IStart.h>
+#include <Collectors/Collector.h>
 
 namespace Tristeon
 {
-	class SceneManager;
-
 	template<typename T>
 	using IsBehaviour = std::enable_if_t<std::is_base_of<Behaviour, T>::value, T>;
 
@@ -27,10 +24,20 @@ namespace Tristeon
 	 */
 	class Actor : public InstancedSerializable
 	{
-		friend ActorLayer;
-		friend SceneManager;
+		friend class ActorLayer;
+		friend class SceneManager;
 		friend class Engine;
 	public:
+		Actor();
+		explicit Actor(const bool& registerSelf);
+		virtual ~Actor() noexcept;
+
+		DELETE_COPY(Actor);
+		DEFAULT_MOVE(Actor);
+
+		json serialize() override;
+		void deserialize(json j) override;
+		
 		/**
 		 * The current position in 2D space of the actor, in pixels.
 		 */
@@ -49,39 +56,37 @@ namespace Tristeon
 		/**
 		 * The name of the actor, used to identify the actor.
 		 */
-		std::string name = "";
-
-		Actor();
-		explicit Actor(const bool& registerSelf);
-		virtual ~Actor() noexcept;
-		
-		json serialize() override;
-		void deserialize(json j) override;
+		String name = "";
 
 		/**
 		 * Gets the first behaviour of type T. nullptr if no behaviour of type T was found.
 		 */
 		template<typename T>
-		IsBehaviour<T>* getBehaviour();
+		IsBehaviour<T>* behaviour();
 
 		/**
-		 * Gets a list of all the behaviours of type T. Returns an empty list if no behaviour of type T was found.
+		 * Gets a list of all the behaviours of type T. Returns an empty vector if no behaviour of type T was found.
 		 */
 		template<typename T>
-		Vector<T*> getBehaviours();
+		Vector<T*> behaviours();
 
 		/**
 		 * Gets a list with all of the actor's behaviours.
 		 */
-		Vector<Behaviour*> getBehaviours();
+		Vector<Behaviour*> behaviours();
 		
 		/**
 		 * Adds a new behaviour of type T and returns the new behaviour.
+		 * If the type isn't found in the register then this function returns nullptr.
 		 */
 		template<typename T>
 		IsBehaviour<T>* addBehaviour();
 
-		Behaviour* addBehaviour(std::string type);
+		/**
+		 * Adds a new behaviour of the given type and returns said behaviour.
+		 * If the type is not recognized as a behaviour, or if the type isn't found in the register at all then this function returns nullptr.
+		 */
+		Behaviour* addBehaviour(const String& type);
 
 		/**
 		 * Destroy removes the actor from the scene and deletes the Actor's instance.
@@ -95,36 +100,30 @@ namespace Tristeon
 		 *
 		 * Returns nullptr if no actor was found.
 		 */
-		static Actor* find(String const& name);
+		static Actor* find(const String& name);
 
 		/**
-		 * Looks through every actor layer,
-		 * returns the actor with the given ID.
-		 *
+		 * Returns the actor with the given ID.
 		 * Returns nullptr if no such actor exists.
 		 */
-		static Actor* find(unsigned int const& id);
+		static Actor* find(const unsigned int& id);
 
 		/**
-		 * Looks through every actor layer,
-		 * returns the first actor with the given type.
-		 *
+		 * Returns the first actor with the given type.
 		 * Returns nullptr if no actor was found.
 		 */
 		template<typename T>
 		static T* findOfType();
 
 		/**
-		 * Looks through every actor layer,
-		 * returns the first actor with the given type AND name.
-		 *
+		 * Returns the first actor with the given type AND name.
 		 * Returns nullptr if no actor was found.
 		 */
 		template<typename T>
-		static T* findOfType(String name);
+		static T* findOfType(const String& name);
 	private:
 		Vector<Unique<Behaviour>> _behaviours{};
-		bool destroyed = false;
+		bool _destroyed = false;
 
 		/**
 		 * Removes and destroys the given behaviour.
@@ -134,7 +133,7 @@ namespace Tristeon
 	};
 
 	template <typename T>
-	IsBehaviour<T>* Actor::getBehaviour()
+	IsBehaviour<T>* Actor::behaviour()
 	{
 		for (auto const& behaviour : _behaviours)
 		{
@@ -146,7 +145,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Actor::getBehaviours()
+	Vector<T*> Actor::behaviours()
 	{
 		Vector<T*> behaviours;
 
@@ -164,11 +163,11 @@ namespace Tristeon
 	IsBehaviour<T>* Actor::addBehaviour()
 	{
 		T* result = new T();
-		result->_owner = this;
+		result->_actor = this;
 		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
-		IStart* istart = dynamic_cast<IStart*>(result);
+		auto* istart = dynamic_cast<IStart*>(result);
 		if (istart != nullptr)
 			istart->start();
 		
@@ -182,19 +181,19 @@ namespace Tristeon
 		for (auto actor : actors)
 		{
 			if (dynamic_cast<T*>(actor))
-				return (T*)actor;
+				return dynamic_cast<T*>(actor);
 		}
 		return nullptr;
 	}
 
 	template <typename T>
-	T* Actor::findOfType(String name)
+	T* Actor::findOfType(const String& name)
 	{
 		auto actors = Collector<Actor>::all();
 		for (auto actor : actors)
 		{
 			if (actor->name == name && dynamic_cast<T*>(actor))
-				return (T*)actor;
+				return dynamic_cast<T*>(actor);
 		}
 		return nullptr;
 	}

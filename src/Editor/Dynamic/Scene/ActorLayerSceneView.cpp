@@ -1,4 +1,5 @@
 #ifdef TRISTEON_EDITOR
+#include "Window.h"
 #include "Actors/Camera.h"
 #include "Editor/GameView.h"
 #include "Math/Math.h"
@@ -51,7 +52,7 @@ namespace TristeonEditor
 					if (graphic == nullptr)
 						Editor::instance()->selectedActor()->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset);
 					else
-						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset) + graphic->getAABB().size() / 2.0f - Grid::tileSize() / 2.0f;
+						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset) + graphic->bounds().size() / 2.0f - Grid::tileSize() / 2.0f;
 				}
 				else
 					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position()) - draggingOffset;
@@ -61,7 +62,7 @@ namespace TristeonEditor
 				//TODO: Make graphic resizing more generic
 				auto* sprite = dynamic_cast<Sprite*>(Editor::instance()->selectedActor());
 
-				if (sprite != nullptr && sprite->getTexture() != nullptr)
+				if (sprite != nullptr && sprite->texture() != nullptr)
 				{
 					Vector2 const position = Editor::instance()->selectedActor()->position;
 					Vector2 const topRight = Window::screenToWorld(Mouse::position());
@@ -74,7 +75,7 @@ namespace TristeonEditor
 					//Snap to aspect ratio
 					if (Keyboard::held(Keyboard::Shift))
 					{
-						Vector2 const imageSize = sprite->getTexture()->size();
+						Vector2 const imageSize = sprite->texture()->size();
 						
 						if (size.x > size.y) //Prioritize X
 							size.x = imageSize.x / imageSize.y * size.y;
@@ -109,17 +110,17 @@ namespace TristeonEditor
 		auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
 		if (graphic != nullptr)
 		{
-			Graphic::AABB const aabb = graphic->getAABB();
+			Graphic::Bounds const aabb = graphic->bounds();
 			Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Colour(0.5, 0.5, 1, 1));
 
 			const Vector2 handleSize = Vector2(Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256), Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256));
 			const Vector2 cpos = Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
 			Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Colour(0.5, 0.5, 0.5));
-			scalar = Graphic::AABB{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };
+			scalar = Graphic::Bounds{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };
 
 			const Vector2 rpos = Math::orbit(graphic->position, Vector2(aabb.size().x, 0), graphic->rotation);
 			Gizmos::drawSquare(rpos, handleSize, graphic->rotation, Colour(0, 0.5, 0.5));
-			rotator = Graphic::AABB{ rpos - handleSize / 2.0f, rpos + handleSize / 2.0f };
+			rotator = Graphic::Bounds{ rpos - handleSize / 2.0f, rpos + handleSize / 2.0f };
 		}
 		else
 		{
@@ -138,7 +139,7 @@ namespace TristeonEditor
 
 			if (graphic != nullptr)
 			{
-				if (graphic->withinBounds(world))
+				if (graphic->bounds().contains(world))
 				{
 					if (graphic == Editor::instance()->selectedActor())
 					{

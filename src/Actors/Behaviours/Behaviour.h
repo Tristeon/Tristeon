@@ -3,9 +3,6 @@
 
 namespace Tristeon
 {
-	class Actor;
-	class ActorLayer;
-
 	/**
 	 * A Behaviour in Tristeon is a class that can be added to an Actor to dynamically add additional behaviour to the Actor object.
 	 *
@@ -14,13 +11,13 @@ namespace Tristeon
 	 */
 	class Behaviour : public InstancedSerializable
 	{
-		friend Actor;
-		friend ActorLayer;
+		friend class Actor;
+		friend class ActorLayer;
 	public:
 		Behaviour();
 		virtual ~Behaviour();
-		Behaviour(const Behaviour& other) = delete;
-		Behaviour& operator=(const Behaviour& other) = delete;
+
+		DELETE_COPY(Behaviour);
 
 		Behaviour(Behaviour&& other) noexcept;
 		Behaviour& operator=(Behaviour&& other) noexcept;
@@ -31,23 +28,27 @@ namespace Tristeon
 		 */
 		void destroy();
 
+		/**
+		 * Gets the actor that the behaviour is attached to.
+		 * The template parameter can be used to conveniently cast the actor to a specific type. This performs a simple dynamic_cast and will return nullptr upon failure.
+		 */
 		template <typename T = Actor>
-		T* getOwner() const;
+		T* actor() const;
 
 	private:
-		bool destroyed = false;
-		Actor* _owner = nullptr;
+		bool _destroyed = false;
+		Actor* _actor = nullptr;
 	};
 
 	template <typename T>
-	T* Behaviour::getOwner() const
+	T* Behaviour::actor() const
 	{
-		return dynamic_cast<T*>(_owner);
+		return dynamic_cast<T*>(_actor);
 	}
 
 	template <>
-	inline Actor* Behaviour::getOwner() const
+	inline Actor* Behaviour::actor() const
 	{
-		return _owner;
+		return _actor;
 	}
 }

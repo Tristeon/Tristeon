@@ -6,7 +6,7 @@
 
 namespace Tristeon
 {
-	Vector2::Vector2(float x, float y) : x(x), y(y) {}
+	Vector2::Vector2(const float& x, const float& y) : x(x), y(y) {}
 
 	float Vector2::getAxis(const int& axis) const
 	{
@@ -35,12 +35,12 @@ namespace Tristeon
 			return;
 
 		//Normalize
-		const float magnitude = getLength();
+		const auto magnitude = getLength();
 		x /= magnitude;
 		y /= magnitude;
 	}
 
-	void Vector2::scale(float multiplier)
+	void Vector2::scale(const float& multiplier)
 	{
 		x *= multiplier;
 		y *= multiplier;
@@ -83,13 +83,13 @@ namespace Tristeon
 
 	float Vector2::distance(Vector2 const& vec, Vector2 const& vec2)
 	{
-		Vector2 const difference = vec2 - vec;
+		auto const difference = vec2 - vec;
 		return difference.getLength();
 	}
 
 	float Vector2::distance(Vector2 const& vec) const
 	{
-		Vector2 const difference = vec - Vector2(x, y);
+		auto const difference = vec - Vector2(x, y);
 		return difference.getLength();
 	}
 
@@ -100,7 +100,7 @@ namespace Tristeon
 
 	void Vector2::rotate(float const& degrees)
 	{
-		float const radians = Math::toRadians(degrees);
+		auto const radians = Math::toRadians(degrees);
 		x = cos(radians - acos(x));
 		y = sin(radians - asin(y));
 	}
@@ -112,15 +112,15 @@ namespace Tristeon
 
 	Vector2 Vector2::unit(float const& degrees)
 	{
-		float const radians = Math::toRadians(degrees);
+		auto const radians = Math::toRadians(degrees);
 		return { cos(radians), sin(radians) };
 	}
 
-	Vector2 Vector2::lerp(Vector2 a, Vector2 b, float t)
+	Vector2 Vector2::lerp(const Vector2& a, const Vector2& b, const float& t)
 	{
 		if (b - a == zero()) return b; //A and B are the same vector
-		const float interpolation = a.distance(b) * t; //Get interpolation distance
-		const Vector2 linearDirection = (b - a).getNormalized(); //Get direction vector
+		const auto interpolation = a.distance(b) * t; //Get interpolation distance
+		const auto linearDirection = (b - a).getNormalized(); //Get direction vector
 		return linearDirection * interpolation + a; //direction * interpolation + start
 	}
 

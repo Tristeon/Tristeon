@@ -12,12 +12,12 @@ namespace Tristeon
 {
 	void Collider::start()
 	{
-		cachedScale = getOwner()->scale;
+		cachedScale = actor()->scale;
 		
 		removeSelf();
 		if (body == nullptr)
 		{
-			PhysicsBody* pb = getOwner()->getBehaviour<PhysicsBody>();
+			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
 			if (pb != nullptr)
 				body = pb->getBody();
 			else
@@ -28,10 +28,10 @@ namespace Tristeon
 
 	void Collider::lateUpdate()
 	{
-		if (cachedScale != getOwner()->scale)
+		if (cachedScale != actor()->scale)
 		{
 			isDirty = true;
-			cachedScale = getOwner()->scale;
+			cachedScale = actor()->scale;
 		}
 		
 		if (isDirty)
@@ -141,7 +141,7 @@ namespace Tristeon
 	{
 		if (body == nullptr)
 		{
-			PhysicsBody* pb = getOwner()->getBehaviour<PhysicsBody>();
+			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
 			if (pb != nullptr)
 				body = pb->getBody();
 			else

@@ -1,6 +1,7 @@
 #pragma once
 #include <json.h>
 #include <TObject.h>
+#include <Utils/ClassDefaults.h>
 
 using namespace nlohmann;
 
@@ -17,11 +18,8 @@ namespace Tristeon
 		Serializable() = default;
 		virtual ~Serializable() = default;
 
-		Serializable(const Serializable& copy) = delete;
-		Serializable(Serializable&& move) = default;
-
-		Serializable& operator=(const Serializable& copy) = delete;
-		Serializable& operator=(Serializable&& move) = default;
+		DELETE_COPY(Serializable);
+		DEFAULT_MOVE(Serializable);
 		
 		/**
 		 * Serialize interface that is called on derived instance of serializable to obtain json data of objects

@@ -4,14 +4,7 @@
 
 namespace Tristeon
 {
-	Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
-
-	const Vector3 Vector3::forward = Vector3(0, 0, 1);
-	const Vector3 Vector3::back = Vector3(0, 0, -1);
-	const Vector3 Vector3::right = Vector3(1, 0, 0);
-	const Vector3 Vector3::left = Vector3(-1, 0, 0);
-	const Vector3 Vector3::up = Vector3(0, 1, 0);
-	const Vector3 Vector3::down = Vector3(0, -1, 0);
+	Vector3::Vector3(const float& x, const float& y, const float& z) : x(x), y(y), z(z) {}
 
 	float& Vector3::getAxis(const int& axis)
 	{
@@ -48,7 +41,7 @@ namespace Tristeon
 		z /= magnitude;
 	}
 
-	void Vector3::scale(float multiplier)
+	void Vector3::scale(const float& multiplier)
 	{
 		x *= multiplier;
 		y *= multiplier;
@@ -65,58 +58,56 @@ namespace Tristeon
 		return x * x + y * y + z * z;
 	}
 
-	float Vector3::dot(Vector3 a, Vector3 b)
+	float Vector3::dot(const Vector3& vec, const Vector3& vec2)
 	{
-		Vector3 const c = a * b;
+		Vector3 const c = vec * vec2;
 		return c.x + c.y + c.z;
 	}
 
-	float Vector3::distance(Vector3 a, Vector3 b)
+	float Vector3::distance(const Vector3& vec, const Vector3& vec2)
 	{
-		Vector3 difference = b - a;
+		const auto difference = vec2 - vec;
 		return difference.getLength();
 	}
 
-	float Vector3::distance(Vector3 vec) const
+	float Vector3::distance(const Vector3& vec) const
 	{
-		Vector3 difference = vec - Vector3(x, y, z);
+		const auto difference = vec - Vector3(x, y, z);
 		return difference.getLength();
 	}
 
-	float Vector3::dot(Vector3 vec) const
+	float Vector3::dot(const Vector3& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 
-	Vector3 Vector3::lerp(Vector3 a, Vector3 b, float t)
+	Vector3 Vector3::lerp(const Vector3& a, const Vector3& b, const float& t)
 	{
 		if (b - a == Vector3(0, 0, 0)) return b; //Positions are equal
 
-		float const interpolation = a.distance(b) * t; //Get interpolation value
-		Vector3 const linearDirection = (b - a).getNormalized(); //Get direction
+		auto const interpolation = a.distance(b) * t; //Get interpolation value
+		auto const linearDirection = (b - a).getNormalized(); //Get direction
 		return linearDirection * interpolation + a; //Pos = direction * distance + start
 	}
 
-	bool Vector3::operator==(const Vector3 & vec) const
+	bool Vector3::operator==(const Vector3& vec) const
 	{
 		return x == vec.x && y == vec.y && z == vec.z;
 	}
 
-	bool Vector3::operator!=(const Vector3 & vec) const
+	bool Vector3::operator!=(const Vector3& vec) const
 	{
 		return x != vec.x || y != vec.y || z != vec.z;
 	}
 
 	Vector3 Vector3::operator*(const float& multiplier) const
 	{
-		Vector3 result(x * multiplier, y * multiplier, z * multiplier);
-		return result;
+		return { x * multiplier, y * multiplier, z * multiplier };
 	}
 
-	Vector3 Vector3::operator*(const Vector3 & vec) const
+	Vector3 Vector3::operator*(const Vector3& vec) const
 	{
-		Vector3 result(x * vec.x, y * vec.y, z * vec.z);
-		return result;
+		return { x * vec.x, y * vec.y, z * vec.z };
 	}
 
 	Vector3 Vector3::operator/(const float& divider) const
@@ -124,17 +115,17 @@ namespace Tristeon
 		return Vector3(x / divider, y / divider, z / divider);
 	}
 
-	Vector3 Vector3::operator/(const Vector3 & divider) const
+	Vector3 Vector3::operator/(const Vector3& divider) const
 	{
 		return Vector3(x / divider.x, y / divider.y, z / divider.z);
 	}
 
-	Vector3 Vector3::operator+(const Vector3 & vec) const
+	Vector3 Vector3::operator+(const Vector3& vec) const
 	{
 		return Vector3(x + vec.x, y + vec.y, z + vec.z);
 	}
 
-	Vector3 Vector3::operator-(const Vector3 & vec) const
+	Vector3 Vector3::operator-(const Vector3& vec) const
 	{
 		return Vector3(x - vec.x, y - vec.y, z - vec.z);
 	}
@@ -144,21 +135,21 @@ namespace Tristeon
 		return getAxis(value);
 	}
 
-	void Vector3::operator-=(const Vector3 & vector)
+	void Vector3::operator-=(const Vector3& vector)
 	{
 		x -= vector.x;
 		y -= vector.y;
 		z -= vector.z;
 	}
 
-	void Vector3::operator+=(const Vector3 & vector)
+	void Vector3::operator+=(const Vector3& vector)
 	{
 		x += vector.x;
 		y += vector.y;
 		z += vector.z;
 	}
 
-	void Vector3::operator*=(const Vector3 & vector)
+	void Vector3::operator*=(const Vector3& vector)
 	{
 		x *= vector.x;
 		y *= vector.y;

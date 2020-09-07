@@ -251,7 +251,7 @@ namespace TristeonEditor
 
 	void ActorEditor::displayBehaviours()
 	{
-		for (auto* behaviour : actor->getBehaviours())
+		for (auto* behaviour : actor->behaviours())
 			addBehaviour(behaviour);
 
 		QPushButton* addBehaviour = new QPushButton(this);

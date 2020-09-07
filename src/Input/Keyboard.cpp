@@ -1,58 +1,56 @@
 #include "Keyboard.h"
 
-#include <iostream>
-
 namespace Tristeon
 {
-	std::map<int, bool> Keyboard::keys;
-	std::map<int, bool> Keyboard::keysPressed;
-	std::map<int, bool> Keyboard::keysReleased;
+	std::map<int, bool> Keyboard::_keys;
+	std::map<int, bool> Keyboard::_keysPressed;
+	std::map<int, bool> Keyboard::_keysReleased;
 
-	bool Keyboard::pressed(Key const& key)
+	bool Keyboard::pressed(const Key& key)
 	{
-		if (keysPressed.find(key) == keysPressed.end())
+		if (_keysPressed.find(key) == _keysPressed.end())
 			return false;
-		return keysPressed[key];
+		return _keysPressed[key];
 	}
 
-	bool Keyboard::held(Key const& key)
+	bool Keyboard::held(const Key& key)
 	{
-		if (keys.find(key) == keys.end())
+		if (_keys.find(key) == _keys.end())
 			return false;
-		return keys[key];
+		return _keys[key];
 	}
 
-	bool Keyboard::released(Key const& key)
+	bool Keyboard::released(const Key& key)
 	{
-		if (keysReleased.find(key) == keysReleased.end())
+		if (_keysReleased.find(key) == _keysReleased.end())
 			return false;
-		return keysReleased[key];
+		return _keysReleased[key];
 	}
 
-	void Keyboard::onPress(Key const& key)
+	void Keyboard::onPress(const Key& key)
 	{
-		keys[key] = true;
-		keysPressed[key] = true;
-		keysReleased[key] = false;
+		_keys[key] = true;
+		_keysPressed[key] = true;
+		_keysReleased[key] = false;
 	}
 
-	void Keyboard::onRelease(Key const& key)
+	void Keyboard::onRelease(const Key& key)
 	{
-		keys[key] = false;
-		keysPressed[key] = false;
-		keysReleased[key] = true;
+		_keys[key] = false;
+		_keysPressed[key] = false;
+		_keysReleased[key] = true;
 	}
 
 	void Keyboard::reset()
 	{
-		keysPressed.clear();
-		keysReleased.clear();
+		_keysPressed.clear();
+		_keysReleased.clear();
 	}
 
 	void Keyboard::clearAll()
 	{
-		keys.clear();
-		keysPressed.clear();
-		keysReleased.clear();
+		_keys.clear();
+		_keysPressed.clear();
+		_keysReleased.clear();
 	}
 }

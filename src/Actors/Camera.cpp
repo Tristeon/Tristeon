@@ -23,7 +23,7 @@ namespace Tristeon
 
 	Camera::~Camera()
 	{
-		glDeleteFramebuffers(1, &fbo);
+		glDeleteFramebuffers(1, &_fbo);
 		Collector<Camera>::remove(this);
 	}
 
@@ -66,69 +66,70 @@ namespace Tristeon
 
 	void Camera::buildFramebuffer()
 	{
-		lastScreenSize = screenSize;
-		lastWindowSize = Window::gameSize();
+		_lastScreenSize = screenSize;
+		_lastWindowSize = Window::gameSize();
 
-		auto size = static_cast<Vector2Int>(lastScreenSize * lastWindowSize);
+		const auto size = static_cast<Vector2Int>(_lastScreenSize * _lastWindowSize);
 
 		//Delete old framebuffer with its texture
-		if (fbo != NULL)
-			glDeleteFramebuffers(1, &fbo);
-		if (fboTexture != NULL)
-			glDeleteTextures(1, &fboTexture);
+		if (_fbo != NULL)
+			glDeleteFramebuffers(1, &_fbo);
+		if (_fboTexture != NULL)
+			glDeleteTextures(1, &_fboTexture);
 
 		//Gen and bind Framebuffer
-		glGenFramebuffers(1, &fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glGenFramebuffers(1, &_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 
 		//Create texture
-		glGenTextures(1, &fboTexture);
-		glBindTexture(GL_TEXTURE_2D, fboTexture);
+		glGenTextures(1, &_fboTexture);
+		glBindTexture(GL_TEXTURE_2D, _fboTexture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexture, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _fboTexture, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//Finish
-		isValid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
-		if (!isValid)
+		_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+		if (!_valid)
 			Console::warning("Failed to create camera's framebuffer with size " + size.toString());
 		else
-			Console::write("Successfully created camera's framebuffer " + std::to_string(fbo));
+			Console::write("Successfully created camera's framebuffer " + std::to_string(_fbo));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 	
 	void Camera::bindFramebuffer()
 	{
-		if (!isValid || lastScreenSize != screenSize || lastWindowSize != Window::gameSize())
+		if (_lastScreenSize != screenSize || _lastWindowSize != Window::gameSize())
 			buildFramebuffer();
 		
-		if (!isValid)
+		if (!_valid)
 			return;
 		
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	
-	void Camera::drawToScreen()
+	void Camera::drawToScreen() const
 	{
 		static Shader shader("Internal/Shaders/Camera.vert", "Internal/Shaders/Camera.frag");
 
-		if (!isValid)
+		if (!_valid)
 			return;
 
-		if (Keyboard::pressed(Keyboard::R))
-			shader.reload();
-
 		shader.bind();
-		
+
+		//Bind texture
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, fboTexture);
+		glBindTexture(GL_TEXTURE_2D, _fboTexture);
 		shader.setUniformValue("screenTexture", 0);
+
+		//Pass screen info
 		shader.setUniformValue("screenSize", screenSize.x, screenSize.y);
 		shader.setUniformValue("screenCoordinates", screenCoordinates.x, screenCoordinates.y);
-		
+
+		//Draw
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

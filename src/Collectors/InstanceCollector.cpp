@@ -1,30 +1,24 @@
 #include "InstanceCollector.h"
-#include "Utils/Random.h"
 
 namespace Tristeon
 {
-	std::map<unsigned int, InstancedSerializable*> InstanceCollector::collection{};
+	std::map<unsigned int, InstancedSerializable*> InstanceCollector::_collection{};
 
-	InstancedSerializable::InstancedSerializable()
+	void InstanceCollector::add(InstancedSerializable* t)
 	{
-		InstanceCollector::add(this);
-		_instanceID = Random::generateUInt();
+		_collection[t->instanceID()] = t;
 	}
 
-	InstancedSerializable::~InstancedSerializable()
+	void InstanceCollector::remove(InstancedSerializable* t)
 	{
-		InstanceCollector::remove(this);
+		_collection.erase(t->instanceID());
 	}
 
-	json InstancedSerializable::serialize()
+	InstancedSerializable* InstanceCollector::find(const unsigned& id)
 	{
-		json j;
-		j["instanceID"] = _instanceID;
-		return j;
-	}
+		if (_collection.find(id) == _collection.end())
+			return nullptr;
 
-	void InstancedSerializable::deserialize(json j)
-	{
-		_instanceID = j.value("instanceID", _instanceID);
+		return _collection[id];
 	}
 }

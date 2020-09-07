@@ -15,42 +15,54 @@ namespace Tristeon
 		/**
 		 * Creates a (x, y, z) Vector3
 		 */
-		Vector3(float x, float y, float z);
+		Vector3(const float& x, const float& y, const float& z);
 
 #pragma region const static vectors
 		/**
+		* (0, -1, 0)
+		*/
+		[[nodiscard]] static Vector3 down() { return Vector3(0, -1, 0); }
+		/**
+		* (0, 1, 0)
+		*/
+		[[nodiscard]] static Vector3 up() { return Vector3(0, 1, 0); }
+		/**
+		* (1, 0, 0)
+		*/
+		[[nodiscard]] static Vector3 right() { return Vector3(1, 0, 0); }
+		/**
+		* (-1, 0, 0)
+		*/
+		[[nodiscard]] static Vector3 left() { return Vector3(-1, 0, 0); }
+		/**
+		* (0, 0, 0)
+		*/
+		[[nodiscard]] static Vector3 zero() { return Vector3(0, 0, 0); }
+		/**
+		* (1, 1, 1)
+		*/
+		[[nodiscard]] static Vector3 one() { return Vector3(1, 1, 1); }
+		/**
 		(0, 0, -1)
 		*/
-		const static Vector3 back;
-		/**
-		(0, -1, 0)
-		*/
-		const static Vector3 down;
+		[[nodiscard]] static Vector3 back() { return Vector3(0, 0, -1); }
 		/**
 		(0, 0, 1)
 		*/
-		const static Vector3 forward;
-		/**
-		(-1, 0, 0)
-		*/
-		const static Vector3 left;
-		/**
-		(1, 0, 0)
-		*/
-		const static Vector3 right;
-		/**
-		(0, 1, 0)
-		*/
-		const static Vector3 up;
-		/**
-		(1, 1, 1)
-		*/
-		const static Vector3 one;
-		const static Vector3 zero;
+		[[nodiscard]] static Vector3 forward() { return Vector3(0, 0, 1); }
 #pragma endregion
 
+		/**
+		 * The horizontal axis, negative is left, positive is right.
+		 */
 		float x;
+		/**
+		 * The vertical axis, negative is down, positive is up.
+		 */
 		float y;
+		/**
+		 * The depth axis, negative is backwards, positive is forwards.
+		 */
 		float z;
 
 		/**
@@ -58,11 +70,11 @@ namespace Tristeon
 		*
 		* \exception invalid_argument If the axis is higher than the dimensions supported by Vector3, or if it's below 0.
 		*/
-		float& getAxis(const int& axis);
+		[[nodiscard]] float& getAxis(const int& axis);
 		/**
 		* Returns a unit (length = 1) vector with the same direction as this vector.
 		*/
-		Vector3 getNormalized() const;
+		[[nodiscard]] Vector3 getNormalized() const;
 		/**
 		* Normalizes the vector into a unit vector
 		*/
@@ -70,51 +82,52 @@ namespace Tristeon
 		/**
 		* Scales vector by the multiplier
 		*/
-		void scale(float multiplier);
+		void scale(const float& multiplier);
 		/**
 		Returns the magnitude of the vector
 		*/
-		float getLength() const;
+		[[nodiscard]] float getLength() const;
 		/**
 		* Returns the magnitude of the vector squared (It's more optimized than normal getLength)
 		*/
-		float getSqrLength() const;
+		[[nodiscard]] float getSqrLength() const;
 		/**
 		*Returns the distance between two vectors
 		*/
-		static float distance(Vector3 vec, Vector3 vec2);
+		[[nodiscard]] static float distance(const Vector3& vec, const Vector3& vec2);
 		/**
 		* Dot product of the two given vectors
 		*/
-		static float dot(Vector3 vec, Vector3 vec2);
+		[[nodiscard]] static float dot(const Vector3& vec, const Vector3& vec2);
 		/**
 		* Returns the distance to the given vector
 		*/
-		float distance(Vector3 vec) const;
+		[[nodiscard]] float distance(const Vector3& vec) const;
 		/**
 		* Dot product between the vector and the given vector
 		*/
-		float dot(Vector3 vec) const;
+		[[nodiscard]] float dot(const Vector3& vec) const;
 		/**
 		* Linearly interpolates between two vectors.
 		* \param a The start point
 		* \param b The destination
 		* \param t interpolate rate (0-1)
 		*/
-		static Vector3 lerp(Vector3 a, Vector3 b, float t);
+		[[nodiscard]] static Vector3 lerp(const Vector3& a, const Vector3& b, const float& t);
 
 		/**
 		* Access the x, y, z components using [0], [1], [2] respectively.
 		 */
-		float& operator[](const int& value);
-		bool operator==(const Vector3& vec) const;
-		bool operator!=(const Vector3& vec) const;
-		Vector3 operator*(const float& multiplier) const;
-		Vector3 operator*(const Vector3& vec) const;
-		Vector3 operator/(const float& divider) const;
-		Vector3 operator/(const Vector3& divider) const;
-		Vector3 operator+(const Vector3& vec) const;
-		Vector3 operator-(const Vector3& vec) const;
+		[[nodiscard]] float& operator[](const int& value);
+		[[nodiscard]] bool operator==(const Vector3& vec) const;
+		[[nodiscard]] bool operator!=(const Vector3& vec) const;
+		[[nodiscard]] Vector3 operator*(const float& multiplier) const;
+		[[nodiscard]] Vector3 operator*(const Vector3& vec) const;
+		[[nodiscard]] Vector3 operator/(const float& divider) const;
+		[[nodiscard]] Vector3 operator/(const Vector3& divider) const;
+		[[nodiscard]] Vector3 operator+(const Vector3& vec) const;
+		[[nodiscard]] Vector3 operator-(const Vector3& vec) const;
+		
 		void operator-=(const Vector3& vector);
 		void operator+=(const Vector3& vector);
 		void operator *=(const Vector3& vector);
@@ -123,27 +136,39 @@ namespace Tristeon
 		/**
 		 * Operator used to order vectors in maps/dictionaries.
 		 */
-		bool operator <(const Vector3& vec) const;
+		[[nodiscard]] bool operator <(const Vector3& vec) const;
 		/**
 		 * Operator used to order vectors in maps/dictionaries.
 		 */
-		bool operator >(const Vector3& vec) const;
-		
+		[[nodiscard]] bool operator >(const Vector3& vec) const;
+
 		/**
 		 * Convert this instance to a string describing the properties
 		 */
-		std::string toString() const;
+		[[nodiscard]] String toString() const;
 
-		std::array<float, 3> toArray() const { return { x, y, z }; }
+		/**
+		 * Convert to an array of 3 floats.
+		 */
+		[[nodiscard]] std::array<float, 3> toArray() const { return { x, y, z }; }
 
+		/**
+		 * Convert to any given type, assuming it has a (float, float, float) constructor.
+		 */
 		template<typename T>
-		constexpr T convert() const { return T{ x, y, z }; }
+		[[nodiscard]] constexpr T convert() const { return T{ x, y, z }; }
 
+		/**
+		 * Convert any given type to a Vector3, assuming it has an x, y, and z field.
+		 */
 		template<typename T>
-		static constexpr Vector3 convert(T* vec) { return Vector3{ vec->x, vec->y, vec->z }; }
+		[[nodiscard]] static constexpr Vector3 convert(T* vec) { return Vector3{ vec->x, vec->y, vec->z }; }
 
+		/**
+		 * Convert any given type to a Vector3, assuming it has an x, y, and z field.
+		 */
 		template<typename T>
-		static constexpr Vector3 convert(T const& vec) { return Vector3{ vec.x, vec.y, vec.z }; }
+		[[nodiscard]] static constexpr Vector3 convert(const T& vec) { return Vector3{ vec.x, vec.y, vec.z }; }
 	};
 
 	inline void to_json(nlohmann::json& j, const Vector3& p) {
@@ -162,7 +187,7 @@ namespace Tristeon
 	/**
 	* Multiplies the x,y,z components with the given multiplier
 	*/
-	Vector3 operator*(const float& multiplier, Vector3 const& vector);
+	[[nodiscard]] Vector3 operator*(const float& multiplier, const Vector3& vector);
 
 	static_assert(sizeof(Vector3) == 3 * sizeof(float), "Vector3 shouldn't contain anything else than 3 floats");
 }

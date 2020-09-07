@@ -36,8 +36,8 @@ namespace Tristeon
 		 */
 		static bool playMode();
 		
-		void destroyLater(Actor* actor);
-		void destroyLater(Behaviour* behaviour);
+		static void destroyLater(Actor* actor);
+		static void destroyLater(Behaviour* behaviour);
 	private:
 		bool inPlayMode = false;
 		bool playModeDirty = false;

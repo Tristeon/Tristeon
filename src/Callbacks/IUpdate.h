@@ -12,6 +12,9 @@ namespace Tristeon
 	class IUpdate : ICallback<IUpdate>
 	{
 	public:
+		/**
+		 * update is called every frame.
+		 */
 		virtual void update() = 0;
 	};
 }

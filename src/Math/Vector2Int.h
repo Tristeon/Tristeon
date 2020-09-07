@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <array>
+#include <json.h>
+#include <Serialization/Typename.h>
 #include "Vector2.h"
 
 namespace Tristeon
@@ -15,49 +17,55 @@ namespace Tristeon
 		 * \param x The x of this vector
 		 * \param y The y of this vector
 		 */
-		Vector2Int(int x, int y);
+		Vector2Int(const int& x, const int& y);
 
 		/**
 		 * Creates a vector2int with the given Vector2
 		 */
-		explicit Vector2Int(Vector2 vec2);
-		
+		explicit Vector2Int(const Vector2& vec2);
+
 		/**
 		 * Converts the Vector2Int into a Vector2
 		 */
-		operator Vector2() const { return Vector2(x, y); }
+		[[nodiscard]] operator Vector2() const { return Vector2((float)x, (float)y); }
 
 #pragma region quick vectors
 
 		/**
 		* (0, -1)
 		*/
-		static Vector2Int down() { return {0, -1}; }
+		[[nodiscard]] static Vector2Int down() { return { 0, -1 }; }
 		/**
 		* (0, 1)
 		*/
-		static Vector2Int up() { return {0, 1}; }
+		[[nodiscard]] static Vector2Int up() { return { 0, 1 }; }
 		/**
 		* (1, 0)
 		*/
-		static Vector2Int right() { return {1, 0}; }
+		[[nodiscard]] static Vector2Int right() { return { 1, 0 }; }
 
 		/**
 		* (-1, 0)
 		*/
-		static Vector2Int left() { return {-1, 0}; }
+		[[nodiscard]] static Vector2Int left() { return { -1, 0 }; }
 
 		/**
 		* (0, 0)
 		*/
-		static Vector2Int zero() { return {0, 0}; }
+		[[nodiscard]] static Vector2Int zero() { return { 0, 0 }; }
 		/**
 		* (1, 1)
 		*/
-		static Vector2Int one() { return {1, 1}; }
+		[[nodiscard]] static Vector2Int one() { return { 1, 1 }; }
 #pragma endregion
 
+		/**
+		 * The horizontal axis, negative is left, positive is right.
+		 */
 		int x;
+		/**
+		 * The vertical axis, negative is down, positive is up.
+		 */
 		int y;
 
 		/**
@@ -65,80 +73,81 @@ namespace Tristeon
 		*
 		* \exception invalid_argument  If the axis is higher than the dimensions supported by Vector2Int, or if it's below 0
 		*/
-		int getAxis(const int& axis) const;
+		[[nodiscard]] int getAxis(const int& axis) const;
 		/**
 		* Scales vector by the multiplier
 		* \param multiplier the amount it multiplies by
 		*/
-		void scale(int multiplier);
+		void scale(const int& multiplier);
 		/**
 		Returns the magnitude of the vector
 		*/
-		float getLength() const;
+		[[nodiscard]] float getLength() const;
 		/**
 		* Returns the magnitude of the vector squared (It's more optimized than normal getLength)
 		*/
-		float getSqrLength() const;
+		[[nodiscard]] float getSqrLength() const;
 		/**
 		*Returns the distance between the two given vectors
 		*/
-		static float distance(Vector2Int vec, Vector2Int vec2);
+		[[nodiscard]] static float distance(const Vector2Int& vec, const Vector2Int& vec2);
 		/**
 		* Dot product of the two given vectors
 		*/
-		static int dot(Vector2Int vec, Vector2Int vec2);
+		[[nodiscard]] static int dot(const Vector2Int& vec, const Vector2Int& vec2);
 		/**
 		* Returns the distance between the vector and the given vector
 		*/
-		float distance(Vector2Int vec) const;
+		[[nodiscard]] float distance(const Vector2Int& vec) const;
 		/**
 		* Dot product between the vector and the given vector
 		*/
-		float dot(Vector2Int vec) const;
+		[[nodiscard]] float dot(const Vector2Int& vec) const;
 
 		/**
 		* Gets the axis with the given index
 		*/
-		int operator[](const int& value) const;
+		[[nodiscard]] int operator[](const int& value) const;
 
-		bool operator==(const Vector2Int & vec) const;
-		bool operator!=(const Vector2Int & vec) const;
-		Vector2Int operator*(const int& multiplier) const;
-		Vector2Int operator*(const Vector2Int & vec) const;
-		Vector2Int operator/(const int& divider) const;
-		Vector2Int operator/(const Vector2Int & divider) const;
-		Vector2Int operator+(const Vector2Int & vec) const;
-		Vector2Int operator-(const Vector2Int & vec) const;
-		void operator-=(const Vector2Int & vector);
-		void operator+=(const Vector2Int & vector);
-		void operator *=(const Vector2Int & vector);
+		[[nodiscard]] bool operator==(const Vector2Int& vec) const;
+		[[nodiscard]] bool operator!=(const Vector2Int& vec) const;
+		[[nodiscard]] Vector2Int operator*(const int& multiplier) const;
+		[[nodiscard]] Vector2Int operator*(const Vector2Int& vec) const;
+		[[nodiscard]] Vector2Int operator/(const int& divider) const;
+		[[nodiscard]] Vector2Int operator/(const Vector2Int& divider) const;
+		[[nodiscard]] Vector2Int operator+(const Vector2Int& vec) const;
+		[[nodiscard]] Vector2Int operator-(const Vector2Int& vec) const;
+		
+		void operator-=(const Vector2Int& vector);
+		void operator+=(const Vector2Int& vector);
+		void operator *=(const Vector2Int& vector);
 		void operator *=(const int& value);
 		void operator *=(const float& value);
 
 		/**
 		 * Operator used to order vectors in maps/dictionaries.
 		 */
-		bool operator <(const Vector2Int& vec) const;
+		[[nodiscard]] bool operator <(const Vector2Int& vec) const;
 		/**
 		 * Operator used to order vectors in maps/dictionaries.
 		 */
-		bool operator >(const Vector2Int& vec) const;
-		
+		[[nodiscard]] bool operator >(const Vector2Int& vec) const;
+
 		/**
 		* Convert this instance to a string describing the properties
 		*/
-		std::string toString() const;
+		[[nodiscard]] String toString() const;
 
-		std::array<int, 2> toArray() const { return { x, y }; }
-
-		template<typename T>
-		constexpr T convert() const { return { x, y }; }
+		[[nodiscard]] std::array<int, 2> toArray() const { return { x, y }; }
 
 		template<typename T>
-		static constexpr Vector2Int convert(T * vec) { return { vec->x, vec->y }; }
+		[[nodiscard]] constexpr T convert() const { return { x, y }; }
 
 		template<typename T>
-		static constexpr Vector2Int convert(T const& vec) { return { vec.x, vec.y }; }
+		[[nodiscard]] static constexpr Vector2Int convert(T* vec) { return { vec->x, vec->y }; }
+
+		template<typename T>
+		[[nodiscard]] static constexpr Vector2Int convert(T const& vec) { return { vec.x, vec.y }; }
 	};
 
 	inline void to_json(nlohmann::json& j, const Vector2Int& p) {
@@ -151,11 +160,11 @@ namespace Tristeon
 		p.x = j.value("x", 0);
 		p.y = j.value("y", 0);
 	}
-	
+
 	/**
 	* Multiplies the x,y,z components with the given multiplier
 	*/
-	Vector2Int operator*(const int& multiplier, Vector2Int const& vector);
+	[[nodiscard]] Vector2Int operator*(const int& multiplier, const Vector2Int& vector);
 
 	static_assert(sizeof(Vector2Int) == 2 * sizeof(int), "Vector2Int shouldn't contain anything else than 2 integers");
 }

@@ -12,6 +12,11 @@ namespace Tristeon
 	class IDrawGizmos : ICallback<IDrawGizmos>
 	{
 	public:
+		/**
+		 * Draw gizmos is called once per frame, gizmos are rendered at the end of the frame and cleared after.
+		 *
+		 * Use the Gizmos class in this function.
+		 */
 		virtual void drawGizmos() = 0;
 	};
 }

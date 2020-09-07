@@ -1,13 +1,9 @@
 #pragma once
-#include "Actor.h"
-
-#include <Rendering/Graphic.h>
+#include "Rendering/Graphic.h"
 #include <Rendering/Texture.h>
+
+#include <Utils/Colour.h>
 #include <Serialization/TypeRegister.h>
-
-#include <Rendering/Shader.h>
-
-#include "Utils/Colour.h"
 
 namespace Tristeon
 {
@@ -25,6 +21,9 @@ namespace Tristeon
 		 */
 		Sprite();
 		virtual ~Sprite() = default;
+
+		DELETE_COPY(Sprite);
+		DEFAULT_MOVE(Sprite);
 
 		json serialize() override;
 		void deserialize(json j) override;
@@ -65,33 +64,27 @@ namespace Tristeon
 		/**
 		 * Returns the current texture of the sprite. May be nullptr.
 		 */
-		virtual Texture* getTexture();
+		virtual Texture* texture();
 		
 		/**
-		 * Returns true if the world position is within the bounds of the Sprite.
+		 * Returns the Sprite's Bounds.
+		 * This is a square, defined using the position, scale, width, and height of the sprite.
 		 */
-		bool withinBounds(Vector2 const& worldPos) override;
-
-		/**
-		 * Returns the Sprite's AABB.
-		 * This is a square, defined using the position, rotation, scale, width and height of the sprite.
-		 * This function handles rotation by calculating the smallest AABB fit around the rotated Sprite.
-		 */
-		AABB getAABB() override;
+		Bounds bounds() override;
 
 	protected:
-		virtual void render() override;
-		virtual Shader* getShader() override;
+		void render() override;
+		Shader* getShader() override;
 
 		/**
 		 * The 2D texture of the sprite.
 		 */
-		Texture* texture = nullptr;
+		Texture* _texture = nullptr;
 
 		/**
 		 * The path to the texture.
 		 */
-		String texturePath;
+		String _texturePath;
 	};
 
 	REGISTER_TYPE(Sprite);

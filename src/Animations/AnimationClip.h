@@ -16,6 +16,19 @@ namespace Tristeon
 	class AnimationClip : public Serializable
 	{
 	public:
+		/**
+		 * Creates an empty animationclip.
+		 */
+		AnimationClip() = default;
+		virtual ~AnimationClip() = default;
+		
+		DELETE_COPY(AnimationClip);
+		DEFAULT_MOVE(AnimationClip);
+		
+		json serialize() override;
+		void deserialize(json j) override;
+
+		//TODO: For consistency's sake, TileSet and AnimationClip should use the same Spacing structure
 		struct Spacing
 		{
 			/**
@@ -98,14 +111,6 @@ namespace Tristeon
 		 * TODO: AnimationClip::playbackRate doesn't support negative (backwards) playback rates yet.
 		 */
 		float playbackRate = 1;
-
-		/**
-		 * Creates an empty animationclip.
-		 */
-		AnimationClip() = default;
-
-		json serialize() override;
-		void deserialize(json j) override;
 	};
 
 	REGISTER_TYPE(AnimationClip);

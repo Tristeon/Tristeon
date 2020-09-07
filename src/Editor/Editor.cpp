@@ -2,6 +2,8 @@
 #include "Editor.h"
 #include "Window.h"
 
+#include <Scenes/Scene.h>
+#include <Scenes/SceneManager.h>
 namespace TristeonEditor
 {
 	void Editor::initialize()

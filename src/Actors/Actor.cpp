@@ -1,12 +1,13 @@
 #include "Actor.h"
-#include <Scenes/Layers/ActorLayer.h>
-
-#include "Collectors/Collector.h"
-#include "Callbacks/IPreDestroy.h"
 
 #include "Engine.h"
+#include "Callbacks/IPreDestroy.h"
 #include "Collectors/InstanceCollector.h"
+#include "Scenes/SceneManager.h"
+#include <Scenes/Layers/ActorLayer.h>
 
+#include "Scenes/Scene.h"
+#include "Serialization/TypeRegister.h"
 
 namespace Tristeon
 {
@@ -25,12 +26,12 @@ namespace Tristeon
 	{
 		Collector<Actor>::remove(this);
 
-		assert(destroyed == true);
+		assert(_destroyed == true);
 
-		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
+		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
-			_behaviours[i]->destroyed = true;
+			_behaviours[i]->_destroyed = true;
 			_behaviours[i].reset();
 			_behaviours.removeAt(i);
 		}
@@ -38,7 +39,7 @@ namespace Tristeon
 
 	json Actor::serialize()
 	{
-		json j = Serializable::serialize();
+		auto j = Serializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Actor);
 		j["position"] = position;
 		j["scale"] = scale;
@@ -46,8 +47,8 @@ namespace Tristeon
 		j["name"] = name;
 
 		json serializedBehaviours = json::array_t();
-		for (size_t i = 0; i < _behaviours.size(); i++)
-			serializedBehaviours.push_back(_behaviours[i]->serialize());
+		for (const auto& behaviour : _behaviours)
+			serializedBehaviours.push_back(behaviour->serialize());
 		j["behaviours"] = serializedBehaviours;
 		return j;
 	}
@@ -61,19 +62,22 @@ namespace Tristeon
 		rotation = j.value("rotation", 0);
 		name = j.value("name", "");
 
+		//Clear previous behaviours
 		for (auto& b : _behaviours)
-			b->destroyed = true;
-		for (auto& b : getBehaviours<IPreDestroy>()) { b->preDestroy(); }
+			b->_destroyed = true;
+		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
 		for (auto serializedBehaviour : j.value("behaviours", json::array_t()))
 		{
+			//Attempt to create behaviour from type ID
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
 			if (serializable == nullptr)
 			{
 				std::cout << "Attempted to create behaviour of type " << serializedBehaviour["typeID"] << ", but failed. It will be ignored upon creation and removed from the save file. \n";
 				continue;
 			}
+			//Attempt to cast serializable down to behaviour
 			auto* behaviour = dynamic_cast<Behaviour*>(serializable.get());
 			if (behaviour == nullptr)
 			{
@@ -81,10 +85,11 @@ namespace Tristeon
 				serializable.reset();
 				continue;
 			}
-			serializable.release();
-			behaviour->_owner = this;
-			_behaviours.add(Unique<Behaviour>(behaviour));
 
+			//Successfully created, move behaviour
+			serializable.release();
+			behaviour->_actor = this;
+			_behaviours.add(Unique<Behaviour>(behaviour));
 			behaviour->deserialize(serializedBehaviour);
 		}
 	}
@@ -106,22 +111,22 @@ namespace Tristeon
 		}
 	}
 
-	Vector<Behaviour*> Actor::getBehaviours()
+	Vector<Behaviour*> Actor::behaviours()
 	{
 		Vector<Behaviour*> result;
-		for (size_t i = 0; i < _behaviours.size(); i++)
-			result.add(_behaviours[i].get());
+		for (const auto& behaviour : _behaviours)
+			result.add(behaviour.get());
 		return result;
 	}
 
-	Behaviour* Actor::addBehaviour(std::string type)
+	Behaviour* Actor::addBehaviour(const std::string& type)
 	{
-		Behaviour* result = Register<Behaviour>::createInstance(type).release();
+		auto* result = Register<Behaviour>::createInstance(type).release();
 
 		if (result == nullptr)
 			return nullptr;
 
-		result->_owner = this;
+		result->_actor = this;
 		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
@@ -134,8 +139,8 @@ namespace Tristeon
 
 	void Actor::destroy()
 	{
-		destroyed = true;
-		Engine::instance()->destroyLater(this);
+		_destroyed = true;
+		Engine::destroyLater(this);
 	}
 
 	Actor* Actor::find(String const& name)
@@ -149,14 +154,10 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	Actor* Actor::find(unsigned const& id)
+	Actor* Actor::find(const unsigned int& id)
 	{
-		auto actorLayers = SceneManager::current()->findLayersOfType<ActorLayer>();
-		auto* serializable = InstanceCollector::find(id);
-		auto* actor = dynamic_cast<Actor*>(serializable);
-
-		if (actor != nullptr)
-			return actor;
-		return nullptr;
+		auto* instance = InstanceCollector::find(id);
+		auto* actor = dynamic_cast<Actor*>(instance);
+		return actor; //Returns nullptr if the dynamic_cast failed.
 	}
 }

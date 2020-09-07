@@ -118,17 +118,17 @@ namespace Tristeon
 
 	void Engine::destroyLater(Actor* actor)
 	{
-		destroyedActors.add(actor);
+		instance()->destroyedActors.add(actor);
 	}
 
 	void Engine::destroyLater(Behaviour* behaviour)
 	{
-		destroyedBehaviours.add(behaviour);
+		instance()->destroyedBehaviours.add(behaviour);
 	}
 
 	void Engine::processDestroyedObjects()
 	{
-		for (auto const& behaviour : destroyedBehaviours) behaviour->getOwner()->removeBehaviour(behaviour);
+		for (auto const& behaviour : destroyedBehaviours) behaviour->actor()->removeBehaviour(behaviour);
 		destroyedBehaviours.clear();
 		for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
 		destroyedActors.clear();

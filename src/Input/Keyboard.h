@@ -7,13 +7,6 @@ namespace TristeonEditor { class EditorWindow; }
 
 namespace Tristeon
 {
-	class Window;
-	class Engine;
-
-#ifndef TRISTEON_EDITOR
-	class GameWindow;
-#endif
-	
 	/**
 	 * Interface to interact with the OS Keyboard.
 	 *
@@ -21,13 +14,13 @@ namespace Tristeon
 	 */
 	class Keyboard
 	{
-		friend Window;
-		friend Engine;
+		friend class Window;
+		friend class Engine;
 
 #ifdef TRISTEON_EDITOR
 		friend TristeonEditor::EditorWindow;
 #else
-		friend GameWindow;
+		friend class GameWindow;
 #endif
 		
 	public:
@@ -152,21 +145,21 @@ namespace Tristeon
 		/**
 		 * Was this key pressed on the current frame?
 		 */
-		static bool pressed(Key const& key);
+		[[nodiscard]] static bool pressed(const Key& key);
 
 		/**
 		 * Was this key held during the current frame?
 		 */
-		static bool held(Key const& key);
+		[[nodiscard]] static bool held(const Key& key);
 
 		/**
 		 * Was this key released on the current frame?
 		 */
-		static bool released(Key const& key);
+		[[nodiscard]] static bool released(const Key& key);
 
 	private:
-		static void onPress(Key const& key);
-		static void onRelease(Key const& key);
+		static void onPress(const Key& key);
+		static void onRelease(const Key& key);
 
 		/**
 		 * Clears frame-based data structures.
@@ -178,8 +171,8 @@ namespace Tristeon
 		 */
 		static void clearAll();
 
-		static std::map<int, bool> keys;
-		static std::map<int, bool> keysPressed;
-		static std::map<int, bool> keysReleased;
+		static std::map<int, bool> _keys;
+		static std::map<int, bool> _keysPressed;
+		static std::map<int, bool> _keysReleased;
 	};
 }

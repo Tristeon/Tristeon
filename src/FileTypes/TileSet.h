@@ -1,12 +1,17 @@
 #pragma once
 #include <memory>
-#include <Rendering/Texture.h>
 #include <Serialization/Serializable.h>
 #include <Serialization/TypeRegister.h>
 #include <Math/Vector2Int.h>
 
 namespace Tristeon
 {
+	class Texture;
+
+	/**
+	 * A structure with basic information about a tile.
+	 * It describes the tile's collider and physical properties.
+	 */
 	struct TileInfo
 	{
 		bool hasCollider = false;
@@ -14,20 +19,8 @@ namespace Tristeon
 		float friction = 0.0f;
 		float restitution = 0.0f;
 	};
-
-	inline void to_json(json& j, const TileInfo& p) {
-		j["hasCollider"] = p.hasCollider;
-		j["density"] = p.density;
-		j["friction"] = p.friction;
-		j["restitution"] = p.restitution;
-	}
-
-	inline void from_json(const json& j, TileInfo& p) {
-		p.hasCollider = j.value("hasCollider", false);
-		p.density = j.value("density", 1.0f);
-		p.friction = j.value("friction", 0.0f);
-		p.restitution = j.value("restitution", 0.0f);
-	}
+	void to_json(json& j, const TileInfo& p);
+	void from_json(const json& j, TileInfo& p);
 
 	/**
 	 * A TileSet is an image that gets interpreted as if it were constructed out of separated tiles, 
@@ -50,94 +43,94 @@ namespace Tristeon
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		TileInfo info(int const& x, int const& y) const;
+		[[nodiscard]] TileInfo info(const int& x, const int& y) const;
 
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		TileInfo info(Vector2Int const& coords) const;
+		[[nodiscard]] TileInfo info(const Vector2Int& coords) const;
 		
 		/**
 		 * Gets the Tile data struct of the tile at the given index.
 		 */
-		TileInfo info(int const& index) const;
+		[[nodiscard]] TileInfo info(const int& index) const;
 
 		/**
 		 * Gets the size of a tile in pixels.
 		 */
-		Vector2Int tileSize() const;
+		[[nodiscard]] Vector2Int tileSize() const;
 
 		/**
 		 * Gets the size of the tiles in 0..1 range
 		 */
-		Vector2 tileSizeNormalized() const;
+		[[nodiscard]] Vector2 tileSizeNormalized() const;
 
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMin(int const& index) const;
+		[[nodiscard]] Vector2Int tileMin(const int& index) const;
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMin(int const& x, int const& y) const;
+		[[nodiscard]] Vector2Int tileMin(const int& x, const int& y) const;
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMin(Vector2Int const& coords) const;
+		[[nodiscard]] Vector2Int tileMin(const Vector2Int& coords) const;
 
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMinNormalized(int const& x, int const& y) const;
+		[[nodiscard]] Vector2 tileMinNormalized(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMinNormalized(int const& index) const;
+		[[nodiscard]] Vector2 tileMinNormalized(const int& index) const;
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMinNormalized(Vector2Int const& coords) const;
+		[[nodiscard]] Vector2 tileMinNormalized(const Vector2Int& coords) const;
 		
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMax(int const& index) const;
+		[[nodiscard]] Vector2Int tileMax(const int& index) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMax(int const& x, int const& y) const;
+		[[nodiscard]] Vector2Int tileMax(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		Vector2Int tileMax(Vector2Int const& coords) const;
+		[[nodiscard]] Vector2Int tileMax(const Vector2Int& coords) const;
 
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMaxNormalized(int const& x, int const& y) const;
+		[[nodiscard]] Vector2 tileMaxNormalized(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMaxNormalized(int const& index) const;
+		[[nodiscard]] Vector2 tileMaxNormalized(const int& index) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		Vector2 tileMaxNormalized(Vector2Int const& coords) const;
+		[[nodiscard]] Vector2 tileMaxNormalized(const Vector2Int& coords) const;
 		
 		/**
 		 * Converts x,y coordinates to the tile index.
 		 */
-		int tile(int const& x, int const& y) const;
+		[[nodiscard]] int tile(const int& x, const int& y) const;
 
 		/**
 		 * Converts x,y coordinates to the tile index.
 		 */
-		int tile(Vector2Int const& coords) const;
+		[[nodiscard]] int tile(const Vector2Int& coords) const;
 		
 		/**
 		 * Converts a tile index to x,y coordinates.
 		 */
-		Vector2Int tileCoords(int const& index) const;
+		[[nodiscard]] Vector2Int tileCoords(const int& index) const;
 		
 		/**
 		 * The amount of columns the tileset has.
@@ -200,7 +193,8 @@ namespace Tristeon
 		 * The filepath of the texture
 		 */
 		String texturePath = "";
-		
+
+		//TODO: Replace TileSet::id with instanceID
 		unsigned int id = 0;
 	};
 

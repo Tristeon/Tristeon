@@ -18,12 +18,12 @@ namespace Tristeon
 {
 	void TestBehaviour::start()
 	{
-		body = getOwner<Actor>()->getBehaviour<PhysicsBody>();
+		body = actor()->behaviour<PhysicsBody>();
 	}
 
 	void TestBehaviour::update()
 	{
-		const auto grounded = PhysicsWorld::raycast(getOwner<Actor>()->position, Vector2::down(), groundedDistance);
+		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector2::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->setVelocity({ body->velocity().x, jumpVelocity });
 
@@ -31,7 +31,7 @@ namespace Tristeon
 		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
 
 		if (!Camera::cameras().empty())
-			Camera::cameras()[0]->position = getOwner<Actor>()->position;
+			Camera::cameras()[0]->position = actor()->position;
 	}
 	
 	json TestBehaviour::serialize()
@@ -55,11 +55,11 @@ namespace Tristeon
 
 	bool TestBehaviour::preContact(Contact const& contact)
 	{
-		if (contact.other->getOwner()->name == "A")
+		if (contact.other->actor()->name == "A")
 		{
 			const auto box = dynamic_cast<BoxCollider*>(contact.other);
 
-			if (getOwner()->position.y < (contact.other->getOwner()->position.y + box->height()))
+			if (actor()->position.y < (contact.other->actor()->position.y + box->height()))
 				return false;
 		}
 

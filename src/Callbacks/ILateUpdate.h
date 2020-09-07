@@ -12,6 +12,9 @@ namespace Tristeon
 	class ILateUpdate : ICallback<ILateUpdate>
 	{
 	public:
+		/**
+		 * lateUpdate is called once every frame, after all the other update calls.
+		 */
 		virtual void lateUpdate() = 0;
 	};
 }

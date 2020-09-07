@@ -338,14 +338,14 @@ namespace TristeonEditor
 		activeGamepad = new QGamepad(gamepads[0]);
 		std::cout << "Selected Gamepad: " << activeGamepad->name().toStdString() << std::endl;
 
-		connect(activeGamepad, &QGamepad::axisLeftXChanged, this, [](double const& value) { Gamepad::left.x = value; });
+		connect(activeGamepad, &QGamepad::axisLeftXChanged, this, [](double const& value) { Gamepad::_left.x = value; });
 		connect(activeGamepad, &QGamepad::axisLeftYChanged, this,
-			[](double const& value) { Gamepad::left.y = -value; });
+			[](double const& value) { Gamepad::_left.y = -value; });
 
 		connect(activeGamepad, &QGamepad::axisRightXChanged, this,
-			[](double const& value) { Gamepad::right.x = value; });
+			[](double const& value) { Gamepad::_right.x = value; });
 		connect(activeGamepad, &QGamepad::axisRightYChanged, this,
-			[](double const& value) { Gamepad::right.y = -value; });
+			[](double const& value) { Gamepad::_right.y = -value; });
 
 		connect(activeGamepad, &QGamepad::buttonAChanged, this, [](bool const& pressed)
 			{
@@ -368,7 +368,7 @@ namespace TristeonEditor
 			{
 				Gamepad::buttonChanged(Gamepad::L1, pressed);
 			});
-		connect(activeGamepad, &QGamepad::buttonL2Changed, this, [](float const& value) { Gamepad::l2 = value; });
+		connect(activeGamepad, &QGamepad::buttonL2Changed, this, [](float const& value) { Gamepad::_l2 = value; });
 		connect(activeGamepad, &QGamepad::buttonL3Changed, this, [](bool const& pressed)
 			{
 				Gamepad::buttonChanged(Gamepad::L3, pressed);
@@ -378,7 +378,7 @@ namespace TristeonEditor
 			{
 				Gamepad::buttonChanged(Gamepad::R1, pressed);
 			});
-		connect(activeGamepad, &QGamepad::buttonR2Changed, this, [](float const& value) { Gamepad::r2 = value; });
+		connect(activeGamepad, &QGamepad::buttonR2Changed, this, [](float const& value) { Gamepad::_r2 = value; });
 		connect(activeGamepad, &QGamepad::buttonR3Changed, this, [](bool const& pressed)
 			{
 				Gamepad::buttonChanged(Gamepad::R3, pressed);

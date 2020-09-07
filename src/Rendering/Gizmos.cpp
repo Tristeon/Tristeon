@@ -59,7 +59,7 @@ namespace Tristeon
 		
 		for (int i = 0; i < 32; i++)
 		{
-			float const theta = Math::twoPI * i / 32.0f;
+			float const theta = Math::TAU * i / 32.0f;
 
 			float const x = radius * cosf(theta);
 			float const y = radius * sinf(theta);

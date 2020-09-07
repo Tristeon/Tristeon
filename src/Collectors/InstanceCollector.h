@@ -6,7 +6,9 @@ namespace Tristeon
 {
 	/**
 	 * InstanceCollector collects all objects with an InstanceID.
-	 * This is used for application wide reference lookups.
+	 * It behaves in a very similar way to Collector<T>, except that it stores items by instanceID and uses the fast look up of std::map to find them back.
+	 * 
+	 * InstanceCollector is used for application wide reference lookups.
 	 */
 	class InstanceCollector
 	{
@@ -14,28 +16,20 @@ namespace Tristeon
 		/**
 		 * Adds an object to the collector.
 		 */
-		static void add(InstancedSerializable* t)
-		{
-			collection[t->instanceID()] = t;
-		}
+		static void add(InstancedSerializable* t);
 
 		/**
 		 * Removes the object from the collector.
 		 */
-		static void remove(InstancedSerializable* t)
-		{
-			collection.erase(t->instanceID());
-		}
+		static void remove(InstancedSerializable* t);
 
-		static InstancedSerializable* find(const unsigned int& id)
-		{
-			if (collection.find(id) == collection.end())
-				return nullptr;
-			
-			return collection[id];
-		}
+		/**
+		 * Returns the object with the given ID.
+		 * Returns nullptr if no such actor exists.
+		 */
+		static InstancedSerializable* find(const unsigned int& id);
 
 	private:
-		static std::map<unsigned int, InstancedSerializable*> collection;
+		static std::map<unsigned int, InstancedSerializable*> _collection;
 	};
 }

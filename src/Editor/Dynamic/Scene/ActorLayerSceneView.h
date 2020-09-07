@@ -19,8 +19,8 @@ namespace TristeonEditor
 		
 		Tristeon::ActorLayer* actorLayer = nullptr;
 
-		Tristeon::Graphic::AABB scalar;
-		Tristeon::Graphic::AABB rotator;
+		Tristeon::Graphic::Bounds scalar;
+		Tristeon::Graphic::Bounds rotator;
 		
 		bool dragging = false;
 		bool draggingScalar = false;

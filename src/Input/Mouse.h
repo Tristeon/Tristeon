@@ -7,12 +7,6 @@ namespace TristeonEditor { class EditorWindow; }
 
 namespace Tristeon
 {
-	class Window;
-	class Engine;
-#ifndef TRISTEON_EDITOR
-	class GameWindow;
-#endif
-	
 	/**
 	 * Interface to interact with the OS Mouse.
 	 *
@@ -21,13 +15,13 @@ namespace Tristeon
 	 */
 	class Mouse final
 	{
-		friend Window;
-		friend Engine;
+		friend class Window;
+		friend class Engine;
 
 #ifdef TRISTEON_EDITOR
 		friend TristeonEditor::EditorWindow;
 #else
-		friend GameWindow;
+		friend class GameWindow;
 #endif
 		
 	public:
@@ -49,27 +43,27 @@ namespace Tristeon
 		/**
 		 * Was this button pressed down on the current frame?
 		 */
-		static bool pressed(MouseButton const& button);
+		[[nodiscard]] static bool pressed(const MouseButton& button);
 
 		/**
 		 * Was this button held during the current frame?
 		 */
-		static bool held(MouseButton const& button);
+		[[nodiscard]] static bool held(const MouseButton& button);
 
 		/**
 		 * Was this button released on the current frame?
 		 */
-		static bool released(MouseButton const& button);
+		[[nodiscard]] static bool released(const MouseButton& button);
 
 		/**
 		 * The position of the mouse, local to the Window.
 		 */
-		static Vector2Int position();
+		[[nodiscard]] static Vector2Int position();
 
 		/**
 		 * The amount of pixels the mouse moved in the current frame.
 		 */
-		static Vector2Int deltaPos();
+		[[nodiscard]] static Vector2Int deltaPos();
 
 		/**
 		 * The amount in degrees at which the scroll wheel scrolled in the current frame.
@@ -77,13 +71,13 @@ namespace Tristeon
 		 * Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture hence why this returns a Vector2Int.
 		 * Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
 		 */
-		static Vector2Int deltaScroll();
+		[[nodiscard]] static Vector2Int deltaScroll();
 
 	private:
-		static void onPress(MouseButton const& button);
-		static void onRelease(MouseButton const& button);
-		static void onMove(Vector2Int const& pos);
-		static void onScroll(Vector2Int const& change);
+		static void onPress(const MouseButton& button);
+		static void onRelease(const MouseButton& button);
+		static void onMove(const Vector2Int& pos);
+		static void onScroll(const Vector2Int& change);
 
 		/**
 		 * Clears frame-based data structures.
@@ -95,12 +89,12 @@ namespace Tristeon
 		 */
 		static void clearAll();
 
-		static bool buttons[];
-		static bool buttonsPressed[];
-		static bool buttonsReleased[];
+		static bool _buttons[];
+		static bool _buttonsPressed[];
+		static bool _buttonsReleased[];
 
-		static Vector2Int mousePos;
-		static Vector2Int mouseDelta;
-		static Vector2Int scrollDelta;
+		static Vector2Int _mousePos;
+		static Vector2Int _mouseDelta;
+		static Vector2Int _scrollDelta;
 	};
 }

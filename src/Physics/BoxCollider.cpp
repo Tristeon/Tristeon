@@ -15,14 +15,14 @@ namespace Tristeon
 		auto* polygon = new b2PolygonShape();
 
 		Vector2 const size = PhysicsWorld::pixelsToMeters({
-			_width * getOwner()->scale.x, _height * getOwner()->scale.y
+			_width * actor()->scale.x, _height * actor()->scale.y
 		});
 		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
 		float rotationOffset = Math::toRadians(_rotationOffset);
 		if (includeBodyTransform)
 		{
-			offset = PhysicsWorld::pixelsToMeters(getOwner()->position) + offset;
-			rotationOffset = Math::toRadians(getOwner()->rotation) + rotationOffset;
+			offset = PhysicsWorld::pixelsToMeters(actor()->position) + offset;
+			rotationOffset = Math::toRadians(actor()->rotation) + rotationOffset;
 		}
 
 		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), -rotationOffset);
@@ -48,7 +48,7 @@ namespace Tristeon
 
 	void BoxCollider::drawGizmos()
 	{
-		Gizmos::drawSquare(getOwner()->position, Vector2(width(), height()), getOwner()->rotation,
+		Gizmos::drawSquare(actor()->position, Vector2(width(), height()), actor()->rotation,
 		                   {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
 	}
 

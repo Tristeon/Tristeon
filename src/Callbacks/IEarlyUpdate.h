@@ -12,6 +12,9 @@ namespace Tristeon
 	class IEarlyUpdate : ICallback<IEarlyUpdate>
 	{
 	public:
+		/**
+		 * earlyUpdate is called once every frame, before all other update calls.
+		 */
 		virtual void earlyUpdate() = 0;
 	};
 }

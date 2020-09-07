@@ -16,6 +16,11 @@ namespace Tristeon
 	class IStart : ICallback<IStart>
 	{
 	public:
+		/**
+		 * Start is called at 2 potential moments:
+		 * - Once a scene is fully loaded (any object may receive this callback)
+		 * - When a new actor or behaviour is added to the scene / existing actor (only actors or behaviours can receive this callback).
+		 */
 		virtual void start() = 0;
 	};
 }

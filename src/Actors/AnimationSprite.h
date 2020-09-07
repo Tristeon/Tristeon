@@ -1,6 +1,5 @@
 #pragma once
 #include "Sprite.h"
-#include <Serialization/TypeRegister.h>
 #include <Callbacks/IUpdate.h>
 
 namespace Tristeon
@@ -8,13 +7,19 @@ namespace Tristeon
 	class AnimationClip;
 
 	/**
-	 * An AnimationSprite is a sprite that uses AnimationClips to divide the Sprite's Texture up in separate "frames", which it then iterates over to create an animation.
+	 * An AnimationSprite is a Sprite that uses AnimationClips to divide the Sprite's Texture up in separate "frames", which it then iterates over to create an animation.
 	 *
-	 * The animation behaviour is mostly defined in the AnimationClip itself, the AnimationSprite then uses that data to play the animation.
+	 * The animation behaviour is defined in the AnimationClip itself, the AnimationSprite then uses that data to play the animation.
 	 */
 	class AnimationSprite : public Sprite, public IUpdate
 	{
 	public:
+		AnimationSprite() = default;
+		virtual ~AnimationSprite() = default;
+
+		DELETE_COPY(AnimationSprite);
+		DEFAULT_MOVE(AnimationSprite);
+
 		json serialize() override;
 		void deserialize(json j) override;
 
@@ -33,15 +38,15 @@ namespace Tristeon
 		 */
 		void setFrame(unsigned int const& frame);
 	protected:
-		virtual void render() override;
-		virtual void update() override;
-		virtual Shader* getShader() override;
+		void render() override;
+		void update() override;
+		Shader* getShader() override;
 
-		float currentFrame = 0;
-		AnimationClip* clip = nullptr;
-		String clipPath;
+		float _currentFrame = 0;
+		AnimationClip* _clip = nullptr;
+		String _clipPath;
 		
-		bool paused = false;
+		bool _paused = false;
 	};
 
 	REGISTER_TYPE(AnimationSprite);

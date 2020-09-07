@@ -12,6 +12,9 @@ namespace Tristeon
 	class IFixedUpdate : ICallback<IFixedUpdate>
 	{
 	public:
+		/**
+		 * fixedUpdate is called a fixed amount of times per second, defined by the project settings.
+		 */
 		virtual void fixedUpdate() = 0;
 	};
 }

@@ -13,7 +13,7 @@ namespace Tristeon
 	{
 		json j = Sprite::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(AnimationSprite);
-		j["clipPath"] = clipPath;
+		j["clipPath"] = _clipPath;
 		return j;
 	}
 
@@ -25,65 +25,67 @@ namespace Tristeon
 
 	void AnimationSprite::setPaused(bool const& value)
 	{
-		paused = value;
+		_paused = value;
 	}
 
 	void AnimationSprite::setAnimationClip(String const& clipPath)
 	{
-		if (clip != nullptr && clipPath == this->clipPath)
+		//Don't reapply the same clip
+		if (_clip != nullptr && clipPath == this->_clipPath)
 			return;
 
+		//Attempt to load the new clip
 		auto* clip = Resources::jsonLoad<AnimationClip>(clipPath);
 		if (clip != nullptr)
 		{
-			this->clip = clip;
-			this->clipPath = clipPath;
+			this->_clip = clip;
+			this->_clipPath = clipPath;
 			
 			setTexture(clip->texturePath, false);
-			currentFrame = 0;
+			_currentFrame = 0;
 		}
 	}
 
 	void AnimationSprite::setFrame(unsigned int const& frame)
 	{
-		currentFrame = Math::clamp(frame, clip->startIndex, clip->endIndex);
+		_currentFrame = Math::clamp(frame, _clip->startIndex, _clip->endIndex);
 	}
 
 	void AnimationSprite::render()
 	{
 		auto* shader = getShader();
-		if (clip != nullptr)
+		if (_clip != nullptr)
 		{
-			shader->setUniformValue("animation.frame", static_cast<unsigned int>(floor(currentFrame)) + clip->startIndex);
-			shader->setUniformValue("animation.cols", clip->cols);
-			shader->setUniformValue("animation.rows", clip->rows);
+			shader->setUniformValue("animation.frame", static_cast<unsigned int>(floor(_currentFrame)) + _clip->startIndex);
+			shader->setUniformValue("animation.cols", _clip->cols);
+			shader->setUniformValue("animation.rows", _clip->rows);
 			
-			shader->setUniformValue("spacing.left", clip->spacing.left);
-			shader->setUniformValue("spacing.right", clip->spacing.right);
-			shader->setUniformValue("spacing.top", clip->spacing.top);
-			shader->setUniformValue("spacing.bottom", clip->spacing.bottom);
-			shader->setUniformValue("spacing.horizontalFrame", clip->spacing.horizontalFrame);
-			shader->setUniformValue("spacing.verticalFrame", clip->spacing.verticalFrame);
+			shader->setUniformValue("spacing.left", _clip->spacing.left);
+			shader->setUniformValue("spacing.right", _clip->spacing.right);
+			shader->setUniformValue("spacing.top", _clip->spacing.top);
+			shader->setUniformValue("spacing.bottom", _clip->spacing.bottom);
+			shader->setUniformValue("spacing.horizontalFrame", _clip->spacing.horizontalFrame);
+			shader->setUniformValue("spacing.verticalFrame", _clip->spacing.verticalFrame);
 		}
 		Sprite::render();
 	}
 
 	void AnimationSprite::update()
 	{
-		if (clip == nullptr)
+		if (_clip == nullptr)
 			return;
 
-		if (paused)
+		if (_paused)
 			return;
 
-		if (clip->startIndex + floor(currentFrame) >= clip->endIndex)
+		if (_clip->startIndex + floor(_currentFrame) >= _clip->endIndex)
 		{
-			if (clip->loops)
-				currentFrame = 0;
+			if (_clip->loops)
+				_currentFrame = 0;
 			else
 				return; //Simply hold onto the last frame if we aren't looping
 		}
-		currentFrame += 0.01f * clip->playbackRate * Time::deltaTime();
+		_currentFrame += 0.01f * _clip->playbackRate * Time::deltaTime();
 	}
 
 	Shader* AnimationSprite::getShader()

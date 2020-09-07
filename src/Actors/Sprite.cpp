@@ -1,18 +1,13 @@
 #include "Sprite.h"
+#include "Resources.h"
 
-#include <Actors/Actor.h>
-#include <Rendering/Texture.h>
-
-#include <Resources.h>
-
-#include "Math/Math.h"
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 namespace Tristeon
 {
 	Sprite::Sprite()
 	{
-		texture = Resources::load<Texture>(Texture::defaultPath);
+		_texture = Resources::load<Texture>(Texture::defaultPath);
 	}
 
 	json Sprite::serialize()
@@ -24,7 +19,7 @@ namespace Tristeon
 		j["flipX"] = flipX;
 		j["flipY"] = flipY;
 		j["colour"] = colour;
-		j["texturePath"] = texturePath;
+		j["texturePath"] = _texturePath;
 		return j;
 	}
 
@@ -41,45 +36,45 @@ namespace Tristeon
 		colour = j.value("colour", Colour());
 
 		std::string const newPath = j.value("texturePath", "");
-		if (newPath != texturePath) //Update if new path
+		if (newPath != _texturePath) //Update if new path
 		{
-			texture = Resources::assetLoad<Texture>(newPath);
-			texturePath = newPath;
+			_texture = Resources::assetLoad<Texture>(newPath);
+			_texturePath = newPath;
 		}
 		
-		if (!texture)
-			texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+		if (!_texture)
+			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
 	}
 
 	void Sprite::setTexture(std::string const& path, bool const& setSize)
 	{
-		texture = Resources::assetLoad<Texture>(path);
-		texturePath = path;
+		_texture = Resources::assetLoad<Texture>(path);
+		_texturePath = path;
 		
-		if (!texture)
+		if (!_texture)
 		{
-			texture = Resources::assetLoad<Texture>(Texture::defaultPath);
-			texturePath = Texture::defaultPath;
+			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+			_texturePath = Texture::defaultPath;
 		}
 		
 		if (setSize)
 		{
-			width = texture->width();
-			height = texture->height();
+			width = _texture->width();
+			height = _texture->height();
 		}
 	}
 
-	Texture* Sprite::getTexture()
+	Texture* Sprite::texture()
 	{
-		return texture;
+		return _texture;
 	}
 
 	void Sprite::render()
 	{
-		auto shader = getShader();
+		auto* shader = getShader();
 		
 		glActiveTexture(GL_TEXTURE0);
-		texture->bind();
+		_texture->bind();
 
 		//Sprite info
 		shader->setUniformValue("sprite.width", width);
@@ -102,14 +97,9 @@ namespace Tristeon
 		return &shader;
 	}
 
-	bool Sprite::withinBounds(Vector2 const& worldPos)
-	{
-		return getAABB().contains(worldPos);
-	}
-
-	Graphic::AABB Sprite::getAABB()
+	Graphic::Bounds Sprite::bounds()
 	{
 		Vector2 const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
-		return AABB{ position - halfSize, position + halfSize };
+		return Bounds{ position - halfSize, position + halfSize };
 	}
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include <algorithm>
 #include <TypeDefinitions.h>
 
 namespace Tristeon
@@ -9,6 +8,18 @@ namespace Tristeon
 	 *
 	 * Classes looking to be collected should add themselves in the constructor using Collector<Type>::add(this) and remove themselves in the deconstructor Collector<Type>::remove(this).
 	 * You may then use Collector<Type>::all() to receive all collected objects.
+	 *
+	 * Default engine classes that are actively tracked:
+	 * - Actor
+	 * - Behaviour
+	 * - Camera
+	 * - Shader
+	 * 
+	 * - IEarlyUpdate
+	 * - IUpdate
+	 * - IFixedUpdate
+	 * - ILateUpdate
+	 * - IDrawGizmos
 	 */
 	template<typename T>
 	class Collector
@@ -30,27 +41,27 @@ namespace Tristeon
 		static Vector<T*> all();
 
 	private:
-		static Vector<T*> collection;
+		static Vector<T*> _collection;
 	};
 
 	template<typename T>
-	Vector<T*> Collector<T>::collection;
+	Vector<T*> Collector<T>::_collection;
 
 	template <typename T>
 	void Collector<T>::add(T* t)
 	{
-		collection.add(t);
+		_collection.add(t);
 	}
 
 	template <typename T>
 	void Collector<T>::remove(T* t)
 	{
-		collection.remove(t);
+		_collection.remove(t);
 	}
 
 	template <typename T>
 	Vector<T*> Collector<T>::all()
 	{
-		return collection;
+		return _collection;
 	}
 }

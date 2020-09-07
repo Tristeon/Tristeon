@@ -4,8 +4,8 @@ namespace Tristeon
 {
 	int Math::maskToIndex(uint64_t mask)
 	{
-		const int MAX_BIT = 40;
-		int result = MAX_BIT;
+		const auto MAX_BIT = 40;
+		auto result = MAX_BIT;
 
 		while (mask != 0)
 		{
@@ -16,17 +16,17 @@ namespace Tristeon
 		return MAX_BIT - result;
 	}
 
-	float Math::toRadians(float const& degrees)
+	float Math::toRadians(const float& degrees)
 	{
-		return degrees * toRad;
+		return degrees * TO_RAD;
 	}
 
-	float Math::toDegrees(float const& radians)
+	float Math::toDegrees(const float& radians)
 	{
-		return radians * toDeg;
+		return radians * TO_DEG;
 	}
 
-	float Math::clamp(float const& value, float const& min, float const& max)
+	float Math::clamp(const float& value, const float& min, const float& max)
 	{
 		if (value < min)
 			return min;
@@ -35,19 +35,19 @@ namespace Tristeon
 		return value;
 	}
 
-	Vector2 Math::orbit(Vector2 const& center, Vector2 const& offset, float const& rotation)
+	Vector2 Math::orbit(const Vector2& center, const Vector2& offset, const float& rotation)
 	{
-		float const theta = toRadians(rotation);
-		float const c = cos(theta);
-		float const s = sin(theta);
+		auto const theta = toRadians(rotation);
+		auto const c = cos(theta);
+		auto const s = sin(theta);
 		
-		Vector2 result;
-		result.x = center.x + (offset.x) * c + (offset.y) * s;
-		result.y = center.y - (offset.x) * s + (offset.y) * c;
-		return result;
+		return {
+			center.x + offset.x * c + offset.y * s,
+			center.y - offset.x * s + offset.y * c
+		};
 	}
 
-	int Math::sign(float const& value)
+	int Math::sign(const float& value)
 	{
 		if (value > 0)
 			return 1;

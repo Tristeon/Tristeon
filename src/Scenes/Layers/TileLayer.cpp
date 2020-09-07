@@ -12,6 +12,7 @@
 #include <Resources.h>
 
 #include "Rendering/Grid.h"
+#include "Rendering/Texture.h"
 
 namespace Tristeon
 {

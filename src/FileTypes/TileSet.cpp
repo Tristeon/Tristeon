@@ -2,8 +2,26 @@
 #include "Resources.h"
 #include "Serialization/JsonSerializer.h"
 
+#include <Rendering/Texture.h>
+
 namespace Tristeon
 {
+	void to_json(json& j, const TileInfo& p)
+	{
+		j["hasCollider"] = p.hasCollider;
+		j["density"] = p.density;
+		j["friction"] = p.friction;
+		j["restitution"] = p.restitution;
+	}
+
+	void from_json(const json& j, TileInfo& p)
+	{
+		p.hasCollider = j.value("hasCollider", false);
+		p.density = j.value("density", 1.0f);
+		p.friction = j.value("friction", 0.0f);
+		p.restitution = j.value("restitution", 0.0f);
+	}
+
 	TileSet::TileSet()
 	{
 		texture = Resources::assetLoad<Texture>(Texture::defaultPath);
@@ -77,7 +95,7 @@ namespace Tristeon
 		}
 	}
 
-	TileInfo TileSet::info(int const& index) const
+	TileInfo TileSet::info(const int& index) const
 	{
 		if (index < 0 || index > cols * rows)
 			return {};
@@ -104,11 +122,9 @@ namespace Tristeon
 		return { size.x / (float)img.x, size.y / (float)img.y };
 	}
 
-	Vector2Int TileSet::tileMin(int const& x, int const& y) const
+	Vector2Int TileSet::tileMin(const int& x, const int& y) const
 	{
-		Vector2Int result;
-		result.x += spacingLeft;
-		result.y += spacingTop;
+		Vector2Int result{ (int)spacingLeft, (int)spacingTop };
 
 		Vector2Int const size = tileSize();
 		
@@ -118,68 +134,68 @@ namespace Tristeon
 		return result;
 	}
 
-	Vector2Int TileSet::tileMin(int const& index) const
+	Vector2Int TileSet::tileMin(const int& index) const
 	{
 		return tileMin(tileCoords(index));
 	}
 	
-	Vector2Int TileSet::tileMin(Vector2Int const& coords) const
+	Vector2Int TileSet::tileMin(const Vector2Int& coords) const
 	{
 		return tileMin(coords.x, coords.y);
 	}
 
-	Vector2 TileSet::tileMinNormalized(int const& x, int const& y) const
+	Vector2 TileSet::tileMinNormalized(const int& x, const int& y) const
 	{
 		Vector2Int const min = tileMin(x, y);
 		Vector2Int const img = texture->size();
 		return { min.x / (float)img.x, min.y / (float)img.y };
 	}
 
-	Vector2 TileSet::tileMinNormalized(int const& index) const
+	Vector2 TileSet::tileMinNormalized(const int& index) const
 	{
 		return tileMinNormalized(tileCoords(index));
 	}
 
-	Vector2 TileSet::tileMinNormalized(Vector2Int const& coords) const
+	Vector2 TileSet::tileMinNormalized(const Vector2Int& coords) const
 	{
 		return tileMinNormalized(coords.x, coords.y);
 	}
 
-	Vector2Int TileSet::tileMax(int const& x, int const& y) const
+	Vector2Int TileSet::tileMax(const int& x, const int& y) const
 	{
 		Vector2Int const min = tileMin(x, y);
 		Vector2Int const size = tileSize();
 		return min + size;
 	}
 
-	Vector2Int TileSet::tileMax(int const& index) const
+	Vector2Int TileSet::tileMax(const int& index) const
 	{
 		return tileMax(tileCoords(index));
 	}
 
-	Vector2Int TileSet::tileMax(Vector2Int const& coords) const
+	Vector2Int TileSet::tileMax(const Vector2Int& coords) const
 	{
 		return tileMax(coords.x, coords.y);
 	}
 
-	Vector2 TileSet::tileMaxNormalized(int const& x, int const& y) const
+	Vector2 TileSet::tileMaxNormalized(const int& x, const int& y) const
 	{
 		Vector2Int const max = tileMax(x, y);
 		Vector2Int const img = texture->size();
 		return { max.x / (float)img.x, max.y / (float)img.y };
 	}
 
-	Vector2 TileSet::tileMaxNormalized(int const& index) const
+	Vector2 TileSet::tileMaxNormalized(const int& index) const
 	{
 		return tileMaxNormalized(tileCoords(index));
 	}
 
-	Vector2 TileSet::tileMaxNormalized(Vector2Int const& coords) const
+	Vector2 TileSet::tileMaxNormalized(const Vector2Int& coords) const
 	{
 		return tileMaxNormalized(coords.x, coords.y);
 	}
 
-	int TileSet::tile(int const& x, int const& y) const
+	int TileSet::tile(const int& x, const int& y) const
 	{
 		assert(x >= 0);
 		assert(y >= 0);
@@ -187,22 +203,22 @@ namespace Tristeon
 		return y * cols + x;
 	}
 
-	int TileSet::tile(Vector2Int const& coords) const
+	int TileSet::tile(const Vector2Int& coords) const
 	{
 		return tile(coords.x, coords.y);
 	}
 
-	Vector2Int TileSet::tileCoords(int const& index) const
+	Vector2Int TileSet::tileCoords(const int& index) const
 	{
 		return { (int)index % (int)cols, (int)(index / (float)cols) };
 	}
 
-	TileInfo TileSet::info(int const& x, int const& y) const
+	TileInfo TileSet::info(const int& x, const int& y) const
 	{
 		return tileInfo[tile(x, y)];
 	}
 
-	TileInfo TileSet::info(Vector2Int const& coords) const
+	TileInfo TileSet::info(const Vector2Int& coords) const
 	{
 		return tileInfo[tile(coords.x, coords.y)];
 	}

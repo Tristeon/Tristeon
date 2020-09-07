@@ -2,9 +2,6 @@
 #include "Actors/Actor.h"
 #include <Rendering/Shader.h>
 
-#include "Window.h"
-#include "Input/Mouse.h"
-
 namespace Tristeon
 {
 	class ActorLayer;
@@ -12,49 +9,55 @@ namespace Tristeon
 	/**
 	 * Graphic is the base class for 2D renderable actors.
 	 *
-	 * Inheriting classes must override the render() and getShader() functions.
+	 * Inheriting classes must override the render(), bounds(), and getShader() functions.
 	 */
 	class Graphic : public Actor
 	{
 		friend ActorLayer;
 	public:
-		struct AABB
+		Graphic() = default;
+		virtual ~Graphic() = default;
+
+		DELETE_COPY(Graphic);
+		DEFAULT_MOVE(Graphic);
+
+		json serialize() override;
+		void deserialize(json j) override;
+		
+		/**
+		 * A square, defined by a min and max value.
+		 * Bounds are used to describe the smallest axis aligned square that can fit around a Graphic.
+		 */
+		struct Bounds
 		{
 			Vector2 min;
 			Vector2 max;
 
-			bool contains(Vector2 const& position) const
-			{
-				return position.x > min.x&& position.x < max.x&& position.y > min.y&& position.y < max.y;
-			}
-
-			Vector2 size() const
-			{
-				return (max - min);
-			}
-
-			bool underMouse() const
-			{
-				return contains(Window::screenToWorld(Mouse::position()));
-			}
+			/**
+			 * Returns true if the position is between min and max.
+			 */
+			[[nodiscard]] bool contains(Vector2 const& position) const;
+			/**
+			 * Calculates the size by doing (max - min).
+			 */
+			[[nodiscard]] Vector2 size() const;
+			/**
+			 * Returns true if the mouse is hovering over the bounds.
+			 */
+			[[nodiscard]] bool underMouse() const;
 		};
 		
 		/**
-		 * Returns true if the world position is within the bounds of the Graphic.
-		 * This function is overridden in inherited classes to accurately represent its bounds
+		 * Returns the Graphic's Bounds.
+		 * The Bounds is a square defined by a min and max value, this does not have to accurately reflect the shape of the object (e.g. the bounds of a circle are still simply a square)
 		 */
-		virtual bool withinBounds(Vector2 const& worldPos) = 0;
+		virtual Bounds bounds() = 0;
 
 		/**
-		 * Returns the Graphic's AABB.
-		 * The AABB is a square defined by a min and max value, this does not have to accurately reflect the shape of the object (e.g. the bounds of a circle are still simply a square)
+		 * Enables or disables rendering the graphic.
 		 */
-		virtual AABB getAABB() = 0;
-
 		bool display = true;
-
-		json serialize() override;
-		void deserialize(json j) override;
+		
 	protected:
 		/**
 		 * Render the graphic to the GameView, called for each graphic by the ActorLayer.
@@ -78,17 +81,4 @@ namespace Tristeon
 		 */
 		virtual Shader* getShader() = 0;
 	};
-
-	inline json Graphic::serialize()
-	{
-		json j = Actor::serialize();
-		j["display"] = display;
-		return j;
-	}
-
-	inline void Graphic::deserialize(json j)
-	{
-		Actor::deserialize(j);
-		display = j.value("display", true);
-	}
 }

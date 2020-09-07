@@ -17,7 +17,7 @@ namespace Tristeon
 			actor->preDestroy();
 
 		for (auto const& actor : actors)
-			actor->destroyed = true;
+			actor->_destroyed = true;
 	}
 
 	json ActorLayer::serialize()

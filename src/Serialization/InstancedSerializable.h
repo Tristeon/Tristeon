@@ -13,7 +13,10 @@ namespace Tristeon
 	{
 	public:
 		InstancedSerializable();
-		~InstancedSerializable();
+		virtual ~InstancedSerializable() noexcept;
+
+		DELETE_COPY(InstancedSerializable);
+		DEFAULT_MOVE(InstancedSerializable);
 		
 		/**
 		 * Serialize interface that is called on derived instance of serializable to obtain json data of objects
@@ -32,7 +35,7 @@ namespace Tristeon
 		 * The instanceID is generated upon initial creation and then stored.
 		 * It can be used to serialize references to objects, which can then be looked up through the Scene interface.
 		 */
-		[[nodiscard]] unsigned int instanceID() const { return _instanceID; }
+		[[nodiscard]] unsigned int instanceID() const;
 	private:
 		unsigned int _instanceID = 0;
 	};

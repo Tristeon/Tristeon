@@ -3,9 +3,9 @@
 
 namespace Tristeon
 {
-	Vector2Int::Vector2Int(int x, int y) : x(x), y(y) {}
+	Vector2Int::Vector2Int(const int& x, const int& y) : x(x), y(y) {}
 
-	Vector2Int::Vector2Int(Vector2 vec2) : x(static_cast<int>(vec2.x)), y(static_cast<int>(vec2.y)) { }
+	Vector2Int::Vector2Int(const Vector2& vec2) : x(static_cast<int>(vec2.x)), y(static_cast<int>(vec2.y)) { }
 
 	int Vector2Int::getAxis(const int& axis) const
 	{
@@ -20,7 +20,7 @@ namespace Tristeon
 		}
 	}
 
-	void Vector2Int::scale(int multiplier)
+	void Vector2Int::scale(const int& multiplier)
 	{
 		x *= multiplier;
 		y *= multiplier;
@@ -36,39 +36,39 @@ namespace Tristeon
 		return static_cast<float>(x * x + y * y);
 	}
 
-	int Vector2Int::dot(Vector2Int a, Vector2Int b)
+	int Vector2Int::dot(const Vector2Int& a, const Vector2Int& b)
 	{
-		return a.x* b.x + a.y * b.y;
+		return a.x * b.x + a.y * b.y;
 	}
 
-	float Vector2Int::distance(Vector2Int a, Vector2Int b)
+	float Vector2Int::distance(const Vector2Int& a, const Vector2Int& b)
 	{
 		Vector2Int const difference = b - a;
 		return difference.getLength();
 	}
 
-	float Vector2Int::distance(Vector2Int vec) const
+	float Vector2Int::distance(const Vector2Int& vec) const
 	{
 		Vector2Int const difference = vec - Vector2Int(x, y);
 		return difference.getLength();
 	}
 
-	float Vector2Int::dot(Vector2Int vec) const
+	float Vector2Int::dot(const Vector2Int& vec) const
 	{
 		return static_cast<float>(x * vec.x + y * vec.y);
 	}
 
-	bool Vector2Int::operator==(const Vector2Int & vec) const
+	bool Vector2Int::operator==(const Vector2Int& vec) const
 	{
 		return x == vec.x && y == vec.y;
 	}
 
-	bool Vector2Int::operator!=(const Vector2Int & vec) const
+	bool Vector2Int::operator!=(const Vector2Int& vec) const
 	{
 		return x != vec.x || y != vec.y;
 	}
 
-	Vector2Int Vector2Int::operator*(const Vector2Int & vec) const
+	Vector2Int Vector2Int::operator*(const Vector2Int& vec) const
 	{
 		return { x * vec.x, y * vec.y };
 	}
@@ -83,17 +83,17 @@ namespace Tristeon
 		return { x / divider, y / divider };
 	}
 
-	Vector2Int Vector2Int::operator/(const Vector2Int & divider) const
+	Vector2Int Vector2Int::operator/(const Vector2Int& divider) const
 	{
 		return { x / divider.x, y / divider.y };
 	}
 
-	Vector2Int Vector2Int::operator+(const Vector2Int & vec) const
+	Vector2Int Vector2Int::operator+(const Vector2Int& vec) const
 	{
 		return { x + vec.x, y + vec.y };
 	}
 
-	Vector2Int Vector2Int::operator-(const Vector2Int & vec) const
+	Vector2Int Vector2Int::operator-(const Vector2Int& vec) const
 	{
 		return { x - vec.x, y - vec.y };
 	}
@@ -103,19 +103,19 @@ namespace Tristeon
 		return getAxis(value);
 	}
 
-	void Vector2Int::operator-=(const Vector2Int & vector)
+	void Vector2Int::operator-=(const Vector2Int& vector)
 	{
 		x -= vector.x;
 		y -= vector.y;
 	}
 
-	void Vector2Int::operator+=(const Vector2Int & vector)
+	void Vector2Int::operator+=(const Vector2Int& vector)
 	{
 		x += vector.x;
 		y += vector.y;
 	}
 
-	void Vector2Int::operator*=(const Vector2Int & vector)
+	void Vector2Int::operator*=(const Vector2Int& vector)
 	{
 		x *= vector.x;
 		y *= vector.y;
@@ -129,8 +129,8 @@ namespace Tristeon
 
 	void Vector2Int::operator*=(const float& value)
 	{
-		x *= value;
-		y *= value;
+		x = (int)((float)x * value);
+		y = (int)((float)y * value);
 	}
 
 	bool Vector2Int::operator<(const Vector2Int& vec) const
@@ -154,7 +154,7 @@ namespace Tristeon
 		return "{ " + std::to_string(x) + ", " + std::to_string(y) + " }";
 	}
 
-	Vector2Int operator*(const int& multiplier, Vector2Int const& vector)
+	Vector2Int operator*(const int& multiplier, const Vector2Int& vector)
 	{
 		return vector * multiplier;
 	}

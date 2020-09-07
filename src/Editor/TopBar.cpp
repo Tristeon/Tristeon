@@ -4,6 +4,7 @@
 #include "TopBar.h"
 #include <Engine.h>
 #include <Scenes/SceneManager.h>
+#include <Scenes/Scene.h>
 #include <QtWidgets>
 
 namespace TristeonEditor

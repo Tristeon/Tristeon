@@ -1,13 +1,11 @@
 #pragma once
-#include <Math/Vector2Int.h>
+#include "Actors/Actor.h"
+#include "Callbacks/IDrawGizmos.h"
 
-#include <Serialization/Serializable.h>
+#include <Utils/ClassDefaults.h>
 #include <Serialization/TypeRegister.h>
 
-#include "Actors/Actor.h"
-#include <Utils/ClassDefaults.h>
-
-#include "Callbacks/IDrawGizmos.h"
+#include "Math/Vector2Int.h"
 
 namespace Tristeon
 {
@@ -16,7 +14,7 @@ namespace Tristeon
 	 * The camera can be moved and zoomed as to adjust the current game view.
 	 *
 	 * The values of this class are used internally to adjust the way the world is rendered,
-	 * but the variables may be changed at any time by the user, usually through Camera::main()
+	 * but the variables may be changed at any time by the user.
 	 */
 	class Camera : public Actor, public IDrawGizmos
 	{
@@ -45,7 +43,7 @@ namespace Tristeon
 		bool renderToScreen = true;
 		/**
 		 * Override the resolution the camera renders at.
-		 * This is only available if renderToScreen == false.
+		 * This is only used if renderToScreen == false.
 		 */
 		Vector2Int overrideResolution{ 800, 800 };
 		/**
@@ -65,19 +63,21 @@ namespace Tristeon
 		[[nodiscard]] static Vector<Camera*> cameras() { return Collector<Camera>::all(); }
 
 		/**
-		 * Returns the frame buffer color texture.
+		 * Returns the OpenGL frame buffer color texture.
 		 * This texture is rendered to by the camera and can be used in other rendering scenarios.
+		 *
+		 * If referenced, the user must keep in mind that the texture could become invalid after each frame, as the framebuffer gets rebuilt when the screen gets resized.
 		 */
-		[[nodiscard]] unsigned int framebufferTexture() const { return fboTexture; }
+		[[nodiscard]] unsigned int framebufferTexture() const { return _fboTexture; }
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
-		Vector2 lastScreenSize{};
-		Vector2Int lastWindowSize{};
+		Vector2 _lastScreenSize{};
+		Vector2Int _lastWindowSize{};
 
 		//Framebuffer
-		unsigned int fbo = 0;
-		unsigned int fboTexture = 0;
-		bool isValid = false;
+		unsigned int _fbo = 0;
+		unsigned int _fboTexture = 0;
+		bool _valid = false;
 
 		/**
 		 * Creates a framebuffer and its corresponding color texture.
@@ -90,7 +90,7 @@ namespace Tristeon
 		/**
 		 * Draws the camera's framebuffer texture to the screen.
 		 */
-		void drawToScreen();
+		void drawToScreen() const;
 	};
 
 	REGISTER_TYPE(Camera);

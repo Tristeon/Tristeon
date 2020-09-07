@@ -62,9 +62,9 @@ namespace Tristeon
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tileSetID)->tileInfo[tileContact.tile.index];
 			tileContact.normal = Vector2::convert(manifold.normal);
 			
-			for (auto* cb : collider->getOwner()->getBehaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
+			for (auto* cb : collider->actor()->behaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
 
-			auto* cbActor = dynamic_cast<ITileContactBegin*>(collider->getOwner());
+			auto* cbActor = dynamic_cast<ITileContactBegin*>(collider->actor());
 			if (cbActor != nullptr) cbActor->tileContactBegin(tileContact);
 		}
 		//Normal contact
@@ -72,24 +72,24 @@ namespace Tristeon
 		{
 			if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
 			{
-				for (auto* cba : aCollider->getOwner()->getBehaviours<ISensorBegin>()) cba->sensorBegin({ bCollider, normal });
-				for (auto* cbb : bCollider->getOwner()->getBehaviours<ISensorBegin>()) cbb->sensorBegin({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->behaviours<ISensorBegin>()) cba->sensorBegin({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->behaviours<ISensorBegin>()) cbb->sensorBegin({ aCollider, -normal });
 
-				auto* cbActorA = dynamic_cast<ISensorBegin*>(aCollider->getOwner());
+				auto* cbActorA = dynamic_cast<ISensorBegin*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->sensorBegin({ bCollider, normal });
 
-				auto* cbActorB = dynamic_cast<ISensorBegin*>(bCollider->getOwner());
+				auto* cbActorB = dynamic_cast<ISensorBegin*>(bCollider->actor());
 				if (cbActorB != nullptr) cbActorB->sensorBegin({ aCollider, -normal });
 			}
 			else
 			{
-				for (auto* cba : aCollider->getOwner()->getBehaviours<IContactBegin>()) cba->contactBegin({ bCollider, normal });
-				for (auto* cbb : bCollider->getOwner()->getBehaviours<IContactBegin>()) cbb->contactBegin({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->behaviours<IContactBegin>()) cba->contactBegin({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->behaviours<IContactBegin>()) cbb->contactBegin({ aCollider, -normal });
 
-				auto* cbActorA = dynamic_cast<IContactBegin*>(aCollider->getOwner());
+				auto* cbActorA = dynamic_cast<IContactBegin*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->contactBegin({ bCollider, normal });
 
-				auto* cbActorB = dynamic_cast<IContactBegin*>(bCollider->getOwner());
+				auto* cbActorB = dynamic_cast<IContactBegin*>(bCollider->actor());
 				if (cbActorB != nullptr) cbActorB->contactBegin({ aCollider, -normal });
 			}
 		}
@@ -141,9 +141,9 @@ namespace Tristeon
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tileSetID)->tileInfo[tileContact.tile.index];
 			tileContact.normal = Vector2::convert(manifold.normal);
 			
-			for (auto* cb : collider->getOwner()->getBehaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);
+			for (auto* cb : collider->actor()->behaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);
 
-			auto* cbActor = dynamic_cast<ITileContactEnd*>(collider->getOwner());
+			auto* cbActor = dynamic_cast<ITileContactEnd*>(collider->actor());
 			if (cbActor != nullptr) cbActor->tileContactEnd(tileContact);
 		}
 		//Normal contact
@@ -151,24 +151,24 @@ namespace Tristeon
 		{
 			if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
 			{
-				for (auto* cba : aCollider->getOwner()->getBehaviours<ISensorEnd>()) cba->sensorEnd({ bCollider, normal });
-				for (auto* cbb : bCollider->getOwner()->getBehaviours<ISensorEnd>()) cbb->sensorEnd({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->behaviours<ISensorEnd>()) cba->sensorEnd({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->behaviours<ISensorEnd>()) cbb->sensorEnd({ aCollider, -normal });
 
-				auto* cbActorA = dynamic_cast<ISensorEnd*>(aCollider->getOwner());
+				auto* cbActorA = dynamic_cast<ISensorEnd*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->sensorEnd({ bCollider, normal });
 
-				auto* cbActorB = dynamic_cast<ISensorEnd*>(bCollider->getOwner());
+				auto* cbActorB = dynamic_cast<ISensorEnd*>(bCollider->actor());
 				if (cbActorB != nullptr) cbActorB->sensorEnd({ aCollider, -normal });
 			}
 			else
 			{
-				for (auto* cba : aCollider->getOwner()->getBehaviours<IContactEnd>()) cba->contactEnd({ bCollider, normal });
-				for (auto* cbb : bCollider->getOwner()->getBehaviours<IContactEnd>()) cbb->contactEnd({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->behaviours<IContactEnd>()) cba->contactEnd({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->behaviours<IContactEnd>()) cbb->contactEnd({ aCollider, -normal });
 
-				auto* cbActorA = dynamic_cast<IContactEnd*>(aCollider->getOwner());
+				auto* cbActorA = dynamic_cast<IContactEnd*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->contactEnd({ bCollider, normal });
 
-				auto* cbActorB = dynamic_cast<IContactEnd*>(bCollider->getOwner());
+				auto* cbActorB = dynamic_cast<IContactEnd*>(bCollider->actor());
 				if (cbActorB != nullptr) cbActorB->contactEnd({ aCollider, -normal });
 			}
 		}
@@ -191,23 +191,23 @@ namespace Tristeon
 		
 		if (aCollider != nullptr && bCollider != nullptr)
 		{
-			for (auto* cba : aCollider->getOwner()->getBehaviours<IPreContact>()) {
+			for (auto* cba : aCollider->actor()->behaviours<IPreContact>()) {
 				if (!cba->preContact({ bCollider, normal }))
 					enableContact = false;
 			}
-			for (auto* cbb : bCollider->getOwner()->getBehaviours<IPreContact>()) {
+			for (auto* cbb : bCollider->actor()->behaviours<IPreContact>()) {
 				if (!cbb->preContact({ aCollider, normal }))
 					enableContact = false;
 			}
 			
-			auto* cbActorA = dynamic_cast<IPreContact*>(aCollider->getOwner());
+			auto* cbActorA = dynamic_cast<IPreContact*>(aCollider->actor());
 			if (cbActorA != nullptr)
 			{
 				if (!cbActorA->preContact({ bCollider, normal }))
 					enableContact = false;
 			}
 
-			auto* cbActorB = dynamic_cast<IPreContact*>(bCollider->getOwner());
+			auto* cbActorB = dynamic_cast<IPreContact*>(bCollider->actor());
 			if (cbActorB != nullptr) {
 				if (!cbActorB->preContact({ aCollider, normal }))
 					enableContact = false;

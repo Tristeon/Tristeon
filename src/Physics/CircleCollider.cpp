@@ -24,7 +24,7 @@ namespace Tristeon
 
 	void CircleCollider::drawGizmos()
 	{
-		Gizmos::drawCircle(getOwner()->position, radius(), Colour{ 46 / 255.0f, 204 / 255.0f, 113 / 255.0f });
+		Gizmos::drawCircle(actor()->position, radius(), Colour{ 46 / 255.0f, 204 / 255.0f, 113 / 255.0f });
 	}
 
 	float CircleCollider::radius() const
@@ -42,10 +42,10 @@ namespace Tristeon
 	{
 		auto* circle = new b2CircleShape();
 
-		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius * std::max(getOwner()->scale.x, getOwner()->scale.y));
+		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius * std::max(actor()->scale.x, actor()->scale.y));
 
 		if (includeBodyTransform)
-			circle->m_p = PhysicsWorld::pixelsToMeters(getOwner()->position + _offset).convert<b2Vec2>();
+			circle->m_p = PhysicsWorld::pixelsToMeters(actor()->position + _offset).convert<b2Vec2>();
 		else
 			circle->m_p = PhysicsWorld::pixelsToMeters(_offset).convert<b2Vec2>();
 

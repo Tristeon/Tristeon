@@ -21,5 +21,5 @@ namespace Tristeon
 	/**
 	 * Creates a default move constructor and operator
 	 */
-#define DEFAULT_MOVE(type) type(type&& move) = default; type& operator=(type&& move) = default
+#define DEFAULT_MOVE(type) type(type&& move) noexcept = default; type& operator=(type&& move) noexcept = default
 }

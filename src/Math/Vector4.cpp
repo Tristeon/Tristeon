@@ -4,10 +4,7 @@
 
 namespace Tristeon
 {
-	Vector4::Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
-
-	const Vector4 Vector4::zero = Vector4(0, 0, 0, 0);
-	const Vector4 Vector4::one = Vector4(1, 1, 1, 1);
+	Vector4::Vector4(const float& x, const float& y, const float& z, const float& w) : x(x), y(y), z(z), w(w) {}
 
 	float& Vector4::getAxis(const int& axis)
 	{
@@ -40,14 +37,14 @@ namespace Tristeon
 			return;
 
 		//Normalize
-		float const magnitude = getLength();
+		auto const magnitude = getLength();
 		x /= magnitude;
 		y /= magnitude;
 		z /= magnitude;
 		w /= magnitude;
 	}
 
-	void Vector4::scale(float multiplier)
+	void Vector4::scale(const float& multiplier)
 	{
 		x *= multiplier;
 		y *= multiplier;
@@ -65,35 +62,35 @@ namespace Tristeon
 		return x * x + y * y + z * z + w * w;
 	}
 
-	float Vector4::dot(Vector4 a, Vector4 b)
+	float Vector4::dot(const Vector4& a, const Vector4& b)
 	{
-		Vector4 const c = a * b;
+		auto const c = a * b;
 		return c.x + c.y + c.z + c.w;
 	}
 
-	float Vector4::distance(Vector4 a, Vector4 b)
+	float Vector4::distance(const Vector4& a, const Vector4& b)
 	{
-		Vector4 difference = b - a;
+		const auto difference = b - a;
 		return difference.getLength();
 	}
 
-	float Vector4::distance(Vector4 other) const
+	float Vector4::distance(const Vector4& other) const
 	{
-		Vector4 difference = other - Vector4(x, y, z, w);
+		const auto difference = other - Vector4(x, y, z, w);
 		return difference.getLength();
 	}
 
-	float Vector4::dot(Vector4 other) const
+	float Vector4::dot(const Vector4& other) const
 	{
 		return x * other.x + y * other.y + z * other.z + w * other.w;
 	}
 
-	Vector4 Vector4::lerp(Vector4 a, Vector4 b, float t)
+	Vector4 Vector4::lerp(const Vector4& a, const Vector4& b, const float& t)
 	{
 		if (b - a == Vector4(0, 0, 0, 0)) return b; //Positions are equal
 
-		float const interpolation = a.distance(b) * t; //Get interpolation value
-		Vector4 const linearDirection = (b - a).getNormalized(); //Get direction
+		auto const interpolation = a.distance(b) * t; //Get interpolation value
+		auto const linearDirection = (b - a).getNormalized(); //Get direction
 		return linearDirection * interpolation + a; //Pos = direction * distance + start
 	}
 
@@ -109,14 +106,12 @@ namespace Tristeon
 
 	Vector4 Vector4::operator*(const float& multiplier) const
 	{
-		Vector4 result(x * multiplier, y * multiplier, z * multiplier, w * multiplier);
-		return result;
+		return { x * multiplier, y * multiplier, z * multiplier, w * multiplier };
 	}
 
 	Vector4 Vector4::operator*(const Vector4 & other) const
 	{
-		Vector4 result(x * other.x, y * other.y, z * other.z, w * other.w);
-		return result;
+		return { x * other.x, y * other.y, z * other.z, w * other.w };
 	}
 
 	Vector4 Vector4::operator/(const float& divider) const
@@ -209,7 +204,7 @@ namespace Tristeon
 		return "{ " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ", " + std::to_string(w) + " }";
 	}
 
-	Vector4 operator*(const float& multiplier, Vector4 vector)
+	Vector4 operator*(const float& multiplier, const Vector4& vector)
 	{
 		return vector * multiplier;
 	}

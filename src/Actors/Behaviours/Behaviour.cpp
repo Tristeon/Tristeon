@@ -11,26 +11,26 @@ namespace Tristeon
 
 	Behaviour::~Behaviour()
 	{
-		assert(destroyed == true);
+		assert(_destroyed == true);
 		Collector<Behaviour>::remove(this);
 	}
 
 	Behaviour::Behaviour(Behaviour&& other) noexcept
 	{
-		_owner = other._owner;
-		other._owner = nullptr;
+		_actor = other._actor;
+		other._actor = nullptr;
 	}
 
 	Behaviour& Behaviour::operator=(Behaviour&& other) noexcept
 	{
-		_owner = other._owner;
-		other._owner = nullptr;
+		_actor = other._actor;
+		other._actor = nullptr;
 		return *this;
 	}
 
 	void Behaviour::destroy()
 	{
-		destroyed = true;
+		_destroyed = true;
 		Engine::instance()->destroyLater(this);
 	}
 }

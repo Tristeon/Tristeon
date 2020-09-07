@@ -7,12 +7,6 @@ namespace TristeonEditor { class EditorWindow; }
 
 namespace Tristeon
 {
-	class Window;
-	class Engine;
-	
-#ifndef TRISTEON_EDITOR
-	class GameWindow;
-#endif
 	/**
 	 * Interface to interact with the OS Gamepad/Controller.
 	 *
@@ -20,13 +14,13 @@ namespace Tristeon
 	 */
 	class Gamepad
 	{
-		friend Window;
-		friend Engine;
+		friend class Window;
+		friend class Engine;
 
 #ifdef TRISTEON_EDITOR
 		friend TristeonEditor::EditorWindow;
 #else
-		friend GameWindow;
+		friend class GameWindow;
 #endif
 		
 	public:
@@ -59,56 +53,56 @@ namespace Tristeon
 		/**
 		 * Was this button pressed down on the current frame?
 		 */
-		static bool pressed(GamepadButton const& button);
+		[[nodiscard]] static bool pressed(const GamepadButton& button);
 
 		/**
 		 * Was this button held during the current frame?
 		 */
-		static bool held(GamepadButton const& button);
+		[[nodiscard]] static bool held(const GamepadButton& button);
 
 		/**
 		 * Was this button released on the current frame?
 		 */
-		static bool released(GamepadButton const& button);
+		[[nodiscard]] static bool released(const GamepadButton& button);
 
 		/**
 		 * The x and y value of the left axis, often referred to as the left thumbstick.
 		 *
 		 * Its values are between -1 and 1.
 		 */
-		static Vector2 axisLeft();
+		[[nodiscard]] static Vector2 axisLeft();
 
 		/**
 		 * The x and y value of the right axis, often referred to as the right thumbstick.
 		 *
 		 * Its values are between -1 and 1.
 		 */
-		static Vector2 axisRight();
+		[[nodiscard]] static Vector2 axisRight();
 
 		/**
 		 * The value of the L2 axis, often referred to as the left trigger button.
 		 *
 		 * This value ranges from 0.0 when not pressed to 1.0 when pressed completely.
 		 */
-		static float axisL2();
+		[[nodiscard]] static float axisL2();
 
 		/**
 		 * The value of the R2 axis, often referred to as the right trigger button.
 		 *
 		 * This value ranges from 0.0 when not pressed to 1.0 when pressed completely.
 		 */
-		static float axisR2();
+		[[nodiscard]] static float axisR2();
 
 	private:
-		static bool buttons[];
-		static bool buttonsPressed[];
-		static bool buttonsReleased[];
+		static bool _buttons[];
+		static bool _buttonsPressed[];
+		static bool _buttonsReleased[];
 
-		static Vector2 left;
-		static Vector2 right;
+		static Vector2 _left;
+		static Vector2 _right;
 
-		static float l2;
-		static float r2;
+		static float _l2;
+		static float _r2;
 
 		/**
 		 * Clears frame-based data structures.
@@ -120,6 +114,9 @@ namespace Tristeon
 		 */
 		static void clearAll();
 
-		static void buttonChanged(GamepadButton const& button, bool const& pressed);
+		/**
+		 * Input update sent by the window interface.
+		 */
+		static void buttonChanged(const GamepadButton& button, const bool& pressed);
 	};
 }
