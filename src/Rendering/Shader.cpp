@@ -1,22 +1,21 @@
 #include "Shader.h"
 #include "Engine.h"
 
+#include "Utils/Console.h"
 #include <fstream>
-#include <iostream>
-
 #include <glad/glad.h>
 
 namespace Tristeon
 {
 	Shader::Shader()
 	{
-		empty = true;
+		_empty = true;
 		Collector<Shader>::add(this);
 	}
 
-	Shader::Shader(std::string const& vertexShader, std::string const& fragmentShader) : vertexPath(vertexShader), fragmentPath(fragmentShader)
+	Shader::Shader(const String& vertexShader, const String& fragmentShader) : _vertexPath(vertexShader), _fragmentPath(fragmentShader)
 	{
-		initialize();
+		load();
 		Collector<Shader>::add(this);
 	}
 
@@ -24,17 +23,17 @@ namespace Tristeon
 	{
 		Collector<Shader>::remove(this);
 
-		glDeleteProgram(program);
+		glDeleteProgram(_program);
 	}
 
-	bool Shader::isReady() const
+	bool Shader::ready() const
 	{
-		return !failed && ready;
+		return !_failed && _ready;
 	}
 
 	void Shader::bind() const
 	{
-		glUseProgram(program);
+		glUseProgram(_program);
 	}
 
 	void Shader::unbind() const
@@ -42,111 +41,110 @@ namespace Tristeon
 		glUseProgram(0);
 	}
 
-	bool Shader::isEmpty() const
+	bool Shader::empty() const
 	{
-		return empty;
+		return _empty;
 	}
 
 	void Shader::reload()
 	{
-		glDeleteProgram(program);
-		
-		ready = false;
-		failed = false;
-		initialize();
+		glDeleteProgram(_program);
+
+		_ready = false;
+		_failed = false;
+		load();
 	}
 
-	void Shader::setUniformValue(std::string const& name, int const& v0)
+	void Shader::setUniformValue(const String& name, const int& v0)
 	{
 		bind();
-		glUniform1i(glGetUniformLocation(program, name.data()), v0);
+		glUniform1i(glGetUniformLocation(_program, name.data()), v0);
 	}
 
-	void Shader::setUniformValue(std::string const& name, int const& v0, int const& v1)
+	void Shader::setUniformValue(const String& name, const int& v0, const int& v1)
 	{
 		bind();
-		glUniform2i(glGetUniformLocation(program, name.data()), v0, v1);
+		glUniform2i(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
-	void Shader::setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2)
+	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2)
 	{
 		bind();
-		glUniform3i(glGetUniformLocation(program, name.data()), v0, v1, v2);
+		glUniform3i(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
-	void Shader::setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2, int const& v3)
+	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2, const int& v3)
 	{
 		bind();
-		glUniform4i(glGetUniformLocation(program, name.data()), v0, v1, v2, v3);
+		glUniform4i(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
-	void Shader::setUniformValue(std::string const& name, unsigned const& v0)
+	void Shader::setUniformValue(const String& name, const unsigned int& v0)
 	{
 		bind();
-		glUniform1ui(glGetUniformLocation(program, name.data()), v0);
+		glUniform1ui(glGetUniformLocation(_program, name.data()), v0);
 	}
 
-	void Shader::setUniformValue(std::string const& name, unsigned const& v0, unsigned const& v1)
+	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1)
 	{
 		bind();
-		glUniform2ui(glGetUniformLocation(program, name.data()), v0, v1);
+		glUniform2ui(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
-	void Shader::setUniformValue(std::string const& name, unsigned const& v0, unsigned const& v1, unsigned const& v2)
+	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2)
 	{
 		bind();
-		glUniform3ui(glGetUniformLocation(program, name.data()), v0, v1, v2);
+		glUniform3ui(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
-	void Shader::setUniformValue(std::string const& name, unsigned const& v0, unsigned const& v1, unsigned const& v2, unsigned const& v3)
+	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2, const unsigned int& v3)
 	{
 		bind();
-		glUniform4ui(glGetUniformLocation(program, name.data()), v0, v1, v2, v3);
+		glUniform4ui(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
-	void Shader::setUniformValue(std::string name, float v0)
+	void Shader::setUniformValue(const String& name, const float& v0)
 	{
 		bind();
-		glUniform1f(glGetUniformLocation(program, name.data()), v0);
+		glUniform1f(glGetUniformLocation(_program, name.data()), v0);
 	}
 
-	void Shader::setUniformValue(std::string name, float v0, float v1)
+	void Shader::setUniformValue(const String& name, const float& v0, const float& v1)
 	{
 		bind();
-		glUniform2f(glGetUniformLocation(program, name.data()), v0, v1);
+		glUniform2f(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
-	void Shader::setUniformValue(std::string name, float v0, float v1, float v2)
+	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2)
 	{
 		bind();
-		glUniform3f(glGetUniformLocation(program, name.data()), v0, v1, v2);
+		glUniform3f(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
-	void Shader::setUniformValue(std::string name, float v0, float v1, float v2, float v3)
+	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2, const float& v3)
 	{
 		bind();
-		glUniform4f(glGetUniformLocation(program, name.data()), v0, v1, v2, v3);
+		glUniform4f(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
-	void Shader::initialize()
+	void Shader::load()
 	{
-		std::ifstream vertexFile(vertexPath.c_str());
-		std::ifstream fragmentFile(fragmentPath.c_str());
+		std::ifstream vertexFile(_vertexPath.c_str());
+		std::ifstream fragmentFile(_fragmentPath.c_str());
 
 		if (!vertexFile.is_open() || !fragmentFile.is_open())
 		{
-			std::cout << "Failed to create shader program with files: [Vertex] " + vertexPath + ", [Fragment] " +
-				fragmentPath << std::endl;
-			failed = true;
+			Console::warning("Failed to create shader program with files: [Vertex] " + _vertexPath + ", [Fragment] " + _fragmentPath);
+			_failed = true;
 			return;
 		}
 
-		vertexData = std::string(std::istreambuf_iterator<char>(vertexFile), std::istreambuf_iterator<char>());
-		fragmentData = std::string(std::istreambuf_iterator<char>(fragmentFile), std::istreambuf_iterator<char>());
+		_vertexData = String(std::istreambuf_iterator<char>(vertexFile), std::istreambuf_iterator<char>());
+		_fragmentData = String(std::istreambuf_iterator<char>(fragmentFile), std::istreambuf_iterator<char>());
 
 		//Compile and check vertex shader
-		auto vertexString = vertexData.data();
-		const unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
+		auto vertexString = _vertexData.data();
+		const auto vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, &vertexString, nullptr);
 		glCompileShader(vertex);
 
@@ -162,17 +160,19 @@ namespace Tristeon
 			{
 				Vector<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(vertex, maxLength, &maxLength, &errorLog[0]);
-				std::cout << "Failed to compile vertex shader " << vertexPath << ": \n" << errorLog.ptr() << "\n";
+				Console::warning("Failed to compile vertex shader " + _vertexPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(vertex);
 			}
 			else
-				std::cout << "Failed to compile vertex shader " << vertexPath << ". No log.\n";
+			{
+				Console::warning("Failed to compile vertex shader " + _vertexPath + ". No log.");
+			}
 			return;
 		}
 #endif
-		
+
 		//Compile and check fragment shader
-		auto fragmentString = fragmentData.data();
+		auto fragmentString = _fragmentData.data();
 		const unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &fragmentString, nullptr);
 		glCompileShader(fragment);
@@ -189,24 +189,25 @@ namespace Tristeon
 			{
 				Vector<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(fragment, maxLength, &maxLength, &errorLog[0]);
-				std::cout << "Failed to compile fragment shader " << fragmentPath << ": \n" << errorLog.ptr() << "\n";
+				Console::warning("Failed to compile fragment shader " + _fragmentPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(fragment);
 			}
 			else
-				std::cout << "Failed to compile fragment shader " << fragmentPath << ". No log.\n";
+			{
+				Console::warning("Failed to compile fragment shader " + _fragmentPath + ". No log.");
+			}
 			return;
 		}
 #endif
-		
-		//Attach and link
-		program = glCreateProgram();
-		glAttachShader(program, vertex);
-		glAttachShader(program, fragment);
-		glLinkProgram(program);
 
-		std::cout << "Created shader program " << program << " with vertexpath " << vertexPath << " and fragmentpath "
-			<< fragmentPath << std::endl;
-		ready = true;
+		//Attach and link
+		_program = glCreateProgram();
+		glAttachShader(_program, vertex);
+		glAttachShader(_program, fragment);
+		glLinkProgram(_program);
+
+		Console::write("Successfully created shader program " + std::to_string(_program) + " with vertexpath " + _vertexPath + " and fragmentpath " + _fragmentPath);
+		_ready = true;
 
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);

@@ -199,7 +199,7 @@ namespace Tristeon
 		if (tbo == 0 || tbo_tex == 0)
 			return;
 
-		if (!shader->isReady())
+		if (!shader->ready())
 			return;
 		
 		shader->bind();

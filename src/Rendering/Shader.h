@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <TObject.h>
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
@@ -25,20 +25,23 @@ namespace Tristeon
 		 *
 		 * If file loading & shader compilation succeeds, isRead() will be true.
 		 */
-		explicit Shader(std::string const& vertexShader, std::string const& fragmentShader);
+		explicit Shader(const String& vertexShader, const String& fragmentShader);
 		~Shader();
+
+		DELETE_COPY(Shader);
+		DEFAULT_MOVE(Shader);
 
 		/**
 		 * True if the shaders have compiled successfully.
 		 * False if the shaders have failed to compile/load, or if the program is empty (isEmpty())
 		 */
-		bool isReady() const;
+		[[nodiscard]] bool ready() const;
 
 		/**
 		 * True if the class was created without any shader files.
 		 * False if the class was created with shader files, even if the shaders failed to compile.
 		 */
-		bool isEmpty() const;
+		[[nodiscard]] bool empty() const;
 
 		/**
 		 * Binds the shader program for rendering usage.
@@ -49,45 +52,45 @@ namespace Tristeon
 		 * Unbinds the shader program.
 		 */
 		void unbind() const;
-		
+
 		/**
 		 * Gets the shader program's ID for advanced rendering use.
 		 */
-		unsigned int getShaderProgram() const { return program; }
+		[[nodiscard]] unsigned int shaderProgram() const { return _program; }
 
 		/**
 		 * Reloads the shader using the same vertex and fragment paths as before.
 		 */
 		void reload();
 
-		void setUniformValue(std::string const& name, int const& v0);
-		void setUniformValue(std::string const& name, int const& v0, int const& v1);
-		void setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2);
-		void setUniformValue(std::string const& name, int const& v0, int const& v1, int const& v2, int const& v3);
+		void setUniformValue(const String& name, const int& v0);
+		void setUniformValue(const String& name, const int& v0, const int& v1);
+		void setUniformValue(const String& name, const int& v0, const int& v1, const int& v2);
+		void setUniformValue(const String& name, const int& v0, const int& v1, const int& v2, const int& v3);
 
-		void setUniformValue(std::string const& name, unsigned int const& v0);
-		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1);
-		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1, unsigned int const& v2);
-		void setUniformValue(std::string const& name, unsigned int const& v0, unsigned int const& v1, unsigned int const& v2, unsigned int const& v3);
+		void setUniformValue(const String& name, const unsigned int& v0);
+		void setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1);
+		void setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2);
+		void setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2, const unsigned int& v3);
 
-		void setUniformValue(std::string name, float v0);
-		void setUniformValue(std::string name, float v0, float v1);
-		void setUniformValue(std::string name, float v0, float v1, float v2);
-		void setUniformValue(std::string name, float v0, float v1, float v2, float v3);
+		void setUniformValue(const String& name, const float& v0);
+		void setUniformValue(const String& name, const float& v0, const float& v1);
+		void setUniformValue(const String& name, const float& v0, const float& v1, const float& v2);
+		void setUniformValue(const String& name, const float& v0, const float& v1, const float& v2, const float& v3);
 
 	private:
-		void initialize();
-		
-		std::string vertexPath = "";
-		std::string fragmentPath = "";
-		
-		std::string vertexData = "";
-		std::string fragmentData = "";
+		void load();
 
-		bool ready = false;
-		bool failed = false;
-		bool empty = false;
+		std::string _vertexPath = "";
+		std::string _fragmentPath = "";
 
-		unsigned int program = 0;
+		std::string _vertexData = "";
+		std::string _fragmentData = "";
+
+		bool _ready = false;
+		bool _failed = false;
+		bool _empty = false;
+
+		unsigned int _program = 0;
 	};
 }

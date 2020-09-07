@@ -4,6 +4,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include "Utils/Console.h"
+
 namespace Tristeon
 {
 	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
@@ -11,12 +13,14 @@ namespace Tristeon
 	Texture::Texture(std::string const& path)
 	{
 		stbi_set_flip_vertically_on_load(true);
-		auto* pixels = stbi_load(path.c_str(), &w, &h, &c, STBI_rgb_alpha);
+		auto* pixels = stbi_load(path.c_str(), &_width, &_height, &_channels, STBI_rgb_alpha);
 		
-		if (!pixels || w == 0 || h == 0)
+		if (!pixels || _width == 0 || _height == 0)
 		{
-			succeeded = false;
-			std::cout << "Failed to load texture " << path << "\n";
+			if (pixels)
+				stbi_image_free(pixels);
+			_valid = false;
+			Console::warning("Failed to load texture " + path);
 			return;
 		}
 
@@ -29,10 +33,10 @@ namespace Tristeon
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glGenTextures(1, &texture);
+		glGenTextures(1, &_texture);
 
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		glBindTexture(GL_TEXTURE_2D, _texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		stbi_image_free(pixels);
@@ -40,31 +44,31 @@ namespace Tristeon
 
 	Texture::~Texture()
 	{
-		glDeleteTextures(1, &texture);
+		glDeleteTextures(1, &_texture);
 	}
 
 	void Texture::bind() const
 	{
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glBindTexture(GL_TEXTURE_2D, _texture);
 	}
 
 	int Texture::width() const
 	{
-		return w;
+		return _width;
 	}
 
 	int Texture::height() const
 	{
-		return h;
+		return _height;
 	}
 
 	Vector2Int Texture::size() const
 	{
-		return { w, h };
+		return { _width, _height };
 	}
 
 	bool Texture::loaded() const
 	{
-		return succeeded;
+		return _valid;
 	}
 }

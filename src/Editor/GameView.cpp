@@ -35,8 +35,6 @@ namespace TristeonEditor
 
 	void GameView::initialize()
 	{
-		Renderer::showGrid = true;
-
 		layout = new QGridLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);

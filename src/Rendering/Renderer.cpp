@@ -3,7 +3,6 @@
 #include <Scenes/Scene.h>
 #include <Scenes/Layers/Layer.h>
 
-
 #include "Engine.h"
 #include "Window.h"
 #include "Shader.h"
@@ -17,8 +16,6 @@
 
 namespace Tristeon
 {
-	bool Renderer::showGrid;
-
 	Renderer::Renderer()
 	{
 #ifdef TRISTEON_EDITOR
@@ -37,7 +34,7 @@ namespace Tristeon
 #endif
 	}
 
-	void Renderer::render(unsigned int const& framebuffer)
+	void Renderer::render(const unsigned int& framebuffer)
 	{
 		Scene* scene = SceneManager::current();
 		if (scene == nullptr)
@@ -54,21 +51,22 @@ namespace Tristeon
 		for (auto* camera : cameras)
 		{
 			camera->bindFramebuffer();
-			
+
+			//Determine final resolution
+			Vector2Int resolution = (Vector2Int)((Vector2)Window::gameSize() * camera->screenSize);
+			if (!camera->renderToScreen)
+				resolution = camera->overrideResolution;
+			glViewport(0, 0, resolution.x, resolution.y);
+
 			//Send common data to all shaders through a prepass
 			for (auto shader : Collector<Shader>::all())
 			{
-				if (shader->isEmpty())
+				if (shader->empty())
 					continue;
 				
 				shader->bind();
 				shader->setUniformValue("camera.position", (float)camera->position.x, (float)camera->position.y);
 				shader->setUniformValue("camera.zoom", camera->zoom);
-
-				Vector2Int resolution = (Vector2Int)((Vector2)Window::gameSize() * camera->screenSize);
-				if (!camera->renderToScreen)
-					resolution = camera->overrideResolution;
-				glViewport(0, 0, resolution.x, resolution.y);
 				shader->setUniformValue("camera.displayPixels", (unsigned int)resolution.x, (unsigned int)resolution.y);
 			}
 
@@ -78,11 +76,18 @@ namespace Tristeon
 				Layer* layer = scene->getLayer(i);
 				layer->render(this, scene);
 			}
-			if (showGrid)
+
+#ifdef TRISTEON_EDITOR
+			//Render grid to editor camera
+			if (camera == _editorCamera.get())
 				Grid::render();
+#endif
+
+			//Render gizmos
 			Gizmos::render();
 		}
 
+		//Prepare renderer for rendering to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 		glViewport(0, 0, Window::gameWidth(), Window::gameHeight());
 

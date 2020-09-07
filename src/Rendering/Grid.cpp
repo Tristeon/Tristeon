@@ -23,27 +23,27 @@ namespace Tristeon
 		return Vector2Int(tileWidth(), tileHeight());
 	}
 
-	Vector2 Grid::snap(Vector2 const& position)
+	Vector2 Grid::snap(const Vector2& position)
 	{
 		return positionByIndex(indexByPosition(position));
 	}
 
-	Vector2Int Grid::indexByPosition(Vector2 const& position)
+	Vector2Int Grid::indexByPosition(const Vector2& position)
 	{
 		return indexByPosition(position.x, position.y);
 	}
 
-	Vector2Int Grid::indexByPosition(float const& wx, float const& wy)
+	Vector2Int Grid::indexByPosition(const float& wx, const float& wy)
 	{
 		return (Vector2Int)Vector2::floor({ (wx + (float)tileWidth() / 2.0f) / (float)tileWidth(), (wy + (float)tileHeight() / 2.0f) / (float)tileHeight() });
 	}
 
-	Vector2 Grid::positionByIndex(Vector2Int const& index)
+	Vector2 Grid::positionByIndex(const Vector2Int& index)
 	{
 		return positionByIndex(index.x, index.y);
 	}
 
-	Vector2 Grid::positionByIndex(int const& ix, int const& iy)
+	Vector2 Grid::positionByIndex(const int& ix, const int& iy)
 	{
 		return {(float)ix * tileWidth(), (float)iy * tileHeight()};
 	}
@@ -52,7 +52,7 @@ namespace Tristeon
 	{
 		static Shader shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/Grid.frag");
 
-		if (!shader.isReady())
+		if (!shader.ready())
 			return;
 
 		shader.bind();

@@ -1,7 +1,6 @@
 #pragma once
-#include <string>
-
 #include "TObject.h"
+#include <Utils/ClassDefaults.h>
 #include "Math/Vector2Int.h"
 
 namespace Tristeon
@@ -23,9 +22,11 @@ namespace Tristeon
 		 * Creates a texture with an image at the given filepath.
 		 */
 		explicit Texture(std::string const& path);
-
 		virtual ~Texture();
 
+		DELETE_COPY(Texture);
+		DEFAULT_MOVE(Texture);
+		
 		/**
 		 * Binds the texture to prepare it for usage within rendering.
 		 */
@@ -34,30 +35,30 @@ namespace Tristeon
 		/**
 		 * Returns the width of the texture in pixels.
 		 */
-		int width() const;
+		[[nodiscard]] int width() const;
 
 		/**
 		 * Returns the height of the texture in pixels.
 		 */
-		int height() const;
+		[[nodiscard]] int height() const;
 
 		/**
 		 * Returns the width and height of the texture in pixels.
 		 */
-		Vector2Int size() const;
+		[[nodiscard]] Vector2Int size() const;
 
 		/**
 		 * Returns true if the texture was successfully loaded from the given filepath.
 		 */
-		bool loaded() const;
+		[[nodiscard]] bool loaded() const;
 
-		static const std::string defaultPath;
+		static const String defaultPath;
 	private:
-		int w = 0;
-		int h = 0;
-		int c = 0;
+		int _width = 0;
+		int _height = 0;
+		int _channels = 0;
 		
-		bool succeeded = false;
-		unsigned int texture = 0;
+		bool _valid = false;
+		unsigned int _texture = 0;
 	};
 }

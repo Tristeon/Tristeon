@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 #include <Utils/Singleton.h>
-
 #include "Actors/Camera.h"
+#include <Utils/ClassDefaults.h>
 
 namespace Tristeon
 {
@@ -19,18 +19,26 @@ namespace Tristeon
 	public:
 		Renderer();
 		~Renderer();
+
+		DELETE_COPY(Renderer);
+		DEFAULT_MOVE(Renderer);
 		
-		static bool showGrid;
 		/**
 		 * Renders the current scene to the given framebuffer. The render function executes a set of steps in the following order:
 		 *
-		 * 1) Shader prepass sends camera data to each shader
-		 * 2) Render each layer individually
-		 * 3) Render Scene HUD
-		 * 4) Render Grid if enabled
-		 * 5) Render Gizmos if enabled
+		 * For each Camera:
+			* Bind camera's framebuffer
+			* Set viewport
+			* Pass camera data to each shader
+			* Render each layer through its virtual render() function
+			* Render Gizmos
+		 * 
+		 * Bind default framebuffer
+		 * Set viewport to fullscreen
+		 * Render each camera to the screen
+		 * Clear Gizmos
 		 */
-		void render(unsigned int const& framebuffer);
+		void render(const unsigned int& framebuffer);
 
 #ifdef TRISTEON_EDITOR
 		[[nodiscard]] static Camera* editorCamera()

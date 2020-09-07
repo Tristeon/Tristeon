@@ -7,21 +7,21 @@
 
 namespace Tristeon
 {
-	Vector<Gizmos::Shape> Gizmos::shapes;
+	Vector<Gizmos::Shape> Gizmos::_shapes;
 	
-	void Gizmos::drawLine(Vector2 const& worldStart, Vector2 const& worldEnd, Colour const& colour)
+	void Gizmos::drawLine(const Vector2& worldStart, const Vector2& worldEnd, const Colour& colour)
 	{
-		shapes.add({ { worldStart, worldEnd }, colour });
+		_shapes.add({ { worldStart, worldEnd }, colour });
 	}
 
-	void Gizmos::drawAABB(Vector2 const& worldMin, Vector2 const& worldMax, Colour const& colour)
+	void Gizmos::drawAABB(const Vector2& worldMin, const Vector2& worldMax, const Colour& colour)
 	{
-		Vector2 const bl = worldMin;
-		Vector2 const tl = Vector2(worldMin.x, worldMax.y);
-		Vector2 const br = Vector2(worldMax.x, worldMin.y);
-		Vector2 const tr = worldMax;
+		auto const bl = worldMin;
+		auto const tl = Vector2(worldMin.x, worldMax.y);
+		auto const br = Vector2(worldMax.x, worldMin.y);
+		auto const tr = worldMax;
 		
-		shapes.add(
+		_shapes.add(
 			{
 				{
 					bl, tl,
@@ -33,14 +33,14 @@ namespace Tristeon
 			});
 	}
 
-	void Gizmos::drawSquare(Vector2 const& worldPosition, Vector2 const& size, float rotationDegrees, Colour const& colour)
+	void Gizmos::drawSquare(const Vector2& worldPosition, const Vector2& size, const float& rotationDegrees, const Colour& colour)
 	{
-		Vector2 const bl = Math::orbit(worldPosition, -size / 2.0f, rotationDegrees);
-		Vector2 const tl = Math::orbit(worldPosition, Vector2(-size.x / 2.0f, size.y / 2.0f), rotationDegrees);
-		Vector2 const br = Math::orbit(worldPosition, Vector2(size.x / 2.0f, -size.y / 2.0f), rotationDegrees);
-		Vector2 const tr = Math::orbit(worldPosition, size / 2.0f, rotationDegrees);
+		auto const bl = Math::orbit(worldPosition, -size / 2.0f, rotationDegrees);
+		auto const tl = Math::orbit(worldPosition, Vector2(-size.x / 2.0f, size.y / 2.0f), rotationDegrees);
+		auto const br = Math::orbit(worldPosition, Vector2(size.x / 2.0f, -size.y / 2.0f), rotationDegrees);
+		auto const tr = Math::orbit(worldPosition, size / 2.0f, rotationDegrees);
 
-		shapes.add(
+		_shapes.add(
 			{
 				{
 					bl, tl,
@@ -52,17 +52,17 @@ namespace Tristeon
 			});
 	}
 
-	void Gizmos::drawCircle(Vector2 const& worldPosition, float radius, Colour const& colour)
+	void Gizmos::drawCircle(const Vector2& worldPosition, const float& radius, const Colour& colour)
 	{
 		Shape shape;
 		shape.colour = colour;
 		
-		for (int i = 0; i < 32; i++)
+		for (auto i = 0; i < 32; i++)
 		{
-			float const theta = Math::TAU * i / 32.0f;
+			auto const theta = Math::TAU * i / 32.0f;
 
-			float const x = radius * cosf(theta);
-			float const y = radius * sinf(theta);
+			auto const x = radius * cosf(theta);
+			auto const y = radius * sinf(theta);
 
 			shape.vertices.add({ x + worldPosition.x , y + worldPosition.y });
 
@@ -73,7 +73,7 @@ namespace Tristeon
 				shape.vertices.add({ radius + worldPosition.x, worldPosition.y });
 		}
 
-		shapes.add(shape);
+		_shapes.add(shape);
 	}
 
 	void Gizmos::render()
@@ -81,7 +81,7 @@ namespace Tristeon
 		static Shader shader = Shader("Internal/Shaders/Gizmo.vert", "Internal/Shaders/Gizmo.frag");
 		shader.bind();
 		
-		for (auto& shape : shapes)
+		for (auto& shape : _shapes)
 		{
 			//create buffer
 			unsigned int buffer = 0;
@@ -107,6 +107,6 @@ namespace Tristeon
 
 	void Gizmos::clear()
 	{
-		shapes.clear();
+		_shapes.clear();
 	}
 }
