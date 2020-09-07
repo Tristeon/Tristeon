@@ -32,13 +32,13 @@ namespace Tristeon
 		return _radius;
 	}
 
-	void CircleCollider::radius(float const& value)
+	void CircleCollider::setRadius(const float& value)
 	{
 		_radius = value;
-		isDirty = true;
+		_isDirty = true;
 	}
 
-	void CircleCollider::createShape(bool const& includeBodyTransform)
+	void CircleCollider::createShape(const bool& includeBodyTransform)
 	{
 		auto* circle = new b2CircleShape();
 
@@ -49,6 +49,6 @@ namespace Tristeon
 		else
 			circle->m_p = PhysicsWorld::pixelsToMeters(_offset).convert<b2Vec2>();
 
-		shape = std::unique_ptr<b2Shape>(circle);
+		_shape = std::unique_ptr<b2Shape>(circle);
 	}
 }

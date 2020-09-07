@@ -15,6 +15,11 @@ namespace Tristeon
 	class IPreContact
 	{
 	public:
+		virtual ~IPreContact() = default;
+		
+		/**
+		 * preContact is called before a collision is resolved, returning false on the callback causes the collision to be ignored.
+		 */
 		virtual bool preContact(Contact const& contact) = 0;
 	};
 }

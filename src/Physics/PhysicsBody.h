@@ -18,6 +18,8 @@ namespace Tristeon
 	 * A physics body can not be bent, squished or in any other way deformed. The physics simulation only adjusts its position and rotation.
 	 *
 	 * The PhysicsBody's behaviour can be adjusted by applying forces, adjusting parameters or by directly changing its position/rotation values.
+	 *
+	 * Collider uses the Box2D API and as such all coordinates and sizes are internally converted to meters.
 	 */
 	class PhysicsBody : public Behaviour, public IFixedUpdate, public IStart, public IPreDestroy
 	{
@@ -79,125 +81,124 @@ namespace Tristeon
 		/**
 		 * Adds a force, applied at the center of mass of the body.
 		 */
-		void applyForce(Vector2 const& force, ForceMode const& mode = ForceMode::Force);
+		void applyForce(const Vector2& force, const ForceMode& mode = ForceMode::Force);
 
 		/**
 		 * Adds a force, applied at the given global point. If the force is not applied at the center of mass, it will generate a torque and affect the angular velocity.
 		 */
-		void applyForceToPoint(Vector2 const& force, Vector2 const& point, ForceMode const& mode = ForceMode::Force);
+		void applyForceToPoint(const Vector2& force, const Vector2& point, const ForceMode& mode = ForceMode::Force);
 
 		/**
 		 * Apply a torque. This solely affects the angular velocity.
 		 */
-		void applyTorque(float const& torque);
+		void applyTorque(const float& torque);
 
 		/**
 		 * Gets the velocity in pixels.
 		 */
-		Vector2 velocity() const;
+		[[nodiscard]] Vector2 velocity() const;
 		/**
 		 * Sets the velocity to the given value.
 		 */
-		void setVelocity(Vector2 const& value);
+		void setVelocity(const Vector2& value);
 		/**
 		 * Sets the velocity to the given value.
 		 */
-		void setVelocity(float const& x, float const& y);
+		void setVelocity(const float& x, const float& y);
 		/**
 		 * Sets the x value of the velocity to the given value.
 		 */
-		void setVelocityX(float const& value);
+		void setVelocityX(const float& value);
 		/**
 		 * Sets the y value of the velocity to the given value.
 		 */
-		void setVelocityY(float const& value);
+		void setVelocityY(const float& value);
 		
 		/**
 		 * Gets the gravity scale. This is a multiplier, defaulted to 1.
 		 */
-		float gravityScale() const;
+		[[nodiscard]] float gravityScale() const;
 		/**
 		 * Sets the gravity scale.
 		 */
-		void setGravityScale(float const& value);
+		void setGravityScale(const float& value);
 
 		/**
 		 * Gets whether or not the rotation of the PhysicsBody is fixed.
 		 *
 		 * If true, the PhysicsBody doesn't adjust Actor::rotation at all and angular forces do not apply.
 		 */
-		bool fixedRotation() const;
+		[[nodiscard]] bool fixedRotation() const;
 		/**
 		 * Sets whether or not the rotation of the PhysicsBody is fixed.
 		 */
-		void setFixedRotation(bool const& value);
+		void setFixedRotation(const bool& value);
 
 		/**
 		 * Gets the linear damping. Linear damping is used to reduce the linear velocity. Usually between 0.0f and 1.0f.
 		 */
-		float linearDamping() const;
+		[[nodiscard]] float linearDamping() const;
 		/**
 		 * Sets the linear damping.
 		 */
-		void setLinearDamping(float const& value);
+		void setLinearDamping(const float& value);
 
 		/**
 		 * Gets the angular damping. Angular damping is used to reduce the angular velocity. Usually between 0.0f an 1.0f.
 		 */
-		float angularDamping() const;
+		[[nodiscard]] float angularDamping() const;
 		/**
 		 * Sets the angular damping.
 		 */
-		void setAngularDamping(float const& value);
+		void setAngularDamping(const float& value);
 
 		/**
 		 * Gets the position in pixels.
 		 */
-		Vector2 position() const;
+		[[nodiscard]] Vector2 position() const;
 		/**
 		 * Sets the position.
 		 */
-		void setPosition(Vector2 const& value);
+		void setPosition(const Vector2& value);
 
 		/**
 		 * The rotation in degrees.
 		 */
-		float rotation() const;
+		[[nodiscard]] float rotation() const;
 		/**
 		 * Sets the rotation.
 		 */
-		void setRotation(float const& value);
+		void setRotation(const float& value);
 
 		/**
 		 * Gets if the body has enabled continuous collision detection.
 		 * This is useful for high-speed objects such as bullets, but increases performance cost so use it sparingly.
 		 */
-		bool continuous() const;
+		[[nodiscard]] bool continuous() const;
 		/**
 		 * Enables/Disables continuous collision detection.
 		 */
-		void setContinuous(bool const& value);
+		void setContinuous(const bool& value);
 
 		/**
 		 * Gets if the body is enabled/simulated.
 		 *
 		 * If false, the body does not simulate any sort of physics.
 		 */
-		bool enabled() const;
+		[[nodiscard]] bool enabled() const;
 		/**
 		 * Enables/Disables the body.
 		 */
-		void setEnabled(bool const& value);
-
-		/**
-		 * Sets the body type (Static, Kinematic, Dynamic).
-		 */
-		void setType(Type type);
+		void setEnabled(const bool& value);
 
 		/**
 		 * Gets the body type (Static, Kinematic, Dynamic).
 		 */
-		Type type() const;
+		[[nodiscard]] Type type() const;
+		/**
+		 * Sets the body type (Static, Kinematic, Dynamic).
+		 */
+		void setType(const Type& type);
 		
 	protected:
 		Type _type = Dynamic;

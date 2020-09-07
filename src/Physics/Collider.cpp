@@ -12,29 +12,30 @@ namespace Tristeon
 {
 	void Collider::start()
 	{
-		cachedScale = actor()->scale;
+		_lastScale = actor()->scale;
 		
 		removeSelf();
-		if (body == nullptr)
+		if (_body == nullptr)
 		{
 			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
 			if (pb != nullptr)
-				body = pb->getBody();
+				_body = pb->getBody();
 			else
-				body = PhysicsWorld::instance()->staticBody.get();
+				_body = PhysicsWorld::instance()->_staticBody.get();
 		}
 		addSelf();
 	}
 
 	void Collider::lateUpdate()
 	{
-		if (cachedScale != actor()->scale)
+		//Check if the actor's scale has been changed, rebuild collider if that's the case.
+		if (_lastScale != actor()->scale)
 		{
-			isDirty = true;
-			cachedScale = actor()->scale;
+			_isDirty = true;
+			_lastScale = actor()->scale;
 		}
 		
-		if (isDirty)
+		if (_isDirty)
 		{
 			removeSelf();
 			addSelf();
@@ -82,14 +83,14 @@ namespace Tristeon
 		return _density;
 	}
 
-	void Collider::density(float const& value)
+	void Collider::setDensity(float const& value)
 	{
 		_density = value;
 
-		if (fixture != nullptr)
+		if (_fixture != nullptr)
 		{
-			fixture->SetDensity(value);
-			fixture->GetBody()->ResetMassData();
+			_fixture->SetDensity(value);
+			_fixture->GetBody()->ResetMassData();
 		}
 	}
 
@@ -98,12 +99,12 @@ namespace Tristeon
 		return _friction;
 	}
 
-	void Collider::friction(float const& value)
+	void Collider::setFriction(float const& value)
 	{
 		_friction = value;
 
-		if (fixture != nullptr)
-			fixture->SetFriction(value);
+		if (_fixture != nullptr)
+			_fixture->SetFriction(value);
 	}
 
 	float Collider::restitution() const
@@ -111,12 +112,12 @@ namespace Tristeon
 		return _restitution;
 	}
 
-	void Collider::restitution(float const& value)
+	void Collider::setRestitution(float const& value)
 	{
 		_restitution = value;
 
-		if (fixture != nullptr)
-			fixture->SetRestitution(value);
+		if (_fixture != nullptr)
+			_fixture->SetRestitution(value);
 	}
 
 	bool Collider::sensor() const
@@ -124,60 +125,62 @@ namespace Tristeon
 		return _sensor;
 	}
 
-	void Collider::sensor(bool const& value)
+	void Collider::setSensor(bool const& value)
 	{
 		_sensor = value;
-		if (fixture != nullptr)
-			fixture->SetSensor(value);
+		if (_fixture != nullptr)
+			_fixture->SetSensor(value);
 	}
 
 	b2Shape* Collider::getShape(bool const& includeOwnerTransform)
 	{
 		createShape(includeOwnerTransform);
-		return shape.get();
+		return _shape.get();
 	}
 
 	void Collider::addSelf()
 	{
-		if (body == nullptr)
+		//Either find a body or get the default static one
+		if (_body == nullptr)
 		{
 			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
 			if (pb != nullptr)
-				body = pb->getBody();
+				_body = pb->getBody();
 			else
-				body = PhysicsWorld::instance()->staticBody.get();
+				_body = PhysicsWorld::instance()->_staticBody.get();
 		}
-		
+
+		//Create the collider fixture
 		b2FixtureDef def;
-		def.shape = getShape(body->GetType() == b2_staticBody);
+		def.shape = getShape(_body->GetType() == b2_staticBody);
 		def.density = density();
 		def.friction = friction();
 		def.isSensor = sensor();
 		def.restitution = restitution();
 
-		fixture = body->CreateFixture(&def);
-		fixture->SetUserData(this);
+		_fixture = _body->CreateFixture(&def);
+		_fixture->SetUserData(this);
 	}
 
 	void Collider::removeSelf()
 	{
-		if (body == nullptr)
+		if (_body == nullptr)
 			return;
 		
-		body->DestroyFixture(fixture);
-		fixture = nullptr;
-		body = nullptr;
+		_body->DestroyFixture(_fixture);
+		_fixture = nullptr;
+		_body = nullptr;
 	}
 
 	void Collider::setPhysicsBody(b2Body* newBody)
 	{
-		if (body == nullptr)
+		if (_body == nullptr)
 			return;
 		
 		removeSelf();
-		body = newBody;
-		if (body == nullptr)
-			body = PhysicsWorld::instance()->staticBody.get();
+		_body = newBody;
+		if (_body == nullptr)
+			_body = PhysicsWorld::instance()->_staticBody.get();
 		addSelf();
 	}
 
@@ -186,10 +189,10 @@ namespace Tristeon
 		return _offset;
 	}
 
-	void Collider::offset(Vector2 const& value)
+	void Collider::setOffset(Vector2 const& value)
 	{
 		_offset = value;
-		isDirty = true;
+		_isDirty = true;
 	}
 
 	float Collider::rotationOffset() const
@@ -197,9 +200,9 @@ namespace Tristeon
 		return _rotationOffset;
 	}
 
-	void Collider::rotationOffset(float const& value)
+	void Collider::setRotationOffset(float const& value)
 	{
 		_rotationOffset = value;
-		isDirty = true;
+		_isDirty = true;
 	}
 }

@@ -10,7 +10,7 @@
 
 namespace Tristeon
 {
-	void BoxCollider::createShape(bool const& includeBodyTransform)
+	void BoxCollider::createShape(const bool& includeBodyTransform)
 	{
 		auto* polygon = new b2PolygonShape();
 
@@ -18,6 +18,7 @@ namespace Tristeon
 			_width * actor()->scale.x, _height * actor()->scale.y
 		});
 		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
+		
 		float rotationOffset = Math::toRadians(_rotationOffset);
 		if (includeBodyTransform)
 		{
@@ -26,7 +27,7 @@ namespace Tristeon
 		}
 
 		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), -rotationOffset);
-		shape = std::unique_ptr<b2Shape>(polygon);
+		_shape = std::unique_ptr<b2Shape>(polygon);
 	}
 
 	json BoxCollider::serialize()
@@ -48,8 +49,7 @@ namespace Tristeon
 
 	void BoxCollider::drawGizmos()
 	{
-		Gizmos::drawSquare(actor()->position, Vector2(width(), height()), actor()->rotation,
-		                   {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
+		Gizmos::drawSquare(actor()->position, Vector2(width(), height()), actor()->rotation, {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
 	}
 
 	float BoxCollider::width() const
@@ -57,10 +57,10 @@ namespace Tristeon
 		return _width;
 	}
 
-	void BoxCollider::width(float const& value)
+	void BoxCollider::setWidth(const float& value)
 	{
 		_width = value;
-		isDirty = true;
+		_isDirty = true;
 	}
 
 	float BoxCollider::height() const
@@ -68,9 +68,9 @@ namespace Tristeon
 		return _height;
 	}
 
-	void BoxCollider::height(float const& value)
+	void BoxCollider::setHeight(const float& value)
 	{
 		_height = value;
-		isDirty = true;
+		_isDirty = true;
 	}
 }

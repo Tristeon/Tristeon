@@ -3,9 +3,18 @@
 
 namespace Tristeon
 {
+	/**
+	 * Data structure containing information about a collision/contact between two colliders.
+	 */
 	struct Contact
 	{
+		/**
+		 * The other collider.
+		 */
 		Collider* other = nullptr;
+		/**
+		 * The normal of the collision.
+		 */
 		Vector2 normal{};
 	};
 }

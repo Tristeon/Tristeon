@@ -20,24 +20,24 @@ namespace TristeonEditor
 		formWidget->setLayout(form);
 		form->setContentsMargins(0, 0, 0, 0);
 		
-		EditorFields::floatField(form, "Radius", circle->radius(), [=](float value) { circle->radius(value); });
+		EditorFields::floatField(form, "Radius", circle->radius(), [=](float value) { circle->setRadius(value); });
 
 		auto* offsetWidget = new QWidget();
 		auto* offsetLayout = new QHBoxLayout(offsetWidget);
 		offsetLayout->setContentsMargins(0, 0, 0, 0);
 		offsetWidget->setLayout(offsetLayout);
-		QWidget* offsetX = EditorFields::floatField(offsetWidget, circle->offset().x, [=](float value) { circle->offset({ value, circle->offset().y }); });
-		QWidget* offsetY = EditorFields::floatField(offsetWidget, circle->offset().y, [=](float value) { circle->offset({ circle->offset().x, value }); });
+		QWidget* offsetX = EditorFields::floatField(offsetWidget, circle->offset().x, [=](float value) { circle->setOffset({ value, circle->offset().y }); });
+		QWidget* offsetY = EditorFields::floatField(offsetWidget, circle->offset().y, [=](float value) { circle->setOffset({ circle->offset().x, value }); });
 		offsetLayout->addWidget(offsetX);
 		offsetLayout->addWidget(offsetY);
 		form->addRow("Offset", offsetWidget);
 
-		EditorFields::boolField(form, "Is Sensor", circle->sensor(), [=](bool value) { circle->sensor(value); });
+		EditorFields::boolField(form, "Is Sensor", circle->sensor(), [=](bool value) { circle->setSensor(value); });
 		
 		EditorFields::header(form, "Physics properties");
-		EditorFields::floatField(form, "Density", circle->density(), [=](float value) { circle->density(value); });
-		EditorFields::floatField(form, "Friction", circle->friction(), [=](float value) { circle->friction(value); });
-		EditorFields::floatField(form, "Restitution", circle->restitution(), [=](float value) { circle->restitution(value); });
+		EditorFields::floatField(form, "Density", circle->density(), [=](float value) { circle->setDensity(value); });
+		EditorFields::floatField(form, "Friction", circle->friction(), [=](float value) { circle->setFriction(value); });
+		EditorFields::floatField(form, "Restitution", circle->restitution(), [=](float value) { circle->setRestitution(value); });
 	}
 }
 #endif

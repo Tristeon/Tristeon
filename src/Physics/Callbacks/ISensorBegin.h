@@ -14,6 +14,11 @@ namespace Tristeon
 	class ISensorBegin
 	{
 	public:
+		virtual ~ISensorBegin() = default;
+
+		/**
+		 * sensorBegin is called on the first moment that a collision existed between a sensor and another collider.
+		 */
 		virtual void sensorBegin(Contact const& contact) = 0;
 	};
 }

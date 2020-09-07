@@ -1,46 +1,46 @@
 #pragma once
 #include <Physics/Collider.h>
 #include <Serialization/TypeRegister.h>
-
 #include "Callbacks/IDrawGizmos.h"
 
 namespace Tristeon
 {
 	/**
 	 * BoxCollider is a collider that defines its shape as a box or 2D rectangle.
-	 *
 	 * The box is defined using a width and height for x min-max and y min-max respectively.
+	 *
+	 * BoxCollider uses the Box2D API and as such all coordinates and sizes are internally converted to meters.
 	 */
 	class BoxCollider : public Collider, public IDrawGizmos
 	{
 	public:
 		json serialize() override;
 		void deserialize(json j) override;
-		void drawGizmos() override;
 
 		/**
 		 * Gets the width of the box in pixels.
 		 */
-		float width() const;
+		[[nodiscard]] float width() const;
 		/**
 		 * Sets the width of the box.
 		 */
-		void width(float const& value);
+		void setWidth(const float& value);
 
 		/**
 		 * Gets the height of the box in pixels.
 		 */
-		float height() const;
+		[[nodiscard]] float height() const;
 		/**
 		 * Sets the height of the box.
 		 */
-		void height(float const& value);
+		void setHeight(const float& value);
 		
 	protected:
 		float _width = 1;
 		float _height = 1;
 		
-		void createShape(bool const& includeBodyTransform) override;
+		void drawGizmos() override;
+		void createShape(const bool& includeBodyTransform) override;
 	};
 
 	REGISTER_TYPE(BoxCollider);

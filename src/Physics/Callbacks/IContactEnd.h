@@ -14,6 +14,11 @@ namespace Tristeon
 	class IContactEnd
 	{
 	public:
+		virtual ~IContactEnd() = default;
+
+		/**
+		 * contactEnd is called once a collision between two non-sensor colliders has come to an end.
+		 */
 		virtual void contactEnd(Contact const& contact) = 0;
 	};
 }

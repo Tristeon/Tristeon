@@ -21,12 +21,12 @@ namespace Tristeon
 		/**
 		 * The exact point at which the raycast hit the collider.
 		 */
-		Vector2 point;
+		Vector2 point{};
 		
 		/**
 		 * The normal at the point of intersection.
 		 */
-		Vector2 normal;
+		Vector2 normal{};
 
 		/**
 		 * ReportFixture is internally used by box2D to receive raycast callbacks.

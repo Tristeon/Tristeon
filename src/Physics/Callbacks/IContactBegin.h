@@ -14,6 +14,10 @@ namespace Tristeon
 	class IContactBegin
 	{
 	public:
+		virtual ~IContactBegin() = default;
+		/**
+		 * contactBegin is called on the first moment that a collision existed between two non-sensor colliders.
+		 */
 		virtual void contactBegin(Contact const& contact) = 0;
 	};
 }

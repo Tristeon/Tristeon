@@ -14,6 +14,11 @@ namespace Tristeon
 	class ISensorEnd
 	{
 	public:
+		virtual ~ISensorEnd() = default;
+		
+		/**
+		 * sensorEnd is called once a collision with a sensor and another collider has come to an end.
+		 */
 		virtual void sensorEnd(Contact const& contact) = 0;
 	};
 }

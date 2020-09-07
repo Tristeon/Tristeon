@@ -27,7 +27,7 @@ namespace Tristeon
 		glDeleteBuffers(1, &tbo);
 
 		for (auto const& pair: fixtures)
-			PhysicsWorld::instance()->staticBody->DestroyFixture(pair.second);
+			PhysicsWorld::instance()->_staticBody->DestroyFixture(pair.second);
 	}
 
 	json TileLayer::serialize()
@@ -283,7 +283,7 @@ namespace Tristeon
 				{
 					if (colliderExists)
 					{
-						PhysicsWorld::instance()->staticBody->DestroyFixture(fixtures[{ x, y }]);
+						PhysicsWorld::instance()->_staticBody->DestroyFixture(fixtures[{ x, y }]);
 						fixtures.erase(fixtures.find({ x, y }));
 					}
 					continue;
@@ -312,14 +312,14 @@ namespace Tristeon
 					def.friction = settings.friction;
 					def.restitution = settings.restitution;
 
-					auto fixture = PhysicsWorld::instance()->staticBody->CreateFixture(&def);
+					auto fixture = PhysicsWorld::instance()->_staticBody->CreateFixture(&def);
 					fixture->SetUserData(this);
 					fixtures[{x, y}] = fixture;
 				}
 				//A collider exists but the tile doesn't want a collider
 				else if (!settings.hasCollider && colliderExists)
 				{
-					PhysicsWorld::instance()->staticBody->DestroyFixture(fixtures[{ x, y }]);
+					PhysicsWorld::instance()->_staticBody->DestroyFixture(fixtures[{ x, y }]);
 					fixtures.erase(fixtures.find({ x, y }));
 				}
 			}

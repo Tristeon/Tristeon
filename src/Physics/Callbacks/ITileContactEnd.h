@@ -13,6 +13,9 @@ namespace Tristeon
 	class ITileContactEnd : public ICallback<ITileContactEnd>
 	{
 	public:
+		/**
+		 * contactEnd is called once a collision between a non-sensor collider and a tile has come to an end.
+		 */
 		virtual void tileContactEnd(TileContact const& contact) = 0;
 	};
 }

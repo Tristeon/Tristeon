@@ -24,8 +24,8 @@ namespace TristeonEditor
 		auto* sizeLayout = new QHBoxLayout(sizeWidget);
 		sizeLayout->setContentsMargins(0, 0, 0, 0);
 		sizeWidget->setLayout(sizeLayout);
-		QWidget* widthWidget = EditorFields::floatField(sizeWidget, box->width(), [=](float value) { box->width(value); });
-		QWidget* heightWidget = EditorFields::floatField(sizeWidget, box->height(), [=](float value) { box->height(value); });
+		QWidget* widthWidget = EditorFields::floatField(sizeWidget, box->width(), [=](float value) { box->setWidth(value); });
+		QWidget* heightWidget = EditorFields::floatField(sizeWidget, box->height(), [=](float value) { box->setHeight(value); });
 		sizeLayout->addWidget(widthWidget);
 		sizeLayout->addWidget(heightWidget);
 		form->addRow("Size", sizeWidget);
@@ -34,19 +34,19 @@ namespace TristeonEditor
 		auto* offsetLayout = new QHBoxLayout(offsetWidget);
 		offsetLayout->setContentsMargins(0, 0, 0, 0);
 		offsetWidget->setLayout(offsetLayout);
-		QWidget* offsetX = EditorFields::floatField(offsetWidget, box->offset().x, [=](float value) { box->offset({ value, box->offset().y }); });
-		QWidget* offsetY = EditorFields::floatField(offsetWidget, box->offset().y, [=](float value) { box->offset({ box->offset().x, value }); });
+		QWidget* offsetX = EditorFields::floatField(offsetWidget, box->offset().x, [=](float value) { box->setOffset({ value, box->offset().y }); });
+		QWidget* offsetY = EditorFields::floatField(offsetWidget, box->offset().y, [=](float value) { box->setOffset({ box->offset().x, value }); });
 		offsetLayout->addWidget(offsetX);
 		offsetLayout->addWidget(offsetY);
 		form->addRow("Offset", offsetWidget);
 
-		EditorFields::floatField(form, "Rotation offset", box->rotationOffset(), [=](float value) { box->rotationOffset(value); });
-		EditorFields::boolField(form, "Is Sensor", box->sensor(), [=](bool value) { box->sensor(value); });
+		EditorFields::floatField(form, "Rotation offset", box->rotationOffset(), [=](float value) { box->setRotationOffset(value); });
+		EditorFields::boolField(form, "Is Sensor", box->sensor(), [=](bool value) { box->setSensor(value); });
 
 		EditorFields::header(form, "Physics properties");
-		EditorFields::floatField(form, "Density", box->density(), [=](float value) { box->density(value); });
-		EditorFields::floatField(form, "Friction", box->friction(), [=](float value) { box->friction(value); });
-		EditorFields::floatField(form, "Restitution", box->restitution(), [=](float value) { box->restitution(value); });
+		EditorFields::floatField(form, "Density", box->density(), [=](float value) { box->setDensity(value); });
+		EditorFields::floatField(form, "Friction", box->friction(), [=](float value) { box->setFriction(value); });
+		EditorFields::floatField(form, "Restitution", box->restitution(), [=](float value) { box->setRestitution(value); });
 	}
 }
 #endif

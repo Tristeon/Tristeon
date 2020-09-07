@@ -30,14 +30,13 @@ namespace Tristeon
 		 */
 		PhysicsWorld();
 
-		//TODO: pixel to meter conversion should be configurable through project physics settings
 		/**
 		 * Converts pixel coordinates into box2D compatible meter coordinates.
 		 *
 		 * This is because box2D exclusively uses a MKS (meter, kilograms, seconds) system to define & calculate location, mass and time.
 		 * Passing normal pixel coordinates to box2d will make box2d interpret each pixel as a full meter, causing physics to be off.
 		 */
-		static float pixelsToMeters(uint32 const& pixels);
+		[[nodiscard]] static float pixelsToMeters(const uint32& pixels);
 
 		/**
 		 * Converts pixel coordinates into box2D compatible meter coordinates.
@@ -45,19 +44,19 @@ namespace Tristeon
 		 * This is because box2D exclusively uses a MKS (meter, kilograms, seconds) system to define & calculate location, mass and time.
 		 * Passing normal pixel coordinates to box2d will make box2d interpret each pixel as a full meter, causing physics to be off.
 		 */
-		static Vector2 pixelsToMeters(Vector2 const& pixels);
+		[[nodiscard]] static Vector2 pixelsToMeters(const Vector2& pixels);
 
 		/**
 		 * Converts box2D meters back to Tristeon pixels.
 		 * This is used to convert box2D's output back into Tristeon compatible coordinates.
 		 */
-		static uint32 metersToPixels(float const& meters);
+		[[nodiscard]] static uint32 metersToPixels(const float& meters);
 
 		/**
 		 * Converts box2D meters back to Tristeon pixels.
 		 * This is used to convert box2D's output back into Tristeon compatible coordinates.
 		 */
-		static Vector2 metersToPixels(Vector2 const& meters);
+		[[nodiscard]] static Vector2 metersToPixels(const Vector2& meters);
 
 		/**
 		 * Cast a ray from origin to origin + direction * distance. Stops at the first collider it finds and returns true there.
@@ -67,7 +66,7 @@ namespace Tristeon
 		 * \param direction The direction of the raycast, this value is expected to be normalized.
 		 * \param distance The length of the raycast in pixels.
 		 */
-		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance);
+		[[nodiscard]] static bool raycast(const Vector2& origin, const Vector2& direction, const float& distance);
 		/**
 		 * Cast a ray from origin to origin + direction * distance. Stops at the first collider it finds and returns true there.
 		 * If no collider was found along the ray then the function returns false.
@@ -77,19 +76,19 @@ namespace Tristeon
 		 * \param distance The length of the raycast in pixels.
 		 * \param result Empty if no collider was hit, otherwise it will contain info describing the raycast hit.
 		 */
-		static bool raycast(Vector2 const& origin, Vector2 const& direction, float const& distance, RaycastResult& result);
+		[[nodiscard]] static bool raycast(const Vector2& origin, const Vector2& direction, const float& distance, RaycastResult& result);
 	private:
 		void update();
-		void processCachedCallbacks();
 
-		int velocityIterations = 8;
-		int positionIterations = 3;
+		//TODO: Move velocity & position iterations to the project settings
+		int _velocityIterations = 8;
+		int _positionIterations = 3;
 		
-		Unique<b2World> world;
+		Unique<b2World> _world = nullptr;
 
-		Unique<b2Body, PhysicsBody::BodyDeleter> staticBody;
-		std::map<Collider*, b2Fixture*> fixtures;
+		Unique<b2Body, PhysicsBody::BodyDeleter> _staticBody = nullptr;
+		std::map<Collider*, b2Fixture*> _fixtures{};
 		
-		CollisionListener listener;
+		CollisionListener _listener{};
 	};
 }

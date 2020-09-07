@@ -13,6 +13,9 @@ namespace Tristeon
 	class ITileContactBegin : public ICallback<ITileContactBegin>
 	{
 	public:
+		/**
+		 * contactBegin is called on the first moment that a collision existed between a non-sensor collider and a tile.
+		 */
 		virtual void tileContactBegin(TileContact const& contact) = 0;
 	};
 }
