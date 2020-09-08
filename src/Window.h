@@ -7,16 +7,18 @@ namespace Tristeon
 {
 	struct Colour;
 	struct Vector2Int;
-	class Engine;
 
 	/**
 	 * Window handles window creation and system input.
 	 * It also contains useful information about screen and game sizes and screen to world (and back) transformations.
+	 *
+	 * While statically accessed, Window handles all functionality internally through virtual methods.
+	 * This is because the editor and non-editor build can contain different functionality.
 	 */
 	class Window : private Singleton<Window>
 	{
 		friend Singleton<Window>;
-		friend Engine;
+		friend class Engine;
 	public:
 		virtual ~Window() = default;
 		
@@ -24,56 +26,56 @@ namespace Tristeon
 		 * The width of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameWidth()
 		 */
-		static unsigned int width() { return instance()->_windowWidth(); }
+		[[nodiscard]] static unsigned int width() { return instance()->_windowWidth(); }
 
 		/**
 		 * The height of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameHeight()
 		 */
-		static unsigned int height() { return instance()->_windowHeight(); }
+		[[nodiscard]] static unsigned int height() { return instance()->_windowHeight(); }
 
 		/**
 		 * The size of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameSize()
 		 */
-		static Vector2Int size() { return { (int)width(), (int)height() }; }
+		[[nodiscard]] static Vector2Int size() { return { (int)width(), (int)height() }; }
 
 		/**
 		 * Returns the width of the game screen. This may not be the width of the entire Window.
 		 */
-		static unsigned int gameWidth() { return instance()->_gameWidth(); }
+		[[nodiscard]] static unsigned int gameWidth() { return instance()->_gameWidth(); }
 
 		/**
 		 * Returns the height of the game screen. This may not be the height of the entire Window.
 		 */
-		static unsigned int gameHeight() { return instance()->_gameHeight(); }
+		[[nodiscard]] static unsigned int gameHeight() { return instance()->_gameHeight(); }
 
 		/**
 		 * Returns the size of the game screen. This may not be the size of the entire Window.
 		 */
-		static Vector2Int gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
+		[[nodiscard]] static Vector2Int gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
 		
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		static Vector2 screenToWorld(Vector2Int const& screenPoint) { return instance()->_screenToWorld(screenPoint); }
+		[[nodiscard]] static Vector2 screenToWorld(const Vector2Int& screenPoint) { return instance()->_screenToWorld(screenPoint); }
 
 		/**
 		 * Converts a world coordinate into a screen point.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		static Vector2Int worldToScreen(Vector2 const& worldPoint) { return instance()->_worldToScreen(worldPoint); }
+		[[nodiscard]] static Vector2Int worldToScreen(const Vector2& worldPoint) { return instance()->_worldToScreen(worldPoint); }
 
 		/**
 		 * Returns true if the window is fullscreen, false if it's not
 		 */
-		static bool isFullscreen() { return instance()->_isFullscreen(); }
+		[[nodiscard]] static bool isFullscreen() { return instance()->_isFullscreen(); }
 
 		/**
 		 * Sets the window's fullscreen status.
 		 */
-		static void setFullscreen(bool const& value) { instance()->_setFullscreen(value); }
+		static void setFullscreen(const bool& value) { instance()->_setFullscreen(value); }
 
 		/**
 		 * Closes the window and the application.
@@ -83,12 +85,12 @@ namespace Tristeon
 		/**
 		 * Returns true if the window is about to close
 		 */
-		static bool closingDown() { return instance()->_closingDown(); }
+		[[nodiscard]] static bool closingDown() { return instance()->_closingDown(); }
 
 		/**
 		 * Sets the window title to the given value.
 		 */
-		static void setWindowTitle(std::string const& title) { instance()->_setWindowTitle(title); }
+		static void setWindowTitle(const String& title) { instance()->_setWindowTitle(title); }
 
 	protected:
 		/**
@@ -97,6 +99,8 @@ namespace Tristeon
 		static void pollEvents() { instance()->_pollEvents(); }
 		static void draw() { instance()->_draw(); }
 
+		//This set of functions are all implemented in inheriting Window implementations and are statically accessed through the functions above.
+#pragma region virtual functions
 		virtual void _pollEvents() = 0;
 		virtual void _draw() = 0;
 		
@@ -107,7 +111,7 @@ namespace Tristeon
 		virtual unsigned int _gameHeight() = 0;
 		
 		virtual bool _isFullscreen() = 0;
-		virtual void _setFullscreen(bool const& value) = 0;
+		virtual void _setFullscreen(const bool& value) = 0;
 
 		virtual void _close() = 0;
 
@@ -119,5 +123,6 @@ namespace Tristeon
 
 		virtual Vector2 _screenToWorld(Vector2Int const& screenPoint) = 0;
 		virtual Vector2Int _worldToScreen(Vector2 const& worldPoint) = 0;
+#pragma endregion
 	};
 }

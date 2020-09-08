@@ -10,6 +10,11 @@ namespace TristeonEditor
 
 namespace Tristeon
 {
+	/**
+	 * Project is the main interface for interacting with a project's settings, filepaths, etc.
+	 *
+	 * Some of these properties are also available through other class interfaces like Grid.
+	 */
 	class Project
 	{
 		friend class Engine;
@@ -21,57 +26,76 @@ namespace Tristeon
 #endif
 
 	public:
-		static String assetPath();
-		static String firstSceneName();
+		/**
+		 * The path to the project.
+		 */
+		[[nodiscard]] static String assetPath();
+		/**
+		 * The first scene to be loaded in build mode.
+		 */
+		[[nodiscard]] static String firstSceneName();
 		
 		class Graphics
 		{
 			friend Project;
 		public:
-			static unsigned int tileWidth();
-			static void setTileWidth(const unsigned int& value);
+			/**
+			 * The width of tiles in pixels.
+			 */
+			[[nodiscard]] static unsigned int tileWidth();
+			/**
+			 * The height of tiles in pixels.
+			 */
+			[[nodiscard]] static unsigned int tileHeight();
 
-			static unsigned int tileHeight();
-			static void setTileHeight(const unsigned int& value);
-
-			static bool vsync();
-			static void setVSync(const bool& value);
-
-			static bool tripleBuffering();
-			static void setTripleBuffering(const bool& value);
-
-			static bool fullscreen();
-			static void setFullscreen(const bool& value);
+			/**
+			 * If vertical sync is enabled.
+			 */
+			[[nodiscard]] static bool vsync();
+			/**
+			 * If triple buffering is enabled.
+			 */
+			[[nodiscard]] static bool tripleBuffering();
+			/**
+			 * If fullscreen is enabled in the build.
+			 */
+			[[nodiscard]] static bool fullscreen();
 
 		private:
-			unsigned int m_tileWidth = 64;
-			unsigned int m_tileHeight = 64;
+			unsigned int _tileWidth = 64;
+			unsigned int _tileHeight = 64;
 
-			bool m_vsync = false;
-			bool m_tripleBuffering = true;
+			bool _vsync = false;
+			bool _tripleBuffering = true;
 
-			bool m_fullscreen = true;
+			bool _fullScreen = true;
 		};
 
 		class Physics
 		{
 			friend Project;
 		public:
-			static float fixedDeltaTime();
-			static unsigned int pixelsPerMeter();
+			/**
+			 * The time between fixed frames.
+			 */
+			[[nodiscard]] static float fixedDeltaTime();
+			/**
+			 * The amount of pixels per meter.
+			 */
+			[[nodiscard]] static unsigned int pixelsPerMeter();
 
 		private:
-			float m_fixedDeltaTime = 1 / 50.0f * 1000.0f;
-			unsigned int m_pixelsPerMeter = 64;
+			float _fixedDeltaTime = 1 / 50.0f * 1000.0f;
+			unsigned int _pixelsPerMeter = 64;
 		};
 
 	private:
-		static Graphics m_graphics;
-		static Physics m_physics;
-		static String m_assetPath;
-		static String m_firstScene;
+		static Graphics _graphics;
+		static Physics _physics;
+		static String _assetPath;
+		static String _firstScene;
 
 		static void loadBuild();
-		static void load(String const& folder);
+		static void load(const String& folder);
 	};
 }

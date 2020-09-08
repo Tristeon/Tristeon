@@ -1,11 +1,8 @@
 #pragma once
-#include <memory>
-
-#include <Rendering/Renderer.h>
-#include <Physics/PhysicsWorld.h>
-
-#include <TypeDefinitions.h>
 #include <Utils/Singleton.h>
+#include "TypeDefinitions.h"
+#include "Physics/PhysicsWorld.h"
+#include "Rendering/Renderer.h"
 
 namespace Tristeon
 {
@@ -16,36 +13,35 @@ namespace Tristeon
 	class Engine final : private Singleton<Engine>
 	{
 		friend Singleton<Engine>;
+		friend class Actor;
+		friend class Behaviour;
 
-		friend Actor;
-		friend Behaviour;
-		
 	public:
-		Engine() = default;
-		Engine(Engine const& other) = delete;
-		void operator=(Engine const& other) = delete;
+		/**
+		 * Runs the engine, usually called by the main() function.
+		 */
 		void run();
 
 		/**
 		 * Enables or disables the play-mode, usually adjusted by the editor.
 		 */
-		static void playMode(bool const& enabled);
+		static void setPlayMode(const bool& enabled);
 
 		/**
 		 * Gets if the engine is in play-mode or not.
 		 */
-		static bool playMode();
+		[[nodiscard]] static bool playMode();
 		
 		static void destroyLater(Actor* actor);
 		static void destroyLater(Behaviour* behaviour);
 	private:
-		bool inPlayMode = false;
-		bool playModeDirty = false;
+		bool _playMode = false;
+		bool _playModeDirty = false;
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;
 
-		Vector<Actor*> destroyedActors{};
-		Vector<Behaviour*> destroyedBehaviours{};
+		Vector<Actor*> _destroyedActors{};
+		Vector<Behaviour*> _destroyedBehaviours{};
 
 		void processDestroyedObjects();
 	};

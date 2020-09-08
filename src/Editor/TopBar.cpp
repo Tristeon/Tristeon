@@ -43,7 +43,7 @@ namespace TristeonEditor
 				sceneBeforePlay = Tristeon::SceneManager::current()->serialize();
 				sceneBeforePlay["path"] = Tristeon::SceneManager::current()->path();
 			}
-			Tristeon::Engine::playMode(true);
+			Tristeon::Engine::setPlayMode(true);
 			pause->setChecked(false);
 			start->setChecked(true);
 		}
@@ -53,7 +53,7 @@ namespace TristeonEditor
 
 	void TopBar::stopGame()
 	{
-		Tristeon::Engine::playMode(false);
+		Tristeon::Engine::setPlayMode(false);
 		Tristeon::SceneManager::reload();
 
 		start->setChecked(false);
@@ -70,7 +70,7 @@ namespace TristeonEditor
 			return;
 		}
 
-		Tristeon::Engine::playMode(!pause->isChecked());
+		Tristeon::Engine::setPlayMode(!pause->isChecked());
 		if (!pause->isChecked())
 			GameView::instance()->setFocus();
 	}

@@ -63,12 +63,12 @@ namespace Tristeon
 				time = fmod(time, 1000.0f);
 			}
 
-			if (inPlayMode)
+			if (_playMode)
 			{
-				if (playModeDirty)
+				if (_playModeDirty)
 				{
 					for (auto* start : Collector<IStart>::all()) start->start();
-					playModeDirty = false;
+					_playModeDirty = false;
 					processDestroyedObjects();
 				}
 				
@@ -104,32 +104,32 @@ namespace Tristeon
 		}
 	}
 
-	void Engine::playMode(bool const& enabled)
+	void Engine::setPlayMode(const bool& enabled)
 	{
-		instance()->inPlayMode = enabled;
-		instance()->playModeDirty = true;
+		instance()->_playMode = enabled;
+		instance()->_playModeDirty = true;
 	}
 
 	bool Engine::playMode()
 	{
-		return instance()->inPlayMode;
+		return instance()->_playMode;
 	}
 
 	void Engine::destroyLater(Actor* actor)
 	{
-		instance()->destroyedActors.add(actor);
+		instance()->_destroyedActors.add(actor);
 	}
 
 	void Engine::destroyLater(Behaviour* behaviour)
 	{
-		instance()->destroyedBehaviours.add(behaviour);
+		instance()->_destroyedBehaviours.add(behaviour);
 	}
 
 	void Engine::processDestroyedObjects()
 	{
-		for (auto const& behaviour : destroyedBehaviours) behaviour->actor()->removeBehaviour(behaviour);
-		destroyedBehaviours.clear();
-		for (auto const& actor : destroyedActors) SceneManager::destroyActor(actor);
-		destroyedActors.clear();
+		for (auto const& behaviour : _destroyedBehaviours) behaviour->actor()->removeBehaviour(behaviour);
+		_destroyedBehaviours.clear();
+		for (auto const& actor : _destroyedActors) SceneManager::destroyActor(actor);
+		_destroyedActors.clear();
 	}
 }
