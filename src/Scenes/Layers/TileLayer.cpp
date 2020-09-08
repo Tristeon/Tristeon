@@ -18,15 +18,14 @@ namespace Tristeon
 {
 	TileLayer::TileLayer()
 	{
-		shader = std::make_unique<Shader>("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
-		tiles = Unique<Tile[]>(new Tile[1]{ Tile { -1, -1 } });
+		_tiles = Unique<Tile[]>(new Tile[1]{ Tile { -1, -1 } });
 	}
 
 	TileLayer::~TileLayer()
 	{
-		glDeleteBuffers(1, &tbo);
+		glDeleteBuffers(1, &_tbo);
 
-		for (auto const& pair: fixtures)
+		for (auto const& pair: _fixtures)
 			PhysicsWorld::instance()->_staticBody->DestroyFixture(pair.second);
 	}
 
@@ -38,14 +37,14 @@ namespace Tristeon
 		j["height"] = _height;
 
 		json sets = json::array();
-		for (auto* tileset : tilesets)
+		for (auto* tileset : _tileSets)
 			sets.push_back(tileset->filePath);
 		j["tileSets"] = sets;
 
 		std::string tilesSerialized;
 		for (unsigned int i = 0; i < _width * _height; i++)
 		{
-			tilesSerialized += std::to_string(tiles[i].index) + "," + std::to_string(tiles[i].tileSetID);
+			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tileSetID);
 			if (i < _width * _height - 1)
 				tilesSerialized += ",";
 		}
@@ -60,7 +59,7 @@ namespace Tristeon
 		_width = j.value("width", 1);
 		_height = j.value("height", 1);
 
-		tilesets.clear();
+		_tileSets.clear();
 		if (j.contains("tileSets"))
 		{
 			for (auto& i : j["tileSets"])
@@ -69,11 +68,11 @@ namespace Tristeon
 				if (tileset == nullptr)
 					continue;
 				tileset->filePath = i.get<String>();
-				tilesets.add(tileset);
+				_tileSets.add(tileset);
 			}
 		}
 		
-		tiles = std::make_unique<Tile[]>(_width * _height);
+		_tiles = std::make_unique<Tile[]>(_width * _height);
 		const String tilesSerialized = j.value("tileData", "");
 		const Vector<String> tileArray = StringHelper::split(tilesSerialized, ',');
 
@@ -81,19 +80,19 @@ namespace Tristeon
 
 		for (unsigned int i = 0; i < tileArray.size(); i += 2)
 		{
-			tiles[i / 2] = Tile{ std::stoi(tileArray[i]), std::stoi(tileArray[i + 1]) };
+			_tiles[i / 2] = Tile{ std::stoi(tileArray[i]), std::stoi(tileArray[i + 1]) };
 		}
 		
 		if (j.contains("tiles"))
 		{
 			for (unsigned int i = 0; i < _width * _height && i < j["tiles"].size(); i++)
-				tiles[i] = j["tiles"].at(i);
+				_tiles[i] = j["tiles"].at(i);
 		}
 		createTBO();
 		createColliders();
 	}
 
-	void TileLayer::setTileByIndex(int const& ix, int const& iy, Tile const& value)
+	void TileLayer::setTileByIndex(const int& ix, const int& iy, const Tile& value)
 	{
 		if (ix < 0 || iy < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
@@ -101,27 +100,27 @@ namespace Tristeon
 		if (ix * iy > _width * _height || ix > _width || iy > _height)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		tiles[iy * (int)_width + ix] = value;
-		isDirty = true;
+		_tiles[iy * (int)_width + ix] = value;
+		_isDirty = true;
 	}
 
-	void TileLayer::setTileByIndex(Vector2Int const& index, Tile const& value)
+	void TileLayer::setTileByIndex(const Vector2Int& index, const Tile& value)
 	{
 		setTileByIndex(index.x, index.y, value);
 	}
 
-	void TileLayer::setTileByPosition(Vector2 const& position, Tile const& value)
+	void TileLayer::setTileByPosition(const Vector2& position, const Tile& value)
 	{
 		setTileByPosition(position.x, position.y, value);
 	}
 
-	void TileLayer::setTileByPosition(float const& wx, float const& wy, Tile const& value)
+	void TileLayer::setTileByPosition(const float& wx, const float& wy, const Tile& value)
 	{
 		Vector2Int const index = Grid::indexByPosition(wx, wy);
 		setTileByIndex(index.x, index.y, value);
 	}
 
-	Tile TileLayer::tileByIndex(int const& ix, int const& iy) const
+	Tile TileLayer::tileByIndex(const int& ix, const int& iy) const
 	{
 		if (ix < 0 || iy < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
@@ -129,28 +128,28 @@ namespace Tristeon
 		if (ix * iy > _width * _height || ix > _width || iy > _height)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		return tiles[iy * (int)_width + ix];
+		return _tiles[iy * (int)_width + ix];
 	}
 
-	Tile TileLayer::tileByIndex(Vector2Int const& index) const
+	Tile TileLayer::tileByIndex(const Vector2Int& index) const
 	{
 		return tileByIndex(index.x, index.y);
 	}
 
-	Tile TileLayer::tileByPosition(Vector2 const& position) const
+	Tile TileLayer::tileByPosition(const Vector2& position) const
 	{
 		return tileByPosition(position.x, position.y);
 	}
 
-	Tile TileLayer::tileByPosition(float const& wx, float const& wy) const
+	Tile TileLayer::tileByPosition(const float& wx, const float& wy) const
 	{
 		Vector2Int const index = Grid::indexByPosition(wx, wy);
 		return tileByIndex(index);
 	}
 
-	TileSet* TileLayer::tileset(int const& id)
+	TileSet* TileLayer::tileset(const int& id)
 	{
-		for (TileSet* tileset : tilesets)
+		for (TileSet* tileset : _tileSets)
 		{
 			if (tileset->id == id)
 				return tileset;
@@ -163,16 +162,16 @@ namespace Tristeon
 		if (tileset == nullptr)
 			return;
 		
-		for (auto* t : tilesets)
+		for (auto* t : _tileSets)
 		{
 			if (t->id == tileset->id)
 				return;
 		}
 
-		tilesets.add(tileset);
+		_tileSets.add(tileset);
 	}
 
-	bool TileLayer::checkBoundsByIndex(Vector2Int const& index) const
+	bool TileLayer::checkBoundsByIndex(const Vector2Int& index) const
 	{
 		if (index.x < 0 || index.y < 0)
 			return false;
@@ -183,7 +182,7 @@ namespace Tristeon
 		return true;
 	}
 
-	bool TileLayer::checkBoundsByPosition(Vector2 const& position) const
+	bool TileLayer::checkBoundsByPosition(const Vector2& position) const
 	{
 		if (position.x < 0 || position.y < 0)
 			return false;
@@ -196,55 +195,57 @@ namespace Tristeon
 
 	void TileLayer::render(Renderer * renderer, Scene * scene)
 	{
-		if (tbo == 0 || tbo_tex == 0)
+		static Shader shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
+		
+		if (_tbo == 0 || _tboTex == 0)
 			return;
 
-		if (!shader->ready())
+		if (!shader.ready())
 			return;
 		
-		shader->bind();
+		shader.bind();
 
-		if (isDirty)
+		if (_isDirty)
 		{
 			createTBO();
 			createColliders();
-			isDirty = false;
+			_isDirty = false;
 		}
 		
 		//Shader
 		//Bind level data
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_BUFFER, tbo_tex);
-		glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, tbo);
+		glBindTexture(GL_TEXTURE_BUFFER, _tboTex);
+		glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, _tbo);
 
-		shader->setUniformValue("level.data", 1);
+		shader.setUniformValue("level.data", 1);
 
-		shader->setUniformValue("level.width", _width);
-		shader->setUniformValue("level.height", _height);
+		shader.setUniformValue("level.width", _width);
+		shader.setUniformValue("level.height", _height);
 
-		shader->setUniformValue("level.tileRenderWidth", Grid::tileWidth());
-		shader->setUniformValue("level.tileRenderHeight", Grid::tileHeight());
+		shader.setUniformValue("level.tileRenderWidth", Grid::tileWidth());
+		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
 		glActiveTexture(GL_TEXTURE0);
-		for (TileSet* tileSet : tilesets)
+		for (TileSet* tileSet : _tileSets)
 		{
 			tileSet->texture->bind();
 
 			//Upload texture & tileset info
-			shader->setUniformValue("tileSet.texture", 0);
+			shader.setUniformValue("tileSet.texture", 0);
 
-			shader->setUniformValue("tileSet.cols", tileSet->cols);
-			shader->setUniformValue("tileSet.rows", tileSet->rows);
+			shader.setUniformValue("tileSet.cols", tileSet->cols);
+			shader.setUniformValue("tileSet.rows", tileSet->rows);
 
-			shader->setUniformValue("tileSet.id", tileSet->id);
+			shader.setUniformValue("tileSet.id", tileSet->id);
 
 			//Spacing
-			shader->setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
-			shader->setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
-			shader->setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
-			shader->setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
-			shader->setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
-			shader->setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
+			shader.setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
+			shader.setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
+			shader.setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
+			shader.setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
+			shader.setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
+			shader.setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
 
 			//Draw
 			glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -255,41 +256,41 @@ namespace Tristeon
 	{
 		//TODO: Updating TBO could be optimized by updating data as opposed to recreating the TBO
 		//TODO: Updating TBO could be optimized by using glBufferSubData()
-		if (tbo != 0)
-			glDeleteBuffers(1, &tbo);
-		if (tbo_tex != 0)
-			glDeleteTextures(1, &tbo_tex);
-		tbo = 0;
-		tbo_tex = 0;
+		if (_tbo != 0)
+			glDeleteBuffers(1, &_tbo);
+		if (_tboTex != 0)
+			glDeleteTextures(1, &_tboTex);
+		_tbo = 0;
+		_tboTex = 0;
 
-		glGenBuffers(1, &tbo);
-		glBindBuffer(GL_TEXTURE_BUFFER, tbo);
-		glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _width * _height, tiles.get(), GL_STATIC_DRAW);
+		glGenBuffers(1, &_tbo);
+		glBindBuffer(GL_TEXTURE_BUFFER, _tbo);
+		glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _width * _height, _tiles.get(), GL_STATIC_DRAW);
 
-		glGenTextures(1, &tbo_tex);
+		glGenTextures(1, &_tboTex);
 		glBindBuffer(GL_TEXTURE_BUFFER, 0);
 	}
 
 	void TileLayer::createColliders()
 	{
-		for (int x = 0; x < _width; x++)
+		for (auto x = 0; x < _width; x++)
 		{
-			for (int y = 0; y < _height; y++)
+			for (auto y = 0; y < _height; y++)
 			{
-				bool const colliderExists = fixtures.find(Vector2Int{ x, y }) != fixtures.end();
+				bool const colliderExists = _fixtures.find(Vector2Int{ x, y }) != _fixtures.end();
 
 				int const index = y * _width + x;
-				if (tiles[index].index == -1)
+				if (_tiles[index].index == -1)
 				{
 					if (colliderExists)
 					{
-						PhysicsWorld::instance()->_staticBody->DestroyFixture(fixtures[{ x, y }]);
-						fixtures.erase(fixtures.find({ x, y }));
+						PhysicsWorld::instance()->_staticBody->DestroyFixture(_fixtures[{ x, y }]);
+						_fixtures.erase(_fixtures.find({ x, y }));
 					}
 					continue;
 				}
 
-				Tile const tile = tiles[index];
+				Tile const tile = _tiles[index];
 				TileSet* set = tileset(tile.tileSetID);
 				if (set == nullptr)
 					continue;
@@ -314,13 +315,13 @@ namespace Tristeon
 
 					auto fixture = PhysicsWorld::instance()->_staticBody->CreateFixture(&def);
 					fixture->SetUserData(this);
-					fixtures[{x, y}] = fixture;
+					_fixtures[{x, y}] = fixture;
 				}
 				//A collider exists but the tile doesn't want a collider
 				else if (!settings.hasCollider && colliderExists)
 				{
-					PhysicsWorld::instance()->_staticBody->DestroyFixture(fixtures[{ x, y }]);
-					fixtures.erase(fixtures.find({ x, y }));
+					PhysicsWorld::instance()->_staticBody->DestroyFixture(_fixtures[{ x, y }]);
+					_fixtures.erase(_fixtures.find({ x, y }));
 				}
 			}
 		}

@@ -1,11 +1,9 @@
 #pragma once
 #include "Serialization/InstancedSerializable.h"
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
-	class Renderer;
-	class Scene;
-
 	/**
 	 * Layers are core to the way Scenes are defined.
 	 * The Scene has a list of layers, each layer is rendered and updated in the order of said list.
@@ -13,10 +11,14 @@ namespace Tristeon
 	 */
 	class Layer : public InstancedSerializable
 	{
-		friend Renderer;
-		friend Scene;
+		friend class Renderer;
+		friend class Scene;
 	public:
-		virtual ~Layer() = default;
+		Layer() = default;
+		virtual ~Layer() noexcept = default;
+
+		DELETE_COPY(Layer);
+		DEFAULT_MOVE(Layer);
 		
 		json serialize() override;
 		void deserialize(json j) override;
@@ -25,7 +27,7 @@ namespace Tristeon
 		 * The name of the layer.
 		 * The name can be used to identify and lookup any layer using Scene::getLayer(string)
 		 */
-		std::string name = "";
+		String name = "";
 
 	protected:
 		/**

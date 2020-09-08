@@ -4,7 +4,6 @@
 #include "Callbacks/IPreDestroy.h"
 #include "Collectors/InstanceCollector.h"
 #include "Scenes/SceneManager.h"
-#include <Scenes/Layers/ActorLayer.h>
 
 #include "Scenes/Scene.h"
 #include "Serialization/TypeRegister.h"
@@ -143,7 +142,7 @@ namespace Tristeon
 		Engine::destroyLater(this);
 	}
 
-	Actor* Actor::find(String const& name)
+	Actor* Actor::find(const String& name)
 	{
 		auto actors = Collector<Actor>::all();
 		for (auto actor : actors)

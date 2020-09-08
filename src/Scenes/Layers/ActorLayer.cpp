@@ -6,7 +6,6 @@
 #include <Scenes/Scene.h>
 
 #include <Actors/Sprite.h>
-
 #include <Callbacks/IPreDestroy.h>
 
 namespace Tristeon
@@ -16,7 +15,7 @@ namespace Tristeon
 		for (auto const& actor : findAllActorsOfType<IPreDestroy>())
 			actor->preDestroy();
 
-		for (auto const& actor : actors)
+		for (auto const& actor : _actors)
 			actor->_destroyed = true;
 	}
 
@@ -26,7 +25,7 @@ namespace Tristeon
 		j["typeID"] = TRISTEON_TYPENAME(ActorLayer);
 
 		json serializedActors = json::array_t();
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 			serializedActors.push_back(actor->serialize());
 		j["actors"] = serializedActors;
 
@@ -37,7 +36,13 @@ namespace Tristeon
 	{
 		Layer::deserialize(j);
 
-		actors.clear();
+		for (const auto& a : _actors)
+		{
+			if (dynamic_cast<IPreDestroy*>(a.get()))
+				dynamic_cast<IPreDestroy*>(a.get())->preDestroy();
+			a->_destroyed = true;
+		}
+		_actors.clear();
 
 		for (auto serializedActor : j["actors"])
 		{
@@ -46,26 +51,26 @@ namespace Tristeon
 			if (serializable == nullptr)
 				continue;
 			serializable->deserialize(serializedActor);
-			actors.add(Unique<Actor>((Actor*)serializable.release()));
+			_actors.add(Unique<Actor>((Actor*)serializable.release()));
 		}
 	}
 
-	Actor* ActorLayer::getActor(unsigned int const& index) const
+	Actor* ActorLayer::actorAt(const unsigned int& index) const
 	{
-		if (index < 0 || index > actors.size())
+		if (index < 0 || index > _actors.size())
 			throw std::invalid_argument("Index in ActorLayer::getActor() must be 0 or higher, and lower than getActorSize()");
 
-		return actors[index].get();
+		return _actors[index].get();
 	}
 
-	unsigned ActorLayer::getActorCount() const
+	unsigned ActorLayer::actorCount() const
 	{
-		return actors.size();
+		return _actors.size();
 	}
 
-	Actor* ActorLayer::findActor(std::string const& name) const
+	Actor* ActorLayer::findActor(const String& name) const
 	{
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 		{
 			if (actor->name == name)
 				return actor.get();
@@ -74,14 +79,14 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	Actor* ActorLayer::createActor(String const& type)
+	Actor* ActorLayer::createActor(const String& type)
 	{
-		Unique<Serializable> serializable = TypeRegister::createInstance(type);
+		auto serializable = TypeRegister::createInstance(type);
 		auto* actor = dynamic_cast<Actor*>(serializable.get());
 		if (actor != nullptr)
 		{
-			actor = (Actor*)serializable.release();
-			actors.add(std::unique_ptr<Actor>(actor));
+			actor = dynamic_cast<Actor*>(serializable.release());
+			_actors.add(std::unique_ptr<Actor>(actor));
 			return actor;
 		}
 		return nullptr;
@@ -90,13 +95,13 @@ namespace Tristeon
 	void ActorLayer::render(Renderer * renderer, Scene * scene)
 	{
 		//Render each graphic
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 		{
 			auto* graphic = dynamic_cast<Graphic*>(actor.get());
 			if (graphic == nullptr || !graphic->display)
 				continue;
-			
-			Shader * shader = graphic->getShader();
+
+			auto* shader = graphic->getShader();
 			shader->bind();
 			graphic->render();
 		}
@@ -104,16 +109,16 @@ namespace Tristeon
 
 	void ActorLayer::destroyActor(Actor * actor)
 	{
-		for (size_t i = 0; i < actors.size(); i++)
+		for (size_t i = 0; i < _actors.size(); i++)
 		{
-			if (actors[i].get() == actor)
+			if (_actors[i].get() == actor)
 			{
-				auto* pre = dynamic_cast<IPreDestroy*>(actors[i].get());
+				auto* pre = dynamic_cast<IPreDestroy*>(_actors[i].get());
 				if (pre != nullptr)
 					pre->preDestroy();
 
-				actors[i].reset();
-				actors.removeAt(i);
+				_actors[i].reset();
+				_actors.removeAt(i);
 				break;
 			}
 		}

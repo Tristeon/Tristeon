@@ -73,7 +73,7 @@ namespace Tristeon
 			//Render each layer
 			for (unsigned int i = 0; i < scene->getLayerCount(); i++)
 			{
-				Layer* layer = scene->getLayer(i);
+				Layer* layer = scene->layerAt(i);
 				layer->render(this, scene);
 			}
 

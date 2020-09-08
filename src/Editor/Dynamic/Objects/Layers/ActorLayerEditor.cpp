@@ -21,9 +21,9 @@ namespace TristeonEditor
 		connect(list, &QListWidget::currentRowChanged, this, &ActorLayerEditor::selectedActorChanged);
 		connect(list, &QListWidget::itemChanged, this, &ActorLayerEditor::actorRenamed);
 		connect(list, &QListWidget::itemClicked, this, [=](QListWidgetItem * item) { Editor::instance()->selectedActor(actors[item]); });
-		for (size_t i = 0; i < targetLayer->getActorCount(); i++)
+		for (size_t i = 0; i < targetLayer->actorCount(); i++)
 		{
-			Tristeon::Actor* actor = targetLayer->getActor(i);
+			Tristeon::Actor* actor = targetLayer->actorAt(i);
 			auto* item = new QListWidgetItem(QString::fromStdString(actor->name));
 			item->setFlags(item->flags() | Qt::ItemIsEditable);
 			list->addItem(item);

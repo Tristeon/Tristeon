@@ -12,36 +12,36 @@
 
 namespace Tristeon
 {
-	std::unique_ptr<Scene> SceneManager::currentScene = nullptr;
+	std::unique_ptr<Scene> SceneManager::_current = nullptr;
 	Delegate<Scene*> SceneManager::sceneLoaded;
-	String SceneManager::cachedSceneName;
-	json SceneManager::cachedSceneData;
+	String SceneManager::_cachedName;
+	json SceneManager::_cachedData;
 
 	Scene* SceneManager::current()
 	{
-		return currentScene.get();
+		return _current.get();
 	}
 
-	void SceneManager::load(String const name)
+	void SceneManager::load(const String& name)
 	{
-		cachedSceneName = name;
+		_cachedName = name;
 	}
 
-	void SceneManager::load(json const data, const String& path)
+	void SceneManager::load(const json& data, const String& path)
 	{
-		cachedSceneData = data;
-		cachedSceneData["path"] = path;
+		_cachedData = data;
+		_cachedData["path"] = path;
 	}
 
 	void SceneManager::reload()
 	{
-		if (currentScene == nullptr)
+		if (_current == nullptr)
 			return;
 
-		load(currentScene->name);
+		load(_current->_name);
 	}
 
-	void SceneManager::save(Scene* scene, String const& filepath)
+	void SceneManager::save(Scene* scene, const String& filepath)
 	{
 		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
@@ -57,12 +57,12 @@ namespace Tristeon
 		if (current() == nullptr)
 			return;
 
-		if (current()->getPath().empty())
+		if (current()->path().empty())
 		{
 			std::cout << "Current scene doesn't have a path therefore it can't be saved automatically. Use save(current(), filePath) instead" << std::endl;
 			return;
 		}
-		save(current(), current()->getPath());
+		save(current(), current()->path());
 	}
 
 	void SceneManager::destroyActor(Actor* actor)
@@ -77,20 +77,20 @@ namespace Tristeon
 		json toLoad;
 		String path;
 		
-		if (!cachedSceneData.empty())
+		if (!_cachedData.empty())
 		{
-			toLoad = cachedSceneData;
-			path = cachedSceneData.value("path", "");
+			toLoad = _cachedData;
+			path = _cachedData.value("path", "");
 		}
-		else if (!cachedSceneName.empty())
+		else if (!_cachedName.empty())
 		{
-			path = AssetDatabase::findByName(cachedSceneName, ".scene");
+			path = AssetDatabase::findByName(_cachedName, ".scene");
 			if (path.empty())
 			{
-				std::cout << "Couldn't find scene: " << cachedSceneName << std::endl;
-				currentScene.reset();
-				currentScene = std::make_unique<Scene>(); // load empty scene
-				sceneLoaded.invoke(currentScene.get());
+				std::cout << "Couldn't find scene: " << _cachedName << std::endl;
+				_current.reset();
+				_current = std::make_unique<Scene>(); // load empty scene
+				sceneLoaded.invoke(_current.get());
 				return;
 			}
 			toLoad = JsonSerializer::load(Project::assetPath() + path);
@@ -100,22 +100,22 @@ namespace Tristeon
 			return;
 		}
 
-		currentScene = std::make_unique<Scene>();
-		currentScene->deserialize(toLoad);
-		currentScene->name = cachedSceneName;
-		currentScene->path = path;
+		_current = std::make_unique<Scene>();
+		_current->deserialize(toLoad);
+		_current->_name = _cachedName;
+		_current->_path = path;
 
 		if (Engine::playMode())
 			for (auto* start : Collector<IStart>::all()) start->start();
 
-		sceneLoaded.invoke(currentScene.get());
+		sceneLoaded.invoke(_current.get());
 
-		cachedSceneName = "";
-		cachedSceneData = json();
+		_cachedName = "";
+		_cachedData = json();
 	}
 
 	void SceneManager::reset()
 	{
-		currentScene.reset();
+		_current.reset();
 	}
 }

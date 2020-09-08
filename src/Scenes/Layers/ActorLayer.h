@@ -1,15 +1,11 @@
 #pragma once
 #include "Layer.h"
 #include <Serialization/TypeRegister.h>
-
-#include <vector>
-
 #include "Actors/Actor.h"
 
 namespace Tristeon
 {
 	class Shader;
-	class SceneManager;
 
 	/**
 	 * The actor layer contains a list of actors.
@@ -19,9 +15,13 @@ namespace Tristeon
 	 */
 	class ActorLayer : public Layer
 	{
-		friend SceneManager;
+		friend class SceneManager;
 	public:
+		ActorLayer() = default;
 		virtual ~ActorLayer();
+
+		DELETE_COPY(ActorLayer);
+		DEFAULT_MOVE(ActorLayer);
 		
 		json serialize() override;
 		void deserialize(json j) override;
@@ -31,19 +31,19 @@ namespace Tristeon
 		 *
 		 * \exception invalid_argument Throws if the index is less than 0 or more than getActorCount()
 		 */
-		Actor* getActor(unsigned int const& index) const;
+		[[nodiscard]] Actor* actorAt(const unsigned int& index) const;
 
 		/**
 		 * Returns the amount of actors in this layer
 		 */
-		unsigned int getActorCount() const;
+		[[nodiscard]] unsigned int actorCount() const;
 
 		/**
 		 * Finds the first actor with the given name within this layer.
 		 *
 		 * Returns nullptr if no actor was found.
 		 */
-		Actor* findActor(std::string const& name) const;
+		[[nodiscard]] Actor* findActor(std::string const& name) const;
 
 		/**
 		 * Finds the first actor of the given type within this layer.
@@ -51,7 +51,7 @@ namespace Tristeon
 		 * Returns nullptr if no actor was found.
 		 */
 		template<typename T>
-		T* findActorOfType() const;
+		[[nodiscard]] T* findActorOfType() const;
 
 		/**
 		 * Finds the first actor of the given type and name within this layer.
@@ -59,7 +59,7 @@ namespace Tristeon
 		 * Returns nullptr if no actor was found.
 		 */
 		template<typename T>
-		T* findActorOfType(String const& name) const;
+		[[nodiscard]] T* findActorOfType(const String& name) const;
 
 		/**
 		 * Returns a vector of all the actors of the given type within this layer.
@@ -69,20 +69,20 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
-		Vector<T*> findAllActorsOfType() const;
+		[[nodiscard]] Vector<T*> findAllActorsOfType() const;
 
 		/**
 		 * Creates and returns a new actor of type T.
 		 */
 		template<typename T>
-		T* createActor();
+		[[nodiscard]] T* createActor();
 
 		/**
 		 * Creates and returns a new Actor of the given type.
 		 *
 		 * Can return nullptr if no such type was registered.
 		 */
-		Actor* createActor(String const& type);
+		[[nodiscard]] Actor* createActor(const String& type);
 	protected:
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
@@ -95,7 +95,7 @@ namespace Tristeon
 		 */
 		void destroyActor(Actor* actor);
 	private:
-		Vector<Unique<Actor>> actors;
+		Vector<Unique<Actor>> _actors{};
 	};
 
 	REGISTER_TYPE(ActorLayer);
@@ -103,10 +103,10 @@ namespace Tristeon
 	template <typename T>
 	T* ActorLayer::findActorOfType() const
 	{
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 		{
 			if (dynamic_cast<T*>(actor.get()) != nullptr)
-				return (T*)actor.get();
+				return dynamic_cast<T*>(actor.get());
 		}
 		return nullptr;
 	}
@@ -114,10 +114,10 @@ namespace Tristeon
 	template <typename T>
 	T* ActorLayer::findActorOfType(String const& name) const
 	{
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 		{
 			if (actor->name == name && dynamic_cast<T*>(actor.get()) != nullptr)
-				return (T*)actor.get();
+				return dynamic_cast<T*>(actor.get());
 		}
 		return nullptr;
 	}
@@ -127,10 +127,10 @@ namespace Tristeon
 	{
 		Vector<T*> result;
 
-		for (auto& actor : actors)
+		for (auto& actor : _actors)
 		{
 			if (dynamic_cast<T*>(actor.get()) != nullptr)
-				result.add((T*)actor.get());
+				result.add(dynamic_cast<T*>(actor.get()));
 		}
 		return result;
 	}
@@ -142,7 +142,7 @@ namespace Tristeon
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Actor!");
 		
 		T* actor = new T();
-		actors.add(std::unique_ptr<T>(actor));
+		_actors.add(std::unique_ptr<T>(actor));
 		return actor;
 	}
 }

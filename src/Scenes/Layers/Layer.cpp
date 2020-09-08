@@ -12,7 +12,6 @@ namespace Tristeon
 	void Layer::deserialize(json j)
 	{
 		Serializable::deserialize(j);
-		
 		name = j.value("name", "");
 	}
 }

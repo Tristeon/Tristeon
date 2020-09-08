@@ -14,7 +14,7 @@ namespace TristeonEditor
 		//Setup scene load callback
 		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
 		{
-			Tristeon::Window::setWindowTitle("Tristeon2D | " + scene->getName());
+			Tristeon::Window::setWindowTitle("Tristeon2D | " + scene->name());
 			selectedLayer(nullptr);
 
 			for (auto* window : windows)

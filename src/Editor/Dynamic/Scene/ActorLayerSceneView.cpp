@@ -133,9 +133,9 @@ namespace TristeonEditor
 	void ActorLayerSceneView::clickActor()
 	{
 		Vector2 const world = Window::screenToWorld(Mouse::position());
-		for (size_t i = 0; i < actorLayer->getActorCount(); i++)
+		for (size_t i = 0; i < actorLayer->actorCount(); i++)
 		{
-			auto* graphic = dynamic_cast<Graphic*>(actorLayer->getActor(i));
+			auto* graphic = dynamic_cast<Graphic*>(actorLayer->actorAt(i));
 
 			if (graphic != nullptr)
 			{

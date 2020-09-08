@@ -3,9 +3,19 @@
 
 namespace Tristeon
 {
+	/**
+	 * Describes a TileLayer tile.
+	 * Instances of this struct can be obtained through the TileLayer.
+	 */
 	struct Tile
 	{
+		/**
+		 * The tile's index on its TileSet.
+		 */
 		int index = -1;
+		/**
+		 * The tile's TileSet.
+		 */
 		int tileSetID = -1;
 	};
 

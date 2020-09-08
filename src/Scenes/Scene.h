@@ -5,12 +5,6 @@
 
 namespace Tristeon
 {
-	class SceneManager;
-	class Engine;
-	
-	template<typename T>
-	using IsLayer = std::enable_if_t<std::is_base_of<Layer, T>::value, T>;
-	
 	/**
 	 * Scene is a class that describes the current 'scene' or 'level' within the game.
 	 * Its core design revolves around layers, which are each constructed of their own set of data,
@@ -21,8 +15,8 @@ namespace Tristeon
 	 */
 	class Scene final : public Serializable
 	{
-		friend Engine;
-		friend SceneManager;
+		friend class Engine;
+		friend class SceneManager;
 
 	public:
 		/**
@@ -30,6 +24,9 @@ namespace Tristeon
 		 */
 		Scene() = default;
 		~Scene() = default;
+
+		DELETE_COPY(Scene);
+		DEFAULT_MOVE(Scene);
 
 		json serialize() override;
 		void deserialize(json j) override;
@@ -39,26 +36,26 @@ namespace Tristeon
 		 *
 		 * \exception invalid_argument Throws if the index is less than 0 or more than getLayerCount()
 		 */
-		Layer* getLayer(unsigned int const& index) const;
+		[[nodiscard]] Layer* layerAt(const unsigned int& index) const;
 
 		/**
 		 * Finds a layer using the given name.
 		 * Returns nullptr if no layer is found.
 		 */
-		Layer* findLayer(std::string const& name) const;
+		[[nodiscard]] Layer* findLayer(const String& name) const;
 
 		/**
 		 * Adds a new layer of the given type and returns it.
 		 */
 		template<typename T>
-		T* addLayer();
+		[[nodiscard]] T* addLayer();
 
 		/**
 		 * Adds a new layer of the given type and returns it.
 		 *
 		 * Can return nullptr if no such type was registered.
 		 */
-		Layer* addLayer(String const& type);
+		[[nodiscard]] Layer* addLayer(const String& type);
 		
 		/**
 		 * Finds the first layer of the given type.
@@ -67,7 +64,7 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Layer.
 		 */
 		template<typename T>
-		IsLayer<T>* findLayerOfType();
+		[[nodiscard]] T* findLayerOfType();
 
 		/**
 		 * Finds the first layer of the given type and name.
@@ -76,7 +73,7 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Layer.
 		 */
 		template<typename T>
-		IsLayer<T>* findLayerOfType(String const& name) const;
+		[[nodiscard]] T* findLayerOfType(const String& name) const;
 
 		/**
 		 * Returns a vector with all the layers of the given type.
@@ -85,16 +82,18 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Layer.
 		 */
 		template<typename T>
-		Vector<IsLayer<T>*> findLayersOfType();
+		[[nodiscard]] Vector<T*> findLayersOfType();
 
 		/**
 		 * Returns the amount of layers this scene contains.
 		 */
-		unsigned int getLayerCount() const;
+		[[nodiscard]] unsigned int getLayerCount() const;
 
 		/**
 		 * Removes the layer from the Scene and destroys it.
 		 * \param layer After this function, layer will point to invalid memory.
+		 *
+		 * //TODO: Add this to the Engine::destroyLater() things instead of destroying it directly.
 		 */
 		void destroyLayer(Layer* layer);
 
@@ -102,26 +101,26 @@ namespace Tristeon
 		 * Sets the index of the given layer. This removes the layer from its current position in the list and inserts it at the given index.
 		 * Other layers will be moved down or up because of this.
 		 */
-		void setIndex(Layer* layer, int const& i);
+		void setIndex(Layer* layer, const int& i);
 
 		/**
 		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
 		 */
-		int indexOf(Layer* layer);
+		[[nodiscard]] int indexOf(Layer* layer);
 
 		/**
 		 * Gets the filepath if the Scene was loaded through SceneManager::load().
 		 */
-		String getPath() const { return path; }
+		[[nodiscard]] String path() const { return _path; }
 
 		/**
 		 * Gets the file name if the Scene was loaded through SceneManager::load().
 		 */
-		String getName() const { return name; }
+		[[nodiscard]] String name() const { return _name; }
 	private:
-		Vector<Unique<Layer>> layers;
-		String name;
-		String path;
+		Vector<Unique<Layer>> _layers;
+		String _name;
+		String _path;
 	};
 
 	template <typename T>
@@ -131,41 +130,41 @@ namespace Tristeon
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Layer!");
 		
 		T* newLayer = new T();
-		layers.add(std::unique_ptr<T>(newLayer));
+		_layers.add(std::unique_ptr<T>(newLayer));
 		return newLayer;
 	}
 
 	template <typename T>
-	IsLayer<T>* Scene::findLayerOfType()
+	T* Scene::findLayerOfType()
 	{
-		for (size_t i = 0; i < layers.size(); i++)
+		for (auto i = 0; i < _layers.size(); i++)
 		{
-			if (dynamic_cast<T*>(layers[i].get()) != nullptr)
-				return dynamic_cast<T*>(layers[i].get());
+			if (dynamic_cast<T*>(_layers[i].get()) != nullptr)
+				return dynamic_cast<T*>(_layers[i].get());
 		}
 		return nullptr;
 	}
 
 	template <typename T>
-	IsLayer<T>* Scene::findLayerOfType(String const& name) const
+	T* Scene::findLayerOfType(String const& name) const
 	{
-		for (size_t i = 0; i < layers.size(); i++)
+		for (auto i = 0; i < _layers.size(); i++)
 		{
-			if (name == layers[i]->name && dynamic_cast<T*>(layers[i].get()) != nullptr)
-				return dynamic_cast<T*>(layers[i].get());
+			if (name == _layers[i]->name && dynamic_cast<T*>(_layers[i].get()) != nullptr)
+				return dynamic_cast<T*>(_layers[i].get());
 		}
 		return nullptr;
 	}
 
 	template <typename T>
-	Vector<IsLayer<T>*> Scene::findLayersOfType()
+	Vector<T*> Scene::findLayersOfType()
 	{
 		Vector<T*> result;
 
-		for (size_t i = 0; i < layers.size(); i++)
+		for (auto i = 0; i < _layers.size(); i++)
 		{
-			if (dynamic_cast<T*>(layers[i].get()) != nullptr)
-				result.add(dynamic_cast<T*>(layers[i].get()));
+			if (dynamic_cast<T*>(_layers[i].get()) != nullptr)
+				result.add(dynamic_cast<T*>(_layers[i].get()));
 		}
 		return result;
 	}

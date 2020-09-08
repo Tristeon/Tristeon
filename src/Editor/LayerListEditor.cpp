@@ -41,7 +41,7 @@ namespace TristeonEditor
 
 		for (size_t i = 0; i < scene->getLayerCount(); i++)
 		{
-			Tristeon::Layer* layer = scene->getLayer(i);
+			Tristeon::Layer* layer = scene->layerAt(i);
 
 			QListWidgetItem* item = new QListWidgetItem(layer->name.c_str());
 			item->setFlags(item->flags() | Qt::ItemIsEditable);

@@ -10,8 +10,6 @@ namespace TristeonEditor { class EditorWindow; }
 
 namespace Tristeon
 {
-	class Window;
-	class Engine;
 	class Scene;
 
 	/**
@@ -23,8 +21,8 @@ namespace Tristeon
 	 */
 	class SceneManager final
 	{
-		friend Engine;
-		friend Window;
+		friend class Engine;
+		friend class Window;
 
 #ifdef TRISTEON_EDITOR
 		friend TristeonEditor::EditorWindow;
@@ -35,21 +33,21 @@ namespace Tristeon
 		 * Returns the currently active scene.
 		 * The scene is never nullptr but it could be empty within the editor.
 		 */
-		static Scene* current();
+		[[nodiscard]] static Scene* current();
 
 		/**
 		 * Unloads the current scene and then loads a scene with the given name (no file extension).
 		 *
 		 * This change gets applied at the end of the game loop.
 		 */
-		static void load(String const name);
+		static void load(const String& name);
 
 		/**
 		 * Unloads the current scene and then loads a scene with the given data.
 		 *
 		 * This change gets applied at the end of the game loop.
 		 */
-		static void load(json const data, const String& path = "");
+		static void load(const json& data, const String& path = "");
 		
 		/**
 		 * Reloads the current scene from file.
@@ -59,7 +57,7 @@ namespace Tristeon
 		/**
 		 * Saves the given scene as a file at the filepath.
 		 */
-		static void save(Scene* scene, String const& filepath);
+		static void save(Scene* scene, const String& filepath);
 
 		/**
 		 * Saves the current scene if it has a filepath. If not, nothing happens.
@@ -86,8 +84,8 @@ namespace Tristeon
 		 */
 		static void reset();
 		
-		static Unique<Scene> currentScene;
-		static String cachedSceneName;
-		static json cachedSceneData;
+		static Unique<Scene> _current;
+		static String _cachedName;
+		static json _cachedData;
 	};
 }

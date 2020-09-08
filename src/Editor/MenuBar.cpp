@@ -99,7 +99,7 @@ namespace TristeonEditor
 
 	void MenuBar::saveScene()
 	{
-		if (Tristeon::SceneManager::current()->getPath().empty())
+		if (Tristeon::SceneManager::current()->path().empty())
 		{
 			QDir const baseDir(Tristeon::Project::assetPath().c_str());
 

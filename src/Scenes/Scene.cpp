@@ -1,8 +1,6 @@
 #include "Scene.h"
 #include <stdexcept>
-
 #include <Scenes/Layers/Layer.h>
-
 #include "Serialization/TypeRegister.h"
 
 namespace Tristeon
@@ -13,7 +11,7 @@ namespace Tristeon
 		j["typeID"] = TRISTEON_TYPENAME(Scene);
 
 		json serializedLayers = json::array_t();
-		for (auto& layer : layers)
+		for (auto& layer : _layers)
 			serializedLayers.push_back(layer->serialize());
 		j["layers"] = serializedLayers;
 		return j;
@@ -23,26 +21,26 @@ namespace Tristeon
 	{
 		Serializable::deserialize(j);
 		
-		layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
+		_layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
 		for (auto serializedLayer : j.value("layers", json::array_t()))
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedLayer["typeID"]);
 			serializable->deserialize(serializedLayer);
-			layers.add(Unique<Layer>((Layer*)serializable.release()));
+			_layers.add(Unique<Layer>(dynamic_cast<Layer*>(serializable.release())));
 		}
 	}
 
-	Layer* Scene::getLayer(unsigned int const& index) const
+	Layer* Scene::layerAt(const unsigned int& index) const
 	{
-		if (index < 0 || index > layers.size() - 1)
+		if (index < 0 || index > _layers.size() - 1)
 			throw std::invalid_argument("Index must be more than 0 and less than the amount of layers");
 
-		return layers[index].get();
+		return _layers[index].get();
 	}
 
-	Layer* Scene::findLayer(std::string const& name) const
+	Layer* Scene::findLayer(const String& name) const
 	{
-		for (const auto& layer : layers)
+		for (const auto& layer : _layers)
 		{
 			if (layer->name == name)
 				return layer.get();
@@ -50,14 +48,14 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	Layer* Scene::addLayer(String const& type)
+	Layer* Scene::addLayer(const String& type)
 	{
 		Unique<Serializable> serializable = TypeRegister::createInstance(type);
 		auto* layer = dynamic_cast<Layer*>(serializable.get());
 		if (layer != nullptr)
 		{
-			layer = (Layer*)serializable.release();
-			layers.add(std::unique_ptr<Layer>(layer));
+			layer = dynamic_cast<Layer*>(serializable.release());
+			_layers.add(std::unique_ptr<Layer>(layer));
 			return layer;
 		}
 		return nullptr;
@@ -65,34 +63,34 @@ namespace Tristeon
 
 	unsigned int Scene::getLayerCount() const
 	{
-		return layers.size();
+		return _layers.size();
 	}
 
 	void Scene::destroyLayer(Layer* layer)
 	{
 		int const index = indexOf(layer);
-		if (index == layers.size())
+		if (index == _layers.size())
 			return;
-		layers[index].reset();
-		layers.removeAt(index);
+		_layers[index].reset();
+		_layers.removeAt(index);
 	}
 
-	void Scene::setIndex(Layer* layer, int const& i)
+	void Scene::setIndex(Layer* layer, const int& i)
 	{
 		ull const old = indexOf(layer);
-		if (old == layers.size())
+		if (old == _layers.size())
 			return;
 
-		auto unique = std::move(layers[old]);
-		layers.removeAt(old);
-		layers.insert(i, std::move(unique));
+		auto unique = std::move(_layers[old]);
+		_layers.removeAt(old);
+		_layers.insert(i, std::move(unique));
 	}
 
 	int Scene::indexOf(Layer* layer)
 	{
-		for (size_t i = 0; i < layers.size(); i++)
+		for (size_t i = 0; i < _layers.size(); i++)
 		{
-			if (layers[i].get() == layer)
+			if (_layers[i].get() == layer)
 			{
 				return i;
 			}

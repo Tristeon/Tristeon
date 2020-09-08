@@ -45,7 +45,7 @@ namespace Tristeon
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
 			Vector2Int tileIndex;
-			for (auto const& f : layer->fixtures)
+			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)
 				{
@@ -124,7 +124,7 @@ namespace Tristeon
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
 			Vector2Int tileIndex;
-			for (auto const& f : layer->fixtures)
+			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)
 				{

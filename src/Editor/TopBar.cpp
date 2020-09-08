@@ -41,7 +41,7 @@ namespace TristeonEditor
 			if (!pause->isChecked())
 			{
 				sceneBeforePlay = Tristeon::SceneManager::current()->serialize();
-				sceneBeforePlay["path"] = Tristeon::SceneManager::current()->getPath();
+				sceneBeforePlay["path"] = Tristeon::SceneManager::current()->path();
 			}
 			Tristeon::Engine::playMode(true);
 			pause->setChecked(false);
