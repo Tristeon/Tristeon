@@ -10,20 +10,13 @@ namespace Tristeon
 		/**
 		 * Changes all of the string's characters to lowercase characters.
 		 */
-		static String toLower(String string);
+		[[nodiscard]] static String toLower(String string);
 
 		/**
 		 * Splits a string into separate strings based on the given delimiter.
 		 */
-		static Vector<String> split(String const& string, char const& delim);
-
-		/**
-		 * Generates a string with random characters with a given length.
-		 *
-		 * \exception invalid_argument if length == 0
-		 */
-		static String generateRandom(unsigned int const& length);
+		[[nodiscard]] static Vector<String> split(const String& string, const char& delim);
 	private:
-		static void internalSplit(const std::string& s, char const& delim, Vector<String>& result);
+		static void internalSplit(const String& s, const char& delim, Vector<String>& result);
 	};
 }

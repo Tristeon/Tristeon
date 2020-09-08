@@ -1,16 +1,16 @@
 #pragma once
-#include <string>
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
 	/**
-	 * Console defines basic printing/asserting behavior that will be logged to the editor or to a console
+	 * Console defines basic printing/asserting behavior that will be logged to the editor or to a console.
 	 */
 	class Console final
 	{
 	public:
 		/**
-		 * Sets the standard console color
+		 * Sets the standard console color.
 		 */
 		static void init();
 
@@ -21,26 +21,26 @@ namespace Tristeon
 		 *
 		 * \exception runtime_error If condition is false
 		 */
-		static void t_assert(bool condition, std::string errorMessage);
+		static void t_assert(const bool& condition, const String& errorMessage);
 		/**
-		 * Clears the console
+		 * Clears the console.
 		 */
 		static void clear();
 
 		/**
 		 * Writes the given data to the console
 		 */
-		static void write(std::string data);
+		static void write(const String& data);
 
 		/**
 		 * Writes a warning with the given data to the editor/console
 		 */
-		static void warning(std::string data);
+		static void warning(const String& data);
 		/**
 		 * Opens an error pop-up window and stops the program.
 		 *
-		 * \exception runtime_error
+		 * \exception runtime_error (data)
 		 */
-		static void error(std::string data);
+		static void error(const String& data);
 	};
 }

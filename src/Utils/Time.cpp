@@ -3,12 +3,12 @@
 
 namespace Tristeon
 {
-	float Time::m_deltaTime;
-	unsigned int Time::m_fps;
+	float Time::_deltaTime;
+	unsigned int Time::_fps;
 	
 	float Time::deltaTime()
 	{
-		return m_deltaTime;
+		return _deltaTime;
 	}
 
 	float Time::fixedDeltaTime()
@@ -18,6 +18,6 @@ namespace Tristeon
 
 	unsigned int Time::fps()
 	{
-		return m_fps;
+		return _fps;
 	}
 }

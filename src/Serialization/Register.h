@@ -5,7 +5,7 @@
 namespace Tristeon
 {
 	template <typename T, typename Base>
-	Unique<Base> CreateInstance() { return std::make_unique<T>(); }
+	[[nodiscard]] Unique<Base> CreateInstance() { return std::make_unique<T>(); }
 
 	/**
 	 * The register is a map that is used to record & create instances of registered types
@@ -20,7 +20,7 @@ namespace Tristeon
 		 * Creates instance of an object that inherits from Base.
 		 * The user must take ownership of the instance himself.
 		 */
-		static Unique<Base> createInstance(const std::string& s)
+		[[nodiscard]] static Unique<Base> createInstance(const std::string& s)
 		{
 			const auto it = getMap()->find(s);
 			if (it == getMap()->end())
@@ -31,7 +31,7 @@ namespace Tristeon
 		/**
 		 * Returns the full register map.
 		 */
-		static TypeMap* getMap()
+		[[nodiscard]] static TypeMap* getMap()
 		{
 			static TypeMap instance;
 			return &instance;

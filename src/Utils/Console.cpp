@@ -13,7 +13,7 @@ namespace Tristeon
 #endif
 	}
 
-	void Console::t_assert(bool condition, std::string errorMessage)
+	void Console::t_assert(const bool& condition, const String& errorMessage)
 	{
 #ifdef TRISTEON_LOGENABLED
 		if (!condition)
@@ -28,14 +28,14 @@ namespace Tristeon
 #endif
 	}
 
-	void Console::write(std::string data)
+	void Console::write(const String& data)
 	{
 #ifdef TRISTEON_LOGENABLED
 		std::cout << data << std::endl;
 #endif
 	}
 
-	void Console::warning(std::string data)
+	void Console::warning(const String& data)
 	{
 #ifdef TRISTEON_LOGENABLED
 		setColor(rlutil::YELLOW);
@@ -44,7 +44,7 @@ namespace Tristeon
 #endif
 	}
 
-	void Console::error(std::string data)
+	void Console::error(const String& data)
 	{
 #ifdef TRISTEON_LOGENABLED
 		setColor(rlutil::LIGHTRED);

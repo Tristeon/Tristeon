@@ -13,7 +13,7 @@ namespace Tristeon
 		/**
 		 * The delta time of a single frame in milliseconds.
 		 */
-		static float deltaTime();
+		[[nodiscard]] static float deltaTime();
 
 		/**
 		 * The delta time of the physics update in milliseconds.
@@ -21,15 +21,15 @@ namespace Tristeon
 		 * This value is constant, it is set in the project settings and it can't be modified in runtime.
 		 * The physics update and fixedUpdate() will try to closely match this value.
 		 */
-		static float fixedDeltaTime();
+		[[nodiscard]] static float fixedDeltaTime();
 
 		/**
 		 * The amount of frames per second that the main game loop is running at.
 		 */
-		static unsigned int fps();
+		[[nodiscard]] static unsigned int fps();
 
 	private:
-		static float m_deltaTime;
-		static unsigned int m_fps;
+		static float _deltaTime;
+		static unsigned int _fps;
 	};
 }

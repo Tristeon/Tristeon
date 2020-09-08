@@ -1,74 +1,44 @@
 #pragma once
 #include <random>
-#include <algorithm>
+#include "TypeDefinitions.h"
 
 namespace Tristeon
 {
+	/**
+	 * Random class that uses the Mersenne Twister 19937 generator together with a std::uniform_x_distribution to generate proper random values.
+	 */
 	class Random
 	{
 	public:
-		static unsigned int generateUInt()
-		{
-			return generateNumber<unsigned int, std::uniform_int_distribution<unsigned int>>();
-		}
-		
-		static unsigned int generateUInt(const unsigned int& min, const unsigned int& max)
-		{
-			return generateNumber<unsigned int, std::uniform_int_distribution<unsigned int>>(min, max);
-		}
+		[[nodiscard]] static unsigned int generateUInt();
+		[[nodiscard]] static unsigned int generateUInt(const unsigned int& min, const unsigned int& max);
 
-		static int generateInt()
-		{
-			return generateNumber<int, std::uniform_int_distribution<int>>();
-		}
+		[[nodiscard]] static int generateInt();
+		[[nodiscard]] static int generateInt(const int& min, const int& max);
 
-		static int generateInt(const int& min, const int& max)
-		{
-			return generateNumber<int, std::uniform_int_distribution<int>>(min, max);
-		}
+		[[nodiscard]] static float generateFloat01();
+		[[nodiscard]] static float generateFloat(const float& min, const float& max);
 
-		static float generateFloat01()
-		{
-			return generateNumber<float, std::uniform_real_distribution<float>>(0, 1);
-		}
+		[[nodiscard]] static double generateDouble01();
+		[[nodiscard]] static double generateDouble(const double& min, const double& max);
 
-		static float generateFloat(const float& min, const float& max)
-		{
-			return generateNumber<float, std::uniform_real_distribution<float>>(min, max);
-		}
+		[[nodiscard]] static bool generateBool();
 
-		static double generateDouble01()
-		{
-			return generateNumber<double, std::uniform_real_distribution<double>>(0, 1);
-		}
-
-		static double generateDouble(const double& min, const double& max)
-		{
-			return generateNumber<double, std::uniform_real_distribution<double>>(min, max);
-		}
-		
-		static bool generateBool()
-		{
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::bernoulli_distribution ber{};
-			return ber(rng);
-		}
-
+		[[nodiscard]] static String generateString(const unsigned int& length);
 	private:
 		template<typename T, typename D>
-		static T generateNumber()
+		[[nodiscard]] static T generateNumber()
 		{
 			return generateNumber<T, D>(std::numeric_limits<T>::lowest(), std::numeric_limits<T>::max());
 		}
 		
 		template<typename T, typename D>
-		static T generateNumber(const T& min, const T& max)
+		[[nodiscard]] static T generateNumber(const T& min, const T& max)
 		{
 			std::random_device rd;
-			std::mt19937 rng(rd());
-			D uni(min, max);
-			return uni(rng);
+			std::mt19937 m(rd());
+			D distribution(min, max);
+			return distribution(m);
 		}
 	};
 }

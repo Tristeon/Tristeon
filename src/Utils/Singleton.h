@@ -1,5 +1,6 @@
 #pragma once
 #include <stdexcept>
+#include <Utils/ClassDefaults.h>
 
 namespace Tristeon
 {
@@ -21,13 +22,10 @@ namespace Tristeon
 		 * Returns the current instance of this Singleton.
 		 * This instance is not guaranteed to be set and could be nullptr unless if the class is a core subsystem to Tristeon.
 		 */
-		static T* instance();
+		[[nodiscard]] static T* instance();
 
-		Singleton(Singleton const& other) = delete;
-		void operator=(Singleton const& other) = delete;
-
-		Singleton(Singleton&& other) = default;
-		Singleton& operator=(Singleton&& other) = default;
+		DELETE_COPY(Singleton);
+		DEFAULT_MOVE(Singleton);
 
 	protected:
 		/**

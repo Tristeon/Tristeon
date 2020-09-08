@@ -40,7 +40,7 @@ namespace Tristeon
 		/**
 		 * Resets the delegate and assigns it to the specific given function.
 		 */
-		void operator=(std::function<void(P...)> f);
+		Delegate<P...>& operator=(std::function<void(P...)> f);
 
 		/**
 		 * Removes all functions from the delegate.
@@ -48,13 +48,13 @@ namespace Tristeon
 		void clear();
 
 	private:
-		std::unordered_map<int, std::function<void(P...)>> events;
+		std::unordered_map<int, std::function<void(P...)>> _events{};
 	};
 
 	template <typename ... P>
 	void Delegate<P...>::invoke(P... params)
 	{
-		for (auto& p : events)
+		for (auto& p : _events)
 			p.second(params...);
 	}
 
@@ -67,29 +67,30 @@ namespace Tristeon
 	template <typename ... P>
 	int Delegate<P...>::operator+=(std::function<void(P...)> f)
 	{
-		int id = Random::generateInt();
-		assert(events.find(id) == events.end()); 
-		events[id] = f;
+		auto id = Random::generateInt();
+		assert(_events.find(id) == _events.end());
+		_events[id] = f;
 		return id;
 	}
 
 	template <typename ... P>
 	void Delegate<P...>::operator-=(int id)
 	{
-		if (events.find(id) != events.end())
-			events.erase(id);
+		if (_events.find(id) != _events.end())
+			_events.erase(id);
 	}
 
 	template <typename ... P>
-	void Delegate<P...>::operator=(std::function<void(P...)> f)
+	Delegate<P...>& Delegate<P...>::operator=(std::function<void(P...)> f)
 	{
 		clear();
 		operator+=(f);
+		return *this;
 	}
 
 	template <typename ... P>
 	void Delegate<P...>::clear()
 	{
-		events.clear();
+		_events.clear();
 	}
 }

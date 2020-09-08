@@ -1,7 +1,6 @@
 #include "Engine.h"
 
 #include <chrono>
-#include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>
 #include <Window.h>
 
@@ -18,12 +17,12 @@
 #include "Actors/Actor.h"
 #include "Project.h"
 #include "Utils/Time.h"
-#include "AssetManagement/AssetDatabase.h"
 
 namespace Tristeon
 {
 	void Engine::run()
 	{
+		Console::init();
 		Window::pollEvents();
 
 #ifndef TRISTEON_EDITOR
@@ -51,7 +50,7 @@ namespace Tristeon
 			auto now = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(now - lastTime);
 			float const deltaTime = duration.count() / 1000.0f; //Convert to ms
-			Time::m_deltaTime = deltaTime;
+			Time::_deltaTime = deltaTime;
 			lastTime = now;
 
 			//FPS counter
@@ -59,7 +58,7 @@ namespace Tristeon
 			time += deltaTime;
 			if (time >= 1000)
 			{
-				Time::m_fps = frames;
+				Time::_fps = frames;
 				frames = 0;
 				time = fmod(time, 1000.0f);
 			}

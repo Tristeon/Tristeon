@@ -41,14 +41,14 @@ namespace Tristeon
 		 * \exception invalid_argument If the json file is invalid or empty.
 		 */
 		template <typename T>
-		static IsSerializable<T>* deserialize(const std::string& path);
+		[[nodiscard]] static IsSerializable<T>* deserialize(const std::string& path);
 
 		/**
 		 * Loads json data from a file using the given filepath.
 		 *
 		 * \exception invalid_argument Throws if the file has no json data.
 		 */
-		static json load(const std::string& path);
+		[[nodiscard]] static json load(const std::string& path);
 	};
 
 	template <typename T>

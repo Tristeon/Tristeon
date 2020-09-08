@@ -11,38 +11,18 @@ namespace Tristeon
 {
 	String StringHelper::toLower(String string)
 	{
-		std::transform(string.begin(), string.end(), string.begin(), ::tolower);
+		std::transform(string.begin(), string.end(), string.begin(), std::tolower);
 		return string;
 	}
 
-	Vector<String> StringHelper::split(String const& string, char const& delim)
+	Vector<String> StringHelper::split(const String& string, const char& delim)
 	{
 		Vector<String> elems;
 		internalSplit(string, delim, elems);
 		return elems;
 	}
 
-	String StringHelper::generateRandom(unsigned int const& length)
-	{
-		if (length == 0)
-			throw std::invalid_argument("The length parameter of StringUtils::generateRandom must be > 0!");
-
-		static const char alphanum[] =
-			"0123456789"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
-		static const int size = sizeof(alphanum);
-
-		std::string output;
-
-		for (size_t i = 0; i < length; ++i) {
-			output.push_back(alphanum[Random::generateInt() % (size - 1)]);
-		}
-
-		return output;
-	}
-
-	void StringHelper::internalSplit(const std::string& s, char const& delim, Vector<String>& result)
+	void StringHelper::internalSplit(const String& s, const char& delim, Vector<String>& result)
 	{
 		std::stringstream ss;
 		ss.str(s);

@@ -10,34 +10,55 @@ namespace Tristeon
 	struct Colour final
 	{
 		/**
-		 * The red value of the Colour.
+		 * The red value of the Colour (0...1).
 		 */
 		float r = 1;
 		/**
-		 * The green value of the Colour.
+		 * The green value of the Colour (0...1).
 		 */
 		float g = 1;
 		/**
-		 * The blue value of the Colour.
+		 * The blue value of the Colour (0...1).
 		 */
 		float b = 1;
 		/**
-		 * The alpha/transparency value of the Colour.
+		 * The alpha/transparency value of the Colour (0...1).
 		 */
 		float a = 1;
 
 		/**
 		 * Creates a colour with the given rgba values.
 		 */
-		constexpr Colour(float const& r = 1, float const& g = 1, float const& b = 1, float const& a = 1) : r(r), g(g), b(b), a(a) { }
-		
+		constexpr Colour(const float& r = 1, const float& g = 1, const float& b = 1, const float& a = 1) : r(r), g(g), b(b), a(a) { }
+
+		/**
+		 * (1, 1, 1, 1)
+		 */
 		static Colour white() { return { 1, 1, 1, 1 }; }
+		/**
+		 * (0, 0, 0, 1)
+		 */
 		static Colour black() { return { 0, 0, 0, 1 }; }
-		
+
+		/**
+		 * (1, 0, 0, 1)
+		 */
 		static Colour red() { return { 1, 0, 0, 1 }; }
+		/**
+		 * (0, 1, 0, 1)
+		 */
 		static Colour green() { return { 0, 1, 0, 1 }; }
+		/**
+		 * (0, 0, 1, 1)
+		 */
 		static Colour blue() { return { 0, 0, 1, 1 }; }
+		/**
+		 * (1, 1, 0, 1)
+		 */
 		static Colour yellow() { return { 1, 1, 0, 1 }; }
+		/**
+		 * (1, 0, 1, 1)
+		 */
 		static Colour purple() { return { 1, 0, 1, 1 }; }
 	};
 

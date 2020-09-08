@@ -138,7 +138,7 @@ namespace Tristeon
 		/**
 		 * Returns true if the vector is empty. This function doesn't modify the vector.
 		 */
-		bool empty() const;
+		[[nodiscard]] bool empty() const;
 		/**
 		 * Ensures that the vector's capacity is at least n.
 		 * If n is less than the vector's current capacity, nothing happens.
@@ -219,6 +219,9 @@ namespace Tristeon
 		 */
 		[[nodiscard]] ull indexOf(const T& value);
 
+		/**
+		 * Sort the vector's elements with the given predicate.
+		 */
 		template<typename Pred>
 		void sort(Pred predicate);
 	private:
