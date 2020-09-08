@@ -73,14 +73,14 @@ namespace Tristeon
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
 			if (serializable == nullptr)
 			{
-				std::cout << "Attempted to create behaviour of type " << serializedBehaviour["typeID"] << ", but failed. It will be ignored upon creation and removed from the save file. \n";
+				Console::warning("Attempted to create behaviour of type " + serializedBehaviour.value("typeID", "") + ", but failed. It will be ignored upon creation and removed from the save file.");
 				continue;
 			}
 			//Attempt to cast serializable down to behaviour
 			auto* behaviour = dynamic_cast<Behaviour*>(serializable.get());
 			if (behaviour == nullptr)
 			{
-				std::cout << "Failed to cast type " << serializedBehaviour["typeID"] << ", to Tristeon::Behaviour. The object will be ignored upon creation and removed from the save file. \n";
+				Console::warning("Failed to cast type " + serializedBehaviour.value("typeID", "") + ", to Tristeon::Behaviour. The object will be ignored upon creation and removed from the save file.");
 				serializable.reset();
 				continue;
 			}

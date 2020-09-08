@@ -11,6 +11,13 @@
 
 namespace Tristeon
 {
+	/**
+	 * SerializableRegister is a specialization of Register.
+	 * It's used as the project-wide register for creating instances of Actors, Behaviours and more.
+	 *
+	 * This class itself shouldn't be interacted with outside of the REGISTER_TYPE macro, because this class is used to register the given type to the Register::map.
+	 * Instead, use the alias TypeRegister to create instances with.
+	 */
 	template <typename T>
 	struct SerializableRegister : Register<Serializable>
 	{
@@ -21,18 +28,25 @@ namespace Tristeon
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Serializable>);
 
+			//Attempt to recognize the type as one of the standard basetypes, add to their respective registers.
 			registerAs<Actor, T>();
 			registerAs<Behaviour, T>();
 			registerAs<Layer, T>();
 		}
 
 	private:
+		/**
+		 * SFINAE approach to recognize T as a given <Base> type. If it's recognized, it's added to the Register<Base> as well.
+		 */
 		template<typename Base, typename Q>
 		typename std::enable_if<std::is_base_of<Base, Q>::value, void>::type registerAs()
 		{
 			Register<Base>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Base>);
 		}
 
+		/**
+		 * SFINAE Failed -> Nothing happens
+		 */
 		template<typename Base, typename Q>
 		typename std::enable_if<!std::is_base_of<Base, Q>::value, void>::type registerAs()
 		{
@@ -40,6 +54,9 @@ namespace Tristeon
 		}
 	};
 
+	/**
+	 * Use this type alias to create instances of serializables (TypeRegister::createInstance(typename).
+	 */
 	using TypeRegister = Register<Serializable>;
 
 /**

@@ -26,7 +26,7 @@ namespace Tristeon
 		 * Each class that implements this function must set json["typeID"] to TRISTEON_TYPENAME(ClassType).
 		 * Any other variables are optional but required for serialization purposes.
 		 */
-		virtual json serialize() { return json{}; }
+		[[nodiscard]] virtual json serialize() { return json{}; }
 		
 		/**
 		 * Deserialize interface for classes to decide how to use json data to load in data into their class

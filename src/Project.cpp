@@ -89,17 +89,17 @@ namespace Tristeon
 		load(projectName + "/");
 	}
 
-	void Project::load(String const& folder)
+	void Project::load(const String& folder)
 	{
 		json const file = JsonSerializer::load(folder + "settings.tristeon");
 
 		if (file.empty() || file.is_null())
 		{
-			std::cout << "Failed to load project at folder " << folder << std::endl;
+			Console::warning("Failed to load project at folder " + folder);
 			return;
 		}
 
-		std::cout << "Loaded project folder " << folder << std::endl;
+		Console::write("Loaded project folder " + folder);
 		
 		m_assetPath = folder;
 		m_firstScene = file.value("firstScene", "");

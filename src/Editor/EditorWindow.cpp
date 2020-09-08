@@ -317,7 +317,7 @@ namespace TristeonEditor
 		auto gamepads = QGamepadManager::instance()->connectedGamepads();
 		if (gamepads.isEmpty())
 		{
-			std::cout << "Gamepad disconnected: " << activeGamepad->name().toStdString() << std::endl;
+			Console::write("Gamepad disconnected: " + activeGamepad->name().toStdString());
 
 			activeGamepad->deleteLater();
 			activeGamepad = nullptr;
@@ -332,11 +332,11 @@ namespace TristeonEditor
 		if (activeGamepad != nullptr)
 		{
 			activeGamepad->deleteLater();
-			std::cout << "Deselected Gamepad: " << activeGamepad->name().toStdString() << std::endl;
+			Console::write("Deselected Gamepad: " + activeGamepad->name().toStdString());
 		}
 
 		activeGamepad = new QGamepad(gamepads[0]);
-		std::cout << "Selected Gamepad: " << activeGamepad->name().toStdString() << std::endl;
+		Console::write("Selected Gamepad: " + activeGamepad->name().toStdString());
 
 		connect(activeGamepad, &QGamepad::axisLeftXChanged, this, [](double const& value) { Gamepad::_left.x = value; });
 		connect(activeGamepad, &QGamepad::axisLeftYChanged, this,

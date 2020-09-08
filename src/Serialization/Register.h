@@ -29,7 +29,7 @@ namespace Tristeon
 		}
 
 		/**
-		 * Returns the full register
+		 * Returns the full register map.
 		 */
 		static TypeMap* getMap()
 		{

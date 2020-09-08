@@ -80,7 +80,6 @@ namespace Tristeon
 			{
 				if (entry.path().filename().string() == "." || entry.path().filename().string() == ".." || entry.path().filename().string().find("tmp"))
 					continue;
-				std::cout << "Path: " << entry.path() << std::endl;
 				readDir(entry.path().string());
 			}
 			else

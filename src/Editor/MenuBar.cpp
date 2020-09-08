@@ -108,7 +108,7 @@ namespace TristeonEditor
 			QString const fileName = QFileInfo(path).baseName();
 			if (path.isEmpty() || localPath.isEmpty())
 			{
-				std::cout << "No path was selected for saving Scene, therefore the scene wasn't saved!" << std::endl;
+				Tristeon::Console::warning("No path was selected for saving Scene, therefore the scene wasn't saved!");
 				return;
 			}
 			Tristeon::SceneManager::save(Tristeon::SceneManager::current(), path.toStdString());

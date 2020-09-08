@@ -1,6 +1,7 @@
 #include "JsonSerializer.h"
 #include <fstream>
 
+//Attempt to get file read errors
 #ifdef _WIN32
 #include <windows.h>
 #define SYSERROR()  GetLastError()
@@ -16,7 +17,7 @@ namespace Tristeon
 		//Read file and check if it read it successfully
 		std::ifstream stream(path);
 		if (!stream.good()) {
-			std::cout << "JsonSerializer can't read file: " << path << "\n";
+			Console::warning("JsonSerializer failed to read file: " + path);
 			return nullptr;
 		}
 
@@ -25,7 +26,7 @@ namespace Tristeon
 		stream >> input;
 		if (input.is_null())
 		{
-			std::cout << "file is either a non-json file or corrupted" << std::endl;
+			Console::warning("The given file is either a non-json file or the file is corrupted");
 			throw std::invalid_argument("file is either a non-json file or corrupted");
 		}
 		return input;
@@ -41,7 +42,7 @@ namespace Tristeon
 		std::ofstream stream;
 		stream.open(path, std::ios::trunc);
 		if (!stream.is_open())
-			std::cout << "Failed to write to path " << path << ", system error code: " << SYSERROR() << std::endl;
+			Console::warning("Failed to write to path " + path + ", system error code: " + std::to_string(SYSERROR()));
 		stream << obj.dump(4);
 	}
 }

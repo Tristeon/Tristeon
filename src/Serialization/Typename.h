@@ -1,39 +1,40 @@
 #pragma once
-#include <iostream>
 #include <Utils/StringHelper.h>
+#include "Utils/Console.h"
 
 namespace Tristeon
 {
 #if defined(_MSC_VER)
 	/**
 	 * Wrapper around typeid(T).name(), to enforce a consistent return style across all (supported) compilers.
+	 *
+	 * The MSVC version removes the "typename " word before the type.
 	 */
 	template<typename T>
-	std::string getTypename()
+	String getTypename()
 	{
-		String name = typeid(T).name();
+		const String name = typeid(T).name();
 		Vector<String> vec = StringHelper::split(name, ' ');
 		if (vec.size() < 2)
 		{
-			std::cout << "[Warning]: Failed to getTypename. Returning empty string!" << std::endl;
-			return "";
+			Console::warning("Failed to interpret MSVC typename. Returning direct typeid(T).name(): " + String(typeid(T).name()));
+			return name;
 		}
 
 		std::string result;
-		for (size_t i = 1; i < vec.size(); i++)
+		for (auto i = 1; i < vec.size(); i++)
 		{
 			result += vec[i];
 		}
 		return result;
 	}
-
-#define TRISTEON_TYPENAME(T) Tristeon::getTypename<T>()
-
 #else
 #include <cxxabi.h>
 
 	/**
 	 * Wrapper around typeid(T).name(), to enforce a consistent return style across all (supported) compilers.
+	 *
+	 * The MinGW version demangles the typename
 	 */
 	template<typename T>
 	std::string getTypename()
@@ -44,6 +45,8 @@ namespace Tristeon
 		free(realName);
 		return result;
 	}
-#define TRISTEON_TYPENAME(T) Tristeon::getTypename<T>()
 #endif
+	
+#define TRISTEON_TYPENAME(T) Tristeon::getTypename<T>()
+	
 }

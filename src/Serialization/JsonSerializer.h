@@ -32,7 +32,7 @@ namespace Tristeon
 		 *
 		 * \exception invalid_argument Throws if the json data is empty.
 		 */
-		static void save(const std::string& path, json const& obj);
+		static void save(const std::string& path, const json& obj);
 
 		/**
 		 * Create an instance with type T from a json file at the given filepath.
@@ -55,7 +55,7 @@ namespace Tristeon
 	void JsonSerializer::serialize(const std::string& path, IsSerializable<T>& obj)
 	{
 		//Convert the object instance to json data
-		json j = obj.serialize();
+		const json j = obj.serialize();
 		save(path, j);
 	}
 
@@ -73,7 +73,7 @@ namespace Tristeon
 			throw std::invalid_argument("File is either a non-json file or corrupted");
 
 		//Create instance of the type that is specified in the json file under the "typeID" member
-		auto instance = TypeRegister::createInstance(input["typeID"]);
+		auto instance = TypeRegister::createInstance(input.value("typeID", ""));
 		if (instance == nullptr)
 			return nullptr;
 		
