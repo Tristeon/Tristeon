@@ -141,7 +141,7 @@ namespace TristeonEditor
 		return closing;
 	}
 
-	Vector2 EditorWindow::_screenToWorld(Vector2Int const& screenPoint)
+	Vector2 EditorWindow::_screenToWorld(Vector2Int const& screenPoint, Camera* camera)
 	{
 		//Convert into Qt coords
 		Vector2Int point = screenPoint;
@@ -154,25 +154,25 @@ namespace TristeonEditor
 		//Flip Y and remove area below gameview because apparently mapFromGlobal() doesnt handle that space?
 		local.setY(Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - local.y());
 
-		//Adjust for center
-		Vector2 const halfSize = Vector2(GameView::instance()->width() / 2.0f, GameView::instance()->height() / 2.0f);
-
-		Vector2 result = Vector2(local.x(), local.y()) - halfSize;
+		//Adjust for camera position on screen
+		Vector2 result = Vector2(local.x(), local.y());
+		result -= ((camera->screenCoordinates + Vector2::one()) / 2.0f)* Window::gameSize();
+		result -= (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
+		
 		//Adjust for camera
-		result *= 1.0f / Renderer::editorCamera()->zoom;
-		result += (Vector2Int)Renderer::editorCamera()->position;
+		result *= 1.0f / camera->zoom;
+		result += (Vector2Int)camera->position;
 		return result;
 	}
 
-	Vector2Int EditorWindow::_worldToScreen(Vector2 const& worldPoint)
+	Vector2Int EditorWindow::_worldToScreen(Vector2 const& worldPoint, Camera* camera)
 	{
-		Vector2 const halfSize = Vector2(GameView::instance()->width() / 2.0f, GameView::instance()->height() / 2.0f);
-
 		Vector2 point = worldPoint;
-		point -= (Vector2Int)Renderer::editorCamera()->position;
-		point /= (1.0f / Renderer::editorCamera()->zoom);
+		point -= (Vector2Int)camera->position;
+		point /= (1.0f / camera->zoom);
 
-		point += halfSize;
+		point += ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
+		point += (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
 		point.y = Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - point.y;
 		const QPoint global = GameView::instance()->mapToGlobal(QPoint(point.x, point.y));

@@ -3,6 +3,10 @@
 #include "Window.h"
 #include <Input/Mouse.h>
 
+#include "Engine.h"
+#include "Renderer.h"
+#include "Actors/Camera.h"
+
 namespace Tristeon
 {
 	auto Graphic::Bounds::contains(Vector2 const& position) const -> bool
@@ -17,7 +21,21 @@ namespace Tristeon
 
 	bool Graphic::Bounds::underMouse() const
 	{
-		return contains(Window::screenToWorld(Mouse::position()));
+		if (Engine::playMode())
+		{
+			for (auto* camera : Camera::cameras())
+			{
+				if (contains(Window::screenToWorld(Mouse::position(), camera)))
+					return true;
+			}
+		}
+
+#ifdef TRISTEON_EDITOR
+		if (!Engine::playMode() && contains(Window::screenToWorld(Mouse::position(), Renderer::editorCamera())))
+			return true;
+#endif
+		
+		return false;
 	}
 
 	json Graphic::serialize()

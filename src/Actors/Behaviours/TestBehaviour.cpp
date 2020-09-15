@@ -5,9 +5,7 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
-
 #include "Actors/Camera.h"
-#include "Actors/Sprite.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"

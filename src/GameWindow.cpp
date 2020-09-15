@@ -19,21 +19,22 @@ namespace Tristeon
 			throw std::exception("Failed to initialize GLFW");
 		glfwSetErrorCallback(&GameWindow::errorCallback);
 		
-		window = glfwCreateWindow(1920, 1080, "Tristeon", NULL, NULL);
-		if (!window)
+		_window = glfwCreateWindow(1920, 1080, "Tristeon", NULL, NULL);
+		_width = 1920;
+		_height = 1080;
+		if (!_window)
 			throw std::exception("Failed to create GLFW window");
-		glfwMakeContextCurrent(window);
+		glfwMakeContextCurrent(_window);
 
 		//Load OGL
 		if (!gladLoadGL())
 		{
-
-			std::cout << "Error initializing glad." << std::endl;
+			Console::error("Error initializing glad");
 			throw std::exception("Failed to initialize glad");
 		}
-		std::cout << "OpenGL " << GLVersion.major << "." << GLVersion.minor << "\n";
+		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		
-		fullscreen = Project::Graphics::fullscreen();
+		_fullscreen = Project::Graphics::fullscreen();
 		setFullscreen(Project::Graphics::fullscreen());
 
 		setupCallbacks();
@@ -43,7 +44,7 @@ namespace Tristeon
 		//Enable culling
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-		glViewport(0, 0, 1920, 1080);
+		glViewport(0, 0, width(), height());
 
 		//Enable transparency blending
 		glEnable(GL_BLEND);
@@ -58,7 +59,7 @@ namespace Tristeon
 
 	GameWindow::~GameWindow()
 	{
-		glfwDestroyWindow(window);
+		glfwDestroyWindow(_window);
 		glfwTerminate();
 	}
 
@@ -77,17 +78,17 @@ namespace Tristeon
 		}
 
 		glfwSwapInterval(Project::Graphics::vsync());
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(_window);
 	}
 
 	unsigned GameWindow::_windowWidth()
 	{
-		return w;
+		return _width;
 	}
 
 	unsigned GameWindow::_windowHeight()
 	{
-		return h;
+		return _height;
 	}
 
 	unsigned GameWindow::_gameWidth()
@@ -102,27 +103,27 @@ namespace Tristeon
 
 	bool GameWindow::_isFullscreen()
 	{
-		return fullscreen;
+		return _fullscreen;
 	}
 
-	void GameWindow::_setFullscreen(bool const& value)
+	void GameWindow::_setFullscreen(const bool& value)
 	{
-		fullscreen = value;
+		_fullscreen = value;
 		
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		
 		if (value)
-			glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			glfwSetWindowMonitor(_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 		else
-			glfwSetWindowMonitor(window, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
+			glfwSetWindowMonitor(_window, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
 
 		glViewport(0, 0, mode->width, mode->height);
 	}
 
 	void GameWindow::_close()
 	{
-		glfwSetWindowShouldClose(window, true);
+		glfwSetWindowShouldClose(_window, true);
 	}
 
 	void GameWindow::_setClearColour(Colour const& colour)
@@ -132,50 +133,52 @@ namespace Tristeon
 
 	bool GameWindow::_closingDown()
 	{
-		return glfwWindowShouldClose(window);
+		return glfwWindowShouldClose(_window);
 	}
 
-	void GameWindow::_setWindowTitle(std::string const& value)
+	void GameWindow::_setWindowTitle(const String& value)
 	{
-		glfwSetWindowTitle(window, value.data());
+		glfwSetWindowTitle(_window, value.data());
 	}
 
-	Vector2 GameWindow::_screenToWorld(Vector2Int const& screenPoint)
+	Vector2 GameWindow::_screenToWorld(const Vector2Int& screenPoint, Camera* camera)
 	{
 		//Adjust for center
-		Vector2 const halfSize = Vector2(gameWidth() / 2.0f, gameHeight() / 2.0f);
-		Vector2 result = static_cast<Vector2>(screenPoint) - halfSize;
+		Vector2 result = static_cast<Vector2>(screenPoint);
+
+		result -= ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
+		result -= (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
 		//Adjust for camera
-		result *= 1.0f / Camera::main()->zoom;
-		result += Camera::main()->position;
+		result *= 1.0f / camera->zoom;
+		result += camera->position;
 		return result;
 	}
 
-	Vector2Int GameWindow::_worldToScreen(Vector2 const& worldPoint)
+	Vector2Int GameWindow::_worldToScreen(const Vector2& worldPoint, Camera* camera)
 	{
 		Vector2 point = worldPoint;
-		point -= Camera::main()->position;
-		point /= (1.0f / Camera::main()->zoom);
+		point -= camera->position;
+		point /= (1.0f / camera->zoom);
 
-		Vector2 const halfSize = Vector2(gameWidth() / 2.0f, gameHeight() / 2.0f);
-		point += halfSize;
+		point += ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
+		point += (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
 		return Vector2Int(point);
 	}
 
 	void GameWindow::setupCallbacks()
 	{
-		glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+		glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
 
-		glfwSetKeyCallback(window, keyCallback);
-		glfwSetMouseButtonCallback(window, mouseButtonCallback);
-		glfwSetCursorPosCallback(window, cursorPosCallback);
+		glfwSetKeyCallback(_window, keyCallback);
+		glfwSetMouseButtonCallback(_window, mouseButtonCallback);
+		glfwSetCursorPosCallback(_window, cursorPosCallback);
 	}
 
 	void GameWindow::errorCallback(int error, const char* description)
 	{
-		std::cout << "GLFW Error: " << error << ". Description: " << description << "\n";
+		Console::warning("GLFW Error: " + std::to_string(error) + ". Description: " + description);
 	}
 
 	void GameWindow::framebufferSizeCallback(GLFWwindow* window, int width, int height)

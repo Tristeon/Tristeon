@@ -50,12 +50,12 @@ namespace TristeonEditor
 				{
 					auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
 					if (graphic == nullptr)
-						Editor::instance()->selectedActor()->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset);
+						Editor::instance()->selectedActor()->position = Grid::snap(Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset);
 					else
-						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position()) - draggingOffset) + graphic->bounds().size() / 2.0f - Grid::tileSize() / 2.0f;
+						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset) + graphic->bounds().size() / 2.0f - Grid::tileSize() / 2.0f;
 				}
 				else
-					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position()) - draggingOffset;
+					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset;
 			}
 			else if (draggingScalar)
 			{
@@ -65,7 +65,7 @@ namespace TristeonEditor
 				if (sprite != nullptr && sprite->texture() != nullptr)
 				{
 					Vector2 const position = Editor::instance()->selectedActor()->position;
-					Vector2 const topRight = Window::screenToWorld(Mouse::position());
+					Vector2 const topRight = Window::screenToWorld(Mouse::position(), Renderer::editorCamera());
 					Vector2 const difference = topRight - position;
 					if (difference.x < 0 || difference.y < 0)
 						return;
@@ -90,7 +90,7 @@ namespace TristeonEditor
 			else if (draggingRotate)
 			{
 				Vector2 const position = Editor::instance()->selectedActor()->position;
-				Vector2 const mouse = (Window::screenToWorld(Mouse::position()) - position).getNormalized();
+				Vector2 const mouse = (Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - position).getNormalized();
 				const float angle = mouse.getAngle();
 
 				if (Keyboard::held(Keyboard::Shift))
@@ -132,7 +132,7 @@ namespace TristeonEditor
 
 	void ActorLayerSceneView::clickActor()
 	{
-		Vector2 const world = Window::screenToWorld(Mouse::position());
+		Vector2 const world = Window::screenToWorld(Mouse::position(), Renderer::editorCamera());
 		for (size_t i = 0; i < actorLayer->actorCount(); i++)
 		{
 			auto* graphic = dynamic_cast<Graphic*>(actorLayer->actorAt(i));

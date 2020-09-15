@@ -136,8 +136,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 1340.0,
-                        "y": 755.0
+                        "x": 0.0,
+                        "y": 0.0
                     },
                     "renderToScreen": true,
                     "rotation": 0.0,
@@ -161,7 +161,7 @@
                 },
                 {
                     "behaviours": [],
-                    "name": "Right",
+                    "name": "Top",
                     "overrideResolution": {
                         "typeID": "Tristeon::Vector2Int",
                         "x": 800,
@@ -181,7 +181,7 @@
                     },
                     "screenCoordinates": {
                         "typeID": "Tristeon::Vector2",
-                        "x": 0.25,
+                        "x": -0.5,
                         "y": 0.5
                     },
                     "screenSize": {

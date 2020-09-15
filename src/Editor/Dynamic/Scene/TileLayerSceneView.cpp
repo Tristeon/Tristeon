@@ -95,7 +95,7 @@ namespace TristeonEditor
 		Vector2 const scalar = Vector2{ width() / (float)Window::gameWidth(), height() / (float)Window::gameHeight() } *Renderer::editorCamera()->zoom;
 		Vector2 const cameraPos = (Vector2)(Vector2Int)Renderer::editorCamera()->position * scalar;
 
-		Vector2Int const tileIndex = Grid::indexByPosition(Window::screenToWorld(mousePos));
+		Vector2Int const tileIndex = Grid::indexByPosition(Window::screenToWorld(mousePos, Renderer::editorCamera()));
 
 		Vector2 position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
 		position -= Vector2{ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f } *scalar; //Adjust center 

@@ -18,13 +18,13 @@ namespace Tristeon
 		unsigned _gameWidth() override;
 		unsigned _gameHeight() override;
 		bool _isFullscreen() override;
-		void _setFullscreen(bool const& value) override;
+		void _setFullscreen(const bool& value) override;
 		void _close() override;
-		void _setClearColour(Colour const& colour) override;
+		void _setClearColour(const Colour& colour) override;
 		bool _closingDown() override;
-		void _setWindowTitle(std::string const& value) override;
-		Vector2 _screenToWorld(Vector2Int const& screenPoint) override;
-		Vector2Int _worldToScreen(Vector2 const& worldPoint) override;
+		void _setWindowTitle(const String& value) override;
+		Vector2 _screenToWorld(const Vector2Int& screenPoint, Camera* camera) override;
+		Vector2Int _worldToScreen(const Vector2& worldPoint, Camera* camera) override;
 
 	private:
 		void setupCallbacks();
@@ -36,9 +36,9 @@ namespace Tristeon
 		static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 		static void cursorPosCallback(GLFWwindow* window, double x, double y);
 		
-		GLFWwindow* window = nullptr;
-		unsigned int w = 0, h = 0;
-		bool fullscreen;
+		GLFWwindow* _window = nullptr;
+		unsigned int _width = 0, _height = 0;
+		bool _fullscreen;
 	};
 }
 #endif

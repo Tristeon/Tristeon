@@ -17,7 +17,7 @@ namespace Tristeon
 		//TODO replace path dependency to ID dependency
 	public:
 		template<typename T>
-		static T* jsonLoad(String const& path)
+		static T* jsonLoad(const String& path)
 		{
 			if (path.empty())
 				return nullptr;
@@ -28,17 +28,17 @@ namespace Tristeon
 			if (!std::filesystem::exists(lower))
 				return nullptr;
 
-			if (loadedResources.find(lower) != loadedResources.end())
-				return (T*)loadedResources[lower].get();
+			if (_loadedResources.find(lower) != _loadedResources.end())
+				return (T*)_loadedResources[lower].get();
 
 			T* resource = JsonSerializer::deserialize<T>(lower);
-			loadedResources[lower] = std::move(Unique<T>(resource));
-			return (T*)loadedResources[lower].get();
+			_loadedResources[lower] = std::move(Unique<T>(resource));
+			return (T*)_loadedResources[lower].get();
 		}
 
 		///<summary>Expects T to contain a constructor that takes a string without having other parameters</summary>
 		template<typename T>
-		static T* assetLoad(String const& path)
+		static T* assetLoad(const String& path)
 		{
 			if (path.empty())
 				return nullptr;
@@ -49,15 +49,15 @@ namespace Tristeon
 			if (!std::filesystem::exists(lower))
 				return nullptr;
 
-			if (loadedResources.find(lower) != loadedResources.end())
-				return (T*)loadedResources[lower].get();
+			if (_loadedResources.find(lower) != _loadedResources.end())
+				return (T*)_loadedResources[lower].get();
 
-			loadedResources[lower] = std::make_unique<T>(lower);
-			return (T*)loadedResources[lower].get();
+			_loadedResources[lower] = std::make_unique<T>(lower);
+			return (T*)_loadedResources[lower].get();
 		}
 
 		template<typename T>
-		static T* load(String const& path)
+		static T* load(const String& path)
 		{
 			//Find complete filepath (path only contains a path relative to the project)
 			if (path.empty())
@@ -74,16 +74,16 @@ namespace Tristeon
 				return nullptr;
 			
 			MetaFile* metaFile = JsonSerializer::deserialize<MetaFile>(globalPath + ".meta");
-			if (newLoadedResources.find(metaFile->GUID) != newLoadedResources.end())
-				return (T*)newLoadedResources[metaFile->GUID].get();
+			if (_newLoadedResources.find(metaFile->GUID) != _newLoadedResources.end())
+				return (T*)_newLoadedResources[metaFile->GUID].get();
 
 			Unique<TObject> loadedAsset = metaFile->load();
 
-			newLoadedResources[metaFile->GUID] = std::move(loadedAsset);
-			return (T*)newLoadedResources[metaFile->GUID].get();
+			_newLoadedResources[metaFile->GUID] = std::move(loadedAsset);
+			return (T*)_newLoadedResources[metaFile->GUID].get();
 		}
 
-		static bool loaded(String const& path)
+		static bool loaded(const String& path)
 		{
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
 			String const lower = StringHelper::toLower(globalPath);
@@ -91,7 +91,7 @@ namespace Tristeon
 			if (lower.empty())
 				return false;
 
-			if (loadedResources.find(lower) != loadedResources.end())
+			if (_loadedResources.find(lower) != _loadedResources.end())
 				return true;
 
 			return false;
@@ -99,8 +99,8 @@ namespace Tristeon
 
 	private:
 		//TODO: Switch to new meta file system
-		static std::map<String, Unique<TObject>> loadedResources;
+		static std::map<String, Unique<TObject>> _loadedResources;
 
-		static std::map<int,Unique<TObject>> newLoadedResources;
+		static std::map<int,Unique<TObject>> _newLoadedResources;
 	};
 }

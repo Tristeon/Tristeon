@@ -42,7 +42,7 @@ namespace Tristeon
 			 */
 			[[nodiscard]] Vector2 size() const;
 			/**
-			 * Returns true if the mouse is hovering over the bounds.
+			 * Returns true if the mouse is hovering over the bounds in any available camera.
 			 */
 			[[nodiscard]] bool underMouse() const;
 		};

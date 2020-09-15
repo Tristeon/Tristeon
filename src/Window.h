@@ -7,6 +7,7 @@ namespace Tristeon
 {
 	struct Colour;
 	struct Vector2Int;
+	class Camera;
 
 	/**
 	 * Window handles window creation and system input.
@@ -20,7 +21,11 @@ namespace Tristeon
 		friend Singleton<Window>;
 		friend class Engine;
 	public:
+		Window() = default;
 		virtual ~Window() = default;
+
+		DELETE_COPY(Window);
+		DEFAULT_MOVE(Window);
 		
 		/**
 		 * The width of the window. This may potentially be different from the world/game size.
@@ -59,13 +64,13 @@ namespace Tristeon
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static Vector2 screenToWorld(const Vector2Int& screenPoint) { return instance()->_screenToWorld(screenPoint); }
+		[[nodiscard]] static Vector2 screenToWorld(const Vector2Int& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
 
 		/**
 		 * Converts a world coordinate into a screen point.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static Vector2Int worldToScreen(const Vector2& worldPoint) { return instance()->_worldToScreen(worldPoint); }
+		[[nodiscard]] static Vector2Int worldToScreen(const Vector2& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
 
 		/**
 		 * Returns true if the window is fullscreen, false if it's not
@@ -121,8 +126,8 @@ namespace Tristeon
 
 		virtual void _setWindowTitle(std::string const& value) = 0;
 
-		virtual Vector2 _screenToWorld(Vector2Int const& screenPoint) = 0;
-		virtual Vector2Int _worldToScreen(Vector2 const& worldPoint) = 0;
+		virtual Vector2 _screenToWorld(Vector2Int const& screenPoint, Camera* camera) = 0;
+		virtual Vector2Int _worldToScreen(Vector2 const& worldPoint, Camera* camera) = 0;
 #pragma endregion
 	};
 }
