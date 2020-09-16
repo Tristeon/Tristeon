@@ -1,6 +1,6 @@
 #ifdef TRISTEON_EDITOR
 #include "Rendering/Renderer.h"
-#include "Actors/Camera.h"
+#include "Rendering/Camera.h"
 #include <qsettings.h>
 #include <qshortcut.h>
 #include "EditorWindow.h"

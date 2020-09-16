@@ -19,7 +19,7 @@ namespace Tristeon
 			throw std::exception("Failed to initialize GLFW");
 		glfwSetErrorCallback(&GameWindow::errorCallback);
 		
-		_window = glfwCreateWindow(1920, 1080, "Tristeon", NULL, NULL);
+		_window = glfwCreateWindow(1920, 1080, "Tristeon", nullptr, nullptr);
 		_width = 1920;
 		_height = 1080;
 		if (!_window)
@@ -133,7 +133,7 @@ namespace Tristeon
 
 	bool GameWindow::_closingDown()
 	{
-		return glfwWindowShouldClose(_window);
+		return glfwWindowShouldClose(_window) == GLFW_TRUE;
 	}
 
 	void GameWindow::_setWindowTitle(const String& value)
@@ -144,7 +144,7 @@ namespace Tristeon
 	Vector2 GameWindow::_screenToWorld(const Vector2Int& screenPoint, Camera* camera)
 	{
 		//Adjust for center
-		Vector2 result = static_cast<Vector2>(screenPoint);
+		auto result = static_cast<Vector2>(screenPoint);
 
 		result -= ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
 		result -= (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center

@@ -6,8 +6,8 @@ namespace Tristeon
 	bool Gamepad::_buttonsPressed[Last];
 	bool Gamepad::_buttonsReleased[Last];
 
-	Vector2 Gamepad::_left = Vector2::zero();
-	Vector2 Gamepad::_right = Vector2::zero();
+	Vector2 Gamepad::_left{};
+	Vector2 Gamepad::_right{};
 
 	float Gamepad::_l2 = 0;
 	float Gamepad::_r2 = 0;

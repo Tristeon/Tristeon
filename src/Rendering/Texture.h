@@ -35,12 +35,12 @@ namespace Tristeon
 		/**
 		 * Returns the width of the texture in pixels.
 		 */
-		[[nodiscard]] int width() const;
+		[[nodiscard]] unsigned int width() const;
 
 		/**
 		 * Returns the height of the texture in pixels.
 		 */
-		[[nodiscard]] int height() const;
+		[[nodiscard]] unsigned int height() const;
 
 		/**
 		 * Returns the width and height of the texture in pixels.
@@ -54,9 +54,9 @@ namespace Tristeon
 
 		static const String defaultPath;
 	private:
-		int _width = 0;
-		int _height = 0;
-		int _channels = 0;
+		unsigned int _width = 0;
+		unsigned int _height = 0;
+		unsigned int _channels = 0;
 		
 		bool _valid = false;
 		unsigned int _texture = 0;

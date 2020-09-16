@@ -1,5 +1,5 @@
 #include "Sprite.h"
-#include "Resources.h"
+#include <AssetManagement/Resources.h>
 
 #include "glad/glad.h"
 
@@ -27,8 +27,8 @@ namespace Tristeon
 	{
 		Graphic::deserialize(j);
 		
-		width = j.value("width", 1);
-		height = j.value("height", 1);
+		width = j.value("width", 1u);
+		height = j.value("height", 1u);
 
 		flipX = j.value("flipX", false);
 		flipY = j.value("flipY", false);

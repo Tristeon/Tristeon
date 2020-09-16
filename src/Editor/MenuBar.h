@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include <QMenuBar>
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 
 namespace TristeonEditor
 {

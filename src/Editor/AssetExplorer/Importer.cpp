@@ -1,7 +1,7 @@
 ﻿#include "Importer.h"
 
 #include "Project.h"
-#include "AssetManagement/MetaFile.h"
+#include "AssetManagement/MetaFiles/MetaFile.h"
 #include "Serialization/JsonSerializer.h"
 #include "Serialization/Register.h"
 #include "Utils/Random.h"

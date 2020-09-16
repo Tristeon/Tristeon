@@ -1,7 +1,7 @@
 #pragma once
 #include <Serialization/Serializable.h>
 #include <Scenes/Layers/Layer.h>
-#include "TypeDefinitions.h"
+#include "Utils/TypeDefinitions.h"
 
 namespace Tristeon
 {
@@ -101,12 +101,12 @@ namespace Tristeon
 		 * Sets the index of the given layer. This removes the layer from its current position in the list and inserts it at the given index.
 		 * Other layers will be moved down or up because of this.
 		 */
-		void setIndex(Layer* layer, const int& i);
+		void setIndex(Layer* layer, const ull& i);
 
 		/**
 		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
 		 */
-		[[nodiscard]] int indexOf(Layer* layer);
+		[[nodiscard]] ull indexOf(Layer* layer);
 
 		/**
 		 * Gets the filepath if the Scene was loaded through SceneManager::load().

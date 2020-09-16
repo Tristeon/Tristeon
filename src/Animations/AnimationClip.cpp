@@ -29,8 +29,8 @@ namespace Tristeon
 	{
 		Serializable::deserialize(j);
 		
-		rows = j.value("rows", 1);
-		cols = j.value("cols", 1);
+		rows = j.value("rows", 1u);
+		cols = j.value("cols", 1u);
 		startIndex = j.value("startIndex", 0);
 		endIndex = j.value("endIndex", rows * cols);
 		loops = j.value("loops", true);

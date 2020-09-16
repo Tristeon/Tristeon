@@ -5,7 +5,7 @@
 
 #include "Engine.h"
 #include "Renderer.h"
-#include "Actors/Camera.h"
+#include "Rendering/Camera.h"
 
 namespace Tristeon
 {
@@ -19,7 +19,7 @@ namespace Tristeon
 		return (max - min);
 	}
 
-	bool Graphic::Bounds::underMouse() const
+	bool Graphic::Bounds::underMouse()
 	{
 		if (Engine::playMode())
 		{

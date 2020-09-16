@@ -1,8 +1,8 @@
 #ifdef TRISTEON_EDITOR
-#include "Resources.h"
+#include <AssetManagement/Resources.h>
 #include "TileSetFileEditor.h"
 #include "Editor/EditorFields.h"
-#include "FileTypes/TileSet.h"
+#include "Scenes/Tiles/TileSet.h"
 
 using Tristeon::Vector2;
 using Tristeon::Vector2Int;

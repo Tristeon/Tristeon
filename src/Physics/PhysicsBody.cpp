@@ -1,7 +1,7 @@
 #include "PhysicsBody.h"
 
 #include <Math/Math.h>
-#include <Actors/Actor.h>
+#include <Scenes/Actors/Actor.h>
 #include <Physics/Collider.h>
 #include <Physics/PhysicsWorld.h>
 

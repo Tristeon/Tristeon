@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "TypeDefinitions.h"
+#include "Utils/TypeDefinitions.h"
 #include <filesystem>
 
 namespace TristeonEditor

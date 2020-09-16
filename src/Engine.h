@@ -1,6 +1,6 @@
 #pragma once
 #include <Utils/Singleton.h>
-#include "TypeDefinitions.h"
+#include "Utils/TypeDefinitions.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Renderer.h"
 

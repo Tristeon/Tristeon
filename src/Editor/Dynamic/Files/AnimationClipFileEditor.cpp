@@ -1,6 +1,6 @@
 #ifdef TRISTEON_EDITOR
 #include "Animations/AnimationClip.h"
-#include "Resources.h"
+#include "AssetManagement/Resources.h"
 #include "AnimationClipFileEditor.h"
 #include "Editor/EditorFields.h"
 

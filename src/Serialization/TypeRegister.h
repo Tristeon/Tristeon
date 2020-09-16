@@ -5,8 +5,8 @@
 #include <Serialization/Typename.h>
 #include <Serialization/Serializable.h>
 
-#include <Actors/Actor.h>
-#include <Actors/Behaviours/Behaviour.h>
+#include <Scenes/Actors/Actor.h>
+#include <Scenes/Actors/Behaviour.h>
 #include <Scenes/Layers/Layer.h>
 
 namespace Tristeon

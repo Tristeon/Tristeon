@@ -72,13 +72,10 @@ Tristeon_autogen/
 *.vcxproj
 *.sln
 *.suo
-*.tmp
 *.user
 *.userprefs
-*.pidb
 *.booproj
 *.svd
-*.pdb
 
 *.lib
 .vs/

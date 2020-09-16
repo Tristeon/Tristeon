@@ -1,5 +1,5 @@
 #pragma once
-#include <Collectors/Collector.h>
+#include <Collector.h>
 
 namespace Tristeon
 {

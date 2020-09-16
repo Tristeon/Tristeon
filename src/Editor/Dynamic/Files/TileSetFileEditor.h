@@ -2,7 +2,7 @@
 #ifdef TRISTEON_EDITOR
 #include "JsonFileEditor.h"
 #include "FileEditorRegister.h"
-#include "FileTypes/TileSet.h"
+#include "Scenes/Tiles/TileSet.h"
 
 namespace TristeonEditor
 {

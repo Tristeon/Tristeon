@@ -2,7 +2,7 @@
 #ifdef TRISTEON_EDITOR
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 #include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
-#include <Actors/Behaviours/Behaviour.h>
+#include <Scenes/Actors/Behaviour.h>
 #include <QtWidgets>
 
 namespace TristeonEditor

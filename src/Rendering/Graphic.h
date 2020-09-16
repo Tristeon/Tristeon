@@ -1,5 +1,5 @@
 #pragma once
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 #include <Rendering/Shader.h>
 
 namespace Tristeon
@@ -44,7 +44,7 @@ namespace Tristeon
 			/**
 			 * Returns true if the mouse is hovering over the bounds in any available camera.
 			 */
-			[[nodiscard]] bool underMouse() const;
+			[[nodiscard]] bool underMouse();
 		};
 		
 		/**

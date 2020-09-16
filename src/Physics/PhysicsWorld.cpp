@@ -26,7 +26,7 @@ namespace Tristeon
 		_world->Step(Project::Physics::fixedDeltaTime() / 1000.0f, _velocityIterations, _positionIterations);
 	}
 
-	float PhysicsWorld::pixelsToMeters(const uint32& pixels)
+	float PhysicsWorld::pixelsToMeters(const float& pixels)
 	{
 		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
@@ -36,7 +36,7 @@ namespace Tristeon
 		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
 
-	uint32 PhysicsWorld::metersToPixels(const float& meters)
+	float PhysicsWorld::metersToPixels(const float& meters)
 	{
 		return meters * (float)Project::Physics::pixelsPerMeter();
 	}

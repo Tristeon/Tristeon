@@ -1,6 +1,6 @@
 #pragma once
 #include <box2d/b2_world.h>
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 #include <Utils/Singleton.h>
 #include <Math/Vector2.h>
 
@@ -36,7 +36,7 @@ namespace Tristeon
 		 * This is because box2D exclusively uses a MKS (meter, kilograms, seconds) system to define & calculate location, mass and time.
 		 * Passing normal pixel coordinates to box2d will make box2d interpret each pixel as a full meter, causing physics to be off.
 		 */
-		[[nodiscard]] static float pixelsToMeters(const uint32& pixels);
+		[[nodiscard]] static float pixelsToMeters(const float& pixels);
 
 		/**
 		 * Converts pixel coordinates into box2D compatible meter coordinates.
@@ -50,7 +50,7 @@ namespace Tristeon
 		 * Converts box2D meters back to Tristeon pixels.
 		 * This is used to convert box2D's output back into Tristeon compatible coordinates.
 		 */
-		[[nodiscard]] static uint32 metersToPixels(const float& meters);
+		[[nodiscard]] static float metersToPixels(const float& meters);
 
 		/**
 		 * Converts box2D meters back to Tristeon pixels.

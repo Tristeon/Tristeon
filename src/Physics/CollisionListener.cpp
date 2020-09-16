@@ -2,7 +2,7 @@
 
 #include <box2d/b2_contact.h>
 
-#include <Actors/Actor.h>
+#include <Scenes/Actors/Actor.h>
 #include <Physics/Collider.h>
 #include <Physics/TileContact.h>
 #include <Scenes/Layers/TileLayer.h>
@@ -44,7 +44,7 @@ namespace Tristeon
 			auto* layer = aTileLayer != nullptr ? aTileLayer : bTileLayer;
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
-			Vector2Int tileIndex;
+			Vector2Int tileIndex{};
 			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)
@@ -123,7 +123,7 @@ namespace Tristeon
 			auto* layer = aTileLayer != nullptr ? aTileLayer : bTileLayer;
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
-			Vector2Int tileIndex;
+			Vector2Int tileIndex{};
 			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)

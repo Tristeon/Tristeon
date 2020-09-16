@@ -8,8 +8,8 @@
 #include "Shader.h"
 #include "Gizmos.h"
 #include "Grid.h"
-#include "Actors/Camera.h"
-#include "Collectors/Collector.h"
+#include "Rendering/Camera.h"
+#include "Collector.h"
 #include "glad/glad.h"
 
 #include "Scenes/SceneManager.h"
@@ -65,7 +65,7 @@ namespace Tristeon
 					continue;
 				
 				shader->bind();
-				shader->setUniformValue("camera.position", (float)camera->position.x, (float)camera->position.y);
+				shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
 				shader->setUniformValue("camera.zoom", camera->zoom);
 				shader->setUniformValue("camera.displayPixels", (unsigned int)resolution.x, (unsigned int)resolution.y);
 			}

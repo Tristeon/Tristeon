@@ -2,7 +2,8 @@
 #ifdef TRISTEON_EDITOR
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 #include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
-#include <Actors/Actor.h>
+#include <Scenes/Actors/Actor.h>
+
 namespace TristeonEditor
 {
 	class ActorEditor : public ObjectEditor

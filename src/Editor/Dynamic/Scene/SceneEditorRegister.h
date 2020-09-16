@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 #include <Serialization/Typename.h>
 
 namespace TristeonEditor

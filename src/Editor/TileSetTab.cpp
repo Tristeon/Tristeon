@@ -7,7 +7,7 @@
 #include <qlineedit.h>
 #include <QMouseEvent>
 
-#include "Resources.h"
+#include "AssetManagement/Resources.h"
 #include "Brushes/Brushes.h"
 #include "Math/Vector2.h"
 

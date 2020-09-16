@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "MetaFile.h"
 #include "Serialization/TypeRegister.h"
-#include "FileExtensionRegister.h"
+#include "AssetManagement/FileExtensionRegister.h"
 
 namespace Tristeon
 {

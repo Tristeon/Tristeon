@@ -2,14 +2,14 @@
 #include <glad/glad.h>
 
 #include <Engine.h>
-#include <FileTypes/TileSet.h>
+#include <Scenes/Tiles/TileSet.h>
 #include <Input/Keyboard.h>
 #include <Scenes/Scene.h>
 
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
 
-#include <Resources.h>
+#include <AssetManagement/Resources.h>
 
 #include "Rendering/Grid.h"
 #include "Rendering/Texture.h"
@@ -56,8 +56,8 @@ namespace Tristeon
 	{
 		Layer::deserialize(j);
 		
-		_width = j.value("width", 1);
-		_height = j.value("height", 1);
+		_width = j.value("width", 1u);
+		_height = j.value("height", 1u);
 
 		_tileSets.clear();
 		if (j.contains("tileSets"))

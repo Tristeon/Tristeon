@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 #include <Serialization/Serializable.h>
 #include <Serialization/JsonSerializer.h>
 #include <Utils/StringHelper.h>
@@ -8,7 +8,7 @@
 #include "Project.h"
 #include <filesystem>
 
-#include "AssetManagement/MetaFile.h"
+#include "AssetManagement/MetaFiles/MetaFile.h"
 
 namespace Tristeon
 {

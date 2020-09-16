@@ -1,6 +1,6 @@
 #ifdef TRISTEON_EDITOR
 #include "Rendering/Renderer.h"
-#include "Actors/Camera.h"
+#include "Rendering/Camera.h"
 #include "Input/Keyboard.h"
 #include "Math/Math.h"
 #include "Input/Mouse.h"
@@ -10,7 +10,6 @@ using namespace Tristeon;
 
 namespace TristeonEditor
 {
-	//TODO: Use editor camera instead of Camera::cameras()[0]
 	void EditorCameraController::update()
 	{
 		handleScrolling();
@@ -44,7 +43,7 @@ namespace TristeonEditor
 		if (!Renderer::editorCamera())
 			return;
 		
-		float const scrollingSpeed = Math::clamp(-pow(Renderer::editorCamera()->zoom - 1, 2) * 2 + 1, 0.1f, 10);
+		float const scrollingSpeed = Math::clamp(-pow(Renderer::editorCamera()->zoom - 1, 2) * 2 + 1, 0.1f, 10.0f);
 		Renderer::editorCamera()->zoom += Mouse::deltaScroll().y * scrollingSpeed * 0.001f;
 		Renderer::editorCamera()->zoom = Math::clamp(Renderer::editorCamera()->zoom, 0.03, 1.7);
 	}

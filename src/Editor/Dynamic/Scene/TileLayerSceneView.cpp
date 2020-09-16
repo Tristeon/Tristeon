@@ -1,6 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "Actors/Camera.h"
-#include "AssetManagement/AssetDatabase.h"
+#include "Rendering/Camera.h"
 #include "Window.h"
 #include "Input/Keyboard.h"
 #include "Rendering/Grid.h"

@@ -3,11 +3,10 @@
 #include "Animations/AnimationClip.h"
 #include "AssetManagement/AssetDatabase.h"
 #include "Serialization/JsonSerializer.h"
-#include "Window.h"
 #include "MenuBar.h"
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>
-#include <FileTypes/TileSet.h>
+#include <Scenes/Tiles/TileSet.h>
 
 #include <QtWidgets>
 

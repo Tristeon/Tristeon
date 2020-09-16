@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include "SceneEditor.h"
 #include "SceneEditorRegister.h"
+#include "Rendering/Graphic.h"
 #include "Scenes/Layers/ActorLayer.h"
 
 namespace TristeonEditor
@@ -19,14 +20,14 @@ namespace TristeonEditor
 		
 		Tristeon::ActorLayer* actorLayer = nullptr;
 
-		Tristeon::Graphic::Bounds scalar;
-		Tristeon::Graphic::Bounds rotator;
+		Tristeon::Graphic::Bounds scalar{};
+		Tristeon::Graphic::Bounds rotator{};
 		
 		bool dragging = false;
 		bool draggingScalar = false;
 		bool draggingRotate = false;
 
-		Tristeon::Vector2 draggingOffset;
+		Tristeon::Vector2 draggingOffset{};
 	};
 }
 #endif

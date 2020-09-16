@@ -1,11 +1,11 @@
 #include "ActorLayer.h"
 
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 
 #include <Rendering/Renderer.h>
 #include <Scenes/Scene.h>
 
-#include <Actors/Sprite.h>
+#include <Rendering/Sprite.h>
 #include <Callbacks/IPreDestroy.h>
 
 namespace Tristeon
@@ -44,7 +44,7 @@ namespace Tristeon
 		}
 		_actors.clear();
 
-		for (auto serializedActor : j["actors"])
+		for (const auto& serializedActor : j["actors"])
 		{
 			//TODO: Potentially detect existing actors and simply re-deserialize as opposed to recreating them
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedActor["typeID"]);

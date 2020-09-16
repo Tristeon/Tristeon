@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-#include <Actors/Actor.h>
+#include <Scenes/Actors/Actor.h>
 
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_polygon_shape.h>

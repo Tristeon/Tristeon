@@ -5,9 +5,9 @@
 #include <qlabel.h>
 #include <QWidget>
 
-#include "TypeDefinitions.h"
-#include "FileTypes/TileSet.h"
-#include "Scenes/Layers/Tile.h"
+#include "Scenes/Tiles/Tile.h"
+#include "Scenes/Tiles/TileSet.h"
+#include "Utils/TypeDefinitions.h"
 
 namespace TristeonEditor
 {

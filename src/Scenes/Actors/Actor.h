@@ -1,11 +1,11 @@
 #pragma once
 #include "Serialization/InstancedSerializable.h"
-#include <Actors/Behaviours/Behaviour.h>
+#include "Behaviour.h"
 
 #include "Math/Vector2.h"
 
 #include <Callbacks/IStart.h>
-#include <Collectors/Collector.h>
+#include <Collector.h>
 
 namespace Tristeon
 {

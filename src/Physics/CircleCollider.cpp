@@ -1,7 +1,7 @@
 #include "CircleCollider.h"
 #include <box2d/b2_shape.h>
 
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 #include "box2d/b2_circle_shape.h"
 #include "PhysicsWorld.h"
 #include "Rendering/Gizmos.h"

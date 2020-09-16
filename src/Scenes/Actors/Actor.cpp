@@ -2,7 +2,7 @@
 
 #include "Engine.h"
 #include "Callbacks/IPreDestroy.h"
-#include "Collectors/InstanceCollector.h"
+#include <InstanceCollector.h>
 #include "Scenes/SceneManager.h"
 
 #include "Scenes/Scene.h"
@@ -32,13 +32,13 @@ namespace Tristeon
 		{
 			_behaviours[i]->_destroyed = true;
 			_behaviours[i].reset();
-			_behaviours.removeAt(i);
 		}
+		_behaviours.clear();
 	}
 
 	json Actor::serialize()
 	{
-		auto j = Serializable::serialize();
+		auto j = InstancedSerializable::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(Actor);
 		j["position"] = position;
 		j["scale"] = scale;
@@ -54,7 +54,7 @@ namespace Tristeon
 
 	void Actor::deserialize(json j)
 	{
-		Serializable::deserialize(j);
+		InstancedSerializable::deserialize(j);
 
 		position = j.value("position", Vector2());
 		scale = j.value("scale", Vector2::one());
@@ -67,7 +67,7 @@ namespace Tristeon
 		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
-		for (auto serializedBehaviour : j.value("behaviours", json::array_t()))
+		for (const auto& serializedBehaviour : j.value("behaviours", json::array_t()))
 		{
 			//Attempt to create behaviour from type ID
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedBehaviour["typeID"]);
@@ -129,7 +129,7 @@ namespace Tristeon
 		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
-		IStart* istart = dynamic_cast<IStart*>(result);
+		auto* istart = dynamic_cast<IStart*>(result);
 		if (istart != nullptr)
 			istart->start();
 

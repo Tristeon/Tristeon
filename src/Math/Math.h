@@ -32,6 +32,11 @@ namespace Tristeon
 		static float clamp(const float& value, const float& min, const float& max);
 
 		/**
+		 * Clamps the given value between min [inclusive] and max [inclusive].
+		 */
+		static int clamp(const int& value, const int& min, const int& max);
+
+		/**
 		 * Returns a position that orbits around the given center with the given offset using the rotation (degrees).
 		 */
 		static Vector2 orbit(const Vector2& center, const Vector2& offset, const float& rotation);

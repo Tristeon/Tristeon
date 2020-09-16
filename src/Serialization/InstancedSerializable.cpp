@@ -1,5 +1,5 @@
 #include "InstancedSerializable.h"
-#include "Collectors/InstanceCollector.h"
+#include "InstanceCollector.h"
 #include "Utils/Random.h"
 
 namespace Tristeon

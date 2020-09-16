@@ -1,6 +1,6 @@
 #ifndef TRISTEON_EDITOR
 #include "Engine.h"
-#include <GameWindow.h>
+#include "GameWindow.h"
 
 std::unique_ptr<Tristeon::Engine> engine;
 

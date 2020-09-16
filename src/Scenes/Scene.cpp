@@ -22,7 +22,7 @@ namespace Tristeon
 		Serializable::deserialize(j);
 		
 		_layers.clear(); //TODO: Could detect and reuse existing layers as opposed to clearing every time
-		for (auto serializedLayer : j.value("layers", json::array_t()))
+		for (const auto& serializedLayer : j.value("layers", json::array_t()))
 		{
 			Unique<Serializable> serializable = TypeRegister::createInstance(serializedLayer["typeID"]);
 			serializable->deserialize(serializedLayer);
@@ -68,14 +68,14 @@ namespace Tristeon
 
 	void Scene::destroyLayer(Layer* layer)
 	{
-		int const index = indexOf(layer);
+		ull const index = indexOf(layer);
 		if (index == _layers.size())
 			return;
 		_layers[index].reset();
 		_layers.removeAt(index);
 	}
 
-	void Scene::setIndex(Layer* layer, const int& i)
+	void Scene::setIndex(Layer* layer, const ull& i)
 	{
 		ull const old = indexOf(layer);
 		if (old == _layers.size())
@@ -86,7 +86,7 @@ namespace Tristeon
 		_layers.insert(i, std::move(unique));
 	}
 
-	int Scene::indexOf(Layer* layer)
+	ull Scene::indexOf(Layer* layer)
 	{
 		for (size_t i = 0; i < _layers.size(); i++)
 		{

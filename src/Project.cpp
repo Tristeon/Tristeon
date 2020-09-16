@@ -81,8 +81,8 @@ namespace Tristeon
 		if (file.contains("graphics"))
 		{
 			json const graphics = file["graphics"];
-			_graphics._tileWidth = graphics.value("tileWidth", 64);
-			_graphics._tileHeight = graphics.value("tileHeight", 64);
+			_graphics._tileWidth = graphics.value("tileWidth", 64u);
+			_graphics._tileHeight = graphics.value("tileHeight", 64u);
 
 			_graphics._vsync = graphics.value("vsync", false);
 			_graphics._tripleBuffering = graphics.value("tripleBuffering", true);
@@ -93,7 +93,7 @@ namespace Tristeon
 		{
 			json const physics = file["physics"];
 			_physics._fixedDeltaTime = physics.value("fixedDeltaTime", 1.0f / 50.0f * 1000.0f);
-			_physics._pixelsPerMeter = physics.value("pixelsPerMeter", 64);
+			_physics._pixelsPerMeter = physics.value("pixelsPerMeter", 64u);
 		}
 	}
 }

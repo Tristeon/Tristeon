@@ -378,7 +378,7 @@ namespace Tristeon
 	template <typename T>
 	ull Vector<T>::removeAll(T value)
 	{
-		const ull index = 0;
+		ull index = 0;
 		while ((index = indexOf(value)) != _size)
 			removeAt(index);
 		return _size;

@@ -20,7 +20,7 @@ namespace Tristeon
 
 	Vector2Int Grid::tileSize()
 	{
-		return Vector2Int(tileWidth(), tileHeight());
+		return Vector2Int((int)tileWidth(), (int)tileHeight());
 	}
 
 	Vector2 Grid::snap(const Vector2& position)
@@ -45,7 +45,7 @@ namespace Tristeon
 
 	Vector2 Grid::positionByIndex(const int& ix, const int& iy)
 	{
-		return {(float)ix * tileWidth(), (float)iy * tileHeight()};
+		return {(float)ix * (float)tileWidth(), (float)iy * (float)tileHeight()};
 	}
 
 	void Grid::render()

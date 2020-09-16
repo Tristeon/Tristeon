@@ -1,5 +1,5 @@
 #pragma once
-#include <Actors/Behaviours/Behaviour.h>
+#include <Scenes/Actors/Behaviour.h>
 #include <Math/Vector2.h>
 
 #include <box2d/b2_shape.h>

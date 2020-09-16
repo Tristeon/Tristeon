@@ -13,7 +13,12 @@ namespace Tristeon
 	Texture::Texture(std::string const& path)
 	{
 		stbi_set_flip_vertically_on_load(true);
-		auto* pixels = stbi_load(path.c_str(), &_width, &_height, &_channels, STBI_rgb_alpha);
+		int w = 0, h = 0, c = 0;
+		auto* pixels = stbi_load(path.c_str(), &w, &h, &c, STBI_rgb_alpha);
+
+		_width = (unsigned int)w;
+		_height = (unsigned int)h;
+		_channels = (unsigned int)c;
 		
 		if (!pixels || _width == 0 || _height == 0)
 		{
@@ -52,19 +57,19 @@ namespace Tristeon
 		glBindTexture(GL_TEXTURE_2D, _texture);
 	}
 
-	int Texture::width() const
+	unsigned int Texture::width() const
 	{
 		return _width;
 	}
 
-	int Texture::height() const
+	unsigned int Texture::height() const
 	{
 		return _height;
 	}
 
 	Vector2Int Texture::size() const
 	{
-		return { _width, _height };
+		return { (int)_width, (int)_height };
 	}
 
 	bool Texture::loaded() const

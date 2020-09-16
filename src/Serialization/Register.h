@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 
 namespace Tristeon
 {

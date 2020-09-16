@@ -1,5 +1,5 @@
 #pragma once
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 #include "Callbacks/IDrawGizmos.h"
 
 #include <Utils/ClassDefaults.h>

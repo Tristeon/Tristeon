@@ -1,5 +1,5 @@
 #include "Behaviour.h"
-#include <Collectors/Collector.h>
+#include <Collector.h>
 #include "Engine.h"
 
 namespace Tristeon

@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <Utils/Singleton.h>
-#include "Actors/Camera.h"
+#include "Rendering/Camera.h"
 #include <Utils/ClassDefaults.h>
 
 namespace Tristeon

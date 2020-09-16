@@ -1,17 +1,17 @@
 #ifdef TRISTEON_EDITOR
-#include "Window.h"
-#include "Actors/Camera.h"
-#include "Editor/GameView.h"
-#include "Math/Math.h"
-#include "Rendering/Gizmos.h"
-#include "Rendering/Grid.h"
-#include "Input/Keyboard.h"
-#include "Actors/Sprite.h"
-#include "Engine.h"
 #include "ActorLayerSceneView.h"
-#include "Rendering/Graphic.h"
-#include "Editor/Editor.h"
 #include <Input/Mouse.h>
+#include "Engine.h"
+#include "Window.h"
+#include "Editor/Editor.h"
+#include "Editor/GameView.h"
+#include "Input/Keyboard.h"
+#include "Math/Math.h"
+#include "Rendering/Camera.h"
+#include "Rendering/Gizmos.h"
+#include "Rendering/Graphic.h"
+#include "Rendering/Grid.h"
+#include "Rendering/Sprite.h"
 
 using namespace Tristeon;
 namespace TristeonEditor
@@ -113,7 +113,7 @@ namespace TristeonEditor
 			Graphic::Bounds const aabb = graphic->bounds();
 			Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Colour(0.5, 0.5, 1, 1));
 
-			const Vector2 handleSize = Vector2(Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256), Math::clamp(32 / Renderer::editorCamera()->zoom, 8, 256));
+			const Vector2 handleSize = Vector2(Math::clamp(32 / Renderer::editorCamera()->zoom, 8.0f, 256.0f), Math::clamp(32 / Renderer::editorCamera()->zoom, 8.0f, 256.0f));
 			const Vector2 cpos = Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
 			Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Colour(0.5, 0.5, 0.5));
 			scalar = Graphic::Bounds{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };

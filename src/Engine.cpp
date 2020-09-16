@@ -14,7 +14,7 @@
 #include <Callbacks/IDrawGizmos.h>
 #include <Callbacks/IUpdate.h>
 
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 #include "Project.h"
 #include "AssetManagement/AssetDatabase.h"
 #include "Utils/Time.h"

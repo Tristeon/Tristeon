@@ -3,8 +3,8 @@
 #include <Animations/AnimationClip.h>
 
 #include "AssetManagement/AssetDatabase.h"
+#include "AssetManagement/Resources.h"
 #include "Math/Math.h"
-#include "Resources.h"
 #include "Utils/Time.h"
 
 namespace Tristeon
@@ -48,7 +48,7 @@ namespace Tristeon
 
 	void AnimationSprite::setFrame(unsigned int const& frame)
 	{
-		_currentFrame = Math::clamp(frame, _clip->startIndex, _clip->endIndex);
+		_currentFrame = (float)Math::clamp((int)frame, (int)_clip->startIndex, (int)_clip->endIndex);
 	}
 
 	void AnimationSprite::render()
@@ -78,7 +78,7 @@ namespace Tristeon
 		if (_paused)
 			return;
 
-		if (_clip->startIndex + floor(_currentFrame) >= _clip->endIndex)
+		if (_clip->startIndex + (unsigned int)floor(_currentFrame) >= _clip->endIndex)
 		{
 			if (_clip->loops)
 				_currentFrame = 0;

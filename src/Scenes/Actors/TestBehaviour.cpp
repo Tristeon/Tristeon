@@ -1,11 +1,11 @@
-#include <Actors/Behaviours/TestBehaviour.h>
-#include <Actors/Actor.h>
+#include <Scenes/Actors/TestBehaviour.h>
+#include <Scenes/Actors/Actor.h>
 
 #include <Input/Gamepad.h>
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
-#include "Actors/Camera.h"
+#include "Rendering/Camera.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
@@ -25,7 +25,7 @@ namespace Tristeon
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->setVelocity({ body->velocity().x, jumpVelocity });
 
-		float const horizontal = Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A);
+		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
 		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
 
 		if (!Camera::cameras().empty())

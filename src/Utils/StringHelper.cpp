@@ -1,6 +1,6 @@
 #include "StringHelper.h"
 
-#include <TypeDefinitions.h>
+#include <Utils/TypeDefinitions.h>
 
 #include <algorithm>
 #include <sstream>

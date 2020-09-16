@@ -5,7 +5,7 @@
 
 #include <box2d/b2_polygon_shape.h>
 
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 #include "Rendering/Gizmos.h"
 
 namespace Tristeon

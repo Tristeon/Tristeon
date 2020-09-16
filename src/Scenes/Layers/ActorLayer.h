@@ -1,7 +1,7 @@
 #pragma once
 #include "Layer.h"
 #include <Serialization/TypeRegister.h>
-#include "Actors/Actor.h"
+#include "Scenes/Actors/Actor.h"
 
 namespace Tristeon
 {

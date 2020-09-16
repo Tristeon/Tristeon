@@ -9,9 +9,9 @@ namespace Tristeon
 	bool Mouse::_buttonsPressed[Last];
 	bool Mouse::_buttonsReleased[Last];
 	
-	Vector2Int Mouse::_mousePos = Vector2Int::zero();
-	Vector2Int Mouse::_mouseDelta = Vector2Int::zero();
-	Vector2Int Mouse::_scrollDelta = Vector2Int::zero();
+	Vector2Int Mouse::_mousePos{};
+	Vector2Int Mouse::_mouseDelta{};
+	Vector2Int Mouse::_scrollDelta{};
 	
 	bool Mouse::pressed(const MouseButton& button)
 	{

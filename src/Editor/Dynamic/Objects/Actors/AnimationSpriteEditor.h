@@ -1,6 +1,6 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
-#include "Actors/AnimationSprite.h"
+#include "Rendering/AnimationSprite.h"
 #include "SpriteEditor.h"
 
 namespace TristeonEditor

@@ -1,7 +1,5 @@
 #include "TileSet.h"
-#include "Resources.h"
-#include "Serialization/JsonSerializer.h"
-
+#include "AssetManagement/Resources.h"
 #include <Rendering/Texture.h>
 
 namespace Tristeon
@@ -66,8 +64,8 @@ namespace Tristeon
 	{
 		Serializable::deserialize(j);
 		
-		cols = j.value("width", 1);
-		rows = j.value("height", 1);
+		cols = j.value("width", 1u);
+		rows = j.value("height", 1u);
 
 		id = j.value("id", 0);
 
@@ -112,7 +110,7 @@ namespace Tristeon
 		img.x -= horizontalSpacing * (cols - 1);
 		img.y -= verticalSpacing * (rows - 1);
 
-		return { (int)img.x / (int)cols, (int)img.y / (int)rows };
+		return { img.x / (int)cols, img.y / (int)rows };
 	}
 
 	Vector2 TileSet::tileSizeNormalized() const

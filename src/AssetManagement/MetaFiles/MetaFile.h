@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "TypeDefinitions.h"
+#include "Utils/TypeDefinitions.h"
 #include "Serialization/Serializable.h"
 
 namespace Tristeon

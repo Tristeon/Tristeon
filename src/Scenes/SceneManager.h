@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
-#include <TypeDefinitions.h>
-#include <Actors/Behaviours/Behaviour.h>
+#include <Utils/TypeDefinitions.h>
+#include <Scenes/Actors/Behaviour.h>
 #include <Utils/Delegate.h>
 
 #ifdef TRISTEON_EDITOR

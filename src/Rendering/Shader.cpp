@@ -153,7 +153,7 @@ namespace Tristeon
 		glGetShaderiv(vertex, GL_COMPILE_STATUS, &compiledVertex);
 		if (compiledVertex == GL_FALSE)
 		{
-			int maxLength = 0;
+			auto maxLength = 0;
 			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &maxLength);
 
 			if (maxLength > 0)
@@ -182,7 +182,7 @@ namespace Tristeon
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &compiledFragment);
 		if (compiledFragment == GL_FALSE)
 		{
-			GLint maxLength = 0;
+			int maxLength = 0;
 			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &maxLength);
 
 			if (maxLength > 0)
