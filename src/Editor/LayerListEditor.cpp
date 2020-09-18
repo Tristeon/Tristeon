@@ -39,7 +39,7 @@ namespace TristeonEditor
 		list->clear();
 		layers.clear();
 
-		for (size_t i = 0; i < scene->getLayerCount(); i++)
+		for (size_t i = 0; i < scene->layerCount(); i++)
 		{
 			Tristeon::Layer* layer = scene->layerAt(i);
 
@@ -49,7 +49,7 @@ namespace TristeonEditor
 			layers[list->item(i)] = layer;
 		}
 
-		if (row < scene->getLayerCount())
+		if (row < scene->layerCount())
 			list->setCurrentRow(row);
 		else
 			list->setCurrentRow(0);
@@ -65,7 +65,7 @@ namespace TristeonEditor
 			QAction* action = new QAction(pair.first.c_str(), this);
 			connect(action, &QAction::triggered, this, [&](bool checked)
 				{
-					auto* layer = Tristeon::SceneManager::current()->addLayer(pair.first);
+					auto* layer = Tristeon::SceneManager::current()->createLayer(pair.first);
 					layer->name = "New " + Tristeon::StringHelper::split(pair.first, ':').last();
 
 					auto* item = new QListWidgetItem(QString::fromStdString(layer->name));

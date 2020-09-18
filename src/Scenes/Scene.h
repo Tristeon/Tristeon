@@ -48,14 +48,14 @@ namespace Tristeon
 		 * Adds a new layer of the given type and returns it.
 		 */
 		template<typename T>
-		[[nodiscard]] T* addLayer();
+		[[nodiscard]] T* createLayer();
 
 		/**
 		 * Adds a new layer of the given type and returns it.
 		 *
 		 * Can return nullptr if no such type was registered.
 		 */
-		[[nodiscard]] Layer* addLayer(const String& type);
+		[[nodiscard]] Layer* createLayer(const String& type);
 		
 		/**
 		 * Finds the first layer of the given type.
@@ -87,7 +87,7 @@ namespace Tristeon
 		/**
 		 * Returns the amount of layers this scene contains.
 		 */
-		[[nodiscard]] unsigned int getLayerCount() const;
+		[[nodiscard]] unsigned int layerCount() const;
 
 		/**
 		 * Removes the layer from the Scene and destroys it.
@@ -101,7 +101,7 @@ namespace Tristeon
 		 * Sets the index of the given layer. This removes the layer from its current position in the list and inserts it at the given index.
 		 * Other layers will be moved down or up because of this.
 		 */
-		void setIndex(Layer* layer, const ull& i);
+		void setIndex(Layer* layer, const ull& index);
 
 		/**
 		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
@@ -124,7 +124,7 @@ namespace Tristeon
 	};
 
 	template <typename T>
-	T* Scene::addLayer()
+	T* Scene::createLayer()
 	{
 		static_assert(std::is_base_of<Layer, T>::value, "Can't add a new Layer if it isn't of type Layer");
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Layer!");

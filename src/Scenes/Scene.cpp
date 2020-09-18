@@ -48,7 +48,7 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	Layer* Scene::addLayer(const String& type)
+	Layer* Scene::createLayer(const String& type)
 	{
 		Unique<Serializable> serializable = TypeRegister::createInstance(type);
 		auto* layer = dynamic_cast<Layer*>(serializable.get());
@@ -61,7 +61,7 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	unsigned int Scene::getLayerCount() const
+	unsigned int Scene::layerCount() const
 	{
 		return _layers.size();
 	}
@@ -75,7 +75,7 @@ namespace Tristeon
 		_layers.removeAt(index);
 	}
 
-	void Scene::setIndex(Layer* layer, const ull& i)
+	void Scene::setIndex(Layer* layer, const ull& index)
 	{
 		ull const old = indexOf(layer);
 		if (old == _layers.size())
@@ -83,7 +83,7 @@ namespace Tristeon
 
 		auto unique = std::move(_layers[old]);
 		_layers.removeAt(old);
-		_layers.insert(i, std::move(unique));
+		_layers.insert(index, std::move(unique));
 	}
 
 	ull Scene::indexOf(Layer* layer)
