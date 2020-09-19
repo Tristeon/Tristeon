@@ -5,6 +5,8 @@
 
 namespace Tristeon
 {
+	class Actor;
+
 	/**
 	 * Scene is a class that describes the current 'scene' or 'level' within the game.
 	 * Its core design revolves around layers, which are each constructed of their own set of data,
@@ -34,7 +36,7 @@ namespace Tristeon
 		/**
 		 * Gets a layer using the given index.
 		 *
-		 * \exception invalid_argument Throws if the index is less than 0 or more than getLayerCount()
+		 * \exception invalid_argument Throws if the index is less than 0 or more than layerCount() - 1
 		 */
 		[[nodiscard]] Layer* layerAt(const unsigned int& index) const;
 
@@ -69,8 +71,6 @@ namespace Tristeon
 		/**
 		 * Finds the first layer of the given type and name.
 		 * Returns nullptr if no layer is found.
-		 *
-		 * Compilation fails if T does not derive from Layer.
 		 */
 		template<typename T>
 		[[nodiscard]] T* findLayerOfType(const String& name) const;
@@ -78,8 +78,6 @@ namespace Tristeon
 		/**
 		 * Returns a vector with all the layers of the given type.
 		 * Returns an empty vector if no layer is found.
-		 *
-		 * Compilation fails if T does not derive from Layer.
 		 */
 		template<typename T>
 		[[nodiscard]] Vector<T*> findLayersOfType();
@@ -87,7 +85,7 @@ namespace Tristeon
 		/**
 		 * Returns the amount of layers this scene contains.
 		 */
-		[[nodiscard]] unsigned int layerCount() const;
+		[[nodiscard]] ull layerCount() const;
 
 		/**
 		 * Removes the layer from the Scene and destroys it.
@@ -104,7 +102,8 @@ namespace Tristeon
 		void setIndex(Layer* layer, const ull& index);
 
 		/**
-		 * Returns the index of the given layer. -1 if the layer isnt part of the scene.
+		 * Returns the index of the given layer.
+		 * If the layer is nullptr or if the layer doesn't exist in the scene, it will return Scene::layerCount() instead.
 		 */
 		[[nodiscard]] ull indexOf(Layer* layer);
 
@@ -118,6 +117,14 @@ namespace Tristeon
 		 */
 		[[nodiscard]] String name() const { return _name; }
 	private:
+		void internalDestroyLayer(Layer* layer);
+		/**
+		 * Finds the actor's layer and removes the actor from said layer.
+		 * Then destroys the actor itself.
+		 * Used internally by Engine to avoid deleting actors within critical loops.
+		 */
+		void internalDestroyActor(Actor* actor);
+		
 		Vector<Unique<Layer>> _layers;
 		String _name;
 		String _path;

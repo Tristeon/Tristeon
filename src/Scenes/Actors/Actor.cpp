@@ -93,7 +93,7 @@ namespace Tristeon
 		}
 	}
 
-	void Actor::removeBehaviour(Behaviour* behaviour)
+	void Actor::internalDestroyBehaviour(Behaviour* behaviour)
 	{
 		for (size_t i = 0; i < _behaviours.size(); i++)
 		{

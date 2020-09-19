@@ -6,7 +6,6 @@
 #include "AssetManagement/AssetDatabase.h"
 #include <Collector.h>
 #include <Callbacks/IStart.h>
-#include <Scenes/Layers/ActorLayer.h>
 #include "Engine.h"
 #include "Project.h"
 
@@ -27,22 +26,24 @@ namespace Tristeon
 		_cachedName = name;
 	}
 
-	void SceneManager::load(const json& data, const String& path)
+	void SceneManager::load(const json& data)
 	{
+		if (data.empty())
+			throw std::invalid_argument("The scene's json data can't be empty");
+		
 		_cachedData = data;
-		_cachedData["path"] = path;
 	}
 
 	void SceneManager::reload()
 	{
-		if (_current == nullptr)
-			return;
-
 		load(_current->_name);
 	}
 
 	void SceneManager::save(Scene* scene, const String& filepath)
 	{
+		if (scene == nullptr)
+			throw std::invalid_argument("Scene can't be nullptr!");
+		
 		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
 
@@ -54,22 +55,12 @@ namespace Tristeon
 
 	void SceneManager::saveCurrent()
 	{
-		if (current() == nullptr)
-			return;
-
 		if (current()->path().empty())
 		{
 			Console::warning("Current scene doesn't have a path therefore it can't be saved automatically. Use save(current(), filePath) instead");
 			return;
 		}
 		save(current(), current()->path());
-	}
-
-	void SceneManager::destroyActor(Actor* actor)
-	{
-		Vector<ActorLayer*> actorLayers = current()->findLayersOfType<ActorLayer>();
-		for (const auto& layer : actorLayers)
-			layer->destroyActor(actor);
 	}
 
 	void SceneManager::processCachedLoad()

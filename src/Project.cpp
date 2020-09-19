@@ -76,7 +76,9 @@ namespace Tristeon
 		Console::write("Loaded project folder " + folder);
 		
 		_assetPath = folder;
-		_firstScene = file.value("firstScene", "");
+		_firstScene = file.value("firstScene", "Scene");
+		if (_firstScene.empty())
+			_firstScene = "Scene";
 		
 		if (file.contains("graphics"))
 		{

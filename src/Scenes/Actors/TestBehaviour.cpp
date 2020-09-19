@@ -10,6 +10,8 @@
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Gizmos.h"
+#include "Scenes/Scene.h"
+#include "Scenes/SceneManager.h"
 #include "Utils/Time.h"
 
 namespace Tristeon

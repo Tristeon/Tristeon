@@ -1,6 +1,10 @@
 #include "Scene.h"
 #include <stdexcept>
 #include <Scenes/Layers/Layer.h>
+
+
+#include "Engine.h"
+#include "Layers/ActorLayer.h"
 #include "Serialization/TypeRegister.h"
 
 namespace Tristeon
@@ -61,18 +65,14 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	unsigned int Scene::layerCount() const
+	ull Scene::layerCount() const
 	{
 		return _layers.size();
 	}
 
 	void Scene::destroyLayer(Layer* layer)
 	{
-		ull const index = indexOf(layer);
-		if (index == _layers.size())
-			return;
-		_layers[index].reset();
-		_layers.removeAt(index);
+		Engine::destroyLater(layer);
 	}
 
 	void Scene::setIndex(Layer* layer, const ull& index)
@@ -95,6 +95,22 @@ namespace Tristeon
 				return i;
 			}
 		}
-		return -1;
+		return layerCount();
+	}
+
+	void Scene::internalDestroyLayer(Layer* layer)
+	{
+		auto const index = indexOf(layer);
+		if (index == _layers.size())
+			return;
+		_layers[index].reset();
+		_layers.removeAt(index);
+	}
+
+	void Scene::internalDestroyActor(Actor* actor)
+	{
+		Vector<ActorLayer*> actorLayers = findLayersOfType<ActorLayer>();
+		for (const auto& layer : actorLayers)
+			layer->internalDestroyActor(actor);
 	}
 }

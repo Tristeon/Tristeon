@@ -47,7 +47,7 @@ namespace Tristeon
 		 *
 		 * This change gets applied at the end of the game loop.
 		 */
-		static void load(const json& data, const String& path = "");
+		static void load(const json& data);
 		
 		/**
 		 * Reloads the current scene from file.
@@ -66,13 +66,6 @@ namespace Tristeon
 
 		static Delegate<Scene*> sceneLoaded;
 	private:
-		/**
-		 * Finds the actor's layer and removes the actor from said layer.
-		 * Then destroys the actor itself.
-		 * Used internally by Engine to avoid deleting actors within critical loops.
-		 */
-		static void destroyActor(Actor* actor);
-
 		/**
 		 * Loads the scene after the frame has finished.
 		 * This is to prevent incorrect destruction mid-loop

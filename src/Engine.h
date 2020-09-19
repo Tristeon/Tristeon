@@ -34,6 +34,7 @@ namespace Tristeon
 		
 		static void destroyLater(Actor* actor);
 		static void destroyLater(Behaviour* behaviour);
+		static void destroyLater(Layer* layer);
 	private:
 		bool _playMode = false;
 		bool _playModeDirty = false;
@@ -42,7 +43,8 @@ namespace Tristeon
 
 		Vector<Actor*> _destroyedActors{};
 		Vector<Behaviour*> _destroyedBehaviours{};
-
+		Vector<Layer*> _destroyedLayers{};
+		
 		void processDestroyedObjects();
 	};
 }

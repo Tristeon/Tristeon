@@ -107,7 +107,7 @@ namespace Tristeon
 		}
 	}
 
-	void ActorLayer::destroyActor(Actor * actor)
+	void ActorLayer::internalDestroyActor(Actor * actor)
 	{
 		for (size_t i = 0; i < _actors.size(); i++)
 		{

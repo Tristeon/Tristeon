@@ -15,6 +15,7 @@ namespace Tristeon
 	 */
 	class ActorLayer : public Layer
 	{
+		friend class Scene;
 		friend class SceneManager;
 	public:
 		ActorLayer() = default;
@@ -93,7 +94,7 @@ namespace Tristeon
 		 * Removes the given actor from this layer, and then destroys the actor itself.
 		 * Used internally by Engine/SceneManager to avoid deleting actors within critical loops.
 		 */
-		void destroyActor(Actor* actor);
+		void internalDestroyActor(Actor* actor);
 	private:
 		Vector<Unique<Actor>> _actors{};
 	};

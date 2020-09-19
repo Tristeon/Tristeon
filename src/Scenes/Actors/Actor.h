@@ -129,7 +129,7 @@ namespace Tristeon
 		 * Removes and destroys the given behaviour.
 		 * Used internally by Engine to destroy behaviours outside of critical loops.
 		 */
-		void removeBehaviour(Behaviour* behaviour);
+		void internalDestroyBehaviour(Behaviour* behaviour);
 	};
 
 	template <typename T>

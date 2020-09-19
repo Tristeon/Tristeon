@@ -17,6 +17,7 @@
 #include "Scenes/Actors/Actor.h"
 #include "Project.h"
 #include "AssetManagement/AssetDatabase.h"
+#include "Scenes/Scene.h"
 #include "Utils/Time.h"
 
 namespace Tristeon
@@ -36,6 +37,15 @@ namespace Tristeon
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
 		SceneManager::load(Project::firstSceneName());
+		SceneManager::processCachedLoad();
+		
+		if (SceneManager::current() == nullptr) //Create an empty scene with firstSceneName()
+		{
+			Scene empty;
+			SceneManager::save(&empty, Project::firstSceneName() + ".scene");
+			SceneManager::load(Project::firstSceneName());
+		}
+		
 		processDestroyedObjects();
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
@@ -126,11 +136,19 @@ namespace Tristeon
 		instance()->_destroyedBehaviours.add(behaviour);
 	}
 
+	void Engine::destroyLater(Layer* layer)
+	{
+		instance()->_destroyedLayers.add(layer);
+	}
+
 	void Engine::processDestroyedObjects()
 	{
-		for (auto const& behaviour : _destroyedBehaviours) behaviour->actor()->removeBehaviour(behaviour);
+		//TODO: Replace this with a non-hardcoded generic late-destroy system.
+		for (auto* behaviour : _destroyedBehaviours) behaviour->actor()->internalDestroyBehaviour(behaviour);
 		_destroyedBehaviours.clear();
-		for (auto const& actor : _destroyedActors) SceneManager::destroyActor(actor);
+		for (auto* actor : _destroyedActors) SceneManager::current()->internalDestroyActor(actor);
 		_destroyedActors.clear();
+		for (auto* layer : _destroyedLayers) SceneManager::current()->internalDestroyLayer(layer);
+		_destroyedLayers.clear();
 	}
 }
