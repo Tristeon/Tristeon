@@ -24,6 +24,7 @@ namespace Tristeon
 	void SceneManager::load(const String& name)
 	{
 		_cachedName = name;
+		_cachedData = {}; //Reset cached data because now this function has precedence 
 	}
 
 	void SceneManager::load(const json& data)
@@ -32,6 +33,7 @@ namespace Tristeon
 			throw std::invalid_argument("The scene's json data can't be empty");
 		
 		_cachedData = data;
+		_cachedName = ""; //Reset cached name because now this function has precedence
 	}
 
 	void SceneManager::reload()

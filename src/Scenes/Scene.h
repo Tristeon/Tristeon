@@ -90,8 +90,6 @@ namespace Tristeon
 		/**
 		 * Removes the layer from the Scene and destroys it.
 		 * \param layer After this function, layer will point to invalid memory.
-		 *
-		 * //TODO: Add this to the Engine::destroyLater() things instead of destroying it directly.
 		 */
 		void destroyLayer(Layer* layer);
 
@@ -108,12 +106,12 @@ namespace Tristeon
 		[[nodiscard]] ull indexOf(Layer* layer);
 
 		/**
-		 * Gets the filepath if the Scene was loaded through SceneManager::load().
+		 * The scene's filepath, local to the project.
 		 */
 		[[nodiscard]] String path() const { return _path; }
 
 		/**
-		 * Gets the file name if the Scene was loaded through SceneManager::load().
+		 * Gets the Scene's file name.
 		 */
 		[[nodiscard]] String name() const { return _name; }
 	private:
