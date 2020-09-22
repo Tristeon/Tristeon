@@ -1,17 +1,17 @@
 #ifdef TRISTEON_EDITOR
 #include <AssetManagement/Resources.h>
-#include "TileSetFileEditor.h"
+#include "TilesetFileEditor.h"
 #include "Editor/EditorFields.h"
-#include "Scenes/Tiles/TileSet.h"
+#include "Scenes/Tiles/Tileset.h"
 
 using Tristeon::Vector2;
 using Tristeon::Vector2Int;
 
 namespace TristeonEditor
 {
-	FILE_EDITOR_CPP("tileset", TileSetFileEditor)
+	FILE_EDITOR_CPP("tileset", TilesetFileEditor)
 	
-	void TileSetFileEditor::initialize()
+	void TilesetFileEditor::initialize()
 	{
 		auto* formWidget = new QWidget(this);
 		layout->addWidget(formWidget);
@@ -79,27 +79,27 @@ namespace TristeonEditor
 		loadTileset();
 	}
 
-	void TileSetFileEditor::saveData()
+	void TilesetFileEditor::saveData()
 	{
 		JsonFileEditor::saveData();
 
 		//Update Instance if it's currently in use
 		if (Tristeon::Resources::loaded(item->path))
 		{
-			auto* tileset = Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path);
+			auto* tileset = Tristeon::Resources::jsonLoad<Tristeon::Tileset>(item->path);
 			if (tileset != nullptr)
 				tileset->deserialize(data);
 		}
 	}
 
-	void TileSetFileEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
+	void TilesetFileEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		JsonFileEditor::targetChanged(current, old);
-		set = Tristeon::Resources::jsonLoad<Tristeon::TileSet>(item->path);
+		set = Tristeon::Resources::jsonLoad<Tristeon::Tileset>(item->path);
 		data = set->serialize();
 	}
 
-	void TileSetFileEditor::loadTileset()
+	void TilesetFileEditor::loadTileset()
 	{
 		tilesetChanged();
 
@@ -111,7 +111,7 @@ namespace TristeonEditor
 		image->adjustSize();
 	}
 
-	void TileSetFileEditor::mousePressEvent(QMouseEvent* event)
+	void TilesetFileEditor::mousePressEvent(QMouseEvent* event)
 	{
 		QPoint const position = event->globalPos();
 		QRect rect = image->geometry();
@@ -148,7 +148,7 @@ namespace TristeonEditor
 		selectedTileChanged();
 	}
 
-	void TileSetFileEditor::selectedTileChanged()
+	void TilesetFileEditor::selectedTileChanged()
 	{
 		if (selectedTileData != nullptr)
 		{
@@ -177,13 +177,13 @@ namespace TristeonEditor
 		EditorFields::floatField(frameLayout, "Restitution", selectedTileInfo.restitution, [&](float value) { selectedTileInfo.restitution = value; saveCurrentTile(); });
 	}
 
-	void TileSetFileEditor::saveCurrentTile()
+	void TilesetFileEditor::saveCurrentTile()
 	{
 		data["tileInfo"][selectedTile] = selectedTileInfo;
 		saveData();
 	}
 
-	void TileSetFileEditor::tilesetChanged()
+	void TilesetFileEditor::tilesetChanged()
 	{
 		set->deserialize(data);
 

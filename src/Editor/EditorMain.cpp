@@ -17,7 +17,7 @@
 #include <Editor/LayerListEditor.h>
 #include <Editor/MenuBar.h>
 #include <Editor/PropertyWindow.h>
-#include <Editor/TileSetEditor.h>
+#include <Editor/TilesetEditor.h>
 #include <Editor/TopBar.h>
 #include <Editor/QtPlugins/AspectRatioWidget.h>
 #include "Editor/ProjectWindow.h"
@@ -90,7 +90,7 @@ QWidget* CustomLoader::createWidget(const QString& className, QWidget* parent, c
 
 	if (name == "tilesets")
 	{
-		auto* tilesets = new TristeonEditor::TileSetEditor(parent);
+		auto* tilesets = new TristeonEditor::TilesetEditor(parent);
 		editor->addWidget(tilesets);
 		return tilesets;
 	}

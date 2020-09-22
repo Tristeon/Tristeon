@@ -23,19 +23,19 @@ namespace Tristeon
 	void from_json(const json& j, TileInfo& p);
 
 	/**
-	 * A TileSet is an image that gets interpreted as if it were constructed out of separated tiles, 
+	 * A Tileset is an image that gets interpreted as if it were constructed out of separated tiles, 
 	 * by dividing the texture into equally sized tiles using columns and rows.
 	 *
 	 * These tiles are simply split up in rows and columns by splitting up the width and the height of the texture.
 	 * The current implementation only allows tiles of the same size, split up equally over the texture, but this may change in the future.
 	 */
-	class TileSet : public Serializable
+	class Tileset : public Serializable
 	{
 	public:
 		/**
 		 * Creates an empty tileset with a white texture.
 		 */
-		explicit TileSet();
+		explicit Tileset();
 
 		json serialize() override;
 		void deserialize(json j) override;
@@ -194,9 +194,9 @@ namespace Tristeon
 		 */
 		String texturePath = "";
 
-		//TODO: Replace TileSet::id with instanceID
+		//TODO: Replace Tileset::id with instanceID
 		unsigned int id = 0;
 	};
 
-	REGISTER_TYPE(TileSet);
+	REGISTER_TYPE(Tileset);
 }

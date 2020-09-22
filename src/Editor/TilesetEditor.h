@@ -5,16 +5,16 @@
 
 namespace TristeonEditor
 {
-	class TileSetEditor : public QDockWidget, public DockWidget
+	class TilesetEditor : public QDockWidget, public DockWidget
 	{
 	public:
-		explicit TileSetEditor(QWidget* parent = nullptr) : QDockWidget(parent) {}
+		explicit TilesetEditor(QWidget* parent = nullptr) : QDockWidget(parent) {}
 	protected:
 		void initialize() override;
 		void sceneLoaded(Tristeon::Scene* scene) override;
 
 	private:
-		QTabWidget* tileSetTabs = nullptr;
+		QTabWidget* tilesetTabs = nullptr;
 		QWidget* contents = nullptr;
 	};
 }

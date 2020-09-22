@@ -1,30 +1,30 @@
 #ifdef TRISTEON_EDITOR
 #include "AssetManagement/AssetDatabase.h"
 #include "Project.h"
-#include "TileSetTab.h"
-#include "TileSetEditor.h"
+#include "TilesetTab.h"
+#include "TilesetEditor.h"
 #include <filesystem>
 namespace TristeonEditor
 {
-	void TileSetEditor::initialize()
+	void TilesetEditor::initialize()
 	{
 		contents = findChild<QWidget*>("tilesets_contents");
-		tileSetTabs = new QTabWidget(contents);
-		tileSetTabs->setStyleSheet(
+		tilesetTabs = new QTabWidget(contents);
+		tilesetTabs->setStyleSheet(
 			"background-color: rgb(255, 255, 255);\nborder-color: rgb(0, 0, 0);\ncolor: rgb(00, 00, 00);");
 
 		for (auto tileset : Tristeon::AssetDatabase::get(".tileset"))
 		{
-			auto* tab = new TileSetTab(tileset);
-			tileSetTabs->addTab(tab, QString::fromStdString(std::filesystem::path(tileset).stem().string()));
+			auto* tab = new TilesetTab(tileset);
+			tilesetTabs->addTab(tab, QString::fromStdString(std::filesystem::path(tileset).stem().string()));
 		}
 
 		auto layout = new QVBoxLayout();
-		layout->addWidget(tileSetTabs);
+		layout->addWidget(tilesetTabs);
 		contents->setLayout(layout);
 	}
 
-	void TileSetEditor::sceneLoaded(Tristeon::Scene* scene)
+	void TilesetEditor::sceneLoaded(Tristeon::Scene* scene)
 	{
 	}
 }

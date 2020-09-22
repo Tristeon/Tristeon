@@ -304,7 +304,7 @@
     ],
     "tileRenderHeight": 256,
     "tileRenderWidth": 256,
-    "typeID": "Tristeon::TileSet",
+    "typeID": "Tristeon::Tileset",
     "verticalSpacing": 2,
     "width": 7,
     "id": 1242115487

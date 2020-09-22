@@ -7,7 +7,7 @@ namespace TristeonEditor
 {
 	void Stamp::draw(Tristeon::TileLayer* layer, Tristeon::Vector2Int const& index)
 	{
-		if (Brushes::selectedTile().tileSetID != -1)
+		if (Brushes::selectedTile().tilesetID != -1)
 			layer->setTileByIndex(index, Brushes::selectedTile());
 	}
 

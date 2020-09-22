@@ -6,7 +6,7 @@
 namespace Tristeon
 {
 	/**
-	 * Textures can be attached to Sprites or TileSets.
+	 * Textures can be attached to Sprites or Tilesets.
 	 *
 	 * Textures are created with a filepath in the form of a string.
 	 * This path is relative to the bin/ folder in the Tristeon project.

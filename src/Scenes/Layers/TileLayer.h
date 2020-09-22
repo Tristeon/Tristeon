@@ -1,6 +1,6 @@
 #pragma once
 #include "Layer.h"
-#include <Scenes/Tiles/TileSet.h>
+#include <Scenes/Tiles/Tileset.h>
 #include <Scenes/Tiles/Tile.h>
 
 #include <Rendering/Shader.h>
@@ -13,11 +13,11 @@ namespace Tristeon
 	 * The TileLayer renders tiles on a 2D grid using a given tileset.
 	 *
 	 * Tiles are rendered on the GPU using a full-screen shader, so performance cost should be minimal.
-	 * Tile-specific behaviour (such as collisions, animations) can be defined through the Tile class in TileSet.
+	 * Tile-specific behaviour (such as collisions, animations) can be defined through the Tile class in Tileset.
 	 *
 	 * This class can be used as an interface to change tile values within the level.
 	 * Tiles are represented by a single index, read on the tileset texture from top left to bottom right.
-	 * To convert said index to tileset x,y coordinates, you can use the tileSet()'s interface.
+	 * To convert said index to tileset x,y coordinates, you can use the tileset()'s interface.
 	 */
 	class TileLayer : public Layer
 	{
@@ -42,16 +42,16 @@ namespace Tristeon
 		[[nodiscard]] unsigned int height() const { return _height; }
 #pragma endregion
 
-#pragma region TileSets
+#pragma region Tilesets
 		/**
 		 * Gets the tileset with the given ID.
 		 */
-		[[nodiscard]] TileSet* tileset(const int& id);
+		[[nodiscard]] Tileset* tileset(const int& id);
 
 		/**
 		 * Adds a tileset if it hasn't already been added.
 		 */
-		void addTileSet(TileSet* tileset);
+		void addTileset(Tileset* tileset);
 #pragma endregion
 
 #pragma region Tile Modification
@@ -135,7 +135,7 @@ namespace Tristeon
 
 	private:
 		Unique<Tile[]> _tiles = nullptr;
-		Vector<TileSet*> _tileSets;
+		Vector<Tileset*> _tilesets;
 		unsigned int _width = 0, _height = 0;
 
 		/**
@@ -154,7 +154,7 @@ namespace Tristeon
 		unsigned int _tboTex = 0;
 		
 		/**
-		 * Creates box colliders for all tiles that have the hasCollider flag set to true in their TileSet.
+		 * Creates box colliders for all tiles that have the hasCollider flag set to true in their Tileset.
 		 * Currently doesn't support other shapes.
 		 */
 		void createColliders();

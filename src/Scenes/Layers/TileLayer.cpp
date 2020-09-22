@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 
 #include <Engine.h>
-#include <Scenes/Tiles/TileSet.h>
+#include <Scenes/Tiles/Tileset.h>
 #include <Input/Keyboard.h>
 #include <Scenes/Scene.h>
 
@@ -37,14 +37,14 @@ namespace Tristeon
 		j["height"] = _height;
 
 		json sets = json::array();
-		for (auto* tileset : _tileSets)
+		for (auto* tileset : _tilesets)
 			sets.push_back(tileset->filePath);
-		j["tileSets"] = sets;
+		j["tilesets"] = sets;
 
 		std::string tilesSerialized;
 		for (unsigned int i = 0; i < _width * _height; i++)
 		{
-			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tileSetID);
+			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tilesetID);
 			if (i < _width * _height - 1)
 				tilesSerialized += ",";
 		}
@@ -59,16 +59,16 @@ namespace Tristeon
 		_width = j.value("width", 1u);
 		_height = j.value("height", 1u);
 
-		_tileSets.clear();
-		if (j.contains("tileSets"))
+		_tilesets.clear();
+		if (j.contains("tilesets"))
 		{
-			for (auto& i : j["tileSets"])
+			for (auto& i : j["tilesets"])
 			{
-				TileSet* tileset = Resources::jsonLoad<TileSet>(i);
+				Tileset* tileset = Resources::jsonLoad<Tileset>(i);
 				if (tileset == nullptr)
 					continue;
 				tileset->filePath = i.get<String>();
-				_tileSets.add(tileset);
+				_tilesets.add(tileset);
 			}
 		}
 		
@@ -83,11 +83,6 @@ namespace Tristeon
 			_tiles[i / 2] = Tile{ std::stoi(tileArray[i]), std::stoi(tileArray[i + 1]) };
 		}
 		
-		if (j.contains("tiles"))
-		{
-			for (unsigned int i = 0; i < _width * _height && i < j["tiles"].size(); i++)
-				_tiles[i] = j["tiles"].at(i);
-		}
 		createTBO();
 		createColliders();
 	}
@@ -147,9 +142,9 @@ namespace Tristeon
 		return tileByIndex(index);
 	}
 
-	TileSet* TileLayer::tileset(const int& id)
+	Tileset* TileLayer::tileset(const int& id)
 	{
-		for (TileSet* tileset : _tileSets)
+		for (Tileset* tileset : _tilesets)
 		{
 			if (tileset->id == id)
 				return tileset;
@@ -157,18 +152,18 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	void TileLayer::addTileSet(TileSet* tileset)
+	void TileLayer::addTileset(Tileset* tileset)
 	{
 		if (tileset == nullptr)
 			return;
 		
-		for (auto* t : _tileSets)
+		for (auto* t : _tilesets)
 		{
 			if (t->id == tileset->id)
 				return;
 		}
 
-		_tileSets.add(tileset);
+		_tilesets.add(tileset);
 	}
 
 	bool TileLayer::checkBoundsByIndex(const Vector2Int& index) const
@@ -227,25 +222,25 @@ namespace Tristeon
 		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
 		glActiveTexture(GL_TEXTURE0);
-		for (TileSet* tileSet : _tileSets)
+		for (Tileset* set : _tilesets)
 		{
-			tileSet->texture->bind();
+			set->texture->bind();
 
 			//Upload texture & tileset info
-			shader.setUniformValue("tileSet.texture", 0);
+			shader.setUniformValue("tileset.texture", 0);
 
-			shader.setUniformValue("tileSet.cols", tileSet->cols);
-			shader.setUniformValue("tileSet.rows", tileSet->rows);
+			shader.setUniformValue("tileset.cols", set->cols);
+			shader.setUniformValue("tileset.rows", set->rows);
 
-			shader.setUniformValue("tileSet.id", tileSet->id);
+			shader.setUniformValue("tileset.id", set->id);
 
 			//Spacing
-			shader.setUniformValue("tileSet.spacingLeft", tileSet->spacingLeft);
-			shader.setUniformValue("tileSet.spacingRight", tileSet->spacingRight);
-			shader.setUniformValue("tileSet.spacingTop", tileSet->spacingTop);
-			shader.setUniformValue("tileSet.spacingBottom", tileSet->spacingBottom);
-			shader.setUniformValue("tileSet.horizontalSpacing", tileSet->horizontalSpacing);
-			shader.setUniformValue("tileSet.verticalSpacing", tileSet->verticalSpacing);
+			shader.setUniformValue("tileset.spacingLeft", set->spacingLeft);
+			shader.setUniformValue("tileset.spacingRight", set->spacingRight);
+			shader.setUniformValue("tileset.spacingTop", set->spacingTop);
+			shader.setUniformValue("tileset.spacingBottom", set->spacingBottom);
+			shader.setUniformValue("tileset.horizontalSpacing", set->horizontalSpacing);
+			shader.setUniformValue("tileset.verticalSpacing", set->verticalSpacing);
 
 			//Draw
 			glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -291,7 +286,7 @@ namespace Tristeon
 				}
 
 				Tile const tile = _tiles[index];
-				TileSet* set = tileset(tile.tileSetID);
+				Tileset* set = tileset(tile.tilesetID);
 				if (set == nullptr)
 					continue;
 				

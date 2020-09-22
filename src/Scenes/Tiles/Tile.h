@@ -1,5 +1,4 @@
 #pragma once
-#include <json.h>
 
 namespace Tristeon
 {
@@ -10,22 +9,12 @@ namespace Tristeon
 	struct Tile
 	{
 		/**
-		 * The tile's index on its TileSet.
+		 * The tile's index on its Tileset.
 		 */
 		int index = -1;
 		/**
-		 * The tile's TileSet.
+		 * The tile's Tileset.
 		 */
-		int tileSetID = -1;
+		int tilesetID = -1;
 	};
-
-	inline void to_json(nlohmann::json& j, const Tile& p) {
-		j["index"] = p.index;
-		j["tileSetID"] = p.tileSetID;
-	}
-
-	inline void from_json(const nlohmann::json& j, Tile& p) {
-		p.index = j.value("index", -1);
-		p.tileSetID = j.value("tileSetID", -1);
-	}
 }

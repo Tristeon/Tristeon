@@ -19,7 +19,7 @@ namespace TristeonEditor
 		void mapHeightChanged(int height);
 		void browse();
 		void resizeMap(int width, int height);
-		void loadTileset(Tristeon::TileSet* set);
+		void loadTileset(Tristeon::Tileset* set);
 		
 		Tristeon::TileLayer* targetLayer = nullptr;
 	};

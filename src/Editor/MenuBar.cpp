@@ -6,7 +6,7 @@
 #include "MenuBar.h"
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>
-#include <Scenes/Tiles/TileSet.h>
+#include <Scenes/Tiles/Tileset.h>
 
 #include <QtWidgets>
 
@@ -60,7 +60,7 @@ namespace TristeonEditor
 		if (path.isEmpty() || localPath.isEmpty())
 			return;
 
-		Tristeon::TileSet tileset{};
+		Tristeon::Tileset tileset{};
 		json j = tileset.serialize();
 		j["id"] = Tristeon::Random::generateUInt();
 		Tristeon::JsonSerializer::save(path.toStdString(), j);

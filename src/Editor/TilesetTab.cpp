@@ -1,6 +1,6 @@
 ﻿#ifdef TRISTEON_EDITOR
 
-#include "TileSetTab.h"
+#include "TilesetTab.h"
 
 #include <qformlayout.h>
 #include <qlabel.h>
@@ -13,17 +13,17 @@
 
 using namespace Tristeon;
 
-TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
+TristeonEditor::TilesetTab::TilesetTab(const String& tilesetPath)
 {
 	//Load tileset
-	tileSet = Resources::jsonLoad<TileSet>(tileSetPath);
-	tileSet->filePath = tileSetPath;
-	selectedTile.tileSetID = tileSet->id;
+	tileset = Resources::jsonLoad<Tileset>(tilesetPath);
+	tileset->filePath = tilesetPath;
+	selectedTile.tilesetID = tileset->id;
 	
 	//Display tileset
 	image = new QLabel(this);
 	image->setAlignment(Qt::AlignCenter);
-	image->setPixmap(QPixmap((Project::assetPath() + tileSet->texturePath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+	image->setPixmap(QPixmap((Project::assetPath() + tileset->texturePath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 	image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 	image->adjustSize();
 
@@ -34,7 +34,7 @@ TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
 	tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
 
 	//Scale highlight to tile size
-	Vector2 const size = Vector2(image->width(), image->height()) * tileSet->tileSizeNormalized();
+	Vector2 const size = Vector2(image->width(), image->height()) * tileset->tileSizeNormalized();
 	tileHighlight->setMinimumSize((int)size.x, (int)size.y);
 	tileHighlight->setMaximumSize((int)size.x, (int)size.y);
 	tileHighlight->adjustSize();
@@ -49,7 +49,7 @@ TristeonEditor::TileSetTab::TileSetTab(const String& tileSetPath)
 	setLayout(layout);
 }
 
-void TristeonEditor::TileSetTab::mousePressEvent(QMouseEvent* event)
+void TristeonEditor::TilesetTab::mousePressEvent(QMouseEvent* event)
 {
 	QPoint const mousePos = event->globalPos();
 	QRect rect = image->geometry();
@@ -59,12 +59,12 @@ void TristeonEditor::TileSetTab::mousePressEvent(QMouseEvent* event)
 	{
 		//Calculate tile index the mouse is hovering over
 		Vector2Int const size = Vector2Int(image->width(), image->height());
-		Vector2Int const tileSize = size / Vector2Int(tileSet->cols, tileSet->rows);
+		Vector2Int const tileSize = size / Vector2Int(tileset->cols, tileset->rows);
 
 		QPoint local = image->mapFromGlobal(mousePos);
 
 		Vector2Int tileIndex = Vector2Int(local.x() / tileSize.x, local.y() / tileSize.y);
-		int const newTile = tileSet->tile(tileIndex);
+		int const newTile = tileset->tile(tileIndex);
 
 		setSelectedTile(newTile);
 	}
@@ -74,7 +74,7 @@ void TristeonEditor::TileSetTab::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void TristeonEditor::TileSetTab::setSelectedTile(const int tileIndex)
+void TristeonEditor::TilesetTab::setSelectedTile(const int tileIndex)
 {
 	if (selectedTile.index == tileIndex) //Unselect
 	{
@@ -85,15 +85,15 @@ void TristeonEditor::TileSetTab::setSelectedTile(const int tileIndex)
 		selectedTile.index = tileIndex;
 
 		//Move highlight
-		Vector2 const tilePos = tileSet->tileMinNormalized(selectedTile.index) * Vector2(image->width(), image->height());
+		Vector2 const tilePos = tileset->tileMinNormalized(selectedTile.index) * Vector2(image->width(), image->height());
 		tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 		tileHighlight->show();
 
-		Brushes::selectTile(selectedTile, tileSet);
+		Brushes::selectTile(selectedTile, tileset);
 	}
 }
 
-void TristeonEditor::TileSetTab::clearSelection()
+void TristeonEditor::TilesetTab::clearSelection()
 {
 	selectedTile.index = -1;
 	tileHighlight->hide();

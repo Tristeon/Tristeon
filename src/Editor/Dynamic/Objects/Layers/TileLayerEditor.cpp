@@ -48,22 +48,16 @@ namespace TristeonEditor
 		int const oldHeight = j.value("height", 1);
 		json oldData = j.value("tiles", json());
 		
-		json::array_t data = json::array_t(width * height);
+		Tristeon::String data;
 		j["width"] = width;
 		j["height"] = height;
-		for (int x = 0; x < width; x++)
+		for (unsigned int i = 0; i < width * height; i++)
 		{
-			for (int y = 0; y < height; y++)
-			{
-				int const index = y * width + x;
-
-				if (x < oldWidth && y < oldHeight)
-					data.at(index) = oldData[y * oldWidth + x];
-				else
-					data.at(index) = Tristeon::Tile{ -1, -1 };
-			}
+			data += std::to_string(-1) + "," + std::to_string(-1);
+			if (i < width * height - 1)
+				data += ",";
 		}
-		j["tiles"] = data;
+		j["tileData"] = data;
 		targetLayer->deserialize(j);
 	}
 }

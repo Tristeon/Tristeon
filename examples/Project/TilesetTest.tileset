@@ -99,7 +99,7 @@
             "restitution": 0.0
         }
     ],
-    "typeID": "Tristeon::TileSet",
+    "typeID": "Tristeon::Tileset",
     "verticalSpacing": 0,
     "width": 3
 }

@@ -2,13 +2,13 @@
 #ifdef TRISTEON_EDITOR
 #include "JsonFileEditor.h"
 #include "FileEditorRegister.h"
-#include "Scenes/Tiles/TileSet.h"
+#include "Scenes/Tiles/Tileset.h"
 
 namespace TristeonEditor
 {
-	class TileSetFileEditor : public JsonFileEditor
+	class TilesetFileEditor : public JsonFileEditor
 	{
-		FILE_EDITOR_H("tileset", TileSetFileEditor)
+		FILE_EDITOR_H("tileset", TilesetFileEditor)
 	public:
 		void initialize() override;
 		void saveData() override;
@@ -27,7 +27,7 @@ namespace TristeonEditor
 		Tristeon::TileInfo selectedTileInfo{};
 		QFrame* selectedTileData = nullptr;
 
-		Tristeon::TileSet* set = nullptr;
+		Tristeon::Tileset* set = nullptr;
 	};
 }
 #endif

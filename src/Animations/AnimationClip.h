@@ -1,6 +1,4 @@
 #pragma once
-#include "Rendering/Texture.h"
-
 #include <Serialization/Serializable.h>
 #include <Serialization/TypeRegister.h>
 
@@ -10,7 +8,7 @@ namespace Tristeon
 	 * An animation clip describes an animation for an animationsprite as a 2D texture split up into separate frames
 	 * by dividing the texture into equally sized images using columns and rows.
 	 *
-	 * Unlike TileSet, the AnimationClip doesn't own its texture but stores a filepath to it instead.
+	 * Unlike Tileset, the AnimationClip doesn't own its texture but stores a filepath to it instead.
 	 * This is because AnimationSprite is designed to own and load in the texture.
 	 */
 	class AnimationClip : public Serializable
@@ -28,7 +26,7 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 
-		//TODO: For consistency's sake, TileSet and AnimationClip should use the same Spacing structure
+		//TODO: For consistency's sake, Tileset and AnimationClip should use the same Spacing structure
 		struct Spacing
 		{
 			/**

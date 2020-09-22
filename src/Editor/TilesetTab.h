@@ -6,16 +6,16 @@
 #include <QWidget>
 
 #include "Scenes/Tiles/Tile.h"
-#include "Scenes/Tiles/TileSet.h"
+#include "Scenes/Tiles/Tileset.h"
 #include "Utils/TypeDefinitions.h"
 
 namespace TristeonEditor
 {
-	class TileSetTab : public QWidget
+	class TilesetTab : public QWidget
 	{
 	public:
 		///Specify the path of the tileset png. It doesn't allow you to set a parent as tabs that get added to a QTabWidget shouldn't have a parent when constructed as they get added later
-		explicit TileSetTab(const Tristeon::String& tileSetPath);
+		explicit TilesetTab(const Tristeon::String& tilesetPath);
 
 	private:
 		void mousePressEvent(QMouseEvent* event) override;
@@ -28,7 +28,7 @@ namespace TristeonEditor
 
 		QVBoxLayout* layout = nullptr;
 		
-		Tristeon::TileSet* tileSet;
+		Tristeon::Tileset* tileset;
 		QLabel* image;
 
 		QLabel* tileHighlight = nullptr;

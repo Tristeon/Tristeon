@@ -1,7 +1,7 @@
 #version 330
 in vec2 texCoord;
 
-struct TileSet
+struct Tileset
 {
     sampler2D texture;
     uint cols;
@@ -17,7 +17,7 @@ struct TileSet
 
     uint id;
 };
-uniform TileSet tileSet;
+uniform Tileset tileset;
 
 struct Level
 {
@@ -73,8 +73,8 @@ void main()
     uint dataIndex = dataY * level.width + dataX;
 
     //Convert data tile to tileset index (data stored in a 1D array of 2 integers per tile, first describes the index, the second describes the tileset id)
-    int tileSetValue = texelFetch(level.data, int(dataIndex) * 2 + 1).r;
-    if (tileSetValue != int(tileSet.id))
+    int tilesetValue = texelFetch(level.data, int(dataIndex) * 2 + 1).r;
+    if (tilesetValue != int(tileset.id))
         discard;
     int dataValue = texelFetch(level.data, int(dataIndex) * 2).r;
     ivec2 tileIndex = tileTo2DIndex(dataValue);
@@ -86,8 +86,8 @@ void main()
     float tileV = mod(tileY, 1.0f);
 
     //Convert UVs to tileset space
-    vec2 tileSetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
-    FragColor = texture(tileSet.texture, tileSetUV);
+    vec2 tilesetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
+    FragColor = texture(tileset.texture, tilesetUV);
 }
 
 ivec2 tileTo2DIndex(int tile)
@@ -95,8 +95,8 @@ ivec2 tileTo2DIndex(int tile)
     if (tile == -1)
         return ivec2(-1, -1);
 
-    int x = tile % int(tileSet.cols);
-    int y = tile / int(tileSet.cols);
+    int x = tile % int(tileset.cols);
+    int y = tile / int(tileset.cols);
 
     return ivec2(x, y);
 }
@@ -104,17 +104,17 @@ ivec2 tileTo2DIndex(int tile)
 vec2 getTileUV(vec2 uv, uint tileX, uint tileY)
 {
     //Coords beyond our tileset mess up spacing so we clamp them
-    tileX = tileX % tileSet.cols;
-    tileY = tileSet.rows - uint(1) - (tileY % tileSet.rows);
-    ivec2 texSize = textureSize(tileSet.texture, 0);
+    tileX = tileX % tileset.cols;
+    tileY = tileset.rows - uint(1) - (tileY % tileset.rows);
+    ivec2 texSize = textureSize(tileset.texture, 0);
 
     //Determine the amount of pixels per tile
-    uint tilePixelsX = (uint(texSize.x) - ((tileSet.spacingLeft + tileSet.spacingRight) + ((tileSet.cols - uint(1)) * tileSet.horizontalSpacing))) / tileSet.cols;
-    uint tilePixelsY = (uint(texSize.y) - ((tileSet.spacingTop + tileSet.spacingBottom) + ((tileSet.rows - uint(1)) * tileSet.verticalSpacing))) / tileSet.rows;
+    uint tilePixelsX = (uint(texSize.x) - ((tileset.spacingLeft + tileset.spacingRight) + ((tileset.cols - uint(1)) * tileset.horizontalSpacing))) / tileset.cols;
+    uint tilePixelsY = (uint(texSize.y) - ((tileset.spacingTop + tileset.spacingBottom) + ((tileset.rows - uint(1)) * tileset.verticalSpacing))) / tileset.rows;
 
     //Determine the start point of the tile depending on spacing
-    uint startX = tileSet.spacingLeft + (tileX * tilePixelsX) + (tileX * tileSet.horizontalSpacing);
-    uint startY = tileSet.spacingBottom + (tileY * tilePixelsY) + (tileY * tileSet.verticalSpacing);
+    uint startX = tileset.spacingLeft + (tileX * tilePixelsX) + (tileX * tileset.horizontalSpacing);
+    uint startY = tileset.spacingBottom + (tileY * tilePixelsY) + (tileY * tileset.verticalSpacing);
 
     //Scale UV to tile coords, then normalize into texture coords
     float x = ((uv.x * tilePixelsX) / texSize.x);
