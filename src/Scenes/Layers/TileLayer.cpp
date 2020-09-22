@@ -33,8 +33,8 @@ namespace Tristeon
 	{
 		json j = Layer::serialize();
 		j["typeID"] = TRISTEON_TYPENAME(TileLayer);
-		j["width"] = _width;
-		j["height"] = _height;
+		j["columns"] = _columns;
+		j["rows"] = _rows;
 
 		json sets = json::array();
 		for (auto* tileset : _tilesets)
@@ -42,10 +42,10 @@ namespace Tristeon
 		j["tilesets"] = sets;
 
 		std::string tilesSerialized;
-		for (unsigned int i = 0; i < _width * _height; i++)
+		for (int i = 0; i < _columns * _rows; i++)
 		{
 			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tilesetID);
-			if (i < _width * _height - 1)
+			if (i < _columns * _rows - 1)
 				tilesSerialized += ",";
 		}
 		j["tileData"] = tilesSerialized;
@@ -56,8 +56,8 @@ namespace Tristeon
 	{
 		Layer::deserialize(j);
 		
-		_width = j.value("width", 1u);
-		_height = j.value("height", 1u);
+		_columns = j.value("columns", 1u);
+		_rows = j.value("rows", 1u);
 
 		_tilesets.clear();
 		if (j.contains("tilesets"))
@@ -72,7 +72,7 @@ namespace Tristeon
 			}
 		}
 		
-		_tiles = std::make_unique<Tile[]>(_width * _height);
+		_tiles = std::make_unique<Tile[]>(_columns * _rows);
 		const String tilesSerialized = j.value("tileData", "");
 		const Vector<String> tileArray = StringHelper::split(tilesSerialized, ',');
 
@@ -92,10 +92,10 @@ namespace Tristeon
 		if (ix < 0 || iy < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
 
-		if (ix * iy > _width * _height || ix > _width || iy > _height)
+		if (ix * iy > _columns * _rows || ix > _columns || iy > _rows)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		_tiles[iy * (int)_width + ix] = value;
+		_tiles[iy * (int)_columns + ix] = value;
 		_isDirty = true;
 	}
 
@@ -120,10 +120,10 @@ namespace Tristeon
 		if (ix < 0 || iy < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
 
-		if (ix * iy > _width * _height || ix > _width || iy > _height)
+		if (ix * iy > _columns * _rows || ix > _columns || iy > _rows)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		return _tiles[iy * (int)_width + ix];
+		return _tiles[iy * (int)_columns + ix];
 	}
 
 	Tile TileLayer::tileByIndex(const Vector2Int& index) const
@@ -171,7 +171,7 @@ namespace Tristeon
 		if (index.x < 0 || index.y < 0)
 			return false;
 		
-		if (index.x * index.y > _width * _height || index.x > _width || index.y > _height)
+		if (index.x * index.y > _columns * _rows || index.x > _columns || index.y > _rows)
 			return false;
 
 		return true;
@@ -182,7 +182,7 @@ namespace Tristeon
 		if (position.x < 0 || position.y < 0)
 			return false;
 
-		if (position.x > _width * Grid::tileWidth() || position.y > _height * Grid::tileHeight())
+		if (position.x > _columns * Grid::tileWidth() || position.y > _rows * Grid::tileHeight())
 			return false;
 
 		return true;
@@ -215,8 +215,8 @@ namespace Tristeon
 
 		shader.setUniformValue("level.data", 1);
 
-		shader.setUniformValue("level.width", _width);
-		shader.setUniformValue("level.height", _height);
+		shader.setUniformValue("level.columns", _columns);
+		shader.setUniformValue("level.rows", _rows);
 
 		shader.setUniformValue("level.tileRenderWidth", Grid::tileWidth());
 		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
@@ -260,7 +260,7 @@ namespace Tristeon
 
 		glGenBuffers(1, &_tbo);
 		glBindBuffer(GL_TEXTURE_BUFFER, _tbo);
-		glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _width * _height, _tiles.get(), GL_STATIC_DRAW);
+		glBufferData(GL_TEXTURE_BUFFER, sizeof(Tile) * _columns * _rows, _tiles.get(), GL_STATIC_DRAW);
 
 		glGenTextures(1, &_tboTex);
 		glBindBuffer(GL_TEXTURE_BUFFER, 0);
@@ -268,13 +268,13 @@ namespace Tristeon
 
 	void TileLayer::createColliders()
 	{
-		for (auto x = 0; x < _width; x++)
+		for (auto x = 0; x < _columns; x++)
 		{
-			for (auto y = 0; y < _height; y++)
+			for (auto y = 0; y < _rows; y++)
 			{
 				bool const colliderExists = _fixtures.find(Vector2Int{ x, y }) != _fixtures.end();
 
-				int const index = y * _width + x;
+				int const index = y * _columns + x;
 				if (_tiles[index].index == -1)
 				{
 					if (colliderExists)

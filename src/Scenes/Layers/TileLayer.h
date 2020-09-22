@@ -33,13 +33,13 @@ namespace Tristeon
 
 #pragma region Core
 		/**
-		 * The width of the level defined by this tile layer.
+		 * The number of columns in the TileLayer's tile-map.
 		 */
-		[[nodiscard]] unsigned int width() const { return _width; }
+		[[nodiscard]] unsigned int columns() const { return _columns; }
 		/**
-		 * The height of the level defined by this tile layer.
+		 * The number of rows in the TileLayer's tile-map.
 		 */
-		[[nodiscard]] unsigned int height() const { return _height; }
+		[[nodiscard]] unsigned int rows() const { return _rows; }
 #pragma endregion
 
 #pragma region Tilesets
@@ -59,7 +59,7 @@ namespace Tristeon
 		 * Sets the tile at x, y to the given value.
 		 *
 		 * \exception invalid_argument Throws if x or y is less than 0
-		 * \exception out_of_range Throws if x is more than width() or y is more than height()
+		 * \exception out_of_range Throws if x is more than columns() or y is more than rows()
 		 */
 		void setTileByIndex(const int& ix, const int& iy, const Tile& value);
 
@@ -67,7 +67,7 @@ namespace Tristeon
 		 * Sets the tile at index.x, index.y to the given value.
 		 *
 		 * \exception invalid_argument Throws if index.x or index.y is less than 0
-		 * \exception out_of_range Throws if index.x is more than width() or index.y is more than height()
+		 * \exception out_of_range Throws if index.x is more than columns() or index.y is more than rows()
 		 */
 		void setTileByIndex(const Vector2Int& index, const Tile& value);
 
@@ -91,7 +91,7 @@ namespace Tristeon
 		 * Gets the tile at x, y.
 		 * 
 		 * \exception invalid_argument Throws if x or y is less than 0
-		 * \exception out_of_range Throws if x is more than width() or y is more than height()
+		 * \exception out_of_range Throws if x is more than columns() or y is more than rows()
 		 */
 		[[nodiscard]] Tile tileByIndex(const int& ix, const int& iy) const;
 
@@ -99,7 +99,7 @@ namespace Tristeon
 		 * Gets the tile at coords.x, coords.y.
 		 *
 		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
-		 * \exception out_of_range Throws if coords.x is more than width() or coords.y is more than height()
+		 * \exception out_of_range Throws if coords.x is more than columns() or coords.y is more than rows()
 		 */
 		[[nodiscard]] Tile tileByIndex(const Vector2Int& index) const;
 
@@ -136,7 +136,7 @@ namespace Tristeon
 	private:
 		Unique<Tile[]> _tiles = nullptr;
 		Vector<Tileset*> _tilesets;
-		unsigned int _width = 0, _height = 0;
+		unsigned int _columns = 0, _rows = 0;
 
 		/**
 		 * If the TileLayer is dirty, it re-uploads the tile data to the GPU and rebuilds colliders where needed.

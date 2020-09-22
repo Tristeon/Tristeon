@@ -21,8 +21,8 @@ namespace TristeonEditor
 		auto* form = new QFormLayout();
 		formParent->setLayout(form);
 		
-		EditorFields::uintField(form, "Columns", targetLayer->width(), 1, 1000, [&](int value) { mapWidthChanged(value); });
-		EditorFields::uintField(form, "Rows", targetLayer->height(), 1, 1000, [&](int value) { mapHeightChanged(value); });
+		EditorFields::uintField(form, "Columns", targetLayer->columns(), 1, 1000, [&](int value) { mapColumnsChanged(value); });
+		EditorFields::uintField(form, "Rows", targetLayer->rows(), 1, 1000, [&](int value) { mapRowsChanged(value); });
 	}
 
 	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
@@ -30,31 +30,29 @@ namespace TristeonEditor
 		targetLayer = dynamic_cast<Tristeon::TileLayer*>(current);
 	}
 
-	void TileLayerEditor::mapWidthChanged(int width)
+	void TileLayerEditor::mapColumnsChanged(int columns)
 	{
-		resizeMap(width, targetLayer->height());
+		resizeMap(columns, targetLayer->rows());
 	}
 
-	void TileLayerEditor::mapHeightChanged(int height)
+	void TileLayerEditor::mapRowsChanged(int rows)
 	{
-		resizeMap(targetLayer->width(), height);
+		resizeMap(targetLayer->columns(), rows);
 	}
 
-	void TileLayerEditor::resizeMap(int width, int height)
+	void TileLayerEditor::resizeMap(int columns, int rows)
 	{
 		json j = targetLayer->serialize();
-
-		int const oldWidth = j.value("width", 1);
-		int const oldHeight = j.value("height", 1);
-		json oldData = j.value("tiles", json());
 		
 		Tristeon::String data;
-		j["width"] = width;
-		j["height"] = height;
-		for (unsigned int i = 0; i < width * height; i++)
+		j["columns"] = columns;
+		j["rows"] = rows;
+
+		//TODO: Copy map over after resizing
+		for (unsigned int i = 0; i < columns * rows; i++)
 		{
 			data += std::to_string(-1) + "," + std::to_string(-1);
-			if (i < width * height - 1)
+			if (i < columns * rows - 1)
 				data += ",";
 		}
 		j["tileData"] = data;

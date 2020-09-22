@@ -15,11 +15,9 @@ namespace TristeonEditor
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 
 	private:
-		void mapWidthChanged(int width);
-		void mapHeightChanged(int height);
-		void browse();
-		void resizeMap(int width, int height);
-		void loadTileset(Tristeon::Tileset* set);
+		void mapColumnsChanged(int columns);
+		void mapRowsChanged(int rows);
+		void resizeMap(int columns, int rows);
 		
 		Tristeon::TileLayer* targetLayer = nullptr;
 	};

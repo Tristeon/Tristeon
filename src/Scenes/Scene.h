@@ -38,7 +38,7 @@ namespace Tristeon
 		 *
 		 * \exception invalid_argument Throws if the index is less than 0 or more than layerCount() - 1
 		 */
-		[[nodiscard]] Layer* layerAt(const unsigned int& index) const;
+		[[nodiscard]] Layer* layerAt(const unsigned long long& index) const;
 
 		/**
 		 * Finds a layer using the given name.

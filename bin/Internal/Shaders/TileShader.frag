@@ -22,8 +22,8 @@ uniform Tileset tileset;
 struct Level
 {
     isamplerBuffer data;
-    uint width;
-    uint height;
+    uint columns;
+    uint rows;
     
     uint tileRenderWidth;
     uint tileRenderHeight;
@@ -64,13 +64,13 @@ void main()
     //Calculate tile x,y by dividing the adjusted texcoords by the 0..1 tile size
     float tileX = (coords.x / normalizedTileWidth);
     float tileY = (coords.y / normalizedTileHeight);
-    if (tileX >= level.width || tileY >= level.height || tileX < 0 || tileY < 0) 
+    if (tileX >= level.columns || tileY >= level.rows || tileX < 0 || tileY < 0) 
         discard; //Discard all out of map tiles
 
     //Calculate data index based on tileX and tileY
     uint dataX = uint(floor(tileX));
     uint dataY = uint(floor(tileY));
-    uint dataIndex = dataY * level.width + dataX;
+    uint dataIndex = dataY * level.columns + dataX;
 
     //Convert data tile to tileset index (data stored in a 1D array of 2 integers per tile, first describes the index, the second describes the tileset id)
     int tilesetValue = texelFetch(level.data, int(dataIndex) * 2 + 1).r;
