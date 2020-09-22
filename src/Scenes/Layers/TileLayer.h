@@ -46,7 +46,7 @@ namespace Tristeon
 		/**
 		 * Gets the tileset with the given ID.
 		 */
-		[[nodiscard]] Tileset* tileset(const int& id);
+		[[nodiscard]] Tileset* tileset(const unsigned int& id);
 
 		/**
 		 * Adds a tileset if it hasn't already been added.
@@ -58,10 +58,9 @@ namespace Tristeon
 		/**
 		 * Sets the tile at x, y to the given value.
 		 *
-		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than columns() or y is more than rows()
 		 */
-		void setTileByIndex(const int& ix, const int& iy, const Tile& value);
+		void setTileByIndex(const unsigned int& column, const unsigned int& row, const Tile& value);
 
 		/**
 		 * Sets the tile at index.x, index.y to the given value.
@@ -90,16 +89,15 @@ namespace Tristeon
 		/**
 		 * Gets the tile at x, y.
 		 * 
-		 * \exception invalid_argument Throws if x or y is less than 0
 		 * \exception out_of_range Throws if x is more than columns() or y is more than rows()
 		 */
-		[[nodiscard]] Tile tileByIndex(const int& ix, const int& iy) const;
+		[[nodiscard]] Tile tileByIndex(const unsigned int& column, const unsigned int& row) const;
 
 		/**
-		 * Gets the tile at coords.x, coords.y.
+		 * Gets the tile at index.x, index.y.
 		 *
-		 * \exception invalid_argument Throws if coords.x or coords.y is less than 0
-		 * \exception out_of_range Throws if coords.x is more than columns() or coords.y is more than rows()
+		 * \exception invalid_argument Throws if index.x or index.y is less than 0
+		 * \exception out_of_range Throws if index.x is more than columns() or index.y is more than rows()
 		 */
 		[[nodiscard]] Tile tileByIndex(const Vector2Int& index) const;
 
@@ -120,10 +118,20 @@ namespace Tristeon
 		[[nodiscard]] Tile tileByPosition(const float& wx, const float& wy) const;
 
 		/**
+		 * Returns true if column is less than columns() and row is less than rows().
+		 */
+		[[nodiscard]] bool checkBoundsByIndex(const unsigned int& column, const unsigned int& row) const;
+
+		/**
 		 * Returns true if the given index is within the bounds of the TileLayer
 		 */
 		[[nodiscard]] bool checkBoundsByIndex(const Vector2Int& index) const;
 
+		/**
+		 * Returns true if the world position is within the bounds of the TileLayer.
+		 */
+		[[nodiscard]] bool checkBoundsByPosition(const float& wx, const float& wy) const;
+		
 		/**
 		 * Returns true if the world position is within the bounds of the TileLayer
 		 */
@@ -133,7 +141,6 @@ namespace Tristeon
 	protected:
 		void render(const Framebuffer& framebuffer) override;
 
-	private:
 		Unique<Tile[]> _tiles = nullptr;
 		Vector<Tileset*> _tilesets;
 		unsigned int _columns = 0, _rows = 0;

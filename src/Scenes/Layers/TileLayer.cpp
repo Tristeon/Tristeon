@@ -41,9 +41,11 @@ namespace Tristeon
 			sets.push_back(tileset->filePath);
 		j["tilesets"] = sets;
 
-		std::string tilesSerialized;
+		//Tiles use a custom serialization method instead of the standard json library to speed things up
+		String tilesSerialized;
 		for (int i = 0; i < _columns * _rows; i++)
 		{
+			//They're stored as a comma separated string
 			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tilesetID);
 			if (i < _columns * _rows - 1)
 				tilesSerialized += ",";
@@ -71,36 +73,37 @@ namespace Tristeon
 				_tilesets.add(tileset);
 			}
 		}
-		
+
+		//json reading can be rather slow, so tiles are read manually through a simple comma-separated string.
 		_tiles = std::make_unique<Tile[]>(_columns * _rows);
-		const String tilesSerialized = j.value("tileData", "");
-		const Vector<String> tileArray = StringHelper::split(tilesSerialized, ',');
+		const String tileString = j.value("tileData", "");
+		const Vector<String> splitTileString = StringHelper::split(tileString, ',');
 
-		assert(tileArray.size() % 2 == 0);
+		assert(splitTileString.size() % 2 == 0);
 
-		for (unsigned int i = 0; i < tileArray.size(); i += 2)
+		for (unsigned int i = 0; i < splitTileString.size(); i += 2)
 		{
-			_tiles[i / 2] = Tile{ std::stoi(tileArray[i]), std::stoi(tileArray[i + 1]) };
+			_tiles[i / 2] = Tile{ std::stoi(splitTileString[i]), std::stoi(splitTileString[i + 1]) };
 		}
 		
 		createTBO();
 		createColliders();
 	}
 
-	void TileLayer::setTileByIndex(const int& ix, const int& iy, const Tile& value)
+	void TileLayer::setTileByIndex(const unsigned int& column, const unsigned int& row, const Tile& value)
 	{
-		if (ix < 0 || iy < 0)
-			throw std::invalid_argument("Coords can't be less than 0");
-
-		if (ix * iy > _columns * _rows || ix > _columns || iy > _rows)
+		if (column * row > _columns * _rows || column > _columns || row > _rows)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		_tiles[iy * (int)_columns + ix] = value;
+		_tiles[row * (int)_columns + column] = value;
 		_isDirty = true;
 	}
 
 	void TileLayer::setTileByIndex(const Vector2Int& index, const Tile& value)
 	{
+		if (index.x < 0 || index.y < 0)
+			throw std::invalid_argument("Coords can't be less than 0");
+		
 		setTileByIndex(index.x, index.y, value);
 	}
 
@@ -115,19 +118,19 @@ namespace Tristeon
 		setTileByIndex(index.x, index.y, value);
 	}
 
-	Tile TileLayer::tileByIndex(const int& ix, const int& iy) const
+	Tile TileLayer::tileByIndex(const unsigned int& column, const unsigned int& row) const
 	{
-		if (ix < 0 || iy < 0)
-			throw std::invalid_argument("Coords can't be less than 0");
-
-		if (ix * iy > _columns * _rows || ix > _columns || iy > _rows)
+		if (column * row > _columns * _rows || column > _columns || row > _rows)
 			throw std::out_of_range("Out of range exception: coords exceed tile level");
 
-		return _tiles[iy * (int)_columns + ix];
+		return _tiles[row * _columns + column];
 	}
 
 	Tile TileLayer::tileByIndex(const Vector2Int& index) const
 	{
+		if (index.x < 0 || index.y < 0)
+			throw std::invalid_argument("Coords can't be less than 0");
+		
 		return tileByIndex(index.x, index.y);
 	}
 
@@ -142,7 +145,7 @@ namespace Tristeon
 		return tileByIndex(index);
 	}
 
-	Tileset* TileLayer::tileset(const int& id)
+	Tileset* TileLayer::tileset(const unsigned int& id)
 	{
 		for (Tileset* tileset : _tilesets)
 		{
@@ -166,12 +169,28 @@ namespace Tristeon
 		_tilesets.add(tileset);
 	}
 
+	bool TileLayer::checkBoundsByIndex(const unsigned& column, const unsigned& row) const
+	{
+		if (column * row > _columns * _rows || column > _columns || row > _rows)
+			return false;
+
+		return true;
+	}
+
 	bool TileLayer::checkBoundsByIndex(const Vector2Int& index) const
 	{
 		if (index.x < 0 || index.y < 0)
 			return false;
-		
-		if (index.x * index.y > _columns * _rows || index.x > _columns || index.y > _rows)
+
+		return checkBoundsByIndex((unsigned int)index.x, (unsigned int)index.y);
+	}
+
+	bool TileLayer::checkBoundsByPosition(const float& wx, const float& wy) const
+	{
+		if (wx < 0 || wy < 0)
+			return false;
+
+		if (wx > _columns * Grid::tileWidth() || wy > _rows * Grid::tileHeight())
 			return false;
 
 		return true;
@@ -179,13 +198,7 @@ namespace Tristeon
 
 	bool TileLayer::checkBoundsByPosition(const Vector2& position) const
 	{
-		if (position.x < 0 || position.y < 0)
-			return false;
-
-		if (position.x > _columns * Grid::tileWidth() || position.y > _rows * Grid::tileHeight())
-			return false;
-
-		return true;
+		return checkBoundsByPosition(position.x, position.y);
 	}
 
 	void TileLayer::render(const Framebuffer& framebuffer)
