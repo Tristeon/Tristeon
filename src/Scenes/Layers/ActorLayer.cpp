@@ -12,7 +12,7 @@ namespace Tristeon
 {
 	ActorLayer::~ActorLayer()
 	{
-		for (auto const& actor : findAllActorsOfType<IPreDestroy>())
+		for (auto const& actor : findActorsOfType<IPreDestroy>())
 			actor->preDestroy();
 
 		for (auto const& actor : _actors)
@@ -55,15 +55,15 @@ namespace Tristeon
 		}
 	}
 
-	Actor* ActorLayer::actorAt(const unsigned int& index) const
+	Actor* ActorLayer::actorAt(const unsigned long long& index) const
 	{
 		if (index < 0 || index > _actors.size())
-			throw std::invalid_argument("Index in ActorLayer::getActor() must be 0 or higher, and lower than getActorSize()");
+			throw std::invalid_argument("Index in ActorLayer::getActor() must be less than actorCount()");
 
 		return _actors[index].get();
 	}
 
-	unsigned ActorLayer::actorCount() const
+	unsigned long long ActorLayer::actorCount() const
 	{
 		return _actors.size();
 	}
@@ -92,7 +92,7 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	void ActorLayer::render(Renderer * renderer, Scene * scene)
+	void ActorLayer::render(const Framebuffer& framebuffer)
 	{
 		//Render each graphic
 		for (auto& actor : _actors)

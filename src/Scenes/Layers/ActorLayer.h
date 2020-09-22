@@ -30,21 +30,21 @@ namespace Tristeon
 		/**
 		 * Gets an actor using the given index.
 		 *
-		 * \exception invalid_argument Throws if the index is less than 0 or more than getActorCount()
+		 * \exception invalid_argument Throws if the index is more than actorCount()
 		 */
-		[[nodiscard]] Actor* actorAt(const unsigned int& index) const;
+		[[nodiscard]] Actor* actorAt(const unsigned long long& index) const;
 
 		/**
 		 * Returns the amount of actors in this layer
 		 */
-		[[nodiscard]] unsigned int actorCount() const;
+		[[nodiscard]] unsigned long long actorCount() const;
 
 		/**
 		 * Finds the first actor with the given name within this layer.
 		 *
 		 * Returns nullptr if no actor was found.
 		 */
-		[[nodiscard]] Actor* findActor(std::string const& name) const;
+		[[nodiscard]] Actor* findActor(String const& name) const;
 
 		/**
 		 * Finds the first actor of the given type within this layer.
@@ -70,7 +70,7 @@ namespace Tristeon
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
-		[[nodiscard]] Vector<T*> findAllActorsOfType() const;
+		[[nodiscard]] Vector<T*> findActorsOfType() const;
 
 		/**
 		 * Creates and returns a new actor of type T.
@@ -88,14 +88,14 @@ namespace Tristeon
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
-		void render(Renderer* renderer, Scene* scene) override;
+		void render(const Framebuffer& framebuffer) override;
 
 		/**
 		 * Removes the given actor from this layer, and then destroys the actor itself.
 		 * Used internally by Engine/SceneManager to avoid deleting actors within critical loops.
 		 */
 		void internalDestroyActor(Actor* actor);
-	private:
+		
 		Vector<Unique<Actor>> _actors{};
 	};
 
@@ -124,7 +124,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> ActorLayer::findAllActorsOfType() const
+	Vector<T*> ActorLayer::findActorsOfType() const
 	{
 		Vector<T*> result;
 

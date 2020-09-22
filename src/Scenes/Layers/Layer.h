@@ -1,6 +1,7 @@
 #pragma once
 #include "Serialization/InstancedSerializable.h"
 #include "Utils/TypeDefinitions.h"
+#include <Rendering/Framebuffer.h>
 
 namespace Tristeon
 {
@@ -31,9 +32,9 @@ namespace Tristeon
 
 	protected:
 		/**
-		 * Renders this layer to the GameView.
+		 * Renders this layer to the currently bound framebuffer.
 		 * Layers are free to implement this in whichever way they like.
 		 */
-		virtual void render(Renderer* renderer, Scene* scene) = 0;
+		virtual void render(const Framebuffer& framebuffer) = 0;
 	};
 }

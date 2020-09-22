@@ -20,7 +20,6 @@ namespace TristeonEditor
 		void target(Tristeon::TObject* value) { Tristeon::TObject* old = _target; _target = value; targetChanged(_target, old); }
 	private:
 		Tristeon::TObject* _target = nullptr;
-		Editor* _editor = nullptr;
 	};
 }
 #endif

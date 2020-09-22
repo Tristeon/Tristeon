@@ -50,14 +50,10 @@ namespace Tristeon
 
 		for (auto* camera : cameras)
 		{
-			camera->bindFramebuffer();
-
-			//Determine final resolution
-			Vector2Int resolution = (Vector2Int)((Vector2)Window::gameSize() * camera->screenSize);
-			if (!camera->renderToScreen)
-				resolution = camera->overrideResolution;
-			glViewport(0, 0, resolution.x, resolution.y);
-
+			auto buffer = camera->framebuffer();
+			buffer.bind();
+			glClear(GL_COLOR_BUFFER_BIT);
+			
 			//Send common data to all shaders through a prepass
 			for (auto shader : Collector<Shader>::all())
 			{
@@ -67,14 +63,14 @@ namespace Tristeon
 				shader->bind();
 				shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
 				shader->setUniformValue("camera.zoom", camera->zoom);
-				shader->setUniformValue("camera.displayPixels", (unsigned int)resolution.x, (unsigned int)resolution.y);
+				shader->setUniformValue("camera.displayPixels", buffer.viewport.width, buffer.viewport.height);
 			}
 
 			//Render each layer
 			for (unsigned int i = 0; i < scene->layerCount(); i++)
 			{
 				Layer* layer = scene->layerAt(i);
-				layer->render(this, scene);
+				layer->render(buffer);
 			}
 
 #ifdef TRISTEON_EDITOR

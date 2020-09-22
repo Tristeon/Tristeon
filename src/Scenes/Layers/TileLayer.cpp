@@ -193,7 +193,7 @@ namespace Tristeon
 		return true;
 	}
 
-	void TileLayer::render(Renderer * renderer, Scene * scene)
+	void TileLayer::render(const Framebuffer& framebuffer)
 	{
 		static Shader shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
 		

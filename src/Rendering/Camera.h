@@ -69,6 +69,11 @@ namespace Tristeon
 		 * If referenced, the user must keep in mind that the texture could become invalid after each frame, as the framebuffer gets rebuilt when the screen gets resized.
 		 */
 		[[nodiscard]] unsigned int framebufferTexture() const { return _fboTexture; }
+
+		/**
+		 * Returns a copy of the framebuffer structure with the camera's current framebuffer properties.
+		 */
+		[[nodiscard]] Framebuffer framebuffer();
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
 		Vector2 _lastScreenSize{};
@@ -78,7 +83,7 @@ namespace Tristeon
 		unsigned int _fbo = 0;
 		unsigned int _fboTexture = 0;
 		bool _valid = false;
-
+		
 		/**
 		 * Creates a framebuffer and its corresponding color texture.
 		 */
@@ -86,7 +91,7 @@ namespace Tristeon
 		/**
 		 * Binds the framebuffer for use.
 		 */
-		void bindFramebuffer();
+		void updateFramebuffer();
 		/**
 		 * Draws the camera's framebuffer texture to the screen.
 		 */

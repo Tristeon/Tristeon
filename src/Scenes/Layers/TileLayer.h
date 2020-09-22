@@ -131,7 +131,7 @@ namespace Tristeon
 #pragma endregion
 		
 	protected:
-		void render(Renderer* renderer, Scene* scene) override;
+		void render(const Framebuffer& framebuffer) override;
 
 	private:
 		Unique<Tile[]> _tiles = nullptr;

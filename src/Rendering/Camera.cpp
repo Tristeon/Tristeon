@@ -64,6 +64,25 @@ namespace Tristeon
 		Gizmos::drawSquare(position, resolution * (1.0f / zoom), 0, Colour(0.8, 0.8, 0.8, 0.5));
 	}
 
+	Framebuffer Camera::framebuffer()
+	{
+		updateFramebuffer();
+		
+		Vector2Int resolution = (Vector2Int)((Vector2)Window::gameSize() * screenSize);
+		if (!renderToScreen)
+			resolution = overrideResolution;
+		
+		return {
+			_fbo,
+			{
+				0u,
+				0u,
+				(unsigned int)resolution.x,
+				(unsigned int)resolution.y
+			}
+		};
+	}
+
 	void Camera::buildFramebuffer()
 	{
 		_lastScreenSize = screenSize;
@@ -99,16 +118,10 @@ namespace Tristeon
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 	
-	void Camera::bindFramebuffer()
+	void Camera::updateFramebuffer()
 	{
 		if (_lastScreenSize != screenSize || _lastWindowSize != Window::gameSize())
 			buildFramebuffer();
-		
-		if (!_valid)
-			return;
-		
-		glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	
 	void Camera::drawToScreen() const

@@ -4,14 +4,14 @@ namespace Tristeon
 {
 	json Layer::serialize()
 	{
-		json j = Serializable::serialize();
+		json j = InstancedSerializable::serialize();
 		j["name"] = name;
 		return j;
 	}
 
 	void Layer::deserialize(json j)
 	{
-		Serializable::deserialize(j);
+		InstancedSerializable::deserialize(j);
 		name = j.value("name", "");
 	}
 }
