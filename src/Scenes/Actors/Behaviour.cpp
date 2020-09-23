@@ -1,6 +1,9 @@
 #include "Behaviour.h"
 #include <Collector.h>
 #include "Engine.h"
+#include "Scenes/Scene.h"
+#include "Scenes/SceneManager.h"
+#include "Scenes/Layers/ActorLayer.h"
 
 namespace Tristeon
 {
@@ -30,7 +33,16 @@ namespace Tristeon
 
 	void Behaviour::destroy()
 	{
-		_destroyed = true;
-		Engine::instance()->destroyLater(this);
+		for (auto* layer : SceneManager::current()->findLayersOfType<ActorLayer>())
+		{
+			if (layer->contains(actor()))
+			{
+				layer->destroyBehaviour(this);
+				_destroyed = true;
+				return;
+			}
+		}
+
+		assert(_destroyed);
 	}
 }

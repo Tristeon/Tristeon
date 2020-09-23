@@ -124,12 +124,6 @@ namespace Tristeon
 	private:
 		Vector<Unique<Behaviour>> _behaviours{};
 		bool _destroyed = false;
-
-		/**
-		 * Removes and destroys the given behaviour.
-		 * Used internally by Engine to destroy behaviours outside of critical loops.
-		 */
-		void internalDestroyBehaviour(Behaviour* behaviour);
 	};
 
 	template <typename T>

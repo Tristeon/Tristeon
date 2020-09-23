@@ -32,19 +32,10 @@ namespace Tristeon
 		 */
 		[[nodiscard]] static bool playMode();
 		
-		static void destroyLater(Actor* actor);
-		static void destroyLater(Behaviour* behaviour);
-		static void destroyLater(Layer* layer);
 	private:
 		bool _playMode = false;
 		bool _playModeDirty = false;
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;
-
-		Vector<Actor*> _destroyedActors{};
-		Vector<Behaviour*> _destroyedBehaviours{};
-		Vector<Layer*> _destroyedLayers{};
-		
-		void processDestroyedObjects();
 	};
 }

@@ -1,4 +1,6 @@
 #include "Layer.h"
+#include "Scenes/Scene.h"
+#include "Scenes/SceneManager.h"
 
 namespace Tristeon
 {
@@ -13,5 +15,10 @@ namespace Tristeon
 	{
 		InstancedSerializable::deserialize(j);
 		name = j.value("name", "");
+	}
+
+	void Layer::destroy()
+	{
+		SceneManager::current()->destroyLayer(this);
 	}
 }

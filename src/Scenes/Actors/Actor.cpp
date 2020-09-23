@@ -6,6 +6,7 @@
 #include "Scenes/SceneManager.h"
 
 #include "Scenes/Scene.h"
+#include "Scenes/Layers/ActorLayer.h"
 #include "Serialization/TypeRegister.h"
 
 namespace Tristeon
@@ -93,23 +94,6 @@ namespace Tristeon
 		}
 	}
 
-	void Actor::internalDestroyBehaviour(Behaviour* behaviour)
-	{
-		for (size_t i = 0; i < _behaviours.size(); i++)
-		{
-			if (_behaviours[i].get() == behaviour)
-			{
-				auto* pre = dynamic_cast<IPreDestroy*>(_behaviours[i].get());
-				if (pre != nullptr)
-					pre->preDestroy();
-
-				_behaviours[i].reset();
-				_behaviours.removeAt(i);
-				break;
-			}
-		}
-	}
-
 	Vector<Behaviour*> Actor::behaviours()
 	{
 		Vector<Behaviour*> result;
@@ -139,7 +123,18 @@ namespace Tristeon
 	void Actor::destroy()
 	{
 		_destroyed = true;
-		Engine::destroyLater(this);
+
+		if (SceneManager::current() != nullptr)
+		{
+			for (auto* layer : SceneManager::current()->findLayersOfType<ActorLayer>())
+			{
+				if (layer->contains(this))
+				{
+					layer->destroyActor(this);
+					return;
+				}
+			}
+		}
 	}
 
 	Actor* Actor::find(const String& name)

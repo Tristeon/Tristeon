@@ -208,11 +208,19 @@ namespace Tristeon
 		T& operator[](const ull& index);
 		T& operator[](const ull& index) const;
 
-		//TODO: Support contains, indexOf and remove() with a predicate
+		//TODO: Support indexOf and remove() with a predicate
 		/**
 		 * Returns true if value is part of the vector.
 		 */
-		[[nodiscard]] bool contains(const T& value);
+		[[nodiscard]] bool contains(const T& value) const;
+
+		/**
+		 * Iterates over each element and calls predicate.
+		 * Returns true if the predicate is true at least once.
+		 */
+		template <typename pred>
+		[[nodiscard]] bool any(pred predicate) const;
+		
 		/**
 		 * Returns the index of the given value.
 		 * If the element wasn't found, it returns size().
@@ -509,13 +517,26 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	bool Vector<T>::contains(const T& value)
+	bool Vector<T>::contains(const T& value) const
 	{
 		for (const auto& element : *this)
 		{
 			if (element == value)
 				return true;
 		}
+		return false;
+	}
+
+	template <typename T>
+	template <typename pred>
+	bool Vector<T>::any(pred predicate) const
+	{
+		for (const auto& element : *this)
+		{
+			if (predicate(element))
+				return true;
+		}
+
 		return false;
 	}
 

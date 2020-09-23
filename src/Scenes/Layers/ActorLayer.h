@@ -17,6 +17,9 @@ namespace Tristeon
 	{
 		friend class Scene;
 		friend class SceneManager;
+
+		friend class Actor;
+		friend class Behaviour;
 	public:
 		ActorLayer() = default;
 		virtual ~ActorLayer();
@@ -39,6 +42,11 @@ namespace Tristeon
 		 */
 		[[nodiscard]] unsigned long long actorCount() const;
 
+		/**
+		 * Returns true if the given actor is in the layer's internal list.
+		 */
+		[[nodiscard]] bool contains(Actor* actor) const;
+		
 		/**
 		 * Finds the first actor with the given name within this layer.
 		 *
@@ -84,17 +92,33 @@ namespace Tristeon
 		 * Can return nullptr if no such type was registered.
 		 */
 		[[nodiscard]] Actor* createActor(const String& type);
+
 	protected:
+		/**
+		 * Queues the actor up for destruction.
+		 * Destruction is processed after each critical loop in the Engine.
+		 */
+		void destroyActor(Actor* actor);
+
+		/**
+		 * Queues the behaviour up for destruction.
+		 * Destruction is processed after each critical loop in the Engine.
+		 */
+		void destroyBehaviour(Behaviour* behaviour);
+		
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
 		void render(const Framebuffer& framebuffer) override;
 
 		/**
-		 * Removes the given actor from this layer, and then destroys the actor itself.
-		 * Used internally by Engine/SceneManager to avoid deleting actors within critical loops.
+		 * Cleans up destroyed actors and behaviours.
+		 * 
+		 * This function is called in-between iteration loops to prevent breaking critical loops.
 		 */
-		void internalDestroyActor(Actor* actor);
+		void safeCleanup() override;
+		Vector<Actor*> _destroyedActors{};
+		Vector<Behaviour*> _destroyedBehaviours{};
 		
 		Vector<Unique<Actor>> _actors{};
 	};

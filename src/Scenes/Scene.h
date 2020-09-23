@@ -5,8 +5,6 @@
 
 namespace Tristeon
 {
-	class Actor;
-
 	/**
 	 * Scene is a class that describes the current 'scene' or 'level' within the game.
 	 * Its core design revolves around layers, which are each constructed of their own set of data,
@@ -88,8 +86,8 @@ namespace Tristeon
 		[[nodiscard]] ull layerCount() const;
 
 		/**
-		 * Removes the layer from the Scene and destroys it.
-		 * \param layer After this function, layer will point to invalid memory.
+		 * Queues the layer up for destruction.
+		 * Destruction is processed after each critical loop in the Engine.
 		 */
 		void destroyLayer(Layer* layer);
 
@@ -115,13 +113,11 @@ namespace Tristeon
 		 */
 		[[nodiscard]] String name() const { return _name; }
 	private:
-		void internalDestroyLayer(Layer* layer);
 		/**
-		 * Finds the actor's layer and removes the actor from said layer.
-		 * Then destroys the actor itself.
-		 * Used internally by Engine to avoid deleting actors within critical loops.
+		 * Used internally by Engine to avoid deleting Layers within critical loops.
 		 */
-		void internalDestroyActor(Actor* actor);
+		void safeCleanup();
+		Vector<Layer*> _destroyedLayers{};
 		
 		Vector<Unique<Layer>> _layers;
 		String _name;

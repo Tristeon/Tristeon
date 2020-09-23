@@ -68,6 +68,11 @@ namespace Tristeon
 		return _actors.size();
 	}
 
+	bool ActorLayer::contains(Actor* actor) const
+	{
+		return _actors.any([=](const Unique<Actor>& unique) { return unique.get() == actor; });
+	}
+
 	Actor* ActorLayer::findActor(const String& name) const
 	{
 		for (auto& actor : _actors)
@@ -92,6 +97,16 @@ namespace Tristeon
 		return nullptr;
 	}
 
+	void ActorLayer::destroyActor(Actor* actor)
+	{
+		_destroyedActors.add(actor);
+	}
+
+	void ActorLayer::destroyBehaviour(Behaviour* behaviour)
+	{
+		_destroyedBehaviours.add(behaviour);
+	}
+
 	void ActorLayer::render(const Framebuffer& framebuffer)
 	{
 		//Render each graphic
@@ -107,20 +122,45 @@ namespace Tristeon
 		}
 	}
 
-	void ActorLayer::internalDestroyActor(Actor * actor)
+	void ActorLayer::safeCleanup()
 	{
-		for (size_t i = 0; i < _actors.size(); i++)
+		//Clear behaviours first
+		for (auto* behaviour : _destroyedBehaviours)
 		{
-			if (_actors[i].get() == actor)
+			Actor* actor = behaviour->actor();
+			for (size_t i = 0; i < actor->_behaviours.size(); i++)
 			{
-				auto* pre = dynamic_cast<IPreDestroy*>(_actors[i].get());
-				if (pre != nullptr)
-					pre->preDestroy();
+				if (actor->_behaviours[i].get() == behaviour)
+				{
+					auto* pre = dynamic_cast<IPreDestroy*>(actor->_behaviours[i].get());
+					if (pre != nullptr)
+						pre->preDestroy();
 
-				_actors[i].reset();
-				_actors.removeAt(i);
-				break;
+					actor->_behaviours[i].reset();
+					actor->_behaviours.removeAt(i);
+					break;
+				}
 			}
 		}
+		_destroyedBehaviours.clear();
+
+		//Then handle actors
+		for (auto* actor : _destroyedActors)
+		{
+			for (size_t i = 0; i < _actors.size(); i++)
+			{
+				if (_actors[i].get() == actor)
+				{
+					auto* pre = dynamic_cast<IPreDestroy*>(_actors[i].get());
+					if (pre != nullptr)
+						pre->preDestroy();
+
+					_actors[i].reset();
+					_actors.removeAt(i);
+					break;
+				}
+			}
+		}
+		_destroyedActors.clear();
 	}
 }

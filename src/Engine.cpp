@@ -46,7 +46,7 @@ namespace Tristeon
 			SceneManager::load(Project::firstSceneName());
 		}
 		
-		processDestroyedObjects();
+		SceneManager::current()->safeCleanup();
 
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		unsigned int frames = 0;
@@ -80,30 +80,30 @@ namespace Tristeon
 				{
 					for (auto* start : Collector<IStart>::all()) start->start();
 					_playModeDirty = false;
-					processDestroyedObjects();
+					SceneManager::current()->safeCleanup();
 				}
 				
 				fixedUpdateTime += deltaTime;
 				while (fixedUpdateTime > Project::Physics::fixedDeltaTime()) 
 				{
 					_physics->update();
-					processDestroyedObjects();
+					SceneManager::current()->safeCleanup();
 					for (auto* fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
-					processDestroyedObjects();
+					SceneManager::current()->safeCleanup();
 					fixedUpdateTime -= Project::Physics::fixedDeltaTime();
 				}
 
 				for (auto* early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();
-				processDestroyedObjects();
+				SceneManager::current()->safeCleanup();
 				for (auto* update : Collector<IUpdate>::all()) update->update();
-				processDestroyedObjects();
+				SceneManager::current()->safeCleanup();
 				for (auto* late : Collector<ILateUpdate>::all()) late->lateUpdate();
-				processDestroyedObjects();
+				SceneManager::current()->safeCleanup();
 			}
 
 			for (auto* gizmos : Collector<IDrawGizmos>::all()) gizmos->drawGizmos();
 
-			processDestroyedObjects();
+			SceneManager::current()->safeCleanup();
 			
 			Window::draw();
 
@@ -124,31 +124,5 @@ namespace Tristeon
 	bool Engine::playMode()
 	{
 		return instance()->_playMode;
-	}
-
-	void Engine::destroyLater(Actor* actor)
-	{
-		instance()->_destroyedActors.add(actor);
-	}
-
-	void Engine::destroyLater(Behaviour* behaviour)
-	{
-		instance()->_destroyedBehaviours.add(behaviour);
-	}
-
-	void Engine::destroyLater(Layer* layer)
-	{
-		instance()->_destroyedLayers.add(layer);
-	}
-
-	void Engine::processDestroyedObjects()
-	{
-		//TODO: Replace this with a non-hardcoded generic late-destroy system.
-		for (auto* behaviour : _destroyedBehaviours) behaviour->actor()->internalDestroyBehaviour(behaviour);
-		_destroyedBehaviours.clear();
-		for (auto* actor : _destroyedActors) SceneManager::current()->internalDestroyActor(actor);
-		_destroyedActors.clear();
-		for (auto* layer : _destroyedLayers) SceneManager::current()->internalDestroyLayer(layer);
-		_destroyedLayers.clear();
 	}
 }

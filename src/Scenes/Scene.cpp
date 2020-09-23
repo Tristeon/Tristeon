@@ -1,10 +1,6 @@
 #include "Scene.h"
 #include <stdexcept>
 #include <Scenes/Layers/Layer.h>
-
-
-#include "Engine.h"
-#include "Layers/ActorLayer.h"
 #include "Serialization/TypeRegister.h"
 
 namespace Tristeon
@@ -72,7 +68,7 @@ namespace Tristeon
 
 	void Scene::destroyLayer(Layer* layer)
 	{
-		Engine::destroyLater(layer);
+		_destroyedLayers.add(layer);
 	}
 
 	void Scene::setIndex(Layer* layer, const ull& index)
@@ -98,19 +94,23 @@ namespace Tristeon
 		return layerCount();
 	}
 
-	void Scene::internalDestroyLayer(Layer* layer)
+	void Scene::safeCleanup()
 	{
-		auto const index = indexOf(layer);
-		if (index == _layers.size())
-			return;
-		_layers[index].reset();
-		_layers.removeAt(index);
-	}
+		//Allow each layer to cleanup their business
+		for (auto& layer : _layers)
+		{
+			layer->safeCleanup();
+		}
 
-	void Scene::internalDestroyActor(Actor* actor)
-	{
-		Vector<ActorLayer*> actorLayers = findLayersOfType<ActorLayer>();
-		for (const auto& layer : actorLayers)
-			layer->internalDestroyActor(actor);
+		//Clean up the destroyed layers
+		for (auto* layer : _destroyedLayers)
+		{
+			auto const index = indexOf(layer);
+			if (index == _layers.size())
+				return;
+			_layers[index].reset();
+			_layers.removeAt(index);
+		}
+		_destroyedLayers.clear();
 	}
 }
