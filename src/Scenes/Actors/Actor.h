@@ -9,9 +9,6 @@
 
 namespace Tristeon
 {
-	template<typename T>
-	using IsBehaviour = std::enable_if_t<std::is_base_of<Behaviour, T>::value, T>;
-
 	/**
 	 * An actor is an empty container that can exist freely on an ActorLayer.
 	 * Actors can be inherited from to implement more specific actors such as Player, Car, Enemy, etc.
@@ -59,35 +56,51 @@ namespace Tristeon
 		String name = "";
 
 		/**
+		 * The number of behaviours attached to the actor.
+		 */
+		unsigned long long behaviourCount() const;
+
+		/**
+		 * Returns the behaviour at the given index.
+		 */
+		Behaviour* behaviourAt(const unsigned long long& index);
+		
+		/**
 		 * Gets the first behaviour of type T. nullptr if no behaviour of type T was found.
 		 */
 		template<typename T>
-		IsBehaviour<T>* behaviour();
+		T* findBehaviour();
 
 		/**
 		 * Gets a list of all the behaviours of type T. Returns an empty vector if no behaviour of type T was found.
 		 */
 		template<typename T>
-		Vector<T*> behaviours();
+		Vector<T*> findBehaviours();
 
 		/**
 		 * Gets a list with all of the actor's behaviours.
 		 */
-		Vector<Behaviour*> behaviours();
+		Vector<Behaviour*> findBehaviours();
 		
 		/**
 		 * Adds a new behaviour of type T and returns the new behaviour.
 		 * If the type isn't found in the register then this function returns nullptr.
 		 */
 		template<typename T>
-		IsBehaviour<T>* addBehaviour();
+		T* createBehaviour();
 
 		/**
 		 * Adds a new behaviour of the given type and returns said behaviour.
 		 * If the type is not recognized as a behaviour, or if the type isn't found in the register at all then this function returns nullptr.
 		 */
-		Behaviour* addBehaviour(const String& type);
+		Behaviour* createBehaviour(const String& type);
 
+		/**
+		 * Queues the Behaviour up for destruction, and then at the right time safely removes the behaviour from its actor and deletes the Behaviour instance.
+		 * Should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.
+		 */
+		void destroyBehaviour(Behaviour* behaviour);
+		
 		/**
 		 * Destroy removes the actor from the scene and deletes the Actor's instance.
 		 * destroy() should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.
@@ -121,13 +134,19 @@ namespace Tristeon
 		 */
 		template<typename T>
 		static T* findOfType(const String& name);
+
+		/**
+		 * Returns all of the actors in the Scene with the given type.
+		 */
+		template<typename T>
+		static Vector<T*> findAllOfType();
 	private:
 		Vector<Unique<Behaviour>> _behaviours{};
 		bool _destroyed = false;
 	};
 
 	template <typename T>
-	IsBehaviour<T>* Actor::behaviour()
+	T* Actor::findBehaviour()
 	{
 		for (auto const& behaviour : _behaviours)
 		{
@@ -139,7 +158,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Actor::behaviours()
+	Vector<T*> Actor::findBehaviours()
 	{
 		Vector<T*> behaviours;
 
@@ -154,8 +173,11 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	IsBehaviour<T>* Actor::addBehaviour()
+	T* Actor::createBehaviour()
 	{
+		static_assert(std::is_base_of<Behaviour, T>::value, "Can't create a new Behaviour if it isn't of type Behaviour");
+		static_assert(!std::is_abstract<T>::value, "Can't create an abstract Behaviour!");
+		
 		T* result = new T();
 		result->_actor = this;
 		_behaviours.add(Unique<Behaviour>(result));
@@ -184,11 +206,25 @@ namespace Tristeon
 	T* Actor::findOfType(const String& name)
 	{
 		auto actors = Collector<Actor>::all();
-		for (auto actor : actors)
+		for (auto* actor : actors)
 		{
 			if (actor->name == name && dynamic_cast<T*>(actor))
 				return dynamic_cast<T*>(actor);
 		}
 		return nullptr;
+	}
+
+	template <typename T>
+	Vector<T*> Actor::findAllOfType()
+	{
+		Vector<T*> result;
+		
+		auto actors = Collector<Actor>::all();
+		for (auto* actor : actors)
+		{
+			if (dynamic_cast<T*>(actor))
+				result.add(dynamic_cast<T*>(actor));
+		}
+		return result;
 	}
 }

@@ -28,7 +28,7 @@ namespace Tristeon
 
 		assert(_destroyed == true);
 
-		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
+		for (auto& b : findBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		for (int i = _behaviours.size() - 1; i >= 0; --i)
 		{
 			_behaviours[i]->_destroyed = true;
@@ -65,7 +65,7 @@ namespace Tristeon
 		//Clear previous behaviours
 		for (auto& b : _behaviours)
 			b->_destroyed = true;
-		for (auto& b : behaviours<IPreDestroy>()) { b->preDestroy(); }
+		for (auto& b : findBehaviours<IPreDestroy>()) { b->preDestroy(); }
 		_behaviours.clear();
 
 		for (const auto& serializedBehaviour : j.value("behaviours", json::array_t()))
@@ -94,7 +94,20 @@ namespace Tristeon
 		}
 	}
 
-	Vector<Behaviour*> Actor::behaviours()
+	unsigned long long Actor::behaviourCount() const
+	{
+		return _behaviours.size();
+	}
+
+	Behaviour* Actor::behaviourAt(const unsigned long long& index)
+	{
+		if (index >= _behaviours.size())
+			throw std::invalid_argument("Index in Actor::behaviourAt() must be less than behaviourCount()");
+		
+		return _behaviours[index].get();
+	}
+
+	Vector<Behaviour*> Actor::findBehaviours()
 	{
 		Vector<Behaviour*> result;
 		for (const auto& behaviour : _behaviours)
@@ -102,7 +115,7 @@ namespace Tristeon
 		return result;
 	}
 
-	Behaviour* Actor::addBehaviour(const std::string& type)
+	Behaviour* Actor::createBehaviour(const std::string& type)
 	{
 		auto* result = Register<Behaviour>::createInstance(type).release();
 
@@ -118,6 +131,14 @@ namespace Tristeon
 			istart->start();
 
 		return result;
+	}
+
+	void Actor::destroyBehaviour(Behaviour* behaviour)
+	{
+		if (!behaviour || behaviour->actor() != this)
+			return;
+		
+		behaviour->destroy();
 	}
 
 	void Actor::destroy()

@@ -62,7 +62,7 @@ namespace Tristeon
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tilesetID)->tileInfo[tileContact.tile.index];
 			tileContact.normal = Vector2::convert(manifold.normal);
 			
-			for (auto* cb : collider->actor()->behaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
+			for (auto* cb : collider->actor()->findBehaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
 
 			auto* cbActor = dynamic_cast<ITileContactBegin*>(collider->actor());
 			if (cbActor != nullptr) cbActor->tileContactBegin(tileContact);
@@ -72,8 +72,8 @@ namespace Tristeon
 		{
 			if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
 			{
-				for (auto* cba : aCollider->actor()->behaviours<ISensorBegin>()) cba->sensorBegin({ bCollider, normal });
-				for (auto* cbb : bCollider->actor()->behaviours<ISensorBegin>()) cbb->sensorBegin({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->findBehaviours<ISensorBegin>()) cba->sensorBegin({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->findBehaviours<ISensorBegin>()) cbb->sensorBegin({ aCollider, -normal });
 
 				auto* cbActorA = dynamic_cast<ISensorBegin*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->sensorBegin({ bCollider, normal });
@@ -83,8 +83,8 @@ namespace Tristeon
 			}
 			else
 			{
-				for (auto* cba : aCollider->actor()->behaviours<IContactBegin>()) cba->contactBegin({ bCollider, normal });
-				for (auto* cbb : bCollider->actor()->behaviours<IContactBegin>()) cbb->contactBegin({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->findBehaviours<IContactBegin>()) cba->contactBegin({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->findBehaviours<IContactBegin>()) cbb->contactBegin({ aCollider, -normal });
 
 				auto* cbActorA = dynamic_cast<IContactBegin*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->contactBegin({ bCollider, normal });
@@ -141,7 +141,7 @@ namespace Tristeon
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tilesetID)->tileInfo[tileContact.tile.index];
 			tileContact.normal = Vector2::convert(manifold.normal);
 			
-			for (auto* cb : collider->actor()->behaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);
+			for (auto* cb : collider->actor()->findBehaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);
 
 			auto* cbActor = dynamic_cast<ITileContactEnd*>(collider->actor());
 			if (cbActor != nullptr) cbActor->tileContactEnd(tileContact);
@@ -151,8 +151,8 @@ namespace Tristeon
 		{
 			if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
 			{
-				for (auto* cba : aCollider->actor()->behaviours<ISensorEnd>()) cba->sensorEnd({ bCollider, normal });
-				for (auto* cbb : bCollider->actor()->behaviours<ISensorEnd>()) cbb->sensorEnd({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->findBehaviours<ISensorEnd>()) cba->sensorEnd({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->findBehaviours<ISensorEnd>()) cbb->sensorEnd({ aCollider, -normal });
 
 				auto* cbActorA = dynamic_cast<ISensorEnd*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->sensorEnd({ bCollider, normal });
@@ -162,8 +162,8 @@ namespace Tristeon
 			}
 			else
 			{
-				for (auto* cba : aCollider->actor()->behaviours<IContactEnd>()) cba->contactEnd({ bCollider, normal });
-				for (auto* cbb : bCollider->actor()->behaviours<IContactEnd>()) cbb->contactEnd({ aCollider, -normal });
+				for (auto* cba : aCollider->actor()->findBehaviours<IContactEnd>()) cba->contactEnd({ bCollider, normal });
+				for (auto* cbb : bCollider->actor()->findBehaviours<IContactEnd>()) cbb->contactEnd({ aCollider, -normal });
 
 				auto* cbActorA = dynamic_cast<IContactEnd*>(aCollider->actor());
 				if (cbActorA != nullptr) cbActorA->contactEnd({ bCollider, normal });
@@ -191,11 +191,11 @@ namespace Tristeon
 		
 		if (aCollider != nullptr && bCollider != nullptr)
 		{
-			for (auto* cba : aCollider->actor()->behaviours<IPreContact>()) {
+			for (auto* cba : aCollider->actor()->findBehaviours<IPreContact>()) {
 				if (!cba->preContact({ bCollider, normal }))
 					enableContact = false;
 			}
-			for (auto* cbb : bCollider->actor()->behaviours<IPreContact>()) {
+			for (auto* cbb : bCollider->actor()->findBehaviours<IPreContact>()) {
 				if (!cbb->preContact({ aCollider, normal }))
 					enableContact = false;
 			}

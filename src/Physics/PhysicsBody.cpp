@@ -41,7 +41,7 @@ namespace Tristeon
 		if (body == nullptr)
 			createBody();
 
-		for (auto* col : actor()->behaviours<Collider>())
+		for (auto* col : actor()->findBehaviours<Collider>())
 		{
 			col->setPhysicsBody(body.get());
 		}
@@ -60,7 +60,7 @@ namespace Tristeon
 
 	void PhysicsBody::preDestroy()
 	{
-		for (auto* col : actor()->behaviours<Collider>())
+		for (auto* col : actor()->findBehaviours<Collider>())
 		{
 			col->setPhysicsBody(nullptr);
 		}

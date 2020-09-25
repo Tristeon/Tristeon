@@ -23,7 +23,7 @@ namespace Tristeon
 		Behaviour& operator=(Behaviour&& other) noexcept;
 
 		/**
-		 * Destroy safely removes the behaviour from its actor and deletes the Behaviour instance.
+		 * Queues the Behaviour up for destruction, and then at the right time safely removes the behaviour from its actor and deletes the Behaviour instance.
 		 * destroy() should be used at all times as opposed to manual deletion, to avoid deleting objects within critical loops.
 		 */
 		void destroy();

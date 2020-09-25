@@ -57,8 +57,8 @@ namespace Tristeon
 
 	Actor* ActorLayer::actorAt(const unsigned long long& index) const
 	{
-		if (index < 0 || index > _actors.size())
-			throw std::invalid_argument("Index in ActorLayer::getActor() must be less than actorCount()");
+		if (index >= _actors.size())
+			throw std::invalid_argument("Index in ActorLayer::actorAt() must be less than actorCount()");
 
 		return _actors[index].get();
 	}

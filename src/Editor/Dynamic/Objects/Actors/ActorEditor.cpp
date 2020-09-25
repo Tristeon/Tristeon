@@ -251,7 +251,7 @@ namespace TristeonEditor
 
 	void ActorEditor::displayBehaviours()
 	{
-		for (auto* behaviour : actor->behaviours())
+		for (auto* behaviour : actor->findBehaviours())
 			addBehaviour(behaviour);
 
 		QPushButton* addBehaviour = new QPushButton(this);
@@ -291,7 +291,7 @@ namespace TristeonEditor
 			QAction* action = new QAction(pair.first.c_str(), this);
 			connect(action, &QAction::triggered, this, [&](bool checked)
 			{
-				auto* behaviour = actor->addBehaviour(pair.first);
+				auto* behaviour = actor->createBehaviour(pair.first);
 				addBehaviour(behaviour);
 			});
 			contextMenu.addAction(action);

@@ -18,7 +18,7 @@ namespace Tristeon
 {
 	void TestBehaviour::start()
 	{
-		body = actor()->behaviour<PhysicsBody>();
+		body = actor()->findBehaviour<PhysicsBody>();
 	}
 
 	void TestBehaviour::update()

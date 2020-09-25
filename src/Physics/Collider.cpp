@@ -17,7 +17,7 @@ namespace Tristeon
 		removeSelf();
 		if (_body == nullptr)
 		{
-			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
+			PhysicsBody* pb = actor()->findBehaviour<PhysicsBody>();
 			if (pb != nullptr)
 				_body = pb->getBody();
 			else
@@ -143,7 +143,7 @@ namespace Tristeon
 		//Either find a body or get the default static one
 		if (_body == nullptr)
 		{
-			PhysicsBody* pb = actor()->behaviour<PhysicsBody>();
+			PhysicsBody* pb = actor()->findBehaviour<PhysicsBody>();
 			if (pb != nullptr)
 				_body = pb->getBody();
 			else

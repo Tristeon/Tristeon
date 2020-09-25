@@ -32,8 +32,8 @@ namespace Tristeon
 
 	Layer* Scene::layerAt(const unsigned long long& index) const
 	{
-		if (index < 0 || index > _layers.size() - 1)
-			throw std::invalid_argument("Index must be more than 0 and less than the amount of layers");
+		if (index >= _layers.size())
+			throw std::invalid_argument("Index must be less than layerCount()");
 
 		return _layers[index].get();
 	}
