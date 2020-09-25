@@ -16,6 +16,6 @@ namespace Tristeon
 		/**
 		 * contactBegin is called on the first moment that a collision existed between a non-sensor collider and a tile.
 		 */
-		virtual void tileContactBegin(TileContact const& contact) = 0;
+		virtual void tileContactBegin(const TileContact& contact) = 0;
 	};
 }

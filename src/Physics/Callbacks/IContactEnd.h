@@ -19,6 +19,6 @@ namespace Tristeon
 		/**
 		 * contactEnd is called once a collision between two non-sensor colliders has come to an end.
 		 */
-		virtual void contactEnd(Contact const& contact) = 0;
+		virtual void contactEnd(const Contact& contact) = 0;
 	};
 }

@@ -19,6 +19,6 @@ namespace Tristeon
 		/**
 		 * sensorEnd is called once a collision with a sensor and another collider has come to an end.
 		 */
-		virtual void sensorEnd(Contact const& contact) = 0;
+		virtual void sensorEnd(const Contact& contact) = 0;
 	};
 }

@@ -16,6 +16,6 @@ namespace Tristeon
 		/**
 		 * contactEnd is called once a collision between a non-sensor collider and a tile has come to an end.
 		 */
-		virtual void tileContactEnd(TileContact const& contact) = 0;
+		virtual void tileContactEnd(const TileContact& contact) = 0;
 	};
 }

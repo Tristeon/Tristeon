@@ -93,12 +93,12 @@ namespace Tristeon
 		 */
 		[[nodiscard]] Actor* createActor(const String& type);
 
-	protected:
 		/**
 		 * Queues the actor up for destruction.
 		 * Destruction is processed after each critical loop in the Engine.
 		 */
 		void destroyActor(Actor* actor);
+	protected:
 
 		/**
 		 * Queues the behaviour up for destruction.

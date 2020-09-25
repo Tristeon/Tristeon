@@ -19,6 +19,6 @@ namespace Tristeon
 		/**
 		 * sensorBegin is called on the first moment that a collision existed between a sensor and another collider.
 		 */
-		virtual void sensorBegin(Contact const& contact) = 0;
+		virtual void sensorBegin(const Contact& contact) = 0;
 	};
 }
