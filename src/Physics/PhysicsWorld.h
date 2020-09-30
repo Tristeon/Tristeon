@@ -10,7 +10,8 @@
 namespace Tristeon
 {
 	struct RaycastResult;
-
+	class Collider;
+	
 	/**
 	 * The PhysicsWorld controls the realtime physics simulation in Tristeon, it consists out of PhysicsBodies and Colliders.
 	 *

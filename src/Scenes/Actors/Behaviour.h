@@ -3,6 +3,8 @@
 
 namespace Tristeon
 {
+	class Actor;
+	
 	/**
 	 * A Behaviour in Tristeon is a class that can be added to an Actor to dynamically add additional behaviour to the Actor object.
 	 *
