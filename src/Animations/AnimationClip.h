@@ -100,7 +100,7 @@ namespace Tristeon
 		/**
 		 * The filepath for the Texture of this animationclip.
 		 */
-		std::string texturePath = "";
+		String texturePath = "";
 
 		/**
 		 * A modifier for the playback rate of the animationclip.

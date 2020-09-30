@@ -6,7 +6,7 @@ namespace Tristeon
 	 * Describes a TileLayer tile.
 	 * Instances of this struct can be obtained through the TileLayer.
 	 */
-	struct Tile
+	struct Tile final
 	{
 		/**
 		 * The tile's index on its Tileset.

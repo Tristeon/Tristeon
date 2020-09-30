@@ -1,4 +1,5 @@
 #pragma once
+#include <typeinfo> //Required by some compilers
 #include <Utils/StringHelper.h>
 #include "Utils/Console.h"
 

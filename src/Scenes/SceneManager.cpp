@@ -98,9 +98,6 @@ namespace Tristeon
 		_current->_name = _cachedName;
 		_current->_path = path;
 
-		if (Engine::playMode())
-			for (auto* start : Collector<IStart>::all()) start->start();
-
 		sceneLoaded.invoke(_current.get());
 
 		_cachedName = "";

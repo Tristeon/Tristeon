@@ -8,9 +8,6 @@ using namespace nlohmann;
 
 namespace Tristeon
 {
-	template<typename T>
-	using IsSerializable = std::enable_if_t<std::is_base_of<Serializable, T>::value, T>;
-	
 	/**
 	 * The JsonSerializer class is a static class used to load & save json objects from a file.
 	 */
@@ -24,15 +21,14 @@ namespace Tristeon
 		 * 
 		 * \exception invalid_argument Throws if the json data is empty.
 		 */
-		template <typename T>
-		static void serialize(const std::string& path, IsSerializable<T>& obj);
+		static void serialize(const String& path, Serializable* obj);
 
 		/**
 		 * Saves the json data into a file with the given filepath.
 		 *
 		 * \exception invalid_argument Throws if the json data is empty.
 		 */
-		static void save(const std::string& path, const json& obj);
+		static void save(const String& path, const json& obj);
 
 		/**
 		 * Create an instance with type T from a json file at the given filepath.
@@ -41,27 +37,22 @@ namespace Tristeon
 		 * \exception invalid_argument If the json file is invalid or empty.
 		 */
 		template <typename T>
-		[[nodiscard]] static IsSerializable<T>* deserialize(const std::string& path);
+		[[nodiscard]] static Unique<T> deserialize(const String& path);
 
 		/**
 		 * Loads json data from a file using the given filepath.
 		 *
 		 * \exception invalid_argument Throws if the file has no json data.
 		 */
-		[[nodiscard]] static json load(const std::string& path);
+		[[nodiscard]] static json load(const String& path);
 	};
 
 	template <typename T>
-	void JsonSerializer::serialize(const std::string& path, IsSerializable<T>& obj)
+	Unique<T> JsonSerializer::deserialize(const String& path)
 	{
-		//Convert the object instance to json data
-		const json j = obj.serialize();
-		save(path, j);
-	}
-
-	template <typename T>
-	IsSerializable<T>* JsonSerializer::deserialize(const std::string& path)
-	{
+		static_assert(std::is_base_of<Serializable, T>::value, "Can't deserialize an object if it isn't of type Serializable");
+		static_assert(!std::is_abstract<T>::value, "Can't deserialize an abstract type!");
+		
 		json input = load(path);
 
 		//Check if the object is serializing its typeID
@@ -76,13 +67,11 @@ namespace Tristeon
 		auto instance = TypeRegister::createInstance(input.value("typeID", ""));
 		if (instance == nullptr)
 			return nullptr;
-		
-		Serializable * deserializedObject = static_cast<Serializable*>(instance.get());
-		instance.release();
-		//Load json data into the instance
-		deserializedObject->deserialize(input);
+		instance->deserialize(input);
+
 		//Cast into the desired type
-		T * obj = static_cast<T*>(deserializedObject);
-		return obj;
+		if (dynamic_cast<T*>(instance.get()) != nullptr)
+			return Unique<T>(dynamic_cast<T*>(instance.release())); //Move and cast value
+		return nullptr; //If cast fails, return nullptr, instance gets cleaned automatically.
 	}
 }

@@ -36,6 +36,11 @@ namespace Tristeon
 		_physics = std::make_unique<PhysicsWorld>();
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
+		SceneManager::sceneLoaded += [=](Scene* scene)
+		{
+			_playModeDirty = true;
+		};
+
 		SceneManager::load(Project::firstSceneName());
 		SceneManager::processCachedLoad();
 		

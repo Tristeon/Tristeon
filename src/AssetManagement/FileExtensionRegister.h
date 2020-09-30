@@ -8,7 +8,7 @@ namespace Tristeon
 	class FileExtensionRegister : Register<MetaFile>
 	{
 	public:
-		FileExtensionRegister(std::string fileExtension)
+		FileExtensionRegister(String fileExtension)
 		{
 			getMap()->emplace(fileExtension,&CreateInstance<T,MetaFile>);
 		}

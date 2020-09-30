@@ -17,12 +17,14 @@ namespace Tristeon
 		using TypeMap = std::map<String, Unique<Base>(*)()>;
 
 		/**
-		 * Creates instance of an object that inherits from Base.
-		 * The user must take ownership of the instance himself.
+		 * Creates an instance of the class that matches the given type name.
+		 * In the case that the given type name string isn't found in the Register's type map, this function returns nullptr.
+		 * 
+		 * The function returns a unique ptr, meaning that the receiver must claim full ownership of the object.
 		 */
-		[[nodiscard]] static Unique<Base> createInstance(const std::string& s)
+		[[nodiscard]] static Unique<Base> createInstance(const String& type)
 		{
-			const auto it = getMap()->find(s);
+			const auto it = getMap()->find(type);
 			if (it == getMap()->end())
 				return nullptr;
 			return it->second();

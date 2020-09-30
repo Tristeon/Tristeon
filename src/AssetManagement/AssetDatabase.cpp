@@ -72,7 +72,7 @@ namespace Tristeon
 		readDir(Project::assetPath());
 	}
 
-	void AssetDatabase::readDir(std::string const& dir)
+	void AssetDatabase::readDir(String const& dir)
 	{
 		for (auto const& entry : fs::directory_iterator(dir))
 		{

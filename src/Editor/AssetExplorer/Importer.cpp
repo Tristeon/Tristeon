@@ -24,7 +24,7 @@ void Importer::import(std::filesystem::path assetPath)
 	metaFile->GUID = Random::generateUInt();
 	metaFile->filepath = assetPath.string();
 	
-	JsonSerializer::serialize<MetaFile>(assetPath.string() + ".meta",*metaFile);
+	JsonSerializer::serialize(assetPath.string() + ".meta", metaFile.get());
 }
 
 void Importer::scanProject()

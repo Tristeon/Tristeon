@@ -31,8 +31,8 @@ namespace Tristeon
 			if (_loadedResources.find(lower) != _loadedResources.end())
 				return (T*)_loadedResources[lower].get();
 
-			T* resource = JsonSerializer::deserialize<T>(lower);
-			_loadedResources[lower] = std::move(Unique<T>(resource));
+			auto resource = JsonSerializer::deserialize<T>(lower);
+			_loadedResources[lower] = std::move(resource);
 			return (T*)_loadedResources[lower].get();
 		}
 
@@ -73,7 +73,7 @@ namespace Tristeon
 			if (!std::filesystem::exists(globalPath + ".meta"))
 				return nullptr;
 			
-			MetaFile* metaFile = JsonSerializer::deserialize<MetaFile>(globalPath + ".meta");
+			auto metaFile = JsonSerializer::deserialize<MetaFile>(globalPath + ".meta");
 			if (_newLoadedResources.find(metaFile->GUID) != _newLoadedResources.end())
 				return (T*)_newLoadedResources[metaFile->GUID].get();
 

@@ -12,7 +12,7 @@
 
 namespace Tristeon
 {
-	json JsonSerializer::load(const std::string& path)
+	json JsonSerializer::load(const String& path)
 	{
 		//Read file and check if it read it successfully
 		std::ifstream stream(path);
@@ -32,7 +32,7 @@ namespace Tristeon
 		return input;
 	}
 	
-	void JsonSerializer::save(const std::string& path, json const& obj)
+	void JsonSerializer::save(const String& path, const json& obj)
 	{
 		//check if json isn't empty
 		if (obj.is_null())
@@ -42,7 +42,20 @@ namespace Tristeon
 		std::ofstream stream;
 		stream.open(path, std::ios::trunc);
 		if (!stream.is_open())
+		{
 			Console::warning("Failed to write to path " + path + ", system error code: " + std::to_string(SYSERROR()));
+			return;
+		}
 		stream << obj.dump(4);
+	}
+
+	void JsonSerializer::serialize(const String& path, Serializable* obj)
+	{
+		if (obj == nullptr)
+			throw std::invalid_argument("The passed object can't be nullptr!");
+
+		//Convert the object instance to json data
+		const json j = obj->serialize();
+		save(path, j);
 	}
 }

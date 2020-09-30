@@ -22,7 +22,7 @@ namespace Tristeon
 	private:
 		
 		static void detectAll();
-		static void readDir(std::string const& dir);
+		static void readDir(String const& dir);
 		static std::map<String, Vector<String>> assets;
 	};
 }
