@@ -27,7 +27,7 @@ namespace Tristeon
 		class Iterator
 		{
 		public:
-			using iterator_category = typename std::random_access_iterator_tag;
+			using iterator_category = std::random_access_iterator_tag;
 			using value_type = T;
 			using difference_type = ull;
 			using pointer = T*;
@@ -72,7 +72,7 @@ namespace Tristeon
 		class ConstIterator
 		{
 		public:
-			using iterator_category = typename std::random_access_iterator_tag;
+			using iterator_category = std::random_access_iterator_tag;
 			using value_type = T;
 			using difference_type = ull;
 			using pointer = T*;
