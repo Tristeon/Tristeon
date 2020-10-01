@@ -5,7 +5,7 @@
 
 namespace Tristeon
 {
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 	/**
 	 * Wrapper around typeid(T).name(), to enforce a consistent return style across all (supported) compilers.
 	 *
