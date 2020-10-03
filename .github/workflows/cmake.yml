@@ -12,7 +12,7 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -22,10 +22,10 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{runner.workspace}}/build
   
-    - name: Install GLFW dependencies
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: sudo apt-get install xorg-dev libglu1-mesa-dev
+    #- name: Install GLFW dependencies
+    #  shell: bash
+    #  working-directory: ${{runner.workspace}}/build
+    #  run: sudo apt-get install xorg-dev libglu1-mesa-dev
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
