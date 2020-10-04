@@ -25,6 +25,9 @@ namespace Tristeon
 		_editorCamera->screenSize = { 1, 1 };
 		_editorCamera->zoom = 0.25f;
 #endif
+
+		glGenVertexArrays(1, &_dummyVAO);
+		glBindVertexArray(_dummyVAO);
 	}
 
 	Renderer::~Renderer()

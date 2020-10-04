@@ -24,7 +24,6 @@ namespace Tristeon
 {
 	void Engine::run()
 	{
-		Console::init();
 		Window::pollEvents();
 
 #ifndef TRISTEON_EDITOR

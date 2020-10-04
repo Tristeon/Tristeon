@@ -18,6 +18,10 @@ namespace Tristeon
 		if (!glfwInit())
 			throw std::exception("Failed to initialize GLFW");
 		glfwSetErrorCallback(&GameWindow::errorCallback);
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		
 		_window = glfwCreateWindow(1920, 1080, "Tristeon", nullptr, nullptr);
 		_width = 1920;

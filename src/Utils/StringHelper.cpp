@@ -11,7 +11,7 @@ namespace Tristeon
 {
 	String StringHelper::toLower(String string)
 	{
-		std::transform(string.begin(), string.end(), string.begin(), std::tolower);
+		std::transform(string.begin(), string.end(), string.begin(), [](unsigned char c) -> unsigned char { return std::toupper(c); });
 		return string;
 	}
 

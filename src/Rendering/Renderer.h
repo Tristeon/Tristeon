@@ -50,5 +50,8 @@ namespace Tristeon
 	private:
 		std::unique_ptr<Camera> _editorCamera = nullptr;
 #endif
+
+	private:
+		unsigned int _dummyVAO = 0;
 	};
 }

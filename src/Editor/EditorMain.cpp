@@ -8,6 +8,7 @@
 
 #include <ctime>
 #include "Project.h"
+#include <Utils/Console.h>
 
 #include <Editor/Editor.h>
 #include <Editor/EditorWindow.h>
@@ -146,6 +147,8 @@ void showEditorWindow(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
+	Tristeon::Console::init();
+	
 	showProjectWindow(argc, argv);
 
 	Tristeon::AssetDatabase::load();
