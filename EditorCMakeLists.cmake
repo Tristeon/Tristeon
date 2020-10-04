@@ -104,15 +104,8 @@ if (MSVC)
 	link_libs(Tristeon)
 	
 else(MSVC)
-	#Create "build configurations" for other IDEs/compilers
-	add_executable(Debug ${tristeonSRC})
-	add_executable(Release ${tristeonSRC})
-	
-	target_compile_definitions(Debug PUBLIC ${CMAKE_CXX_FLAGS_DEBUG})
-	target_compile_definitions(Release PUBLIC ${CMAKE_CXX_FLAGS_RELEASE})
-	
-	link_libs(Debug)
-	link_libs(Release)
+	add_executable(Tristeon ${tristeonSRC})
+	link_libs(Tristeon)
 endif(MSVC)
 
 #Add Qt binaries to build
