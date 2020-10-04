@@ -23,17 +23,16 @@ namespace Tristeon
 				return nullptr;
 
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
-			String const lower = StringHelper::toLower(globalPath);
 
-			if (!std::filesystem::exists(lower))
+			if (!std::filesystem::exists(globalPath))
 				return nullptr;
 
-			if (_loadedResources.find(lower) != _loadedResources.end())
-				return (T*)_loadedResources[lower].get();
+			if (_loadedResources.find(globalPath) != _loadedResources.end())
+				return (T*)_loadedResources[globalPath].get();
 
-			auto resource = JsonSerializer::deserialize<T>(lower);
-			_loadedResources[lower] = std::move(resource);
-			return (T*)_loadedResources[lower].get();
+			auto resource = JsonSerializer::deserialize<T>(globalPath);
+			_loadedResources[globalPath] = std::move(resource);
+			return (T*)_loadedResources[globalPath].get();
 		}
 
 		///<summary>Expects T to contain a constructor that takes a string without having other parameters</summary>
@@ -44,16 +43,15 @@ namespace Tristeon
 				return nullptr;
 
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
-			String const lower = StringHelper::toLower(globalPath);
 
-			if (!std::filesystem::exists(lower))
+			if (!std::filesystem::exists(globalPath))
 				return nullptr;
 
-			if (_loadedResources.find(lower) != _loadedResources.end())
-				return (T*)_loadedResources[lower].get();
+			if (_loadedResources.find(globalPath) != _loadedResources.end())
+				return (T*)_loadedResources[globalPath].get();
 
-			_loadedResources[lower] = std::make_unique<T>(lower);
-			return (T*)_loadedResources[lower].get();
+			_loadedResources[globalPath] = std::make_unique<T>(globalPath);
+			return (T*)_loadedResources[globalPath].get();
 		}
 
 		template<typename T>
@@ -64,9 +62,8 @@ namespace Tristeon
 				return nullptr;
 
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
-			String const lower = StringHelper::toLower(globalPath);
 
-			if (!std::filesystem::exists(lower))
+			if (!std::filesystem::exists(globalPath))
 				return nullptr;
 
 			//Load metafile and its associated resource
@@ -86,12 +83,11 @@ namespace Tristeon
 		static bool loaded(const String& path)
 		{
 			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
-			String const lower = StringHelper::toLower(globalPath);
 
-			if (lower.empty())
+			if (globalPath.empty())
 				return false;
 
-			if (_loadedResources.find(lower) != _loadedResources.end())
+			if (_loadedResources.find(globalPath) != _loadedResources.end())
 				return true;
 
 			return false;

@@ -71,6 +71,9 @@ namespace Tristeon
 
 	void Sprite::render()
 	{
+	    if (!_texture)
+	        return;
+
 		auto* shader = getShader();
 		
 		glActiveTexture(GL_TEXTURE0);
