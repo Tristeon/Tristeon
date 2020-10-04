@@ -95,7 +95,7 @@ namespace Tristeon
 		}
 		else
 		{
-			throw std::exception("This shouldn't happen");
+			throw std::runtime_error("This shouldn't happen");
 		}
 	}
 

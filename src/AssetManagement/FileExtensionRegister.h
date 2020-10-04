@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "MetaFile.h"
+#include "MetaFiles/MetaFile.h"
 #include "Serialization/Register.h"
 
 namespace Tristeon

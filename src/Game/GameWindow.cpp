@@ -1,4 +1,6 @@
 #ifndef TRISTEON_EDITOR
+#include <exception>
+
 #include "glad/glad.h"
 #include "GameWindow.h"
 
@@ -16,7 +18,7 @@ namespace Tristeon
 	{
 		//Create window
 		if (!glfwInit())
-			throw std::exception("Failed to initialize GLFW");
+			throw std::runtime_error("Failed to initialize GLFW");
 		glfwSetErrorCallback(&GameWindow::errorCallback);
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -27,14 +29,14 @@ namespace Tristeon
 		_width = 1920;
 		_height = 1080;
 		if (!_window)
-			throw std::exception("Failed to create GLFW window");
+			throw std::runtime_error("Failed to create GLFW window");
 		glfwMakeContextCurrent(_window);
 
 		//Load OGL
 		if (!gladLoadGL())
 		{
 			Console::error("Error initializing glad");
-			throw std::exception("Failed to initialize glad");
+			throw std::runtime_error("Failed to initialize glad");
 		}
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		

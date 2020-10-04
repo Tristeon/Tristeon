@@ -98,3 +98,5 @@ external/glfw/src/glfw3ConfigVersion.cmake
 external/glfw/src/glfw3.pc
 external/glfw/src/glfw3Config.cmake
 external/glfw/cmake_uninstall.cmake
+
+bin/Tristeon
