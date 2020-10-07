@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 
 void Importer::import(std::filesystem::path assetPath)
 {
-	if (!exists(assetPath)) throw std::exception("Invalid assetPath has been passed. File does not exist");
+	if (!exists(assetPath)) throw std::runtime_error("Invalid assetPath has been passed. File does not exist");
 	
 	if (fs::exists(assetPath.string() + ".meta")) return;
 	

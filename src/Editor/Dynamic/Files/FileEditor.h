@@ -20,7 +20,7 @@ namespace TristeonEditor
 			item = dynamic_cast<FileItem*>(current);
 
 			if (item == nullptr)
-				throw std::exception("FileEditor's target must be of type FileItem!");
+				throw std::runtime_error("FileEditor's target must be of type FileItem!");
 		}
 	protected:
 		FileItem* item = nullptr;

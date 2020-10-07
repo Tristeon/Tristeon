@@ -32,6 +32,7 @@ namespace Tristeon
 
 	Renderer::~Renderer()
 	{
+	    glDeleteVertexArrays(1, &_dummyVAO);
 #ifdef TRISTEON_EDITOR
 		_editorCamera->destroy();
 #endif

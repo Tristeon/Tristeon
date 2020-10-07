@@ -61,6 +61,7 @@ set(QT_USE_QTOPENGL TRUE)
 #Libraries
 macro(link_libs targetname)
 	target_link_libraries(${targetname} PUBLIC glad)
+	target_link_libraries(${targetname} PUBLIC ${CMAKE_DL_LIBS})
 
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)

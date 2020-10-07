@@ -1,5 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include <Engine.h>
+
 #include <Editor/DockWidget.h>
 #include <Utils/Singleton.h>
 

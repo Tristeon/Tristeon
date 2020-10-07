@@ -59,6 +59,7 @@ macro(link_libs targetname)
     target_link_libraries(${targetname} PUBLIC box2d)
     target_link_libraries(${targetname} PUBLIC glad)
     target_link_libraries(${targetname} PUBLIC glfw)
+	target_link_libraries(${targetname} PUBLIC ${CMAKE_DL_LIBS})
 endmacro()
 
 if (MSVC)

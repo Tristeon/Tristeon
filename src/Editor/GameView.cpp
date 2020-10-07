@@ -21,16 +21,16 @@ namespace TristeonEditor
 {
 	GameView::GameView(QWidget* parent) : QOpenGLWidget(parent)
 	{
-		show();
+        QSurfaceFormat format;
+        format.setRenderableType(QSurfaceFormat::OpenGL);
+        format.setProfile(QSurfaceFormat::CoreProfile);
+        format.setVersion(3, 3);
+        format.setSamples(0);
+        format.setSwapBehavior(Tristeon::Project::Graphics::tripleBuffering() ? QSurfaceFormat::TripleBuffer : QSurfaceFormat::SwapBehavior::DoubleBuffer);
+        format.setSwapInterval(0);
+        setFormat(format);
 
-		//Disables sampling because it harms 2D transparency
-		QSurfaceFormat format;
-		format.setRenderableType(QSurfaceFormat::OpenGL);
-		format.setProfile(QSurfaceFormat::CoreProfile);
-		format.setSamples(0);
-		format.setSwapBehavior(Project::Graphics::tripleBuffering() ? QSurfaceFormat::TripleBuffer : QSurfaceFormat::SwapBehavior::DoubleBuffer);
-		format.setSwapInterval(0);
-		setFormat(format);
+        show();
 	}
 
 	void GameView::initialize()
@@ -47,11 +47,16 @@ namespace TristeonEditor
 		//Load OGL
 		if (!gladLoadGL())
 		{
-			std::cout << "Error initializing glad." << std::endl;
-			throw std::exception("Failed to initialize glad");
+			Console::write("Error initializing glad");
+			throw std::runtime_error("Failed to initialize glad");
 		}
-		std::cout << "OpenGL " << GLVersion.major << "." << GLVersion.minor << "\n";
-		
+		Console::write("Detected OpenGL: " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
+		if (GLVersion.major < 3 || GLVersion.minor < 3)
+        {
+		    Console::write("Incorrect OpenGL version!");
+		    throw std::runtime_error("Incorrect OpenGL version!");
+        }
+
 		glad_glClearColor(0, 0, 0, 1);
 
 		//Enable culling
