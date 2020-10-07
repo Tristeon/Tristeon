@@ -37,6 +37,16 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       if: matrix.platform == 'ubuntu-20.04'
       run: sudo apt-get install xorg-dev libglu1-mesa-dev
+    
+    - name: Install Qt dependencies
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      if: matrix.platform == 'ubuntu-20.04' && matrix.editor == 'ON'
+      run: |
+        sudo apt-get install qt5-default
+        sudo apt-get install qttools5-dev
+        sudo apt-get install qtdeclarative5-dev
+        sudo apt-get install libqt5gamepad5-dev
             
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
