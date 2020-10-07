@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, ubuntu-latest, windows-latest]
+        platform: [ubuntu-20.04, windows-latest]
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -23,9 +23,9 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
       
     - name: Install GLFW dependencies
-      if: ${{ matrix.platform }} != windows-latest
       shell: bash
       working-directory: ${{runner.workspace}}/build
+      if: ${{ matrix.platform != windows-latest }}
       run: sudo apt-get install xorg-dev libglu1-mesa-dev
             
     - name: Configure CMake
