@@ -2,12 +2,14 @@
 SET(QT_MISSING True)
 # msvc only; mingw will need different logic
 IF(MSVC)
-    # look for user-registry pointing to qtcreator
-    GET_FILENAME_COMPONENT(QT_BIN [HKEY_CURRENT_USER\\Software\\Classes\\Applications\\QtProject.QtCreator.cpp\\shell\\Open\\Command] PATH)
+    IF (NOT DEFINED QT_BIN)
+        # get root path so we can search for 5.3, 5.4, 5.5, etc
+        # look for user-registry pointing to qtcreator
+        GET_FILENAME_COMPONENT(QT_BIN [HKEY_CURRENT_USER\\Software\\Classes\\Applications\\QtProject.QtCreator.cpp\\shell\\Open\\Command] PATH)
+        STRING(REPLACE "/Tools" ";" QT_BIN "${QT_BIN}")
+        LIST(GET QT_BIN 0 QT_BIN)
+    ENDIF()
 
-    # get root path so we can search for 5.3, 5.4, 5.5, etc
-    STRING(REPLACE "/Tools" ";" QT_BIN "${QT_BIN}")
-    LIST(GET QT_BIN 0 QT_BIN)
     FILE(GLOB QT_VERSIONS "${QT_BIN}/5.*")
     LIST(SORT QT_VERSIONS)
 
@@ -18,7 +20,6 @@ IF(MSVC)
 
     # fix any double slashes which seem to be common
     STRING(REPLACE "//" "/"  QT_VERSION "${QT_VERSION}")
-        
 
     # check for 64-bit os
     # may need to be removed for older compilers as it wasn't always offered
