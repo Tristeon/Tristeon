@@ -10,6 +10,8 @@ IF(MSVC)
         LIST(GET QT_BIN 0 QT_BIN)
     ENDIF()
 
+    message("Qt root folder: " ${QT_BIN})
+
     FILE(GLOB QT_VERSIONS "${QT_BIN}/5.*")
     LIST(SORT QT_VERSIONS)
 
