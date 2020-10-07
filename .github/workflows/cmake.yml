@@ -10,7 +10,7 @@ jobs:
   download_dependencies:
       runs-on: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
       steps:
-      - uses: actions/checkout&v2
+      - uses: actions/checkout@v2
       
       - name: Install GLFW dependencies
         shell: bash
