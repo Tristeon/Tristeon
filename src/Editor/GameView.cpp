@@ -23,8 +23,6 @@ namespace TristeonEditor
 	{
         QSurfaceFormat format;
         format.setRenderableType(QSurfaceFormat::OpenGL);
-        format.setProfile(QSurfaceFormat::CoreProfile);
-        format.setVersion(3, 3);
         format.setSamples(0);
         format.setSwapBehavior(Tristeon::Project::Graphics::tripleBuffering() ? QSurfaceFormat::TripleBuffer : QSurfaceFormat::SwapBehavior::DoubleBuffer);
         format.setSwapInterval(0);
@@ -51,7 +49,7 @@ namespace TristeonEditor
 			throw std::runtime_error("Failed to initialize glad");
 		}
 		Console::write("Detected OpenGL: " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
-		if (GLVersion.major < 3 || GLVersion.minor < 3)
+		if (GLVersion.major < 3)
         {
 		    Console::write("Incorrect OpenGL version!");
 		    throw std::runtime_error("Incorrect OpenGL version!");
