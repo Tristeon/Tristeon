@@ -21,7 +21,7 @@ jobs:
             compiler: msvc
 
           - platform: windows-latest
-            compiler: gcc
+            compiler: g++
     runs-on: ${{ matrix.platform }}
 
     steps:
