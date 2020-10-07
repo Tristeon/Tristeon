@@ -41,7 +41,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.9.0
       with:
-        dir: ${{github.workspace/Qt/
+        dir: ${{github.workspace}}/Qt/
     
    # - name: Install Qt dependencies
    #   shell: bash
