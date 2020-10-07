@@ -54,7 +54,13 @@ add_subdirectory(external/box2d)
 add_subdirectory(external/glad)
 
 #include Qt
-include(${CMAKE_MODULE_PATH}/QtLocator.cmake)
+if (NOT DEFINED Qt5_DIR)
+	message("Qt5_DIR not set, attempting to find it.")
+	include(${CMAKE_MODULE_PATH}/QtLocator.cmake)
+else()
+	message("Qt5_DIR set, using dir directly.")
+endif()
+
 find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml Gamepad REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
