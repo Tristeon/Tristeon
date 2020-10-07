@@ -25,7 +25,7 @@ jobs:
     - name: Install GLFW dependencies
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      if: ${{ matrix.platform }} == 'ubuntu-20.04'
+      if: matrix.platform == 'ubuntu-20.04'
       run: sudo apt-get install xorg-dev libglu1-mesa-dev
             
     - name: Configure CMake
