@@ -60,7 +60,7 @@ namespace Tristeon
 	};
 
 /**
- * Registers the given type into the DerivedTypeRegister for object creation through serialization.
+ * Registers the given type into the TypeRegister for object creation through serialization.
  */
 #define REGISTER_TYPE(t) static const Tristeon::DerivedTypeRegister<t> register_##t
 
