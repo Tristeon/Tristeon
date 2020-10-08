@@ -12,19 +12,24 @@
 namespace Tristeon
 {
 	/**
-	 * SerializableRegister is a specialization of Register.
+	 * Use this type alias to create instances of serializables (TypeRegister::createInstance(typename).
+	 */
+	using TypeRegister = Register<Serializable>;
+	
+	/**
+	 * DerivedTypeRegister is a specialization of Register.
 	 * It's used as the project-wide register for creating instances of Actors, Behaviours and more.
 	 *
 	 * This class itself shouldn't be interacted with outside of the REGISTER_TYPE macro, because this class is used to register the given type to the Register::map.
 	 * Instead, use the alias TypeRegister to create instances with.
 	 */
 	template <typename T>
-	struct SerializableRegister : Register<Serializable>
+	struct DerivedTypeRegister : TypeRegister
 	{
 		static_assert(std::is_base_of<Serializable, T>::value, "T has to be a type of Serializable!");
 		static_assert(!std::is_abstract<T>::value, "Registered types can not be abstract!");
 		
-		SerializableRegister()
+		DerivedTypeRegister()
 		{
 			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Serializable>);
 
@@ -54,15 +59,10 @@ namespace Tristeon
 		}
 	};
 
-	/**
-	 * Use this type alias to create instances of serializables (TypeRegister::createInstance(typename).
-	 */
-	using TypeRegister = Register<Serializable>;
-
 /**
- * Registers the given type into the SerializableRegister for object creation through serialization.
+ * Registers the given type into the DerivedTypeRegister for object creation through serialization.
  */
-#define REGISTER_TYPE(t) static const Tristeon::SerializableRegister<t> register_##t
+#define REGISTER_TYPE(t) static const Tristeon::DerivedTypeRegister<t> register_##t
 
 	//Actor is a unique case of an engine base class that can be instantiated without a derived class.
 	//Actor needs to be included in TypeRegister but can't register manually because it'd cause recursive including
