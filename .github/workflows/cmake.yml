@@ -31,6 +31,7 @@ jobs:
           - platform: windows-latest
             toolset: -T ClangCL
           - platform: windows-latest
+            toolset: -T host=x64 #-T needs a value, we only build for x64 anyways
             
     runs-on: ${{ matrix.platform }}
 
