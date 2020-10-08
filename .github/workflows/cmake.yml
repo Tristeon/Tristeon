@@ -31,7 +31,6 @@ jobs:
           - platform: windows-latest
             toolset: -T ClangCL
           - platform: windows-latest
-            toolset: -T
             
     runs-on: ${{ matrix.platform }}
 
