@@ -22,7 +22,7 @@ namespace Tristeon
 			return name;
 		}
 
-		std::string result;
+		String result;
 		for (auto i = 1; i < vec.size(); i++)
 		{
 			result += vec[i];
@@ -38,11 +38,11 @@ namespace Tristeon
 	 * The MinGW version demangles the typename
 	 */
 	template<typename T>
-	std::string getTypename()
+	String getTypename()
 	{
 		int status;
 		char* realName = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-		std::string result = { realName };
+		String result = { realName };
 		free(realName);
 		return result;
 	}
