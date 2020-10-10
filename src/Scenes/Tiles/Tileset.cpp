@@ -33,7 +33,7 @@ namespace Tristeon
 	json Tileset::serialize()
 	{
 		json j = Serializable::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(Tileset);
+		j["typeID"] = Type<Tileset>::fullName();
 
 		j["id"] = id;
 		

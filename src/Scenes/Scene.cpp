@@ -8,7 +8,7 @@ namespace Tristeon
 	json Scene::serialize()
 	{
 		json j = Serializable::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(Scene);
+		j["typeID"] = Type<Scene>::fullName();
 
 		json serializedLayers = json::array_t();
 		for (auto& layer : _layers)

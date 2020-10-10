@@ -1,11 +1,10 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 
-#include <iostream>
 #include <map>
 
 #include <Utils/TypeDefinitions.h>
-#include <Serialization/Typename.h>
+#include <Serialization/Type.h>
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 
 namespace TristeonEditor
@@ -50,14 +49,14 @@ namespace TristeonEditor
 	/**
 	 * The derived register is used to register types into the ObjectEditorRegister's map
 	 */
-	template <typename Type, typename EditorType>
+	template <typename T, typename EditorType>
 	struct DerivedObjectEditorRegister : ObjectEditorRegister
 	{
 		static_assert(std::is_base_of<ObjectEditor, EditorType>::value, "T has to be a type of ObjectEditor!");
 
 		DerivedObjectEditorRegister()
 		{
-			getMap()->emplace(TRISTEON_TYPENAME(Type), &createEditor<EditorType>);
+			getMap()->emplace(Tristeon::Type<T>::fullName(), &createEditor<EditorType>);
 		}
 	};
 

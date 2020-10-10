@@ -12,7 +12,7 @@ namespace Tristeon
 	json PhysicsBody::serialize()
 	{
 		json j = Behaviour::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(PhysicsBody);
+		j["typeID"] = Type<PhysicsBody>::fullName();
 		j["type"] = _type;
 		j["gravityScale"] = _gravityScale;
 		j["fixedRotation"] = _fixedRotation;
@@ -229,12 +229,12 @@ namespace Tristeon
 		_enabled = value;
 	}
 
-	void PhysicsBody::setType(const Type& type)
+	void PhysicsBody::setType(const BodyType& type)
 	{
 		body->SetType(static_cast<b2BodyType>(type));
 	}
 
-	PhysicsBody::Type PhysicsBody::type() const
+	PhysicsBody::BodyType PhysicsBody::type() const
 	{
 		return _type;
 	}

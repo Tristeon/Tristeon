@@ -44,7 +44,7 @@ namespace Tristeon
 		/**
 		 * Describes the PhysicsBody's type; the way it interacts with the world.
 		 */
-		enum Type
+		enum BodyType
 		{
 			/**
 			 * Used for non-moving colliders, although this is usually unnecessary as Tristeon resolves static colliders without manually added PhysicsBodies.
@@ -194,14 +194,14 @@ namespace Tristeon
 		/**
 		 * Gets the body type (Static, Kinematic, Dynamic).
 		 */
-		[[nodiscard]] Type type() const;
+		[[nodiscard]] BodyType type() const;
 		/**
 		 * Sets the body type (Static, Kinematic, Dynamic).
 		 */
-		void setType(const Type& type);
+		void setType(const BodyType& type);
 		
 	protected:
-		Type _type = Dynamic;
+		BodyType _type = Dynamic;
 
 		float _gravityScale = 1;
 		bool _fixedRotation = false;

@@ -1,12 +1,10 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include "FileEditor.h"
-
-#include <iostream>
 #include <map>
 
 #include <Utils/TypeDefinitions.h>
-#include <Serialization/Typename.h>
+#include <Utils/Console.h>
 
 namespace TristeonEditor
 {
@@ -32,7 +30,7 @@ namespace TristeonEditor
 			const auto it = getMap()->find(extension);
 			if (it == getMap()->end())
 			{
-				std::cout << "Couldn't find FileEditor for extension " << extension << std::endl;
+				Tristeon::Console::warning("Couldn't find FileEditor for extension " + extension);
 				return nullptr;
 			}
 			return it->second();

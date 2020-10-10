@@ -1,11 +1,11 @@
 ﻿#include "MetaFile.h"
 
-#include "Serialization/Typename.h"
+#include "Serialization/Type.h"
 
 json Tristeon::MetaFile::serialize()
 {
 	json j = Serializable::serialize();
-	j["typeID"] = TRISTEON_TYPENAME(MetaFile);
+	j["typeID"] = Type<MetaFile>::fullName();
 	j["filepath"] = filepath;
 	j["GUID"] = GUID;
 	return j;

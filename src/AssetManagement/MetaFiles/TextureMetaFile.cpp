@@ -7,7 +7,7 @@ using namespace Tristeon;
 json TextureMetaFile::serialize()
 {
 	json j = MetaFile::serialize();
-	j["typeID"] = TRISTEON_TYPENAME(TextureMetaFile);
+	j["typeID"] = Type<TextureMetaFile>::fullName();
 	return j;
 }
 

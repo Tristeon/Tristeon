@@ -11,7 +11,7 @@ namespace Tristeon
 	json CircleCollider::serialize()
 	{
 		json j = Collider::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(CircleCollider);
+		j["typeID"] = Type<CircleCollider>::fullName();
 		j["radius"] = _radius;
 		return j;
 	}

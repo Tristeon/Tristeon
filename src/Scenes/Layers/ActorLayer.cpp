@@ -22,7 +22,7 @@ namespace Tristeon
 	json ActorLayer::serialize()
 	{
 		json j = Layer::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(ActorLayer);
+		j["typeID"] = Type<ActorLayer>::fullName();
 
 		json serializedActors = json::array_t();
 		for (auto& actor : _actors)

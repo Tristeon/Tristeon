@@ -33,7 +33,7 @@ namespace Tristeon
 	json BoxCollider::serialize()
 	{
 		json j = Collider::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(BoxCollider);
+		j["typeID"] = Type<BoxCollider>::fullName();
 		j["width"] = _width;
 		j["height"] = _height;
 		return j;

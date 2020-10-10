@@ -12,7 +12,7 @@ namespace Tristeon
 	json AnimationSprite::serialize()
 	{
 		json j = Sprite::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(AnimationSprite);
+		j["typeID"] = Type<AnimationSprite>::fullName();
 		j["clipPath"] = _clipPath;
 		return j;
 	}

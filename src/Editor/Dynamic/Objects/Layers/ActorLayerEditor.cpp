@@ -83,10 +83,10 @@ namespace TristeonEditor
 	{
 		QMenu contextMenu(tr("Context menu"));
 
-		QAction* actor = new QAction(TRISTEON_TYPENAME(Tristeon::Actor).c_str(), this);
+		QAction* actor = new QAction(Tristeon::Type<Tristeon::Actor>::fullName().c_str(), this);
 		connect(actor, &QAction::triggered, this, [&](bool checked)
 			{
-				Tristeon::Actor* a = targetLayer->createActor(TRISTEON_TYPENAME(Tristeon::Actor));
+				Tristeon::Actor* a = targetLayer->createActor(Tristeon::Type<Tristeon::Actor>::fullName());
 				a->name = "New Actor";
 
 				auto* item = new QListWidgetItem(QString::fromStdString(a->name));

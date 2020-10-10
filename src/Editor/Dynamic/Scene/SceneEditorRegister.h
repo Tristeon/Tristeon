@@ -6,7 +6,7 @@
 #include <map>
 
 #include <Utils/TypeDefinitions.h>
-#include <Serialization/Typename.h>
+#include <Serialization/Type.h>
 
 namespace TristeonEditor
 {
@@ -51,14 +51,14 @@ namespace TristeonEditor
 	/**
 	 * The derived register is used to register types into the SceneEditorRegister's map
 	 */
-	template <typename Type, typename EditorType>
+	template <typename T, typename EditorType>
 	struct DerivedSceneEditorRegister : SceneEditorRegister
 	{
 		static_assert(std::is_base_of<SceneEditor, EditorType>::value, "T has to be a type of SceneEditor!");
 
 		DerivedSceneEditorRegister()
 		{
-			getMap()->emplace(TRISTEON_TYPENAME(Type), &createEditor<EditorType>);
+			getMap()->emplace(Tristeon::Type<T>::fullName(), &createEditor<EditorType>);
 		}
 	};
 

@@ -40,7 +40,7 @@ namespace Tristeon
 	json Actor::serialize()
 	{
 		auto j = InstancedSerializable::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(Actor);
+		j["typeID"] = Type<Actor>::fullName();
 		j["position"] = position;
 		j["scale"] = scale;
 		j["rotation"] = rotation;

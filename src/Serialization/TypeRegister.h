@@ -2,8 +2,8 @@
 #include "Register.h"
 
 #include <map>
-#include <Serialization/Typename.h>
 #include <Serialization/Serializable.h>
+#include <Serialization/Type.h>
 
 #include <Scenes/Actors/Actor.h>
 #include <Scenes/Actors/Behaviour.h>
@@ -31,7 +31,7 @@ namespace Tristeon
 		
 		DerivedTypeRegister()
 		{
-			getMap()->emplace(TRISTEON_TYPENAME(T), &CreateInstance<T, Serializable>);
+			getMap()->emplace(Type<T>::fullName(), &CreateInstance<T, Serializable>);
 
 			//Attempt to recognize the type as one of the standard basetypes, add to their respective registers.
 			registerAs<Actor, T>();
@@ -46,7 +46,7 @@ namespace Tristeon
 		template<typename Base, typename Q>
 		typename std::enable_if<std::is_base_of<Base, Q>::value, void>::type registerAs()
 		{
-			Register<Base>::getMap()->emplace(TRISTEON_TYPENAME(Q), &CreateInstance<Q, Base>);
+			Register<Base>::getMap()->emplace(Type<T>::fullName(), &CreateInstance<Q, Base>);
 		}
 
 		/**

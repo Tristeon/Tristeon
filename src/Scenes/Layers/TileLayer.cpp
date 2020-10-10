@@ -32,7 +32,7 @@ namespace Tristeon
 	json TileLayer::serialize()
 	{
 		json j = Layer::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(TileLayer);
+		j["typeID"] = Type<TileLayer>::fullName();
 		j["columns"] = _columns;
 		j["rows"] = _rows;
 

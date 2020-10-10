@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <array>
 #include <json.h>
-#include <Serialization/Typename.h>
+#include <Serialization/Type.h>
 #include "Vector2.h"
 
 namespace Tristeon
@@ -153,7 +153,7 @@ namespace Tristeon
 	inline void to_json(nlohmann::json& j, const Vector2Int& p) {
 		j["x"] = p.x;
 		j["y"] = p.y;
-		j["typeID"] = TRISTEON_TYPENAME(Vector2Int);
+		j["typeID"] = Type<Vector2Int>::fullName();
 	}
 
 	inline void from_json(const nlohmann::json& j, Vector2Int& p) {

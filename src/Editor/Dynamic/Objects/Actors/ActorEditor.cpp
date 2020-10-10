@@ -173,10 +173,10 @@ namespace TristeonEditor
 			{
 				Tristeon::String const type = it.value().contains("typeID") ? it.value()["typeID"] : "";
 
-				bool const isVector2 = type == TRISTEON_TYPENAME(Tristeon::Vector2);
-				bool const isVector2Int = type == TRISTEON_TYPENAME(Tristeon::Vector2Int);
-				bool const isVector3 = type == TRISTEON_TYPENAME(Tristeon::Vector3);
-				bool const isVector4 = type == TRISTEON_TYPENAME(Tristeon::Vector4);
+				bool const isVector2 = type == Tristeon::Type<Tristeon::Vector2>::fullName();
+				bool const isVector2Int = type == Tristeon::Type<Tristeon::Vector2Int>::fullName();
+				bool const isVector3 = type == Tristeon::Type<Tristeon::Vector3>::fullName();
+				bool const isVector4 = type == Tristeon::Type<Tristeon::Vector4>::fullName();
 
 				QWidget* field;
 				if (isVector2 || isVector2Int || isVector3 || isVector4)

@@ -13,7 +13,7 @@ namespace Tristeon
 	json Sprite::serialize()
 	{
 		json j = Graphic::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(Sprite);
+		j["typeID"] = Type<Sprite>::fullName();
 		j["width"] = width;
 		j["height"] = height;
 		j["flipX"] = flipX;

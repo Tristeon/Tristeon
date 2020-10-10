@@ -30,7 +30,7 @@ namespace Tristeon
 	json Camera::serialize()
 	{
 		json j = Actor::serialize();
-		j["typeID"] = TRISTEON_TYPENAME(Camera);
+		j["typeID"] = Type<Camera>::fullName();
 
 		j["screenSize"] = screenSize;
 		j["screenCoordinates"] = screenCoordinates;
