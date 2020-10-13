@@ -7,7 +7,7 @@
 namespace Tristeon
 {
 	/**
-	* Delegate is a callback class that wraps around a vector containing functions.
+	* Delegate is a callback class that wraps around a list containing functions.
 	* You can add or remove functions from this list, or call invoke() to call all subscribed functions.
 	*/
 	template <typename ... P>

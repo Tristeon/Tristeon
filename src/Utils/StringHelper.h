@@ -15,8 +15,8 @@ namespace Tristeon
 		/**
 		 * Splits a string into separate strings based on the given delimiter.
 		 */
-		[[nodiscard]] static Vector<String> split(const String& string, const char& delim);
+		[[nodiscard]] static List<String> split(const String& string, const char& delim);
 	private:
-		static void internalSplit(const String& s, const char& delim, Vector<String>& result);
+		static void internalSplit(const String& s, const char& delim, List<String>& result);
 	};
 }

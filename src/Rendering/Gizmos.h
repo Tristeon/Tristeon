@@ -1,5 +1,5 @@
 #pragma once
-#include <Utils/Vector.h>
+#include <Utils/List.h>
 #include "Utils/Colour.h"
 
 namespace Tristeon
@@ -43,11 +43,11 @@ namespace Tristeon
 		 */
 		struct Shape
 		{
-			Vector<Vector2> vertices;
+			List<Vector2> vertices;
 			Colour colour;
 		};
 		
-		static Vector<Shape> _shapes;
+		static List<Shape> _shapes;
 
 		/**
 		 * Draws the gizmos onto the current camera.

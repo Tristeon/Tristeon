@@ -107,9 +107,9 @@ namespace Tristeon
 		return _behaviours[index].get();
 	}
 
-	Vector<Behaviour*> Actor::findBehaviours()
+	List<Behaviour*> Actor::findBehaviours()
 	{
-		Vector<Behaviour*> result;
+		List<Behaviour*> result;
 		for (const auto& behaviour : _behaviours)
 			result.add(behaviour.get());
 		return result;

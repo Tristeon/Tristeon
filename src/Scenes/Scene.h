@@ -74,11 +74,11 @@ namespace Tristeon
 		[[nodiscard]] T* findLayerOfType(const String& name) const;
 
 		/**
-		 * Returns a vector with all the layers of the given type.
-		 * Returns an empty vector if no layer is found.
+		 * Returns a list with all the layers of the given type.
+		 * Returns an empty list if no layer is found.
 		 */
 		template<typename T>
-		[[nodiscard]] Vector<T*> findLayersOfType();
+		[[nodiscard]] List<T*> findLayersOfType();
 
 		/**
 		 * Returns the amount of layers this scene contains.
@@ -117,9 +117,9 @@ namespace Tristeon
 		 * Used internally by Engine to avoid deleting Layers within critical loops.
 		 */
 		void safeCleanup();
-		Vector<Layer*> _destroyedLayers{};
+		List<Layer*> _destroyedLayers{};
 		
-		Vector<Unique<Layer>> _layers;
+		List<Unique<Layer>> _layers;
 		String _name;
 		String _path;
 	};
@@ -158,9 +158,9 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Scene::findLayersOfType()
+	List<T*> Scene::findLayersOfType()
 	{
-		Vector<T*> result;
+		List<T*> result;
 
 		for (auto i = 0; i < _layers.size(); i++)
 		{

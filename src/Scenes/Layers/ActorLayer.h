@@ -71,14 +71,14 @@ namespace Tristeon
 		[[nodiscard]] T* findActorOfType(const String& name) const;
 
 		/**
-		 * Returns a vector of all the actors of the given type within this layer.
+		 * Returns a list of all the actors of the given type within this layer.
 		 *
-		 * Returns an empty vector if no actors were found.
+		 * Returns an empty list if no actors were found.
 		 *
 		 * Compilation fails if T does not derive from Actor.
 		 */
 		template<typename T>
-		[[nodiscard]] Vector<T*> findActorsOfType() const;
+		[[nodiscard]] List<T*> findActorsOfType() const;
 
 		/**
 		 * Creates and returns a new actor of type T.
@@ -117,10 +117,10 @@ namespace Tristeon
 		 * This function is called in-between iteration loops to prevent breaking critical loops.
 		 */
 		void safeCleanup() override;
-		Vector<Actor*> _destroyedActors{};
-		Vector<Behaviour*> _destroyedBehaviours{};
+		List<Actor*> _destroyedActors{};
+		List<Behaviour*> _destroyedBehaviours{};
 		
-		Vector<Unique<Actor>> _actors{};
+		List<Unique<Actor>> _actors{};
 	};
 
 	REGISTER_TYPE(ActorLayer);
@@ -148,9 +148,9 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> ActorLayer::findActorsOfType() const
+	List<T*> ActorLayer::findActorsOfType() const
 	{
-		Vector<T*> result;
+		List<T*> result;
 
 		for (auto& actor : _actors)
 		{

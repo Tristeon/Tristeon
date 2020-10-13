@@ -9,20 +9,20 @@ using ull = unsigned long long;
 namespace Tristeon
 {
 	/**
-	 * A simple and clean implementation of a dynamic array, or as referred to according to C++ standards; a Vector.
-	 * This Vector class mimics a considerable amount of the std::vector but provides a cleaner and easier to use interface with more
+	 * A simple and clean implementation of a dynamic array.
+	 * This List class mimics a considerable amount of the std::list but provides a cleaner and easier to use interface with more
 	 * simplified and readable functionality.
 	 */
 	template<typename T>
-	class Vector
+	class List
 	{
 	public:
 
 		/**
-		 * The Iterator used to iterate over the Vector's members.
+		 * The Iterator used to iterate over the List's members.
 		 *
 		 * It is used to support range-based for loops & iterator based iteration.
-		 * The Iterator class is usually not constructed manually but instead retrieved through the vector's member functions begin() and end().
+		 * The Iterator class is usually not constructed manually but instead retrieved through the list's member functions begin() and end().
 		 */
 		class Iterator
 		{
@@ -64,10 +64,10 @@ namespace Tristeon
 		};
 
 		/**
-		 * The ConstIterator is the constant counterpart of Iterator. It is used to iterate over the Vector's members.
+		 * The ConstIterator is the constant counterpart of Iterator. It is used to iterate over the List's members.
 		 *
 		 * It is used to support range-based for loops & iterator based iteration.
-		 * The ConstIterator class is usually not constructed manually but instead retrieved through the vector's member functions begin() and end().
+		 * The ConstIterator class is usually not constructed manually but instead retrieved through the list's member functions begin() and end().
 		 */
 		class ConstIterator
 		{
@@ -109,78 +109,78 @@ namespace Tristeon
 		};
 		
 		/**
-		 * The default Vector constructor preemptively creates an empty array of capacity 100. This is similar to calling reserve(100);
+		 * The default List constructor preemptively creates an empty array of capacity 100. This is similar to calling reserve(100);
 		 * This number may be modified by changing the capacity parameter, in which case the array will be of said capacity.
 		 * The capacity parameter has to be more than 0, not following this in debug mode will cause a crash but the behaviour is undefined in release mode.
 		 *
 		 * //TODO: Investigate the possibility of supporting 0 capacity Vectors
 		 */
-		explicit Vector(const ull& capacity = 100);
+		explicit List(const ull& capacity = 100);
 		/**
-		 * Creates a vector with an initializer list to support Vector<T> vec = { a, b, c };
-		 * The vector's capacity will be the same as the list's length.
+		 * Creates a list with an initializer list to support List<T> list = { a, b, c };
+		 * The list's capacity will be the same as the list's length.
 		 */
-		Vector(const std::initializer_list<T>& list);
-		~Vector();
+		List(const std::initializer_list<T>& list);
+		~List();
 
-		Vector(const Vector& copy);
-		Vector(Vector&& move) noexcept;
+		List(const List& copy);
+		List(List&& move) noexcept;
 
-		Vector& operator=(const Vector& copy);
-		Vector& operator=(Vector&& move) noexcept;
+		List& operator=(const List& copy);
+		List& operator=(List&& move) noexcept;
 
 		/**
-		 * Empties the vector. Leaves the vector empty but with a capacity of 1.
+		 * Empties the list. Leaves the list empty but with a capacity of 1.
 		 */
 		void clear();
 
 		/**
-		 * Returns true if the vector is empty. This function doesn't modify the vector.
+		 * Returns true if the list is empty. This function doesn't modify the list.
 		 */
 		[[nodiscard]] bool empty() const;
 		/**
-		 * Ensures that the vector's capacity is at least n.
-		 * If n is less than the vector's current capacity, nothing happens.
+		 * Ensures that the list's capacity is at least n.
+		 * If n is less than the list's current capacity, nothing happens.
 		 */
 		void reserve(const ull& n);
 		/**
-		 * Reduces the vector's capacity down to size().
+		 * Reduces the list's capacity down to size().
 		 */
 		ull trim();
 
 		/**
-		 * Adds an element to the vector.
-		 * If the item doesn't fit, the vector's capacity is doubled.
+		 * Adds an element to the list.
+		 * If the item doesn't fit, the list's capacity is doubled.
 		 */
 		ull add(T value);
 		/**
-		 * Adds an element to the vector at [index].
+		 * Adds an element to the list at [index].
 		 * Elements at and after [index] are shifted backwards.
 		 */
 		ull insert(const ull& index, T value);
 
 		/**
-		 * Removes (the first occurence of) value from the vector.
+		 * Removes (the first occurence of) value from the list.
 		 */
 		ull remove(T value);
 		/**
-		 * Removes each occurrence of value from the vector.
+		 * Removes each occurrence of value from the list.
 		 */
 		ull removeAll(T value);
 		/**
-		 * Removes the element at [index] from the vector.
+		 * Removes the element at [index] from the list.
 		 */
 		ull removeAt(const ull& index);
 		/**
-		 * Removes the last element of the vector.
+		 * Removes the last element of the list.
 		 * This operation is far more performant than any of the other remove functions,
-		 * so if you (for example) wish to iteratively empty a vector, going backwards is the best approach.
+		 * so if you (for example) wish to iteratively empty a list, going backwards is the best approach.
 		 */
 		ull removeLast();
 		
 		/**
-		 * The pointer to the vector's underlying dynamic array.
-		 * This value is altered through the vector's member functions and the pointer may turn invalid if the vector is modified.
+		 * The pointer to the list's underlying dynamic array.
+		 * This value is altered through the list's member functions and the pointer may turn invalid if the list is modified.
 		 */
 		[[nodiscard]] T* ptr() const;
 		/**
@@ -188,7 +188,7 @@ namespace Tristeon
 		 */
 		[[nodiscard]] ull capacity() const;
 		/**
-		 * The size of the vector.
+		 * The size of the list.
 		 */
 		[[nodiscard]] ull size() const;
 
@@ -196,11 +196,11 @@ namespace Tristeon
 		[[nodiscard]] Iterator end() const;
 
 		/**
-		 * The first item of the vector.
+		 * The first item of the list.
 		 */
 		[[nodiscard]] T& first() const;
 		/**
-		 * The last item of the vector.
+		 * The last item of the list.
 		 */
 		[[nodiscard]] T& last() const;
 		
@@ -209,7 +209,7 @@ namespace Tristeon
 
 		//TODO: Support indexOf and remove() with a predicate
 		/**
-		 * Returns true if value is part of the vector.
+		 * Returns true if value is part of the list.
 		 */
 		[[nodiscard]] bool contains(const T& value) const;
 
@@ -227,7 +227,7 @@ namespace Tristeon
 		[[nodiscard]] ull indexOf(const T& value);
 
 		/**
-		 * Sort the vector's elements with the given predicate.
+		 * Sort the list's elements with the given predicate.
 		 */
 		template<typename Pred>
 		void sort(Pred predicate);
@@ -238,25 +238,25 @@ namespace Tristeon
 	};
 
 	template <typename T>
-	Vector<T>::Vector(const ull& capacity) : _ptr(new T[capacity]), _capacity(capacity), _size(0)
+	List<T>::List(const ull& capacity) : _ptr(new T[capacity]), _capacity(capacity), _size(0)
 	{
 		assert(capacity > 0);
 	}
 
 	template <typename T>
-	Vector<T>::Vector(const std::initializer_list<T>& list) : _ptr(new T[list.size()]), _capacity(list.size()), _size(list.size())
+	List<T>::List(const std::initializer_list<T>& list) : _ptr(new T[list.size()]), _capacity(list.size()), _size(list.size())
 	{
 		std::move(list.begin(), list.end(), _ptr);
 	}
 
 	template <typename T>
-	Vector<T>::~Vector()
+	List<T>::~List()
 	{
 		delete[] _ptr;
 	}
 
 	template <typename T>
-	Vector<T>::Vector(const Vector& copy)
+	List<T>::List(const List& copy)
 	{
 		_size = copy._size;
 		_capacity = copy._capacity;
@@ -265,7 +265,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T>::Vector(Vector&& move) noexcept
+	List<T>::List(List&& move) noexcept
 	{
 		_size = move._size;
 		_capacity = move._capacity;
@@ -277,7 +277,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T>& Vector<T>::operator=(const Vector& copy)
+	List<T>& List<T>::operator=(const List& copy)
 	{
 		if (this == &copy)
 			return *this;
@@ -294,7 +294,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T>& Vector<T>::operator=(Vector&& move) noexcept
+	List<T>& List<T>::operator=(List&& move) noexcept
 	{
 		if (this == &move)
 			return *this;
@@ -313,7 +313,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	void Vector<T>::clear()
+	void List<T>::clear()
 	{
 		delete[] _ptr;
 		_ptr = new T[_capacity = 1];
@@ -321,13 +321,13 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	bool Vector<T>::empty() const
+	bool List<T>::empty() const
 	{
 		return _size == 0;
 	}
 
 	template <typename T>
-	ull Vector<T>::add(T value)
+	ull List<T>::add(T value)
 	{
 		//Increase size if the capacity is too low
 		if (_size == _capacity)
@@ -344,7 +344,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::insert(const ull& index, T value)
+	ull List<T>::insert(const ull& index, T value)
 	{
 		T* old = _ptr;
 		const auto oldSize = _size;
@@ -364,7 +364,7 @@ namespace Tristeon
 		}
 
 		//If the size is the same as before then the item wasn't added.
-		//This happens if the index isn't found, so we can assume that it's on an index after oldSize, aka at the end of the vector.
+		//This happens if the index isn't found, so we can assume that it's on an index after oldSize, aka at the end of the list.
 		if (_size == oldSize)
 			add(std::move(value));
 
@@ -374,7 +374,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::remove(T value)
+	ull List<T>::remove(T value)
 	{
 		const ull index = indexOf(value);
 		if (index != _size)
@@ -383,7 +383,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::removeAll(T value)
+	ull List<T>::removeAll(T value)
 	{
 		ull index = 0;
 		while ((index = indexOf(value)) != _size)
@@ -392,7 +392,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::removeAt(const ull& index)
+	ull List<T>::removeAt(const ull& index)
 	{
 		assert(index < _size);
 
@@ -402,7 +402,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::removeLast()
+	ull List<T>::removeLast()
 	{
 		//Reduce size by 1 and reset the value to default
 		operator[](_size - 1) = {};
@@ -410,7 +410,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	void Vector<T>::reserve(const ull& n)
+	void List<T>::reserve(const ull& n)
 	{
 		if (n > _capacity)
 		{
@@ -422,7 +422,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::trim()
+	ull List<T>::trim()
 	{
 		if (_capacity > _size)
 		{
@@ -436,87 +436,87 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	T* Vector<T>::ptr() const
+	T* List<T>::ptr() const
 	{
 		return _ptr;
 	}
 
 	template <typename T>
-	ull Vector<T>::capacity() const
+	ull List<T>::capacity() const
 	{
 		return _capacity;
 	}
 
 	template <typename T>
-	ull Vector<T>::size() const
+	ull List<T>::size() const
 	{
 		return _size;
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator Vector<T>::begin() const
+	typename List<T>::Iterator List<T>::begin() const
 	{
 		return Iterator(_ptr);
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator Vector<T>::end() const
+	typename List<T>::Iterator List<T>::end() const
 	{
 		return Iterator(_ptr + _size);
 	}
 
 	template <typename T>
-	T& Vector<T>::first() const
+	T& List<T>::first() const
 	{
 		return operator[](0);
 	}
 
 	template <typename T>
-	T& Vector<T>::last() const
+	T& List<T>::last() const
 	{
 		return operator[](_size - 1);
 	}
 
 	template <typename T>
-	T& Vector<T>::operator[](const ull& index)
+	T& List<T>::operator[](const ull& index)
 	{
 		assert(index < _capacity);
 		return _ptr[index];
 	}
 
 	template <typename T>
-	T& Vector<T>::operator[](const ull& index) const
+	T& List<T>::operator[](const ull& index) const
 	{
 		assert(index < _size);
 		return _ptr[index];
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator begin(const Vector<T>& vec)
+	typename List<T>::Iterator begin(const List<T>& list)
 	{
-		return vec.begin();
+		return list.begin();
 	}
 
 	template <typename T>
-	typename Vector<T>::Iterator end(const Vector<T>& vec)
+	typename List<T>::Iterator end(const List<T>& list)
 	{
-		return vec.end();
+		return list.end();
 	}
 
 	template <typename T>
-	typename Vector<T>::ConstIterator begin(const Vector<T>& vec)
+	typename List<T>::ConstIterator begin(const List<T>& list)
 	{
-		return Vector<T>::ConstIterator(vec.ptr());
+		return List<T>::ConstIterator(list.ptr());
 	}
 
 	template <typename T>
-	typename Vector<T>::ConstIterator end(const Vector<T>& vec)
+	typename List<T>::ConstIterator end(const List<T>& list)
 	{
-		return Vector<T>::ConstIterator(vec.ptr() + vec.size());
+		return List<T>::ConstIterator(list.ptr() + list.size());
 	}
 
 	template <typename T>
-	bool Vector<T>::contains(const T& value) const
+	bool List<T>::contains(const T& value) const
 	{
 		for (const auto& element : *this)
 		{
@@ -528,7 +528,7 @@ namespace Tristeon
 
 	template <typename T>
 	template <typename pred>
-	bool Vector<T>::any(pred predicate) const
+	bool List<T>::any(pred predicate) const
 	{
 		for (const auto& element : *this)
 		{
@@ -540,7 +540,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	ull Vector<T>::indexOf(const T& value)
+	ull List<T>::indexOf(const T& value)
 	{
 		for (ull i = 0; i < _size; i++)
 		{
@@ -552,7 +552,7 @@ namespace Tristeon
 
 	template <typename T>
 	template <typename Pred>
-	void Vector<T>::sort(Pred predicate)
+	void List<T>::sort(Pred predicate)
 	{
 		std::sort(begin(), end(), predicate);
 	}

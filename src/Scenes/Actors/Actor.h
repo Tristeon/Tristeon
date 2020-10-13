@@ -72,15 +72,15 @@ namespace Tristeon
 		T* findBehaviour();
 
 		/**
-		 * Gets a list of all the behaviours of type T. Returns an empty vector if no behaviour of type T was found.
+		 * Gets a list of all the behaviours of type T. Returns an empty list if no behaviour of type T was found.
 		 */
 		template<typename T>
-		Vector<T*> findBehaviours();
+		List<T*> findBehaviours();
 
 		/**
 		 * Gets a list with all of the actor's behaviours.
 		 */
-		Vector<Behaviour*> findBehaviours();
+		List<Behaviour*> findBehaviours();
 		
 		/**
 		 * Adds a new behaviour of type T and returns the new behaviour.
@@ -139,9 +139,9 @@ namespace Tristeon
 		 * Returns all of the actors in the Scene with the given type.
 		 */
 		template<typename T>
-		static Vector<T*> findAllOfType();
+		static List<T*> findAllOfType();
 	private:
-		Vector<Unique<Behaviour>> _behaviours{};
+		List<Unique<Behaviour>> _behaviours{};
 		bool _destroyed = false;
 	};
 
@@ -158,9 +158,9 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Actor::findBehaviours()
+	List<T*> Actor::findBehaviours()
 	{
-		Vector<T*> behaviours;
+		List<T*> behaviours;
 
 		for (auto const& behaviour : _behaviours)
 		{
@@ -215,9 +215,9 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Actor::findAllOfType()
+	List<T*> Actor::findAllOfType()
 	{
-		Vector<T*> result;
+		List<T*> result;
 		
 		auto actors = Collector<Actor>::all();
 		for (auto* actor : actors)

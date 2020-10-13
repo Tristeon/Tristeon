@@ -36,16 +36,16 @@ namespace Tristeon
 		static void remove(T* t);
 
 		/**
-		 * Returns a vector with all the collected objects.
+		 * Returns a list with all the collected objects.
 		 */
-		static Vector<T*> all();
+		static List<T*> all();
 
 	private:
-		static Vector<T*> _collection;
+		static List<T*> _collection;
 	};
 
 	template<typename T>
-	Vector<T*> Collector<T>::_collection;
+	List<T*> Collector<T>::_collection;
 
 	template <typename T>
 	void Collector<T>::add(T* t)
@@ -60,7 +60,7 @@ namespace Tristeon
 	}
 
 	template <typename T>
-	Vector<T*> Collector<T>::all()
+	List<T*> Collector<T>::all()
 	{
 		return _collection;
 	}

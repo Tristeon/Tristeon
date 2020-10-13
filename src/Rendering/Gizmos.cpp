@@ -7,7 +7,7 @@
 
 namespace Tristeon
 {
-	Vector<Gizmos::Shape> Gizmos::_shapes;
+	List<Gizmos::Shape> Gizmos::_shapes;
 	
 	void Gizmos::drawLine(const Vector2& worldStart, const Vector2& worldEnd, const Colour& colour)
 	{

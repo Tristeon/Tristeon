@@ -60,7 +60,7 @@ namespace Tristeon
 		 * Get all camera instances.
 		 * This is the same as calling Collector<Camera>::all();
 		 */
-		[[nodiscard]] static Vector<Camera*> cameras() { return Collector<Camera>::all(); }
+		[[nodiscard]] static List<Camera*> cameras() { return Collector<Camera>::all(); }
 
 		/**
 		 * Returns the OpenGL frame buffer color texture.

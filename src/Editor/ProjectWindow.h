@@ -26,8 +26,8 @@ namespace TristeonEditor
 
 		void loadSettingsWidget(QWidget* projectWidget);
 		
-		Tristeon::Vector<QWidget*> projectWidgets;
-		Tristeon::Vector<QMetaObject::Connection> activeConnections;
+		Tristeon::List<QWidget*> projectWidgets;
+		Tristeon::List<QMetaObject::Connection> activeConnections;
 
 		QWidget* selectedProject = nullptr;
 	};

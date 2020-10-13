@@ -25,7 +25,7 @@ namespace Tristeon
 	{
 		//MSVC generates "typename <Class>". Remove the typename bit.
 		const String name = typeid(T).name();
-		Vector<String> vec = StringHelper::split(name, ' ');
+		List<String> vec = StringHelper::split(name, ' ');
 		if (vec.size() < 2)
 		{
 			Console::warning("Type failed to interpret the MSVC typename. Returning direct typeid(T).name(): " + String(typeid(T).name()));

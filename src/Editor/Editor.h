@@ -38,7 +38,7 @@ namespace TristeonEditor
 		FileItem* _selectedFileItem = nullptr;
 		MenuBar* menuBar = nullptr;
 		Importer importer;
-		Tristeon::Vector<DockWidget*> windows;
+		Tristeon::List<DockWidget*> windows;
 	};
 }
 #endif

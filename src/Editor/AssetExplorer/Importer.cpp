@@ -29,7 +29,7 @@ void Importer::import(std::filesystem::path assetPath)
 
 void Importer::scanProject()
 {
-	Vector<fs::path> metaFilesToRemove;
+	List<fs::path> metaFilesToRemove;
 	
 	for (auto& directoryEntry : fs::recursive_directory_iterator(Project::assetPath()))
 	{

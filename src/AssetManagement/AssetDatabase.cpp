@@ -7,7 +7,7 @@ namespace fs = std::filesystem;
 
 namespace Tristeon
 {
-	std::map<String, Vector<String>> AssetDatabase::assets;
+	std::map<String, List<String>> AssetDatabase::assets;
 
 	void AssetDatabase::add(String const& path)
 	{
@@ -15,7 +15,7 @@ namespace Tristeon
 		auto const suffix = p.extension().string();
 		
 		if (assets.find(suffix) == assets.end())
-			assets[suffix] = Vector<String>();
+			assets[suffix] = List<String>();
 
 		if (!assets[suffix].contains(path))
 			assets[suffix].add(path);
@@ -25,15 +25,15 @@ namespace Tristeon
 	{
 		auto const p = fs::path(path);
 		if (assets.find(p.extension().string()) == assets.end())
-			assets[p.extension().string()] = Vector<String>();
+			assets[p.extension().string()] = List<String>();
 		assets[p.extension().string()].remove(path);
 	}
 
-	Vector<String> AssetDatabase::get(String const& extension)
+	List<String> AssetDatabase::get(String const& extension)
 	{
 		if (assets.find(extension) != assets.end())
 			return assets[extension];
-		return Vector<String>();
+		return List<String>();
 	}
 
 	String AssetDatabase::findByName(String const& name)
@@ -51,7 +51,7 @@ namespace Tristeon
 
 	String AssetDatabase::findByName(String const& name, String const& extension)
 	{
-		Vector<String> paths = get(extension);
+		List<String> paths = get(extension);
 		for (String path : paths)
 		{
 			if (fs::path(path).stem() == name)
@@ -85,7 +85,7 @@ namespace Tristeon
 			else
 			{
 				if (assets.find(entry.path().extension().string()) == assets.end())
-					assets[entry.path().extension().string()] = Vector<String>();
+					assets[entry.path().extension().string()] = List<String>();
 
 				assets[entry.path().extension().string()].add(relative(entry.path(), std::filesystem::path(Project::assetPath())).string());
 			}

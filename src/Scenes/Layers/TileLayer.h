@@ -142,7 +142,7 @@ namespace Tristeon
 		void render(const Framebuffer& framebuffer) override;
 
 		Unique<Tile[]> _tiles = nullptr;
-		Vector<Tileset*> _tilesets;
+		List<Tileset*> _tilesets;
 		unsigned int _columns = 0, _rows = 0;
 
 		/**

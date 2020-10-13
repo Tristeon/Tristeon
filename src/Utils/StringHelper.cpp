@@ -15,14 +15,14 @@ namespace Tristeon
 		return string;
 	}
 
-	Vector<String> StringHelper::split(const String& string, const char& delim)
+	List<String> StringHelper::split(const String& string, const char& delim)
 	{
-		Vector<String> elems;
+		List<String> elems;
 		internalSplit(string, delim, elems);
 		return elems;
 	}
 
-	void StringHelper::internalSplit(const String& s, const char& delim, Vector<String>& result)
+	void StringHelper::internalSplit(const String& s, const char& delim, List<String>& result)
 	{
 		std::stringstream ss;
 		ss.str(s);

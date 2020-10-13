@@ -158,7 +158,7 @@ namespace Tristeon
 
 			if (maxLength > 0)
 			{
-				Vector<GLchar> errorLog(maxLength);
+				List<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(vertex, maxLength, &maxLength, &errorLog[0]);
 				Console::warning("Failed to compile vertex shader " + _vertexPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(vertex);
@@ -187,7 +187,7 @@ namespace Tristeon
 
 			if (maxLength > 0)
 			{
-				Vector<GLchar> errorLog(maxLength);
+				List<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(fragment, maxLength, &maxLength, &errorLog[0]);
 				Console::warning("Failed to compile fragment shader " + _fragmentPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(fragment);

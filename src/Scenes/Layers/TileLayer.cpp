@@ -77,7 +77,7 @@ namespace Tristeon
 		//json reading can be rather slow, so tiles are read manually through a simple comma-separated string.
 		_tiles = std::make_unique<Tile[]>(_columns * _rows);
 		const String tileString = j.value("tileData", "");
-		const Vector<String> splitTileString = StringHelper::split(tileString, ',');
+		const List<String> splitTileString = StringHelper::split(tileString, ',');
 
 		assert(splitTileString.size() % 2 == 0);
 
