@@ -147,13 +147,13 @@ namespace Tristeon
 		glfwSetWindowTitle(_window, value.data());
 	}
 
-	Vector2 GameWindow::_screenToWorld(const Vector2Int& screenPoint, Camera* camera)
+	Vector GameWindow::_screenToWorld(const VectorI& screenPoint, Camera* camera)
 	{
 		//Adjust for center
-		auto result = static_cast<Vector2>(screenPoint);
+		auto result = static_cast<Vector>(screenPoint);
 
-		result -= ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
-		result -= (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
+		result -= ((camera->screenCoordinates + Vector::one()) / 2.0f) * Window::gameSize();
+		result -= (Vector)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
 		//Adjust for camera
 		result *= 1.0f / camera->zoom;
@@ -161,16 +161,16 @@ namespace Tristeon
 		return result;
 	}
 
-	Vector2Int GameWindow::_worldToScreen(const Vector2& worldPoint, Camera* camera)
+	VectorI GameWindow::_worldToScreen(const Vector& worldPoint, Camera* camera)
 	{
-		Vector2 point = worldPoint;
+		Vector point = worldPoint;
 		point -= camera->position;
 		point /= (1.0f / camera->zoom);
 
-		point += ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
-		point += (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
+		point += ((camera->screenCoordinates + Vector::one()) / 2.0f) * Window::gameSize();
+		point += (Vector)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
-		return Vector2Int(point);
+		return VectorI(point);
 	}
 
 	void GameWindow::setupCallbacks()

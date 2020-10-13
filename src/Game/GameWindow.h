@@ -23,8 +23,8 @@ namespace Tristeon
 		void _setClearColour(const Colour& colour) override;
 		bool _closingDown() override;
 		void _setWindowTitle(const String& value) override;
-		Vector2 _screenToWorld(const Vector2Int& screenPoint, Camera* camera) override;
-		Vector2Int _worldToScreen(const Vector2& worldPoint, Camera* camera) override;
+		Vector _screenToWorld(const VectorI& screenPoint, Camera* camera) override;
+		VectorI _worldToScreen(const Vector& worldPoint, Camera* camera) override;
 
 	private:
 		void setupCallbacks();
