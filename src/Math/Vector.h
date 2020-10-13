@@ -201,7 +201,7 @@ namespace Tristeon
 
 		void normalize()
 		{
-			if (x == 0 || y == 0)
+			if (x == 0 && y == 0)
 				return;
 
 			const auto mag = magnitude();
