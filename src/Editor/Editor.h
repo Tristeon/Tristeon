@@ -6,8 +6,8 @@
 #include <Editor/DockWidget.h>
 #include <Editor/MenuBar.h>
 
+#include <Standard/Delegate.h>
 #include <Scenes/Actors/Actor.h>
-#include <Utils/Delegate.h>
 
 namespace TristeonEditor
 {

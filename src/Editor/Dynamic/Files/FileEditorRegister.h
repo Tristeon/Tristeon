@@ -3,8 +3,8 @@
 #include "FileEditor.h"
 #include <map>
 
-#include <Utils/TypeDefinitions.h>
 #include <Utils/Console.h>
+#include <Standard/String.h>
 
 namespace TristeonEditor
 {

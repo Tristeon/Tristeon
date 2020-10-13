@@ -1,5 +1,5 @@
 #pragma once
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor { class EditorWindow; }
@@ -58,12 +58,12 @@ namespace Tristeon
 		/**
 		 * The position of the mouse, local to the Window.
 		 */
-		[[nodiscard]] static Vector2Int position();
+		[[nodiscard]] static VectorI position();
 
 		/**
 		 * The amount of pixels the mouse moved in the current frame.
 		 */
-		[[nodiscard]] static Vector2Int deltaPos();
+		[[nodiscard]] static VectorI deltaPos();
 
 		/**
 		 * The amount in degrees at which the scroll wheel scrolled in the current frame.
@@ -71,13 +71,13 @@ namespace Tristeon
 		 * Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture hence why this returns a Vector2Int.
 		 * Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
 		 */
-		[[nodiscard]] static Vector2Int deltaScroll();
+		[[nodiscard]] static VectorI deltaScroll();
 
 	private:
 		static void onPress(const MouseButton& button);
 		static void onRelease(const MouseButton& button);
-		static void onMove(const Vector2Int& pos);
-		static void onScroll(const Vector2Int& change);
+		static void onMove(const VectorI& pos);
+		static void onScroll(const VectorI& change);
 
 		/**
 		 * Clears frame-based data structures.
@@ -93,8 +93,8 @@ namespace Tristeon
 		static bool _buttonsPressed[];
 		static bool _buttonsReleased[];
 
-		static Vector2Int _mousePos;
-		static Vector2Int _mouseDelta;
-		static Vector2Int _scrollDelta;
+		static VectorI _mousePos;
+		static VectorI _mouseDelta;
+		static VectorI _scrollDelta;
 	};
 }

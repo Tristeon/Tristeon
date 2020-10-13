@@ -1,6 +1,7 @@
 #pragma once
 #include <typeinfo> //Required by some compilers
-#include <Utils/TypeDefinitions.h>
+#include <Standard/String.h>
+#include <Standard/List.h>
 #include "Utils/Console.h"
 #include "Utils/StringHelper.h"
 

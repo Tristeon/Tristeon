@@ -102,7 +102,7 @@ namespace Tristeon
 
 	Graphic::Bounds Sprite::bounds()
 	{
-		Vector2 const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
+		Vector const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
 		return Bounds{ position - halfSize, position + halfSize };
 	}
 }

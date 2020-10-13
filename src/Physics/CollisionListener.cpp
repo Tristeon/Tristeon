@@ -24,7 +24,7 @@ namespace Tristeon
 	{
 		b2WorldManifold manifold{};
 		contact->GetWorldManifold(&manifold);
-		const auto normal = Vector2::convert(manifold.normal);
+		const auto normal = Vector::convert(manifold.normal);
 		
 		//Get downcasted types
 		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());
@@ -44,7 +44,7 @@ namespace Tristeon
 			auto* layer = aTileLayer != nullptr ? aTileLayer : bTileLayer;
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
-			Vector2Int tileIndex{};
+			VectorI tileIndex{};
 			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)
@@ -60,7 +60,7 @@ namespace Tristeon
 			tileContact.tileIndex = tileIndex;
 			tileContact.tile = layer->tileByIndex(tileIndex);
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tilesetID)->tileInfo[tileContact.tile.index];
-			tileContact.normal = Vector2::convert(manifold.normal);
+			tileContact.normal = Vector::convert(manifold.normal);
 			
 			for (auto* cb : collider->actor()->findBehaviours<ITileContactBegin>()) cb->tileContactBegin(tileContact);
 
@@ -103,7 +103,7 @@ namespace Tristeon
 	{
 		b2WorldManifold manifold{};
 		contact->GetWorldManifold(&manifold);
-		const auto normal = Vector2::convert(manifold.normal);
+		const auto normal = Vector::convert(manifold.normal);
 		
 		//Get downcasted types
 		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());
@@ -123,7 +123,7 @@ namespace Tristeon
 			auto* layer = aTileLayer != nullptr ? aTileLayer : bTileLayer;
 			auto* tileFixture = aTileLayer != nullptr ? contact->GetFixtureA() : contact->GetFixtureB();
 
-			Vector2Int tileIndex{};
+			VectorI tileIndex{};
 			for (auto const& f : layer->_fixtures)
 			{
 				if (f.second == tileFixture)
@@ -139,7 +139,7 @@ namespace Tristeon
 			tileContact.tileIndex = tileIndex;
 			tileContact.tile = layer->tileByIndex(tileIndex);
 			tileContact.tileInfo = layer->tileset(tileContact.tile.tilesetID)->tileInfo[tileContact.tile.index];
-			tileContact.normal = Vector2::convert(manifold.normal);
+			tileContact.normal = Vector::convert(manifold.normal);
 			
 			for (auto* cb : collider->actor()->findBehaviours<ITileContactEnd>()) cb->tileContactEnd(tileContact);
 
@@ -178,7 +178,7 @@ namespace Tristeon
 	{
 		b2WorldManifold manifold{};
 		contact->GetWorldManifold(&manifold);
-		const auto normal = Vector2::convert(manifold.normal);
+		const auto normal = Vector::convert(manifold.normal);
 		
 		//Get downcasted types
 		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());

@@ -14,10 +14,10 @@ namespace Tristeon
 	{
 		auto* polygon = new b2PolygonShape();
 
-		Vector2 const size = PhysicsWorld::pixelsToMeters({
+		Vector const size = PhysicsWorld::pixelsToMeters({
 			_width * actor()->scale.x, _height * actor()->scale.y
 		});
-		Vector2 offset = PhysicsWorld::pixelsToMeters(_offset);
+		Vector offset = PhysicsWorld::pixelsToMeters(_offset);
 		
 		float rotationOffset = Math::toRadians(_rotationOffset);
 		if (includeBodyTransform)
@@ -49,7 +49,7 @@ namespace Tristeon
 
 	void BoxCollider::drawGizmos()
 	{
-		Gizmos::drawSquare(actor()->position, Vector2(width(), height()), actor()->rotation, {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
+		Gizmos::drawSquare(actor()->position, Vector(width(), height()), actor()->rotation, {46 / 255.0f, 204 / 255.0f, 113 / 255.0f});
 	}
 
 	float BoxCollider::width() const

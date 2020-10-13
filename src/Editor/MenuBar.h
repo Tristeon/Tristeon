@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include <QMenuBar>
-#include <Utils/TypeDefinitions.h>
+#include <Standard/String.h>
 
 namespace TristeonEditor
 {
@@ -20,7 +20,7 @@ namespace TristeonEditor
 
 		void saveScene();
 
-		void saveCurrentSceneDialog(std::string nextSceneName);
+		void saveCurrentSceneDialog(Tristeon::String nextSceneName);
 
 		static QAction* findAction(QMenu* menu, Tristeon::String name);
 	};

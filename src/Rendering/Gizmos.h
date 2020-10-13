@@ -1,11 +1,11 @@
 #pragma once
-#include <Utils/List.h>
-#include "Utils/Colour.h"
+#include <Utils/Colour.h>
+#include <Standard/List.h>
+
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
-	struct Vector2;
-
 	/**
 	 * Draws 2D shapes in world space.
 	 *
@@ -21,19 +21,19 @@ namespace Tristeon
 		/**
 		 * Draw a line from world start to world end.
 		 */
-		static void drawLine(const Vector2& worldStart, const Vector2& worldEnd, const Colour& colour = Colour(1, 1, 1, 1));
+		static void drawLine(const Vector& worldStart, const Vector& worldEnd, const Colour& colour = Colour(1, 1, 1, 1));
 		/**
 		 * Draw an axis aligned bounding box, from world min, to world max.
 		 */
-		static void drawAABB(const Vector2& worldMin, const Vector2& worldMax, const Colour& colour = Colour(1, 1, 1, 1));
+		static void drawAABB(const Vector& worldMin, const Vector& worldMax, const Colour& colour = Colour(1, 1, 1, 1));
 		/**
 		 * Draw a square at the given position with a size and rotation.
 		 */
-		static void drawSquare(const Vector2& worldPosition, const Vector2& size, const float& rotationDegrees, const Colour& colour = Colour(1, 1, 1, 1));
+		static void drawSquare(const Vector& worldPosition, const Vector& size, const float& rotationDegrees, const Colour& colour = Colour(1, 1, 1, 1));
 		/**
 		 * Draw a circle at the given position with a given radius.
 		 */
-		static void drawCircle(const Vector2& worldPosition, const float& radius, const Colour& colour = Colour(1, 1, 1, 1));
+		static void drawCircle(const Vector& worldPosition, const float& radius, const Colour& colour = Colour(1, 1, 1, 1));
 
 	private:
 		/**
@@ -43,7 +43,7 @@ namespace Tristeon
 		 */
 		struct Shape
 		{
-			List<Vector2> vertices;
+			List<Vector> vertices;
 			Colour colour;
 		};
 		

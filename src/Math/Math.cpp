@@ -35,7 +35,7 @@ namespace Tristeon
 		return value;
 	}
 
-	Vector2 Math::orbit(const Vector2& center, const Vector2& offset, const float& rotation)
+	Vector Math::orbit(const Vector& center, const Vector& offset, const float& rotation)
 	{
 		auto const theta = toRadians(rotation);
 		auto const c = cos(theta);

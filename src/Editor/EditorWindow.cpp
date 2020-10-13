@@ -69,7 +69,7 @@ namespace TristeonEditor
 		}
 		while (!mouseMoveEvents.empty())
 		{
-			Vector2Int newPos = Vector2Int(mouseMoveEvents.front().pos().x(), Window::height() - mouseMoveEvents.front().pos().y());
+			VectorI newPos = VectorI(mouseMoveEvents.front().pos().x(), Window::height() - mouseMoveEvents.front().pos().y());
 			if (!Window::isFullscreen())
 				newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 						
@@ -79,7 +79,7 @@ namespace TristeonEditor
 
 		while (!mouseWheelEvents.empty())
 		{
-			Mouse::onScroll(Vector2Int(mouseWheelEvents.front().angleDelta().x(), mouseWheelEvents.front().angleDelta().y()));
+			Mouse::onScroll(VectorI(mouseWheelEvents.front().angleDelta().x(), mouseWheelEvents.front().angleDelta().y()));
 			mouseWheelEvents.pop();
 		}
 
@@ -141,13 +141,13 @@ namespace TristeonEditor
 		return closing;
 	}
 
-	Vector2 EditorWindow::_screenToWorld(Vector2Int const& screenPoint, Camera* camera)
+	Vector EditorWindow::_screenToWorld(VectorI const& screenPoint, Camera* camera)
 	{
 		//Convert into Qt coords
-		Vector2Int point = screenPoint;
+		VectorI point = screenPoint;
 		if (!isFullscreen())
 			point.y -= QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
-		point = Vector2Int(screenPoint.x, Window::height() - point.y);
+		point = VectorI(screenPoint.x, Window::height() - point.y);
 
 		//Convert into local coords
 		QPoint local = GameView::instance()->mapFromGlobal(QPoint(point.x, point.y));
@@ -155,29 +155,29 @@ namespace TristeonEditor
 		local.setY(Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - local.y());
 
 		//Adjust for camera position on screen
-		Vector2 result = Vector2(local.x(), local.y());
-		result -= ((camera->screenCoordinates + Vector2::one()) / 2.0f)* Window::gameSize();
-		result -= (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
+		Vector result = Vector(local.x(), local.y());
+		result -= ((camera->screenCoordinates + Vector::one()) / 2.0f)* Window::gameSize();
+		result -= (Vector)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 		
 		//Adjust for camera
 		result *= 1.0f / camera->zoom;
-		result += (Vector2Int)camera->position;
+		result += (VectorI)camera->position;
 		return result;
 	}
 
-	Vector2Int EditorWindow::_worldToScreen(Vector2 const& worldPoint, Camera* camera)
+	VectorI EditorWindow::_worldToScreen(Vector const& worldPoint, Camera* camera)
 	{
-		Vector2 point = worldPoint;
-		point -= (Vector2Int)camera->position;
+		Vector point = worldPoint;
+		point -= (VectorI)camera->position;
 		point /= (1.0f / camera->zoom);
 
-		point += ((camera->screenCoordinates + Vector2::one()) / 2.0f) * Window::gameSize();
-		point += (Vector2)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
+		point += ((camera->screenCoordinates + Vector::one()) / 2.0f) * Window::gameSize();
+		point += (Vector)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
 		point.y = Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - point.y;
 		const QPoint global = GameView::instance()->mapToGlobal(QPoint(point.x, point.y));
 
-		Vector2Int result = Vector2Int(global.x(), Window::height() - global.y());
+		VectorI result = VectorI(global.x(), Window::height() - global.y());
 		if (!isFullscreen())
 			result.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		return result;

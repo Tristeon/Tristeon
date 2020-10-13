@@ -1,12 +1,10 @@
 #pragma once
 #include <Utils/Singleton.h>
-#include <Math/Vector2.h>
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
 	struct Colour;
-	struct Vector2Int;
 	class Camera;
 
 	/**
@@ -43,7 +41,7 @@ namespace Tristeon
 		 * The size of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameSize()
 		 */
-		[[nodiscard]] static Vector2Int size() { return { (int)width(), (int)height() }; }
+		[[nodiscard]] static VectorI size() { return { (int)width(), (int)height() }; }
 
 		/**
 		 * Returns the width of the game screen. This may not be the width of the entire Window.
@@ -58,19 +56,19 @@ namespace Tristeon
 		/**
 		 * Returns the size of the game screen. This may not be the size of the entire Window.
 		 */
-		[[nodiscard]] static Vector2Int gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
+		[[nodiscard]] static VectorI gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
 		
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static Vector2 screenToWorld(const Vector2Int& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
+		[[nodiscard]] static Vector screenToWorld(const VectorI& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
 
 		/**
 		 * Converts a world coordinate into a screen point.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static Vector2Int worldToScreen(const Vector2& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
+		[[nodiscard]] static VectorI worldToScreen(const Vector& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
 
 		/**
 		 * Returns true if the window is fullscreen, false if it's not
@@ -126,8 +124,8 @@ namespace Tristeon
 
 		virtual void _setWindowTitle(std::string const& value) = 0;
 
-		virtual Vector2 _screenToWorld(Vector2Int const& screenPoint, Camera* camera) = 0;
-		virtual Vector2Int _worldToScreen(Vector2 const& worldPoint, Camera* camera) = 0;
+		virtual Vector _screenToWorld(VectorI const& screenPoint, Camera* camera) = 0;
+		virtual VectorI _worldToScreen(Vector const& worldPoint, Camera* camera) = 0;
 #pragma endregion
 	};
 }

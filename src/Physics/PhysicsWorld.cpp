@@ -31,7 +31,7 @@ namespace Tristeon
 		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
 
-	Vector2 PhysicsWorld::pixelsToMeters(const Vector2& pixels)
+	Vector PhysicsWorld::pixelsToMeters(const Vector& pixels)
 	{
 		return pixels / (float)Project::Physics::pixelsPerMeter();
 	}
@@ -41,12 +41,12 @@ namespace Tristeon
 		return meters * (float)Project::Physics::pixelsPerMeter();
 	}
 
-	Vector2 PhysicsWorld::metersToPixels(const Vector2& meters)
+	Vector PhysicsWorld::metersToPixels(const Vector& meters)
 	{
 		return meters * (float)Project::Physics::pixelsPerMeter();
 	}
 
-	bool PhysicsWorld::raycast(const Vector2& origin, const Vector2& direction, const float& distance)
+	bool PhysicsWorld::raycast(const Vector& origin, const Vector& direction, const float& distance)
 	{
 		if (distance == 0)
 			return false;
@@ -55,13 +55,13 @@ namespace Tristeon
 
 		RaycastResult callback;
 		auto const point1 = pixelsToMeters(origin).convert<b2Vec2>();
-		auto const point2 = pixelsToMeters(origin + direction.getNormalized() * distance).convert<b2Vec2>();
+		auto const point2 = pixelsToMeters(origin + direction.normalized() * distance).convert<b2Vec2>();
 		world->RayCast(&callback, point1, point2);
 
 		return callback.collider != nullptr;
 	}
 
-	bool PhysicsWorld::raycast(const Vector2& origin, const Vector2& direction, const float& distance,
+	bool PhysicsWorld::raycast(const Vector& origin, const Vector& direction, const float& distance,
 		RaycastResult& result)
 	{
 		if (distance == 0)

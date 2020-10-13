@@ -1,6 +1,5 @@
 #pragma once
-#include <Math/Vector2.h>
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
@@ -22,32 +21,32 @@ namespace Tristeon
 		/**
 		 * The size of the tiles in pixels.
 		 */
-		[[nodiscard]] static Vector2Int tileSize();
+		[[nodiscard]] static VectorI tileSize();
 
 		/**
 		 * Snaps the given world position to grid cell positions.
 		 */
-		[[nodiscard]] static Vector2 snap(const Vector2& position);
+		[[nodiscard]] static Vector snap(const Vector& position);
 
 		/**
 		 * Gets the index of the grid cell by the given world position.
 		 */
-		[[nodiscard]] static Vector2Int indexByPosition(const Vector2& position);
+		[[nodiscard]] static VectorI indexByPosition(const Vector& position);
 
 		/**
 		 * Gets the index of the grid cell by the given world position.
 		 */
-		[[nodiscard]] static Vector2Int indexByPosition(const float& wx, const float& wy);
+		[[nodiscard]] static VectorI indexByPosition(const float& wx, const float& wy);
 
 		/**
 		 * Gets the world position of the grid cell at the given index.
 		 */
-		[[nodiscard]] static Vector2 positionByIndex(const Vector2Int& index);
+		[[nodiscard]] static Vector positionByIndex(const VectorI& index);
 
 		/**
 		 * Gets the world position of the grid cell at the given index.
 		 */
-		[[nodiscard]] static Vector2 positionByIndex(const int& ix, const int& iy);
+		[[nodiscard]] static Vector positionByIndex(const int& ix, const int& iy);
 
 	private:
 		static void render();

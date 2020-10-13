@@ -7,7 +7,6 @@
 
 #include "Scenes/Tiles/Tile.h"
 #include "Scenes/Tiles/Tileset.h"
-#include "Utils/TypeDefinitions.h"
 
 namespace TristeonEditor
 {

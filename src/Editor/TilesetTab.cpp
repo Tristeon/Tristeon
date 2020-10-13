@@ -9,7 +9,7 @@
 
 #include "AssetManagement/Resources.h"
 #include "Brushes/Brushes.h"
-#include "Math/Vector2.h"
+#include "Math/Vector.h"
 
 using namespace Tristeon;
 
@@ -34,7 +34,7 @@ TristeonEditor::TilesetTab::TilesetTab(const String& tilesetPath)
 	tileHighlight->setAttribute(Qt::WA_TranslucentBackground);
 
 	//Scale highlight to tile size
-	Vector2 const size = Vector2(image->width(), image->height()) * tileset->tileSizeNormalized();
+	Vector const size = Vector(image->width(), image->height()) * tileset->tileSizeNormalized();
 	tileHighlight->setMinimumSize((int)size.x, (int)size.y);
 	tileHighlight->setMaximumSize((int)size.x, (int)size.y);
 	tileHighlight->adjustSize();
@@ -58,12 +58,12 @@ void TristeonEditor::TilesetTab::mousePressEvent(QMouseEvent* event)
 	if (rect.contains(mousePos))
 	{
 		//Calculate tile index the mouse is hovering over
-		Vector2Int const size = Vector2Int(image->width(), image->height());
-		Vector2Int const tileSize = size / Vector2Int(tileset->cols, tileset->rows);
+		VectorI const size = VectorI(image->width(), image->height());
+		VectorI const tileSize = size / VectorI(tileset->cols, tileset->rows);
 
 		QPoint local = image->mapFromGlobal(mousePos);
 
-		Vector2Int tileIndex = Vector2Int(local.x() / tileSize.x, local.y() / tileSize.y);
+		VectorI tileIndex = VectorI(local.x() / tileSize.x, local.y() / tileSize.y);
 		int const newTile = tileset->tile(tileIndex);
 
 		setSelectedTile(newTile);
@@ -85,7 +85,7 @@ void TristeonEditor::TilesetTab::setSelectedTile(const int tileIndex)
 		selectedTile.index = tileIndex;
 
 		//Move highlight
-		Vector2 const tilePos = tileset->tileMinNormalized(selectedTile.index) * Vector2(image->width(), image->height());
+		Vector const tilePos = tileset->tileMinNormalized(selectedTile.index) * Vector(image->width(), image->height());
 		tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 		tileHighlight->show();
 

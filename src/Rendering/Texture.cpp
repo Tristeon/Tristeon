@@ -67,7 +67,7 @@ namespace Tristeon
 		return _height;
 	}
 
-	Vector2Int Texture::size() const
+	VectorI Texture::size() const
 	{
 		return { (int)_width, (int)_height };
 	}

@@ -1,6 +1,6 @@
 #pragma once
 #include <random>
-#include "Utils/TypeDefinitions.h"
+#include <Standard/String.h>
 
 namespace Tristeon
 {

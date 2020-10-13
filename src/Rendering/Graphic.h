@@ -30,17 +30,17 @@ namespace Tristeon
 		 */
 		struct Bounds
 		{
-			Vector2 min;
-			Vector2 max;
+			Vector min;
+			Vector max;
 
 			/**
 			 * Returns true if the position is between min and max.
 			 */
-			[[nodiscard]] bool contains(Vector2 const& position) const;
+			[[nodiscard]] bool contains(Vector const& position) const;
 			/**
 			 * Calculates the size by doing (max - min).
 			 */
-			[[nodiscard]] Vector2 size() const;
+			[[nodiscard]] Vector size() const;
 			/**
 			 * Returns true if the mouse is hovering over the bounds in any available camera.
 			 */

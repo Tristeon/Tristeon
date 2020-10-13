@@ -1,8 +1,7 @@
 #pragma once
-#include <memory>
 #include <Serialization/Serializable.h>
 #include <Serialization/TypeRegister.h>
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
@@ -48,7 +47,7 @@ namespace Tristeon
 		/**
 		 * Gets the Tile data struct of the tile at {x, y}
 		 */
-		[[nodiscard]] TileInfo info(const Vector2Int& coords) const;
+		[[nodiscard]] TileInfo info(const VectorI& coords) const;
 		
 		/**
 		 * Gets the Tile data struct of the tile at the given index.
@@ -58,64 +57,64 @@ namespace Tristeon
 		/**
 		 * Gets the size of a tile in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileSize() const;
+		[[nodiscard]] VectorI tileSize() const;
 
 		/**
 		 * Gets the size of the tiles in 0..1 range
 		 */
-		[[nodiscard]] Vector2 tileSizeNormalized() const;
+		[[nodiscard]] Vector tileSizeNormalized() const;
 
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMin(const int& index) const;
+		[[nodiscard]] VectorI tileMin(const int& index) const;
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMin(const int& x, const int& y) const;
+		[[nodiscard]] VectorI tileMin(const int& x, const int& y) const;
 		/**
 		 * Gets the top-left corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMin(const Vector2Int& coords) const;
+		[[nodiscard]] VectorI tileMin(const VectorI& coords) const;
 
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMinNormalized(const int& x, const int& y) const;
+		[[nodiscard]] Vector tileMinNormalized(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMinNormalized(const int& index) const;
+		[[nodiscard]] Vector tileMinNormalized(const int& index) const;
 		/**
 		 * Gets the bottom-left corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMinNormalized(const Vector2Int& coords) const;
+		[[nodiscard]] Vector tileMinNormalized(const VectorI& coords) const;
 		
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMax(const int& index) const;
+		[[nodiscard]] VectorI tileMax(const int& index) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMax(const int& x, const int& y) const;
+		[[nodiscard]] VectorI tileMax(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in pixels.
 		 */
-		[[nodiscard]] Vector2Int tileMax(const Vector2Int& coords) const;
+		[[nodiscard]] VectorI tileMax(const VectorI& coords) const;
 
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMaxNormalized(const int& x, const int& y) const;
+		[[nodiscard]] Vector tileMaxNormalized(const int& x, const int& y) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMaxNormalized(const int& index) const;
+		[[nodiscard]] Vector tileMaxNormalized(const int& index) const;
 		/**
 		 * Gets the bottom-right corner of the tile on the image in normalized 0..1 range.
 		 */
-		[[nodiscard]] Vector2 tileMaxNormalized(const Vector2Int& coords) const;
+		[[nodiscard]] Vector tileMaxNormalized(const VectorI& coords) const;
 		
 		/**
 		 * Converts x,y coordinates to the tile index.
@@ -125,12 +124,12 @@ namespace Tristeon
 		/**
 		 * Converts x,y coordinates to the tile index.
 		 */
-		[[nodiscard]] int tile(const Vector2Int& coords) const;
+		[[nodiscard]] int tile(const VectorI& coords) const;
 		
 		/**
 		 * Converts a tile index to x,y coordinates.
 		 */
-		[[nodiscard]] Vector2Int tileCoords(const int& index) const;
+		[[nodiscard]] VectorI tileCoords(const int& index) const;
 		
 		/**
 		 * The amount of columns the tileset has.

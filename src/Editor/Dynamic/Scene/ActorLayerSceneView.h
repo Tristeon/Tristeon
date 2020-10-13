@@ -27,7 +27,7 @@ namespace TristeonEditor
 		bool draggingScalar = false;
 		bool draggingRotate = false;
 
-		Tristeon::Vector2 draggingOffset{};
+		Tristeon::Vector draggingOffset{};
 	};
 }
 #endif

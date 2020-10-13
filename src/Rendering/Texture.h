@@ -1,7 +1,8 @@
 #pragma once
 #include "TObject.h"
 #include <Utils/ClassDefaults.h>
-#include "Math/Vector2Int.h"
+#include "Math/Vector.h"
+#include <Standard/String.h>
 
 namespace Tristeon
 {
@@ -21,7 +22,7 @@ namespace Tristeon
 		/**
 		 * Creates a texture with an image at the given filepath.
 		 */
-		explicit Texture(std::string const& path);
+		explicit Texture(String const& path);
 		virtual ~Texture();
 
 		DELETE_COPY(Texture);
@@ -45,7 +46,7 @@ namespace Tristeon
 		/**
 		 * Returns the width and height of the texture in pixels.
 		 */
-		[[nodiscard]] Vector2Int size() const;
+		[[nodiscard]] VectorI size() const;
 
 		/**
 		 * Returns true if the texture was successfully loaded from the given filepath.

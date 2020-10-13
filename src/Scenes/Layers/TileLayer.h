@@ -68,7 +68,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if index.x or index.y is less than 0
 		 * \exception out_of_range Throws if index.x is more than columns() or index.y is more than rows()
 		 */
-		void setTileByIndex(const Vector2Int& index, const Tile& value);
+		void setTileByIndex(const VectorI& index, const Tile& value);
 
 		/**
 		 * Sets the tile at the given world position to the given value.
@@ -76,7 +76,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if position is under 0
 		 * \exception out_of_range Throws if the position is outside of the tilemap
 		 */
-		void setTileByPosition(const Vector2& position, const Tile& value);
+		void setTileByPosition(const Vector& position, const Tile& value);
 
 		/**
 		 * Sets the tile at the given world position to the given value.
@@ -99,7 +99,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if index.x or index.y is less than 0
 		 * \exception out_of_range Throws if index.x is more than columns() or index.y is more than rows()
 		 */
-		[[nodiscard]] Tile tileByIndex(const Vector2Int& index) const;
+		[[nodiscard]] Tile tileByIndex(const VectorI& index) const;
 
 		/**
 		 * Gets the tile at the given world position.
@@ -107,7 +107,7 @@ namespace Tristeon
 		 * \exception invalid_argument Throws if position is under 0
 		 * \exception out_of_range Throws if the position is outside of the tilemap
 		 */
-		[[nodiscard]] Tile tileByPosition(const Vector2& position) const;
+		[[nodiscard]] Tile tileByPosition(const Vector& position) const;
 
 		/**
 		 * Gets the tile at the given world position.
@@ -125,7 +125,7 @@ namespace Tristeon
 		/**
 		 * Returns true if the given index is within the bounds of the TileLayer
 		 */
-		[[nodiscard]] bool checkBoundsByIndex(const Vector2Int& index) const;
+		[[nodiscard]] bool checkBoundsByIndex(const VectorI& index) const;
 
 		/**
 		 * Returns true if the world position is within the bounds of the TileLayer.
@@ -135,7 +135,7 @@ namespace Tristeon
 		/**
 		 * Returns true if the world position is within the bounds of the TileLayer
 		 */
-		[[nodiscard]] bool checkBoundsByPosition(const Vector2& position) const;
+		[[nodiscard]] bool checkBoundsByPosition(const Vector& position) const;
 #pragma endregion
 		
 	protected:
@@ -165,7 +165,7 @@ namespace Tristeon
 		 * Currently doesn't support other shapes.
 		 */
 		void createColliders();
-		std::map<Vector2Int, b2Fixture*> _fixtures{};
+		std::map<VectorI, b2Fixture*> _fixtures{};
 	};
 
 	REGISTER_TYPE(TileLayer);

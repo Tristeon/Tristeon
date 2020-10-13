@@ -1,6 +1,6 @@
 #pragma once
 #include <Scenes/Actors/Behaviour.h>
-#include <Math/Vector2.h>
+#include <Math/Vector.h>
 
 #include <box2d/b2_shape.h>
 #include <box2d/b2_fixture.h>
@@ -8,6 +8,8 @@
 #include <Callbacks/IStart.h>
 #include <Callbacks/ILateUpdate.h>
 #include <Callbacks/IPreDestroy.h>
+
+#include <Standard/Unique.h>
 
 namespace Tristeon
 {
@@ -74,11 +76,11 @@ namespace Tristeon
 		/**
 		 * Gets the offset of the collider relative to the Actor's position in pixels.
 		 */
-		[[nodiscard]] Vector2 offset() const;
+		[[nodiscard]] Vector offset() const;
 		/**
 		 * Sets the position offset.
 		 */
-		void setOffset(const Vector2& value);
+		void setOffset(const Vector& value);
 
 		/**
 		 * Gets the rotational offset of the collider relative to the Actor's rotation in degrees.
@@ -90,8 +92,8 @@ namespace Tristeon
 		void setRotationOffset(const float& value);
 		
 	protected:
-		Vector2 _lastScale;
-		Vector2 _offset;
+		Vector _lastScale;
+		Vector _offset;
 		float _rotationOffset = 0;
 		
 		//Simulation values

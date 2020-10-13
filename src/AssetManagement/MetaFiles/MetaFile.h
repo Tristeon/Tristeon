@@ -1,6 +1,7 @@
 ﻿#pragma once
-#include "Utils/TypeDefinitions.h"
 #include "Serialization/Serializable.h"
+#include "Standard/String.h"
+#include "Standard/Unique.h"
 
 namespace Tristeon
 {

@@ -1,8 +1,7 @@
 #pragma once
 #include <box2d/b2_world.h>
-#include <Utils/TypeDefinitions.h>
 #include <Utils/Singleton.h>
-#include <Math/Vector2.h>
+#include <Math/Vector.h>
 
 #include <Physics/CollisionListener.h>
 #include <Physics/PhysicsBody.h>
@@ -45,7 +44,7 @@ namespace Tristeon
 		 * This is because box2D exclusively uses a MKS (meter, kilograms, seconds) system to define & calculate location, mass and time.
 		 * Passing normal pixel coordinates to box2d will make box2d interpret each pixel as a full meter, causing physics to be off.
 		 */
-		[[nodiscard]] static Vector2 pixelsToMeters(const Vector2& pixels);
+		[[nodiscard]] static Vector pixelsToMeters(const Vector& pixels);
 
 		/**
 		 * Converts box2D meters back to Tristeon pixels.
@@ -57,7 +56,7 @@ namespace Tristeon
 		 * Converts box2D meters back to Tristeon pixels.
 		 * This is used to convert box2D's output back into Tristeon compatible coordinates.
 		 */
-		[[nodiscard]] static Vector2 metersToPixels(const Vector2& meters);
+		[[nodiscard]] static Vector metersToPixels(const Vector& meters);
 
 		/**
 		 * Cast a ray from origin to origin + direction * distance. Stops at the first collider it finds and returns true there.
@@ -67,7 +66,7 @@ namespace Tristeon
 		 * \param direction The direction of the raycast, this value is expected to be normalized.
 		 * \param distance The length of the raycast in pixels.
 		 */
-		[[nodiscard]] static bool raycast(const Vector2& origin, const Vector2& direction, const float& distance);
+		[[nodiscard]] static bool raycast(const Vector& origin, const Vector& direction, const float& distance);
 		/**
 		 * Cast a ray from origin to origin + direction * distance. Stops at the first collider it finds and returns true there.
 		 * If no collider was found along the ray then the function returns false.
@@ -77,7 +76,7 @@ namespace Tristeon
 		 * \param distance The length of the raycast in pixels.
 		 * \param result Empty if no collider was hit, otherwise it will contain info describing the raycast hit.
 		 */
-		[[nodiscard]] static bool raycast(const Vector2& origin, const Vector2& direction, const float& distance, RaycastResult& result);
+		[[nodiscard]] static bool raycast(const Vector& origin, const Vector& direction, const float& distance, RaycastResult& result);
 	private:
 		void update();
 

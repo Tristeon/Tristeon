@@ -1,6 +1,6 @@
 #pragma once
-#include <json.h>
-#include <Utils/TypeDefinitions.h>
+#include <Standard/List.h>
+#include <Standard/String.h>
 
 namespace Tristeon
 {

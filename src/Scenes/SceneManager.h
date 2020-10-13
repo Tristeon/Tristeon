@@ -1,8 +1,8 @@
 #pragma once
-#include <memory>
-#include <Utils/TypeDefinitions.h>
 #include <Scenes/Actors/Behaviour.h>
-#include <Utils/Delegate.h>
+#include <Standard/Delegate.h>
+#include <Standard/String.h>
+#include <Standard/Unique.h>
 
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor { class EditorWindow; }

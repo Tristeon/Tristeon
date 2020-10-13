@@ -15,6 +15,6 @@ namespace Tristeon
 		/**
 		 * The normal of the collision.
 		 */
-		Vector2 normal{};
+		Vector normal{};
 	};
 }

@@ -3,8 +3,8 @@
 #include "TileLayerEditor.h"
 #include <Serialization/JsonSerializer.h>
 
-using Tristeon::Vector2;
-using Tristeon::Vector2Int;
+using Tristeon::Vector;
+using Tristeon::VectorI;
 
 namespace TristeonEditor
 {

@@ -5,7 +5,7 @@
 #include <Utils/ClassDefaults.h>
 #include <Serialization/TypeRegister.h>
 
-#include "Math/Vector2Int.h"
+#include "Math/Vector.h"
 
 namespace Tristeon
 {
@@ -30,11 +30,11 @@ namespace Tristeon
 		/**
 		 * The render-size of the camera, this is a multiplier to the resolution and can be used to make the camera cover only a part of the screen.
 		 */
-		Vector2 screenSize = Vector2(1, 1);
+		Vector screenSize = Vector(1, 1);
 		/**
 		 * The coordinates of the bottom-left corner of the camera on the screen, these are in range -1..1 in where -1, 1 is on the bottom-left and 1,1 is on the top-right.
 		 */
-		Vector2 screenCoordinates = Vector2(-1, -1);
+		Vector screenCoordinates = Vector(-1, -1);
 		/**
 		 * Determines whether the camera renders to the screen or not.
 		 * If false, the camera's texture isn't used by the renderer but can be used for other purposes.
@@ -45,7 +45,7 @@ namespace Tristeon
 		 * Override the resolution the camera renders at.
 		 * This is only used if renderToScreen == false.
 		 */
-		Vector2Int overrideResolution{ 800, 800 };
+		VectorI overrideResolution{ 800, 800 };
 		/**
 		 * The zoom of the camera. This value is 1 by default but can be adjusted to zoom in/out
 		 * of the scene without having to adjust the size variable.
@@ -76,8 +76,8 @@ namespace Tristeon
 		[[nodiscard]] Framebuffer framebuffer();
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
-		Vector2 _lastScreenSize{};
-		Vector2Int _lastWindowSize{};
+		Vector _lastScreenSize{};
+		VectorI _lastWindowSize{};
 
 		//Framebuffer
 		unsigned int _fbo = 0;

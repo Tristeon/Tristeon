@@ -1,7 +1,7 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
 #include <TObject.h>
-#include <Utils/TypeDefinitions.h>
+#include <Standard/String.h>
 
 namespace TristeonEditor
 {

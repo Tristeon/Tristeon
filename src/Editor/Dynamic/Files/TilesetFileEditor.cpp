@@ -4,8 +4,8 @@
 #include "Editor/EditorFields.h"
 #include "Scenes/Tiles/Tileset.h"
 
-using Tristeon::Vector2;
-using Tristeon::Vector2Int;
+using Tristeon::Vector;
+using Tristeon::VectorI;
 
 namespace TristeonEditor
 {
@@ -119,12 +119,12 @@ namespace TristeonEditor
 
 		if (rect.contains(position))
 		{
-			Vector2Int const size = Vector2Int(image->width(), image->height());
-			Vector2Int const tileSize = size / Vector2Int(data["width"], data["height"]);
+			VectorI const size = VectorI(image->width(), image->height());
+			VectorI const tileSize = size / VectorI(data["width"], data["height"]);
 
 			QPoint const local = image->mapFromGlobal(position);
 
-			Vector2Int const tileIndex = Vector2Int(local.x() / tileSize.x, local.y() / tileSize.y);
+			VectorI const tileIndex = VectorI(local.x() / tileSize.x, local.y() / tileSize.y);
 			int const newTile = set->tile(tileIndex.x, tileIndex.y);
 			if (newTile == selectedTile)
 			{
@@ -134,7 +134,7 @@ namespace TristeonEditor
 			else
 			{
 				selectedTile = newTile;
-				Vector2 const tilePos = set->tileMinNormalized(newTile) * Vector2(image->width(), image->height());
+				Vector const tilePos = set->tileMinNormalized(newTile) * Vector(image->width(), image->height());
 				tileHighlight->move((int)tilePos.x, (int)tilePos.y);
 				tileHighlight->show();
 			}
@@ -187,7 +187,7 @@ namespace TristeonEditor
 	{
 		set->deserialize(data);
 
-		Vector2 const size = set->tileSizeNormalized() * Tristeon::Vector2(image->width(), image->height());
+		Vector const size = set->tileSizeNormalized() * Tristeon::Vector(image->width(), image->height());
 		tileHighlight->setMinimumSize((int)size.x, (int)size.y);
 		tileHighlight->setMaximumSize((int)size.x, (int)size.y);
 		tileHighlight->adjustSize();

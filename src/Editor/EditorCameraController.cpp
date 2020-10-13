@@ -16,7 +16,7 @@ namespace TristeonEditor
 		handleDragging();
 
 		if (Keyboard::pressed(Keyboard::F) && Editor::instance()->selectedActor() != nullptr)
-			Renderer::editorCamera()->position = (Vector2Int)Editor::instance()->selectedActor()->position;
+			Renderer::editorCamera()->position = (VectorI)Editor::instance()->selectedActor()->position;
 	}
 
 	void EditorCameraController::handleDragging()
@@ -27,7 +27,7 @@ namespace TristeonEditor
 
 		if (dragging)
 		{
-			Vector2Int delta = Mouse::position() - dragMousePos;
+			VectorI delta = Mouse::position() - dragMousePos;
 			delta.y *= -1;
 			delta.x *= -1;
 			delta *= 3;

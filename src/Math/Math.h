@@ -1,5 +1,6 @@
 #pragma once
-#include "Vector2.h"
+#include <cstdint>
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
@@ -39,7 +40,7 @@ namespace Tristeon
 		/**
 		 * Returns a position that orbits around the given center with the given offset using the rotation (degrees).
 		 */
-		static Vector2 orbit(const Vector2& center, const Vector2& offset, const float& rotation);
+		static Vector orbit(const Vector& center, const Vector& offset, const float& rotation);
 
 		/**
 		 * Returns -1 if the value is less than 0, 0 if the value == 0, 1 if the value is more than 0.

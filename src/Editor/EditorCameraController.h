@@ -1,8 +1,9 @@
 #pragma once
-
 #ifdef TRISTEON_EDITOR
+
 #include "Editor.h"
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
+
 namespace TristeonEditor
 {
 	class EditorCameraController
@@ -14,7 +15,7 @@ namespace TristeonEditor
 		void handleScrolling();
 		
 		bool dragging = false;
-		Tristeon::Vector2Int dragMousePos{};
+		Tristeon::VectorI dragMousePos{};
 	};
 }
 #endif

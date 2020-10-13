@@ -1,7 +1,7 @@
 #pragma once
 #include "Serialization/InstancedSerializable.h"
-#include "Utils/TypeDefinitions.h"
 #include <Rendering/Framebuffer.h>
+#include <Standard/String.h>
 
 namespace Tristeon
 {

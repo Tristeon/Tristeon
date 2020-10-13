@@ -1,5 +1,5 @@
 #pragma once
-#include <Math/Vector2.h>
+#include <Math/Vector.h>
 
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor { class EditorWindow; }
@@ -70,14 +70,14 @@ namespace Tristeon
 		 *
 		 * Its values are between -1 and 1.
 		 */
-		[[nodiscard]] static Vector2 axisLeft();
+		[[nodiscard]] static Vector axisLeft();
 
 		/**
 		 * The x and y value of the right axis, often referred to as the right thumbstick.
 		 *
 		 * Its values are between -1 and 1.
 		 */
-		[[nodiscard]] static Vector2 axisRight();
+		[[nodiscard]] static Vector axisRight();
 
 		/**
 		 * The value of the L2 axis, often referred to as the left trigger button.
@@ -98,8 +98,8 @@ namespace Tristeon
 		static bool _buttonsPressed[];
 		static bool _buttonsReleased[];
 
-		static Vector2 _left;
-		static Vector2 _right;
+		static Vector _left;
+		static Vector _right;
 
 		static float _l2;
 		static float _r2;

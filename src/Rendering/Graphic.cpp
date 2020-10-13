@@ -9,12 +9,12 @@
 
 namespace Tristeon
 {
-	auto Graphic::Bounds::contains(Vector2 const& position) const -> bool
+	auto Graphic::Bounds::contains(Vector const& position) const -> bool
 	{
 		return position.x > min.x && position.x < max.x&& position.y > min.y && position.y < max.y;
 	}
 
-	Vector2 Graphic::Bounds::size() const
+	Vector Graphic::Bounds::size() const
 	{
 		return (max - min);
 	}

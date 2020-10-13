@@ -3,7 +3,6 @@
 
 #include <map>
 
-#include <Utils/TypeDefinitions.h>
 #include <Serialization/Type.h>
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 

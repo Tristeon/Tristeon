@@ -45,10 +45,10 @@ namespace Tristeon
 	{
 		Actor::deserialize(j);
 		
-		screenSize = j.value("screenSize", Vector2::one());
-		screenCoordinates = j.value("screenCoordinates", Vector2 { -1 , -1 });
+		screenSize = j.value("screenSize", Vector::one());
+		screenCoordinates = j.value("screenCoordinates", Vector { -1 , -1 });
 		renderToScreen = j.value("renderToScreen", true);
-		overrideResolution = j.value("overrideResolution", Vector2Int{ 800, 800 });
+		overrideResolution = j.value("overrideResolution", VectorI{ 800, 800 });
 		zoom = j.value("zoom", 1.0f);
 	}
 
@@ -57,7 +57,7 @@ namespace Tristeon
 		if (zoom == 0)
 			return;
 
-		Vector2 resolution = (Vector2)Window::gameSize() * screenSize;
+		Vector resolution = (Vector)Window::gameSize() * screenSize;
 		if (!renderToScreen)
 			resolution = overrideResolution;
 		
@@ -68,7 +68,7 @@ namespace Tristeon
 	{
 		updateFramebuffer();
 		
-		Vector2Int resolution = (Vector2Int)((Vector2)Window::gameSize() * screenSize);
+		VectorI resolution = (VectorI)((Vector)Window::gameSize() * screenSize);
 		if (!renderToScreen)
 			resolution = overrideResolution;
 		
@@ -88,7 +88,7 @@ namespace Tristeon
 		_lastScreenSize = screenSize;
 		_lastWindowSize = Window::gameSize();
 
-		const auto size = static_cast<Vector2Int>(_lastScreenSize * _lastWindowSize);
+		const auto size = static_cast<VectorI>(_lastScreenSize * _lastWindowSize);
 
 		//Delete old framebuffer with its texture
 		if (_fbo != NULL)

@@ -46,8 +46,8 @@ namespace TristeonEditor
 
 		void _setWindowTitle(std::string const& value) override;
 		
-		Tristeon::Vector2 _screenToWorld(Tristeon::Vector2Int const& screenPoint, Tristeon::Camera* camera) override;
-		Tristeon::Vector2Int _worldToScreen(Tristeon::Vector2 const& worldPoint, Tristeon::Camera* camera) override;
+		Tristeon::Vector _screenToWorld(Tristeon::VectorI const& screenPoint, Tristeon::Camera* camera) override;
+		Tristeon::VectorI _worldToScreen(Tristeon::Vector const& worldPoint, Tristeon::Camera* camera) override;
 
 		Tristeon::Keyboard::Key mapToTristeonKey(Qt::Key key);
 	private:

@@ -57,8 +57,8 @@ namespace Tristeon
 	{
 		InstancedSerializable::deserialize(j);
 
-		position = j.value("position", Vector2());
-		scale = j.value("scale", Vector2::one());
+		position = j.value("position", Vector());
+		scale = j.value("scale", Vector::one());
 		rotation = j.value("rotation", 0);
 		name = j.value("name", "");
 

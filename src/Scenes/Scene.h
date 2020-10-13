@@ -1,7 +1,9 @@
 #pragma once
 #include <Serialization/Serializable.h>
 #include <Scenes/Layers/Layer.h>
-#include "Utils/TypeDefinitions.h"
+
+#include <Standard/List.h>
+#include <Standard/Unique.h>
 
 namespace Tristeon
 {

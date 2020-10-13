@@ -18,32 +18,32 @@ namespace Tristeon
 		return Project::Graphics::tileHeight();
 	}
 
-	Vector2Int Grid::tileSize()
+	VectorI Grid::tileSize()
 	{
-		return Vector2Int((int)tileWidth(), (int)tileHeight());
+		return VectorI((int)tileWidth(), (int)tileHeight());
 	}
 
-	Vector2 Grid::snap(const Vector2& position)
+	Vector Grid::snap(const Vector& position)
 	{
 		return positionByIndex(indexByPosition(position));
 	}
 
-	Vector2Int Grid::indexByPosition(const Vector2& position)
+	VectorI Grid::indexByPosition(const Vector& position)
 	{
 		return indexByPosition(position.x, position.y);
 	}
 
-	Vector2Int Grid::indexByPosition(const float& wx, const float& wy)
+	VectorI Grid::indexByPosition(const float& wx, const float& wy)
 	{
-		return (Vector2Int)Vector2::floor({ (wx + (float)tileWidth() / 2.0f) / (float)tileWidth(), (wy + (float)tileHeight() / 2.0f) / (float)tileHeight() });
+		return (VectorI)Vector::floor({ (wx + (float)tileWidth() / 2.0f) / (float)tileWidth(), (wy + (float)tileHeight() / 2.0f) / (float)tileHeight() });
 	}
 
-	Vector2 Grid::positionByIndex(const Vector2Int& index)
+	Vector Grid::positionByIndex(const VectorI& index)
 	{
 		return positionByIndex(index.x, index.y);
 	}
 
-	Vector2 Grid::positionByIndex(const int& ix, const int& iy)
+	Vector Grid::positionByIndex(const int& ix, const int& iy)
 	{
 		return {(float)ix * (float)tileWidth(), (float)iy * (float)tileHeight()};
 	}

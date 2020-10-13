@@ -1,6 +1,7 @@
 #pragma once
 #include <TObject.h>
-#include "Utils/TypeDefinitions.h"
+#include <Standard/String.h>
+#include <Utils/ClassDefaults.h>
 
 namespace Tristeon
 {

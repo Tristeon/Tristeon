@@ -1,11 +1,11 @@
 #include "StringHelper.h"
 
-#include <Utils/TypeDefinitions.h>
-
 #include <algorithm>
 #include <sstream>
 
 #include "Random.h"
+#include <Standard/List.h>
+#include <Standard/String.h>
 
 namespace Tristeon
 {

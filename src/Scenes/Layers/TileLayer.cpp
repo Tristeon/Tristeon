@@ -99,7 +99,7 @@ namespace Tristeon
 		_isDirty = true;
 	}
 
-	void TileLayer::setTileByIndex(const Vector2Int& index, const Tile& value)
+	void TileLayer::setTileByIndex(const VectorI& index, const Tile& value)
 	{
 		if (index.x < 0 || index.y < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
@@ -107,14 +107,14 @@ namespace Tristeon
 		setTileByIndex(index.x, index.y, value);
 	}
 
-	void TileLayer::setTileByPosition(const Vector2& position, const Tile& value)
+	void TileLayer::setTileByPosition(const Vector& position, const Tile& value)
 	{
 		setTileByPosition(position.x, position.y, value);
 	}
 
 	void TileLayer::setTileByPosition(const float& wx, const float& wy, const Tile& value)
 	{
-		Vector2Int const index = Grid::indexByPosition(wx, wy);
+		VectorI const index = Grid::indexByPosition(wx, wy);
 		setTileByIndex(index.x, index.y, value);
 	}
 
@@ -126,7 +126,7 @@ namespace Tristeon
 		return _tiles[row * _columns + column];
 	}
 
-	Tile TileLayer::tileByIndex(const Vector2Int& index) const
+	Tile TileLayer::tileByIndex(const VectorI& index) const
 	{
 		if (index.x < 0 || index.y < 0)
 			throw std::invalid_argument("Coords can't be less than 0");
@@ -134,14 +134,14 @@ namespace Tristeon
 		return tileByIndex(index.x, index.y);
 	}
 
-	Tile TileLayer::tileByPosition(const Vector2& position) const
+	Tile TileLayer::tileByPosition(const Vector& position) const
 	{
 		return tileByPosition(position.x, position.y);
 	}
 
 	Tile TileLayer::tileByPosition(const float& wx, const float& wy) const
 	{
-		Vector2Int const index = Grid::indexByPosition(wx, wy);
+		VectorI const index = Grid::indexByPosition(wx, wy);
 		return tileByIndex(index);
 	}
 
@@ -177,7 +177,7 @@ namespace Tristeon
 		return true;
 	}
 
-	bool TileLayer::checkBoundsByIndex(const Vector2Int& index) const
+	bool TileLayer::checkBoundsByIndex(const VectorI& index) const
 	{
 		if (index.x < 0 || index.y < 0)
 			return false;
@@ -196,7 +196,7 @@ namespace Tristeon
 		return true;
 	}
 
-	bool TileLayer::checkBoundsByPosition(const Vector2& position) const
+	bool TileLayer::checkBoundsByPosition(const Vector& position) const
 	{
 		return checkBoundsByPosition(position.x, position.y);
 	}
@@ -285,7 +285,7 @@ namespace Tristeon
 		{
 			for (auto y = 0; y < _rows; y++)
 			{
-				bool const colliderExists = _fixtures.find(Vector2Int{ x, y }) != _fixtures.end();
+				bool const colliderExists = _fixtures.find(VectorI{ x, y }) != _fixtures.end();
 
 				int const index = y * _columns + x;
 				if (_tiles[index].index == -1)
@@ -308,9 +308,9 @@ namespace Tristeon
 				//No collider exists but the tile wants a collider
 				if (settings.hasCollider && !colliderExists)
 				{
-					Vector2 position = Vector2(x * Grid::tileWidth(), y * Grid::tileHeight());
-					Vector2 const meterSize = PhysicsWorld::pixelsToMeters({ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f });
-					Vector2 meterPosition = PhysicsWorld::pixelsToMeters(position);
+					Vector position = Vector(x * Grid::tileWidth(), y * Grid::tileHeight());
+					Vector const meterSize = PhysicsWorld::pixelsToMeters({ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f });
+					Vector meterPosition = PhysicsWorld::pixelsToMeters(position);
 
 					b2PolygonShape shape;
 					shape.SetAsBox(meterSize.x, meterSize.y, meterPosition.convert<b2Vec2>(), 0);

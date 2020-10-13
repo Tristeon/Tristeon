@@ -2,10 +2,12 @@
 #include "Serialization/InstancedSerializable.h"
 #include "Behaviour.h"
 
-#include "Math/Vector2.h"
+#include "Math/Vector.h"
 
 #include <Callbacks/IStart.h>
 #include <Collector.h>
+
+#include <Standard/Unique.h>
 
 namespace Tristeon
 {
@@ -38,12 +40,12 @@ namespace Tristeon
 		/**
 		 * The current position in 2D space of the actor, in pixels.
 		 */
-		Vector2 position = { 0, 0 };
+		Vector position = { 0, 0 };
 
 		/**
 		 * The current scale of the actor, Vector2::one() by default.
 		 */
-		Vector2 scale = { 1, 1 };
+		Vector scale = { 1, 1 };
 
 		/**
 		 * The current rotation of the actor, in degrees.

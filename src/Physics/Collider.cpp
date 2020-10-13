@@ -68,7 +68,7 @@ namespace Tristeon
 	{
 		Behaviour::deserialize(j);
 		
-		_offset = j.value("offset", Vector2::zero());
+		_offset = j.value("offset", Vector::zero());
 		_rotationOffset = j.value("rotationOffset", 0);
 		
 		_density = j.value("density", 1.0f);
@@ -184,12 +184,12 @@ namespace Tristeon
 		addSelf();
 	}
 
-	Vector2 Collider::offset() const
+	Vector Collider::offset() const
 	{
 		return _offset;
 	}
 
-	void Collider::setOffset(Vector2 const& value)
+	void Collider::setOffset(Vector const& value)
 	{
 		_offset = value;
 		_isDirty = true;

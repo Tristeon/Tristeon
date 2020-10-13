@@ -23,12 +23,12 @@ namespace Tristeon
 
 	void TestBehaviour::update()
 	{
-		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector2::down(), groundedDistance);
+		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->setVelocity({ body->velocity().x, jumpVelocity });
 
 		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
-		body->applyForce(Vector2(horizontal, 0) * Time::deltaTime() * runSpeed);
+		body->applyForce(Vector(horizontal, 0) * Time::deltaTime() * runSpeed);
 
 		if (!Camera::cameras().empty())
 			Camera::cameras()[0]->position = actor()->position;

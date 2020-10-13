@@ -1,7 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "Math/Vector2Int.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
+#include "Math/Vector.h"
 #include "ActorEditor.h"
 #include <QtWidgets>
 #include <Editor/Editor.h>
@@ -173,35 +171,23 @@ namespace TristeonEditor
 			{
 				Tristeon::String const type = it.value().contains("typeID") ? it.value()["typeID"] : "";
 
-				bool const isVector2 = type == Tristeon::Type<Tristeon::Vector2>::fullName();
-				bool const isVector2Int = type == Tristeon::Type<Tristeon::Vector2Int>::fullName();
-				bool const isVector3 = type == Tristeon::Type<Tristeon::Vector3>::fullName();
-				bool const isVector4 = type == Tristeon::Type<Tristeon::Vector4>::fullName();
+				bool const isVector2 = type == Tristeon::Type<Tristeon::Vector>::fullName();
+				bool const isVector2Int = type == Tristeon::Type<Tristeon::VectorI>::fullName();
 
 				QWidget* field;
-				if (isVector2 || isVector2Int || isVector3 || isVector4)
+				if (isVector2 || isVector2Int)
 				{
 					field = new QWidget();
 					auto* layout = new QHBoxLayout(field);
 					layout->setContentsMargins(0, 0, 0, 0);
 					field->setLayout(layout);
 
-					if (isVector2 || isVector3 || isVector4)
+					if (isVector2)
 					{
 						auto* x = EditorFields::floatField(field, it.value()["x"], [=](float value) { data[key]["x"] = value; actor->deserialize(data); });
 						auto* y = EditorFields::floatField(field, it.value()["y"], [=](float value) { data[key]["y"] = value; actor->deserialize(data); });
 						layout->addWidget(x);
 						layout->addWidget(y);
-					}
-					if (isVector3 || isVector4)
-					{
-						auto* z = EditorFields::floatField(field, it.value()["z"], [=](float value) { data[key]["z"] = value; actor->deserialize(data); });
-						layout->addWidget(z);
-					}
-					if (isVector4)
-					{
-						auto* w = EditorFields::floatField(field, it.value()["w"], [=](float value) { data[key]["w"] = value; actor->deserialize(data); });
-						layout->addWidget(w);
 					}
 
 					if (isVector2Int)

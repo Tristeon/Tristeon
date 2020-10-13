@@ -1,5 +1,5 @@
 #pragma once
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 #include <Scenes/Layers/TileLayer.h>
 
 namespace Tristeon
@@ -16,7 +16,7 @@ namespace Tristeon
 		/**
 		 * The world index of the tile.
 		 */
-		Vector2Int tileIndex = {};
+		VectorI tileIndex = {};
 		/**
 		 * The tile's tile-set and tile-set index.
 		 */
@@ -28,6 +28,6 @@ namespace Tristeon
 		/**
 		 * The normal of the collision.
 		 */
-		Vector2 normal{};
+		Vector normal{};
 	};
 }

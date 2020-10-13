@@ -1,7 +1,6 @@
 #include "Mouse.h"
 
-#include <Math/Math.h>
-#include <Math/Vector2Int.h>
+#include <Math/Vector.h>
 
 namespace Tristeon
 {
@@ -9,9 +8,9 @@ namespace Tristeon
 	bool Mouse::_buttonsPressed[Last];
 	bool Mouse::_buttonsReleased[Last];
 	
-	Vector2Int Mouse::_mousePos{};
-	Vector2Int Mouse::_mouseDelta{};
-	Vector2Int Mouse::_scrollDelta{};
+	VectorI Mouse::_mousePos{};
+	VectorI Mouse::_mouseDelta{};
+	VectorI Mouse::_scrollDelta{};
 	
 	bool Mouse::pressed(const MouseButton& button)
 	{
@@ -28,17 +27,17 @@ namespace Tristeon
 		return _buttonsReleased[button];
 	}
 
-	Vector2Int Mouse::position()
+	VectorI Mouse::position()
 	{
 		return _mousePos;
 	}
 
-	Vector2Int Mouse::deltaPos()
+	VectorI Mouse::deltaPos()
 	{
 		return _mouseDelta;
 	}
 
-	Vector2Int Mouse::deltaScroll()
+	VectorI Mouse::deltaScroll()
 	{
 		return _scrollDelta;
 	}
@@ -57,13 +56,13 @@ namespace Tristeon
 		_buttonsReleased[button] = true;
 	}
 
-	void Mouse::onMove(const Vector2Int& pos)
+	void Mouse::onMove(const VectorI& pos)
 	{
 		_mouseDelta += pos - _mousePos;
 		_mousePos = pos;
 	}
 
-	void Mouse::onScroll(const Vector2Int& change)
+	void Mouse::onScroll(const VectorI& change)
 	{
 		_scrollDelta += change;
 	}
@@ -73,8 +72,8 @@ namespace Tristeon
 		std::fill(std::begin(_buttonsPressed), std::end(_buttonsPressed), false);
 		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
 
-		_mouseDelta = Vector2Int::zero();
-		_scrollDelta = Vector2Int::zero();
+		_mouseDelta = VectorI::zero();
+		_scrollDelta = VectorI::zero();
 	}
 
 	void Mouse::clearAll()
@@ -83,7 +82,7 @@ namespace Tristeon
 		std::fill(std::begin(_buttons), std::end(_buttons), false);
 		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
 
-		_mouseDelta = Vector2Int::zero();
-		_scrollDelta = Vector2Int::zero();
+		_mouseDelta = VectorI::zero();
+		_scrollDelta = VectorI::zero();
 	}
 }

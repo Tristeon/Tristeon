@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <box2d/b2_body.h>
-#include <Math/Vector2.h>
+#include <Math/Vector.h>
 
 #include <Serialization/TypeRegister.h>
 
@@ -81,12 +81,12 @@ namespace Tristeon
 		/**
 		 * Adds a force, applied at the center of mass of the body.
 		 */
-		void applyForce(const Vector2& force, const ForceMode& mode = ForceMode::Force);
+		void applyForce(const Vector& force, const ForceMode& mode = ForceMode::Force);
 
 		/**
 		 * Adds a force, applied at the given global point. If the force is not applied at the center of mass, it will generate a torque and affect the angular velocity.
 		 */
-		void applyForceToPoint(const Vector2& force, const Vector2& point, const ForceMode& mode = ForceMode::Force);
+		void applyForceToPoint(const Vector& force, const Vector& point, const ForceMode& mode = ForceMode::Force);
 
 		/**
 		 * Apply a torque. This solely affects the angular velocity.
@@ -96,11 +96,11 @@ namespace Tristeon
 		/**
 		 * Gets the velocity in pixels.
 		 */
-		[[nodiscard]] Vector2 velocity() const;
+		[[nodiscard]] Vector velocity() const;
 		/**
 		 * Sets the velocity to the given value.
 		 */
-		void setVelocity(const Vector2& value);
+		void setVelocity(const Vector& value);
 		/**
 		 * Sets the velocity to the given value.
 		 */
@@ -155,11 +155,11 @@ namespace Tristeon
 		/**
 		 * Gets the position in pixels.
 		 */
-		[[nodiscard]] Vector2 position() const;
+		[[nodiscard]] Vector position() const;
 		/**
 		 * Sets the position.
 		 */
-		void setPosition(const Vector2& value);
+		void setPosition(const Vector& value);
 
 		/**
 		 * The rotation in degrees.

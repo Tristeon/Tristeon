@@ -1,9 +1,7 @@
 #pragma once
 #include <map>
-#include <Utils/TypeDefinitions.h>
 #include <Serialization/Serializable.h>
 #include <Serialization/JsonSerializer.h>
-#include <Utils/StringHelper.h>
 
 #include "Project.h"
 #include <filesystem>
