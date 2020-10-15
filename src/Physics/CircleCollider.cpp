@@ -45,9 +45,15 @@ namespace Tristeon
 		circle->m_radius = PhysicsWorld::pixelsToMeters(_radius * std::max(actor()->scale.x, actor()->scale.y));
 
 		if (includeBodyTransform)
-			circle->m_p = PhysicsWorld::pixelsToMeters(actor()->position + _offset).convert<b2Vec2>();
+		{
+			const auto p = PhysicsWorld::pixelsToMeters(actor()->position + _offset);
+			circle->m_p = b2Vec2(p.x, p.y);
+		}
 		else
-			circle->m_p = PhysicsWorld::pixelsToMeters(_offset).convert<b2Vec2>();
+		{
+			const auto p = PhysicsWorld::pixelsToMeters(_offset);
+			circle->m_p = b2Vec2(p.x, p.y);
+		}
 
 		_shape = std::unique_ptr<b2Shape>(circle);
 	}

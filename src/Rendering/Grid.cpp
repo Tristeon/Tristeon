@@ -35,7 +35,8 @@ namespace Tristeon
 
 	VectorI Grid::indexByPosition(const float& wx, const float& wy)
 	{
-		return (VectorI)Vector::floor({ (wx + (float)tileWidth() / 2.0f) / (float)tileWidth(), (wy + (float)tileHeight() / 2.0f) / (float)tileHeight() });
+		Vector result{ (wx + (float)tileWidth() / 2.0f) / (float)tileWidth(), (wy + (float)tileHeight() / 2.0f) / (float)tileHeight() };
+		return static_cast<VectorI>(result.floor());
 	}
 
 	Vector Grid::positionByIndex(const VectorI& index)

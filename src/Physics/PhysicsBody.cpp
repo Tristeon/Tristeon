@@ -51,8 +51,9 @@ namespace Tristeon
 	{
 		if (!_enabled)
 			return;
-		
-		actor()->position = PhysicsWorld::metersToPixels(Vector::convert(body->GetPosition()));
+
+		const auto p = body->GetPosition();
+		actor()->position = PhysicsWorld::metersToPixels({ p.x, p.y });
 
 		if (!_fixedRotation)
 			actor()->rotation = -Math::toDegrees(body->GetAngle()); //Box2D's rotation is inversed to Tristeon's.
@@ -81,10 +82,10 @@ namespace Tristeon
 		switch (mode)
 		{
 		case Force:
-			body->ApplyForceToCenter(meterForce.convert<b2Vec2>(), true);
+			body->ApplyForceToCenter(b2Vec2(meterForce.x, meterForce.y), true);
 			break;
 		case Impulse:
-			body->ApplyLinearImpulseToCenter(meterForce.convert<b2Vec2>(), true);
+			body->ApplyLinearImpulseToCenter(b2Vec2(meterForce.x, meterForce.y), true);
 			break;
 		}
 	}
@@ -97,10 +98,10 @@ namespace Tristeon
 		switch (mode)
 		{
 		case Force:
-			body->ApplyForce(meterForce.convert<b2Vec2>(), meterPoint.convert<b2Vec2>(), true);
+			body->ApplyForce(b2Vec2(meterForce.x, meterForce.y), b2Vec2(meterPoint.x, meterPoint.y), true);
 			break;
 		case Impulse:
-			body->ApplyLinearImpulse(meterForce.convert<b2Vec2>(), meterPoint.convert<b2Vec2>(), true);
+			body->ApplyLinearImpulse(b2Vec2(meterForce.x, meterForce.y), b2Vec2(meterPoint.x, meterPoint.y), true);
 			break;
 		}
 	}
@@ -113,14 +114,14 @@ namespace Tristeon
 
 	Vector PhysicsBody::velocity() const
 	{
-		Vector const vel = Vector::convert(body->GetLinearVelocity());
-		return PhysicsWorld::metersToPixels(vel);
+		const auto vel = body->GetLinearVelocity();
+		return PhysicsWorld::metersToPixels({ vel.x, vel.y });
 	}
 
 	void PhysicsBody::setVelocity(const Vector& value)
 	{
-		Vector const meterValue = PhysicsWorld::pixelsToMeters(value);
-		body->SetLinearVelocity(meterValue.convert<b2Vec2>());
+		const auto meterValue = PhysicsWorld::pixelsToMeters(value);
+		body->SetLinearVelocity({ meterValue.x, meterValue.y });
 	}
 
 	void PhysicsBody::setVelocity(const float& x, const float& y)
@@ -184,13 +185,14 @@ namespace Tristeon
 
 	Vector PhysicsBody::position() const
 	{
-		return PhysicsWorld::metersToPixels(Vector::convert(body->GetPosition()));
+		const auto p = body->GetPosition();
+		return PhysicsWorld::metersToPixels({ p.x, p.y });
 	}
 
 	void PhysicsBody::setPosition(const Vector& value)
 	{
-		Vector const meterValue = PhysicsWorld::pixelsToMeters(value);
-		body->SetTransform(meterValue.convert<b2Vec2>(), body->GetAngle());
+		auto const meterValue = PhysicsWorld::pixelsToMeters(value);
+		body->SetTransform(b2Vec2(meterValue.x, meterValue.y), body->GetAngle());
 	}
 
 	float PhysicsBody::rotation() const
@@ -252,7 +254,7 @@ namespace Tristeon
 		Vector const meterPosition = PhysicsWorld::pixelsToMeters(actor()->position);
 
 		b2BodyDef bodyDef;
-		bodyDef.position = meterPosition.convert<b2Vec2>();
+		bodyDef.position = b2Vec2(meterPosition.x, meterPosition.y);
 		bodyDef.angle = Math::toRadians(-actor()->rotation);
 		bodyDef.type = (b2BodyType)_type;
 		bodyDef.fixedRotation = _fixedRotation;

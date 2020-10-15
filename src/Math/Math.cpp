@@ -28,6 +28,21 @@ namespace Tristeon
 
 	float Math::clamp(const float& value, const float& min, const float& max)
 	{
+		if (min > max)
+			throw std::invalid_argument("Min can't be more than max!");
+		
+		if (value < min)
+			return min;
+		if (value > max)
+			return max;
+		return value;
+	}
+
+	int Math::clamp(const int& value, const int& min, const int& max)
+	{
+		if (min > max)
+			throw std::invalid_argument("Min can't be more than max!");
+		
 		if (value < min)
 			return min;
 		if (value > max)
@@ -40,7 +55,7 @@ namespace Tristeon
 		auto const theta = toRadians(rotation);
 		auto const c = cos(theta);
 		auto const s = sin(theta);
-		
+
 		return {
 			center.x + offset.x * c + offset.y * s,
 			center.y - offset.x * s + offset.y * c
@@ -55,12 +70,4 @@ namespace Tristeon
 			return -1;
 		return 0;
 	}
-
-    int Math::clamp(const int &value, const int &min, const int &max) {
-        if (value < min)
-            return min;
-        if (value > max)
-            return max;
-        return value;
-    }
 }

@@ -26,7 +26,7 @@ namespace Tristeon
 			rotationOffset = Math::toRadians(actor()->rotation) + rotationOffset;
 		}
 
-		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, offset.convert<b2Vec2>(), -rotationOffset);
+		polygon->SetAsBox(size.x / 2.0f, size.y / 2.0f, b2Vec2(offset.x, offset.y), -rotationOffset);
 		_shape = std::unique_ptr<b2Shape>(polygon);
 	}
 

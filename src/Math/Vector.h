@@ -85,10 +85,12 @@ namespace Tristeon
 		}
 
 		template<typename T = Type>
-		void operator*=(const VectorType<T>& other)
+		VectorType<Type> operator*=(const VectorType<T>& other)
 		{
 			x *= other.x;
 			y *= other.y;
+
+			return *this;
 		}
 
 		template<typename T = Type>
@@ -97,10 +99,11 @@ namespace Tristeon
 			return { x * other.x, y * other.y };
 		}
 
-		void operator*=(const Type& multiplier)
+		VectorType<Type> operator*=(const Type& multiplier)
 		{
 			x *= multiplier;
 			y *= multiplier;
+			return *this;
 		}
 
 		[[nodiscard]] VectorType operator*(const Type& multiplier) const
@@ -109,10 +112,11 @@ namespace Tristeon
 		}
 
 		template<typename T = Type>
-		void operator/=(const VectorType<T>& other)
+		VectorType<Type> operator/=(const VectorType<T>& other)
 		{
 			x /= other.x;
 			y /= other.y;
+			return *this;
 		}
 
 		template<typename T = Type>
@@ -121,10 +125,12 @@ namespace Tristeon
 			return { x / other.x, y / other.y };
 		}
 
-		void operator/=(const Type& divider)
+		VectorType<Type> operator/=(const Type& divider)
 		{
 			x /= divider;
 			y /= divider;
+
+			return *this;
 		}
 
 		[[nodiscard]] VectorType operator/(const Type& divider) const
@@ -133,10 +139,11 @@ namespace Tristeon
 		}
 
 		template<typename T = Type>
-		void operator+=(const VectorType<T>& other)
+		VectorType<Type> operator+=(const VectorType<T>& other)
 		{
 			x += other.x;
 			y += other.y;
+			return *this;
 		}
 
 		template<typename T = Type>
@@ -146,10 +153,11 @@ namespace Tristeon
 		}
 
 		template<typename T = Type>
-		void operator-=(const VectorType<T>& other)
+		VectorType<Type> operator-=(const VectorType<T>& other)
 		{
 			x -= other.x;
 			y -= other.y;
+			return *this;
 		}
 
 		template<typename T = Type>
@@ -199,61 +207,44 @@ namespace Tristeon
 			return sqrt(x * x + y * y);
 		}
 
-		void normalize()
+		[[nodiscard]] Type magnitudeSquared() const
+		{
+			return x * x + y * y;
+		}
+
+		VectorType<Type> normalize()
 		{
 			if (x == 0 && y == 0)
-				return;
+				return *this;
 
 			const auto mag = magnitude();
 
 			x /= mag;
 			y /= mag;
+
+			return *this;
 		}
 
-		[[nodiscard]] VectorType normalized() const
+		VectorType<Type> floor()
 		{
-			VectorType vec = *this;
-			vec.normalize();
-			return vec;
+			x = (Type)floorf(x);
+			y = (Type)floorf(y);
+			return *this;
 		}
 
-		void floor()
+		VectorType<Type> ceil()
 		{
-			x = floorf(x);
-			y = floorf(y);
+			x = (Type)ceilf(x);
+			y = (Type)ceilf(y);
+			return *this;
 		}
 
-		template<typename T = Type>
-		[[nodiscard]] static VectorType floor(VectorType<T> vector)
+		VectorType<Type> round()
 		{
-			vector.floor();
-			return vector;
-		}
+			x = (Type)roundf(x);
+			y = (Type)roundf(y);
 
-		void ceil()
-		{
-			x = ceilf(x);
-			y = ceilf(y);
-		}
-
-		template<typename T = Type>
-		[[nodiscard]] static VectorType ceil(VectorType<T> vector)
-		{
-			vector.ceil();
-			return vector;
-		}
-
-		void round()
-		{
-			x = roundf(x);
-			y = roundf(y);
-		}
-
-		template<typename T = Type>
-		[[nodiscard]] static VectorType round(VectorType<T> vector)
-		{
-			vector.round();
-			return vector;
+			return *this;
 		}
 
 		template<typename TA = Type, typename TB = Type>
@@ -298,24 +289,6 @@ namespace Tristeon
 		{
 			return "{ " + std::to_string(x) + ", " + std::to_string(y) + " }";
 		}
-
-		/**
-		 * Convert to any given type, assuming it has a (float, float) constructor.
-		 */
-		template<typename T>
-		[[nodiscard]] constexpr T convert() const { return T{ x, y }; }
-
-		/**
-		 * Convert any given type to a Vector3, assuming it has an x, y, and z field.
-		 */
-		template<typename T>
-		[[nodiscard]] static constexpr VectorType convert(T* vec) { return VectorType{ vec->x, vec->y }; }
-
-		/**
-		 * Convert any given type to a Vector3, assuming it has an x, y, and z field.
-		 */
-		template<typename T>
-		[[nodiscard]] static constexpr VectorType convert(const T& vec) { return VectorType{ vec.x, vec.y }; }
 #pragma endregion
 	};
 

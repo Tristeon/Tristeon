@@ -54,9 +54,9 @@ namespace Tristeon
 		auto* world = instance()->_world.get();
 
 		RaycastResult callback;
-		auto const point1 = pixelsToMeters(origin).convert<b2Vec2>();
-		auto const point2 = pixelsToMeters(origin + direction.normalized() * distance).convert<b2Vec2>();
-		world->RayCast(&callback, point1, point2);
+		auto const point1 = pixelsToMeters(origin);
+		auto const point2 = pixelsToMeters(origin + Vector(direction).normalize() * distance);
+		world->RayCast(&callback, { point1.x, point1.y }, { point2.x, point2.y });
 
 		return callback.collider != nullptr;
 	}
@@ -69,9 +69,9 @@ namespace Tristeon
 		
 		auto* world = instance()->_world.get();
 
-		auto const point1 = pixelsToMeters(origin).convert<b2Vec2>();
-		auto const point2 = pixelsToMeters(origin + direction * distance).convert<b2Vec2>();
-		world->RayCast(&result, point1, point2);
+		auto const point1 = pixelsToMeters(origin);
+		auto const point2 = pixelsToMeters(origin + direction * distance);
+		world->RayCast(&result, { point1.x, point1.y }, { point2.x, point2.y });
 
 		return result.collider != nullptr;
 	}

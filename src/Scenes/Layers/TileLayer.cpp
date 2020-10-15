@@ -313,7 +313,7 @@ namespace Tristeon
 					Vector meterPosition = PhysicsWorld::pixelsToMeters(position);
 
 					b2PolygonShape shape;
-					shape.SetAsBox(meterSize.x, meterSize.y, meterPosition.convert<b2Vec2>(), 0);
+					shape.SetAsBox(meterSize.x, meterSize.y, b2Vec2(meterPosition.x, meterPosition.y), 0);
 
 					b2FixtureDef def;
 					def.shape = &shape;
