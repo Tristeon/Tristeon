@@ -41,7 +41,7 @@ namespace Tristeon
 		 * The size of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameSize()
 		 */
-		[[nodiscard]] static VectorI size() { return { (int)width(), (int)height() }; }
+		[[nodiscard]] static VectorU size() { return { width(), height() }; }
 
 		/**
 		 * Returns the width of the game screen. This may not be the width of the entire Window.
@@ -56,24 +56,24 @@ namespace Tristeon
 		/**
 		 * Returns the size of the game screen. This may not be the size of the entire Window.
 		 */
-		[[nodiscard]] static VectorI gameSize() { return { (int)gameWidth(), (int)gameHeight() }; }
+		[[nodiscard]] static VectorU gameSize() { return { gameWidth(), gameHeight() }; }
 		
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static Vector screenToWorld(const VectorI& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
+		[[nodiscard]] static Vector screenToWorld(const VectorU& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
 
 		/**
 		 * Converts a world coordinate into a screen point.
 		 * This function takes into account that game's screen might not always take up the full window.
 		 */
-		[[nodiscard]] static VectorI worldToScreen(const Vector& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
+		[[nodiscard]] static VectorU worldToScreen(const Vector& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
 
 		/**
 		 * Returns true if the window is fullscreen, false if it's not
 		 */
-		[[nodiscard]] static bool isFullscreen() { return instance()->_isFullscreen(); }
+		[[nodiscard]] static bool fullScreen() { return instance()->_fullscreen(); }
 
 		/**
 		 * Sets the window's fullscreen status.
@@ -113,7 +113,7 @@ namespace Tristeon
 		virtual unsigned int _gameWidth() = 0;
 		virtual unsigned int _gameHeight() = 0;
 		
-		virtual bool _isFullscreen() = 0;
+		virtual bool _fullscreen() = 0;
 		virtual void _setFullscreen(const bool& value) = 0;
 
 		virtual void _close() = 0;
@@ -124,8 +124,8 @@ namespace Tristeon
 
 		virtual void _setWindowTitle(std::string const& value) = 0;
 
-		virtual Vector _screenToWorld(VectorI const& screenPoint, Camera* camera) = 0;
-		virtual VectorI _worldToScreen(Vector const& worldPoint, Camera* camera) = 0;
+		virtual Vector _screenToWorld(VectorU const& screenPoint, Camera* camera) = 0;
+		virtual VectorU _worldToScreen(Vector const& worldPoint, Camera* camera) = 0;
 #pragma endregion
 	};
 }

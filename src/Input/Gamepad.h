@@ -37,7 +37,6 @@ namespace Tristeon
 			X,
 			Y,
 
-			Center,
 			Guide,
 			Select,
 			Start,

@@ -69,8 +69,8 @@ namespace TristeonEditor
 		}
 		while (!mouseMoveEvents.empty())
 		{
-			VectorI newPos = VectorI(mouseMoveEvents.front().pos().x(), Window::height() - mouseMoveEvents.front().pos().y());
-			if (!Window::isFullscreen())
+			VectorU newPos = VectorU((unsigned int)mouseMoveEvents.front().pos().x(), Window::height() - (unsigned int)mouseMoveEvents.front().pos().y());
+			if (!Window::fullScreen())
 				newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 						
 			Mouse::onMove(newPos);
@@ -117,7 +117,7 @@ namespace TristeonEditor
 		return GameView::instance()->height();
 	}
 
-	bool EditorWindow::_isFullscreen()
+	bool EditorWindow::_fullscreen()
 	{
 		return QMainWindow::isFullScreen();
 	}
@@ -141,11 +141,11 @@ namespace TristeonEditor
 		return closing;
 	}
 
-	Vector EditorWindow::_screenToWorld(VectorI const& screenPoint, Camera* camera)
+	Vector EditorWindow::_screenToWorld(VectorU const& screenPoint, Camera* camera)
 	{
 		//Convert into Qt coords
-		VectorI point = screenPoint;
-		if (!isFullscreen())
+		VectorU point = screenPoint;
+		if (!fullScreen())
 			point.y -= QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		point = VectorI(screenPoint.x, Window::height() - point.y);
 
@@ -165,7 +165,7 @@ namespace TristeonEditor
 		return result;
 	}
 
-	VectorI EditorWindow::_worldToScreen(Vector const& worldPoint, Camera* camera)
+	VectorU EditorWindow::_worldToScreen(Vector const& worldPoint, Camera* camera)
 	{
 		Vector point = worldPoint;
 		point -= (VectorI)camera->position;
@@ -177,8 +177,8 @@ namespace TristeonEditor
 		point.y = Window::height() - (Window::height() - GameView::instance()->rect().bottom()) - point.y;
 		const QPoint global = GameView::instance()->mapToGlobal(QPoint(point.x, point.y));
 
-		VectorI result = VectorI(global.x(), Window::height() - global.y());
-		if (!isFullscreen())
+		VectorU result = VectorU((unsigned int)global.x(), Window::height() - (unsigned int)global.y());
+		if (!fullScreen())
 			result.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		return result;
 	}

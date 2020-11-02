@@ -27,7 +27,7 @@ namespace TristeonEditor
 
 		if (dragging)
 		{
-			VectorI delta = Mouse::position() - dragMousePos;
+			VectorI delta = (VectorI)Mouse::position() - dragMousePos;
 			delta.y *= -1;
 			delta.x *= -1;
 			delta *= 3;

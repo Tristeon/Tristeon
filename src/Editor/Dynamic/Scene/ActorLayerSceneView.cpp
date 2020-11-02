@@ -90,7 +90,7 @@ namespace TristeonEditor
 			else if (draggingRotate)
 			{
 				Vector const position = Editor::instance()->selectedActor()->position;
-				Vector const mouse = (Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - position).normalized();
+				Vector const mouse = (Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - position).normalize();
 				const float angle = mouse.angle();
 
 				if (Keyboard::held(Keyboard::Shift))

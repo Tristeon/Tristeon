@@ -89,7 +89,7 @@ namespace TristeonEditor
 		highlight->adjustSize();
 	}
 
-	void TileLayerSceneView::updateTilePosition(VectorI mousePos)
+	void TileLayerSceneView::updateTilePosition(VectorU mousePos)
 	{
 		Vector const scalar = Vector{ width() / (float)Window::gameWidth(), height() / (float)Window::gameHeight() } *Renderer::editorCamera()->zoom;
 		Vector const cameraPos = (Vector)(VectorI)Renderer::editorCamera()->position * scalar;

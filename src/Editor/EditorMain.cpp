@@ -121,8 +121,15 @@ void showProjectWindow(int argc, char** argv)
 		exit(0);
 }
 
-void showEditorWindow(int argc, char** argv)
+int main(int argc, char** argv)
 {
+	Tristeon::Console::init();
+	
+	showProjectWindow(argc, argv);
+
+	Tristeon::AssetDatabase::load();
+
+	//Run editor
 	engine = std::make_unique<Tristeon::Engine>();
 	editor = std::make_unique<TristeonEditor::Editor>();
 
@@ -136,24 +143,13 @@ void showEditorWindow(int argc, char** argv)
 	QSettings settings("Tristeon", "Tristeon2D");
 	window->restoreGeometry(settings.value("geometry").toByteArray());
 	window->restoreState(settings.value("windowState").toByteArray());
-	
+
 	window->show();
 
 	QApplication::processEvents();
 
 	editor->initialize();
 	engine->run();
-}
-
-int main(int argc, char** argv)
-{
-	Tristeon::Console::init();
-	
-	showProjectWindow(argc, argv);
-
-	Tristeon::AssetDatabase::load();
-
-	showEditorWindow(argc, argv);
 	return 0;
 }
 #endif

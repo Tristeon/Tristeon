@@ -3,6 +3,8 @@
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Renderer.h"
 
+int main(int argc, char** argv);
+
 namespace Tristeon
 {
 	/**
@@ -14,13 +16,8 @@ namespace Tristeon
 		friend Singleton<Engine>;
 		friend class Actor;
 		friend class Behaviour;
-
+		friend int ::main(int argc, char** argv);
 	public:
-		/**
-		 * Runs the engine, usually called by the main() function.
-		 */
-		void run();
-
 		/**
 		 * Enables or disables the play-mode, usually adjusted by the editor.
 		 */
@@ -32,6 +29,11 @@ namespace Tristeon
 		[[nodiscard]] static bool playMode();
 		
 	private:
+		/**
+		 * Runs the engine, usually called by the main() function.
+		 */
+		void run();
+		
 		bool _playMode = false;
 		bool _playModeDirty = false;
 		Unique<Renderer> _renderer = nullptr;

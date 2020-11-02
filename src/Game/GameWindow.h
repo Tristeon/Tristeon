@@ -17,14 +17,14 @@ namespace Tristeon
 		unsigned _windowHeight() override;
 		unsigned _gameWidth() override;
 		unsigned _gameHeight() override;
-		bool _isFullscreen() override;
+		bool _fullscreen() override;
 		void _setFullscreen(const bool& value) override;
 		void _close() override;
 		void _setClearColour(const Colour& colour) override;
 		bool _closingDown() override;
 		void _setWindowTitle(const String& value) override;
-		Vector _screenToWorld(const VectorI& screenPoint, Camera* camera) override;
-		VectorI _worldToScreen(const Vector& worldPoint, Camera* camera) override;
+		Vector _screenToWorld(const VectorU& screenPoint, Camera* camera) override;
+		VectorU _worldToScreen(const Vector& worldPoint, Camera* camera) override;
 
 	private:
 		void setupCallbacks();
@@ -38,7 +38,7 @@ namespace Tristeon
 		
 		GLFWwindow* _window = nullptr;
 		unsigned int _width = 0, _height = 0;
-		bool _fullscreen;
+		bool _isFullscreen = false;
 	};
 }
 #endif

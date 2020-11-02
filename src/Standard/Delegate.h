@@ -32,10 +32,23 @@ namespace Tristeon
 		int operator+=(std::function<void(P...)> f);
 
 		/**
+		 * Adds a function to the delegate. The function must have the same template as the Delegate.
+		 *
+		 * \returns Returns an ID integer which can be used to remove the callback again (with the -= operator)
+		 */
+		int add(std::function<void(P...)> f);
+		
+		/**
 		 * Removes the function at the given ID from the delegate.
 		 * If this delegate doesn't contain the given ID this will be ignored.
 		 */
-		void operator-=(int id);
+		void operator-=(const int& id);
+
+		/**
+		 * Removes the function at the given ID from the delegate.
+		 * If this delegate doesn't contain the given ID this will be ignored.
+		 */
+		void remove(const int& id);
 
 		/**
 		 * Resets the delegate and assigns it to the specific given function.
@@ -67,6 +80,12 @@ namespace Tristeon
 	template <typename ... P>
 	int Delegate<P...>::operator+=(std::function<void(P...)> f)
 	{
+		return add(f);
+	}
+
+	template <typename ... P>
+	int Delegate<P...>::add(std::function<void(P...)> f)
+	{
 		auto id = Random::generateInt();
 		assert(_events.find(id) == _events.end());
 		_events[id] = f;
@@ -74,7 +93,13 @@ namespace Tristeon
 	}
 
 	template <typename ... P>
-	void Delegate<P...>::operator-=(int id)
+	void Delegate<P...>::operator-=(const int& id)
+	{
+		remove(id);
+	}
+
+	template <typename ... P>
+	void Delegate<P...>::remove(const int& id)
 	{
 		if (_events.find(id) != _events.end())
 			_events.erase(id);

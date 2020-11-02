@@ -43,7 +43,7 @@ namespace Tristeon
 		Vector position = { 0, 0 };
 
 		/**
-		 * The current scale of the actor, Vector2::one() by default.
+		 * The current scale of the actor, Vector::one() by default.
 		 */
 		Vector scale = { 1, 1 };
 

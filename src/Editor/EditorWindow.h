@@ -35,7 +35,7 @@ namespace TristeonEditor
 		unsigned int _gameWidth() override;
 		unsigned int _gameHeight() override;
 
-		bool _isFullscreen() override;
+		bool _fullscreen() override;
 		void _setFullscreen(bool const& value) override;
 
 		void _close() override;
@@ -46,8 +46,8 @@ namespace TristeonEditor
 
 		void _setWindowTitle(std::string const& value) override;
 		
-		Tristeon::Vector _screenToWorld(Tristeon::VectorI const& screenPoint, Tristeon::Camera* camera) override;
-		Tristeon::VectorI _worldToScreen(Tristeon::Vector const& worldPoint, Tristeon::Camera* camera) override;
+		Tristeon::Vector _screenToWorld(Tristeon::VectorU const& screenPoint, Tristeon::Camera* camera) override;
+		Tristeon::VectorU _worldToScreen(Tristeon::Vector const& worldPoint, Tristeon::Camera* camera) override;
 
 		Tristeon::Keyboard::Key mapToTristeonKey(Qt::Key key);
 	private:

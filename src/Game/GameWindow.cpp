@@ -40,7 +40,7 @@ namespace Tristeon
 		}
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		
-		_fullscreen = Project::Graphics::fullscreen();
+		_isFullscreen = Project::Graphics::fullscreen();
 		setFullscreen(Project::Graphics::fullscreen());
 
 		setupCallbacks();
@@ -107,14 +107,14 @@ namespace Tristeon
 		return _windowHeight();
 	}
 
-	bool GameWindow::_isFullscreen()
+	bool GameWindow::_fullscreen()
 	{
-		return _fullscreen;
+		return _isFullscreen;
 	}
 
 	void GameWindow::_setFullscreen(const bool& value)
 	{
-		_fullscreen = value;
+		_isFullscreen = value;
 		
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -147,7 +147,7 @@ namespace Tristeon
 		glfwSetWindowTitle(_window, value.data());
 	}
 
-	Vector GameWindow::_screenToWorld(const VectorI& screenPoint, Camera* camera)
+	Vector GameWindow::_screenToWorld(const VectorU& screenPoint, Camera* camera)
 	{
 		//Adjust for center
 		auto result = static_cast<Vector>(screenPoint);
@@ -161,7 +161,7 @@ namespace Tristeon
 		return result;
 	}
 
-	VectorI GameWindow::_worldToScreen(const Vector& worldPoint, Camera* camera)
+	VectorU GameWindow::_worldToScreen(const Vector& worldPoint, Camera* camera)
 	{
 		Vector point = worldPoint;
 		point -= camera->position;
@@ -170,7 +170,7 @@ namespace Tristeon
 		point += ((camera->screenCoordinates + Vector::one()) / 2.0f) * Window::gameSize();
 		point += (Vector)Window::gameSize() * camera->screenSize / 2.0f; //Adjust for center
 
-		return VectorI(point);
+		return VectorU(point);
 	}
 
 	void GameWindow::setupCallbacks()

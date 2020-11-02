@@ -58,7 +58,7 @@ namespace Tristeon
 		/**
 		 * The position of the mouse, local to the Window.
 		 */
-		[[nodiscard]] static VectorI position();
+		[[nodiscard]] static VectorU position();
 
 		/**
 		 * The amount of pixels the mouse moved in the current frame.
@@ -68,7 +68,7 @@ namespace Tristeon
 		/**
 		 * The amount in degrees at which the scroll wheel scrolled in the current frame.
 		 *
-		 * Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture hence why this returns a Vector2Int.
+		 * Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture hence why this returns a VectorI.
 		 * Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
 		 */
 		[[nodiscard]] static VectorI deltaScroll();
@@ -76,7 +76,7 @@ namespace Tristeon
 	private:
 		static void onPress(const MouseButton& button);
 		static void onRelease(const MouseButton& button);
-		static void onMove(const VectorI& pos);
+		static void onMove(const VectorU& pos);
 		static void onScroll(const VectorI& change);
 
 		/**
@@ -93,7 +93,7 @@ namespace Tristeon
 		static bool _buttonsPressed[];
 		static bool _buttonsReleased[];
 
-		static VectorI _mousePos;
+		static VectorU _mousePos;
 		static VectorI _mouseDelta;
 		static VectorI _scrollDelta;
 	};

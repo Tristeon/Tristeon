@@ -47,25 +47,25 @@ namespace TristeonEditor
 				{
 					Tristeon::String const type = it.value().contains("typeID") ? it.value()["typeID"] : "";
 
-					bool const isVector2 = type == Tristeon::Type<Tristeon::Vector>::fullName();
-					bool const isVector2Int = type == Tristeon::Type<Tristeon::VectorI>::fullName();
+					bool const isVector = type == Tristeon::Type<Tristeon::Vector>::fullName();
+					bool const isVectorI = type == Tristeon::Type<Tristeon::VectorI>::fullName();
 
 					QWidget* field;
-					if (isVector2 || isVector2Int)
+					if (isVector || isVectorI)
 					{
 						field = new QWidget(parent);
 						auto* layout = new QHBoxLayout(field);
 						layout->setContentsMargins(0, 0, 0, 0);
 						field->setLayout(layout);
 
-						if (isVector2)
+						if (isVector)
 						{
 							auto* x = EditorFields::floatField(field, it.value()["x"], [&](float value) { data[it.key()]["x"] = value; saveData(); });
 							auto* y = EditorFields::floatField(field, it.value()["y"], [&](float value) { data[it.key()]["y"] = value; saveData(); });
 							layout->addWidget(x);
 							layout->addWidget(y);
 						}
-						if (isVector2Int)
+						if (isVectorI)
 						{
 							auto* x = EditorFields::intField(field, it.value()["x"], [&](int value) { data[it.key()]["x"] = value; saveData(); });
 							auto* y = EditorFields::intField(field, it.value()["y"], [&](int value) { data[it.key()]["y"] = value; saveData(); });

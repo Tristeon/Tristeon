@@ -12,7 +12,16 @@ namespace Tristeon
 	 */
 	class InstanceCollector
 	{
+		friend InstancedSerializable;
+		
 	public:
+		/**
+		 * Returns the object with the given ID.
+		 * Returns nullptr if no such object exists.
+		 */
+		static InstancedSerializable* find(const unsigned int& id);
+
+	private:
 		/**
 		 * Adds an object to the collector.
 		 */
@@ -22,14 +31,7 @@ namespace Tristeon
 		 * Removes the object from the collector.
 		 */
 		static void remove(InstancedSerializable* t);
-
-		/**
-		 * Returns the object with the given ID.
-		 * Returns nullptr if no such actor exists.
-		 */
-		static InstancedSerializable* find(const unsigned int& id);
-
-	private:
+		
 		static std::map<unsigned int, InstancedSerializable*> _collection;
 	};
 }

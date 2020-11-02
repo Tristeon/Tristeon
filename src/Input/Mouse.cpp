@@ -8,7 +8,7 @@ namespace Tristeon
 	bool Mouse::_buttonsPressed[Last];
 	bool Mouse::_buttonsReleased[Last];
 	
-	VectorI Mouse::_mousePos{};
+	VectorU Mouse::_mousePos{};
 	VectorI Mouse::_mouseDelta{};
 	VectorI Mouse::_scrollDelta{};
 	
@@ -27,7 +27,7 @@ namespace Tristeon
 		return _buttonsReleased[button];
 	}
 
-	VectorI Mouse::position()
+	VectorU Mouse::position()
 	{
 		return _mousePos;
 	}
@@ -56,9 +56,9 @@ namespace Tristeon
 		_buttonsReleased[button] = true;
 	}
 
-	void Mouse::onMove(const VectorI& pos)
+	void Mouse::onMove(const VectorU& pos)
 	{
-		_mouseDelta += pos - _mousePos;
+		_mouseDelta += (VectorI)pos - (VectorI)_mousePos;
 		_mousePos = pos;
 	}
 
