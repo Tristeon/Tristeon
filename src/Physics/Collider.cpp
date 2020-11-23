@@ -159,7 +159,7 @@ namespace Tristeon
 		def.restitution = restitution();
 
 		_fixture = _body->CreateFixture(&def);
-		_fixture->SetUserData(this);
+		_fixture->GetUserData().pointer = (uintptr_t)this;
 	}
 
 	void Collider::removeSelf()

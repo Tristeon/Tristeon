@@ -262,7 +262,7 @@ namespace Tristeon
 		bodyDef.allowSleep = true;
 		bodyDef.awake = true;
 		bodyDef.enabled = _enabled;
-		bodyDef.userData = this;
+		bodyDef.userData.pointer = (uintptr_t)this;
 		bodyDef.bullet = _continuous;
 
 		body = std::unique_ptr<b2Body, BodyDeleter>(world->CreateBody(&bodyDef), {});

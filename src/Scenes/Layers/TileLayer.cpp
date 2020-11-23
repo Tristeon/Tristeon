@@ -322,7 +322,7 @@ namespace Tristeon
 					def.restitution = settings.restitution;
 
 					auto fixture = PhysicsWorld::instance()->_staticBody->CreateFixture(&def);
-					fixture->SetUserData(this);
+					fixture->GetUserData().pointer = (uintptr_t)this;
 					_fixtures[{x, y}] = fixture;
 				}
 				//A collider exists but the tile doesn't want a collider

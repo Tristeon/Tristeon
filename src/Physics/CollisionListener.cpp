@@ -27,8 +27,8 @@ namespace Tristeon
 		const Vector normal = { manifold.normal.x, manifold.normal.y };
 		
 		//Get downcasted types
-		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());
-		auto* b = static_cast<TObject*>(contact->GetFixtureB()->GetUserData());
+		auto* a = static_cast<TObject*>((void*)contact->GetFixtureA()->GetUserData().pointer);
+		auto* b = static_cast<TObject*>((void*)contact->GetFixtureB()->GetUserData().pointer);
 
 		auto* aTileLayer = dynamic_cast<TileLayer*>(a);
 		auto* bTileLayer = dynamic_cast<TileLayer*>(b);
@@ -106,8 +106,8 @@ namespace Tristeon
 		const Vector normal = { manifold.normal.x, manifold.normal.y };
 		
 		//Get downcasted types
-		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());
-		auto* b = static_cast<TObject*>(contact->GetFixtureB()->GetUserData());
+		auto* a = static_cast<TObject*>((void*)contact->GetFixtureA()->GetUserData().pointer);
+		auto* b = static_cast<TObject*>((void*)contact->GetFixtureB()->GetUserData().pointer);
 
 		auto* aTileLayer = dynamic_cast<TileLayer*>(a);
 		auto* bTileLayer = dynamic_cast<TileLayer*>(b);
@@ -181,8 +181,8 @@ namespace Tristeon
 		const Vector normal = { manifold.normal.x, manifold.normal.y };
 		
 		//Get downcasted types
-		auto* a = static_cast<TObject*>(contact->GetFixtureA()->GetUserData());
-		auto* b = static_cast<TObject*>(contact->GetFixtureB()->GetUserData());
+		auto* a = static_cast<TObject*>((void*)contact->GetFixtureA()->GetUserData().pointer);
+		auto* b = static_cast<TObject*>((void*)contact->GetFixtureB()->GetUserData().pointer);
 
 		auto* aCollider = dynamic_cast<Collider*>(a);
 		auto* bCollider = dynamic_cast<Collider*>(b);
