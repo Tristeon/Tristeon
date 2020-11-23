@@ -212,7 +212,7 @@ namespace Tristeon
 
 	void GameWindow::cursorPosCallback(GLFWwindow* window, double x, double y)
 	{
-		Mouse::onMove({ (int)x, (int)y });
+		Mouse::onMove({ (unsigned int)x, (unsigned int)y });
 	}
 }
 #endif
