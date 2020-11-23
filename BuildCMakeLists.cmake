@@ -49,6 +49,11 @@ read_directory(${PROJECT_SOURCE_DIR}/src)
 
 add_definitions(-DTRISTEON_LOGENABLED)
 
+#External library defaults
+set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "")
+set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "")
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
+
 #External libraries
 add_subdirectory(external/box2d)
 add_subdirectory(external/glad)
