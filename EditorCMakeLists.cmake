@@ -49,6 +49,10 @@ read_directory(${PROJECT_SOURCE_DIR}/src)
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 add_definitions(-DTRISTEON_LOGENABLED -DTRISTEON_EDITOR)
 
+#External library defaults
+set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "")
+set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "")
+
 #External libraries
 add_subdirectory(external/box2d)
 add_subdirectory(external/glad)
