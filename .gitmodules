@@ -4,3 +4,6 @@
 [submodule "external/box2d"]
 	path = external/box2d
 	url = https://github.com/erincatto/box2d.git
+[submodule "external/magic_enum"]
+	path = external/magic_enum
+	url = https://github.com/Neargye/magic_enum.git

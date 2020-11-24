@@ -58,12 +58,14 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 add_subdirectory(external/box2d)
 add_subdirectory(external/glad)
 add_subdirectory(external/glfw)
+add_subdirectory(external/magic_enum)
 
 #Libraries
 macro(link_libs targetname)
     target_link_libraries(${targetname} PUBLIC box2d)
     target_link_libraries(${targetname} PUBLIC glad)
     target_link_libraries(${targetname} PUBLIC glfw)
+    target_link_libraries(${targetname} PUBLIC magic_enum)
 	target_link_libraries(${targetname} PUBLIC ${CMAKE_DL_LIBS})
 endmacro()
 
