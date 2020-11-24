@@ -27,16 +27,17 @@ namespace Tristeon
 	public:
 		enum MouseButton
 		{
-			Left = 1,
-			Right = 2,
-			Middle = 3,
-			Back = 4,
+			Unknown,
+			Left,
+			Right,
+			Middle,
+			Back,
 			Extra1 = Back,
-			Forward = 5,
+			Forward,
 			Extra2 = Forward,
-			Task = 6,
-			Extra3 = 7,
-			Extra4 = 8,
+			Task,
+			Extra3 = Task,
+			Extra4,
 			Last = Extra4
 		};
 

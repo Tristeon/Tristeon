@@ -51,13 +51,13 @@ namespace TristeonEditor
 		//Mouse handling
 		while (!mousePressEvents.empty())
 		{
-			Mouse::onPress(static_cast<Mouse::MouseButton>(Math::maskToIndex(mousePressEvents.front().button())));
+			Mouse::onPress(static_cast<Mouse::MouseButton>(mapToTristeonButton(mousePressEvents.front().button())));
 			mousePressEvents.pop();
 		}
 
 		while (!mouseReleaseEvents.empty())
 		{
-			Mouse::onRelease(static_cast<Mouse::MouseButton>(Math::maskToIndex(mouseReleaseEvents.front().button())));
+			Mouse::onRelease(static_cast<Mouse::MouseButton>(mapToTristeonButton(mouseReleaseEvents.front().button())));
 			mouseReleaseEvents.pop();
 		}
 
@@ -183,7 +183,7 @@ namespace TristeonEditor
 		return result;
 	}
 
-	Keyboard::Key EditorWindow::mapToTristeonKey(Qt::Key key)
+	Keyboard::Key EditorWindow::mapToTristeonKey(const Qt::Key& key) const
 	{
 		switch(key)
 		{
@@ -239,7 +239,8 @@ namespace TristeonEditor
 		case Qt::Key::Key_BracketLeft: return Keyboard::LeftBracket;
 		case Qt::Key::Key_Backslash: return Keyboard::Backslash;
 		case Qt::Key::Key_BracketRight: return Keyboard::RightBracket;
-		//case Qt::Key::Key_GraveAccent: return Keyboard::GraveAccent; //TODO: Qt Key Grave binding
+
+		case Qt::Key::Key_QuoteLeft: return Keyboard::GraveAccent;
 
 		case Qt::Key::Key_Escape: return Keyboard::Escape;
 		case Qt::Key::Key_Enter: return Keyboard::Enter;
@@ -291,7 +292,9 @@ namespace TristeonEditor
 		case Qt::Key::Key_F23: return Keyboard::F23;
 		case Qt::Key::Key_F24: return Keyboard::F24;
 		case Qt::Key::Key_F25: return Keyboard::F25;
-
+			
+		case Qt::Key::Key_Return: return Keyboard::Enter;
+			
 		case Qt::Key::Key_Shift: return Keyboard::Shift;
 		case Qt::Key::Key_Control: return Keyboard::Control;
 		case Qt::Key::Key_Alt: return Keyboard::Alt;
@@ -302,6 +305,24 @@ namespace TristeonEditor
 		}
 
 		return Keyboard::Unknown;
+	}
+
+	Tristeon::Mouse::MouseButton EditorWindow::mapToTristeonButton(const Qt::MouseButton& button) const
+	{
+		switch(button)
+		{
+		case Qt::NoButton: return Mouse::Unknown;
+		case Qt::LeftButton: return Mouse::Left;
+		case Qt::RightButton: return Mouse::Right;
+		case Qt::MidButton: return Mouse::Middle;
+		case Qt::BackButton: return Mouse::Back;
+		case Qt::ForwardButton: return Mouse::Forward;
+		case Qt::TaskButton: return Mouse::Task;
+		case Qt::ExtraButton4: return Mouse::Extra4;
+		default: Console::warning("Invalid/non-covered mouse button: " + std::to_string(button));
+		}
+
+		return Mouse::Unknown;
 	}
 
 	void EditorWindow::connectGamepads()

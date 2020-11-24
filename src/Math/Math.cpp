@@ -2,20 +2,6 @@
 
 namespace Tristeon
 {
-	int Math::maskToIndex(uint64_t mask)
-	{
-		const auto MAX_BIT = 40;
-		auto result = MAX_BIT;
-
-		while (mask != 0)
-		{
-			mask >>= 1;
-			result -= 1;
-		}
-
-		return MAX_BIT - result;
-	}
-
 	float Math::toRadians(const float& degrees)
 	{
 		return degrees * TO_RAD;

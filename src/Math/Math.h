@@ -11,13 +11,6 @@ namespace Tristeon
 	{
 	public:
 		/**
-		 * Converts a bitmask to an index
-		 *
-		 * E.g: 16 is the 5th bitmask so the function will return 5.
-		 */
-		static int maskToIndex(uint64_t mask);
-
-		/**
 		 * Converts a value in degrees to a value in radians.
 		 */
 		static float toRadians(const float& degrees);
