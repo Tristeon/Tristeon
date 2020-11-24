@@ -1,5 +1,4 @@
 #include "Mouse.h"
-
 #include <Math/Vector.h>
 
 namespace Tristeon

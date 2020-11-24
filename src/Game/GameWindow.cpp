@@ -194,7 +194,6 @@ namespace Tristeon
 
 	void GameWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		//TODO: Handle Right shift, control, alt and super
 		if (action == GLFW_PRESS)
 			Keyboard::onPress((Keyboard::Key)key);
 		else if (action == GLFW_RELEASE)
@@ -203,11 +202,10 @@ namespace Tristeon
 
 	void GameWindow::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	{
-		//TODO: Mouse button mapping might be incorrect
 		if (action == GLFW_PRESS)
-			Mouse::onPress((Mouse::MouseButton)button);
+			Mouse::onPress((Mouse::MouseButton)(button + 1));
 		else if (action == GLFW_RELEASE)
-			Mouse::onRelease((Mouse::MouseButton)button);
+			Mouse::onRelease((Mouse::MouseButton)(button + 1));
 	}
 
 	void GameWindow::cursorPosCallback(GLFWwindow* window, double x, double y)
