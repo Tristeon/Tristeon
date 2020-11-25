@@ -35,6 +35,8 @@ namespace Tristeon
 		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 		static void cursorPosCallback(GLFWwindow* window, double x, double y);
+		static void joystickCallback(int jid, int event);
+		static void pollJoystick();
 		
 		GLFWwindow* _window = nullptr;
 		unsigned int _width = 0, _height = 0;

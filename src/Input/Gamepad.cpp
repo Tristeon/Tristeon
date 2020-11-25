@@ -1,78 +1,104 @@
 #include "Gamepad.h"
+#include "magic_enum.hpp"
 
 namespace Tristeon
 {
-	bool Gamepad::_buttons[Last];
-	bool Gamepad::_buttonsPressed[Last];
-	bool Gamepad::_buttonsReleased[Last];
+	Gamepad Gamepad::gamepads[15];
 
-	Vector Gamepad::_left{};
-	Vector Gamepad::_right{};
-
-	float Gamepad::_l2 = 0;
-	float Gamepad::_r2 = 0;
-	
-	bool Gamepad::pressed(const GamepadButton& button)
+	bool Gamepad::connected(const unsigned& gamepad)
 	{
-		return _buttonsPressed[button];
+		if (gamepad >= 15)
+			return false;
+		return gamepads[gamepad]._connected;
 	}
 
-	bool Gamepad::held(const GamepadButton& button)
+	String Gamepad::name(const unsigned& gamepad)
 	{
-		return _buttons[button];
+		return gamepads[gamepad]._name;
 	}
 
-	bool Gamepad::released(const GamepadButton& button)
+	bool Gamepad::pressed(const GamepadButton& button, const unsigned& gamepad)
 	{
-		return _buttonsReleased[button];
+		if (gamepad >= 15)
+			return false;
+		return gamepads[gamepad]._buttonsPressed[button];
 	}
 
-	Vector Gamepad::axisLeft()
+	bool Gamepad::held(const GamepadButton& button, const unsigned& gamepad)
 	{
-		return _left;
+		if (gamepad >= 15)
+			return false;
+		return gamepads[gamepad]._buttons[button];
 	}
 
-	Vector Gamepad::axisRight()
+	bool Gamepad::released(const GamepadButton& button, const unsigned& gamepad)
 	{
-		return _right;
+		if (gamepad >= 15)
+			return false;
+		return gamepads[gamepad]._buttonsReleased[button];
 	}
 
-	float Gamepad::axisL2()
+	Vector Gamepad::axisLeft(const unsigned& gamepad)
 	{
-		return _l2;
+		if (gamepad >= 15)
+			return {};
+		return gamepads[gamepad]._left;
 	}
 
-	float Gamepad::axisR2()
+	Vector Gamepad::axisRight(const unsigned& gamepad)
 	{
-		return _r2;
+		if (gamepad >= 15)
+			return {};
+		return gamepads[gamepad]._right;
+	}
+
+	float Gamepad::axisL2(const unsigned& gamepad)
+	{
+		if (gamepad >= 15)
+			return 0;
+		return gamepads[gamepad]._l2;
+	}
+
+	float Gamepad::axisR2(const unsigned& gamepad)
+	{
+		if (gamepad >= 15)
+			return 0;
+		return gamepads[gamepad]._r2;
 	}
 
 	void Gamepad::reset()
 	{
-		std::fill(std::begin(_buttonsPressed), std::end(_buttonsPressed), false);
-		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
+		for (auto& gamepad : gamepads)
+		{
+			std::fill(std::begin(gamepad._buttonsPressed), std::end(gamepad._buttonsPressed), false);
+			std::fill(std::begin(gamepad._buttonsReleased), std::end(gamepad._buttonsReleased), false);
+		}
 	}
 
 	void Gamepad::clearAll()
 	{
-		std::fill(std::begin(_buttonsPressed), std::end(_buttonsPressed), false);
-		std::fill(std::begin(_buttons), std::end(_buttons), false);
-		std::fill(std::begin(_buttonsReleased), std::end(_buttonsReleased), false);
+		for (auto& gamepad : gamepads)
+		{
+			std::fill(std::begin(gamepad._buttonsPressed), std::end(gamepad._buttonsPressed), false);
+			std::fill(std::begin(gamepad._buttons), std::end(gamepad._buttons), false);
+			std::fill(std::begin(gamepad._buttonsReleased), std::end(gamepad._buttonsReleased), false);
+		}
 	}
 
-	void Gamepad::buttonChanged(GamepadButton const& button, bool const& pressed)
+	void Gamepad::buttonChanged(const unsigned int& gamepad, GamepadButton const& button, bool const& pressed)
 	{
 		if (pressed)
 		{
-			_buttons[button] = true;
-			_buttonsPressed[button] = true;
-			_buttonsReleased[button] = false;
+			gamepads[gamepad]._buttons[button] = true;
+			gamepads[gamepad]._buttonsPressed[button] = true;
+			gamepads[gamepad]._buttonsReleased[button] = false;
 		}
 		else
 		{
-			_buttons[button] = false;
-			_buttonsPressed[button] = false;
-			_buttonsReleased[button] = false;
+			gamepads[gamepad]._buttons[button] = false;
+			gamepads[gamepad]._buttonsPressed[button] = false;
+			gamepads[gamepad]._buttonsReleased[button] = false;
 		}
+		Console::write("Gamepad " + std::to_string(gamepad) + " pressed button " + magic_enum::enum_name(button).data() + "? " + (pressed ? "true" : "false"));
 	}
 }

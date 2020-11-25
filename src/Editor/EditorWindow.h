@@ -25,7 +25,7 @@ namespace TristeonEditor
 		void keyPressEvent(QKeyEvent* event) override;
 		void keyReleaseEvent(QKeyEvent* event) override;
 		void closeEvent(QCloseEvent* event) override;
-		void gamepadsChanged();
+		void bindGamepads();
 
 		void _pollEvents() override;
 
@@ -60,9 +60,9 @@ namespace TristeonEditor
 		std::queue<QWheelEvent> mouseWheelEvents;
 
 		QPoint oldMousePos;
-		QGamepad* activeGamepad = nullptr;
-
 		bool closing = false;
+
+		QGamepad gamepads[15];
 		
 		void connectGamepads();
 	};

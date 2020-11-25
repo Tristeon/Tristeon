@@ -1,12 +1,11 @@
 #ifndef TRISTEON_EDITOR
-#include <exception>
-
 #include "glad/glad.h"
 #include "GameWindow.h"
 
 #include "Project.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
+#include "Input/Gamepad.h"
 #include "Rendering/Renderer.h"
 #include "Scenes/Scene.h"
 #include "Scenes/SceneManager.h"
@@ -72,6 +71,9 @@ namespace Tristeon
 	void GameWindow::_pollEvents()
 	{
 		glfwPollEvents();
+
+		if (glfwGetWindowAttrib(_window, GLFW_FOCUSED))
+			pollJoystick();
 	}
 
 	void GameWindow::_draw()
@@ -180,6 +182,18 @@ namespace Tristeon
 		glfwSetKeyCallback(_window, keyCallback);
 		glfwSetMouseButtonCallback(_window, mouseButtonCallback);
 		glfwSetCursorPosCallback(_window, cursorPosCallback);
+		glfwSetJoystickCallback(joystickCallback);
+
+		for (int jid = 0; jid < Gamepad::maximumGamepads; jid++)
+		{
+			Gamepad::gamepads[jid]._connected = glfwJoystickPresent(jid);
+
+			if (Gamepad::gamepads[jid]._connected)
+			{
+				Gamepad::gamepads[jid]._name = glfwGetJoystickName(jid);
+				Console::write("Gamepad detected: " + Gamepad::name(jid));
+			}
+		}
 	}
 
 	void GameWindow::errorCallback(int error, const char* description)
@@ -211,6 +225,45 @@ namespace Tristeon
 	void GameWindow::cursorPosCallback(GLFWwindow* window, double x, double y)
 	{
 		Mouse::onMove({ (unsigned int)x, (unsigned int)y });
+	}
+
+	void GameWindow::joystickCallback(int jid, int event)
+	{
+		if (event == GLFW_DISCONNECTED)
+		{
+			Gamepad::gamepads[jid]._connected = false;
+			Console::write("Gamepad disconnected: " + Gamepad::name(jid));
+		}
+		else if (event == GLFW_CONNECTED)
+		{
+			Gamepad::gamepads[jid]._connected = true;
+			Gamepad::gamepads[jid]._name = glfwGetJoystickName(jid);
+			Console::write("Gamepad connected: " + Gamepad::name(jid));
+		}
+	}
+
+	void GameWindow::pollJoystick()
+	{
+		for (auto jid = 0; jid < (int)Gamepad::maximumGamepads; jid++)
+		{
+			if (!Gamepad::gamepads[jid]._connected)
+				continue;
+
+			GLFWgamepadstate state;
+			if (glfwGetGamepadState(jid, &state))
+			{
+				for (unsigned int i = 0; i < Gamepad::Last + 1; i++)
+				{
+					if (state.buttons[i] != Gamepad::gamepads[jid]._buttons[i])
+						Gamepad::buttonChanged(jid, (Gamepad::GamepadButton)i, state.buttons[i]);
+				}
+				
+				Gamepad::gamepads[jid]._left = Vector(state.axes[0], state.axes[1]);
+				Gamepad::gamepads[jid]._right = Vector(state.axes[2], state.axes[3]);
+				Gamepad::gamepads[jid]._l2 = state.axes[4];
+				Gamepad::gamepads[jid]._r2 = state.axes[5];
+			}
+		}
 	}
 }
 #endif
