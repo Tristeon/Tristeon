@@ -77,12 +77,20 @@ namespace Tristeon
 
 	void Gamepad::clearAll()
 	{
-		for (auto& gamepad : gamepads)
-		{
-			std::fill(std::begin(gamepad._buttonsPressed), std::end(gamepad._buttonsPressed), false);
-			std::fill(std::begin(gamepad._buttons), std::end(gamepad._buttons), false);
-			std::fill(std::begin(gamepad._buttonsReleased), std::end(gamepad._buttonsReleased), false);
-		}
+		for (auto i = 0; i < maximumGamepads; i++)
+			clearGamepad(i);
+	}
+
+	void Gamepad::clearGamepad(const unsigned& gamepad)
+	{
+		std::fill(std::begin(gamepads[gamepad]._buttonsPressed), std::end(gamepads[gamepad]._buttonsPressed), false);
+		std::fill(std::begin(gamepads[gamepad]._buttons), std::end(gamepads[gamepad]._buttons), false);
+		std::fill(std::begin(gamepads[gamepad]._buttonsReleased), std::end(gamepads[gamepad]._buttonsReleased), false);
+
+		gamepads[gamepad]._l2 = {};
+		gamepads[gamepad]._r2 = {};
+		gamepads[gamepad]._left = {};
+		gamepads[gamepad]._right = {};
 	}
 
 	void Gamepad::buttonChanged(const unsigned int& gamepad, GamepadButton const& button, bool const& pressed)
@@ -99,6 +107,5 @@ namespace Tristeon
 			gamepads[gamepad]._buttonsPressed[button] = false;
 			gamepads[gamepad]._buttonsReleased[button] = false;
 		}
-		Console::write("Gamepad " + std::to_string(gamepad) + " pressed button " + magic_enum::enum_name(button).data() + "? " + (pressed ? "true" : "false"));
 	}
 }

@@ -336,6 +336,8 @@ namespace TristeonEditor
 				Gamepad::gamepads[deviceID]._connected = true;
 				Gamepad::gamepads[deviceID]._name = QGamepadManager::instance()->gamepadName(deviceID).toStdString();
 				Console::write("Gamepad connected: " + Gamepad::name(deviceID));
+
+				Gamepad::clearGamepad(deviceID);
 			}
 		});
 
@@ -345,6 +347,8 @@ namespace TristeonEditor
 			{
 				Gamepad::gamepads[deviceID]._connected = false;
 				Console::write("Gamepad disconnected: " + Gamepad::name(deviceID));
+
+				Gamepad::clearGamepad(deviceID);
 			}
 		});
 

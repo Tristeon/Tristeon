@@ -132,6 +132,11 @@ namespace Tristeon
 		 * Clears every stat, used on things like window focus.
 		 */
 		static void clearAll();
+
+		/**
+		 * Clears every stat of one specific gamepad.
+		 */
+		static void clearGamepad(const unsigned int& gamepad);
 		
 		/**
 		 * Input update sent by the window interface.

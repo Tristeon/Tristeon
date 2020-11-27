@@ -232,12 +232,14 @@ namespace Tristeon
 		if (event == GLFW_DISCONNECTED)
 		{
 			Gamepad::gamepads[jid]._connected = false;
+			Gamepad::clearGamepad(jid);
 			Console::write("Gamepad disconnected: " + Gamepad::name(jid));
 		}
 		else if (event == GLFW_CONNECTED)
 		{
 			Gamepad::gamepads[jid]._connected = true;
 			Gamepad::gamepads[jid]._name = glfwGetJoystickName(jid);
+			Gamepad::clearGamepad(jid);
 			Console::write("Gamepad connected: " + Gamepad::name(jid));
 		}
 	}
