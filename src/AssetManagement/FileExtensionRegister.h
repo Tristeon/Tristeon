@@ -8,11 +8,12 @@ namespace Tristeon
 	class FileExtensionRegister : Register<MetaFile>
 	{
 	public:
-		FileExtensionRegister(String fileExtension)
+		template<typename ...Extensions>
+		FileExtensionRegister(Extensions... fileExtensions)
 		{
-			getMap()->emplace(fileExtension,&CreateInstance<T,MetaFile>);
+			getMap()->emplace(fileExtensions..., &CreateInstance<T, MetaFile>);
 		}
 	};
 
-#define FILE_EXTENSION_TYPE(type,extension) static const FileExtensionRegister<type> extensionRegister_##type(extension)
+#define FILE_EXTENSION_TYPE(type, ...) static const FileExtensionRegister<type> extensionRegister_##type(__VA_ARGS__)
 }
