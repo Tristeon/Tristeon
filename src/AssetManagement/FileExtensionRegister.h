@@ -11,7 +11,20 @@ namespace Tristeon
 		template<typename ...Extensions>
 		FileExtensionRegister(Extensions... fileExtensions)
 		{
-			getMap()->emplace(fileExtensions..., &CreateInstance<T, MetaFile>);
+			registerExtension(fileExtensions...);
+		}
+
+		template<typename Extension>
+		void registerExtension(Extension extension)
+		{
+			getMap()->emplace(extension, &CreateInstance<T, MetaFile>);
+		}
+		
+		template<typename Ext, typename ...Args>
+		void registerExtension(Ext first, Args... remainder)
+		{
+			registerExtension(first);
+			registerExtension(remainder...);
 		}
 	};
 
