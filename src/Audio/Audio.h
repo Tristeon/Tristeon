@@ -11,6 +11,7 @@ namespace Tristeon
 	 */
 	class Audio final : private Singleton<Audio>
 	{
+		friend Singleton<Audio>;
 		friend class Engine;
 	public:
 		Audio();
