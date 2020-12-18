@@ -37,6 +37,9 @@
                             "jumpVelocity": 1500.0,
                             "runSpeed": 100.0,
                             "typeID": "Tristeon::TestBehaviour"
+                        },
+                        {
+                            "typeID": "Tristeon::AudioListener"
                         }
                     ],
                     "colour": {
@@ -99,7 +102,14 @@
                     "width": 635
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "typeID": "Tristeon::AudioSource",
+                            "looping": true,
+                            "playOnStart": true,
+                            "clipPath": "scotland.wav"
+                        }
+                    ],
                     "clipPath": "CharacterWalk.clip",
                     "colour": {
                         "a": 1.0,

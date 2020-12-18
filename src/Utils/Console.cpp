@@ -13,11 +13,30 @@ namespace Tristeon
 #endif
 	}
 
-	void Console::t_assert(const bool& condition, const String& errorMessage)
+	void Console::assertLog(const bool& condition, const String& message, const AssertSeverity& severity)
 	{
 #ifdef TRISTEON_LOGENABLED
 		if (!condition)
-			error(errorMessage);
+		{
+			switch(severity)
+			{
+				case AssertSeverity::Log: 
+				{
+					write(message);
+					break;
+				}
+				case AssertSeverity::Warning:
+				{
+					warning(message);
+					break;
+				}
+				case AssertSeverity::Fatal:
+				{
+					error(message);
+				}
+				break;
+			}
+		}
 #endif
 	}
 

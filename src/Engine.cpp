@@ -33,6 +33,7 @@ namespace Tristeon
 
 		_renderer = std::make_unique<Renderer>();
 		_physics = std::make_unique<PhysicsWorld>();
+		_audio = std::make_unique<Audio>();
 		
 		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
 		SceneManager::sceneLoaded += [=](Scene* scene)

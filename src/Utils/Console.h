@@ -3,6 +3,22 @@
 
 namespace Tristeon
 {
+	enum class AssertSeverity
+	{
+		/**
+		 * Print a log message
+		 */
+		Log,
+		/**
+		 * Display a distinguished yellow log message
+		 */
+		Warning,
+		/**
+		 * Throw a std::runtime_error
+		 */
+		Fatal
+	};
+
 	/**
 	 * Console defines basic printing/asserting behavior that will be logged to the editor or to a console.
 	 */
@@ -13,15 +29,13 @@ namespace Tristeon
 		 * Sets the standard console color.
 		 */
 		static void init();
-
+		
 		/**
-		 * Throws an error if the given condition is not true
-		 * \param condition The condition you expect to be true
-		 * \param errorMessage The error message to be shown in the error pop-up
-		 *
-		 * \exception runtime_error If condition is false
+		 * Performs an action if the given condition is not true, the action depends on the assert severity (default: Fatal).
+		 * \exception runtime_error If condition is false and the severity is Fatal
 		 */
-		static void t_assert(const bool& condition, const String& errorMessage);
+		static void assertLog(const bool& condition, const String& message, const AssertSeverity& severity = AssertSeverity::Fatal);
+		
 		/**
 		 * Clears the console.
 		 */
@@ -36,6 +50,7 @@ namespace Tristeon
 		 * Writes a warning with the given data to the editor/console
 		 */
 		static void warning(const String& data);
+
 		/**
 		 * Opens an error pop-up window and stops the program.
 		 *

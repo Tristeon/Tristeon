@@ -49,16 +49,27 @@ read_directory(${PROJECT_SOURCE_DIR}/src)
 
 add_definitions(-DTRISTEON_LOGENABLED)
 
-#External library defaults
+#External libraries
 set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "")
 set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "")
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
-
-#External libraries
 add_subdirectory(external/box2d)
+
 add_subdirectory(external/glad)
+
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 add_subdirectory(external/glfw)
+
 add_subdirectory(external/magic_enum)
+
+set(ALSOFT_EXAMPLES OFF CACHE BOOL "")
+add_subdirectory(external/openal-soft)
+include_directories(external/openal-soft/include)
+
+set(BUILD_STATIC ON CACHE BOOL "")
+set(BUILD_EXAMPLES OFF CACHE BOOL "")
+set(BUILD_TESTS OFF CACHE BOOL "")
+set(OPENAL_INCLUDE_DIR "external/openal-soft/include/al/" CACHE STRING "")
+set(OPENAL_LIBRARY "OpenAL" CACHE STRING "")
 
 #Libraries
 macro(link_libs targetname)
@@ -66,6 +77,7 @@ macro(link_libs targetname)
     target_link_libraries(${targetname} PUBLIC glad)
     target_link_libraries(${targetname} PUBLIC glfw)
     target_link_libraries(${targetname} PUBLIC magic_enum)
+    target_link_libraries(${targetname} PUBLIC OpenAL)
 	target_link_libraries(${targetname} PUBLIC ${CMAKE_DL_LIBS})
 endmacro()
 

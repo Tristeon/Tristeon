@@ -1,5 +1,7 @@
 #pragma once
 #include <Utils/Singleton.h>
+
+#include "Audio/Audio.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Renderer.h"
 
@@ -38,5 +40,6 @@ namespace Tristeon
 		bool _playModeDirty = false;
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;
+		Unique<Audio> _audio = nullptr;
 	};
 }

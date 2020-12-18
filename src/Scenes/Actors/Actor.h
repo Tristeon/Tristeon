@@ -34,7 +34,7 @@ namespace Tristeon
 		DELETE_COPY(Actor);
 		DEFAULT_MOVE(Actor);
 
-		json serialize() override;
+		[[nodiscard]] json serialize() override;
 		void deserialize(json j) override;
 		
 		/**
