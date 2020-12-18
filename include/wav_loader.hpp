@@ -11,6 +11,9 @@
 #include <cassert>
 #include <cmath>
 
+#include <cstring>
+#include <memory>
+
 typedef int32_t int32;
 typedef int16_t int16;
 typedef int8_t int8;
