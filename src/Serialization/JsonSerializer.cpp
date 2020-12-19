@@ -3,7 +3,8 @@
 
 //Attempt to get file read errors
 #ifdef _WIN32
-#include <windows.h>
+#undef WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #define SYSERROR()  GetLastError()
 #else
 #include <errno.h>
