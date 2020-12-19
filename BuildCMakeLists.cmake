@@ -62,6 +62,8 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/magic_enum)
 
 set(ALSOFT_EXAMPLES OFF CACHE BOOL "")
+set(ALSOFT_INSTALL_EXAMPLES OFF CACHE BOOL "")
+set(ALSOFT_UTILS OFF CACHE BOOL "")
 add_subdirectory(external/openal-soft)
 include_directories(external/openal-soft/include)
 
