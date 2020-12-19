@@ -38,5 +38,7 @@ namespace Tristeon
 		alBufferData(_buffer, AL_FORMAT_MONO8, data, size, freq);
 		const auto error = alGetError();
 		Console::assertLog(error == AL_NO_ERROR, "Failed to send audio data to OpenAL buffer. Error: " + std::to_string(error), AssertSeverity::Warning);
+
+		delete[] data;
 	}
 }
