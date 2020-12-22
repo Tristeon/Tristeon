@@ -5,6 +5,7 @@
 #include "AL/alc.h"
 #include "AssetManagement/Resources.h"
 #include "Utils/Console.h"
+#include <cfloat>
 
 namespace Tristeon
 {
@@ -29,7 +30,7 @@ namespace Tristeon
 			Console::error("Failed to make ALC context current: " + std::to_string(alcGetError(_device)));
 
 		//Set the distance model to linear distance because after testing it seems to be the most reliable solution for 2D audio
-		AUDIO_ASSERT(alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED), "Failed to set OpenAL distance model");
+		AUDIO_ASSERT(alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED));
 	}
 
 	Audio::~Audio()
