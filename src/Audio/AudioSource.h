@@ -1,6 +1,7 @@
 #pragma once
 #include "Scenes/Actors/Behaviour.h"
 #include <Serialization/TypeRegister.h>
+#include <Audio/Audio.h>
 #include <Audio/AudioClip.h>
 #include <Callbacks/ILateUpdate.h>
 #include <Math/Math.h>
@@ -26,6 +27,13 @@ namespace Tristeon
 		 * If no clip is attached, nothing happens.
 		 */
 		void play();
+
+		/**
+		 * Stops playing the attached clip but maintains the current audio time.
+		 * When play is called again, the clip will resume where it left off.
+		 */
+		void pause();
+
 		/**
 		 * Stop playing the attached clip.
 		 * If no clip is attached, or the source isn't playing, nothing happens.
@@ -45,9 +53,7 @@ namespace Tristeon
 		void setPitch(const float& p)
 		{
 			_pitch = Math::clamp(p, 0.5f, 2.0f);
-			alGetError();
-			alSourcef(_handle, AL_PITCH, _pitch);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source pitch. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcef(_handle, AL_PITCH, _pitch));
 		}
 
 		/**
@@ -66,9 +72,7 @@ namespace Tristeon
 		void setVolume(const float& v)
 		{
 			_volume = v;
-			alGetError();
-			alSourcef(_handle, AL_GAIN, _volume);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source volume. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcef(_handle, AL_GAIN, _volume));
 		}
 
 		/**
@@ -82,9 +86,7 @@ namespace Tristeon
 		void setMinimumRange(const float& r)
 		{
 			_minimumRange = r;
-			alGetError();
-			alSourcef(_handle, AL_REFERENCE_DISTANCE, _minimumRange);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source minimum range. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcef(_handle, AL_REFERENCE_DISTANCE, _minimumRange));
 		}
 
 		/**
@@ -98,9 +100,7 @@ namespace Tristeon
 		void setMaximumRange(const float& r)
 		{
 			_maximumRange = r;
-			alGetError();
-			alSourcef(_handle, AL_MAX_DISTANCE, _maximumRange);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source maximum range. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcef(_handle, AL_MAX_DISTANCE, _maximumRange));
 		}
 
 		/**
@@ -114,9 +114,7 @@ namespace Tristeon
 		void setMinimumVolume(const float& mv)
 		{
 			_minimumVolume = mv;
-			alGetError();
-			alSourcef(_handle, AL_MIN_GAIN, _minimumVolume);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source minimum volume. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcef(_handle, AL_MIN_GAIN, _minimumVolume));
 		}
 
 		/**
@@ -130,9 +128,7 @@ namespace Tristeon
 		void setLooping(const bool& l)
 		{
 			_looping = l;
-			alGetError();
-			alSourcei(_handle, AL_LOOPING, _looping);
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source looping. The change is likely not applied", AssertSeverity::Warning);
+			AUDIO_ASSERT(alSourcei(_handle, AL_LOOPING, _looping));
 		}
 
 		/**
@@ -145,16 +141,16 @@ namespace Tristeon
 		 */
 		void setClip(AudioClip* clip)
 		{
-			alGetError();
 			_clip = clip;
 			if (clip != nullptr)
-				alSourcei(_handle, AL_BUFFER, clip->_buffer);
+			{
+				AUDIO_ASSERT(alSourcei(_handle, AL_BUFFER, clip->_buffer));
+			}
 			else
 			{
-				alSourcei(_handle, AL_BUFFER, AL_NONE);
-				alSourceStop(_handle);
+				AUDIO_ASSERT(alSourcei(_handle, AL_BUFFER, AL_NONE));
+				AUDIO_ASSERT(alSourceStop(_handle));
 			}
-			Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source's clip. The change is likely not applied", AssertSeverity::Warning);
 		}
 
 		/**

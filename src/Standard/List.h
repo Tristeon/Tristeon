@@ -112,8 +112,6 @@ namespace Tristeon
 		 * The default List constructor preemptively creates an empty array of capacity 100. This is similar to calling reserve(100);
 		 * This number may be modified by changing the capacity parameter, in which case the array will be of said capacity.
 		 * The capacity parameter has to be more than 0, not following this in debug mode will cause a crash but the behaviour is undefined in release mode.
-		 *
-		 * //TODO: Investigate the possibility of supporting 0 capacity Vectors
 		 */
 		explicit List(const ull& capacity = 100);
 		/**

@@ -5,6 +5,8 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
+
+#include "Audio/Audio.h"
 #include "Rendering/Camera.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
@@ -25,7 +27,10 @@ namespace Tristeon
 	{
 		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
+		{
 			body->setVelocity({ body->velocity().x, jumpVelocity });
+			Audio::play("jump.wav", false, 0.1f);
+		}
 
 		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
 		body->applyForce(Vector(horizontal, 0) * Time::deltaTime() * runSpeed);

@@ -7,33 +7,21 @@ namespace Tristeon
 	AudioSource::AudioSource()
 	{
 		//Create OpenAL audio source
-		alGetError();
-		alGenSources(1, &_handle);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to create audio source");
+		AUDIO_ASSERT(alGenSources(1, &_handle));
 
 		//Set defaults
-		alSource3f(_handle, AL_POSITION, 0, 0, 0);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source position to a default value", AssertSeverity::Warning);
-		alSource3f(_handle, AL_VELOCITY, 0, 0, 0);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source velocity to a default value", AssertSeverity::Warning);
-		alSourcef(_handle, AL_MIN_GAIN, 0);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source minimum volume to a default value", AssertSeverity::Warning);
-		alSourcef(_handle, AL_MAX_GAIN, 1);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source maximum volume to a default value", AssertSeverity::Warning);
-		alSourcef(_handle, AL_REFERENCE_DISTANCE, 0);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source minimum range to a default value", AssertSeverity::Warning);
-		alSourcef(_handle, AL_MAX_DISTANCE, 256);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source maximum range to a default value", AssertSeverity::Warning);
+		AUDIO_ASSERT(alSource3f(_handle, AL_POSITION, 0, 0, 0));
+		AUDIO_ASSERT(alSource3f(_handle, AL_VELOCITY, 0, 0, 0));
+		AUDIO_ASSERT(alSourcef(_handle, AL_MIN_GAIN, 0));
+		AUDIO_ASSERT(alSourcef(_handle, AL_MAX_GAIN, 1));
+		AUDIO_ASSERT(alSourcef(_handle, AL_REFERENCE_DISTANCE, 0));
+		AUDIO_ASSERT(alSourcef(_handle, AL_MAX_DISTANCE, 256));
 	}
 
 	AudioSource::~AudioSource()
 	{
-		alGetError();
-		alSourceStop(_handle);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to stop OpenAL source from playing prior to destruction", AssertSeverity::Warning);
-
-		alDeleteSources(1, &_handle);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to delete OpenAL audio source", AssertSeverity::Warning);
+		AUDIO_ASSERT(alSourceStop(_handle));
+		AUDIO_ASSERT(alDeleteSources(1, &_handle));
 	}
 
 	json AudioSource::serialize()
@@ -76,16 +64,17 @@ namespace Tristeon
 
 	void AudioSource::play()
 	{
-		alGetError();
-		alSourcePlay(_handle);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to play audio source", AssertSeverity::Warning);
+		AUDIO_ASSERT(alSourcePlay(_handle));
 	}
 
+	void AudioSource::pause()
+	{
+		AUDIO_ASSERT(alSourcePause(_handle));
+	}
+		
 	void AudioSource::stop()
 	{
-		alGetError();
-		alSourceStop(_handle);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to stop audio source", AssertSeverity::Warning);
+		AUDIO_ASSERT(alSourceStop(_handle));
 	}
 
 	void AudioSource::start()
@@ -97,8 +86,6 @@ namespace Tristeon
 	void AudioSource::lateUpdate()
 	{
 		//Update position
-		alGetError();
-		alSource3f(_handle, AL_POSITION, actor()->position.x, actor()->position.y, -(int)Project::Graphics::tileWidth()); //The z distance helps create smoother interactions since OpenAL isn't normally built for 2D audio
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to set audio source position, audio distance function may behave incorrectly", AssertSeverity::Warning);
+		AUDIO_ASSERT(alSource3f(_handle, AL_POSITION, actor()->position.x, actor()->position.y, -(int)Project::Graphics::tileWidth())); //The z distance helps create smoother interactions since OpenAL isn't normally built for 2D audio
 	}
 }

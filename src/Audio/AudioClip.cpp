@@ -1,44 +1,50 @@
 #include "AudioClip.h"
 #include "Utils/Console.h"
-#include <wav_loader.hpp>
-#include <magic_enum.hpp>
+
+#include "Audio.h"
+#define DR_WAV_IMPLEMENTATION
+#include "dr_wav.h"
 
 namespace Tristeon
 {
 	AudioClip::AudioClip()
 	{
-		alGenBuffers(1, &_buffer);
+		AUDIO_ASSERT(alGenBuffers(1, &_buffer));
 	}
 
 	AudioClip::~AudioClip()
 	{
-		alDeleteBuffers(1, &_buffer);
+		AUDIO_ASSERT(alDeleteBuffers(1, &_buffer));
 	}
 
 	AudioClip::AudioClip(const String& path)
 	{
 		//Create an OpenAL buffer to store our data
-		alGenBuffers(1, &_buffer);
-		Console::assertLog(alGetError() == AL_NO_ERROR, "Failed to generate OpenAL buffer", AssertSeverity::Warning);
-
-		//Load wav file (no other file types supported for now)
-		unsigned char* data = nullptr;
-		ALsizei size;
-		ALsizei freq;
-		WAVE_Format format{};
-
-		const auto err = load_wav(path.c_str(), &data, format, &size, &freq);
-		if (err != WAVE_Error::NO_ERROR)
+		AUDIO_ASSERT(alGenBuffers(1, &_buffer));
+		
+		//Load wav file
+		drwav wav;
+		if (!drwav_init_file(&wav, path.c_str(), NULL)) 
 		{
-			Console::warning("Failed to load: WAV File " + path + ". Error code: " + magic_enum::enum_name(err).data());
+			Console::warning("Failed to load wav file: " + path);
 			return;
 		}
 
-		//Upload data to the OpenAL buffer
-		alBufferData(_buffer, AL_FORMAT_MONO8, data, size, freq);
-		const auto error = alGetError();
-		Console::assertLog(error == AL_NO_ERROR, "Failed to send audio data to OpenAL buffer. Error: " + std::to_string(error), AssertSeverity::Warning);
+		int16_t* pSampleData = (int16_t*)malloc((size_t)wav.totalPCMFrameCount * wav.channels * sizeof(int16_t));
+		drwav_read_pcm_frames_s16(&wav, wav.totalPCMFrameCount, pSampleData);
 
-		delete[] data;
+		AUDIO_ASSERT(alBufferData(_buffer, AL_FORMAT_MONO16, pSampleData, (size_t)wav.totalPCMFrameCount * wav.channels * sizeof(int16_t), wav.sampleRate))
+
+		drwav_uninit(&wav);
+		delete[] pSampleData;
+	}
+
+	AudioClip::AudioClip(void* data, const unsigned& size, const unsigned& frequency)
+	{
+		//Create an OpenAL buffer to store our data
+		AUDIO_ASSERT(alGetError());
+		AUDIO_ASSERT(alGenBuffers(1, &_buffer));
+
+		AUDIO_ASSERT(alBufferData(_buffer, AL_FORMAT_MONO8, data, size, frequency));
 	}
 }
