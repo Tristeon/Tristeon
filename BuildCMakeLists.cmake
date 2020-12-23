@@ -47,7 +47,28 @@ macro(read_directory curdir)
 endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
+set(CMAKE_CONFIGURATION_TYPES Debug Release)
 add_definitions(-DTRISTEON_LOGENABLED)
+
+#Check if submodules are downloaded
+if(	NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glfw/CMakeLists.txt" OR
+NOT EXISTS "${PROJECT_SOURCE_DIR}/external/box2d/CMakeLists.txt" OR
+NOT EXISTS "${PROJECT_SOURCE_DIR}/external/magic_enum/CMakeLists.txt" OR
+NOT EXISTS "${PROJECT_SOURCE_DIR}/external/openal-soft/CMakeLists.txt")
+	message(STATUS "The git submodules were not updated, attempting to do so now")
+	find_package(Git)
+	if (NOT GIT_FOUND)
+		message(FATAL_ERROR "Couldn't find Git executable thus the git submodules weren't downloaded. To build Tristeon, you'll need to download git and try again, or run git submodule update --init --recursive yourself.")
+	else()
+		message(STATUS "Git found, updating submodules")
+		execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+						WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+						RESULT_VARIABLE GIT_SUBMOD_RESULT)
+		if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+			message(FATAL_ERROR "git submodule update failed with ${GIT_SUBMOD_RESULT}")
+		endif()
+	endif()
+endif()
 
 #External libraries
 set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "")
