@@ -71,6 +71,16 @@ namespace Tristeon
 		 */
 		static void setPosition(const Handle& handle, const Vector& position);
 	private:
+		/**
+		 * Adds the source and sets a timer for when the source ought to be removed.
+		 */
+		static void addSource(const Handle& handle, const bool& looping);
+		/**
+		 * Removes the handle after n milliseconds.
+		 */
+		static void removeAfter(Handle handle);
+
+		
 		ALCdevice* _device = nullptr;
 		ALCcontext* _context = nullptr;
 

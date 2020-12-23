@@ -30,12 +30,12 @@ namespace Tristeon
 		explicit AudioClip(const String& path);
 
 		/**
-		 * Create an audio clip using a given buffer, size and frequency.
+		 * Create an audio clip using a given buffer, size and sample rate.
 		 * You may use this constructor if you wish to load or generate audio data manually.
 		 *
 		 * The constructor doesn't take ownership of the supplied data and destruction still has to be done manually.
 		 */
-		explicit AudioClip(void* data, const unsigned int& size, const unsigned int& frequency);
+		explicit AudioClip(void* data, const unsigned int& size, const unsigned int& sampleRate);
 
 	private:
 		ALuint _buffer = 0;

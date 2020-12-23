@@ -5,7 +5,12 @@
 #include "AL/alc.h"
 #include "AssetManagement/Resources.h"
 #include "Utils/Console.h"
+
+// ReSharper disable once CppUnusedIncludeDirective (Required on GNU GCC)
 #include <cfloat>
+
+#include <thread>
+#include <chrono>
 
 namespace Tristeon
 {
@@ -71,7 +76,7 @@ namespace Tristeon
 
 		//Play, add and return
 		AUDIO_ASSERT(alSourcePlay(source));
-		instance()->_sources.add(Handle{ source });
+		addSource(Handle{ source }, looping);
 		return Handle{ source };
 	}
 
@@ -98,7 +103,7 @@ namespace Tristeon
 
 		//Play, add and return
 		AUDIO_ASSERT(alSourcePlay(source));
-		instance()->_sources.add(Handle{ source });
+		addSource(Handle{ source }, looping);
 		return Handle{ source };
 	}
 
@@ -120,5 +125,39 @@ namespace Tristeon
 	void Audio::setPosition(const Handle& handle, const Vector& position)
 	{
 		AUDIO_ASSERT(alSource3f(handle.idx, AL_POSITION, position.x, position.y, -Project::Graphics::tileWidth()));
+	}
+
+	void Audio::addSource(const Handle& handle, const bool& looping)
+	{
+		instance()->_sources.add(handle);
+		if (!looping)
+		{
+			std::thread(removeAfter, handle).detach();
+		}
+	}
+
+	void Audio::removeAfter(Handle handle)
+	{
+		//Get playtime in ms
+		ALint bufferID, bufferSize, frequency, bitsPerSample, channels;
+		AUDIO_ASSERT(alGetSourcei(handle.idx, AL_BUFFER, &bufferID));
+		AUDIO_ASSERT(alGetBufferi(bufferID, AL_SIZE, &bufferSize));
+		AUDIO_ASSERT(alGetBufferi(bufferID, AL_FREQUENCY, &frequency));
+		AUDIO_ASSERT(alGetBufferi(bufferID, AL_CHANNELS, &channels));
+		AUDIO_ASSERT(alGetBufferi(bufferID, AL_BITS, &bitsPerSample));
+
+		const auto seconds = static_cast<double>(bufferSize) / (frequency * channels * (bitsPerSample / 8)); //in seconds
+		
+		//Sleep thread until playtime is over
+		std::this_thread::sleep_for(std::chrono::seconds(static_cast<int>(seconds + 1)));
+
+		//Got removed before we got the chance
+		if (!alIsSource(handle.idx))
+			return;
+		
+		//Delete and cleanup
+		AUDIO_ASSERT(alSourceStop(handle.idx));
+		AUDIO_ASSERT(alDeleteSources(1, &handle.idx));
+		instance()->_sources.remove(handle);
 	}
 }

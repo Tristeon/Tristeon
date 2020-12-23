@@ -83,11 +83,11 @@ set(QT_USE_QTOPENGL TRUE)
 
 #Libraries
 macro(link_libs targetname)
-	target_link_libraries(${targetname} PUBLIC glad)
-	target_link_libraries(${targetname} PUBLIC magic_enum)
-	target_link_libraries(${targetname} PUBLIC OpenAL)
-	target_link_libraries(${targetname} PUBLIC ${CMAKE_DL_LIBS})
-	target_link_libraries(${targetname} PUBLIC box2d)
+	target_link_libraries(${targetname} PRIVATE glad)
+	target_link_libraries(${targetname} PRIVATE magic_enum)
+	target_link_libraries(${targetname} PRIVATE OpenAL)
+	target_link_libraries(${targetname} PRIVATE ${CMAKE_DL_LIBS})
+	target_link_libraries(${targetname} PRIVATE box2d)
 
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)

@@ -37,6 +37,9 @@ namespace Tristeon
 
 		if (!Camera::cameras().empty())
 			Camera::cameras()[0]->position = actor()->position;
+
+		if (Keyboard::pressed(Keyboard::J))
+			Audio::play("scotland.wav");
 	}
 	
 	json TestBehaviour::serialize()
