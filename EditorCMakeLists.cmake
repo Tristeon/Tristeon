@@ -81,13 +81,18 @@ endif()
 find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml Gamepad REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
+#Include threading
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 #Libraries
 macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE glad)
 	target_link_libraries(${targetname} PRIVATE magic_enum)
 	target_link_libraries(${targetname} PRIVATE OpenAL)
-	target_link_libraries(${targetname} PRIVATE ${CMAKE_DL_LIBS})
 	target_link_libraries(${targetname} PRIVATE box2d)
+	target_link_libraries(${targetname} PRIVATE Threads::Threads)
+	target_link_libraries(${targetname} PRIVATE ${CMAKE_DL_LIBS})
 
 	target_link_libraries(${targetname} PRIVATE Qt5::Widgets)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)

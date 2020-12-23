@@ -73,6 +73,10 @@ set(BUILD_TESTS OFF CACHE BOOL "")
 set(OPENAL_INCLUDE_DIR "external/openal-soft/include/al/" CACHE STRING "")
 set(OPENAL_LIBRARY "OpenAL" CACHE STRING "")
 
+#Include threading
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 #Libraries
 macro(link_libs targetname)
     target_link_libraries(${targetname} PRIVATE box2d)
@@ -80,6 +84,7 @@ macro(link_libs targetname)
     target_link_libraries(${targetname} PRIVATE glfw)
     target_link_libraries(${targetname} PRIVATE magic_enum)
     target_link_libraries(${targetname} PRIVATE OpenAL)
+	target_link_libraries(${targetname} PRIVATE Threads::Threads)
 	target_link_libraries(${targetname} PRIVATE ${CMAKE_DL_LIBS})
 endmacro()
 
