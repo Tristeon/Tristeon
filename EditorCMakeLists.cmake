@@ -98,6 +98,8 @@ macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE Qt5::UiTools)
 	target_link_libraries(${targetname} PRIVATE Qt5::Qml)
 	target_link_libraries(${targetname} PRIVATE Qt5::Gamepad)
+
+	target_link_libraries(${targetname} PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
 endmacro()
 
 if (MSVC)

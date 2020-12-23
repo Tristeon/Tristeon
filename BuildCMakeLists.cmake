@@ -86,6 +86,8 @@ macro(link_libs targetname)
     target_link_libraries(${targetname} PRIVATE OpenAL)
 	target_link_libraries(${targetname} PRIVATE Threads::Threads)
 	target_link_libraries(${targetname} PRIVATE ${CMAKE_DL_LIBS})
+
+	target_link_libraries(${targetname} PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
 endmacro()
 
 if (MSVC)
