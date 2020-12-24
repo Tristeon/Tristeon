@@ -13,7 +13,7 @@ namespace Tristeon
 	 * AudioSource represents the physical source of a sound effect or song in-game.
 	 * Audio in Tristeon uses linear attenuation to determine its volume/falloff over distance from the AudioListener. The attenuation behaviour can be tweaked through the AudioSource's fields.
 	 */
-	class AudioSource : public Behaviour, public IStart, public ILateUpdate
+	class AudioSource : public Behaviour, public IInit, public ILateUpdate
 	{
 	public:
 		AudioSource();
@@ -154,9 +154,9 @@ namespace Tristeon
 		}
 
 		/**
-		 * Used to implement playOnStart.
+		 * Used to implement playOnInit.
 		 */
-		void start() override;
+		void init() override;
 		/**
 		 * Used to update the audio source's position.
 		 */
@@ -174,7 +174,7 @@ namespace Tristeon
 
 		bool _looping = false;
 
-		bool _playOnStart = false;
+		bool _playOnInit = false;
 
 		AudioClip* _clip = nullptr;
 		String _clipPath = "";

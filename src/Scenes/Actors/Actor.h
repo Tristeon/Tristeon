@@ -4,7 +4,7 @@
 
 #include "Math/Vector.h"
 
-#include <Callbacks/IStart.h>
+#include <Callbacks/IInit.h>
 #include <Collector.h>
 
 #include <Standard/Unique.h>
@@ -185,9 +185,9 @@ namespace Tristeon
 		_behaviours.add(Unique<Behaviour>(result));
 
 		//Call start callback if available.
-		auto* istart = dynamic_cast<IStart*>(result);
+		auto* istart = dynamic_cast<IInit*>(result);
 		if (istart != nullptr)
-			istart->start();
+			istart->init();
 		
 		return result;
 	}

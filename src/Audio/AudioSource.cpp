@@ -37,7 +37,7 @@ namespace Tristeon
 		j["minimumVolume"] = _minimumVolume;
 
 		j["looping"] = _looping;
-		j["playOnStart"] = _playOnStart;
+		j["playOnInit"] = _playOnInit;
 
 		j["clipPath"] = _clipPath;
 		return j;
@@ -56,7 +56,7 @@ namespace Tristeon
 
 		setLooping(j.value("looping", false));
 
-		_playOnStart = j.value("playOnStart", false);
+		_playOnInit = j.value("playOnInit", false);
 
 		_clipPath = j.value("clipPath", "");
 		setClip(Resources::assetLoad<AudioClip>(_clipPath));
@@ -77,9 +77,9 @@ namespace Tristeon
 		AUDIO_ASSERT(alSourceStop(_handle));
 	}
 
-	void AudioSource::start()
+	void AudioSource::init()
 	{
-		if (_playOnStart)
+		if (_playOnInit)
 			play();
 	}
 

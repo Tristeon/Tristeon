@@ -5,7 +5,7 @@
 #include <box2d/b2_shape.h>
 #include <box2d/b2_fixture.h>
 
-#include <Callbacks/IStart.h>
+#include <Callbacks/IInit.h>
 #include <Callbacks/ILateUpdate.h>
 #include <Callbacks/IPreDestroy.h>
 
@@ -21,12 +21,12 @@ namespace Tristeon
 	 *
 	 * Collider uses the Box2D API and as such all coordinates and sizes are internally converted to meters.
 	 */
-	class Collider : public Behaviour, public IStart, public ILateUpdate, public IPreDestroy
+	class Collider : public Behaviour, public IInit, public ILateUpdate, public IPreDestroy
 	{
 		friend class PhysicsBody;
 		friend class PhysicsWorld;
 	public:
-		void start() override;
+		void init() override;
 		void lateUpdate() override;
 		void preDestroy() override;
 		

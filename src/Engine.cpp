@@ -83,7 +83,7 @@ namespace Tristeon
 			{
 				if (_playModeDirty)
 				{
-					for (auto* start : Collector<IStart>::all()) start->start();
+					for (auto* start : Collector<IInit>::all()) start->init();
 					_playModeDirty = false;
 					SceneManager::current()->safeCleanup();
 				}

@@ -36,7 +36,7 @@ namespace Tristeon
 		_continuous = j.value("continuous", false);
 	}
 
-	void PhysicsBody::start()
+	void PhysicsBody::init()
 	{
 		if (body == nullptr)
 			createBody();

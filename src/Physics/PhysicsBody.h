@@ -7,7 +7,7 @@
 
 #include <Serialization/TypeRegister.h>
 
-#include <Callbacks/IStart.h>
+#include <Callbacks/IInit.h>
 #include <Callbacks/IFixedUpdate.h>
 #include <Callbacks/IPreDestroy.h>
 
@@ -21,7 +21,7 @@ namespace Tristeon
 	 *
 	 * Collider uses the Box2D API and as such all coordinates and sizes are internally converted to meters.
 	 */
-	class PhysicsBody : public Behaviour, public IFixedUpdate, public IStart, public IPreDestroy
+	class PhysicsBody : public Behaviour, public IFixedUpdate, public IInit, public IPreDestroy
 	{
 		friend class Collider;
 		friend class SceneManager;
@@ -32,7 +32,7 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 		
-		void start() override;
+		void init() override;
 		void fixedUpdate() override;
 		void preDestroy() override;
 

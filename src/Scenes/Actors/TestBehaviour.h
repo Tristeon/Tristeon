@@ -3,7 +3,7 @@
 #include <Serialization/TypeRegister.h>
 
 #include <Callbacks/IUpdate.h>
-#include <Callbacks/IStart.h>
+#include <Callbacks/IInit.h>
 
 #include <Physics/Callbacks/IPreContact.h>
 
@@ -14,10 +14,10 @@ namespace Tristeon
 	/**
 	 * Temporary test behaviour used to test our behaviour system. Will be removed at release.
 	 */
-	class TestBehaviour : public Behaviour, public IPreContact, public IUpdate, public IStart
+	class TestBehaviour : public Behaviour, public IPreContact, public IUpdate, public IInit
 	{
 	public:
-		void start() override;
+		void init() override;
 		void update() override;
 
 		json serialize() override;

@@ -10,7 +10,7 @@
 
 namespace Tristeon
 {
-	void Collider::start()
+	void Collider::init()
 	{
 		_lastScale = actor()->scale;
 		
