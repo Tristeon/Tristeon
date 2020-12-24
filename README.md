@@ -1,7 +1,9 @@
 # Tristeon2D
-Tristeon2D is an open-source game engine built for 2D tile-based platformers.
+![build](https://github.com/Tristeon/Tristeon2D/workflows/CMake/badge.svg)
+![License-MIT](https://img.shields.io/github/license/Tristeon/Tristeon2D)
+[![Discord](https://img.shields.io/static/v1?label=Discord&message=Join%20The%20Discord!&color=white&logo=discord)](https://discord.gg/SyeHrsC)
 
-![logo](https://i.imgur.com/0nUq7XL.png)
+Tristeon2D is an open-source game engine built for 2D tile-based platformers.
 
 ## Getting started
 We aim to simplify building Tristeon as much as we possibly can. This process is stil a work in progress so please bear with us for the time being.
