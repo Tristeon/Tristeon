@@ -78,7 +78,7 @@ namespace Tristeon
 
 	void Gizmos::render()
 	{
-		static Shader shader = Shader("Internal/Shaders/Gizmo.vert", "Internal/Shaders/Gizmo.frag");
+		static Shader shader = Shader("Internal/Shaders/WorldVertex.vert", "Internal/Shaders/Colour.frag");
 		shader.bind();
 		
 		for (auto& shape : _shapes)

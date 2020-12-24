@@ -203,7 +203,7 @@ namespace Tristeon
 
 	void TileLayer::render(const Framebuffer& framebuffer)
 	{
-		static Shader shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/TileShader.frag");
+		static Shader shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/TileShader.frag");
 		
 		if (_tbo == 0 || _tboTex == 0)
 			return;

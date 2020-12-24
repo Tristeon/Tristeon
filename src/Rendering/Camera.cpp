@@ -126,7 +126,7 @@ namespace Tristeon
 	
 	void Camera::drawToScreen() const
 	{
-		static Shader shader("Internal/Shaders/Camera.vert", "Internal/Shaders/Camera.frag");
+		static Shader shader("Internal/Shaders/Camera.vert", "Internal/Shaders/Texture.frag");
 
 		if (!_valid)
 			return;
@@ -136,7 +136,7 @@ namespace Tristeon
 		//Bind texture
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _fboTexture);
-		shader.setUniformValue("screenTexture", 0);
+		shader.setUniformValue("texture", 0);
 
 		//Pass screen info
 		shader.setUniformValue("screenSize", screenSize.x, screenSize.y);
