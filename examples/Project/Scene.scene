@@ -106,7 +106,7 @@
                         {
                             "typeID": "Tristeon::AudioSource",
                             "looping": true,
-                            "playOnStart": true,
+                            "playOnInit": true,
                             "clipPath": "scotland.wav"
                         }
                     ],
