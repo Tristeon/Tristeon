@@ -43,7 +43,7 @@ IF(MSVC)
     endif ()
 
     ENDIF()
-    SET(QT_PATH "${QT_VERSION}/msvc${QT_MSVC}${QT_MSVC_POSTFIX}")
+    SET(QT_PATH "${QT_VERSION}/msvc${QT_MSVC}${QT_MSVC_POSTFIX}" CACHE STRING "${QT_VERSION}/msvc${QT_MSVC}${QT_MSVC_POSTFIX}")
     SET(QT_MISSING False)
 
     MESSAGE("-- Qt found: ${QT_PATH}")
