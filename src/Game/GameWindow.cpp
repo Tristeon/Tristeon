@@ -42,6 +42,11 @@ namespace Tristeon
 		_isFullscreen = Project::Graphics::fullscreen();
 		setFullscreen(Project::Graphics::fullscreen());
 
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        _width = mode->width;
+        _height = mode->height;
+
 		setupCallbacks();
 
 		glClearColor(0, 0, 0, 1);

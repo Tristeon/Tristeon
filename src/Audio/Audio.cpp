@@ -19,7 +19,10 @@ namespace Tristeon
 		//Set up the ALC device, this will normally use the OS's default audio device
 		_device = alcOpenDevice(nullptr);
 		if (!_device)
-			Console::error("Failed to open OpenAL device, audio will not function!");
+        {
+            Console::warning("Failed to open OpenAL device, audio will not function!");
+            return;
+        }
 		else
 			Console::write("Initialized: OpenAL Audio device");
 
