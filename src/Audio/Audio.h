@@ -93,7 +93,7 @@ namespace Tristeon
 	alGetError(); \
 	function; \
 	auto err = alGetError(); \
-	Tristeon::Console::assertLog(err == AL_NO_ERROR, Tristeon::String("Call to ") + #function + "failed because error " + std::to_string(err) + " occured. This happened in File: " + Tristeon::String(__FILE__) + " at Function: " + Tristeon::String(__func__) + " at Line: " + std::to_string(__LINE__), AssertSeverity::Warning); \
+	Tristeon::Console::assertLog(err == AL_NO_ERROR, Tristeon::String("Call to ") + #function + " failed because error " + std::to_string(err) + " occured. This happened in File: " + Tristeon::String(__FILE__) + " at Function: " + Tristeon::String(__func__) + " at Line: " + std::to_string(__LINE__), AssertSeverity::Warning); \
 }
 #else
 #define AUDIO_DEBUG_AL(function)

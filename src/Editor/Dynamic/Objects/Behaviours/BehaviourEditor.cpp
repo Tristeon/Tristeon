@@ -60,7 +60,7 @@ namespace TristeonEditor
 		{
 			std::string key = it.key();
 
-			if (key == "typeID") continue;
+			if (key == "typeID" || key == "instanceID") continue;
 			
 			switch (it.value().type())
 			{
