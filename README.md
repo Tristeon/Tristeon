@@ -15,22 +15,36 @@ We aim to simplify building Tristeon as much as we possibly can. This process is
 - Windows | MSVC 2019 | x64
 - Windows | MSVC 2019 (LLVM clang-cl) | x64
 
-- Linux | GCC | x64 (compiles, runtime doesn't fully function)
-- Linux | Clang | x64 (compiles, runtime not tested)
+- Linux | GCC | x64
+- Linux | Clang | x64 (built, not tested)
 
 ### Building the project
 
 #### Requirements
 - Tristeon uses CMake as its building software. To be able to build Tristeon, please make sure that you've got CMake 3.7 or higher installed [https://cmake.org/download/].
-- Tristeon's editor uses the Qt5 framework for editor tooling. Our tests are currently done with Qt 5.14.1, but other versions should work fine. Please make sure you have Qt5 installed [https://www.qt.io/download-qt-installer].
 
 #### Steps
+##### Windows
+- Tristeon's editor uses the Qt5 framework for editor tooling. Our tests are currently done with Qt 5.14.1, but other versions should work fine. Please make sure you have Qt5 installed [https://www.qt.io/download-qt-installer].
 - Use CMake to build Tristeon's source code using the CMakeLists.txt file
-  - If you'd like to use the clang compiler, specify ClangCL in the "Optional toolset to use" box in CMake's GUI or through -T ClangCL
+  - If you'd like to use the clang compiler with MSVC, specify ClangCL in the "Optional toolset to use" box in CMake's GUI or through -T ClangCL
   - Set BUILD_EDITOR to true if you wish to build the engine with its editor.
 - Fully build the solution. If you are using the editor, then trying to run the application at this point will result in missing dll errors.
 - If you are using the editor run CMake a second time. CMake will detect the built .exe file and will use it to import Qt dlls. 
 After this, the engine should be ready to run.
+
+##### Linux
+- Download the dependency packages using sudo apt-get install
+    - xorg-dev 
+    - libglu1-mesa-dev
+    - qt5-default
+    - qttools5-dev
+    - qtdeclarative5-dev
+    - libqt5gamepad5-dev 
+    - libopenal-dev
+- Use CMake to build Tristeon's source code using the CMakeLists.txt file.
+  - Set BUILD_EDITOR to true if you wish to build the engine with its editor.
+- Use your favorite IDE to build the project.
 
 ## Features
 (WIP)
