@@ -51,7 +51,7 @@ namespace Tristeon
 
 	void Grid::render()
 	{
-		static Shader shader = Shader("Internal/Shaders/TileShader.vert", "Internal/Shaders/Grid.frag");
+		static Shader shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/Grid.frag");
 
 		if (!shader.ready())
 			return;

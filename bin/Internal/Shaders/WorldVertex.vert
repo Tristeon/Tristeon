@@ -1,5 +1,5 @@
-#version 330
-layout (location = 0) in vec2 pos;
+#version 140
+in vec2 pos;
 
 struct CameraData
 {

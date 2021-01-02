@@ -1,4 +1,4 @@
-#version 330
+#version 140
 
 uniform vec2 screenSize;
 uniform vec2 screenCoordinates;
