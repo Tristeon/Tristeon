@@ -1,6 +1,8 @@
 #pragma once
 #include <Standard/String.h>
 
+#include "Math/Vector.h"
+
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor
 {
@@ -53,22 +55,27 @@ namespace Tristeon
 			 */
 			[[nodiscard]] static bool vsync();
 			/**
-			 * If triple buffering is enabled.
+			 * Enable/disable vsync in the Project's settings and for the runtime window.
 			 */
-			[[nodiscard]] static bool tripleBuffering();
+			static void setVsync(const bool& value);
+			
 			/**
 			 * If fullscreen is enabled in the build.
 			 */
 			[[nodiscard]] static bool fullscreen();
-
+			/**
+			 * The resolution that the game will take when loaded in on fullscreen.
+			 */
+			[[nodiscard]] static VectorI preferredResolution();
 		private:
 			unsigned int _tileWidth = 64;
 			unsigned int _tileHeight = 64;
 
 			bool _vsync = false;
-			bool _tripleBuffering = true;
 
 			bool _fullScreen = true;
+
+			VectorI _preferredResolution{ 0, 0 };
 		};
 
 		class Physics
@@ -95,7 +102,10 @@ namespace Tristeon
 		static String _assetPath;
 		static String _firstScene;
 
+		static nlohmann::json _data;
+		
 		static void loadBuild();
 		static void load(const String& folder);
+		static void save();
 	};
 }

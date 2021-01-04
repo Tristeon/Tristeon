@@ -1,6 +1,8 @@
 #include "Project.h"
 
 #include <json.h>
+
+#include "Window.h"
 #include "Serialization/JsonSerializer.h"
 
 namespace Tristeon
@@ -9,6 +11,7 @@ namespace Tristeon
 	Project::Physics Project::_physics;
 	String Project::_assetPath;
 	String Project::_firstScene;
+	nlohmann::json Project::_data;
 	
 	String Project::assetPath()
 	{
@@ -35,14 +38,22 @@ namespace Tristeon
 		return _graphics._vsync;
 	}
 
-	bool Project::Graphics::tripleBuffering()
+	void Project::Graphics::setVsync(const bool& value)
 	{
-		return _graphics._tripleBuffering;
+		_graphics._vsync = value;
+		_data["graphics"]["vsync"] = value;
+		save();
+		Window::setVsync(value);
 	}
 
 	bool Project::Graphics::fullscreen()
 	{
 		return _graphics._fullScreen;
+	}
+
+	VectorI Project::Graphics::preferredResolution()
+	{
+		return _graphics._preferredResolution;
 	}
 
 	float Project::Physics::fixedDeltaTime()
@@ -87,8 +98,8 @@ namespace Tristeon
 			_graphics._tileHeight = graphics.value("tileHeight", 64u);
 
 			_graphics._vsync = graphics.value("vsync", false);
-			_graphics._tripleBuffering = graphics.value("tripleBuffering", true);
 			_graphics._fullScreen = graphics.value("fullscreen", true);
+			_graphics._preferredResolution = graphics.value("preferredResolution", VectorI{ 0, 0 });
 		}
 
 		if (file.contains("physics"))
@@ -97,5 +108,10 @@ namespace Tristeon
 			_physics._fixedDeltaTime = physics.value("fixedDeltaTime", 1.0f / 50.0f * 1000.0f);
 			_physics._pixelsPerMeter = physics.value("pixelsPerMeter", 64u);
 		}
+	}
+
+	void Project::save()
+	{
+		JsonSerializer::save(_data, _assetPath + "settings.tristeon");
 	}
 }

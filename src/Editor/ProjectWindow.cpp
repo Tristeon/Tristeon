@@ -146,7 +146,6 @@ namespace TristeonEditor
 					{"tileWidth", 64},
 					{"tileHeight", 64},
 					{"vsync", false},
-					{"tripleBuffering", true},
 					{"fullscreen", true}
 				}
 			},
@@ -261,15 +260,6 @@ namespace TristeonEditor
 			{
 				json file = Tristeon::JsonSerializer::load(path);
 				file["graphics"]["vsync"] = ((Qt::CheckState)state != Qt::Unchecked);
-				Tristeon::JsonSerializer::save(path, file);
-			}));
-
-		auto* triple_buffering_field = findChild<QCheckBox*>("triple_buffering_field");
-		triple_buffering_field->setChecked(settings["graphics"]["tripleBuffering"]);
-		activeConnections.add(connect(triple_buffering_field, &QCheckBox::stateChanged, [=](const int& state)
-			{
-				json file = Tristeon::JsonSerializer::load(path);
-				file["graphics"]["tripleBuffering"] = ((Qt::CheckState)state != Qt::Unchecked);
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 

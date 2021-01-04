@@ -3,7 +3,6 @@
 		"tileWidth": 256,
 		"tileHeight": 256,
 		"vsync": false,
-		"tripleBuffering": true,
 		"fullscreen": true
 	},
 

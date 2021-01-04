@@ -520,8 +520,8 @@ color: rgb(236, 240, 241);</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>539</width>
-         <height>451</height>
+         <width>536</width>
+         <height>448</height>
         </rect>
        </property>
        <property name="mouseTracking">
@@ -542,7 +542,7 @@ color: rgb(236, 240, 241);</string>
   <widget class="QDockWidget" name="tool_menu">
    <property name="minimumSize">
     <size>
-     <width>135</width>
+     <width>141</width>
      <height>68</height>
     </size>
    </property>
@@ -795,48 +795,6 @@ color: rgb(236, 240, 241);</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="tile_height">
-                 <property name="text">
-                  <string>Tile Height</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="vsync">
-                 <property name="text">
-                  <string>VSync</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="triple_buffering">
-                 <property name="text">
-                  <string>Triple Buffering</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QCheckBox" name="triple_buffering_field">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="fullscreen">
-                 <property name="text">
-                  <string>Fullscreen</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QCheckBox" name="fullscreen_field">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="1">
                 <widget class="QSpinBox" name="tile_width_field">
                  <property name="buttonSymbols">
@@ -847,6 +805,13 @@ color: rgb(236, 240, 241);</string>
                  </property>
                  <property name="singleStep">
                   <number>0</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="tile_height">
+                 <property name="text">
+                  <string>Tile Height</string>
                  </property>
                 </widget>
                </item>
@@ -863,8 +828,29 @@ color: rgb(236, 240, 241);</string>
                  </property>
                 </widget>
                </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="vsync">
+                 <property name="text">
+                  <string>VSync</string>
+                 </property>
+                </widget>
+               </item>
                <item row="2" column="1">
                 <widget class="QCheckBox" name="vsync_field">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="fullscreen">
+                 <property name="text">
+                  <string>Fullscreen</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="fullscreen_field">
                  <property name="text">
                   <string/>
                  </property>

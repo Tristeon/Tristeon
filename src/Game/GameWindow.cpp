@@ -39,14 +39,8 @@ namespace Tristeon
 		}
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		
-		_isFullscreen = Project::Graphics::fullscreen();
 		setFullscreen(Project::Graphics::fullscreen());
-
-        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-        _width = mode->width;
-        _height = mode->height;
-
+		setVsync(Project::Graphics::vsync());
 		setupCallbacks();
 
 		glClearColor(0, 0, 0, 1);
@@ -125,13 +119,29 @@ namespace Tristeon
 		
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+		if (Project::Graphics::preferredResolution() != Vector::zero())
+		{
+			_width = Project::Graphics::preferredResolution().x;
+			_height = Project::Graphics::preferredResolution().y;
+		}
+		else
+		{
+			_width = mode->width;
+			_height = mode->height;
+		}
 		
 		if (value)
-			glfwSetWindowMonitor(_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
 		else
-			glfwSetWindowMonitor(_window, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
+			glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
 
-		glViewport(0, 0, mode->width, mode->height);
+		glViewport(0, 0, _width, _height);
+	}
+
+	void GameWindow::_setVsync(const bool& value)
+	{
+		glfwSwapInterval(value);
 	}
 
 	void GameWindow::_close()

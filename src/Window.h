@@ -2,6 +2,8 @@
 #include <Utils/Singleton.h>
 #include <Math/Vector.h>
 
+#include "Project.h"
+
 namespace Tristeon
 {
 	struct Colour;
@@ -76,9 +78,21 @@ namespace Tristeon
 		[[nodiscard]] static bool fullScreen() { return instance()->_fullscreen(); }
 
 		/**
-		 * Sets the window's fullscreen status.
+		 * Sets the window's runtime fullscreen status.
+		 * This doesn't affect the project's settings, use Project::Graphics::setFullscreen() to affect both runtime and project settings.
 		 */
 		static void setFullscreen(const bool& value) { instance()->_setFullscreen(value); }
+
+		/**
+		 * Returns true if vsync is enabled.
+		 */
+		[[nodiscard]] static bool vsync() { return instance()->_vsync; }
+
+		/**
+		 * Sets the window's runtime vsync status.
+		 * This doesn't affect the project's settings, use Project::Graphics::setVsync() to affect both runtime and project settings.
+		 */
+		static void setVsync(const bool& value) { instance()->_vsync = value; instance()->_setVsync(value); }
 
 		/**
 		 * Closes the window and the application.
@@ -115,6 +129,7 @@ namespace Tristeon
 		
 		virtual bool _fullscreen() = 0;
 		virtual void _setFullscreen(const bool& value) = 0;
+		virtual void _setVsync(const bool& value) = 0;
 
 		virtual void _close() = 0;
 
@@ -127,5 +142,8 @@ namespace Tristeon
 		virtual Vector _screenToWorld(VectorU const& screenPoint, Camera* camera) = 0;
 		virtual VectorU _worldToScreen(Vector const& worldPoint, Camera* camera) = 0;
 #pragma endregion
+
+	private:
+		bool _vsync;
 	};
 }

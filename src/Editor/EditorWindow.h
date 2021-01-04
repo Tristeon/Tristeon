@@ -37,6 +37,8 @@ namespace TristeonEditor
 		bool _fullscreen() override;
 		void _setFullscreen(bool const& value) override;
 
+		void _setVsync(const bool& value) override;
+
 		void _close() override;
 		bool _closingDown() override;
 

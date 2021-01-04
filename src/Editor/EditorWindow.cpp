@@ -130,6 +130,13 @@ namespace TristeonEditor
 			QMainWindow::showNormal();
 	}
 
+	void EditorWindow::_setVsync(const bool& value)
+	{
+		auto f = GameView::instance()->format();
+		f.setSwapInterval(value);
+		GameView::instance()->setFormat(f);
+	}
+
 	void EditorWindow::_close()
 	{
 		QMainWindow::close();

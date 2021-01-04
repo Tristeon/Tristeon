@@ -19,6 +19,7 @@ namespace Tristeon
 		unsigned _gameHeight() override;
 		bool _fullscreen() override;
 		void _setFullscreen(const bool& value) override;
+		void _setVsync(const bool& value) override;
 		void _close() override;
 		void _setClearColour(const Colour& colour) override;
 		bool _closingDown() override;

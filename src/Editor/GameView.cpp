@@ -24,7 +24,7 @@ namespace TristeonEditor
         QSurfaceFormat format;
         format.setRenderableType(QSurfaceFormat::OpenGL);
         format.setSamples(0);
-        format.setSwapBehavior(Tristeon::Project::Graphics::tripleBuffering() ? QSurfaceFormat::TripleBuffer : QSurfaceFormat::SwapBehavior::DoubleBuffer);
+        format.setSwapBehavior(QSurfaceFormat::SwapBehavior::DoubleBuffer);
         format.setSwapInterval(0);
         setFormat(format);
 
