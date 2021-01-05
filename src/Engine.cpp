@@ -94,8 +94,6 @@ namespace Tristeon
 				Time::_fps = frames;
 				frames = 0;
 				time = fmod(time, 1000.0f);
-
-				Console::write("FPS: " + std::to_string(Time::fps()));
 			}
 
 			//Poll input & window changes
