@@ -64,18 +64,44 @@ namespace Tristeon
 			 */
 			[[nodiscard]] static bool fullscreen();
 			/**
+			 * Enable/disable fullscreen in the Project's settings and for the runtime window.
+			 */
+			static void setFullscreen(const bool& value);
+			
+			/**
 			 * The resolution that the game will take when loaded in on fullscreen.
 			 */
-			[[nodiscard]] static VectorI preferredResolution();
+			[[nodiscard]] static VectorU preferredResolution();
+			/**
+			 * Set the preferred resolution.
+			 * The game will attempt to take this resolution when loaded in on fullscreen.
+			 */
+			static void setPreferredResolution(const VectorU& value);
+
+			/**
+			 * The maximum number of frames per second.
+			 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
+			 * If the value is set to 0, the engine runs as if there were no limit.
+			 */
+			[[nodiscard]] static unsigned int maxFPS();
+
+			/**
+			 * Set the maximum number of frames per second.
+			 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
+			 * If the value is set to 0, the engine runs as if there were no limit.
+			 *
+			 * This affects both the Project's and the runtime's settings.
+			 */
+			static void setMaxFPS(const unsigned int& value);
 		private:
 			unsigned int _tileWidth = 64;
 			unsigned int _tileHeight = 64;
 
 			bool _vsync = false;
-
 			bool _fullScreen = true;
+			unsigned int _maxFPS = 0;
 
-			VectorI _preferredResolution{ 0, 0 };
+			VectorU _preferredResolution{ 0, 0 };
 		};
 
 		class Physics

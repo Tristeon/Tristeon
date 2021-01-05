@@ -51,9 +51,38 @@ namespace Tristeon
 		return _graphics._fullScreen;
 	}
 
-	VectorI Project::Graphics::preferredResolution()
+	void Project::Graphics::setFullscreen(const bool& value)
+	{
+		_graphics._fullScreen = value;
+		_data["graphics"]["fullscreen"] = value;
+		save();
+		Window::setFullscreen(value);
+	}
+
+	VectorU Project::Graphics::preferredResolution()
 	{
 		return _graphics._preferredResolution;
+	}
+
+	void Project::Graphics::setPreferredResolution(const VectorU& value)
+	{
+		_graphics._preferredResolution = value;
+		_data["graphics"]["preferredResolution"] = value;
+		save();
+		Window::setResolution(value);
+	}
+
+	unsigned Project::Graphics::maxFPS()
+	{
+		return _graphics._maxFPS;
+	}
+
+	void Project::Graphics::setMaxFPS(const unsigned& value)
+	{
+		_graphics._maxFPS = value;
+		_data["graphics"]["maxFPS"] = value;
+		save();
+		Window::setMaxFPS(value);
 	}
 
 	float Project::Physics::fixedDeltaTime()
@@ -100,6 +129,7 @@ namespace Tristeon
 			_graphics._vsync = graphics.value("vsync", false);
 			_graphics._fullScreen = graphics.value("fullscreen", true);
 			_graphics._preferredResolution = graphics.value("preferredResolution", VectorI{ 0, 0 });
+			_graphics._maxFPS = graphics.value("maxFPS", 0);
 		}
 
 		if (file.contains("physics"))

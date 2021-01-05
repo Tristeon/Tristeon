@@ -1,15 +1,18 @@
 {
-	"graphics": {
-		"tileWidth": 256,
-		"tileHeight": 256,
-		"vsync": false,
-		"fullscreen": true
-	},
-
-	"physics": {
-		"fixedDeltaTime": 20,
-		"pixelsPerMeter": 256
-	},
-
-	"firstScene": "Scene"
+    "firstScene": "Scene",
+    "graphics": {
+        "fullscreen": true,
+        "maxFPS": 60,
+        "preferredResolution": {
+            "x": 0,
+            "y": 0
+        },
+        "tileHeight": 256,
+        "tileWidth": 256,
+        "vsync": true
+    },
+    "physics": {
+        "fixedDeltaTime": 20,
+        "pixelsPerMeter": 256
+    }
 }

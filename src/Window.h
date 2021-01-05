@@ -6,6 +6,7 @@
 #include <set>
 
 #ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 
@@ -103,6 +104,22 @@ namespace Tristeon
 		static void setVsync(const bool& value) { instance()->_vsync = value; instance()->_setVsync(value); }
 
 		/**
+		 * The maximum number of frames per second.
+		 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
+		 * If the value is set to 0, the engine runs as if there were no limit.
+		 */
+		[[nodiscard]] static unsigned int maxFPS() { return instance()->_maxFPS; }
+
+		/**
+		 * Set the maximum number of frames per second.
+		 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
+		 * If the value is set to 0, the engine runs as if there were no limit.
+		 * 
+		 * This doesn't affect the project's settings, use Project::Graphics::setMaxFPS() to affect both runtime and project settings.
+		 */
+		static void setMaxFPS(const unsigned int& fps) { instance()->_maxFPS = fps; }
+		
+		/**
 		 * Closes the window and the application.
 		 */
 		static void close() { instance()->_close(); }
@@ -166,6 +183,7 @@ namespace Tristeon
 		void populateResolutions();
 		
 		bool _vsync;
+		unsigned int _maxFPS;
 		std::set<VectorU> _resolutions;
 	};
 	

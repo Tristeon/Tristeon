@@ -146,7 +146,9 @@ namespace TristeonEditor
 					{"tileWidth", 64},
 					{"tileHeight", 64},
 					{"vsync", false},
-					{"fullscreen", true}
+					{"fullscreen", true},
+					{"maxFPS", 0},
+					{"preferredResolution", Tristeon::VectorU{ 0, 0 }}
 				}
 			},
 			{
@@ -269,6 +271,33 @@ namespace TristeonEditor
 			{
 				json file = Tristeon::JsonSerializer::load(path);
 				file["graphics"]["fullscreen"] = ((Qt::CheckState)state != Qt::Unchecked);
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* max_fps_field = findChild<QSpinBox*>("fps_field");
+		max_fps_field->setValue(settings["graphics"]["maxFPS"]);
+		activeConnections.add(connect(max_fps_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["maxFPS"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* resolution_field_width = findChild<QSpinBox*>("resolution_field_width");
+		resolution_field_width->setValue(settings["graphics"]["preferredResolution"]["x"]);
+		activeConnections.add(connect(resolution_field_width, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["preferredResolution"]["x"] = val;
+				Tristeon::JsonSerializer::save(path, file);
+			}));
+
+		auto* resolution_field_height = findChild<QSpinBox*>("resolution_field_height");
+		resolution_field_height->setValue(settings["graphics"]["preferredResolution"]["y"]);
+		activeConnections.add(connect(resolution_field_height, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
+			{
+				json file = Tristeon::JsonSerializer::load(path);
+				file["graphics"]["preferredResolution"]["y"] = val;
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 

@@ -20,6 +20,10 @@
 #include "Scenes/Scene.h"
 #include "Utils/Time.h"
 
+#include <thread>
+
+using namespace std::chrono;
+
 namespace Tristeon
 {
 	void Engine::run()
@@ -53,31 +57,49 @@ namespace Tristeon
 		
 		SceneManager::current()->safeCleanup();
 
-		auto lastTime = std::chrono::high_resolution_clock::now();
+		auto lastTime = high_resolution_clock::now();
 		unsigned int frames = 0;
 		float time = 0;
 		float fixedUpdateTime = 0;
 
 		while (!Window::closingDown())
 		{
-			Window::pollEvents();
-
 			//Keep track of elapsed time to calculate deltaTime (used in gameplay/physics systems to account for FPS differences)
-			auto now = std::chrono::high_resolution_clock::now();
-			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(now - lastTime);
-			float const deltaTime = duration.count() / 1000.0f; //Convert to ms
-			Time::_deltaTime = deltaTime;
+			auto now = high_resolution_clock::now();
+			microseconds duration = std::chrono::duration_cast<microseconds>(now - lastTime);
 			lastTime = now;
+			float deltaTime = (float)duration.count() / 1000.0f; //Convert to ms
+
+			//Account for fps limit
+			if (Project::Graphics::maxFPS() != 0)
+			{
+				microseconds targetMicroSeconds = 1000000us / Project::Graphics::maxFPS();
+				if (duration < targetMicroSeconds)
+				{
+					//Sleep if we're running too fast
+					microseconds sleepTime{ (targetMicroSeconds - duration) };
+					std::this_thread::sleep_for(sleepTime);
+
+					deltaTime = 1000.0f / (float)Project::Graphics::maxFPS();
+					lastTime = high_resolution_clock::now();
+				}
+			}
 
 			//FPS counter
 			frames++;
 			time += deltaTime;
+			Time::_deltaTime = deltaTime;
 			if (time >= 1000)
 			{
 				Time::_fps = frames;
 				frames = 0;
 				time = fmod(time, 1000.0f);
+
+				Console::write("FPS: " + std::to_string(Time::fps()));
 			}
+
+			//Poll input & window changes
+			Window::pollEvents();
 
 			if (_playMode)
 			{
