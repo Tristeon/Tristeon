@@ -137,6 +137,11 @@ namespace TristeonEditor
 		GameView::instance()->setFormat(f);
 	}
 
+	void EditorWindow::_setResolution(const Tristeon::VectorU& resolution)
+	{
+		QMainWindow::resize(resolution.x, resolution.y);
+	}
+
 	void EditorWindow::_close()
 	{
 		QMainWindow::close();

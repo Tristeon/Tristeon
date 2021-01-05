@@ -7,9 +7,10 @@
 #include "Input/Mouse.h"
 #include "Input/Gamepad.h"
 #include "Rendering/Renderer.h"
-#include "Scenes/Scene.h"
 #include "Scenes/SceneManager.h"
 #include "Utils/Colour.h"
+
+#include <Windows.h>
 
 namespace Tristeon
 {
@@ -142,6 +143,14 @@ namespace Tristeon
 	void GameWindow::_setVsync(const bool& value)
 	{
 		glfwSwapInterval(value);
+	}
+
+	void GameWindow::_setResolution(const VectorU& resolution)
+	{
+		glfwSetWindowSize(_window, resolution.x, resolution.y);
+		_width = resolution.x;
+		_height = resolution.y;
+		glViewport(0, 0, _width, _height);
 	}
 
 	void GameWindow::_close()

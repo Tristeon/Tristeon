@@ -3,6 +3,11 @@
 #include <Math/Vector.h>
 
 #include "Project.h"
+#include <set>
+
+#ifdef WIN32
+#include <Windows.h>
+#endif
 
 namespace Tristeon
 {
@@ -21,7 +26,10 @@ namespace Tristeon
 		friend Singleton<Window>;
 		friend class Engine;
 	public:
-		Window() = default;
+		Window()
+		{
+			populateResolutions();
+		}
 		virtual ~Window() = default;
 
 		DELETE_COPY(Window);
@@ -109,6 +117,16 @@ namespace Tristeon
 		 */
 		static void setWindowTitle(const String& title) { instance()->_setWindowTitle(title); }
 
+		/**
+		 * Returns a set of the resolutions available to the current monitor.
+		 */
+		static std::set<VectorU> availableResolutions() { return instance()->_resolutions; }
+
+		/**
+		 * Sets the window's current resolution.
+		 * This doesn't affect the project's settings, use Project::Graphics::setPreferredResolution() to affect both runtime and project settings.
+		 */
+		static void setResolution(const VectorU& resolution) { return instance()->_setResolution(resolution); }
 	protected:
 		/**
 		 * Iterates over the event queues and sends each event to their respective classes (Mouse, Keyboard, Gamepad)
@@ -130,6 +148,7 @@ namespace Tristeon
 		virtual bool _fullscreen() = 0;
 		virtual void _setFullscreen(const bool& value) = 0;
 		virtual void _setVsync(const bool& value) = 0;
+		virtual void _setResolution(const VectorU& resolution) = 0;
 
 		virtual void _close() = 0;
 
@@ -144,6 +163,26 @@ namespace Tristeon
 #pragma endregion
 
 	private:
+		void populateResolutions();
+		
 		bool _vsync;
+		std::set<VectorU> _resolutions;
 	};
+	
+	inline void Window::populateResolutions()
+	{
+#ifdef _WIN32
+		DEVMODE dm { 0 };
+		int i = 0;
+		dm.dmSize = sizeof(dm);
+
+		while (EnumDisplaySettingsA(nullptr, i, &dm))
+		{
+			i += 1;
+			_resolutions.insert(VectorU{ (unsigned int)dm.dmPelsWidth, (unsigned int)dm.dmPelsHeight });
+		}
+#elif defined(__linux__)
+#error TODO: Linux populateResolutions()
+#endif
+	}
 }

@@ -38,6 +38,7 @@ namespace TristeonEditor
 		void _setFullscreen(bool const& value) override;
 
 		void _setVsync(const bool& value) override;
+		void _setResolution(const Tristeon::VectorU& resolution) override;
 
 		void _close() override;
 		bool _closingDown() override;

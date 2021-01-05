@@ -5,14 +5,12 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
-
 #include "Audio/Audio.h"
 #include "Rendering/Camera.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Gizmos.h"
-#include "Scenes/Scene.h"
 #include "Scenes/SceneManager.h"
 #include "Utils/Time.h"
 
@@ -23,6 +21,8 @@ namespace Tristeon
 		body = actor()->findBehaviour<PhysicsBody>();
 	}
 
+	unsigned int index = 0;
+	
 	void TestBehaviour::update()
 	{
 		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);
@@ -37,9 +37,6 @@ namespace Tristeon
 
 		if (!Camera::cameras().empty())
 			Camera::cameras()[0]->position = actor()->position;
-
-		if (Keyboard::pressed(Keyboard::J))
-			Audio::play("scotland.wav");
 	}
 	
 	json TestBehaviour::serialize()
