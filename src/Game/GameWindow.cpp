@@ -10,8 +10,6 @@
 #include "Scenes/SceneManager.h"
 #include "Utils/Colour.h"
 
-#include <Windows.h>
-
 namespace Tristeon
 {
 	GameWindow::GameWindow()

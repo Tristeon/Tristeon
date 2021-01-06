@@ -90,6 +90,19 @@ set(BUILD_TESTS OFF CACHE BOOL "")
 set(OPENAL_INCLUDE_DIR "external/openal-soft/include/al/" CACHE STRING "")
 set(OPENAL_LIBRARY "OpenAL" CACHE STRING "")
 
+if (UNIX)
+	find_package(X11 REQUIRED)
+
+	# Set up library and include paths
+	include_directories(${X11_X11_INCLUDE_PATH})
+
+	# Check for XRandR (modern resolution switching and gamma control)
+	if (NOT X11_Xrandr_INCLUDE_PATH)
+		message(FATAL_ERROR "RandR headers not found; install libxrandr development package")
+	endif()
+	message(STATUS "Found X11")
+endif()
+
 #include Qt
 if (NOT DEFINED Qt5_DIR)
 	message("Qt5_DIR not set, attempting to find it.")
@@ -120,6 +133,11 @@ macro(link_libs targetname)
 	target_link_libraries(${targetname} PRIVATE Qt5::Gamepad)
 
 	target_link_libraries(${targetname} PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
+
+	if (UNIX)
+		target_link_libraries(${targetname} PRIVATE X11)
+		target_link_libraries(${targetname} PRIVATE Xrandr)
+	endif()
 endmacro()
 
 if (MSVC)
