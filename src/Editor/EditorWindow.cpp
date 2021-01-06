@@ -70,7 +70,7 @@ namespace TristeonEditor
 		while (!mouseMoveEvents.empty())
 		{
 			VectorU newPos = VectorU((unsigned int)mouseMoveEvents.front().pos().x(), Window::height() - (unsigned int)mouseMoveEvents.front().pos().y());
-			if (!Window::fullScreen())
+			//if (!Window::fullScreen())
 				newPos.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 						
 			Mouse::onMove(newPos);
@@ -117,24 +117,16 @@ namespace TristeonEditor
 		return GameView::instance()->height();
 	}
 
-	bool EditorWindow::_fullscreen()
-	{
-		return QMainWindow::isFullScreen();
-	}
-
-	void EditorWindow::_setFullscreen(bool const& value)
-	{
-		if (value)
-			QMainWindow::showFullScreen();
-		else
-			QMainWindow::showNormal();
-	}
-
 	void EditorWindow::_setVsync(const bool& value)
 	{
 		auto f = GameView::instance()->format();
 		f.setSwapInterval(value);
 		GameView::instance()->setFormat(f);
+	}
+
+	void EditorWindow::_setWindowMode(const Tristeon::Project::Graphics::WindowMode& mode)
+	{
+		//Do nothing because the editor window should always stay windowed
 	}
 
 	void EditorWindow::_setResolution(const Tristeon::VectorU& resolution)
@@ -157,7 +149,7 @@ namespace TristeonEditor
 	{
 		//Convert into Qt coords
 		VectorU point = screenPoint;
-		if (!fullScreen())
+		//if (!fullScreen())
 			point.y -= QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		point = VectorI(screenPoint.x, Window::height() - point.y);
 
@@ -190,7 +182,7 @@ namespace TristeonEditor
 		const QPoint global = GameView::instance()->mapToGlobal(QPoint(point.x, point.y));
 
 		VectorU result = VectorU((unsigned int)global.x(), Window::height() - (unsigned int)global.y());
-		if (!fullScreen())
+		//if (!fullScreen())
 			result.y += QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
 		return result;
 	}

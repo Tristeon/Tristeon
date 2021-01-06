@@ -1,7 +1,8 @@
 #pragma once
 #include <Standard/String.h>
-
 #include "Math/Vector.h"
+
+int main(int argc, char** argv);
 
 #ifdef TRISTEON_EDITOR
 namespace TristeonEditor
@@ -22,6 +23,7 @@ namespace Tristeon
 		friend class Engine;
 		friend class Graphics;
 		friend class Physics;
+		friend int ::main(int argc, char** argv);
 		
 #ifdef TRISTEON_EDITOR
 		friend TristeonEditor::ProjectWindow;
@@ -58,15 +60,36 @@ namespace Tristeon
 			 * Enable/disable vsync in the Project's settings and for the runtime window.
 			 */
 			static void setVsync(const bool& value);
-			
+
 			/**
-			 * If fullscreen is enabled in the build.
+			 * The window's fullscreen settings and decoration.
+			 * This only applies to built games (no editor).
 			 */
-			[[nodiscard]] static bool fullscreen();
+			enum class WindowMode
+			{
+				/**
+				 * The window has a normal window with borders and open/close/maximize buttons.
+				 * It can be moved and resized freely.
+				 */
+				Windowed,
+				/**
+				 * Just like Windowed, but now without borders or open/close/maximize buttons.
+				 * The window is always maximized (similar to fullscreen).
+				 */
+				Borderless,
+				/**
+				 * The window is fullscreen.
+				 */
+				Fullscreen
+			};
 			/**
-			 * Enable/disable fullscreen in the Project's settings and for the runtime window.
+			 * The current window mode.
 			 */
-			static void setFullscreen(const bool& value);
+			[[nodiscard]] static WindowMode windowMode();
+			/**
+			 * Set the window mode in the Project's settings and the runtime window.
+			 */
+			static void setWindowMode(const WindowMode& value);
 			
 			/**
 			 * The resolution that the game will take when loaded in on fullscreen.
@@ -98,7 +121,7 @@ namespace Tristeon
 			unsigned int _tileHeight = 64;
 
 			bool _vsync = false;
-			bool _fullScreen = true;
+			WindowMode _windowMode = WindowMode::Fullscreen;
 			unsigned int _maxFPS = 0;
 
 			VectorU _preferredResolution{ 0, 0 };

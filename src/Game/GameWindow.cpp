@@ -10,8 +10,6 @@
 #include "Scenes/SceneManager.h"
 #include "Utils/Colour.h"
 
-#include <Windows.h>
-
 namespace Tristeon
 {
 	GameWindow::GameWindow()
@@ -39,9 +37,9 @@ namespace Tristeon
 			throw std::runtime_error("Failed to initialize glad");
 		}
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
-		
-		setFullscreen(Project::Graphics::fullscreen());
-		setVsync(Project::Graphics::vsync());
+
+		GameWindow::_setWindowMode(Project::Graphics::windowMode());
+		GameWindow::_setVsync(Project::Graphics::vsync());
 		setupCallbacks();
 
 		glClearColor(0, 0, 0, 1);
@@ -109,15 +107,21 @@ namespace Tristeon
 		return _windowHeight();
 	}
 
-	bool GameWindow::_fullscreen()
+	void GameWindow::_setVsync(const bool& value)
 	{
-		return _isFullscreen;
+		glfwSwapInterval(value);
 	}
 
-	void GameWindow::_setFullscreen(const bool& value)
+	void GameWindow::_setResolution(const VectorU& resolution)
 	{
-		_isFullscreen = value;
-		
+		glfwSetWindowSize(_window, resolution.x, resolution.y);
+		_width = resolution.x;
+		_height = resolution.y;
+		glViewport(0, 0, _width, _height);
+	}
+
+	void GameWindow::_setWindowMode(const Project::Graphics::WindowMode& value)
+	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
@@ -132,24 +136,29 @@ namespace Tristeon
 			_height = mode->height;
 		}
 		
-		if (value)
-			glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
-		else
-			glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+		switch (value)
+		{
+			case Project::Graphics::WindowMode::Windowed:
+			{
+				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_TRUE);
+					
+				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+				glfwMaximizeWindow(_window);
+				break;
+			}
+			case Project::Graphics::WindowMode::Borderless: 
+			{
+				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_FALSE);
+				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+				break;
+			}
+			case Project::Graphics::WindowMode::Fullscreen: 
+			{
+				glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+				break;
+			}
+		}
 
-		glViewport(0, 0, _width, _height);
-	}
-
-	void GameWindow::_setVsync(const bool& value)
-	{
-		glfwSwapInterval(value);
-	}
-
-	void GameWindow::_setResolution(const VectorU& resolution)
-	{
-		glfwSetWindowSize(_window, resolution.x, resolution.y);
-		_width = resolution.x;
-		_height = resolution.y;
 		glViewport(0, 0, _width, _height);
 	}
 

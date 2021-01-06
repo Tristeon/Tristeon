@@ -1,7 +1,7 @@
 {
     "firstScene": "Scene",
     "graphics": {
-        "fullscreen": true,
+        "windowMode": 1,
         "maxFPS": 60,
         "preferredResolution": {
             "x": 0,

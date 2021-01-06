@@ -19,6 +19,7 @@ namespace Tristeon
 	 */
 	class Window : private Singleton<Window>
 	{
+		friend Project::Graphics;
 		friend Singleton<Window>;
 		friend class Engine;
 	public:
@@ -77,44 +78,6 @@ namespace Tristeon
 		[[nodiscard]] static VectorU worldToScreen(const Vector& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
 
 		/**
-		 * Returns true if the window is fullscreen, false if it's not
-		 */
-		[[nodiscard]] static bool fullScreen() { return instance()->_fullscreen(); }
-
-		/**
-		 * Sets the window's runtime fullscreen status.
-		 * This doesn't affect the project's settings, use Project::Graphics::setFullscreen() to affect both runtime and project settings.
-		 */
-		static void setFullscreen(const bool& value) { instance()->_setFullscreen(value); }
-
-		/**
-		 * Returns true if vsync is enabled.
-		 */
-		[[nodiscard]] static bool vsync() { return instance()->_vsync; }
-
-		/**
-		 * Sets the window's runtime vsync status.
-		 * This doesn't affect the project's settings, use Project::Graphics::setVsync() to affect both runtime and project settings.
-		 */
-		static void setVsync(const bool& value) { instance()->_vsync = value; instance()->_setVsync(value); }
-
-		/**
-		 * The maximum number of frames per second.
-		 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
-		 * If the value is set to 0, the engine runs as if there were no limit.
-		 */
-		[[nodiscard]] static unsigned int maxFPS() { return instance()->_maxFPS; }
-
-		/**
-		 * Set the maximum number of frames per second.
-		 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
-		 * If the value is set to 0, the engine runs as if there were no limit.
-		 * 
-		 * This doesn't affect the project's settings, use Project::Graphics::setMaxFPS() to affect both runtime and project settings.
-		 */
-		static void setMaxFPS(const unsigned int& fps) { instance()->_maxFPS = fps; }
-		
-		/**
 		 * Closes the window and the application.
 		 */
 		static void close() { instance()->_close(); }
@@ -133,12 +96,6 @@ namespace Tristeon
 		 * Returns a set of the resolutions available to the current monitor.
 		 */
 		static std::set<VectorU> availableResolutions() { return instance()->_resolutions; }
-
-		/**
-		 * Sets the window's current resolution.
-		 * This doesn't affect the project's settings, use Project::Graphics::setPreferredResolution() to affect both runtime and project settings.
-		 */
-		static void setResolution(const VectorU& resolution) { return instance()->_setResolution(resolution); }
 	protected:
 		/**
 		 * Iterates over the event queues and sends each event to their respective classes (Mouse, Keyboard, Gamepad)
@@ -157,8 +114,7 @@ namespace Tristeon
 		virtual unsigned int _gameWidth() = 0;
 		virtual unsigned int _gameHeight() = 0;
 		
-		virtual bool _fullscreen() = 0;
-		virtual void _setFullscreen(const bool& value) = 0;
+		virtual void _setWindowMode(const Project::Graphics::WindowMode& mode) = 0;
 		virtual void _setVsync(const bool& value) = 0;
 		virtual void _setResolution(const VectorU& resolution) = 0;
 
@@ -177,8 +133,6 @@ namespace Tristeon
 	private:
 		void populateResolutions();
 		
-		bool _vsync;
-		unsigned int _maxFPS;
 		std::set<VectorU> _resolutions;
 	};
 }

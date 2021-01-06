@@ -71,8 +71,8 @@ namespace Tristeon
 
 	void Sprite::render()
 	{
-	    if (!_texture)
-	        return;
+		if (!_texture)
+			return;
 
 		auto* shader = getShader();
 		

@@ -43,20 +43,20 @@ namespace Tristeon
 		_graphics._vsync = value;
 		_data["graphics"]["vsync"] = value;
 		save();
-		Window::setVsync(value);
+		Window::instance()->_setVsync(value);
 	}
 
-	bool Project::Graphics::fullscreen()
+	Project::Graphics::WindowMode Project::Graphics::windowMode()
 	{
-		return _graphics._fullScreen;
+		return _graphics._windowMode;
 	}
 
-	void Project::Graphics::setFullscreen(const bool& value)
+	void Project::Graphics::setWindowMode(const WindowMode& value)
 	{
-		_graphics._fullScreen = value;
-		_data["graphics"]["fullscreen"] = value;
+		_graphics._windowMode = value;
+		_data["graphics"]["windowMode"] = value;
 		save();
-		Window::setFullscreen(value);
+		Window::instance()->_setWindowMode(value);
 	}
 
 	VectorU Project::Graphics::preferredResolution()
@@ -69,7 +69,7 @@ namespace Tristeon
 		_graphics._preferredResolution = value;
 		_data["graphics"]["preferredResolution"] = value;
 		save();
-		Window::setResolution(value);
+		Window::instance()->_setResolution(value);
 	}
 
 	unsigned Project::Graphics::maxFPS()
@@ -82,7 +82,6 @@ namespace Tristeon
 		_graphics._maxFPS = value;
 		_data["graphics"]["maxFPS"] = value;
 		save();
-		Window::setMaxFPS(value);
 	}
 
 	float Project::Physics::fixedDeltaTime()
@@ -127,7 +126,7 @@ namespace Tristeon
 			_graphics._tileHeight = graphics.value("tileHeight", 64u);
 
 			_graphics._vsync = graphics.value("vsync", false);
-			_graphics._fullScreen = graphics.value("fullscreen", true);
+			_graphics._windowMode = graphics.value("windowMode", Graphics::WindowMode::Fullscreen);
 			_graphics._preferredResolution = graphics.value("preferredResolution", VectorI{ 0, 0 });
 			_graphics._maxFPS = graphics.value("maxFPS", 0);
 		}

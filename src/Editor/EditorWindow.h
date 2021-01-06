@@ -1,7 +1,7 @@
 #pragma once
+#ifdef TRISTEON_EDITOR
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
-#ifdef TRISTEON_EDITOR
 #include "GameView.h"
 #include <queue>
 #include <Window.h>
@@ -34,10 +34,8 @@ namespace TristeonEditor
 		unsigned int _gameWidth() override;
 		unsigned int _gameHeight() override;
 
-		bool _fullscreen() override;
-		void _setFullscreen(bool const& value) override;
-
 		void _setVsync(const bool& value) override;
+		void _setWindowMode(const Tristeon::Project::Graphics::WindowMode& mode) override;
 		void _setResolution(const Tristeon::VectorU& resolution) override;
 
 		void _close() override;

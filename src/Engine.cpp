@@ -30,11 +30,6 @@ namespace Tristeon
 	{
 		Window::pollEvents();
 
-#ifndef TRISTEON_EDITOR
-		Project::loadBuild();
-		AssetDatabase::load();
-#endif
-
 		_renderer = std::make_unique<Renderer>();
 		_physics = std::make_unique<PhysicsWorld>();
 		_audio = std::make_unique<Audio>();
