@@ -3,6 +3,8 @@
 ![License-MIT](https://img.shields.io/github/license/Tristeon/Tristeon)
 [![Discord](https://img.shields.io/static/v1?label=Discord&message=Join%20The%20Discord!&color=white&logo=discord)](https://discord.gg/SyeHrsC)
 
+![WIP Editor](https://i.imgur.com/r0YxMIB.png)
+
 Tristeon is an open-source game engine built for 2D tile-based games. It is designed to promote development efficiency, enabling quick prototyping and reducing game development time. The code architecture is designed to be easy to understand and maintain, so modifying the engine to fit your needs shouldn't be an issue.
 
 ## Getting started
