@@ -17,8 +17,8 @@ We aim to simplify building Tristeon as much as we possibly can. This process is
 - Windows | MSVC 2019 | x64
 - Windows | MSVC 2019 (LLVM clang-cl) | x64
 
-- Linux | GCC | x64
-- Linux | Clang | x64 (built, not tested)
+- Ubuntu 20.04 (LTS) | GCC | x64
+- Ubuntu 20.04 (LTS)| Clang | x64 (built, not tested)
 
 ### Building the project
 
