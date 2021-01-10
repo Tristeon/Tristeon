@@ -8,7 +8,7 @@ namespace Tristeon
 	class Time
 	{
 		friend class Engine;
-		friend class Project;
+		friend class Settings;
 	public:
 		/**
 		 * The delta time of a single frame in milliseconds.

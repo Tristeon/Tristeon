@@ -2,7 +2,7 @@
 #include "glad/glad.h"
 #include "GameWindow.h"
 
-#include "Project.h"
+#include "Settings.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 #include "Input/Gamepad.h"
@@ -38,9 +38,9 @@ namespace Tristeon
 		}
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 
-		GameWindow::_setWindowMode(Project::Graphics::windowMode());
-		GameWindow::_setDisplay(Project::Graphics::preferredDisplay());
-		GameWindow::_setVsync(Project::Graphics::vsync());
+		GameWindow::_setWindowMode(Settings::Graphics::windowMode());
+		GameWindow::_setDisplay(Settings::Graphics::preferredDisplay());
+		GameWindow::_setVsync(Settings::Graphics::vsync());
 		setupCallbacks();
 
 		glClearColor(0, 0, 0, 1);
@@ -84,7 +84,7 @@ namespace Tristeon
 			Renderer::instance()->render(0);
 		}
 
-		glfwSwapInterval(Project::Graphics::vsync());
+		glfwSwapInterval(Settings::Graphics::vsync());
 		glfwSwapBuffers(_window);
 	}
 
@@ -121,7 +121,7 @@ namespace Tristeon
 		glViewport(0, 0, _width, _height);
 	}
 
-	void GameWindow::_setWindowMode(const Project::Graphics::WindowMode& value)
+	void GameWindow::_setWindowMode(const Settings::Graphics::WindowMode& value)
 	{
 		//Get available monitors
 		int count = 0;
@@ -131,10 +131,10 @@ namespace Tristeon
 
 		//Attempt to get preferred monitor, otherwise use primary display
 		GLFWmonitor* monitor = nullptr;
-		if (Project::Graphics::preferredDisplay() >= count)
+		if (Settings::Graphics::preferredDisplay() >= count)
 			monitor = glfwGetPrimaryMonitor();
 		else 
-			monitor = monitors[count - Project::Graphics::preferredDisplay() - 1];
+			monitor = monitors[count - Settings::Graphics::preferredDisplay() - 1];
 
 		updateDisplay(monitor, value);
 	}
@@ -153,7 +153,7 @@ namespace Tristeon
 		}
 
 		GLFWmonitor* selectedMonitor = monitors[count - monitor - 1];
-		updateDisplay(selectedMonitor, Project::Graphics::windowMode());
+		updateDisplay(selectedMonitor, Settings::Graphics::windowMode());
 		populateResolutions(monitor);
 	}
 
@@ -245,14 +245,14 @@ namespace Tristeon
 		}
 	}
 
-	void GameWindow::updateDisplay(GLFWmonitor* monitor, const Project::Graphics::WindowMode& windowmode)
+	void GameWindow::updateDisplay(GLFWmonitor* monitor, const Settings::Graphics::WindowMode& windowmode)
 	{
 		//Get monitor and adjust width/height appropriately
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		if (Project::Graphics::preferredResolution() != VectorU::zero())
+		if (Settings::Graphics::preferredResolution() != VectorU::zero())
 		{
-			_width = Project::Graphics::preferredResolution().x;
-			_height = Project::Graphics::preferredResolution().y;
+			_width = Settings::Graphics::preferredResolution().x;
+			_height = Settings::Graphics::preferredResolution().y;
 		}
 		else
 		{
@@ -262,7 +262,7 @@ namespace Tristeon
 
 		switch (windowmode)
 		{
-			case Project::Graphics::WindowMode::Windowed:
+			case Settings::Graphics::WindowMode::Windowed:
 			{
 				//Enable windowed mode and decoration
 				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_TRUE);
@@ -275,7 +275,7 @@ namespace Tristeon
 				glfwSetWindowSize(_window, _width, _height);
 				break;
 			}
-			case Project::Graphics::WindowMode::Borderless:
+			case Settings::Graphics::WindowMode::Borderless:
 			{
 				//Enable windowed mode but disable decoration
 				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_FALSE);
@@ -289,7 +289,7 @@ namespace Tristeon
 				glfwMaximizeWindow(_window);
 				break;
 			}
-			case Project::Graphics::WindowMode::Fullscreen:
+			case Settings::Graphics::WindowMode::Fullscreen:
 			{
 				//Enable fullscreen mode
 				glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
@@ -384,7 +384,7 @@ namespace Tristeon
 			for (unsigned int i = 0; i < count; i++)
 			{
 				if (monitor == monitors[i] && i == Window::currentDisplay())
-					Project::Graphics::setPreferredDisplay(0);
+					Settings::Graphics::setPreferredDisplay(0);
 			}
 		}
 	}

@@ -101,7 +101,7 @@ namespace Tristeon
 		//Set range & position params
 		AUDIO_ASSERT(alSourcef(source, AL_REFERENCE_DISTANCE, minimumRange));
 		AUDIO_ASSERT(alSourcef(source, AL_MAX_DISTANCE, maximumRange));
-		AUDIO_ASSERT(alSource3f(source, AL_POSITION, position.x, position.y, -(int)Project::Graphics::tileWidth()));
+		AUDIO_ASSERT(alSource3f(source, AL_POSITION, position.x, position.y, -(int)Settings::Graphics::tileWidth()));
 		AUDIO_ASSERT(alSourcei(source, AL_SOURCE_RELATIVE, AL_FALSE));
 
 		//Play, add and return
@@ -127,7 +127,7 @@ namespace Tristeon
 
 	void Audio::setPosition(const Handle& handle, const Vector& position)
 	{
-		AUDIO_ASSERT(alSource3f(handle.idx, AL_POSITION, position.x, position.y, -Project::Graphics::tileWidth()));
+		AUDIO_ASSERT(alSource3f(handle.idx, AL_POSITION, position.x, position.y, -Settings::Graphics::tileWidth()));
 	}
 
 	void Audio::addSource(const Handle& handle, const bool& looping)

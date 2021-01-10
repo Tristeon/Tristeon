@@ -1,5 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "Project.h"
+#include "Settings.h"
 #include "Animations/AnimationClip.h"
 #include "AssetManagement/AssetDatabase.h"
 #include "Serialization/JsonSerializer.h"
@@ -36,9 +36,9 @@ namespace TristeonEditor
 
 	void MenuBar::createScene()
 	{
-		QDir const baseDir(Tristeon::Project::assetPath().c_str());
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Project::assetPath().c_str(), "*.scene");
+		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Settings::assetPath().c_str(), "*.scene");
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())
@@ -52,9 +52,9 @@ namespace TristeonEditor
 
 	void MenuBar::createTileset()
 	{
-		QDir const baseDir(Tristeon::Project::assetPath().c_str());
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Project::assetPath().c_str(), "*.tileset");
+		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Settings::assetPath().c_str(), "*.tileset");
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())
@@ -69,9 +69,9 @@ namespace TristeonEditor
 
 	void MenuBar::createAnimationClip()
 	{
-		QDir const baseDir(Tristeon::Project::assetPath().c_str());
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Project::assetPath().c_str(), "*.clip");
+		QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Settings::assetPath().c_str(), "*.clip");
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())
@@ -85,9 +85,9 @@ namespace TristeonEditor
 
 	void MenuBar::openScene()
 	{
-		QDir const baseDir(Tristeon::Project::assetPath().c_str());
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-		QString const path = QFileDialog::getOpenFileName(this, tr("Find Files"), Tristeon::Project::assetPath().c_str(), "*.scene");
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Files"), Tristeon::Settings::assetPath().c_str(), "*.scene");
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())
@@ -100,9 +100,9 @@ namespace TristeonEditor
 	{
 		if (Tristeon::SceneManager::current()->path().empty())
 		{
-			QDir const baseDir(Tristeon::Project::assetPath().c_str());
+			QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-			QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Project::assetPath().c_str(), "*.scene");
+			QString const path = QFileDialog::getSaveFileName(this, tr("Find Files"), Tristeon::Settings::assetPath().c_str(), "*.scene");
 			QString const localPath = baseDir.relativeFilePath(path);
 			QString const fileName = QFileInfo(path).baseName();
 			if (path.isEmpty() || localPath.isEmpty())

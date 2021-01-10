@@ -86,6 +86,6 @@ namespace Tristeon
 	void AudioSource::lateUpdate()
 	{
 		//Update position
-		AUDIO_ASSERT(alSource3f(_handle, AL_POSITION, actor()->position.x, actor()->position.y, -(int)Project::Graphics::tileWidth())); //The z distance helps create smoother interactions since OpenAL isn't normally built for 2D audio
+		AUDIO_ASSERT(alSource3f(_handle, AL_POSITION, actor()->position.x, actor()->position.y, -(int)Settings::Graphics::tileWidth())); //The z distance helps create smoother interactions since OpenAL isn't normally built for 2D audio
 	}
 }

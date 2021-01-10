@@ -1,6 +1,6 @@
 #include "Grid.h"
 
-#include "Project.h"
+#include "Settings.h"
 #include "Shader.h"
 
 #include <glad/glad.h>
@@ -10,12 +10,12 @@ namespace Tristeon
 {
 	unsigned int Grid::tileWidth()
 	{
-		return Project::Graphics::tileWidth();
+		return Settings::Graphics::tileWidth();
 	}
 
 	unsigned int Grid::tileHeight()
 	{
-		return Project::Graphics::tileHeight();
+		return Settings::Graphics::tileHeight();
 	}
 
 	VectorI Grid::tileSize()

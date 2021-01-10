@@ -1,6 +1,6 @@
 ﻿#include "Importer.h"
 
-#include "Project.h"
+#include "Settings.h"
 #include "AssetManagement/MetaFiles/MetaFile.h"
 #include "Serialization/JsonSerializer.h"
 #include "Serialization/Register.h"
@@ -27,11 +27,11 @@ void Importer::import(std::filesystem::path assetPath)
 	JsonSerializer::serialize(assetPath.string() + ".meta", metaFile.get());
 }
 
-void Importer::scanProject()
+void Importer::scanAssets()
 {
 	List<fs::path> metaFilesToRemove;
 	
-	for (auto& directoryEntry : fs::recursive_directory_iterator(Project::assetPath()))
+	for (auto& directoryEntry : fs::recursive_directory_iterator(Settings::assetPath()))
 	{
 		auto path = directoryEntry.path();
 		if (path.extension().string() == ".meta")

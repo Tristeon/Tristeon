@@ -124,7 +124,7 @@ namespace TristeonEditor
 		GameView::instance()->setFormat(f);
 	}
 
-	void EditorWindow::_setWindowMode(const Tristeon::Project::Graphics::WindowMode& mode)
+	void EditorWindow::_setWindowMode(const Tristeon::Settings::Graphics::WindowMode& mode)
 	{
 		//Do nothing because the editor window should always stay windowed
 	}

@@ -1,4 +1,4 @@
-#include "Project.h"
+#include "Settings.h"
 
 #include <json.h>
 
@@ -7,23 +7,23 @@
 
 namespace Tristeon
 {
-	Project::Graphics Project::_graphics;
-	Project::Physics Project::_physics;
-	String Project::_assetPath;
-	String Project::_firstScene;
-	json Project::_data;
+	Settings::Graphics Settings::_graphics;
+	Settings::Physics Settings::_physics;
+	String Settings::_assetPath;
+	String Settings::_firstScene;
+	json Settings::_data;
 	
-	String Project::assetPath()
+	String Settings::assetPath()
 	{
 		return _assetPath;
 	}
 
-	String Project::firstSceneName()
+	String Settings::firstSceneName()
 	{
 		return _firstScene;
 	}
 
-	json Project::serialize()
+	json Settings::serialize()
 	{
 		json j;
 		j["firstScene"] = _firstScene;
@@ -42,7 +42,7 @@ namespace Tristeon
 		return j;
 	}
 
-	void Project::deserialize(json j)
+	void Settings::deserialize(json j)
 	{
 		_firstScene = j.value("firstScene", "Scene");
 		if (_firstScene.empty())
@@ -69,22 +69,22 @@ namespace Tristeon
 		}
 	}
 
-	unsigned Project::Graphics::tileWidth()
+	unsigned Settings::Graphics::tileWidth()
 	{
 		return _graphics._tileWidth;
 	}
 
-	unsigned Project::Graphics::tileHeight()
+	unsigned Settings::Graphics::tileHeight()
 	{
 		return _graphics._tileHeight;
 	}
 
-	bool Project::Graphics::vsync()
+	bool Settings::Graphics::vsync()
 	{
 		return _graphics._vsync;
 	}
 
-	void Project::Graphics::setVsync(const bool& value)
+	void Settings::Graphics::setVsync(const bool& value)
 	{
 		_graphics._vsync = value;
 		_data["graphics"]["vsync"] = value;
@@ -92,12 +92,12 @@ namespace Tristeon
 		Window::instance()->_setVsync(value);
 	}
 
-	Project::Graphics::WindowMode Project::Graphics::windowMode()
+	Settings::Graphics::WindowMode Settings::Graphics::windowMode()
 	{
 		return _graphics._windowMode;
 	}
 
-	void Project::Graphics::setWindowMode(const WindowMode& value)
+	void Settings::Graphics::setWindowMode(const WindowMode& value)
 	{
 		_graphics._windowMode = value;
 		_data["graphics"]["windowMode"] = value;
@@ -105,12 +105,12 @@ namespace Tristeon
 		Window::instance()->_setWindowMode(value);
 	}
 
-	VectorU Project::Graphics::preferredResolution()
+	VectorU Settings::Graphics::preferredResolution()
 	{
 		return _graphics._preferredResolution;
 	}
 
-	void Project::Graphics::setPreferredResolution(const VectorU& value)
+	void Settings::Graphics::setPreferredResolution(const VectorU& value)
 	{
 		_graphics._preferredResolution = value;
 		_data["graphics"]["preferredResolution"] = value;
@@ -118,24 +118,24 @@ namespace Tristeon
 		Window::instance()->_setResolution(value);
 	}
 
-	unsigned Project::Graphics::maxFPS()
+	unsigned Settings::Graphics::maxFPS()
 	{
 		return _graphics._maxFPS;
 	}
 
-	void Project::Graphics::setMaxFPS(const unsigned& value)
+	void Settings::Graphics::setMaxFPS(const unsigned& value)
 	{
 		_graphics._maxFPS = value;
 		_data["graphics"]["maxFPS"] = value;
 		save();
 	}
 
-	unsigned Project::Graphics::preferredDisplay()
+	unsigned Settings::Graphics::preferredDisplay()
 	{
 		return _graphics._preferredDisplay;
 	}
 
-	void Project::Graphics::setPreferredDisplay(const unsigned& display)
+	void Settings::Graphics::setPreferredDisplay(const unsigned& display)
 	{
 		_graphics._preferredDisplay = display;
 		_data["graphics"]["preferredDisplay"] = display;
@@ -143,17 +143,17 @@ namespace Tristeon
 		Window::instance()->_setDisplay(display);
 	}
 
-	float Project::Physics::fixedDeltaTime()
+	float Settings::Physics::fixedDeltaTime()
 	{
 		return _physics._fixedDeltaTime;
 	}
 
-	unsigned Project::Physics::pixelsPerMeter()
+	unsigned Settings::Physics::pixelsPerMeter()
 	{
 		return _physics._pixelsPerMeter;
 	}
 
-	void Project::loadBuild()
+	void Settings::loadBuild()
 	{
 		json const file = JsonSerializer::load("build.json");
 
@@ -161,7 +161,7 @@ namespace Tristeon
 		load(projectName + "/");
 	}
 
-	void Project::load(const String& folder)
+	void Settings::load(const String& folder)
 	{
 		auto const file = JsonSerializer::load(folder + "settings.tristeon");
 
@@ -178,7 +178,7 @@ namespace Tristeon
 		_assetPath = folder;
 	}
 
-	void Project::save()
+	void Settings::save()
 	{
 		JsonSerializer::save(_assetPath + "settings.tristeon", _data);
 	}

@@ -2,7 +2,7 @@
 #include <Utils/Singleton.h>
 #include <Math/Vector.h>
 
-#include "Project.h"
+#include "Settings.h"
 #include <set>
 
 namespace Tristeon
@@ -19,7 +19,7 @@ namespace Tristeon
 	 */
 	class Window : private Singleton<Window>
 	{
-		friend Project::Graphics;
+		friend Settings::Graphics;
 		friend Singleton<Window>;
 		friend class Engine;
 	public:
@@ -124,7 +124,7 @@ namespace Tristeon
 		virtual unsigned int _gameWidth() = 0;
 		virtual unsigned int _gameHeight() = 0;
 		
-		virtual void _setWindowMode(const Project::Graphics::WindowMode& mode) = 0;
+		virtual void _setWindowMode(const Settings::Graphics::WindowMode& mode) = 0;
 		virtual void _setVsync(const bool& value) = 0;
 		virtual void _setResolution(const VectorU& resolution) = 0;
 		virtual void _setDisplay(const unsigned int& display) = 0;

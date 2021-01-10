@@ -1,5 +1,5 @@
 #ifdef TRISTEON_EDITOR
-#include "Project.h"
+#include "Settings.h"
 #include "JsonFileEditor.h"
 #include "Serialization/JsonSerializer.h"
 #include "Editor/EditorFields.h"

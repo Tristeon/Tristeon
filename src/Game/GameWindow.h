@@ -19,7 +19,7 @@ namespace Tristeon
 		unsigned _gameHeight() override;
 		void _setVsync(const bool& value) override;
 		void _setResolution(const VectorU& resolution) override;
-		void _setWindowMode(const Project::Graphics::WindowMode& value) override;
+		void _setWindowMode(const Settings::Graphics::WindowMode& value) override;
 		void _setDisplay(const unsigned& monitor) override;
 		unsigned int _currentDisplay() override;
 		void _close() override;
@@ -32,7 +32,7 @@ namespace Tristeon
 	private:
 		void setupCallbacks();
 
-		void updateDisplay(GLFWmonitor* monitor, const Project::Graphics::WindowMode& windowmode);
+		void updateDisplay(GLFWmonitor* monitor, const Settings::Graphics::WindowMode& windowmode);
 		
 		static void errorCallback(int error, const char* description);
 		static void framebufferSizeCallback(GLFWwindow* window, int width, int height);

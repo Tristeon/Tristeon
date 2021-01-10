@@ -7,7 +7,7 @@
 #include <Collector.h>
 #include <Callbacks/IInit.h>
 #include "Engine.h"
-#include "Project.h"
+#include "Settings.h"
 
 namespace Tristeon
 {
@@ -50,7 +50,7 @@ namespace Tristeon
 			throw std::invalid_argument("Filepath can't be empty!");
 
 		json const data = scene->serialize();
-		JsonSerializer::save(Project::assetPath() + filepath, data);
+		JsonSerializer::save(Settings::assetPath() + filepath, data);
 
 		AssetDatabase::add(filepath);
 	}
@@ -86,7 +86,7 @@ namespace Tristeon
 				sceneLoaded.invoke(_current.get());
 				return;
 			}
-			toLoad = JsonSerializer::load(Project::assetPath() + path);
+			toLoad = JsonSerializer::load(Settings::assetPath() + path);
 		}
 		else //Don't load a scene if there's nothing to load
 		{

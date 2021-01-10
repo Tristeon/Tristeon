@@ -38,9 +38,9 @@ namespace TristeonEditor
 		layout->addWidget(changeTexture);
 		connect(changeTexture, &QPushButton::clicked, this, [&]()
 			{
-				QDir const baseDir(Tristeon::Project::assetPath().c_str());
+				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Project::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
+				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
 				QString const localPath = baseDir.relativeFilePath(path);
 				QString const fileName = QFileInfo(path).baseName();
 				if (path.isEmpty() || localPath.isEmpty())
@@ -66,7 +66,7 @@ namespace TristeonEditor
 		frameLayout->addWidget(image);
 		image->show();
 		image->setAlignment(Qt::AlignCenter);
-		image->setPixmap(QPixmap((Tristeon::Project::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 		image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 		image->adjustSize();
 
@@ -106,7 +106,7 @@ namespace TristeonEditor
 		selectedTile = -1;
 		selectedTileChanged();
 
-		image->setPixmap(QPixmap((Tristeon::Project::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 		image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 		image->adjustSize();
 	}

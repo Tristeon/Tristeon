@@ -7,7 +7,7 @@
 #include <QtUiTools/QtUiTools>
 
 #include <ctime>
-#include "Project.h"
+#include "Settings.h"
 #include <Utils/Console.h>
 
 #include <Editor/Editor.h>
@@ -117,7 +117,7 @@ void showProjectWindow(int argc, char** argv)
 	TristeonEditor::ProjectWindow projectWindow;
 	QApplication::exec();
 
-	if (Tristeon::Project::assetPath().empty())
+	if (Tristeon::Settings::assetPath().empty())
 		exit(0);
 }
 

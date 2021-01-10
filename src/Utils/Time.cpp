@@ -1,5 +1,5 @@
 #include "Time.h"
-#include "Project.h"
+#include "Settings.h"
 
 namespace Tristeon
 {
@@ -13,7 +13,7 @@ namespace Tristeon
 
 	float Time::fixedDeltaTime()
 	{
-		return Project::Physics::fixedDeltaTime();
+		return Settings::Physics::fixedDeltaTime();
 	}
 
 	unsigned int Time::fps()

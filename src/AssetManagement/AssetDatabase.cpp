@@ -1,6 +1,6 @@
 #include "AssetManagement/AssetDatabase.h"
 #include <Serialization/JsonSerializer.h>
-#include "Project.h"
+#include "Settings.h"
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -69,7 +69,7 @@ namespace Tristeon
 
 	void AssetDatabase::detectAll()
 	{
-		readDir(Project::assetPath());
+		readDir(Settings::assetPath());
 	}
 
 	void AssetDatabase::readDir(String const& dir)
@@ -87,7 +87,7 @@ namespace Tristeon
 				if (assets.find(entry.path().extension().string()) == assets.end())
 					assets[entry.path().extension().string()] = List<String>();
 
-				assets[entry.path().extension().string()].add(relative(entry.path(), std::filesystem::path(Project::assetPath())).string());
+				assets[entry.path().extension().string()].add(relative(entry.path(), std::filesystem::path(Settings::assetPath())).string());
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 #ifdef TRISTEON_EDITOR
 #include "AnimationSpriteEditor.h"
-#include "Project.h"
+#include "Settings.h"
 
 namespace TristeonEditor
 {
@@ -29,9 +29,9 @@ namespace TristeonEditor
 
 	void AnimationSpriteEditor::loadAnimationClip()
 	{
-		QDir const baseDir(Tristeon::Project::assetPath().c_str());
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
-		QString const path = QFileDialog::getOpenFileName(this, tr("Find Animation Clip"), Tristeon::Project::assetPath().c_str(), "*.clip");
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Animation Clip"), Tristeon::Settings::assetPath().c_str(), "*.clip");
 		QString const localPath = baseDir.relativeFilePath(path);
 		QString const fileName = QFileInfo(path).baseName();
 		if (path.isEmpty() || localPath.isEmpty())

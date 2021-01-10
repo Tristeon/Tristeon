@@ -3,7 +3,7 @@
 
 #include "GameView.h"
 #include <Engine.h>
-#include <Project.h>
+#include <Settings.h>
 
 #include <Scenes/Scene.h>
 #include <Scenes/SceneManager.h>

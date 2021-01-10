@@ -35,7 +35,7 @@ namespace TristeonEditor
 		unsigned int _gameHeight() override;
 
 		void _setVsync(const bool& value) override;
-		void _setWindowMode(const Tristeon::Project::Graphics::WindowMode& mode) override;
+		void _setWindowMode(const Tristeon::Settings::Graphics::WindowMode& mode) override;
 		void _setResolution(const Tristeon::VectorU& resolution) override;
 		void _setDisplay(const unsigned& display) override;
 		unsigned _currentDisplay() override;

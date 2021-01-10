@@ -15,11 +15,11 @@ namespace TristeonEditor
 namespace Tristeon
 {
 	/**
-	 * Project is the main interface for interacting with a project's settings, filepaths, etc.
+	 * Settings is the main interface for interacting with graphics and physics settings.
 	 *
 	 * Some of these properties are also available through other class interfaces like Grid.
 	 */
-	class Project
+	class Settings
 	{
 		friend class Engine;
 		friend class Graphics;
@@ -32,7 +32,7 @@ namespace Tristeon
 
 	public:
 		/**
-		 * The path to the project.
+		 * The path to the asset folder.
 		 */
 		[[nodiscard]] static String assetPath();
 		/**
@@ -54,7 +54,7 @@ namespace Tristeon
 		
 		class Graphics
 		{
-			friend Project;
+			friend Settings;
 		public:
 			/**
 			 * The width of tiles in pixels.
@@ -70,7 +70,7 @@ namespace Tristeon
 			 */
 			[[nodiscard]] static bool vsync();
 			/**
-			 * Enable/disable vsync in the Project's settings and for the runtime window.
+			 * Enable/disable vsync in the settings and for the runtime window.
 			 */
 			static void setVsync(const bool& value);
 
@@ -100,7 +100,7 @@ namespace Tristeon
 			 */
 			[[nodiscard]] static WindowMode windowMode();
 			/**
-			 * Set the window mode in the Project's settings and the runtime window.
+			 * Set the window mode in the settings and the runtime window.
 			 */
 			static void setWindowMode(const WindowMode& value);
 			
@@ -128,7 +128,7 @@ namespace Tristeon
 			 * If frames render faster than this, then the update loop waits at the end of the frame until enough time has past.
 			 * If the value is set to 0, the engine runs as if there were no limit.
 			 *
-			 * This affects both the Project's and the runtime's settings.
+			 * This affects both the settings and the runtime property.
 			 */
 			static void setMaxFPS(const unsigned int& value);
 
@@ -161,7 +161,7 @@ namespace Tristeon
 
 		class Physics
 		{
-			friend Project;
+			friend Settings;
 		public:
 			/**
 			 * The time between fixed frames.

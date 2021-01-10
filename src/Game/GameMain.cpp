@@ -1,5 +1,5 @@
-#include "AssetManagement/AssetDatabase.h"
 #ifndef TRISTEON_EDITOR
+#include "AssetManagement/AssetDatabase.h"
 #include "Engine.h"
 #include "GameWindow.h"
 
@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
 	Tristeon::Console::init();
 	
-	Tristeon::Project::loadBuild();
+	Tristeon::Settings::loadBuild();
 	Tristeon::AssetDatabase::load();
 
 	Tristeon::GameWindow window;

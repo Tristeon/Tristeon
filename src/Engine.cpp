@@ -15,7 +15,7 @@
 #include <Callbacks/IUpdate.h>
 
 #include "Scenes/Actors/Actor.h"
-#include "Project.h"
+#include "Settings.h"
 #include "AssetManagement/AssetDatabase.h"
 #include "Scenes/Scene.h"
 #include "Utils/Time.h"
@@ -40,14 +40,14 @@ namespace Tristeon
 			_playModeDirty = true;
 		};
 
-		SceneManager::load(Project::firstSceneName());
+		SceneManager::load(Settings::firstSceneName());
 		SceneManager::processCachedLoad();
 		
 		if (SceneManager::current() == nullptr) //Create an empty scene with firstSceneName()
 		{
 			Scene empty;
-			SceneManager::save(&empty, Project::firstSceneName() + ".scene");
-			SceneManager::load(Project::firstSceneName());
+			SceneManager::save(&empty, Settings::firstSceneName() + ".scene");
+			SceneManager::load(Settings::firstSceneName());
 		}
 		
 		SceneManager::current()->safeCleanup();
@@ -66,16 +66,16 @@ namespace Tristeon
 			float deltaTime = (float)duration.count() / 1000.0f; //Convert to ms
 
 			//Account for fps limit
-			if (Project::Graphics::maxFPS() != 0)
+			if (Settings::Graphics::maxFPS() != 0)
 			{
-				microseconds targetMicroSeconds = 1000000us / Project::Graphics::maxFPS();
+				microseconds targetMicroSeconds = 1000000us / Settings::Graphics::maxFPS();
 				if (duration < targetMicroSeconds)
 				{
 					//Sleep if we're running too fast
 					microseconds sleepTime{ (targetMicroSeconds - duration) };
 					std::this_thread::sleep_for(sleepTime);
 
-					deltaTime = 1000.0f / (float)Project::Graphics::maxFPS();
+					deltaTime = 1000.0f / (float)Settings::Graphics::maxFPS();
 					lastTime = high_resolution_clock::now();
 				}
 			}
@@ -104,13 +104,13 @@ namespace Tristeon
 				}
 				
 				fixedUpdateTime += deltaTime;
-				while (fixedUpdateTime > Project::Physics::fixedDeltaTime()) 
+				while (fixedUpdateTime > Settings::Physics::fixedDeltaTime()) 
 				{
 					_physics->update();
 					SceneManager::current()->safeCleanup();
 					for (auto* fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
 					SceneManager::current()->safeCleanup();
-					fixedUpdateTime -= Project::Physics::fixedDeltaTime();
+					fixedUpdateTime -= Settings::Physics::fixedDeltaTime();
 				}
 
 				for (auto* early : Collector<IEarlyUpdate>::all()) early->earlyUpdate();

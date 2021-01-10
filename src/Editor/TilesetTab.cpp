@@ -23,7 +23,7 @@ TristeonEditor::TilesetTab::TilesetTab(const String& tilesetPath)
 	//Display tileset
 	image = new QLabel(this);
 	image->setAlignment(Qt::AlignCenter);
-	image->setPixmap(QPixmap((Project::assetPath() + tileset->texturePath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+	image->setPixmap(QPixmap((Settings::assetPath() + tileset->texturePath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 	image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 	image->adjustSize();
 

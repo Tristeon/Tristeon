@@ -2,7 +2,7 @@
 #include "Palette.h"
 #include "EditorFields.h"
 #include "Scenes/Scene.h"
-#include "Project.h"
+#include "Settings.h"
 #include "ProjectWindow.h"
 #include <quiloader.h>
 #include <QtUiTools>
@@ -139,7 +139,7 @@ namespace TristeonEditor
 			return;
 		}
 
-		json const project = Tristeon::Project::serialize();
+		json const project = Tristeon::Settings::serialize();
 		Tristeon::JsonSerializer::save(path.toStdString() + "/settings.tristeon", project);
 		Tristeon::JsonSerializer::save(path.toStdString() + "/Scene.scene", Tristeon::Scene().serialize());
 
@@ -158,13 +158,13 @@ namespace TristeonEditor
 
 	void ProjectWindow::projectClicked(Tristeon::String path)
 	{
-		Tristeon::Project::load(QFileInfo(QString::fromStdString(path)).dir().path().toStdString() + "/");
+		Tristeon::Settings::load(QFileInfo(QString::fromStdString(path)).dir().path().toStdString() + "/");
 		close();
 	}
 
 	void ProjectWindow::loadProject(Tristeon::String path)
 	{
-		Tristeon::Project::load(QFileInfo(path.c_str()).dir().path().toStdString() + "/");
+		Tristeon::Settings::load(QFileInfo(path.c_str()).dir().path().toStdString() + "/");
 
 		json cache = Tristeon::JsonSerializer::load("Local/Projects.json");
 		json::array_t projects = cache.is_null() ? json::array_t() : cache.value("projects", json::array_t());

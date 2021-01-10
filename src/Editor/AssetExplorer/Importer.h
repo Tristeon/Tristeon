@@ -10,6 +10,6 @@ namespace TristeonEditor
 
 		void import(std::filesystem::path assetPath);
 
-		void scanProject();
+		void scanAssets();
 	};
 }

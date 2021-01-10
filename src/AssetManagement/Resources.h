@@ -3,7 +3,7 @@
 #include <Serialization/Serializable.h>
 #include <Serialization/JsonSerializer.h>
 
-#include "Project.h"
+#include "Settings.h"
 #include <filesystem>
 
 #include "AssetManagement/MetaFiles/MetaFile.h"
@@ -20,7 +20,7 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
 
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
@@ -40,7 +40,7 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
 
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
@@ -55,11 +55,11 @@ namespace Tristeon
 		template<typename T>
 		static T* load(const String& path)
 		{
-			//Find complete filepath (path only contains a path relative to the project)
+			//Find complete filepath (path only contains a path relative to the asset folder)
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
 
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
@@ -80,7 +80,7 @@ namespace Tristeon
 
 		static bool loaded(const String& path)
 		{
-			String const globalPath = path.find("Internal/") != String::npos ? path : Project::assetPath() + path; //Add global project path unless if it's internal
+			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
 
 			if (globalPath.empty())
 				return false;
