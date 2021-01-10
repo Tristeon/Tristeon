@@ -134,6 +134,16 @@ namespace TristeonEditor
 		QMainWindow::resize(resolution.x, resolution.y);
 	}
 
+	void EditorWindow::_setDisplay(const unsigned& display)
+	{
+		//Not relevant for the editor window
+	}
+
+	unsigned EditorWindow::_currentDisplay()
+	{
+		return 0;
+	}
+
 	void EditorWindow::_close()
 	{
 		QMainWindow::close();

@@ -1,6 +1,7 @@
 #pragma once
 #include <Standard/String.h>
 #include "Math/Vector.h"
+#include "Serialization/Serializable.h"
 
 int main(int argc, char** argv);
 
@@ -38,6 +39,18 @@ namespace Tristeon
 		 * The first scene to be loaded in build mode.
 		 */
 		[[nodiscard]] static String firstSceneName();
+
+		/**
+		 * Static version of the Serializable::serialize function.
+		 * Writes the data into a json object.
+		 */
+		[[nodiscard]] static json serialize();
+
+		/**
+		 * Static version of the Serializable::deserialize function.
+		 * Reads the data from a json object.
+		 */
+		static void deserialize(json j);
 		
 		class Graphics
 		{
@@ -98,6 +111,8 @@ namespace Tristeon
 			/**
 			 * Set the preferred resolution.
 			 * The game will attempt to take this resolution when loaded in on fullscreen.
+			 *
+			 * It also sets the current Window's resolution.
 			 */
 			static void setPreferredResolution(const VectorU& value);
 
@@ -116,6 +131,22 @@ namespace Tristeon
 			 * This affects both the Project's and the runtime's settings.
 			 */
 			static void setMaxFPS(const unsigned int& value);
+
+			/**
+			 * The preferred display to use for borderless and fullscreen applications.
+			 * The application will attempt to use this display but will default to display 0 if it can't be found.
+			 */
+			[[nodiscard]] static unsigned int preferredDisplay();
+			
+			/**
+			 * Set the preferred display used for borderless and fullscreen applications.
+			 * Upon loading, the application will attempt to use this monitor but will default to display 0 if it can't be found.
+			 *
+			 * If called in runtime, and the monitor exists, the application will switch to the given display.
+			 * Whenever the display is changed, Window::availableResolutions updates.
+			 */
+			static void setPreferredDisplay(const unsigned int& display);
+
 		private:
 			unsigned int _tileWidth = 64;
 			unsigned int _tileHeight = 64;
@@ -125,6 +156,7 @@ namespace Tristeon
 			unsigned int _maxFPS = 0;
 
 			VectorU _preferredResolution{ 0, 0 };
+			unsigned int _preferredDisplay = 0;
 		};
 
 		class Physics

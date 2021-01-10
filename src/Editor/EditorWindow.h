@@ -37,6 +37,8 @@ namespace TristeonEditor
 		void _setVsync(const bool& value) override;
 		void _setWindowMode(const Tristeon::Project::Graphics::WindowMode& mode) override;
 		void _setResolution(const Tristeon::VectorU& resolution) override;
+		void _setDisplay(const unsigned& display) override;
+		unsigned _currentDisplay() override;
 
 		void _close() override;
 		bool _closingDown() override;

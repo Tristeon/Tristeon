@@ -542,7 +542,7 @@ color: rgb(236, 240, 241);</string>
   <widget class="QDockWidget" name="tool_menu">
    <property name="minimumSize">
     <size>
-     <width>141</width>
+     <width>142</width>
      <height>68</height>
     </size>
    </property>
@@ -843,16 +843,9 @@ color: rgb(236, 240, 241);</string>
                 </widget>
                </item>
                <item row="3" column="0">
-                <widget class="QLabel" name="fullscreen">
+                <widget class="QLabel" name="windowmode">
                  <property name="text">
-                  <string>Fullscreen</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QCheckBox" name="fullscreen_field">
-                 <property name="text">
-                  <string/>
+                  <string>Window Mode</string>
                  </property>
                 </widget>
                </item>
@@ -934,6 +927,25 @@ color: rgb(236, 240, 241);</string>
                    </widget>
                   </item>
                  </layout>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="windowmode_field">
+                 <item>
+                  <property name="text">
+                   <string>Windowed</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Borderless</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Fullscreen</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>

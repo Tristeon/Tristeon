@@ -1,15 +1,16 @@
 {
     "firstScene": "Scene",
     "graphics": {
-        "windowMode": 1,
         "maxFPS": 60,
+        "preferredDisplay": 1,
         "preferredResolution": {
             "x": 0,
             "y": 0
         },
         "tileHeight": 256,
         "tileWidth": 256,
-        "vsync": true
+        "vsync": false,
+        "windowMode": 1
     },
     "physics": {
         "fixedDeltaTime": 20,

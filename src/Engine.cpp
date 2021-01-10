@@ -93,7 +93,7 @@ namespace Tristeon
 
 			//Poll input & window changes
 			Window::pollEvents();
-
+			
 			if (_playMode)
 			{
 				if (_playModeDirty)

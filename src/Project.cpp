@@ -11,7 +11,7 @@ namespace Tristeon
 	Project::Physics Project::_physics;
 	String Project::_assetPath;
 	String Project::_firstScene;
-	nlohmann::json Project::_data;
+	json Project::_data;
 	
 	String Project::assetPath()
 	{
@@ -21,6 +21,52 @@ namespace Tristeon
 	String Project::firstSceneName()
 	{
 		return _firstScene;
+	}
+
+	json Project::serialize()
+	{
+		json j;
+		j["firstScene"] = _firstScene;
+
+		j["graphics"]["tileWidth"] = _graphics._tileWidth;
+		j["graphics"]["tileHeight"] = _graphics._tileHeight;
+
+		j["graphics"]["vsync"] = _graphics._vsync;
+		j["graphics"]["windowMode"] = _graphics._windowMode;
+		j["graphics"]["preferredResolution"] = _graphics._preferredResolution;
+		j["graphics"]["preferredDisplay"] = _graphics._preferredDisplay;
+		j["graphics"]["maxFPS"] = _graphics._maxFPS;
+
+		j["physics"]["fixedDeltaTime"] = _physics._fixedDeltaTime;
+		j["physics"]["pixelsPerMeter"] = _physics._pixelsPerMeter;
+		return j;
+	}
+
+	void Project::deserialize(json j)
+	{
+		_firstScene = j.value("firstScene", "Scene");
+		if (_firstScene.empty())
+			_firstScene = "Scene";
+
+		if (j.contains("graphics"))
+		{
+			json const graphics = j["graphics"];
+			_graphics._tileWidth = graphics.value("tileWidth", 64u);
+			_graphics._tileHeight = graphics.value("tileHeight", 64u);
+
+			_graphics._vsync = graphics.value("vsync", false);
+			_graphics._windowMode = graphics.value("windowMode", Graphics::WindowMode::Fullscreen);
+			_graphics._preferredResolution = graphics.value("preferredResolution", VectorI{ 0, 0 });
+			_graphics._preferredDisplay = graphics.value("preferredDisplay", 0u);
+			_graphics._maxFPS = graphics.value("maxFPS", 0);
+		}
+
+		if (j.contains("physics"))
+		{
+			json const physics = j["physics"];
+			_physics._fixedDeltaTime = physics.value("fixedDeltaTime", 1.0f / 50.0f * 1000.0f);
+			_physics._pixelsPerMeter = physics.value("pixelsPerMeter", 64u);
+		}
 	}
 
 	unsigned Project::Graphics::tileWidth()
@@ -84,6 +130,19 @@ namespace Tristeon
 		save();
 	}
 
+	unsigned Project::Graphics::preferredDisplay()
+	{
+		return _graphics._preferredDisplay;
+	}
+
+	void Project::Graphics::setPreferredDisplay(const unsigned& display)
+	{
+		_graphics._preferredDisplay = display;
+		_data["graphics"]["preferredDisplay"] = display;
+		save();
+		Window::instance()->_setDisplay(display);
+	}
+
 	float Project::Physics::fixedDeltaTime()
 	{
 		return _physics._fixedDeltaTime;
@@ -113,34 +172,14 @@ namespace Tristeon
 		}
 
 		Console::write("Loaded project folder " + folder);
-		
+
+		_data = file;
+		deserialize(file);
 		_assetPath = folder;
-		_firstScene = file.value("firstScene", "Scene");
-		if (_firstScene.empty())
-			_firstScene = "Scene";
-		
-		if (file.contains("graphics"))
-		{
-			json const graphics = file["graphics"];
-			_graphics._tileWidth = graphics.value("tileWidth", 64u);
-			_graphics._tileHeight = graphics.value("tileHeight", 64u);
-
-			_graphics._vsync = graphics.value("vsync", false);
-			_graphics._windowMode = graphics.value("windowMode", Graphics::WindowMode::Fullscreen);
-			_graphics._preferredResolution = graphics.value("preferredResolution", VectorI{ 0, 0 });
-			_graphics._maxFPS = graphics.value("maxFPS", 0);
-		}
-
-		if (file.contains("physics"))
-		{
-			json const physics = file["physics"];
-			_physics._fixedDeltaTime = physics.value("fixedDeltaTime", 1.0f / 50.0f * 1000.0f);
-			_physics._pixelsPerMeter = physics.value("pixelsPerMeter", 64u);
-		}
 	}
 
 	void Project::save()
 	{
-		JsonSerializer::save(_data, _assetPath + "settings.tristeon");
+		JsonSerializer::save(_assetPath + "settings.tristeon", _data);
 	}
 }

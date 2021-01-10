@@ -22,7 +22,7 @@ namespace Tristeon
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		
+
 		_window = glfwCreateWindow(1920, 1080, "Tristeon", nullptr, nullptr);
 		_width = 1920;
 		_height = 1080;
@@ -39,6 +39,7 @@ namespace Tristeon
 		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 
 		GameWindow::_setWindowMode(Project::Graphics::windowMode());
+		GameWindow::_setDisplay(Project::Graphics::preferredDisplay());
 		GameWindow::_setVsync(Project::Graphics::vsync());
 		setupCallbacks();
 
@@ -122,44 +123,57 @@ namespace Tristeon
 
 	void GameWindow::_setWindowMode(const Project::Graphics::WindowMode& value)
 	{
-		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+		//Get available monitors
+		int count = 0;
+		GLFWmonitor** monitors = glfwGetMonitors(&count);
+		if (!monitors)
+			throw std::runtime_error("Failed to get GLFW monitors");
 
-		if (Project::Graphics::preferredResolution() != Vector::zero())
+		//Attempt to get preferred monitor, otherwise use primary display
+		GLFWmonitor* monitor = nullptr;
+		if (Project::Graphics::preferredDisplay() >= count)
+			monitor = glfwGetPrimaryMonitor();
+		else 
+			monitor = monitors[count - Project::Graphics::preferredDisplay() - 1];
+
+		updateDisplay(monitor, value);
+	}
+
+	void GameWindow::_setDisplay(const unsigned& monitor)
+	{
+		//Get available monitors
+		int count = 0;
+		GLFWmonitor** monitors = glfwGetMonitors(&count);
+		if (!monitors)
+			throw std::runtime_error("Failed to get GLFW monitors");
+		if (monitor >= count)
 		{
-			_width = Project::Graphics::preferredResolution().x;
-			_height = Project::Graphics::preferredResolution().y;
-		}
-		else
-		{
-			_width = mode->width;
-			_height = mode->height;
-		}
-		
-		switch (value)
-		{
-			case Project::Graphics::WindowMode::Windowed:
-			{
-				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_TRUE);
-					
-				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
-				glfwMaximizeWindow(_window);
-				break;
-			}
-			case Project::Graphics::WindowMode::Borderless: 
-			{
-				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_FALSE);
-				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
-				break;
-			}
-			case Project::Graphics::WindowMode::Fullscreen: 
-			{
-				glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
-				break;
-			}
+			Console::warning("Invalid monitor " + std::to_string(monitor) + " selected, maximum number of monitors is " + std::to_string(count));
+			return;
 		}
 
-		glViewport(0, 0, _width, _height);
+		GLFWmonitor* selectedMonitor = monitors[count - monitor - 1];
+		updateDisplay(selectedMonitor, Project::Graphics::windowMode());
+		populateResolutions(monitor);
+	}
+
+	unsigned GameWindow::_currentDisplay()
+	{
+		int count = 0;
+		GLFWmonitor** monitors = glfwGetMonitors(&count);
+		if (!monitors)
+			throw std::runtime_error("Failed to get GLFW monitors");
+
+		GLFWmonitor* monitor = glfwGetWindowMonitor(_window);
+		if (monitor == nullptr)
+			return 0;
+
+		for (unsigned int i = 0; i < count; i++)
+		{
+			if (monitor == monitors[i])
+				return count - i - 1; //Convert to OS monitors 
+		}
+		throw std::runtime_error("Current display doesn't exist");
 	}
 
 	void GameWindow::_close()
@@ -217,6 +231,8 @@ namespace Tristeon
 		glfwSetCursorPosCallback(_window, cursorPosCallback);
 		glfwSetJoystickCallback(joystickCallback);
 
+		glfwSetMonitorCallback(monitorCallback);
+
 		for (int jid = 0; jid < Gamepad::maximumGamepads; jid++)
 		{
 			Gamepad::gamepads[jid]._connected = glfwJoystickPresent(jid);
@@ -227,6 +243,61 @@ namespace Tristeon
 				Console::write("Gamepad detected: " + Gamepad::name(jid));
 			}
 		}
+	}
+
+	void GameWindow::updateDisplay(GLFWmonitor* monitor, const Project::Graphics::WindowMode& windowmode)
+	{
+		//Get monitor and adjust width/height appropriately
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+		if (Project::Graphics::preferredResolution() != VectorU::zero())
+		{
+			_width = Project::Graphics::preferredResolution().x;
+			_height = Project::Graphics::preferredResolution().y;
+		}
+		else
+		{
+			_width = mode->width;
+			_height = mode->height;
+		}
+
+		switch (windowmode)
+		{
+			case Project::Graphics::WindowMode::Windowed:
+			{
+				//Enable windowed mode and decoration
+				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_TRUE);
+				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+
+				//Move window over to the appropriate monitor
+				int x, y;
+				glfwGetMonitorPos(monitor, &x, &y);
+				glfwSetWindowPos(_window, x, y);
+				glfwSetWindowSize(_window, _width, _height);
+				break;
+			}
+			case Project::Graphics::WindowMode::Borderless:
+			{
+				//Enable windowed mode but disable decoration
+				glfwSetWindowAttrib(_window, GLFW_DECORATED, GLFW_FALSE);
+				glfwSetWindowMonitor(_window, nullptr, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+
+				//Move window over to the appropriate monitor and maximize
+				int x, y;
+				glfwGetMonitorPos(monitor, &x, &y);
+				glfwSetWindowPos(_window, x, y);
+				glfwSetWindowSize(_window, _width, _height);
+				glfwMaximizeWindow(_window);
+				break;
+			}
+			case Project::Graphics::WindowMode::Fullscreen:
+			{
+				//Enable fullscreen mode
+				glfwSetWindowMonitor(_window, monitor, 0, 0, (int)_width, (int)_height, GLFW_DONT_CARE);
+				break;
+			}
+		}
+
+		glViewport(0, 0, _width, _height);
 	}
 
 	void GameWindow::errorCallback(int error, const char* description)
@@ -292,11 +363,28 @@ namespace Tristeon
 					if (state.buttons[i] != Gamepad::gamepads[jid]._buttons[i])
 						Gamepad::buttonChanged(jid, (Gamepad::GamepadButton)i, state.buttons[i]);
 				}
-				
+
 				Gamepad::gamepads[jid]._left = Vector(state.axes[0], state.axes[1]);
 				Gamepad::gamepads[jid]._right = Vector(state.axes[2], state.axes[3]);
 				Gamepad::gamepads[jid]._l2 = state.axes[4];
 				Gamepad::gamepads[jid]._r2 = state.axes[5];
+			}
+		}
+	}
+
+	void GameWindow::monitorCallback(GLFWmonitor* monitor, int event)
+	{
+		if (event == GLFW_DISCONNECTED)
+		{
+			int count = 0;
+			GLFWmonitor** monitors = glfwGetMonitors(&count);
+			if (!monitors)
+				throw std::runtime_error("Failed to get GLFW monitors");
+
+			for (unsigned int i = 0; i < count; i++)
+			{
+				if (monitor == monitors[i] && i == Window::currentDisplay())
+					Project::Graphics::setPreferredDisplay(0);
 			}
 		}
 	}

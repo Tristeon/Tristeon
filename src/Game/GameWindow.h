@@ -20,6 +20,8 @@ namespace Tristeon
 		void _setVsync(const bool& value) override;
 		void _setResolution(const VectorU& resolution) override;
 		void _setWindowMode(const Project::Graphics::WindowMode& value) override;
+		void _setDisplay(const unsigned& monitor) override;
+		unsigned int _currentDisplay() override;
 		void _close() override;
 		void _setClearColour(const Colour& colour) override;
 		bool _closingDown() override;
@@ -29,6 +31,8 @@ namespace Tristeon
 
 	private:
 		void setupCallbacks();
+
+		void updateDisplay(GLFWmonitor* monitor, const Project::Graphics::WindowMode& windowmode);
 		
 		static void errorCallback(int error, const char* description);
 		static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -38,10 +42,10 @@ namespace Tristeon
 		static void cursorPosCallback(GLFWwindow* window, double x, double y);
 		static void joystickCallback(int jid, int event);
 		static void pollJoystick();
+		static void monitorCallback(GLFWmonitor* monitor, int event);
 		
 		GLFWwindow* _window = nullptr;
 		unsigned int _width = 0, _height = 0;
-		bool _isFullscreen = false;
 	};
 }
 #endif

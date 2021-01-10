@@ -23,15 +23,12 @@ namespace Tristeon
 		friend Singleton<Window>;
 		friend class Engine;
 	public:
-		Window()
-		{
-			populateResolutions();
-		}
+		Window() = default;
 		virtual ~Window() = default;
 
 		DELETE_COPY(Window);
 		DEFAULT_MOVE(Window);
-		
+
 		/**
 		 * The width of the window. This may potentially be different from the world/game size.
 		 * For rendering purposes, it is recommended to use Window::gameWidth()
@@ -64,7 +61,7 @@ namespace Tristeon
 		 * Returns the size of the game screen. This may not be the size of the entire Window.
 		 */
 		[[nodiscard]] static VectorU gameSize() { return { gameWidth(), gameHeight() }; }
-		
+
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
 		 * This function takes into account that game's screen might not always take up the full window.
@@ -95,7 +92,20 @@ namespace Tristeon
 		/**
 		 * Returns a set of the resolutions available to the current monitor.
 		 */
-		static std::set<VectorU> availableResolutions() { return instance()->_resolutions; }
+		[[nodiscard]] static std::set<VectorU> availableResolutions() { return instance()->_resolutions; }
+
+		/**
+		 * Returns the number of displays available
+		 */
+		[[nodiscard]] static unsigned int numberOfDisplays();
+
+		/**
+		 * The current display that the Window is on.
+		 * In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if e.g. the previous display disconnected.
+		 *
+		 * In windowed mode, this function always returns 0 regardless of where the window is.
+		 */
+		[[nodiscard]] static unsigned int currentDisplay() { return instance()->_currentDisplay(); };
 	protected:
 		/**
 		 * Iterates over the event queues and sends each event to their respective classes (Mouse, Keyboard, Gamepad)
@@ -117,6 +127,8 @@ namespace Tristeon
 		virtual void _setWindowMode(const Project::Graphics::WindowMode& mode) = 0;
 		virtual void _setVsync(const bool& value) = 0;
 		virtual void _setResolution(const VectorU& resolution) = 0;
+		virtual void _setDisplay(const unsigned int& display) = 0;
+		virtual unsigned int _currentDisplay() = 0;
 
 		virtual void _close() = 0;
 
@@ -130,9 +142,7 @@ namespace Tristeon
 		virtual VectorU _worldToScreen(Vector const& worldPoint, Camera* camera) = 0;
 #pragma endregion
 
-	private:
-		void populateResolutions();
-		
+		void populateResolutions(const unsigned int& monitor);
 		std::set<VectorU> _resolutions;
 	};
 }

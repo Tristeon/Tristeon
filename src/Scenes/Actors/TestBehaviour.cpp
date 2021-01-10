@@ -5,6 +5,8 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
+
+#include "Project.h"
 #include "Audio/Audio.h"
 #include "Rendering/Camera.h"
 #include "Physics/BoxCollider.h"
@@ -37,6 +39,16 @@ namespace Tristeon
 
 		if (!Camera::cameras().empty())
 			Camera::cameras()[0]->position = actor()->position;
+
+		if (Keyboard::pressed(Keyboard::Number1))
+			Project::Graphics::setPreferredDisplay(0);
+		else if (Keyboard::pressed(Keyboard::Number2))
+			Project::Graphics::setPreferredDisplay(1);
+		else if (Keyboard::pressed(Keyboard::Number3))
+			Project::Graphics::setPreferredDisplay(2);
+
+		if (Keyboard::pressed(Keyboard::J))
+			Project::Graphics::setMaxFPS(65);
 	}
 	
 	json TestBehaviour::serialize()

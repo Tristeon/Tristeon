@@ -139,27 +139,7 @@ namespace TristeonEditor
 			return;
 		}
 
-		json const project = {
-			{
-				"graphics",
-				{
-					{"tileWidth", 64},
-					{"tileHeight", 64},
-					{"vsync", false},
-					{"fullscreen", true},
-					{"maxFPS", 0},
-					{"preferredResolution", Tristeon::VectorU{ 0, 0 }}
-				}
-			},
-			{
-				"physics",
-				{
-					{"fixedDeltaTime", 20},
-					{"pixelsPerMeter", 64},
-				}
-			},
-			{"firstScene", "Scene"}
-		};
+		json const project = Tristeon::Project::serialize();
 		Tristeon::JsonSerializer::save(path.toStdString() + "/settings.tristeon", project);
 		Tristeon::JsonSerializer::save(path.toStdString() + "/Scene.scene", Tristeon::Scene().serialize());
 
@@ -229,7 +209,7 @@ namespace TristeonEditor
 
 		//Scene
 		auto* scene_field = findChild<QLineEdit*>("scene_field");
-		scene_field->setText(QString::fromStdString(settings["firstScene"]));
+		scene_field->setText(QString::fromStdString(settings.value("firstScene", "")));
 		activeConnections.add(connect(scene_field, &QLineEdit::textChanged, [=](const QString & val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -238,8 +218,10 @@ namespace TristeonEditor
 			}));
 
 		//Graphics
+		auto graphics = settings.value("graphics", json::object());
+		
 		auto* tile_width_field = findChild<QSpinBox*>("tile_width_field");
-		tile_width_field->setValue(settings["graphics"]["tileWidth"]);
+		tile_width_field->setValue(graphics.value("tileWidth", 64u));
 		activeConnections.add(connect(tile_width_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int & val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -248,7 +230,7 @@ namespace TristeonEditor
 			}));
 
 		auto* tile_height_field = findChild<QSpinBox*>("tile_height_field");
-		tile_height_field->setValue(settings["graphics"]["tileHeight"]);
+		tile_height_field->setValue(graphics.value("tileHeight", 64u));
 		activeConnections.add(connect(tile_height_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -257,7 +239,7 @@ namespace TristeonEditor
 			}));
 
 		auto* vsync_field = findChild<QCheckBox*>("vsync_field");
-		vsync_field->setChecked(settings["graphics"]["vsync"]);
+		vsync_field->setChecked(graphics.value("vsync", false));
 		activeConnections.add(connect(vsync_field, &QCheckBox::stateChanged, [=](const int& state)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -265,17 +247,17 @@ namespace TristeonEditor
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 
-		auto* fullscreen_field = findChild<QCheckBox*>("fullscreen_field");
-		fullscreen_field->setChecked(settings["graphics"]["fullscreen"]);
-		activeConnections.add(connect(fullscreen_field, &QCheckBox::stateChanged, [=](const int& state)
+		auto* windowmode_field = findChild<QComboBox*>("windowmode_field");
+		windowmode_field->setCurrentIndex(graphics.value("windowMode", 2));
+		activeConnections.add(connect(windowmode_field, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](const int& index)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
-				file["graphics"]["fullscreen"] = ((Qt::CheckState)state != Qt::Unchecked);
+				file["graphics"]["windowMode"] = index;
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 
 		auto* max_fps_field = findChild<QSpinBox*>("fps_field");
-		max_fps_field->setValue(settings["graphics"]["maxFPS"]);
+		max_fps_field->setValue(graphics.value("maxFPS", 0));
 		activeConnections.add(connect(max_fps_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -283,8 +265,8 @@ namespace TristeonEditor
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 
-		auto* resolution_field_width = findChild<QSpinBox*>("resolution_field_width");
-		resolution_field_width->setValue(settings["graphics"]["preferredResolution"]["x"]);
+		auto * resolution_field_width = findChild<QSpinBox*>("resolution_field_width");
+		resolution_field_width->setValue(graphics.value("preferredResolution", json::object()).value("x", 0));
 		activeConnections.add(connect(resolution_field_width, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -292,8 +274,8 @@ namespace TristeonEditor
 				Tristeon::JsonSerializer::save(path, file);
 			}));
 
-		auto* resolution_field_height = findChild<QSpinBox*>("resolution_field_height");
-		resolution_field_height->setValue(settings["graphics"]["preferredResolution"]["y"]);
+		auto * resolution_field_height = findChild<QSpinBox*>("resolution_field_height");
+		resolution_field_height->setValue(graphics.value("preferredResolution", json::object()).value("y", 0));
 		activeConnections.add(connect(resolution_field_height, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -302,8 +284,10 @@ namespace TristeonEditor
 			}));
 
 		//Physics
+		auto physics = settings.value("physics", json::object());
+
 		auto* fixed_delta_time_field = findChild<QDoubleSpinBox*>("fixed_delta_time_field");
-		fixed_delta_time_field->setValue(settings["physics"]["fixedDeltaTime"]);
+		fixed_delta_time_field->setValue(physics.value("fixedDeltaTime", 1000.0f / 50.0f));
 		activeConnections.add(connect(fixed_delta_time_field, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), [=](const double& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
@@ -312,7 +296,7 @@ namespace TristeonEditor
 			}));
 		
 		auto* pixels_per_meter_field = findChild<QSpinBox*>("pixels_per_meter_field");
-		pixels_per_meter_field->setValue(settings["physics"]["pixelsPerMeter"]);
+		pixels_per_meter_field->setValue(physics.value("pixelsPerMeter", 64));
 		activeConnections.add(connect(pixels_per_meter_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [=](const int& val)
 			{
 				json file = Tristeon::JsonSerializer::load(path);
