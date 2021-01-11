@@ -15,7 +15,10 @@ namespace Tristeon
 #if defined(_WIN32)
 		return GetSystemMetrics(SM_CMONITORS);
 #elif defined(__linux__)
-#error Linux implementation not implemented!
+        Display *dpy = XOpenDisplay(getenv("DISPLAY"));
+        auto result = ScreenCount(dpy);
+        XCloseDisplay(dpy);
+        return result;
 #else
 #error This platform isnt supported (yet)
 #endif
@@ -49,6 +52,7 @@ namespace Tristeon
         for (int i = 0; i < nsize; i++) {
             _resolutions.insert(VectorU { sizes[i].width, sizes[i].height });
         }
+        XCloseDisplay(dpy);
 #else
 #error This platform isnt supported (yet)
 #endif
