@@ -42,7 +42,7 @@ namespace Tristeon
 			i += 1;
 			_resolutions.insert(VectorU{ (unsigned int)dm.dmPelsWidth, (unsigned int)dm.dmPelsHeight });
 		}
-		Console::write("Populated resolutions for monitor " + std::to_string(monitor) + ": ");
+		TRISTEON_LOG("Populated resolutions for monitor " + std::to_string(monitor) + ": ");
 #elif defined(__linux__)
         Display *dpy = XOpenDisplay(std::string(":" + std::to_string(monitor)).c_str());
         auto root = DefaultRootWindow(dpy);
@@ -57,6 +57,6 @@ namespace Tristeon
 #error This platform isnt supported (yet)
 #endif
 		for (auto resolution : _resolutions)
-			Console::write("\t" + std::to_string(resolution.x) + "x" + std::to_string(resolution.y));
+			TRISTEON_LOG("\t" + std::to_string(resolution.x) + "x" + std::to_string(resolution.y));
 	}
 }

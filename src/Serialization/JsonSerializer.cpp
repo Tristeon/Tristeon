@@ -17,7 +17,7 @@ namespace Tristeon
 		//Read file and check if it read it successfully
 		std::ifstream stream(path);
 		if (!stream.good()) {
-			Console::warning("JsonSerializer failed to read file: " + path);
+			TRISTEON_WARNING("JsonSerializer failed to read file: " + path);
 			return nullptr;
 		}
 
@@ -26,7 +26,7 @@ namespace Tristeon
 		stream >> input;
 		if (input.is_null())
 		{
-			Console::warning("The given file is either a non-json file or the file is corrupted");
+			TRISTEON_WARNING("The given file is either a non-json file or the file is corrupted");
 			throw std::invalid_argument("file is either a non-json file or corrupted");
 		}
 		return input;
@@ -43,7 +43,7 @@ namespace Tristeon
 		stream.open(path, std::ios::trunc);
 		if (!stream.is_open())
 		{
-			Console::warning("Failed to write to path " + path + ", system error code: " + std::to_string(SYSERROR()));
+			TRISTEON_WARNING("Failed to write to path " + path + ", system error code: " + std::to_string(SYSERROR()));
 			return;
 		}
 		stream << obj.dump(4);

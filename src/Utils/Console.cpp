@@ -22,7 +22,7 @@ namespace Tristeon
 			{
 				case AssertSeverity::Log: 
 				{
-					write(message);
+					log(message);
 					break;
 				}
 				case AssertSeverity::Warning:
@@ -47,7 +47,7 @@ namespace Tristeon
 #endif
 	}
 
-	void Console::write(const String& data)
+	void Console::log(const String& data)
 	{
 #ifdef TRISTEON_LOGENABLED
 		std::cout << data << std::endl;

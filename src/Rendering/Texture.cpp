@@ -25,7 +25,7 @@ namespace Tristeon
 			if (pixels)
 				stbi_image_free(pixels);
 			_valid = false;
-			Console::warning("Failed to load texture " + path);
+			TRISTEON_WARNING("Failed to load texture " + path);
 			return;
 		}
 

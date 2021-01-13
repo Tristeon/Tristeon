@@ -134,7 +134,7 @@ namespace Tristeon
 
 		if (!vertexFile.is_open() || !fragmentFile.is_open())
 		{
-			Console::warning("Failed to create shader program with files: [Vertex] " + _vertexPath + ", [Fragment] " + _fragmentPath);
+			TRISTEON_WARNING("Failed to create shader program with files: [Vertex] " + _vertexPath + ", [Fragment] " + _fragmentPath);
 			_failed = true;
 			return;
 		}
@@ -160,12 +160,12 @@ namespace Tristeon
 			{
 				List<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(vertex, maxLength, &maxLength, &errorLog[0]);
-				Console::warning("Failed to compile vertex shader " + _vertexPath + ": " + std::string(errorLog.ptr()));
+				TRISTEON_WARNING("Failed to compile vertex shader " + _vertexPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(vertex);
 			}
 			else
 			{
-				Console::warning("Failed to compile vertex shader " + _vertexPath + ". No log.");
+				TRISTEON_WARNING("Failed to compile vertex shader " + _vertexPath + ". No log.");
 			}
 			return;
 		}
@@ -189,12 +189,12 @@ namespace Tristeon
 			{
 				List<GLchar> errorLog(maxLength);
 				glGetShaderInfoLog(fragment, maxLength, &maxLength, &errorLog[0]);
-				Console::warning("Failed to compile fragment shader " + _fragmentPath + ": " + std::string(errorLog.ptr()));
+				TRISTEON_WARNING("Failed to compile fragment shader " + _fragmentPath + ": " + std::string(errorLog.ptr()));
 				glDeleteShader(fragment);
 			}
 			else
 			{
-				Console::warning("Failed to compile fragment shader " + _fragmentPath + ". No log.");
+				TRISTEON_WARNING("Failed to compile fragment shader " + _fragmentPath + ". No log.");
 			}
 			return;
 		}
@@ -206,7 +206,7 @@ namespace Tristeon
 		glAttachShader(_program, fragment);
 		glLinkProgram(_program);
 
-		Console::write("Successfully created shader program " + std::to_string(_program) + " with vertexpath " + _vertexPath + " and fragmentpath " + _fragmentPath);
+		TRISTEON_LOG("Successfully created shader program " + std::to_string(_program) + " with vertexpath " + _vertexPath + " and fragmentpath " + _fragmentPath);
 		_ready = true;
 
 		glDeleteShader(vertex);

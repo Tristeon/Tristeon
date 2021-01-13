@@ -29,7 +29,7 @@ namespace Tristeon
 		List<String> vec = StringHelper::split(name, ' ');
 		if (vec.size() < 2)
 		{
-			Console::warning("Type failed to interpret the MSVC typename. Returning direct typeid(T).name(): " + String(typeid(T).name()));
+			TRISTEON_WARNING("Type failed to interpret the MSVC typename. Returning direct typeid(T).name(): " + String(typeid(T).name()));
 			return name;
 		}
 

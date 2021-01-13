@@ -59,7 +59,7 @@ namespace Tristeon
 	{
 		if (current()->path().empty())
 		{
-			Console::warning("Current scene doesn't have a path therefore it can't be saved automatically. Use save(current(), filePath) instead");
+			TRISTEON_WARNING("Current scene doesn't have a path therefore it can't be saved automatically. Use save(current(), filePath) instead");
 			return;
 		}
 		save(current(), current()->path());
@@ -80,7 +80,7 @@ namespace Tristeon
 			path = AssetDatabase::findByName(_cachedName, ".scene");
 			if (path.empty())
 			{
-				Console::warning("Couldn't find scene: " + _cachedName);
+				TRISTEON_WARNING("Couldn't find scene: " + _cachedName);
 				_current.reset();
 				_current = std::make_unique<Scene>(); // load empty scene
 				sceneLoaded.invoke(_current.get());

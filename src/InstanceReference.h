@@ -15,18 +15,29 @@ namespace Tristeon
 		static_assert(std::is_base_of<InstancedSerializable, T>::value, "InstanceReference<T>'s T has to inherit from InstancedSerializable");
 
 		/**
-		 * Get the instance pointer, the first time when this is called it performs a lookup through the InstanceCollector.
+		 * Get the instance pointer through a binary tree lookup.
 		 */
-		T* get()
+		[[nodiscard]] T* get()
 		{
-			if (_instance == nullptr && !_invalid)
-			{
-				_instance = dynamic_cast<T*>(InstanceCollector::find(_id));
-				_invalid = !_instance;
-			}
-			return _instance;
+			return dynamic_cast<T*>(InstanceCollector::find(_id));
 		}
 
+		/**
+		 * Set the instance, this changes the id reference internally.
+		 */
+		void set(T* instance)
+		{
+			_id = instance->instanceID();
+		}
+
+		/**
+		 * Sets the ID of the instance reference. If no instance with this id exists, get() returns nullptr.
+		 */
+		void set(const unsigned int& id)
+		{
+			_id = id;
+		}
+		
 		json serialize() override
 		{
 			auto j = Serializable::serialize();
@@ -40,10 +51,8 @@ namespace Tristeon
 			Serializable::deserialize(j);
 			_id = j.value("id", 0);
 			_invalid = false;
-			_instance = nullptr;
 		}
 	private:
-		T* _instance = nullptr;
 		bool _invalid = false;
 		unsigned int _id = 0;
 	};

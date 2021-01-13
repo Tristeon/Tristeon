@@ -30,7 +30,7 @@ namespace TristeonEditor
 			const auto it = getMap()->find(extension);
 			if (it == getMap()->end())
 			{
-				Tristeon::Console::warning("Couldn't find FileEditor for extension " + extension);
+				TRISTEON_WARNING("Couldn't find FileEditor for extension " + extension);
 				return nullptr;
 			}
 			return it->second();

@@ -42,9 +42,9 @@ namespace Tristeon
 		static void clear();
 
 		/**
-		 * Writes the given data to the console
+		 * Logs the given data to the console
 		 */
-		static void write(const String& data);
+		static void log(const String& data);
 
 		/**
 		 * Writes a warning with the given data to the editor/console
@@ -58,4 +58,9 @@ namespace Tristeon
 		 */
 		static void error(const String& data);
 	};
+
+#define TRISTEON_LOG(message) Tristeon::Console::log(Tristeon::String("[") + __FILE__ + "] [" + __func__ + "] [" + std::to_string(__LINE__) + "] " + Tristeon::String(message))
+#define TRISTEON_WARNING(message) Tristeon::Console::warning(Tristeon::String("[") + __FILE__ + "] [" + __func__ + "] [" + std::to_string(__LINE__) + "] " + Tristeon::String(message))
+#define TRISTEON_ERROR(message) Tristeon::Console::error(Tristeon::String("[") + __FILE__ + "] [" + __func__ + "] [" + std::to_string(__LINE__) + "] " + Tristeon::String(message))
+#define TRISTEON_ASSERT(condition, message, severity) Tristeon::Console::assertLog(condition, String("[") + __FILE__ + "] [" + __func__ + "] [" + std::to_string(__LINE__) + "] " + Tristeon::String(message), severity)
 }

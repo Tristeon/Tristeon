@@ -333,7 +333,7 @@ namespace TristeonEditor
 		case Qt::ForwardButton: return Mouse::Forward;
 		case Qt::TaskButton: return Mouse::Task;
 		case Qt::ExtraButton4: return Mouse::Extra4;
-		default: Console::warning("Invalid/non-covered mouse button: " + std::to_string(button));
+		default: TRISTEON_WARNING("Invalid/non-covered mouse button: " + std::to_string(button));
 		}
 
 		return Mouse::Unknown;
@@ -349,7 +349,7 @@ namespace TristeonEditor
 			{
 				Gamepad::gamepads[deviceID]._connected = true;
 				Gamepad::gamepads[deviceID]._name = QGamepadManager::instance()->gamepadName(deviceID).toStdString();
-				Console::write("Gamepad connected: " + Gamepad::name(deviceID));
+				TRISTEON_LOG("Gamepad connected: " + Gamepad::name(deviceID));
 
 				Gamepad::clearGamepad(deviceID);
 			}
@@ -360,7 +360,7 @@ namespace TristeonEditor
 			if (deviceID < Gamepad::maximumGamepads)
 			{
 				Gamepad::gamepads[deviceID]._connected = false;
-				Console::write("Gamepad disconnected: " + Gamepad::name(deviceID));
+				TRISTEON_LOG("Gamepad disconnected: " + Gamepad::name(deviceID));
 
 				Gamepad::clearGamepad(deviceID);
 			}

@@ -45,14 +45,14 @@ namespace TristeonEditor
 		//Load OGL
 		if (!gladLoadGL())
 		{
-			Console::write("Error initializing glad");
-			throw std::runtime_error("Failed to initialize glad");
+			TRISTEON_ERROR("Error initializing glad");
+			return;
 		}
-		Console::write("Detected OpenGL: " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
+		TRISTEON_LOG("Detected OpenGL: " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		if (GLVersion.major < 3)
         {
-		    Console::write("Incorrect OpenGL version!");
-		    throw std::runtime_error("Incorrect OpenGL version!");
+		    TRISTEON_ERROR("Incorrect OpenGL version!");
+			return;
         }
 
 		glad_glClearColor(0, 0, 0, 1);

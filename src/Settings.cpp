@@ -167,11 +167,11 @@ namespace Tristeon
 
 		if (file.empty() || file.is_null())
 		{
-			Console::warning("Failed to load project at folder " + folder);
+			TRISTEON_WARNING("Failed to load project at folder " + folder);
 			return;
 		}
 
-		Console::write("Loaded project folder " + folder);
+		TRISTEON_LOG("Loaded project folder " + folder);
 
 		_data = file;
 		deserialize(file);

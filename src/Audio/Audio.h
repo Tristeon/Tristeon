@@ -6,8 +6,6 @@
 #include "Math/Vector.h"
 #include "Standard/String.h"
 
-#include <Utils/Console.h>
-
 namespace Tristeon
 {
 	class AudioClip;
@@ -80,7 +78,6 @@ namespace Tristeon
 		 */
 		static void removeAfter(Handle handle);
 
-		
 		ALCdevice* _device = nullptr;
 		ALCcontext* _context = nullptr;
 
@@ -88,15 +85,18 @@ namespace Tristeon
 	};
 
 #ifdef TRISTEON_LOGENABLED
+	// ReSharper disable once CppUnusedIncludeDirective
+#include <Utils/Console.h>
+
 #define AUDIO_ASSERT(function) \
 { \
 	alGetError(); \
 	function; \
 	auto err = alGetError(); \
-	Tristeon::Console::assertLog(err == AL_NO_ERROR, Tristeon::String("Call to ") + #function + " failed because error " + std::to_string(err) + " occured. This happened in File: " + Tristeon::String(__FILE__) + " at Function: " + Tristeon::String(__func__) + " at Line: " + std::to_string(__LINE__), AssertSeverity::Warning); \
+	TRISTEON_ASSERT(err == AL_NO_ERROR, Tristeon::String("Error ") + std::to_string(err) + " occured when calling function " + Tristeon::String(#function), Tristeon::AssertSeverity::Warning); \
 }
 #else
-#define AUDIO_DEBUG_AL(function)
+#define AUDIO_ASSERT(function)
 	function;
 #endif
 }

@@ -20,22 +20,22 @@ namespace Tristeon
 		_device = alcOpenDevice(nullptr);
 		if (!_device)
         {
-            Console::warning("Failed to open OpenAL device, audio will not function!");
+			TRISTEON_WARNING("Failed to open OpenAL device, audio will not function!");
             return;
         }
 		else
-			Console::write("Initialized: OpenAL Audio device");
+			TRISTEON_LOG("Initialized: OpenAL Audio Device");
 
 		//Create an audio context using the device
 		alcGetError(_device);
 		_context = alcCreateContext(_device, nullptr);
-		ALCenum err = alcGetError(_device);
-		Console::assertLog(err == ALC_NO_ERROR, "Failed to create ALC context: " + std::to_string(err) + ". audio will not function!");
+		const ALCenum err = alcGetError(_device);
+		TRISTEON_ASSERT(err == ALC_NO_ERROR, "Failed to create ALC context: " + std::to_string(err) + ". audio will not function!", AssertSeverity::Fatal);
 
 		if (alcMakeContextCurrent(_context))
-			Console::write("Initialized: Set ALC context to current");
+			TRISTEON_LOG("Initialized: Set ALC context to current");
 		else
-			Console::error("Failed to make ALC context current: " + std::to_string(alcGetError(_device)));
+			TRISTEON_ERROR("Failed to make ALC context current: " + std::to_string(alcGetError(_device)));
 
 		//Set the distance model to linear distance because after testing it seems to be the most reliable solution for 2D audio
 		AUDIO_ASSERT(alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED));

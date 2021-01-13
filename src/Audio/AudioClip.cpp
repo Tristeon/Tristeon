@@ -26,7 +26,7 @@ namespace Tristeon
 		drwav wav;
 		if (!drwav_init_file(&wav, path.c_str(), NULL))
 		{
-			Console::warning("Failed to load wav file: " + path);
+			TRISTEON_WARNING("Failed to load wav file: " + path);
 			return;
 		}
 

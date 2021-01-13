@@ -112,9 +112,9 @@ namespace Tristeon
 		//Finish
 		_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 		if (!_valid)
-			Console::warning("Failed to create camera's framebuffer with size " + size.toString());
+			TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
 		else
-			Console::write("Successfully created camera's framebuffer " + std::to_string(_fbo));
+			TRISTEON_LOG("Successfully created camera's framebuffer " + std::to_string(_fbo));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 	
