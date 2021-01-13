@@ -141,8 +141,13 @@ macro(link_libs targetname)
 endmacro()
 
 if (MSVC)
+	target_compile_options(box2d PUBLIC /MP)
+	target_compile_options(glad PUBLIC /MP)
+	target_compile_options(OpenAL PUBLIC /MP)
+
 	add_definitions(/MP)
 	add_executable(Tristeon ${tristeonSRC})
+
 	#Set target output directory
 	set_target_properties(Tristeon
 		PROPERTIES
