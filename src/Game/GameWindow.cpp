@@ -33,10 +33,12 @@ namespace Tristeon
 		//Load OGL
 		if (!gladLoadGL())
 		{
-			Console::error("Error initializing glad");
-			throw std::runtime_error("Failed to initialize glad");
+			TRISTEON_ERROR("Error initializing glad");
+			return;
 		}
-		Console::write("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
+		TRISTEON_LOG("OpenGL " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
+		if (GLVersion.major < 3)
+			throw std::runtime_error("OpenGL 3.1 or higher required!");
 
 		GameWindow::_setWindowMode(Settings::Graphics::windowMode());
 		GameWindow::_setDisplay(Settings::Graphics::preferredDisplay());
@@ -148,7 +150,7 @@ namespace Tristeon
 			throw std::runtime_error("Failed to get GLFW monitors");
 		if (monitor >= count)
 		{
-			Console::warning("Invalid monitor " + std::to_string(monitor) + " selected, maximum number of monitors is " + std::to_string(count));
+			TRISTEON_WARNING("Invalid monitor " + std::to_string(monitor) + " selected, maximum number of monitors is " + std::to_string(count));
 			return;
 		}
 
@@ -240,7 +242,7 @@ namespace Tristeon
 			if (Gamepad::gamepads[jid]._connected)
 			{
 				Gamepad::gamepads[jid]._name = glfwGetJoystickName(jid);
-				Console::write("Gamepad detected: " + Gamepad::name(jid));
+				TRISTEON_LOG("Gamepad detected: " + Gamepad::name(jid));
 			}
 		}
 	}
@@ -302,7 +304,7 @@ namespace Tristeon
 
 	void GameWindow::errorCallback(int error, const char* description)
 	{
-		Console::warning("GLFW Error: " + std::to_string(error) + ". Description: " + description);
+		TRISTEON_WARNING("GLFW Error: " + std::to_string(error) + ". Description: " + description);
 	}
 
 	void GameWindow::framebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -337,14 +339,14 @@ namespace Tristeon
 		{
 			Gamepad::gamepads[jid]._connected = false;
 			Gamepad::clearGamepad(jid);
-			Console::write("Gamepad disconnected: " + Gamepad::name(jid));
+			TRISTEON_LOG("Gamepad disconnected: " + Gamepad::name(jid));
 		}
 		else if (event == GLFW_CONNECTED)
 		{
 			Gamepad::gamepads[jid]._connected = true;
 			Gamepad::gamepads[jid]._name = glfwGetJoystickName(jid);
 			Gamepad::clearGamepad(jid);
-			Console::write("Gamepad connected: " + Gamepad::name(jid));
+			TRISTEON_LOG("Gamepad connected: " + Gamepad::name(jid));
 		}
 	}
 
