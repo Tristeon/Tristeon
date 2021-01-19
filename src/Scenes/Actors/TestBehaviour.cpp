@@ -23,8 +23,6 @@ namespace Tristeon
 		body = actor()->findBehaviour<PhysicsBody>();
 	}
 
-	unsigned int index = 0;
-	
 	void TestBehaviour::update()
 	{
 		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);

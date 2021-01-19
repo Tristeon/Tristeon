@@ -42,6 +42,8 @@ namespace TristeonEditor
 			{
 				sceneBeforePlay = Tristeon::SceneManager::current()->serialize();
 				sceneBeforePlay["path"] = Tristeon::SceneManager::current()->path();
+
+				Tristeon::SceneManager::load(sceneBeforePlay); //Reload scene
 			}
 			Tristeon::Engine::setPlayMode(true);
 			pause->setChecked(false);

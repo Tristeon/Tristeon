@@ -34,12 +34,6 @@ namespace Tristeon
 		_physics = std::make_unique<PhysicsWorld>();
 		_audio = std::make_unique<Audio>();
 		
-		//SceneManager must be loaded last because its components can rely on any of the previously created subsystems
-		SceneManager::sceneLoaded += [=](Scene* scene)
-		{
-			_playModeDirty = true;
-		};
-
 		SceneManager::load(Settings::firstSceneName());
 		SceneManager::processCachedLoad();
 		
@@ -93,23 +87,19 @@ namespace Tristeon
 
 			//Poll input & window changes
 			Window::pollEvents();
+			SceneManager::processCachedLoad();
 			
 			if (_playMode)
 			{
-				if (_playModeDirty)
-				{
-					for (auto* start : Collector<IInit>::all()) start->init();
-					_playModeDirty = false;
-					SceneManager::current()->safeCleanup();
-				}
-				
 				fixedUpdateTime += deltaTime;
 				while (fixedUpdateTime > Settings::Physics::fixedDeltaTime()) 
 				{
-					_physics->update();
-					SceneManager::current()->safeCleanup();
 					for (auto* fixed : Collector<IFixedUpdate>::all()) fixed->fixedUpdate();
 					SceneManager::current()->safeCleanup();
+
+					_physics->update();
+					SceneManager::current()->safeCleanup();
+
 					fixedUpdateTime -= Settings::Physics::fixedDeltaTime();
 				}
 
@@ -130,15 +120,12 @@ namespace Tristeon
 			Mouse::reset();
 			Keyboard::reset();
 			Gamepad::reset();
-
-			SceneManager::processCachedLoad();
 		}
 	}
 
 	void Engine::setPlayMode(const bool& enabled)
 	{
 		instance()->_playMode = enabled;
-		instance()->_playModeDirty = true;
 	}
 
 	bool Engine::playMode()

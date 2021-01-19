@@ -37,7 +37,6 @@ namespace Tristeon
 		void run();
 		
 		bool _playMode = false;
-		bool _playModeDirty = false;
 		Unique<Renderer> _renderer = nullptr;
 		Unique<PhysicsWorld> _physics = nullptr;
 		Unique<Audio> _audio = nullptr;
