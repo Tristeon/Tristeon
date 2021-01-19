@@ -63,14 +63,14 @@ namespace Tristeon
 		 * Saves the current scene if it has a filepath. If not, nothing happens.
 		 */
 		static void saveCurrent();
-
-		static Delegate<Scene*> sceneLoaded;
 	private:
 		/**
 		 * Loads the scene after the frame has finished.
 		 * This is to prevent incorrect destruction mid-loop
 		 */
 		static void processCachedLoad();
+
+		static void postLoad();
 		
 		/**
 		 * Clears the current scene.

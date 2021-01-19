@@ -9,11 +9,13 @@
 #include <Standard/Delegate.h>
 #include <Scenes/Actors/Actor.h>
 
+#include "Callbacks/ISceneLoaded.h"
+
 namespace TristeonEditor
 {
 	struct FileItem;
 
-	class Editor : public Tristeon::Singleton<Editor>
+	class Editor : public Tristeon::Singleton<Editor>, public Tristeon::ISceneLoaded
 	{
 	public:
 		void initialize();
@@ -32,6 +34,7 @@ namespace TristeonEditor
 		
 		void setMenuBar(MenuBar* menu_bar);
 
+		void sceneLoaded(Tristeon::Scene* scene) override;
 	private:
 		Tristeon::Layer* _selectedLayer = nullptr;
 		Tristeon::Actor* _selectedActor = nullptr;

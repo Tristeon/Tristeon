@@ -3,7 +3,7 @@
 #include "Window.h"
 
 #include <Scenes/Scene.h>
-#include <Scenes/SceneManager.h>
+
 namespace TristeonEditor
 {
 	void Editor::initialize()
@@ -11,16 +11,6 @@ namespace TristeonEditor
 		//Scan meta files
 		importer.scanAssets();
 		
-		//Setup scene load callback
-		Tristeon::SceneManager::sceneLoaded += [&](Tristeon::Scene * scene)
-		{
-			Tristeon::Window::setWindowTitle("Tristeon2D | " + scene->name());
-			selectedLayer(nullptr);
-
-			for (auto* window : windows)
-				window->sceneLoaded(scene);
-		};
-
 		if (menuBar != nullptr)
 			menuBar->initialize();
 		
@@ -78,6 +68,15 @@ namespace TristeonEditor
 	void Editor::setMenuBar(MenuBar* menu_bar)
 	{
 		menuBar = menu_bar;
+	}
+
+	void Editor::sceneLoaded(Tristeon::Scene* scene)
+	{
+		Tristeon::Window::setWindowTitle("Tristeon2D | " + scene->name());
+		selectedLayer(nullptr);
+
+		for (auto* window : windows)
+			window->sceneLoaded(scene);
 	}
 }
 #endif

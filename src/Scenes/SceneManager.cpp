@@ -8,11 +8,11 @@
 #include <Callbacks/IInit.h>
 #include "Engine.h"
 #include "Settings.h"
+#include "Callbacks/ISceneLoaded.h"
 
 namespace Tristeon
 {
 	std::unique_ptr<Scene> SceneManager::_current = nullptr;
-	Delegate<Scene*> SceneManager::sceneLoaded;
 	String SceneManager::_cachedName;
 	json SceneManager::_cachedData;
 
@@ -83,7 +83,7 @@ namespace Tristeon
 				TRISTEON_WARNING("Couldn't find scene: " + _cachedName);
 				_current.reset();
 				_current = std::make_unique<Scene>(); // load empty scene
-				sceneLoaded.invoke(_current.get());
+				postLoad();
 				return;
 			}
 			toLoad = JsonSerializer::load(Settings::assetPath() + path);
@@ -98,13 +98,19 @@ namespace Tristeon
 		_current->_name = _cachedName;
 		_current->_path = path;
 
+		postLoad();
+	}
+
+	void SceneManager::postLoad()
+	{
 		if (Engine::playMode())
 		{
-			for (auto* start : Collector<IInit>::all()) start->init();
-			SceneManager::current()->safeCleanup();
+			for (auto* init : Collector<IInit>::all()) init->init();
+			current()->safeCleanup();
 		}
-		
-		sceneLoaded.invoke(_current.get());
+
+		for (auto* loaded : Collector<ISceneLoaded>::all()) loaded->sceneLoaded(_current.get());
+		current()->safeCleanup();
 
 		_cachedName = "";
 		_cachedData = json();
