@@ -49,7 +49,7 @@ jobs:
       run: sudo apt update && sudo apt-get install xorg-dev libglu1-mesa-dev
     
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.9.0
+      uses: jurplel/install-qt-action@v2.11.1
             
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
