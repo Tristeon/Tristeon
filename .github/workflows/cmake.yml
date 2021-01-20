@@ -49,6 +49,7 @@ jobs:
       run: sudo apt update && sudo apt-get install xorg-dev libglu1-mesa-dev
     
     - name: Install Qt
+      if: matrix.editor == 'ON'
       uses: jurplel/install-qt-action@v2.11.1
             
     - name: Configure CMake
