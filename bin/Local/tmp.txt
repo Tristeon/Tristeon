@@ -1,0 +1,1 @@
+Remove once the editor can actually write files in folders properly
