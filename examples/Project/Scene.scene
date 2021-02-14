@@ -39,6 +39,7 @@
                             "typeID": "Tristeon::TestBehaviour"
                         },
                         {
+                            "instanceID": 3507494867,
                             "typeID": "Tristeon::AudioListener"
                         }
                     ],
@@ -102,14 +103,7 @@
                     "width": 635
                 },
                 {
-                    "behaviours": [
-                        {
-                            "typeID": "Tristeon::AudioSource",
-                            "looping": true,
-                            "playOnInit": true,
-                            "clipPath": "scotland.wav"
-                        }
-                    ],
+                    "behaviours": [],
                     "clipPath": "CharacterWalk.clip",
                     "colour": {
                         "a": 1.0,

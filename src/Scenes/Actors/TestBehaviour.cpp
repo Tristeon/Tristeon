@@ -27,10 +27,7 @@ namespace Tristeon
 	{
 		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
-		{
 			body->setVelocity({ body->velocity().x, jumpVelocity });
-			Audio::play("jump.wav", false, 0.1f);
-		}
 
 		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
 		body->applyForce(Vector(horizontal, 0) * Time::deltaTime() * runSpeed);
@@ -44,9 +41,6 @@ namespace Tristeon
 			Settings::Graphics::setPreferredDisplay(1);
 		else if (Keyboard::pressed(Keyboard::Number3))
 			Settings::Graphics::setPreferredDisplay(2);
-
-		if (Keyboard::pressed(Keyboard::J))
-			Settings::Graphics::setMaxFPS(65);
 	}
 	
 	json TestBehaviour::serialize()
