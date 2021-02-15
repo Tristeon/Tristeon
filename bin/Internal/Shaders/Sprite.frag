@@ -1,5 +1,6 @@
 #version 140
 in vec2 texCoord;
+in vec2 worldPos;
 
 out vec4 outAlbedo;
 out vec4 outNormal;
@@ -32,5 +33,5 @@ void main()
 
     outAlbedo = texture2D(mainTex, coords) * sprite.colour;
     outNormal = vec4(1, 1, 1, 1);
-    outPosition = vec4(1, 1, 1, 1); 
+    outPosition = vec4(worldPos, 0, 1);
 }

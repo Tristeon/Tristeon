@@ -92,7 +92,7 @@ void main()
 
     outAlbedo = texture(tileset.texture, tilesetUV);
     outNormal = vec4(1, 1, 1, 1);
-    outPosition = vec4(1, 1, 1, 1);
+    outPosition = vec4(tileX * level.tileRenderWidth, tileY * level.tileRenderHeight, 0, 1);
 }
 
 ivec2 tileTo2DIndex(int tile)

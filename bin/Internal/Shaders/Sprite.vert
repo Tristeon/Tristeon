@@ -31,6 +31,7 @@ struct CameraData
 uniform CameraData camera;
  
 out vec2 texCoord;
+out vec2 worldPos;
 
 const float PI = 3.14159265;
 const float toRAD = PI / 180.0f;
@@ -61,4 +62,6 @@ void main()
     y += actor.position.y / camera.displayPixels.y * camera.zoom * 2;
 
     gl_Position = vec4(x, y, 0, 1);
+
+    worldPos = actor.position + vec2(rotX, rotY);
 }
