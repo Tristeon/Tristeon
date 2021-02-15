@@ -54,12 +54,14 @@ namespace Tristeon
 
 		for (auto* camera : cameras)
 		{
-			auto buffer = camera->framebuffer();
-			buffer.bind();
+			const auto offlineBuffer = camera->_offlineFBO;
+			auto resolution = camera->resolution();
+			glBindFramebuffer(GL_FRAMEBUFFER, offlineBuffer);
+			glViewport(0, 0, resolution.x, resolution.y);
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			//Send common data to all shaders through a prepass
-			for (auto shader : Collector<Shader>::all())
+			for (auto* shader : Collector<Shader>::all())
 			{
 				if (shader->empty())
 					continue;
@@ -67,14 +69,14 @@ namespace Tristeon
 				shader->bind();
 				shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
 				shader->setUniformValue("camera.zoom", camera->zoom);
-				shader->setUniformValue("camera.displayPixels", buffer.viewport.width, buffer.viewport.height);
+				shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
 			}
 
 			//Render each layer
 			for (unsigned int i = 0; i < scene->layerCount(); i++)
 			{
 				Layer* layer = scene->layerAt(i);
-				layer->render(buffer);
+				layer->render(Framebuffer { offlineBuffer, { 0, 0, resolution.x, resolution.y }});
 			}
 
 #ifdef TRISTEON_EDITOR
@@ -87,10 +89,34 @@ namespace Tristeon
 			Gizmos::render();
 		}
 
+		glUseProgram(GL_NONE);
+
+		for (auto* camera : cameras)
+		{
+			//Deferred output pass
+			auto outputBuffer = camera->framebuffer();
+			outputBuffer.bind();
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			getDeferredCameraShader()->setUniformValue("albedo", 0);
+			getDeferredCameraShader()->setUniformValue("normals", 1);
+			getDeferredCameraShader()->setUniformValue("positions", 2);
+
+			for (int i = 0; i < camera->_offlineFBOTextures.size(); i++) 
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, camera->_offlineFBOTextures[i]);
+			}
+
+			glUseProgram(getDeferredCameraShader()->shaderProgram());
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		}
+
 		//Prepare renderer for rendering to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 		glViewport(0, 0, Window::gameWidth(), Window::gameHeight());
-
+		glClear(GL_COLOR_BUFFER_BIT);
+		
 		if (Engine::playMode())
 		{
 			for (auto* camera : cameras)
@@ -110,5 +136,12 @@ namespace Tristeon
 		}
 #endif
 		Gizmos::clear();
+	}
+
+	Shader* Renderer::getDeferredCameraShader()
+	{
+		static Shader deferredCamera("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/DeferredCamera.frag");
+
+		return &deferredCamera;
 	}
 }

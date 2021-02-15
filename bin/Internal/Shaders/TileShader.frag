@@ -1,6 +1,10 @@
 #version 140
 in vec2 texCoord;
 
+out vec4 outAlbedo;
+out vec4 outNormal;
+out vec4 outPosition;
+
 struct Tileset
 {
     sampler2D texture;
@@ -37,8 +41,6 @@ struct CameraData
     float zoom;
 };
 uniform CameraData camera;
-
-out vec4 FragColor;
 
 vec2 getTileUV(vec2 uv, uint x, uint y);
 ivec2 tileTo2DIndex(int tile);
@@ -87,7 +89,10 @@ void main()
 
     //Convert UVs to tileset space
     vec2 tilesetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
-    FragColor = texture(tileset.texture, tilesetUV);
+
+    outAlbedo = texture(tileset.texture, tilesetUV);
+    outNormal = vec4(1, 1, 1, 1);
+    outPosition = vec4(1, 1, 1, 1);
 }
 
 ivec2 tileTo2DIndex(int tile)

@@ -1,6 +1,9 @@
 #version 140
 in vec2 texCoord;
-out vec4 FragColor;
+
+out vec4 outAlbedo;
+out vec4 outNormal;
+out vec4 outPosition;
 
 struct Spacing
 {
@@ -67,5 +70,7 @@ void main()
     float u = x + (startX / float(texSize.x));
     float v = y + (startY / float(texSize.y));
     
-    FragColor = texture2D(mainTex, vec2(u, v)) * sprite.colour;
+    outAlbedo = texture2D(mainTex, vec2(u, v)) * sprite.colour;
+    outNormal = vec4(1, 1, 1, 1);
+    outPosition = vec4(1, 1, 1, 1);
 }

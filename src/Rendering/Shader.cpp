@@ -57,73 +57,61 @@ namespace Tristeon
 
 	void Shader::setUniformValue(const String& name, const int& v0)
 	{
-		bind();
 		glUniform1i(glGetUniformLocation(_program, name.data()), v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1)
 	{
-		bind();
 		glUniform2i(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2)
 	{
-		bind();
 		glUniform3i(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2, const int& v3)
 	{
-		bind();
 		glUniform4i(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0)
 	{
-		bind();
 		glUniform1ui(glGetUniformLocation(_program, name.data()), v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1)
 	{
-		bind();
 		glUniform2ui(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2)
 	{
-		bind();
 		glUniform3ui(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2, const unsigned int& v3)
 	{
-		bind();
 		glUniform4ui(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0)
 	{
-		bind();
 		glUniform1f(glGetUniformLocation(_program, name.data()), v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1)
 	{
-		bind();
 		glUniform2f(glGetUniformLocation(_program, name.data()), v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2)
 	{
-		bind();
 		glUniform3f(glGetUniformLocation(_program, name.data()), v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2, const float& v3)
 	{
-		bind();
 		glUniform4f(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
 	}
 
@@ -204,6 +192,7 @@ namespace Tristeon
 		_program = glCreateProgram();
 		glAttachShader(_program, vertex);
 		glAttachShader(_program, fragment);
+		
 		glLinkProgram(_program);
 
 		TRISTEON_LOG("Successfully created shader program " + std::to_string(_program) + " with vertexpath " + _vertexPath + " and fragmentpath " + _fragmentPath);

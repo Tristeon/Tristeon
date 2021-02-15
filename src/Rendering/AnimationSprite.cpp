@@ -4,6 +4,7 @@
 
 #include "AssetManagement/AssetDatabase.h"
 #include "AssetManagement/Resources.h"
+#include "glad/glad.h"
 #include "Math/Math.h"
 #include "Utils/Time.h"
 
@@ -54,6 +55,7 @@ namespace Tristeon
 	void AnimationSprite::render()
 	{
 		auto* shader = getShader();
+		shader->bind();
 		if (_clip != nullptr)
 		{
 			shader->setUniformValue("animation.frame", static_cast<unsigned int>(floor(_currentFrame)) + _clip->startIndex);

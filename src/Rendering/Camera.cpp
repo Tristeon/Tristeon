@@ -23,6 +23,9 @@ namespace Tristeon
 	Camera::~Camera()
 	{
 		glDeleteFramebuffers(1, &_fbo);
+		glDeleteTextures(1, &_fboTexture);
+		glDeleteFramebuffers(1, &_offlineFBO);
+		glDeleteTextures(_offlineFBOTextures.size(), _offlineFBOTextures.data());
 		Collector<Camera>::remove(this);
 	}
 
@@ -63,9 +66,17 @@ namespace Tristeon
 		Gizmos::drawSquare(position, resolution * (1.0f / zoom), 0, Colour(0.8, 0.8, 0.8, 0.5));
 	}
 
+	VectorU Camera::resolution()
+	{
+		VectorU resolution = (VectorU)((Vector)Window::gameSize() * screenSize);
+		if (!renderToScreen)
+			resolution = overrideResolution;
+		return resolution;
+	}
+
 	Framebuffer Camera::framebuffer()
 	{
-		updateFramebuffer();
+		updateFramebuffers();
 		
 		VectorI resolution = (VectorI)((Vector)Window::gameSize() * screenSize);
 		if (!renderToScreen)
@@ -82,12 +93,18 @@ namespace Tristeon
 		};
 	}
 
-	void Camera::buildFramebuffer()
+	void Camera::buildFramebuffers()
 	{
 		_lastScreenSize = screenSize;
 		_lastWindowSize = Window::gameSize();
 
-		const auto size = static_cast<VectorI>(_lastScreenSize * _lastWindowSize);
+		createFramebuffer();
+		createOfflineFramebuffer();
+	}
+
+	void Camera::createFramebuffer()
+	{
+		const VectorU size = resolution();
 
 		//Delete old framebuffer with its texture
 		if (_fbo != NULL)
@@ -113,14 +130,52 @@ namespace Tristeon
 		if (!_valid)
 			TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
 		else
-			TRISTEON_LOG("Successfully created camera's framebuffer " + std::to_string(_fbo));
+			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_fbo));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
-	
-	void Camera::updateFramebuffer()
+
+	void Camera::createOfflineFramebuffer()
+	{
+		const VectorU size = resolution();
+
+		//Delete old framebuffer with its texture
+		if (_offlineFBO != NULL)
+		{
+			glDeleteFramebuffers(1, &_offlineFBO);
+			glDeleteTextures((GLsizei)_offlineFBOTextures.size(), _offlineFBOTextures.data());
+		}
+
+		//Gen and bind Framebuffer
+		glGenFramebuffers(1, &_offlineFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, _offlineFBO);
+
+		std::vector<uint32_t> attachments;
+		glGenTextures((uint32_t)_offlineFBOTextures.size(), _offlineFBOTextures.data());
+		for (int i = 0; i < _offlineFBOTextures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, _offlineFBOTextures[i]);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, _offlineFBOTextures[i], 0);
+			attachments.push_back(GL_COLOR_ATTACHMENT0 + i);
+		}
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDrawBuffers((uint32_t)attachments.size(), attachments.data());
+		
+		_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+		if (!_valid)
+			TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
+		else
+			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_fbo));
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void Camera::updateFramebuffers()
 	{
 		if (_lastScreenSize != screenSize || _lastWindowSize != Window::gameSize())
-			buildFramebuffer();
+			buildFramebuffers();
 	}
 	
 	void Camera::drawToScreen() const
@@ -142,7 +197,7 @@ namespace Tristeon
 		shader.setUniformValue("screenCoordinates", screenCoordinates.x, screenCoordinates.y);
 
 		//Draw
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

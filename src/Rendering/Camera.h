@@ -70,9 +70,7 @@ namespace Tristeon
 		 */
 		[[nodiscard]] unsigned int framebufferTexture() const { return _fboTexture; }
 
-		/**
-		 * Returns a copy of the framebuffer structure with the camera's current framebuffer properties.
-		 */
+		VectorU resolution();
 		[[nodiscard]] Framebuffer framebuffer();
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
@@ -80,6 +78,9 @@ namespace Tristeon
 		VectorI _lastWindowSize{};
 
 		//Framebuffer
+		unsigned int _offlineFBO = 0;
+		std::array<unsigned int, 3> _offlineFBOTextures;
+		
 		unsigned int _fbo = 0;
 		unsigned int _fboTexture = 0;
 		bool _valid = false;
@@ -87,11 +88,14 @@ namespace Tristeon
 		/**
 		 * Creates a framebuffer and its corresponding color texture.
 		 */
-		void buildFramebuffer();
+		void buildFramebuffers();
+		void createFramebuffer();
+		void createOfflineFramebuffer();
+
 		/**
 		 * Binds the framebuffer for use.
 		 */
-		void updateFramebuffer();
+		void updateFramebuffers();
 		/**
 		 * Draws the camera's framebuffer texture to the screen.
 		 */

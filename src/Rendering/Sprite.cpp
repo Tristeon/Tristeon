@@ -75,6 +75,7 @@ namespace Tristeon
 			return;
 
 		auto* shader = getShader();
+		shader->bind();
 		
 		glActiveTexture(GL_TEXTURE0);
 		_texture->bind();

@@ -1,6 +1,9 @@
 #version 140
 in vec2 texCoord;
-out vec4 FragColor;
+
+out vec4 outAlbedo;
+out vec4 outNormal;
+out vec4 outPosition;
 
 //Sprite
 uniform sampler2D mainTex;
@@ -27,5 +30,7 @@ void main()
     if (sprite.flipY)
         coords.y = 1 - coords.y;
 
-    FragColor = texture2D(mainTex, coords) * sprite.colour;
+    outAlbedo = texture2D(mainTex, coords) * sprite.colour;
+    outNormal = vec4(1, 1, 1, 1);
+    outPosition = vec4(1, 1, 1, 1); 
 }

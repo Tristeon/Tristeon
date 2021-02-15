@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 #include <Utils/Singleton.h>
-#include "Rendering/Camera.h"
+#include <Rendering/Shader.h>
+#include <Rendering/Camera.h>
 #include <Utils/ClassDefaults.h>
 
 namespace Tristeon
 {
-	class Shader;
 	class Scene;
 	class HUD;
 
@@ -48,6 +48,8 @@ namespace Tristeon
 			return instance()->_editorCamera.get();
 		}
 	private:
+		Shader* getDeferredCameraShader();
+		
 		std::unique_ptr<Camera> _editorCamera = nullptr;
 #endif
 
