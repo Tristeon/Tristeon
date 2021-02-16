@@ -74,7 +74,7 @@ namespace Tristeon
 
 	void AssetDatabase::readDir(String const& dir)
 	{
-		for (auto const& entry : fs::directory_iterator(dir))
+		for (auto const& entry : fs::recursive_directory_iterator(dir))
 		{
 			if (entry.is_directory())
 			{
