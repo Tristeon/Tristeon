@@ -25,6 +25,9 @@ namespace Tristeon
 
 	void TestBehaviour::update()
 	{
+		if (!body)
+			return;
+		
 		const auto grounded = PhysicsWorld::raycast(actor()->position, Vector::down(), groundedDistance);
 		if (Keyboard::pressed(Keyboard::Space) && grounded)
 			body->setVelocity({ body->velocity().x, jumpVelocity });

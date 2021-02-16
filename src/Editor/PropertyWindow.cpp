@@ -50,7 +50,7 @@ namespace TristeonEditor
 		current->setParent(contents);
 		current->initialize();
 		layout->addWidget(current);
-		current->show();
+		//current->show();
 	}
 
 	void PropertyWindow::selectedLayerChanged(Tristeon::Layer * layer)

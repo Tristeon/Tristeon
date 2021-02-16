@@ -39,5 +39,13 @@ namespace Tristeon
 			static TypeMap instance;
 			return &instance;
 		}
+
+		/**
+		 * Returns true if the type is registerd
+		 */
+		[[nodiscard]] static bool registered(const String& type)
+		{
+			return getMap()->find(type) != getMap()->end();
+		}
 	};
 }
