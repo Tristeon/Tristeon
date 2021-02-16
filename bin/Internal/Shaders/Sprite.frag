@@ -31,7 +31,11 @@ void main()
     if (sprite.flipY)
         coords.y = 1 - coords.y;
 
-    outAlbedo = texture2D(mainTex, coords) * sprite.colour;
-    outNormal = vec4(1, 1, 1, 1);
+    vec4 tex =  texture2D(mainTex, coords);
+    if (tex.a == 0)
+        discard;
+
+    outAlbedo = tex * sprite.colour;
+    outNormal = vec4(0, 0, -1, 0);
     outPosition = vec4(worldPos, 0, 1);
 }

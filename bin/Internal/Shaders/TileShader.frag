@@ -91,7 +91,7 @@ void main()
     vec2 tilesetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
 
     outAlbedo = texture(tileset.texture, tilesetUV);
-    outNormal = vec4(1, 1, 1, 1);
+    outNormal = vec4(0, 0, -1, 0);
     outPosition = vec4(tileX * level.tileRenderWidth, tileY * level.tileRenderHeight, 0, 1);
 }
 

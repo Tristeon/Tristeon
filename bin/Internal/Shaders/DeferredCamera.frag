@@ -21,7 +21,7 @@ struct Light
     int type;
 };
 uniform Light lights[32];
-uniform int lightCount = 0;
+uniform int disableLighting;
 
 in vec2 texCoord;
 out vec4 fragColor;
@@ -29,7 +29,13 @@ out vec4 fragColor;
 void main()
 {
     vec4 albedo_val = texture2D(albedo, texCoord);
- 
+    if (disableLighting == 1)
+    {
+        fragColor = albedo_val;
+        return;
+    }
+
+
     if (length(albedo_val.rgb * albedo_val.a) < 0.2f)
         discard;
 

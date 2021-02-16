@@ -70,8 +70,12 @@ void main()
     //Add start pixels, also scaled into normalized texture coords
     float u = x + (startX / float(texSize.x));
     float v = y + (startY / float(texSize.y));
-    
-    outAlbedo = texture2D(mainTex, vec2(u, v)) * sprite.colour;
-    outNormal = vec4(1, 1, 1, 1);
+
+    vec4 tex =  texture2D(mainTex, vec2(u, v));
+    if (tex.a == 0)
+        discard;
+
+    outAlbedo = tex * sprite.colour;
+    outNormal = vec4(0, 0, -1, 0);
     outPosition = vec4(worldPos, 0, 1);
 }
