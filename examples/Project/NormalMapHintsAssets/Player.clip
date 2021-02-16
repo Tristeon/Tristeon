@@ -1,0 +1,18 @@
+{
+    "cols": 11,
+    "endIndex": 10,
+    "loops": true,
+    "playbackRate": 2.0,
+    "rows": 1,
+    "spacing": {
+        "bottom": 0,
+        "horizontalFrame": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "verticalFrame": 0
+    },
+    "startIndex": 0,
+    "texturePath": "NormalMapHintsAssets/spritesheet.png",
+    "typeID": "Tristeon::AnimationClip"
+}
