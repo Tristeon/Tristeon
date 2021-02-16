@@ -93,15 +93,6 @@ namespace Tristeon
 			Layer* layer = SceneManager::current()->layerAt(i);
 			layer->render(Framebuffer{ camera->_offlineFBO, { 0, 0, resolution.x, resolution.y } });
 		}
-
-#ifdef TRISTEON_EDITOR
-		//Render grid to editor camera
-		if (camera == _editorCamera.get())
-			Grid::render();
-#endif
-
-		//Render gizmos
-		Gizmos::render();
 	}
 
 	void Renderer::renderDeferred(Camera* camera)
@@ -127,7 +118,21 @@ namespace Tristeon
 			glBindTexture(GL_TEXTURE_2D, camera->_offlineFBOTextures[i]);
 		}
 
+		shader->setUniformValue("disableLighting", 0);
+#ifdef TRISTEON_EDITOR
+		if (camera == _editorCamera.get())
+			shader->setUniformValue("disableLighting", 1);
+#endif
+
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+#ifdef TRISTEON_EDITOR
+		if (camera == _editorCamera.get())
+		{
+			Grid::render();
+			Gizmos::render();
+		}
+#endif
 	}
 
 	void Renderer::renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const
