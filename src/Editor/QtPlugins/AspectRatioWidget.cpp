@@ -21,25 +21,25 @@ namespace TristeonEditor
 
 	void AspectRatioWidget::resizeEvent(QResizeEvent* event)
 	{
-		float const thisAspectRatio = (float)event->size().width() / event->size().height();
-		int widgetStretch, outerStretch;
+		//float const thisAspectRatio = (float)event->size().width() / (float)event->size().height();
+		//float widgetStretch, outerStretch;
 
-		if (thisAspectRatio > (arWidth / arHeight)) // too wide
-		{
-			layout->setDirection(QBoxLayout::LeftToRight);
-			widgetStretch = height() * (arWidth / arHeight); // i.e., my width
-			outerStretch = (width() - widgetStretch) / 2 + 0.5;
-		}
-		else // too tall
-		{
-			layout->setDirection(QBoxLayout::TopToBottom);
-			widgetStretch = width() * (arHeight / arWidth); // i.e., my height
-			outerStretch = (height() - widgetStretch) / 2 + 0.5;
-		}
+		//if (thisAspectRatio > (arWidth / arHeight)) // too wide
+		//{
+		//	layout->setDirection(QBoxLayout::LeftToRight);
+		//	widgetStretch = (float)height() * (arWidth / arHeight); // i.e., my width
+		//	outerStretch = ((float)width() - widgetStretch) / 2.0f + 0.5f;
+		//}
+		//else // too tall
+		//{
+		//	layout->setDirection(QBoxLayout::TopToBottom);
+		//	widgetStretch = (float)width() * (arHeight / arWidth); // i.e., my height
+		//	outerStretch = ((float)height() - widgetStretch) / 2.0f + 0.5f;
+		//}
 
-		layout->setStretch(0, outerStretch);
-		layout->setStretch(1, widgetStretch);
-		layout->setStretch(2, outerStretch);
+		//layout->setStretch(0, (int)outerStretch);
+		//layout->setStretch(1, (int)widgetStretch);
+		//layout->setStretch(2, (int)outerStretch);
 	}
 }
 #endif

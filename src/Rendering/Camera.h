@@ -71,11 +71,10 @@ namespace Tristeon
 		[[nodiscard]] unsigned int framebufferTexture() const { return _fboTexture; }
 
 		VectorU resolution();
-		[[nodiscard]] Framebuffer framebuffer();
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
 		Vector _lastScreenSize{};
-		VectorI _lastWindowSize{};
+		VectorU _lastWindowSize{};
 
 		//Framebuffer
 		unsigned int _offlineFBO = 0;

@@ -81,7 +81,7 @@ namespace Tristeon
 		template<typename T = Type>
 		[[nodiscard]] bool operator!=(const VectorType<T>& other) const
 		{
-			return x != other.x && y != other.y;
+			return x != other.x || y != other.y;
 		}
 
 		template<typename T = Type>

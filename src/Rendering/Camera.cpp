@@ -58,39 +58,16 @@ namespace Tristeon
 	{
 		if (zoom == 0)
 			return;
-
-		Vector resolution = (Vector)Window::gameSize() * screenSize;
-		if (!renderToScreen)
-			resolution = overrideResolution;
-		
-		Gizmos::drawSquare(position, resolution * (1.0f / zoom), 0, Colour(0.8, 0.8, 0.8, 0.5));
+		const auto r = resolution();
+		Gizmos::drawSquare(position, (Vector)r * (1.0f / zoom), 0, Colour(0.8, 0.8, 0.8, 0.5));
 	}
 
 	VectorU Camera::resolution()
 	{
-		VectorU resolution = (VectorU)((Vector)Window::gameSize() * screenSize);
+		Vector resolution = ((Vector)Window::gameSize() * screenSize);
 		if (!renderToScreen)
 			resolution = overrideResolution;
-		return resolution;
-	}
-
-	Framebuffer Camera::framebuffer()
-	{
-		updateFramebuffers();
-		
-		VectorI resolution = (VectorI)((Vector)Window::gameSize() * screenSize);
-		if (!renderToScreen)
-			resolution = overrideResolution;
-		
-		return {
-			_fbo,
-			{
-				0u,
-				0u,
-				(unsigned int)resolution.x,
-				(unsigned int)resolution.y
-			}
-		};
+		return (VectorU)resolution;
 	}
 
 	void Camera::buildFramebuffers()

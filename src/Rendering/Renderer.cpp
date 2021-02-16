@@ -29,15 +29,6 @@ namespace Tristeon
 
 		glGenVertexArrays(1, &_dummyVAO);
 		glBindVertexArray(_dummyVAO);
-
-		for (int i = 0; i < 32; i++)
-		{
-			getDeferredCameraShader()->setUniformValue("lights[" + std::to_string(i) + "].position", Random::generateFloat(0, 1000), Random::generateFloat(0, 1000), 0.0f);
-			getDeferredCameraShader()->setUniformValue("lights[" + std::to_string(i) + "].intensity", 1.0f);
-			getDeferredCameraShader()->setUniformValue("lights[" + std::to_string(i) + "].color", Random::generateFloat01(), Random::generateFloat01(), Random::generateFloat01());
-			getDeferredCameraShader()->setUniformValue("lights[" + std::to_string(i) + "].intensity", 1024.0f);
-			getDeferredCameraShader()->setUniformValue("lights[" + std::to_string(i) + "].type", 0);
-		}
 	}
 
 	Renderer::~Renderer()
@@ -61,76 +52,91 @@ namespace Tristeon
 		if (!Engine::playMode())
 			cameras.add(editorCamera());
 #endif
-
 		for (auto* camera : cameras)
 		{
-			const auto offlineBuffer = camera->_offlineFBO;
-			auto resolution = camera->resolution();
-			glBindFramebuffer(GL_FRAMEBUFFER, offlineBuffer);
-			glViewport(0, 0, resolution.x, resolution.y);
-			glClear(GL_COLOR_BUFFER_BIT);
-			
-			//Send common data to all shaders through a prepass
-			for (auto* shader : Collector<Shader>::all())
-			{
-				if (shader->empty())
-					continue;
-				
-				shader->bind();
-				shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
-				shader->setUniformValue("camera.zoom", camera->zoom);
-				shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
-			}
+			camera->updateFramebuffers();
+			renderOffline(camera);
+			renderDeferred(camera);
+		}
 
-			//Render each layer
-			for (unsigned int i = 0; i < scene->layerCount(); i++)
-			{
-				Layer* layer = scene->layerAt(i);
-				layer->render(Framebuffer { offlineBuffer, { 0, 0, resolution.x, resolution.y }});
-			}
+		renderOnscreen(framebuffer, cameras);
+	}
+
+	Shader* Renderer::getDeferredCameraShader()
+	{
+		static Shader deferredCamera("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/DeferredCamera.frag");
+		return &deferredCamera;
+	}
+
+	void Renderer::renderOffline(Camera* camera) const
+	{
+		const auto resolution = camera->resolution();
+		glBindFramebuffer(GL_FRAMEBUFFER, camera->_offlineFBO);
+		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//Send common data to all shaders through a prepass
+		for (auto* shader : Collector<Shader>::all())
+		{
+			if (shader->empty())
+				continue;
+
+			shader->bind();
+			shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
+			shader->setUniformValue("camera.zoom", camera->zoom);
+			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
+		}
+
+		//Render each layer
+		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
+		{
+			Layer* layer = SceneManager::current()->layerAt(i);
+			layer->render(Framebuffer{ camera->_offlineFBO, { 0, 0, resolution.x, resolution.y } });
+		}
 
 #ifdef TRISTEON_EDITOR
-			//Render grid to editor camera
-			if (camera == _editorCamera.get())
-				Grid::render();
+		//Render grid to editor camera
+		if (camera == _editorCamera.get())
+			Grid::render();
 #endif
 
-			//Render gizmos
-			Gizmos::render();
-		}
+		//Render gizmos
+		Gizmos::render();
+	}
 
-		glUseProgram(GL_NONE);
+	void Renderer::renderDeferred(Camera* camera)
+	{
+		const auto resolution = camera->resolution();
+		
+		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
+		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (auto* camera : cameras)
+		auto* shader = getDeferredCameraShader();
+		shader->bind();
+
+		shader->setUniformValue("albedo", 0);
+		shader->setUniformValue("normals", 1);
+		shader->setUniformValue("positions", 2);
+
+		shader->setUniformValue("lights[0].position", 500.0f, 800.0f, -256.0f);
+
+		for (size_t i = 0; i < camera->_offlineFBOTextures.size(); i++)
 		{
-			//Deferred output pass
-			auto outputBuffer = camera->framebuffer();
-			outputBuffer.bind();
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			getDeferredCameraShader()->bind();
-			
-			getDeferredCameraShader()->setUniformValue("albedo", 0);
-			getDeferredCameraShader()->setUniformValue("normals", 1);
-			getDeferredCameraShader()->setUniformValue("positions", 2);
-
-			auto mouse = Window::screenToWorld(Mouse::position(), camera);
-			getDeferredCameraShader()->setUniformValue("lights[0].position", mouse.x, mouse.y, 0.0f);
-
-			for (int i = 0; i < camera->_offlineFBOTextures.size(); i++) 
-			{
-				glActiveTexture(GL_TEXTURE0 + i);
-				glBindTexture(GL_TEXTURE_2D, camera->_offlineFBOTextures[i]);
-			}
-
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, camera->_offlineFBOTextures[i]);
 		}
 
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+
+	void Renderer::renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const
+	{
 		//Prepare renderer for rendering to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-		glViewport(0, 0, Window::gameWidth(), Window::gameHeight());
+		glViewport(0, 0, (GLsizei)Window::gameWidth(), (GLsizei)Window::gameHeight());
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
 		if (Engine::playMode())
 		{
 			for (auto* camera : cameras)
@@ -150,12 +156,5 @@ namespace Tristeon
 		}
 #endif
 		Gizmos::clear();
-	}
-
-	Shader* Renderer::getDeferredCameraShader()
-	{
-		static Shader deferredCamera("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/DeferredCamera.frag");
-
-		return &deferredCamera;
 	}
 }
