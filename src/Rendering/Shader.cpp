@@ -1,9 +1,14 @@
 #include "Shader.h"
+
+#include <filesystem>
+
 #include "Engine.h"
 
 #include "Utils/Console.h"
 #include <fstream>
 #include <glad/glad.h>
+
+#include <Shadinclude.hpp>
 
 namespace Tristeon
 {
@@ -153,21 +158,24 @@ namespace Tristeon
 
 	void Shader::load()
 	{
-		std::ifstream vertexFile(_vertexPath.c_str());
-		std::ifstream fragmentFile(_fragmentPath.c_str());
-
-		if (!vertexFile.is_open() || !fragmentFile.is_open())
+		if (!std::filesystem::exists(_vertexPath))
 		{
-			TRISTEON_WARNING("Failed to create shader program with files: [Vertex] " + _vertexPath + ", [Fragment] " + _fragmentPath);
+			TRISTEON_WARNING("Failed to create shader program because vertex file " + _vertexPath + " doesn't exist");
+			_failed = true;
+			return;
+		}
+		if (!std::filesystem::exists(_vertexPath))
+		{
+			TRISTEON_WARNING("Failed to create shader program because fragment file " + _fragmentPath + " doesn't exist");
 			_failed = true;
 			return;
 		}
 
-		_vertexData = String(std::istreambuf_iterator<char>(vertexFile), std::istreambuf_iterator<char>());
-		_fragmentData = String(std::istreambuf_iterator<char>(fragmentFile), std::istreambuf_iterator<char>());
+		_vertexData = Shadinclude::load(_vertexPath);
+		_fragmentData = Shadinclude::load(_fragmentPath);
 
 		//Compile and check vertex shader
-		auto vertexString = _vertexData.data();
+		auto* vertexString = _vertexData.data();
 		const auto vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, &vertexString, nullptr);
 		glCompileShader(vertex);
