@@ -207,9 +207,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 4096.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -246,10 +259,23 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 50.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": -1.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
-                            "sourceType": 0,
+                            "intensity": 1.0,
+                            "range": 1028.0,
+                            "sourceType": 1,
                             "typeID": "Tristeon::Light"
                         }
                     ],
@@ -272,7 +298,7 @@
                         "x": 1068.4210205078125,
                         "y": 984.21044921875
                     },
-                    "rotation": 0.0,
+                    "rotation": 58.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -285,9 +311,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 1028.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -324,6 +363,71 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "instanceID": 1857102904,
+                            "intensity": 1.0,
+                            "range": 1028.0,
+                            "sourceType": 0,
+                            "typeID": "Tristeon::Light"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 173,
+                    "instanceID": 30496675,
+                    "name": "Light",
+                    "normalPath": "",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 2968.4208984375,
+                        "y": 1663.15771484375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "NormalMapHintsAssets/LightSprite.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 173
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
                             "intensity": 5.0,
                             "range": 256.0,
@@ -363,48 +467,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
-                            "sourceType": 0,
-                            "typeID": "Tristeon::Light"
-                        }
-                    ],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 173,
-                    "instanceID": 30496675,
-                    "name": "Light",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2968.4208984375,
-                        "y": 1663.15771484375
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "NormalMapHintsAssets/LightSprite.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 173
-                },
-                {
-                    "behaviours": [
-                        {
-                            "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 2048.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -441,9 +519,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 2048.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -480,9 +571,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 2048.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -519,9 +623,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 1028.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -558,9 +675,22 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
                             "instanceID": 1857102904,
-                            "intensity": 5.0,
-                            "range": 256.0,
+                            "intensity": 1.0,
+                            "range": 1028.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }

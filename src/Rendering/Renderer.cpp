@@ -11,6 +11,7 @@
 #include "Rendering/Camera.h"
 #include "Collector.h"
 #include "glad/glad.h"
+#include "Math/Math.h"
 
 #include "Scenes/SceneManager.h"
 #include "Scenes/Actors/Light.h"
@@ -90,6 +91,9 @@ namespace Tristeon
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
+				auto invertedDirection = -lights[i]->direction().normalize();
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".invertedDirection", invertedDirection.x, invertedDirection.y);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".cutoff", cos(Math::toRadians(lights[i]->cutoff())));
 			}
 			shader->setUniformValue("lightCount", (int)lights.size());
 

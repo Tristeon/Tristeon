@@ -16,9 +16,14 @@ namespace Tristeon
 	{
 		json j = Behaviour::serialize();
 		j["typeID"] = Type<Light>::fullName();
-		j["intensity"] = _intensity;
 		j["sourceType"] = _type;
+		j["intensity"] = _intensity;
 		j["range"] = _range;
+		j["colour"] = _colour;
+		
+		j["direction"] = _direction;
+		j["cutoff"] = _cutoff;
+		
 		return j;
 	}
 
@@ -29,5 +34,9 @@ namespace Tristeon
 		_intensity = j.value("intensity", 1.0f);
 		_type = j.value("sourceType", SourceType::Point);
 		_range = j.value("range", 256.0f);
+		_colour = j.value("colour", Colour());
+
+		_direction = j.value("direction", Vector{});
+		_cutoff = j.value("cutoff", 360.0f);
 	}
 }

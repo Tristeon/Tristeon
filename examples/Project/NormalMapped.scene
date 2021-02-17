@@ -264,14 +264,27 @@
                 {
                     "behaviours": [
                         {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 15.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": -1.0
+                            },
                             "instanceID": 3152115923,
-                            "intensity": 5.0,
-                            "range": 256.0,
-                            "sourceType": 0,
+                            "intensity": 20.0,
+                            "range": 2048.0,
+                            "sourceType": 1,
                             "typeID": "Tristeon::Light"
                         },
                         {
-                            "instanceID": 3759724530,
+                            "instanceID": 2392568987,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
