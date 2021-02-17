@@ -1,11 +1,13 @@
 {
+    "albedoPath": "GoldBricks.png",
     "height": 7,
     "horizontalSpacing": 2,
+    "id": 1242115487,
+    "normalPath": "",
     "spacingBottom": 2,
     "spacingLeft": 2,
     "spacingRight": 2,
     "spacingTop": 2,
-    "texturePath": "GoldBricks.png",
     "tileInfo": [
         {
             "density": 1.0,
@@ -302,10 +304,7 @@
             "restitution": -107374176.0
         }
     ],
-    "tileRenderHeight": 256,
-    "tileRenderWidth": 256,
     "typeID": "Tristeon::Tileset",
     "verticalSpacing": 2,
-    "width": 7,
-    "id": 1242115487
+    "width": 7
 }

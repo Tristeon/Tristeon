@@ -1,12 +1,13 @@
 {
+    "albedoPath": "TilesetTest.png",
     "height": 5,
     "horizontalSpacing": 0,
     "id": 670680868,
+    "normalPath": "",
     "spacingBottom": 0,
     "spacingLeft": 0,
     "spacingRight": 0,
     "spacingTop": 0,
-    "texturePath": "TilesetTest.png",
     "tileInfo": [
         {
             "density": 1.0,

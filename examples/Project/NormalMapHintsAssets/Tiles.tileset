@@ -1,12 +1,13 @@
 {
+    "albedoPath": "NormalMapHintsAssets/tile.png",
     "height": 4,
     "horizontalSpacing": 0,
     "id": 2308924437,
+    "normalPath": "NormalMapHintsAssets/tile_n.png",
     "spacingBottom": 0,
     "spacingLeft": 0,
     "spacingRight": 0,
     "spacingTop": 0,
-    "texturePath": "NormalMapHintsAssets/tile.png",
     "tileInfo": [
         {
             "density": 1.0,
