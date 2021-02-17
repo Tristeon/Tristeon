@@ -31,19 +31,19 @@ namespace Tristeon
 
 	json TileLayer::serialize()
 	{
-		json j = Layer::serialize();
+		auto j = Layer::serialize();
 		j["typeID"] = Type<TileLayer>::fullName();
 		j["columns"] = _columns;
 		j["rows"] = _rows;
 
-		json sets = json::array();
+		auto sets = json::array();
 		for (auto* tileset : _tilesets)
 			sets.push_back(tileset->filePath);
 		j["tilesets"] = sets;
 
 		//Tiles use a custom serialization method instead of the standard json library to speed things up
 		String tilesSerialized;
-		for (int i = 0; i < _columns * _rows; i++)
+		for (auto i = 0; i < _columns * _rows; i++)
 		{
 			//They're stored as a comma separated string
 			tilesSerialized += std::to_string(_tiles[i].index) + "," + std::to_string(_tiles[i].tilesetID);
@@ -66,7 +66,7 @@ namespace Tristeon
 		{
 			for (auto& i : j["tilesets"])
 			{
-				Tileset* tileset = Resources::jsonLoad<Tileset>(i);
+				auto tileset = Resources::jsonLoad<Tileset>(i);
 				if (tileset == nullptr)
 					continue;
 				tileset->filePath = i.get<String>();
@@ -76,8 +76,8 @@ namespace Tristeon
 
 		//json reading can be rather slow, so tiles are read manually through a simple comma-separated string.
 		_tiles = std::make_unique<Tile[]>(_columns * _rows);
-		const String tileString = j.value("tileData", "");
-		const List<String> splitTileString = StringHelper::split(tileString, ',');
+		const auto tileString = j.value("tileData", "");
+		const auto splitTileString = StringHelper::split(tileString, ',');
 
 		assert(splitTileString.size() % 2 == 0);
 
@@ -114,7 +114,7 @@ namespace Tristeon
 
 	void TileLayer::setTileByPosition(const float& wx, const float& wy, const Tile& value)
 	{
-		VectorI const index = Grid::indexByPosition(wx, wy);
+		auto const index = Grid::indexByPosition(wx, wy);
 		setTileByIndex(index.x, index.y, value);
 	}
 
@@ -141,13 +141,13 @@ namespace Tristeon
 
 	Tile TileLayer::tileByPosition(const float& wx, const float& wy) const
 	{
-		VectorI const index = Grid::indexByPosition(wx, wy);
+		auto const index = Grid::indexByPosition(wx, wy);
 		return tileByIndex(index);
 	}
 
 	Tileset* TileLayer::tileset(const unsigned int& id)
 	{
-		for (Tileset* tileset : _tilesets)
+		for (auto* tileset : _tilesets)
 		{
 			if (tileset->id == id)
 				return tileset;
@@ -203,7 +203,7 @@ namespace Tristeon
 
 	void TileLayer::render(const Framebuffer& framebuffer)
 	{
-		static Shader shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/TileShader.frag");
+		static auto shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/TileShader.frag");
 		
 		if (_tbo == 0 || _tboTex == 0)
 			return;
@@ -234,13 +234,27 @@ namespace Tristeon
 		shader.setUniformValue("level.tileRenderWidth", Grid::tileWidth());
 		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
-		glActiveTexture(GL_TEXTURE0);
-		for (Tileset* set : _tilesets)
+		for (auto* set : _tilesets)
 		{
-			set->texture->bind();
+			if (!set->albedoMap)
+				continue;
+			
+			glActiveTexture(GL_TEXTURE0);
+			set->albedoMap->bind();
+			glActiveTexture(GL_TEXTURE2);
+			if (set->normalMap)
+			{
+				set->normalMap->bind();
+				shader.setUniformValue("tileset.normalMapEnabled", true);
+			}
+			else
+			{
+				shader.setUniformValue("tileset.normalMapEnabled", false);
+			}
 
 			//Upload texture & tileset info
-			shader.setUniformValue("tileset.texture", 0);
+			shader.setUniformValue("tileset.albedoMap", 0);
+			shader.setUniformValue("tileset.normalMap", 2);
 
 			shader.setUniformValue("tileset.cols", set->cols);
 			shader.setUniformValue("tileset.rows", set->rows);
@@ -285,7 +299,7 @@ namespace Tristeon
 		{
 			for (auto y = 0; y < _rows; y++)
 			{
-				bool const colliderExists = _fixtures.find(VectorI{ x, y }) != _fixtures.end();
+				auto const colliderExists = _fixtures.find(VectorI{ x, y }) != _fixtures.end();
 
 				int const index = y * _columns + x;
 				if (_tiles[index].index == -1)
@@ -298,19 +312,19 @@ namespace Tristeon
 					continue;
 				}
 
-				Tile const tile = _tiles[index];
-				Tileset* set = tileset(tile.tilesetID);
+				auto const tile = _tiles[index];
+				auto* set = tileset(tile.tilesetID);
 				if (set == nullptr)
 					continue;
-				
-				TileInfo const settings = set->info(tile.index);
+
+				auto const settings = set->info(tile.index);
 
 				//No collider exists but the tile wants a collider
 				if (settings.hasCollider && !colliderExists)
 				{
-					Vector position = Vector(x * Grid::tileWidth(), y * Grid::tileHeight());
-					Vector const meterSize = PhysicsWorld::pixelsToMeters({ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f });
-					Vector meterPosition = PhysicsWorld::pixelsToMeters(position);
+					auto position = Vector(x * Grid::tileWidth(), y * Grid::tileHeight());
+					auto const meterSize = PhysicsWorld::pixelsToMeters({ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f });
+					const auto meterPosition = PhysicsWorld::pixelsToMeters(position);
 
 					b2PolygonShape shape;
 					shape.SetAsBox(meterSize.x, meterSize.y, b2Vec2(meterPosition.x, meterPosition.y), 0);
@@ -321,7 +335,7 @@ namespace Tristeon
 					def.friction = settings.friction;
 					def.restitution = settings.restitution;
 
-					auto fixture = PhysicsWorld::instance()->_staticBody->CreateFixture(&def);
+					auto* fixture = PhysicsWorld::instance()->_staticBody->CreateFixture(&def);
 					fixture->GetUserData().pointer = (uintptr_t)this;
 					_fixtures[{x, y}] = fixture;
 				}

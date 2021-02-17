@@ -7,7 +7,7 @@ namespace Tristeon
 {
 	Sprite::Sprite()
 	{
-		_texture = Resources::load<Texture>(Texture::defaultPath);
+		_albedo = Resources::load<Texture>(Texture::defaultPath);
 	}
 
 	json Sprite::serialize()
@@ -19,14 +19,15 @@ namespace Tristeon
 		j["flipX"] = flipX;
 		j["flipY"] = flipY;
 		j["colour"] = colour;
-		j["texturePath"] = _texturePath;
+		j["texturePath"] = _albedoPath;
+		j["normalPath"] = _normalPath;
 		return j;
 	}
 
 	void Sprite::deserialize(json j)
 	{
 		Graphic::deserialize(j);
-		
+
 		width = j.value("width", 1u);
 		height = j.value("height", 1u);
 
@@ -35,59 +36,107 @@ namespace Tristeon
 
 		colour = j.value("colour", Colour());
 
-		std::string const newPath = j.value("texturePath", "");
-		if (newPath != _texturePath) //Update if new path
+		std::string const newAlbedoPath = j.value("texturePath", "");
+		if (newAlbedoPath != _albedoPath)
 		{
-			_texture = Resources::assetLoad<Texture>(newPath);
-			_texturePath = newPath;
+			_albedo = Resources::assetLoad<Texture>(newAlbedoPath);
+			_albedoPath = newAlbedoPath;
 		}
+		if (!_albedo)
+			_albedo = Resources::assetLoad<Texture>(Texture::defaultPath);
 		
-		if (!_texture)
-			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+		std::string const newNormalPath = j.value("normalPath", "");
+		if (newNormalPath != _normalPath)
+		{
+			_normal = Resources::assetLoad<Texture>(newNormalPath);
+			_normalPath = newNormalPath;
+		}
 	}
 
-	void Sprite::setTexture(std::string const& path, bool const& setSize)
+	void Sprite::setTexture(std::string const& path, bool const& setSize, const TextureType& type)
 	{
-		_texture = Resources::assetLoad<Texture>(path);
-		_texturePath = path;
-		
-		if (!_texture)
+		Texture** texPtr = nullptr;
+		String* pathPtr = nullptr;
+
+		switch (type)
 		{
-			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
-			_texturePath = Texture::defaultPath;
+			case TextureType::Albedo:
+			{
+				texPtr = &_albedo;
+				pathPtr = &_albedoPath;
+				break;
+			}
+			case TextureType::Normal:
+			{
+				texPtr = &_normal;
+				pathPtr = &_normalPath;
+				break;
+			}
 		}
-		
+
+		*texPtr = Resources::assetLoad<Texture>(path);
+		*pathPtr = path;
+
+		if (!*texPtr && type == TextureType::Albedo)
+		{
+			*texPtr = Resources::assetLoad<Texture>(Texture::defaultPath);
+			*pathPtr = Texture::defaultPath;
+		}
+
 		if (setSize)
 		{
-			width = _texture->width();
-			height = _texture->height();
+			width = (*texPtr)->width();
+			height = (*texPtr)->height();
 		}
 	}
 
-	Texture* Sprite::texture()
+	Texture* Sprite::texture(const TextureType& type)
 	{
-		return _texture;
+		switch (type)
+		{
+		case TextureType::Albedo:
+			return _albedo;
+		case TextureType::Normal:
+			return _normal;
+		}
+
+		TRISTEON_LOG("Invalid argument passed, type needs to be a valid enum value");
+		return nullptr;
 	}
 
 	void Sprite::render()
 	{
-		if (!_texture)
+		if (!_albedo)
 			return;
 
 		auto* shader = getShader();
 		shader->bind();
-		
-		glActiveTexture(GL_TEXTURE0);
-		_texture->bind();
 
+		glActiveTexture(GL_TEXTURE0);
+		_albedo->bind();
+
+		if (_normal)
+		{
+			glActiveTexture(GL_TEXTURE1);
+			_normal->bind();
+			shader->setUniformValue("normalMapEnabled", true);
+		}
+		else
+		{
+			shader->setUniformValue("normalMapEnabled", false);
+		}
+
+		shader->setUniformValue("albedoMap", 0);
+		shader->setUniformValue("normalMap", 1);
+		
 		//Sprite info
 		shader->setUniformValue("sprite.width", width);
 		shader->setUniformValue("sprite.height", height);
 		shader->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
-		
+
 		shader->setUniformValue("sprite.flipX", flipX);
 		shader->setUniformValue("sprite.flipY", flipY);
-		
+
 		shader->setUniformValue("actor.position", position.x, position.y);
 		shader->setUniformValue("actor.scale", scale.x, scale.y);
 		shader->setUniformValue("actor.rotation", -rotation);

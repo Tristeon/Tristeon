@@ -7,7 +7,9 @@ out vec4 outNormal;
 out vec4 outPosition;
 
 //Sprite
-uniform sampler2D mainTex;
+uniform sampler2D albedoMap;
+uniform sampler2D normalMap;
+uniform bool normalMapEnabled;
 struct Sprite
 {
     uint width;
@@ -31,11 +33,13 @@ void main()
     if (sprite.flipY)
         coords.y = 1 - coords.y;
 
-    vec4 tex =  texture2D(mainTex, coords);
-    if (tex.a == 0)
+    vec4 tex = texture2D(albedoMap, coords);
+    if (tex.a < 0.05)
         discard;
 
     outAlbedo = tex * sprite.colour;
-    outNormal = vec4(0, 0, -1, 0);
+    vec3 normal = 2 * texture2D(normalMap, coords).rgb - 1.0;
+    normal.z *= -1;
+    outNormal = normalMapEnabled ? vec4(normal, 1) : vec4(0, 0, -1, 1);
     outPosition = vec4(worldPos, 0, 1);
 }

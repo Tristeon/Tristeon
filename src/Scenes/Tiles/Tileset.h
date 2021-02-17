@@ -181,17 +181,27 @@ namespace Tristeon
 		/**
 		 * The texture used by the tileset.
 		 */
-		Texture* texture = nullptr;
-
-		/**
-		 * The filepath of the tileset (not the texture)
-		 */
-		String filePath = "";
+		Texture* albedoMap = nullptr;
 
 		/**
 		 * The filepath of the texture
 		 */
-		String texturePath = "";
+		String albedoPath;
+
+		/**
+		 * The normal map texture used by the tileset
+		 */
+		Texture* normalMap = nullptr;
+
+		/**
+		 * The filepath of the normal map
+		 */
+		String normalPath;
+		
+		/**
+		 * The filepath of the tileset (not the texture)
+		 */
+		String filePath;
 
 		//TODO: Replace Tileset::id with instanceID
 		unsigned int id = 0;

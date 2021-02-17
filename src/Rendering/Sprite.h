@@ -9,13 +9,19 @@ namespace Tristeon
 {
 	class ActorLayer;
 
+	enum class TextureType
+	{
+		Albedo,
+		Normal
+	};
+	
 	/**
 	 * Sprite is a 2D quad with a texture. Its size can be adjusted through Sprite::width and Sprite::height.
 	 */
 	class Sprite : public Graphic
 	{
 		friend ActorLayer;
-	public:
+	public:		
 		/**
 		 * Creates a white sprite of size 64x64.
 		 */
@@ -58,13 +64,14 @@ namespace Tristeon
 		 *
 		 * \param path The filepath of the new texture.
 		 * \param setSize If true, the sprite will take on the size of the texture.
+		 * \param type The type of texture
 		 */
-		virtual void setTexture(std::string const& path, bool const& setSize);
+		virtual void setTexture(std::string const& path, bool const& setSize, const TextureType& type = TextureType::Albedo);
 
 		/**
 		 * Returns the current texture of the sprite. May be nullptr.
 		 */
-		virtual Texture* texture();
+		virtual Texture* texture(const TextureType& type = TextureType::Albedo);
 		
 		/**
 		 * Returns the Sprite's Bounds.
@@ -76,15 +83,11 @@ namespace Tristeon
 		void render() override;
 		Shader* getShader() override;
 
-		/**
-		 * The 2D texture of the sprite.
-		 */
-		Texture* _texture = nullptr;
+		Texture* _albedo = nullptr;
+		String _albedoPath;
 
-		/**
-		 * The path to the texture.
-		 */
-		String _texturePath;
+		Texture* _normal = nullptr;
+		String _normalPath;
 	};
 
 	REGISTER_TYPE(Sprite);

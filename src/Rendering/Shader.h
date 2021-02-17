@@ -82,11 +82,11 @@ namespace Tristeon
 	private:
 		void load();
 
-		std::string _vertexPath = "";
-		std::string _fragmentPath = "";
+		std::string _vertexPath;
+		std::string _fragmentPath;
 
-		std::string _vertexData = "";
-		std::string _fragmentData = "";
+		std::string _vertexData;
+		std::string _fragmentData;
 
 		bool _ready = false;
 		bool _failed = false;

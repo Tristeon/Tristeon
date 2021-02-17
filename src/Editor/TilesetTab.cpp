@@ -19,11 +19,11 @@ TristeonEditor::TilesetTab::TilesetTab(const String& tilesetPath)
 	tileset = Resources::jsonLoad<Tileset>(tilesetPath);
 	tileset->filePath = tilesetPath;
 	selectedTile.tilesetID = tileset->id;
-	
+
 	//Display tileset
 	image = new QLabel(this);
 	image->setAlignment(Qt::AlignCenter);
-	image->setPixmap(QPixmap((Settings::assetPath() + tileset->texturePath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+	image->setPixmap(QPixmap((Settings::assetPath() + tileset->albedoPath).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 	image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 	image->adjustSize();
 

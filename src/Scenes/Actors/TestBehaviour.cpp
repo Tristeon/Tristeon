@@ -13,6 +13,7 @@
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
 #include "Rendering/Gizmos.h"
+#include "Rendering/Sprite.h"
 #include "Scenes/SceneManager.h"
 #include "Utils/Time.h"
 
@@ -35,6 +36,8 @@ namespace Tristeon
 		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
 		body->applyForce(Vector(horizontal, 0) * Time::deltaTime() * runSpeed);
 
+		actor<Sprite>()->flipX = horizontal < 0;
+		
 		if (!Camera::cameras().empty())
 			Camera::cameras()[0]->position = actor()->position;
 

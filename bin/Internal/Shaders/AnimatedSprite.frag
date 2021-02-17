@@ -19,7 +19,9 @@ struct Spacing
 uniform Spacing spacing;
 
 //Sprite
-uniform sampler2D mainTex;
+uniform sampler2D albedoMap;
+uniform sampler2D normalMap;
+uniform bool normalMapEnabled;
 struct Sprite
 {
     uint width;
@@ -46,7 +48,7 @@ void main()
     if (texCoord.x > 1 || texCoord.y > 1 || texCoord.x < 0 || texCoord.y < 0)
         discard;
 
-    ivec2 texSize = textureSize(mainTex, 0);
+    ivec2 texSize = textureSize(albedoMap, 0);
 
     uint frameX = animation.frame % animation.cols;
     uint frameY = animation.rows - uint(1) - (animation.frame / animation.cols);
@@ -71,11 +73,13 @@ void main()
     float u = x + (startX / float(texSize.x));
     float v = y + (startY / float(texSize.y));
 
-    vec4 tex =  texture2D(mainTex, vec2(u, v));
+    vec4 tex = texture2D(albedoMap, vec2(u, v));
     if (tex.a == 0)
         discard;
 
     outAlbedo = tex * sprite.colour;
-    outNormal = vec4(0, 0, -1, 0);
+    vec3 normal = 2 * texture2D(normalMap, vec2(u, v)).rgb - 1.0;
+    normal.z *= -1;
+    outNormal = normalMapEnabled ? vec4(normal, 1) : vec4(0, 0, -1, 1);
     outPosition = vec4(worldPos, 0, 1);
 }

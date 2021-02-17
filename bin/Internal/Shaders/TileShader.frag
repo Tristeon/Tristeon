@@ -7,7 +7,10 @@ out vec4 outPosition;
 
 struct Tileset
 {
-    sampler2D texture;
+    sampler2D albedoMap;
+    sampler2D normalMap;
+    bool normalMapEnabled;
+
     uint cols;
     uint rows;
 
@@ -90,9 +93,13 @@ void main()
     //Convert UVs to tileset space
     vec2 tilesetUV = getTileUV(vec2(tileU, tileV), uint(tileIndex.x), uint(tileIndex.y));
 
-    outAlbedo = texture(tileset.texture, tilesetUV);
-    outNormal = vec4(0, 0, -1, 0);
-    outPosition = vec4(tileX * level.tileRenderWidth, tileY * level.tileRenderHeight, 0, 1);
+    outAlbedo = texture2D(tileset.albedoMap, tilesetUV);
+
+    vec3 normal = 2 * texture2D(tileset.normalMap, tilesetUV).rgb - 1.0;
+    normal.z *= -1;
+    outNormal = tileset.normalMapEnabled ? vec4(normal, 1) : vec4(0, 0, -1, 1);
+
+    outPosition = vec4(tileX * level.tileRenderWidth - level.tileRenderWidth / 2.0f, tileY * level.tileRenderHeight - level.tileRenderHeight / 2.0f, 0, 1);
 }
 
 ivec2 tileTo2DIndex(int tile)
@@ -111,7 +118,7 @@ vec2 getTileUV(vec2 uv, uint tileX, uint tileY)
     //Coords beyond our tileset mess up spacing so we clamp them
     tileX = tileX % tileset.cols;
     tileY = tileset.rows - uint(1) - (tileY % tileset.rows);
-    ivec2 texSize = textureSize(tileset.texture, 0);
+    ivec2 texSize = textureSize(tileset.albedoMap, 0);
 
     //Determine the amount of pixels per tile
     uint tilePixelsX = (uint(texSize.x) - ((tileset.spacingLeft + tileset.spacingRight) + ((tileset.cols - uint(1)) * tileset.horizontalSpacing))) / tileset.cols;

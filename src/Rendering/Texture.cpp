@@ -45,6 +45,7 @@ namespace Tristeon
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		stbi_image_free(pixels);
+		_valid = true;
 	}
 
 	Texture::~Texture()

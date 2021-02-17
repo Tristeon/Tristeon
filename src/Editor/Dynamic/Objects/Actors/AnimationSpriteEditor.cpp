@@ -19,7 +19,7 @@ namespace TristeonEditor
 		return SpriteEditor::shouldDisplay(propertyName);
 	}
 
-	void AnimationSpriteEditor::textureButton()
+	void AnimationSpriteEditor::albedoButton()
 	{
 		QPushButton* button = new QPushButton(this);
 		button->setText("Load Animation Clip");

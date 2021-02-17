@@ -61,7 +61,8 @@ namespace TristeonEditor
 		start->setChecked(false);
 		pause->setChecked(false);
 
-		Tristeon::SceneManager::load(sceneBeforePlay);
+		if (!sceneBeforePlay.empty())
+			Tristeon::SceneManager::load(sceneBeforePlay);
 	}
 
 	void TopBar::pauseGame()

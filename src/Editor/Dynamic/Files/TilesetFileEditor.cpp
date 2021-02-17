@@ -34,9 +34,9 @@ namespace TristeonEditor
 		EditorFields::uintField(spacingLayout, "Vertical", data["verticalSpacing"], [&](uint value) { data["verticalSpacing"] = value; saveData(); tilesetChanged(); });
 		form->addRow(new QLabel("Spacing"), spacing);
 
-		auto* changeTexture = new QPushButton("Change Texture", this);
-		layout->addWidget(changeTexture);
-		connect(changeTexture, &QPushButton::clicked, this, [&]()
+		auto* changeAlbedo = new QPushButton("Change Albedo map", this);
+		layout->addWidget(changeAlbedo);
+		connect(changeAlbedo, &QPushButton::clicked, this, [&]()
 			{
 				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
@@ -46,11 +46,28 @@ namespace TristeonEditor
 				if (path.isEmpty() || localPath.isEmpty())
 					return;
 
-				data["texturePath"] = localPath.toStdString();
+				data["albedoPath"] = localPath.toStdString();
 				saveData();
 				loadTileset();
 			});
 
+		auto* changeNormal = new QPushButton("Change Normal map", this);
+		layout->addWidget(changeNormal);
+		connect(changeNormal, &QPushButton::clicked, this, [&]()
+			{
+				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+
+				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
+				QString const localPath = baseDir.relativeFilePath(path);
+				QString const fileName = QFileInfo(path).baseName();
+				if (path.isEmpty() || localPath.isEmpty())
+					return;
+
+				data["normalPath"] = localPath.toStdString();
+				saveData();
+				loadTileset();
+			});
+		
 		//Tile Editing
 		auto* frame = new QFrame(this);
 		frame->setMinimumSize(250, 250);
@@ -66,7 +83,7 @@ namespace TristeonEditor
 		frameLayout->addWidget(image);
 		image->show();
 		image->setAlignment(Qt::AlignCenter);
-		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data.value("albedoPath", std::string())).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 		image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 		image->adjustSize();
 
@@ -106,7 +123,7 @@ namespace TristeonEditor
 		selectedTile = -1;
 		selectedTileChanged();
 
-		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data["texturePath"].get<std::string>()).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
+		image->setPixmap(QPixmap((Tristeon::Settings::assetPath() + data.value("albedoPath", std::string())).c_str()).scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio));
 		image->setMaximumSize(image->pixmap()->width(), image->pixmap()->height());
 		image->adjustSize();
 	}

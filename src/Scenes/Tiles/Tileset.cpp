@@ -22,8 +22,8 @@ namespace Tristeon
 
 	Tileset::Tileset()
 	{
-		texture = Resources::assetLoad<Texture>(Texture::defaultPath);
-		texturePath = Texture::defaultPath;
+		albedoMap = Resources::assetLoad<Texture>(Texture::defaultPath);
+		albedoPath = Texture::defaultPath;
 		
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
 		for (size_t i = 0; i < cols * rows; i++)
@@ -32,14 +32,15 @@ namespace Tristeon
 
 	json Tileset::serialize()
 	{
-		json j = Serializable::serialize();
+		auto j = Serializable::serialize();
 		j["typeID"] = Type<Tileset>::fullName();
 
 		j["id"] = id;
 		
 		j["width"] = cols;
 		j["height"] = rows;
-		j["texturePath"] = texturePath;
+		j["albedoPath"] = albedoPath;
+		j["normalPath"] = normalPath;
 		
 		j["spacingLeft"] = spacingLeft;
 		j["spacingRight"] = spacingRight;
@@ -69,8 +70,11 @@ namespace Tristeon
 
 		id = j.value("id", 0);
 
-		texturePath = j.value("texturePath", "");
-		texture = Resources::assetLoad<Texture>(texturePath);
+		albedoPath = j.value("albedoPath", "");
+		albedoMap = Resources::assetLoad<Texture>(albedoPath);
+
+		normalPath = j.value("normalPath", "");
+		normalMap = Resources::assetLoad<Texture>(normalPath);
 
 		spacingLeft = j.value("spacingLeft", 0);
 		spacingRight = j.value("spacingRight", 0);
@@ -103,7 +107,7 @@ namespace Tristeon
 
 	VectorI Tileset::tileSize() const
 	{
-		VectorI img = texture->size();
+		auto img = albedoMap->size();
 		img.x -= spacingLeft + spacingRight;
 		img.y -= spacingTop + spacingBottom;
 
@@ -115,8 +119,10 @@ namespace Tristeon
 
 	Vector Tileset::tileSizeNormalized() const
 	{
-		VectorI const img = texture->size();
-		VectorI const size = tileSize();
+		if (!albedoMap)
+			return Vector{};
+		auto const img = albedoMap->size();
+		auto const size = tileSize();
 		return { size.x / (float)img.x, size.y / (float)img.y };
 	}
 
@@ -124,7 +130,7 @@ namespace Tristeon
 	{
 		VectorI result{ (int)spacingLeft, (int)spacingTop };
 
-		VectorI const size = tileSize();
+		auto const size = tileSize();
 		
 		result.x += x * (size.x + horizontalSpacing);
 		result.y += y * (size.y + verticalSpacing);
@@ -144,8 +150,8 @@ namespace Tristeon
 
 	Vector Tileset::tileMinNormalized(const int& x, const int& y) const
 	{
-		VectorI const min = tileMin(x, y);
-		VectorI const img = texture->size();
+		auto const min = tileMin(x, y);
+		auto const img = albedoMap->size();
 		return { min.x / (float)img.x, min.y / (float)img.y };
 	}
 
@@ -161,8 +167,8 @@ namespace Tristeon
 
 	VectorI Tileset::tileMax(const int& x, const int& y) const
 	{
-		VectorI const min = tileMin(x, y);
-		VectorI const size = tileSize();
+		auto const min = tileMin(x, y);
+		auto const size = tileSize();
 		return min + size;
 	}
 
@@ -178,8 +184,8 @@ namespace Tristeon
 
 	Vector Tileset::tileMaxNormalized(const int& x, const int& y) const
 	{
-		VectorI const max = tileMax(x, y);
-		VectorI const img = texture->size();
+		auto const max = tileMax(x, y);
+		auto const img = albedoMap->size();
 		return { max.x / (float)img.x, max.y / (float)img.y };
 	}
 

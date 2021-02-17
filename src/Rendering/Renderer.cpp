@@ -11,9 +11,9 @@
 #include "Rendering/Camera.h"
 #include "Collector.h"
 #include "glad/glad.h"
-#include "Input/Mouse.h"
 
 #include "Scenes/SceneManager.h"
+#include "Scenes/Actors/Light.h"
 
 namespace Tristeon
 {
@@ -52,6 +52,22 @@ namespace Tristeon
 		if (!Engine::playMode())
 			cameras.add(editorCamera());
 #endif
+
+		auto* deferred = getDeferredCameraShader();
+		deferred->bind();
+		auto lights = Collector<Light>::all();
+		for (size_t i = 0; i < lights.size(); i++)
+		{
+			auto pos = lights[i]->actor()->position;
+			auto col = lights[i]->colour();
+			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -256.0f);
+			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
+			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
+			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
+			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
+		}
+		deferred->setUniformValue("lightCount", (int)lights.size());
+		
 		for (auto* camera : cameras)
 		{
 			camera->updateFramebuffers();
@@ -109,8 +125,6 @@ namespace Tristeon
 		shader->setUniformValue("albedo", 0);
 		shader->setUniformValue("normals", 1);
 		shader->setUniformValue("positions", 2);
-
-		shader->setUniformValue("lights[0].position", 500.0f, 800.0f, -256.0f);
 
 		for (size_t i = 0; i < camera->_offlineFBOTextures.size(); i++)
 		{

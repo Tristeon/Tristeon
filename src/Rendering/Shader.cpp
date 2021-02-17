@@ -57,62 +57,98 @@ namespace Tristeon
 
 	void Shader::setUniformValue(const String& name, const int& v0)
 	{
-		glUniform1i(glGetUniformLocation(_program, name.data()), v0);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform1i(loc, v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1)
 	{
-		glUniform2i(glGetUniformLocation(_program, name.data()), v0, v1);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+		
+		glUniform2i(loc, v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2)
 	{
-		glUniform3i(glGetUniformLocation(_program, name.data()), v0, v1, v2);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+		
+		glUniform3i(loc, v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const int& v0, const int& v1, const int& v2, const int& v3)
 	{
-		glUniform4i(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform4i(loc, v0, v1, v2, v3);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0)
 	{
-		glUniform1ui(glGetUniformLocation(_program, name.data()), v0);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform1ui(loc, v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1)
 	{
-		glUniform2ui(glGetUniformLocation(_program, name.data()), v0, v1);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform2ui(loc, v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2)
 	{
-		glUniform3ui(glGetUniformLocation(_program, name.data()), v0, v1, v2);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform3ui(loc, v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const unsigned int& v0, const unsigned int& v1, const unsigned int& v2, const unsigned int& v3)
 	{
-		glUniform4ui(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform4ui(loc, v0, v1, v2, v3);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0)
 	{
-		glUniform1f(glGetUniformLocation(_program, name.data()), v0);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform1f(loc, v0);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1)
 	{
-		glUniform2f(glGetUniformLocation(_program, name.data()), v0, v1);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform2f(loc, v0, v1);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2)
 	{
-		glUniform3f(glGetUniformLocation(_program, name.data()), v0, v1, v2);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform3f(loc, v0, v1, v2);
 	}
 
 	void Shader::setUniformValue(const String& name, const float& v0, const float& v1, const float& v2, const float& v3)
 	{
-		glUniform4f(glGetUniformLocation(_program, name.data()), v0, v1, v2, v3);
+		const auto loc = glGetUniformLocation(_program, name.data());
+		//TRISTEON_ASSERT(loc != -1, "Couldn't find shader uniform with name " + name + ". Shader: " + _vertexPath + ", " + _fragmentPath, AssertSeverity::Warning);
+
+		glUniform4f(loc, v0, v1, v2, v3);
 	}
 
 	void Shader::load()

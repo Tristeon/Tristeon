@@ -1,5 +1,5 @@
-#include "Editor/Palette.h"
 #ifdef TRISTEON_EDITOR
+#include "Editor/Palette.h"
 #include "Editor/EditorFields.h"
 #include "Settings.h"
 #include "SpriteEditor.h"
@@ -57,24 +57,32 @@ namespace TristeonEditor
 		EditorFields::boolField(form, "Flip X", sprite->flipX, [=](bool value) { sprite->flipX = value; });
 		EditorFields::boolField(form, "Flip Y", sprite->flipY, [=](bool value) { sprite->flipY = value; });
 		
-		textureButton();
+		albedoButton();
+		normalButton();
 	}
 
 	bool SpriteEditor::shouldDisplay(Tristeon::String const& propertyName)
 	{
-		if (propertyName == "display" || propertyName == "width" || propertyName == "height" || propertyName == "colour" || propertyName == "texturePath" || propertyName == "flipX" || propertyName == "flipY")
+		if (propertyName == "display" || propertyName == "width" || propertyName == "height" || propertyName == "colour" || propertyName == "texturePath" || propertyName == "normalPath" || propertyName == "flipX" || propertyName == "flipY")
 			return false;
 		return ActorEditor::shouldDisplay(propertyName);
 	}
 
-	void SpriteEditor::textureButton()
+	void SpriteEditor::albedoButton()
 	{
-		QPushButton* changeTexture = new QPushButton("Change Texture", this);
+		QPushButton* changeTexture = new QPushButton("Change albedo map", this);
 		scrollLayout->addWidget(changeTexture);
-		connect(changeTexture, &QPushButton::clicked, this, &SpriteEditor::changeTexturePressed);
+		connect(changeTexture, &QPushButton::clicked, this, &SpriteEditor::changeAlbedoPressed);
 	}
 
-	void SpriteEditor::changeTexturePressed()
+	void SpriteEditor::normalButton()
+	{
+		QPushButton* changeTexture = new QPushButton("Change normal map", this);
+		scrollLayout->addWidget(changeTexture);
+		connect(changeTexture, &QPushButton::clicked, this, &SpriteEditor::changeNormalPressed);
+	}
+
+	void SpriteEditor::changeAlbedoPressed()
 	{
 		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
 
@@ -84,7 +92,20 @@ namespace TristeonEditor
 		if (path.isEmpty() || localPath.isEmpty())
 			return;
 
-		sprite->setTexture(localPath.toStdString(), false);
+		sprite->setTexture(localPath.toStdString(), false, Tristeon::TextureType::Albedo);
+	}
+
+	void SpriteEditor::changeNormalPressed()
+	{
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
+		QString const localPath = baseDir.relativeFilePath(path);
+		QString const fileName = QFileInfo(path).baseName();
+		if (path.isEmpty() || localPath.isEmpty())
+			return;
+
+		sprite->setTexture(localPath.toStdString(), false, Tristeon::TextureType::Normal);
 	}
 }
 #endif

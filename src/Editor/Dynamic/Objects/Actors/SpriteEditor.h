@@ -16,8 +16,10 @@ namespace TristeonEditor
 		bool shouldDisplay(Tristeon::String const& propertyName) override;
 
 	protected:
-		virtual void textureButton();
-		void changeTexturePressed();
+		virtual void albedoButton();
+		virtual void normalButton();
+		void changeAlbedoPressed();
+		void changeNormalPressed();
 
 		Tristeon::Sprite* sprite = nullptr;
 
