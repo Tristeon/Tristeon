@@ -69,7 +69,6 @@ namespace Tristeon
 		 * If referenced, the user must keep in mind that the texture could become invalid after each frame, as the framebuffer gets rebuilt when the screen gets resized.
 		 */
 		[[nodiscard]] unsigned int framebufferTexture() const { return _fboTexture; }
-
 		VectorU resolution();
 	private:
 		//Keep track of old values so we can update the framebuffer if needed
@@ -77,9 +76,6 @@ namespace Tristeon
 		VectorU _lastWindowSize{};
 
 		//Framebuffer
-		unsigned int _offlineFBO = 0;
-		std::array<unsigned int, 3> _offlineFBOTextures;
-		
 		unsigned int _fbo = 0;
 		unsigned int _fboTexture = 0;
 		bool _valid = false;
@@ -89,7 +85,6 @@ namespace Tristeon
 		 */
 		void buildFramebuffers();
 		void createFramebuffer();
-		void createOfflineFramebuffer();
 
 		/**
 		 * Binds the framebuffer for use.

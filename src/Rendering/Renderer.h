@@ -52,9 +52,7 @@ namespace Tristeon
 #endif
 
 	private:
-		static Shader* getDeferredCameraShader();
 		void renderOffline(Camera* camera) const;
-		void renderDeferred(Camera* camera);
 		void renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const;
 		
 		unsigned int _dummyVAO = 0;

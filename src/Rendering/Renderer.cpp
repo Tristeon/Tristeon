@@ -52,42 +52,20 @@ namespace Tristeon
 		if (!Engine::playMode())
 			cameras.add(editorCamera());
 #endif
-
-		auto* deferred = getDeferredCameraShader();
-		deferred->bind();
-		auto lights = Collector<Light>::all();
-		for (size_t i = 0; i < lights.size(); i++)
-		{
-			auto pos = lights[i]->actor()->position;
-			auto col = lights[i]->colour();
-			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -256.0f);
-			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
-			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
-			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
-			deferred->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
-		}
-		deferred->setUniformValue("lightCount", (int)lights.size());
 		
 		for (auto* camera : cameras)
 		{
 			camera->updateFramebuffers();
 			renderOffline(camera);
-			renderDeferred(camera);
 		}
 
 		renderOnscreen(framebuffer, cameras);
 	}
 
-	Shader* Renderer::getDeferredCameraShader()
-	{
-		static Shader deferredCamera("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/DeferredCamera.frag");
-		return &deferredCamera;
-	}
-
 	void Renderer::renderOffline(Camera* camera) const
 	{
 		const auto resolution = camera->resolution();
-		glBindFramebuffer(GL_FRAMEBUFFER, camera->_offlineFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
 		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -101,44 +79,33 @@ namespace Tristeon
 			shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
 			shader->setUniformValue("camera.zoom", camera->zoom);
 			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
+
+			auto lights = Collector<Light>::all();
+			for (size_t i = 0; i < lights.size(); i++)
+			{
+				auto pos = lights[i]->actor()->position;
+				auto col = lights[i]->colour();
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -256.0f);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
+			}
+			shader->setUniformValue("lightCount", (int)lights.size());
+
+			shader->setUniformValue("disableLighting", false);
+#ifdef TRISTEON_EDITOR
+			if (camera == _editorCamera.get())
+				shader->setUniformValue("disableLighting", true);
+#endif
 		}
 
 		//Render each layer
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{
 			Layer* layer = SceneManager::current()->layerAt(i);
-			layer->render(Framebuffer{ camera->_offlineFBO, { 0, 0, resolution.x, resolution.y } });
+			layer->render(Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } });
 		}
-	}
-
-	void Renderer::renderDeferred(Camera* camera)
-	{
-		const auto resolution = camera->resolution();
-		
-		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
-		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		auto* shader = getDeferredCameraShader();
-		shader->bind();
-
-		shader->setUniformValue("albedo", 0);
-		shader->setUniformValue("normals", 1);
-		shader->setUniformValue("positions", 2);
-
-		for (size_t i = 0; i < camera->_offlineFBOTextures.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, camera->_offlineFBOTextures[i]);
-		}
-
-		shader->setUniformValue("disableLighting", 0);
-#ifdef TRISTEON_EDITOR
-		if (camera == _editorCamera.get())
-			shader->setUniformValue("disableLighting", 1);
-#endif
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 #ifdef TRISTEON_EDITOR
 		if (camera == _editorCamera.get())
