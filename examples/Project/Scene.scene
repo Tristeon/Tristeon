@@ -148,7 +148,7 @@
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 0.0,
-                        "y": 0.0
+                        "y": 1000.0
                     },
                     "renderToScreen": true,
                     "rotation": 0.0,
@@ -723,6 +723,44 @@
                     "texturePath": "NormalMapHintsAssets/LightSprite.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 173
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "instanceID": 195990573,
+                            "intensity": 1.0,
+                            "range": 256.0,
+                            "sourceType": 2,
+                            "typeID": "Tristeon::Light"
+                        }
+                    ],
+                    "instanceID": 2236587147,
+                    "name": "Ambient",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "typeID": "Tristeon::Actor"
                 }
             ],
             "instanceID": 779401963,
