@@ -36,7 +36,7 @@ void Importer::scanAssets()
 		auto path = directoryEntry.path();
 		if (path.extension().string() == ".meta")
 		{
-			String assetPath = path.parent_path().string() + path.stem().string();
+			String assetPath = path.parent_path().string() + "/" + path.stem().string();
 			if (!fs::exists(assetPath)) metaFilesToRemove.add(path);
 			continue;
 		}
