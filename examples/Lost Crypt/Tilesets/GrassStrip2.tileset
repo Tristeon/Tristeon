@@ -1,0 +1,22 @@
+{
+    "albedoPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Color.png",
+    "height": 1,
+    "horizontalSpacing": 0,
+    "id": 4001552871,
+    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
+    "spacingBottom": 0,
+    "spacingLeft": 0,
+    "spacingRight": 0,
+    "spacingTop": 0,
+    "tileInfo": [
+        {
+            "density": 1.0,
+            "friction": 0.0,
+            "hasCollider": false,
+            "restitution": 0.0
+        }
+    ],
+    "typeID": "Tristeon::Tileset",
+    "verticalSpacing": 0,
+    "width": 1
+}

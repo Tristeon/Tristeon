@@ -11,7 +11,7 @@ namespace Tristeon
 		{
 			Point,
 			Spot,
-			Directional
+			Ambient
 		};
 		
 	public:

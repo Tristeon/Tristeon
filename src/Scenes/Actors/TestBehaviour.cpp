@@ -5,14 +5,10 @@
 #include <Input/Keyboard.h>
 #include <Physics/PhysicsBody.h>
 
-
 #include "Settings.h"
-#include "Audio/Audio.h"
-#include "Rendering/Camera.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/Collider.h"
 #include "Physics/PhysicsWorld.h"
-#include "Rendering/Gizmos.h"
 #include "Rendering/Sprite.h"
 #include "Scenes/SceneManager.h"
 #include "Utils/Time.h"
@@ -38,9 +34,6 @@ namespace Tristeon
 
 		actor<Sprite>()->flipX = horizontal < 0;
 		
-		if (!Camera::cameras().empty())
-			Camera::cameras()[0]->position = actor()->position;
-
 		if (Keyboard::pressed(Keyboard::Number1))
 			Settings::Graphics::setPreferredDisplay(0);
 		else if (Keyboard::pressed(Keyboard::Number2))
@@ -63,9 +56,9 @@ namespace Tristeon
 	{
 		Behaviour::deserialize(j);
 		
-		jumpVelocity = j.value("jumpVelocity", 1500);
-		groundedDistance = j.value("groundedDistance", 256);
-		runSpeed = j.value("runSpeed", 100);
+		jumpVelocity = j.value("jumpVelocity", 1500.0f);
+		groundedDistance = j.value("groundedDistance", 256.0f);
+		runSpeed = j.value("runSpeed", 100.0f);
 	}
 
 	bool TestBehaviour::preContact(Contact const& contact)

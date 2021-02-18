@@ -1,0 +1,20 @@
+{
+    "firstScene": "",
+    "graphics": {
+        "maxFPS": 0,
+        "preferredDisplay": 0,
+        "preferredResolution": {
+            "typeID": "Tristeon::VectorType<unsignedint>",
+            "x": 0,
+            "y": 0
+        },
+        "tileHeight": 64,
+        "tileWidth": 64,
+        "vsync": false,
+        "windowMode": 2
+    },
+    "physics": {
+        "fixedDeltaTime": 20.0,
+        "pixelsPerMeter": 64
+    }
+}
