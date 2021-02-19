@@ -8,7 +8,6 @@ namespace TristeonEditor
 {
 	class ActorEditor : public ObjectEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::Actor, ActorEditor)
 	public:
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
@@ -36,5 +35,7 @@ namespace TristeonEditor
 
 		json data;
 	};
+
+	OBJECT_EDITOR(Tristeon::Actor, ActorEditor);
 }
 #endif

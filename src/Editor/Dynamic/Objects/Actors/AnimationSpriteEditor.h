@@ -7,7 +7,6 @@ namespace TristeonEditor
 {
 	class AnimationSpriteEditor : public SpriteEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::AnimationSprite, AnimationSpriteEditor);
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 		bool shouldDisplay(Tristeon::String const& propertyName) override;
@@ -17,5 +16,6 @@ namespace TristeonEditor
 
 		Tristeon::AnimationSprite* animSprite = nullptr;
 	};
+	OBJECT_EDITOR(Tristeon::AnimationSprite, AnimationSpriteEditor);
 }
 #endif

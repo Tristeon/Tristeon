@@ -11,8 +11,6 @@ using Tristeon::Actor;
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::Actor, ActorEditor)
-	
 	void ActorEditor::initialize()
 	{
 		//Display default actor properties first, these don't scroll

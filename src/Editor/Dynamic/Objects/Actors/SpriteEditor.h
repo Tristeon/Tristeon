@@ -9,7 +9,6 @@ namespace TristeonEditor
 {
 	class SpriteEditor : public ActorEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::Sprite, SpriteEditor);
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 		void displayProperties() override;
@@ -23,5 +22,6 @@ namespace TristeonEditor
 
 		QPushButton* colorButton = nullptr;
 	};
+	OBJECT_EDITOR(Tristeon::Sprite, SpriteEditor);
 }
 #endif

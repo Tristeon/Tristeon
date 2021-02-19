@@ -63,10 +63,6 @@ namespace TristeonEditor
 	/**
 	 * Binds a file editor to a given extension
 	 */
-	#define FILE_EDITOR_H(extension, editor) static DerivedFileEditorRegister<editor> file_editor_reg;
-	 /**
-	  * Binds a custom editor to a given extension
-	  */
-	#define FILE_EDITOR_CPP(extension, editor) DerivedFileEditorRegister<editor> editor::file_editor_reg(extension);
+	#define FILE_EDITOR(extension, t) static const TristeonEditor::DerivedFileEditorRegister<t> file_editor_reg_##t(extension)
 }
 #endif

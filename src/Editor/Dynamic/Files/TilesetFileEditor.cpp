@@ -9,8 +9,6 @@ using Tristeon::VectorI;
 
 namespace TristeonEditor
 {
-	FILE_EDITOR_CPP("tileset", TilesetFileEditor)
-	
 	void TilesetFileEditor::initialize()
 	{
 		auto* formWidget = new QWidget(this);

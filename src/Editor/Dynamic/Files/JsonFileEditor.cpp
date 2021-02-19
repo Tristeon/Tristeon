@@ -7,8 +7,6 @@
 
 namespace TristeonEditor
 {
-	FILE_EDITOR_CPP("json", JsonFileEditor)
-
 	void JsonFileEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		FileEditor::targetChanged(current, old);

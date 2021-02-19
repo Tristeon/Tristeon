@@ -8,7 +8,6 @@ namespace TristeonEditor
 {
 	class TilesetFileEditor : public JsonFileEditor
 	{
-		FILE_EDITOR_H("tileset", TilesetFileEditor)
 	public:
 		void initialize() override;
 		void saveData() override;
@@ -31,5 +30,7 @@ namespace TristeonEditor
 
 		Tristeon::Tileset* set = nullptr;
 	};
+
+	FILE_EDITOR("tileset", TilesetFileEditor);
 }
 #endif

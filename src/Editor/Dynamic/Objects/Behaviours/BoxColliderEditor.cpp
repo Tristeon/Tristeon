@@ -4,8 +4,6 @@
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::BoxCollider, BoxColliderEditor);
-
 	void BoxColliderEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		BehaviourEditor::targetChanged(current, old);

@@ -6,8 +6,6 @@
 
 namespace TristeonEditor
 {
-	FILE_EDITOR_CPP("clip", AnimationClipFileEditor)
-
 	void AnimationClipFileEditor::initialize()
 	{
 		auto* formWidget = new QWidget(this);

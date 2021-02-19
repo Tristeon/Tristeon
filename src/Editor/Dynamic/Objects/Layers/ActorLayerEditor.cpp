@@ -6,8 +6,6 @@
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::ActorLayer, ActorLayerEditor)
-
 	void ActorLayerEditor::initialize()
 	{
 		list = new QListWidget(this);

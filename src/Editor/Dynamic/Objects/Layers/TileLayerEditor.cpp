@@ -8,8 +8,6 @@ using Tristeon::VectorI;
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::TileLayer, TileLayerEditor)
-
 	void TileLayerEditor::initialize()
 	{
 		setMouseTracking(true);

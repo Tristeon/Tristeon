@@ -7,8 +7,6 @@
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::Sprite, SpriteEditor)
-
 	void SpriteEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		ActorEditor::targetChanged(current, old);

@@ -9,7 +9,6 @@ namespace TristeonEditor
 {
 	class TileLayerEditor : public ObjectEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::TileLayer, TileLayerEditor)
 	public:
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
@@ -21,5 +20,7 @@ namespace TristeonEditor
 		
 		Tristeon::TileLayer* targetLayer = nullptr;
 	};
+
+	OBJECT_EDITOR(Tristeon::TileLayer, TileLayerEditor);
 }
 #endif

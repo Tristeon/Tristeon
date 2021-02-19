@@ -3,13 +3,14 @@
 
 #include <map>
 
+#include <Standard/String.h>
 #include <Serialization/Type.h>
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 
 namespace TristeonEditor
 {
 	template <typename T>
-	ObjectEditor* createEditor() { return new T(); }
+	ObjectEditor* createObjectEditor() { return new T(); }
 
 	/**
 	 * The ObjectEditorRegister, much like the TypeRegister is a map that is used to create instances of registered types.
@@ -55,17 +56,13 @@ namespace TristeonEditor
 
 		DerivedObjectEditorRegister()
 		{
-			getMap()->emplace(Tristeon::Type<T>::fullName(), &createEditor<EditorType>);
+			getMap()->emplace(Tristeon::Type<T>::fullName(), &createObjectEditor<EditorType>);
 		}
 	};
 
 	/**
 	 * Binds a custom editor to a given type.
 	 */
-	#define OBJECT_EDITOR_H(type, editor) static TristeonEditor::DerivedObjectEditorRegister<type, editor> object_editor_reg;
-	 /**
-	  * Binds a custom editor to a given type.
-	  */
-	#define OBJECT_EDITOR_CPP(type, editor) TristeonEditor::DerivedObjectEditorRegister<type, editor> editor::object_editor_reg;
+	#define OBJECT_EDITOR(type, editor) static const TristeonEditor::DerivedObjectEditorRegister<type, editor> object_editor_reg_##editor
 }
 #endif

@@ -8,7 +8,6 @@ namespace TristeonEditor
 {
 	class JsonFileEditor : public FileEditor
 	{
-		FILE_EDITOR_H("json", JsonFileEditor)
 	public:
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
 		void initialize() override;
@@ -18,5 +17,7 @@ namespace TristeonEditor
 	protected:
 		nlohmann::json data;
 	};
+
+	FILE_EDITOR("json", JsonFileEditor);
 }
 #endif

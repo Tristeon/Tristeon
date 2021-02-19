@@ -9,7 +9,6 @@ namespace TristeonEditor
 {
 	class ActorLayerEditor : public ObjectEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::ActorLayer, ActorLayerEditor)
 	public:
 		virtual ~ActorLayerEditor();
 		void initialize() override;
@@ -27,5 +26,7 @@ namespace TristeonEditor
 		QListWidget* list = nullptr;
 		std::map<QListWidgetItem*, Tristeon::Actor*> actors;
 	};
+
+	OBJECT_EDITOR(Tristeon::ActorLayer, ActorLayerEditor);
 }
 #endif

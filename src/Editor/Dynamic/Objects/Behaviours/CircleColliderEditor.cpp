@@ -4,8 +4,6 @@
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::CircleCollider, CircleColliderEditor);
-
 	void CircleColliderEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
 	{
 		BehaviourEditor::targetChanged(current, old);

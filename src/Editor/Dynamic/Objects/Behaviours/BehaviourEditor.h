@@ -3,13 +3,11 @@
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 #include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 #include <Scenes/Actors/Behaviour.h>
-#include <QtWidgets>
 
 namespace TristeonEditor
 {
 	class BehaviourEditor : public ObjectEditor
 	{
-		OBJECT_EDITOR_H(Tristeon::Behaviour, BehaviourEditor);
 	public:
 		void initialize() override;
 		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
@@ -21,5 +19,7 @@ namespace TristeonEditor
 		Tristeon::Behaviour* behaviour = nullptr;
 		json data;
 	};
+	
+	OBJECT_EDITOR(Tristeon::Behaviour, BehaviourEditor);
 }
 #endif

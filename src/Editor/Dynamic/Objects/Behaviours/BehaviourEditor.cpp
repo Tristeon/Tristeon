@@ -8,8 +8,6 @@
 
 namespace TristeonEditor
 {
-	OBJECT_EDITOR_CPP(Tristeon::Behaviour, BehaviourEditor);
-
 	void BehaviourEditor::initialize()
 	{
 		data = behaviour->serialize();
