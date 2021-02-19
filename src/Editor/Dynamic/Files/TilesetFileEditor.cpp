@@ -18,55 +18,38 @@ namespace TristeonEditor
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
 
-		EditorFields::uintField(form, "Columns", data["width"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["width"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(form, "Rows", data["height"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["height"] = value; saveData(); tilesetChanged(); });
+		EditorFields::uintField(form, "Columns", data["width"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["width"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(form, "Rows", data["height"], 1, std::numeric_limits<int>::max(), [&](uint value) { data["height"] = value; saveData(); loadTileset(); });
 		
 		auto* spacing = new QWidget(formWidget);
 		layout->addWidget(spacing);
 		auto* spacingLayout = new QFormLayout(spacing);
 		spacing->setLayout(spacingLayout);
 
-		EditorFields::uintField(spacingLayout, "Left", data["spacingLeft"], [&](uint value) { data["spacingLeft"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(spacingLayout, "Right", data["spacingRight"], [&](uint value) { data["spacingRight"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(spacingLayout, "Top", data["spacingTop"], [&](uint value) { data["spacingTop"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(spacingLayout, "Bottom", data["spacingBottom"], [&](uint value) { data["spacingBottom"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(spacingLayout, "Horizontal", data["horizontalSpacing"], [&](uint value) { data["horizontalSpacing"] = value; saveData(); tilesetChanged(); });
-		EditorFields::uintField(spacingLayout, "Vertical", data["verticalSpacing"], [&](uint value) { data["verticalSpacing"] = value; saveData(); tilesetChanged(); });
+		EditorFields::uintField(spacingLayout, "Left", data["spacingLeft"], [&](uint value) { data["spacingLeft"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(spacingLayout, "Right", data["spacingRight"], [&](uint value) { data["spacingRight"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(spacingLayout, "Top", data["spacingTop"], [&](uint value) { data["spacingTop"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(spacingLayout, "Bottom", data["spacingBottom"], [&](uint value) { data["spacingBottom"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(spacingLayout, "Horizontal", data["horizontalSpacing"], [&](uint value) { data["horizontalSpacing"] = value; saveData(); loadTileset(); });
+		EditorFields::uintField(spacingLayout, "Vertical", data["verticalSpacing"], [&](uint value) { data["verticalSpacing"] = value; saveData(); loadTileset(); });
 		form->addRow(new QLabel("Spacing"), spacing);
 
-		auto* changeAlbedo = new QPushButton("Change Albedo map", this);
+		layout->addWidget(new QLabel("Albedo"));
+		auto* changeAlbedo = new QPushButton(data.value("albedoPath", "").c_str(), this);
 		layout->addWidget(changeAlbedo);
-		connect(changeAlbedo, &QPushButton::clicked, this, [&]()
-			{
-				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+		connect(changeAlbedo, &QPushButton::clicked, this, [=]() { changeTexturePressed("albedoPath", changeAlbedo); });
 
-				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
-				QString const localPath = baseDir.relativeFilePath(path);
-				QString const fileName = QFileInfo(path).baseName();
-				if (path.isEmpty() || localPath.isEmpty())
-					return;
-
-				data["albedoPath"] = localPath.toStdString();
-				saveData();
-				loadTileset();
-			});
-
-		auto* changeNormal = new QPushButton("Change Normal map", this);
+		layout->addWidget(new QLabel("Normal"));
+		auto* changeNormal = new QPushButton(data.value("normalPath", "").c_str(), this);
 		layout->addWidget(changeNormal);
-		connect(changeNormal, &QPushButton::clicked, this, [&]()
-			{
-				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+		connect(changeNormal, &QPushButton::clicked, this, [=]() { changeTexturePressed("normalPath", changeNormal); });
 
-				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
-				QString const localPath = baseDir.relativeFilePath(path);
-				QString const fileName = QFileInfo(path).baseName();
-				if (path.isEmpty() || localPath.isEmpty())
-					return;
+		EditorFields::floatField(form, "Normal map strength", data.value("normalMapStrength", 1.0f), [&](float value) { data["normalMapStrength"] = value; saveData(); loadTileset(); });
 
-				data["normalPath"] = localPath.toStdString();
-				saveData();
-				loadTileset();
-			});
+		layout->addWidget(new QLabel("Light Mask"));
+		auto* changeLightMask = new QPushButton(data.value("lightMaskPath", "").c_str(), this);
+		layout->addWidget(changeLightMask);
+		connect(changeLightMask, &QPushButton::clicked, this, [=]() { changeTexturePressed("lightMaskPath", changeLightMask); });
 		
 		//Tile Editing
 		auto* frame = new QFrame(this);
@@ -94,6 +77,21 @@ namespace TristeonEditor
 		tileHighlight->setFocusPolicy(Qt::NoFocus);
 
 		loadTileset();
+	}
+
+	void TilesetFileEditor::changeTexturePressed(const Tristeon::String& idx, QPushButton* button)
+	{
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
+		QString const localPath = baseDir.relativeFilePath(path);
+		QString const fileName = QFileInfo(path).baseName();
+
+		data[idx] = localPath.toStdString();
+		saveData();
+		loadTileset();
+
+		button->setText(localPath);
 	}
 
 	void TilesetFileEditor::saveData()

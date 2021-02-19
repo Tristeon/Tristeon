@@ -222,11 +222,11 @@ namespace Tristeon
 		
 		//Shader
 		//Bind level data
-		glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_BUFFER, _tboTex);
 		glTexBuffer(GL_TEXTURE_BUFFER, GL_R32I, _tbo);
 
-		shader.setUniformValue("level.data", 1);
+		shader.setUniformValue("level.data", 0);
 
 		shader.setUniformValue("level.columns", _columns);
 		shader.setUniformValue("level.rows", _rows);
@@ -234,28 +234,33 @@ namespace Tristeon
 		shader.setUniformValue("level.tileRenderWidth", Grid::tileWidth());
 		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
+		shader.setUniformValue("tileset.albedoMap", 1);
+		shader.setUniformValue("tileset.normalMap", 2);
+		shader.setUniformValue("tileset.lightMask", 3);
+		
 		for (auto* set : _tilesets)
 		{
 			if (!set->albedoMap)
 				continue;
 			
-			glActiveTexture(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE1);
 			set->albedoMap->bind();
-			glActiveTexture(GL_TEXTURE2);
+
+			shader.setUniformValue("tileset.normalMapEnabled", (bool)set->normalMap);
 			if (set->normalMap)
 			{
+				glActiveTexture(GL_TEXTURE2);
 				set->normalMap->bind();
-				shader.setUniformValue("tileset.normalMapEnabled", true);
 			}
-			else
+
+			shader.setUniformValue("tileset.lightMaskEnabled", (bool)set->lightMask);
+			if (set->lightMask)
 			{
-				shader.setUniformValue("tileset.normalMapEnabled", false);
+				glActiveTexture(GL_TEXTURE3);
+				set->lightMask->bind();
 			}
 
 			//Upload texture & tileset info
-			shader.setUniformValue("tileset.albedoMap", 0);
-			shader.setUniformValue("tileset.normalMap", 2);
-
 			shader.setUniformValue("tileset.cols", set->cols);
 			shader.setUniformValue("tileset.rows", set->rows);
 

@@ -91,7 +91,7 @@ namespace Tristeon
 
 		Texture* _normal = nullptr;
 		String _normalPath;
-		float _normalMapStrength = 0.1f;
+		float _normalMapStrength = 1.0f;
 
 		Texture* _lightMask = nullptr;
 		String _lightMaskPath;

@@ -53,7 +53,7 @@ namespace Tristeon
 			_normal = Resources::assetLoad<Texture>(newNormalPath);
 			_normalPath = newNormalPath;
 		}
-		_normalMapStrength = j.value("normalMapStrength", 0.1f);
+		_normalMapStrength = j.value("normalMapStrength", 1.0f);
 		
 		auto const newLightMaskPath = j.value("lightMaskPath", "");
 		if (newLightMaskPath != _lightMaskPath)

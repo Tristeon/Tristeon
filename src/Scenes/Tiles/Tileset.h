@@ -182,7 +182,6 @@ namespace Tristeon
 		 * The texture used by the tileset.
 		 */
 		Texture* albedoMap = nullptr;
-
 		/**
 		 * The filepath of the texture
 		 */
@@ -192,11 +191,20 @@ namespace Tristeon
 		 * The normal map texture used by the tileset
 		 */
 		Texture* normalMap = nullptr;
-
 		/**
 		 * The filepath of the normal map
 		 */
 		String normalPath;
+		float normalMapStrength = 1.0f;
+
+		/**
+		 * The light mask used by the tileset
+		 */
+		Texture* lightMask;
+		/**
+		 * The filepath of the light mask
+		 */
+		String lightMaskPath;
 		
 		/**
 		 * The filepath of the tileset (not the texture)

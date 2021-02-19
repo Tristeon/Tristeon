@@ -41,6 +41,8 @@ namespace Tristeon
 		j["height"] = rows;
 		j["albedoPath"] = albedoPath;
 		j["normalPath"] = normalPath;
+		j["normalMapStrength"] = normalMapStrength;
+		j["lightMaskPath"] = lightMaskPath;
 		
 		j["spacingLeft"] = spacingLeft;
 		j["spacingRight"] = spacingRight;
@@ -75,7 +77,11 @@ namespace Tristeon
 
 		normalPath = j.value("normalPath", "");
 		normalMap = Resources::assetLoad<Texture>(normalPath);
+		normalMapStrength = j.value("normalMapStrength", 1.0f);
 
+		lightMaskPath = j.value("lightMaskPath", "");
+		lightMask = Resources::assetLoad<Texture>(lightMaskPath);
+		
 		spacingLeft = j.value("spacingLeft", 0);
 		spacingRight = j.value("spacingRight", 0);
 		spacingTop = j.value("spacingTop", 0);

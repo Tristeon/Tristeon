@@ -21,6 +21,8 @@ namespace TristeonEditor
 		void selectedTileChanged();
 		void tilesetChanged();
 		
+		void changeTexturePressed(const Tristeon::String& idx, QPushButton* button);
+
 		QLabel* image = nullptr;
 		QLabel* tileHighlight = nullptr;
 		int selectedTile = -1;
