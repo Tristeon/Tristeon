@@ -97,10 +97,10 @@ namespace Tristeon
 		 */
 		bool loops = false;
 
-		/**
-		 * The filepath for the Texture of this animationclip.
-		 */
-		String texturePath = "";
+		String albedoPath;
+		String normalPath;
+		float normalMapStrength = 1.0f;
+		String lightMaskPath;
 
 		/**
 		 * A modifier for the playback rate of the animationclip.

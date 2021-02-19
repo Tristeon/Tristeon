@@ -12,6 +12,8 @@ namespace TristeonEditor
 		void initialize() override;
 		void saveData() override;
 	private:
+		void changeTexturePressed(const Tristeon::String& idx, QPushButton* button);
+
 		FILE_EDITOR_H("clip", AnimationClipFileEditor)
 	};
 }

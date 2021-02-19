@@ -4,7 +4,6 @@
 
 #include "AssetManagement/AssetDatabase.h"
 #include "AssetManagement/Resources.h"
-#include "glad/glad.h"
 #include "Math/Math.h"
 #include "Utils/Time.h"
 
@@ -42,7 +41,10 @@ namespace Tristeon
 			this->_clip = clip;
 			this->_clipPath = clipPath;
 			
-			setTexture(clip->texturePath, false);
+			setTexture(clip->albedoPath, false);
+			setTexture(clip->normalPath, false, TextureType::Normal);
+			setTexture(clip->lightMaskPath, false, TextureType::LightMask);
+			_normalMapStrength = clip->normalMapStrength;
 			_currentFrame = 0;
 		}
 	}

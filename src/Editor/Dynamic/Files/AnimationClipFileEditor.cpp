@@ -38,21 +38,22 @@ namespace TristeonEditor
 
 		EditorFields::floatField(form, "Playback Rate", data["playbackRate"], [&](float value) { data["playbackRate"] = value; saveData(); });
 
-		auto* changeTexture = new QPushButton("Change Texture", this);
-		layout->addWidget(changeTexture);
-		connect(changeTexture, &QPushButton::clicked, this, [&]()
-			{
-				QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+		layout->addWidget(new QLabel("Albedo"));
+		auto* changeAlbedo = new QPushButton(data.value("texturePath", "").c_str(), this);
+		layout->addWidget(changeAlbedo);
+		connect(changeAlbedo, &QPushButton::clicked, this, [=]() { changeTexturePressed("texturePath", changeAlbedo); });
 
-				QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
-				QString const localPath = baseDir.relativeFilePath(path);
-				QString const fileName = QFileInfo(path).baseName();
-				if (path.isEmpty() || localPath.isEmpty())
-					return;
+		layout->addWidget(new QLabel("Normal"));
+		auto* changeNormal = new QPushButton(data.value("normalPath", "").c_str(), this);
+		layout->addWidget(changeNormal);
+		connect(changeNormal, &QPushButton::clicked, this, [=]() { changeTexturePressed("normalPath", changeNormal); });
 
-				data["texturePath"] = localPath.toStdString();
-				saveData();
-			});
+		EditorFields::floatField(form, "Normal map strength", data.value("normalMapStrength", 1.0f), [&](float value) { data["normalMapStrength"] = value; saveData(); });
+
+		layout->addWidget(new QLabel("Light Mask"));
+		auto* changeLightMask = new QPushButton(data.value("lightMaskPath", "").c_str(), this);
+		layout->addWidget(changeLightMask);
+		connect(changeLightMask, &QPushButton::clicked, this, [=]() { changeTexturePressed("lightMaskPath", changeLightMask); });
 	}
 
 	void AnimationClipFileEditor::saveData()
@@ -61,6 +62,20 @@ namespace TristeonEditor
 
 		if (Tristeon::Resources::loaded(item->path))
 			Tristeon::Resources::jsonLoad<Tristeon::AnimationClip>(item->path)->deserialize(data);
+	}
+
+	void AnimationClipFileEditor::changeTexturePressed(const Tristeon::String& idx, QPushButton* button)
+	{
+		QDir const baseDir(Tristeon::Settings::assetPath().c_str());
+
+		QString const path = QFileDialog::getOpenFileName(this, tr("Find Texture"), Tristeon::Settings::assetPath().c_str(), tr("Image Files (*.png *.jpg *.bmp)"));
+		QString const localPath = baseDir.relativeFilePath(path);
+		QString const fileName = QFileInfo(path).baseName();
+
+		data[idx] = localPath.toStdString();
+		saveData();
+		
+		button->setText(localPath);
 	}
 }
 #endif

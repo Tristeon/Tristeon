@@ -55,7 +55,9 @@
                     "flipY": false,
                     "height": 256,
                     "instanceID": 1304861322,
+                    "lightMaskPath": "",
                     "name": "Penguin",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -87,7 +89,9 @@
                     "flipY": false,
                     "height": 635,
                     "instanceID": 1157287089,
+                    "lightMaskPath": "",
                     "name": "Animated Numbers",
+                    "normalMapStrength": 1.0,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -119,7 +123,9 @@
                     "flipY": false,
                     "height": 349,
                     "instanceID": 3774548040,
+                    "lightMaskPath": "",
                     "name": "Walking Character",
+                    "normalMapStrength": 1.0,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -239,7 +245,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -291,7 +299,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -343,7 +353,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -395,7 +407,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -447,7 +461,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -499,7 +515,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -551,7 +569,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -603,7 +623,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -655,7 +677,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -707,7 +731,9 @@
                     "flipY": false,
                     "height": 173,
                     "instanceID": 30496675,
+                    "lightMaskPath": "",
                     "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -741,7 +767,7 @@
                                 "y": 0.0
                             },
                             "instanceID": 195990573,
-                            "intensity": 1.0,
+                            "intensity": 0.10000000149011612,
                             "range": 256.0,
                             "sourceType": 2,
                             "typeID": "Tristeon::Light"

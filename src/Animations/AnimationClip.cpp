@@ -12,7 +12,10 @@ namespace Tristeon
 		j["startIndex"] = startIndex;
 		j["endIndex"] = endIndex;
 		j["loops"] = loops;
-		j["texturePath"] = texturePath;
+		j["texturePath"] = albedoPath;
+		j["normalPath"] = normalPath;
+		j["normalMapStrength"] = normalMapStrength;
+		j["lightMaskPath"] = lightMaskPath;
 		j["playbackRate"] = playbackRate;
 
 		j["spacing"]["left"] = spacing.left;
@@ -34,7 +37,10 @@ namespace Tristeon
 		startIndex = j.value("startIndex", 0);
 		endIndex = j.value("endIndex", rows * cols);
 		loops = j.value("loops", true);
-		texturePath = j.value("texturePath", "");
+		albedoPath = j.value("texturePath", "");
+		normalPath = j.value("normalPath", "");
+		normalMapStrength = j.value("normalMapStrength", 1.0f);
+		lightMaskPath = j.value("lightMaskPath", "");
 		playbackRate = j.value("playbackRate", 1.0f);
 
 		const json s = j.value("spacing", json());

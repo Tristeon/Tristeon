@@ -1,7 +1,10 @@
 {
     "cols": 4,
     "endIndex": 8,
+    "lightMaskPath": "",
     "loops": true,
+    "normalMapStrength": 1.0,
+    "normalPath": "",
     "playbackRate": 0.25,
     "rows": 4,
     "spacing": {
