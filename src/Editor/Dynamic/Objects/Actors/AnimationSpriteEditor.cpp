@@ -19,9 +19,9 @@ namespace TristeonEditor
 		return SpriteEditor::shouldDisplay(propertyName);
 	}
 
-	void AnimationSpriteEditor::albedoButton()
+	void AnimationSpriteEditor::displayTextureButtons()
 	{
-		QPushButton* button = new QPushButton(this);
+		auto* button = new QPushButton(this);
 		button->setText("Load Animation Clip");
 		connect(button, &QPushButton::clicked, this, &AnimationSpriteEditor::loadAnimationClip);
 		scrollLayout->addWidget(button);

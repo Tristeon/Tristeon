@@ -74,7 +74,9 @@
                     "flipY": false,
                     "height": 305,
                     "instanceID": 310342092,
+                    "lightMaskPath": "",
                     "name": "New AnimationSprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "NormalMapHintsAssets/spritesheet.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -102,8 +104,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 0.0,
-                        "y": 0.0
+                        "x": 1500.0,
+                        "y": 1500.0
                     },
                     "renderToScreen": true,
                     "rotation": 0.0,
@@ -284,7 +286,7 @@
                             "typeID": "Tristeon::Light"
                         },
                         {
-                            "instanceID": 1850450233,
+                            "instanceID": 3431605114,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
@@ -300,7 +302,9 @@
                     "flipY": false,
                     "height": 200,
                     "instanceID": 1232564469,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -316,6 +320,39 @@
                     "texturePath": "NormalMapHintsAssets/LightSprite.png",
                     "typeID": "Tristeon::Sprite",
                     "width": 200
+                },
+                {
+                    "behaviours": [],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 2209,
+                    "instanceID": 1548597114,
+                    "lightMaskPath": "",
+                    "name": "Brick",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "NormalMapHintsAssets/simplebrick_n.png",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1376.922607421875,
+                        "y": 1499.99951171875
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "NormalMapHintsAssets/simplebrick.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 2209
                 }
             ],
             "instanceID": 342274874,

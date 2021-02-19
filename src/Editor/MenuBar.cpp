@@ -1,3 +1,4 @@
+#include "Rendering/Shader.h"
 #ifdef TRISTEON_EDITOR
 #include "Settings.h"
 #include "Animations/AnimationClip.h"
@@ -32,6 +33,13 @@ namespace TristeonEditor
 		
 		auto* saveScene = findAction(save, "saveScene");
 		connect(saveScene, &QAction::triggered, this, &MenuBar::saveScene);
+
+		auto* recompileShaders = findAction(findChild<QMenu*>("menuAction"), "actionRecompile_Shaders");
+		connect(recompileShaders, &QAction::triggered, this, []()
+		{
+			for (auto* shader : Tristeon::Collector<Tristeon::Shader>::all())
+				shader->reload();
+		});
 	}
 
 	void MenuBar::createScene()

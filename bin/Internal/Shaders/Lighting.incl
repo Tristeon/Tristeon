@@ -13,12 +13,10 @@ uniform Light lights[32];
 uniform int lightCount;
 uniform int disableLighting;
 
-vec4 calculateLights(vec4 albedo, vec3 normal, vec3 world_pos, vec2 view_pos)
+vec4 calculateLights(vec4 albedo, vec3 normal, vec3 world_pos, vec2 view_pos, float mask)
 {
     if (disableLighting == 1)
         return albedo;
-    
-    vec3 viewDir = normalize(vec3(view_pos, -256) - world_pos);
 
     vec3 light;
     vec3 ambient;
@@ -39,7 +37,7 @@ vec4 calculateLights(vec4 albedo, vec3 normal, vec3 world_pos, vec2 view_pos)
 
             //Attenuation
             float r = lights[i].range;
-            float d = length(toLight);
+            float d = length(toLight.xy);
             float attenuation = log(1/d * r);
             if (d > lights[i].range)
                 attenuation = 0;
@@ -47,6 +45,6 @@ vec4 calculateLights(vec4 albedo, vec3 normal, vec3 world_pos, vec2 view_pos)
             light += diffuse * attenuation * lights[i].intensity * lights[i].color;  
         }
     }
-    
-    return albedo * vec4(ambient, 1) + albedo * vec4(light, 1);
+
+    return albedo * mask * vec4(ambient, 1) + albedo * vec4(light, 1);
 }

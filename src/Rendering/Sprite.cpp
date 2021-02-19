@@ -21,6 +21,8 @@ namespace Tristeon
 		j["colour"] = colour;
 		j["texturePath"] = _albedoPath;
 		j["normalPath"] = _normalPath;
+		j["lightMaskPath"] = _lightMaskPath;
+		j["normalMapStrength"] = _normalMapStrength;
 		return j;
 	}
 
@@ -36,7 +38,7 @@ namespace Tristeon
 
 		colour = j.value("colour", Colour());
 
-		std::string const newAlbedoPath = j.value("texturePath", "");
+		auto const newAlbedoPath = j.value("texturePath", "");
 		if (newAlbedoPath != _albedoPath)
 		{
 			_albedo = Resources::assetLoad<Texture>(newAlbedoPath);
@@ -44,12 +46,20 @@ namespace Tristeon
 		}
 		if (!_albedo)
 			_albedo = Resources::assetLoad<Texture>(Texture::defaultPath);
-		
-		std::string const newNormalPath = j.value("normalPath", "");
+
+		auto const newNormalPath = j.value("normalPath", "");
 		if (newNormalPath != _normalPath)
 		{
 			_normal = Resources::assetLoad<Texture>(newNormalPath);
 			_normalPath = newNormalPath;
+		}
+		_normalMapStrength = j.value("normalMapStrength", 0.1f);
+		
+		auto const newLightMaskPath = j.value("lightMaskPath", "");
+		if (newLightMaskPath != _lightMaskPath)
+		{
+			_lightMask = Resources::assetLoad<Texture>(newLightMaskPath);
+			_lightMaskPath = newLightMaskPath;
 		}
 	}
 
@@ -71,6 +81,11 @@ namespace Tristeon
 				texPtr = &_normal;
 				pathPtr = &_normalPath;
 				break;
+			}
+			case TextureType::LightMask:
+			{
+				texPtr = &_lightMask;
+				pathPtr = &_lightMaskPath;
 			}
 		}
 
@@ -98,10 +113,28 @@ namespace Tristeon
 			return _albedo;
 		case TextureType::Normal:
 			return _normal;
+		case TextureType::LightMask:
+			return _lightMask;
 		}
 
 		TRISTEON_LOG("Invalid argument passed, type needs to be a valid enum value");
 		return nullptr;
+	}
+
+	String Sprite::texturePath(const TextureType& type)
+	{
+		switch (type)
+		{
+		case TextureType::Albedo:
+			return _albedoPath;
+		case TextureType::Normal:
+			return _normalPath;
+		case TextureType::LightMask:
+			return _lightMaskPath;
+		}
+
+		TRISTEON_LOG("Invalid argument passed, type needs to be a valid enum value");
+		return "";
 	}
 
 	void Sprite::render()
@@ -112,22 +145,26 @@ namespace Tristeon
 		auto* shader = getShader();
 		shader->bind();
 
+		shader->setUniformValue("albedoMap", 0);
 		glActiveTexture(GL_TEXTURE0);
 		_albedo->bind();
 
+		shader->setUniformValue("normalMap", 1);
+		shader->setUniformValue("normalMapStrength", _normalMapStrength);
+		shader->setUniformValue("normalMapEnabled", (bool)_normal);
 		if (_normal)
 		{
 			glActiveTexture(GL_TEXTURE1);
 			_normal->bind();
-			shader->setUniformValue("normalMapEnabled", true);
-		}
-		else
-		{
-			shader->setUniformValue("normalMapEnabled", false);
 		}
 
-		shader->setUniformValue("albedoMap", 0);
-		shader->setUniformValue("normalMap", 1);
+		shader->setUniformValue("lightMask", 2);
+		shader->setUniformValue("lightMaskEnabled", (bool)_lightMask);
+		if (_lightMask)
+		{
+			glActiveTexture(GL_TEXTURE2);
+			_lightMask->bind();
+		}
 		
 		//Sprite info
 		shader->setUniformValue("sprite.width", width);

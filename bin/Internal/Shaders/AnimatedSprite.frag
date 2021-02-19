@@ -20,8 +20,13 @@ uniform Spacing spacing;
 
 //Sprite
 uniform sampler2D albedoMap;
+
 uniform sampler2D normalMap;
 uniform bool normalMapEnabled;
+uniform float normalMapStrength;
+
+uniform sampler2D lightMask;
+uniform bool lightMaskEnabled;
 struct Sprite
 {
     uint width;
@@ -90,11 +95,20 @@ void main()
     {
         normal = 2 * texture2D(normalMap, coords).rgb - 1.0;
         normal.z *= -1;
+        
+        normal = mix(vec3(0, 0, -1), normal, normalMapStrength);
     }
     else
     {
         normal = vec3(0, 0, -1);
     }
 
-    fragColor = calculateLights(albedo, normal, vec3(worldPos, 0), camera.position);
+    float mask = 1;
+    if (lightMaskEnabled)
+    {
+        vec4 mask_val = texture2D(lightMask, coords);
+        mask = mask_val.r;
+    }
+
+    fragColor = calculateLights(albedo, normal, vec3(worldPos, 0), camera.position, mask);
 }

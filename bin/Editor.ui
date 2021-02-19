@@ -1255,9 +1255,16 @@ alternate-background-color: rgb(127, 140, 141);</string>
     </widget>
     <addaction name="menuLayout"/>
    </widget>
+   <widget class="QMenu" name="menuAction">
+    <property name="title">
+     <string>Action</string>
+    </property>
+    <addaction name="actionRecompile_Shaders"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPreferences"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuAction"/>
   </widget>
   <widget class="QDockWidget" name="tilesets">
    <property name="minimumSize">
@@ -1406,6 +1413,11 @@ alternate-background-color: rgb(127, 140, 141);</string>
   <action name="actionReset">
    <property name="text">
     <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionRecompile_Shaders">
+   <property name="text">
+    <string>Recompile Shaders</string>
    </property>
   </action>
   <zorder>layers</zorder>

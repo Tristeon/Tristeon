@@ -16,7 +16,9 @@
                     "flipY": false,
                     "height": 5276,
                     "instanceID": 1894941205,
+                    "lightMaskPath": "",
                     "name": "Color",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -47,7 +49,9 @@
                     "flipY": false,
                     "height": 1672,
                     "instanceID": 3577302834,
+                    "lightMaskPath": "",
                     "name": "Fog",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -85,7 +89,9 @@
                     "flipY": false,
                     "height": 675,
                     "instanceID": 263102741,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -116,7 +122,9 @@
                     "flipY": false,
                     "height": 675,
                     "instanceID": 263102741,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -147,7 +155,9 @@
                     "flipY": false,
                     "height": 391,
                     "instanceID": 3165963983,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -178,7 +188,9 @@
                     "flipY": false,
                     "height": 463,
                     "instanceID": 122402709,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -209,7 +221,9 @@
                     "flipY": false,
                     "height": 463,
                     "instanceID": 122402709,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -240,7 +254,9 @@
                     "flipY": false,
                     "height": 356,
                     "instanceID": 3165963983,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -271,7 +287,9 @@
                     "flipY": false,
                     "height": 391,
                     "instanceID": 3165963983,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -309,7 +327,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -340,7 +360,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -371,7 +393,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -402,7 +426,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -433,7 +459,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -464,7 +492,9 @@
                     "flipY": false,
                     "height": 648,
                     "instanceID": 1443902661,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -500,47 +530,11 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 2267,
-                    "instanceID": 1987062801,
-                    "name": "New Sprite",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2965.257568359375,
-                        "y": 1101.95361328125
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/Sky/Sprite_Sky_Gradient.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 10432
-                }
-            ],
-            "instanceID": 2522391480,
-            "name": "Fog",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
                     "height": 461,
                     "instanceID": 237346960,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -571,7 +565,9 @@
                     "flipY": false,
                     "height": 281,
                     "instanceID": 285516360,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -602,7 +598,9 @@
                     "flipY": false,
                     "height": 449,
                     "instanceID": 3201237739,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -633,7 +631,9 @@
                     "flipY": false,
                     "height": 449,
                     "instanceID": 3201237739,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -669,47 +669,11 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 1963,
-                    "instanceID": 4074330496,
-                    "name": "New Sprite",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2896.982421875,
-                        "y": 1008.040771484375
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/Sky/Sprite_Sky_Gradient.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 8702
-                }
-            ],
-            "instanceID": 72271824,
-            "name": "Fog",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
                     "height": 333,
                     "instanceID": 1819342435,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -740,7 +704,9 @@
                     "flipY": false,
                     "height": 376,
                     "instanceID": 867982652,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -771,7 +737,9 @@
                     "flipY": false,
                     "height": 374,
                     "instanceID": 1819342435,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -802,7 +770,9 @@
                     "flipY": false,
                     "height": 333,
                     "instanceID": 1819342435,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -830,44 +800,6 @@
                     "behaviours": [],
                     "colour": {
                         "a": 1.0,
-                        "b": 0.3921568691730499,
-                        "g": 0.41960784792900085,
-                        "r": 0.250980406999588,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 1915,
-                    "instanceID": 3741633935,
-                    "name": "New Sprite",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2828.1025390625,
-                        "y": 965.9058227539063
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/Sky/Sprite_Sky_Gradient.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 9574
-                }
-            ],
-            "instanceID": 2626554084,
-            "name": "Fog",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
                         "b": 1.0,
                         "g": 1.0,
                         "r": 1.0,
@@ -878,7 +810,9 @@
                     "flipY": false,
                     "height": 718,
                     "instanceID": 2804614720,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -909,7 +843,9 @@
                     "flipY": false,
                     "height": 413,
                     "instanceID": 3680032998,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -940,7 +876,9 @@
                     "flipY": false,
                     "height": 422,
                     "instanceID": 2054169889,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -968,44 +906,6 @@
                     "behaviours": [],
                     "colour": {
                         "a": 1.0,
-                        "b": 0.5254902243614197,
-                        "g": 0.5411764979362488,
-                        "r": 0.34117648005485535,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 1899,
-                    "instanceID": 1336861689,
-                    "name": "New Sprite",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2300.447265625,
-                        "y": 1033.07568359375
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/Sky/Sprite_Sky_Gradient.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 9351
-                }
-            ],
-            "instanceID": 1345680490,
-            "name": "Fog",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
                         "b": 1.0,
                         "g": 1.0,
                         "r": 1.0,
@@ -1016,7 +916,9 @@
                     "flipY": false,
                     "height": 1054,
                     "instanceID": 3275373417,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1047,7 +949,9 @@
                     "flipY": false,
                     "height": 782,
                     "instanceID": 2469643669,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1078,7 +982,9 @@
                     "flipY": false,
                     "height": 948,
                     "instanceID": 2073072359,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1098,44 +1004,6 @@
             ],
             "instanceID": 1461736926,
             "name": "Background Actors 1",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 0.5607843399047852,
-                        "g": 0.545098066329956,
-                        "r": 0.3764705955982208,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 3245,
-                    "instanceID": 2335801934,
-                    "name": "New Sprite",
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2356.955078125,
-                        "y": 1589.03759765625
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/Sky/Sprite_Sky_Gradient.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 9992
-                }
-            ],
-            "instanceID": 1519490683,
-            "name": "Fog",
             "typeID": "Tristeon::ActorLayer"
         },
         {
@@ -1205,7 +1073,9 @@
                     "flipY": false,
                     "height": 55,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1253,7 +1123,9 @@
                     "flipY": false,
                     "height": 51,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1301,7 +1173,9 @@
                     "flipY": false,
                     "height": 51,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1349,7 +1223,9 @@
                     "flipY": false,
                     "height": 51,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1397,7 +1273,9 @@
                     "flipY": false,
                     "height": 51,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1445,7 +1323,9 @@
                     "flipY": false,
                     "height": 51,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1493,7 +1373,9 @@
                     "flipY": false,
                     "height": 55,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1541,7 +1423,9 @@
                     "flipY": false,
                     "height": 55,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1589,7 +1473,9 @@
                     "flipY": false,
                     "height": 55,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1637,7 +1523,9 @@
                     "flipY": false,
                     "height": 55,
                     "instanceID": 2670317415,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1727,9 +1615,9 @@
                         {
                             "colour": {
                                 "a": 1.0,
-                                "b": 1.0,
-                                "g": 1.0,
-                                "r": 1.0,
+                                "b": 0.7452830076217651,
+                                "g": 0.6023771166801453,
+                                "r": 0.30584728717803955,
                                 "typeID": "Tristeon::Colour"
                             },
                             "cutoff": 360.0,
@@ -1781,7 +1669,9 @@
                     "flipY": false,
                     "height": 387,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1812,7 +1702,9 @@
                     "flipY": false,
                     "height": 320,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1843,7 +1735,9 @@
                     "flipY": false,
                     "height": 506,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1874,7 +1768,9 @@
                     "flipY": false,
                     "height": 1206,
                     "instanceID": 270628337,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_TrunkAndBranches_1_Mask.png",
                     "name": "Tree 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1905,7 +1801,9 @@
                     "flipY": false,
                     "height": 311,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1936,7 +1834,9 @@
                     "flipY": false,
                     "height": 566,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1967,7 +1867,9 @@
                     "flipY": false,
                     "height": 465,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -1998,7 +1900,9 @@
                     "flipY": false,
                     "height": 615,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2029,7 +1933,9 @@
                     "flipY": false,
                     "height": 524,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2060,7 +1966,9 @@
                     "flipY": false,
                     "height": 436,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2091,7 +1999,9 @@
                     "flipY": false,
                     "height": 777,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2122,7 +2032,9 @@
                     "flipY": false,
                     "height": 507,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2153,7 +2065,9 @@
                     "flipY": false,
                     "height": 509,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2184,7 +2098,9 @@
                     "flipY": false,
                     "height": 1400,
                     "instanceID": 878749100,
-                    "name": "New Sprite",
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_TrunkAndBranches_2_Mask.png",
+                    "name": "Tree 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2215,7 +2131,9 @@
                     "flipY": false,
                     "height": 852,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2246,7 +2164,9 @@
                     "flipY": false,
                     "height": 727,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2277,7 +2197,9 @@
                     "flipY": false,
                     "height": 556,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2308,7 +2230,9 @@
                     "flipY": false,
                     "height": 644,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2339,7 +2263,9 @@
                     "flipY": false,
                     "height": 758,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2370,7 +2296,9 @@
                     "flipY": false,
                     "height": 1149,
                     "instanceID": 2399111947,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                     "name": "Vegetation 1",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_2_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2401,7 +2329,9 @@
                     "flipY": false,
                     "height": 985,
                     "instanceID": 1426306059,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                     "name": "Vegetation 2",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_1_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2432,7 +2362,9 @@
                     "flipY": false,
                     "height": 953,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2463,7 +2395,9 @@
                     "flipY": false,
                     "height": 1268,
                     "instanceID": 1094242751,
+                    "lightMaskPath": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                     "name": "Vegetation 0",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "Sprites/Vegetation/Sprite_Foliage_3_Normal.png",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2494,7 +2428,9 @@
                     "flipY": false,
                     "height": 178,
                     "instanceID": 1540553508,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2525,7 +2461,9 @@
                     "flipY": false,
                     "height": 128,
                     "instanceID": 1540553508,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2556,7 +2494,9 @@
                     "flipY": false,
                     "height": 1341,
                     "instanceID": 3644569857,
-                    "name": "New Sprite",
+                    "lightMaskPath": "",
+                    "name": "Tree 3",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2594,8 +2534,10 @@
                     "flipY": false,
                     "height": 793,
                     "instanceID": 2289769761,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 5786.61181640625,
@@ -2625,8 +2567,10 @@
                     "flipY": false,
                     "height": 793,
                     "instanceID": 2289769761,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1487.5323486328125,
@@ -2656,8 +2600,10 @@
                     "flipY": false,
                     "height": 793,
                     "instanceID": 2289769761,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 2158.389404296875,
@@ -2687,8 +2633,10 @@
                     "flipY": false,
                     "height": 793,
                     "instanceID": 2289769761,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 3861.787353515625,
@@ -2718,8 +2666,10 @@
                     "flipY": false,
                     "height": 793,
                     "instanceID": 2289769761,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 5424.923828125,
@@ -2745,40 +2695,6 @@
                 {
                     "behaviours": [
                         {
-                            "groundedDistance": 256.0,
-                            "instanceID": 3807207571,
-                            "jumpVelocity": 500.0,
-                            "runSpeed": 100.0,
-                            "typeID": "Tristeon::TestBehaviour"
-                        },
-                        {
-                            "density": 1.0,
-                            "friction": 0.0,
-                            "height": 128.0,
-                            "instanceID": 2211367331,
-                            "offset": {
-                                "typeID": "Tristeon::VectorType<float>",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "restitution": 0.0,
-                            "rotationOffset": 0.0,
-                            "sensor": false,
-                            "typeID": "Tristeon::BoxCollider",
-                            "width": 64.0
-                        },
-                        {
-                            "angularDamping": 0.009999999776482582,
-                            "continuous": false,
-                            "enabled": true,
-                            "fixedRotation": true,
-                            "gravityScale": 1.0,
-                            "instanceID": 4155472159,
-                            "linearDamping": 0.0,
-                            "type": 2,
-                            "typeID": "Tristeon::PhysicsBody"
-                        },
-                        {
                             "colour": {
                                 "a": 1.0,
                                 "b": 1.0,
@@ -2786,15 +2702,15 @@
                                 "r": 1.0,
                                 "typeID": "Tristeon::Colour"
                             },
-                            "cutoff": 360.0,
+                            "cutoff": 65.0,
                             "direction": {
                                 "typeID": "Tristeon::VectorType<float>",
-                                "x": 0.0,
-                                "y": 0.0
+                                "x": 0.25,
+                                "y": -1.0
                             },
-                            "instanceID": 2278038970,
-                            "intensity": 1.0,
-                            "range": 1028.0,
+                            "instanceID": 2152875753,
+                            "intensity": 2.0,
+                            "range": 2048.0,
                             "sourceType": 0,
                             "typeID": "Tristeon::Light"
                         }
@@ -2809,14 +2725,16 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 128,
-                    "instanceID": 4203268956,
-                    "name": "New Sprite",
+                    "height": 93,
+                    "instanceID": 1742952335,
+                    "lightMaskPath": "",
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1027.5552978515625,
-                        "y": 738.5313720703125
+                        "x": 2775.28857421875,
+                        "y": 2132.974609375
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -2824,9 +2742,175 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "",
+                    "texturePath": "Sprites/LightSprite.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 64
+                    "width": 93
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 65.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.25,
+                                "y": -1.0
+                            },
+                            "instanceID": 2152875753,
+                            "intensity": 2.0,
+                            "range": 2048.0,
+                            "sourceType": 0,
+                            "typeID": "Tristeon::Light"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 93,
+                    "instanceID": 1742952335,
+                    "lightMaskPath": "",
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 547.507568359375,
+                        "y": 2109.7373046875
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "Sprites/LightSprite.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 93
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 65.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.25,
+                                "y": -1.0
+                            },
+                            "instanceID": 2152875753,
+                            "intensity": 2.0,
+                            "range": 2048.0,
+                            "sourceType": 0,
+                            "typeID": "Tristeon::Light"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 93,
+                    "instanceID": 1742952335,
+                    "lightMaskPath": "",
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1527.0357666015625,
+                        "y": 2176.662109375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "Sprites/LightSprite.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 93
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "cutoff": 360.0,
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "instanceID": 1269701188,
+                            "intensity": 1.0,
+                            "range": 257.0,
+                            "sourceType": 0,
+                            "typeID": "Tristeon::Light"
+                        },
+                        {
+                            "instanceID": 3306654179,
+                            "typeID": "Tristeon::MouseFollowBehaviour"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flipX": false,
+                    "flipY": false,
+                    "height": 9,
+                    "instanceID": 362872908,
+                    "lightMaskPath": "",
+                    "name": "LightSprite",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "",
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.7693424224853516,
+                        "y": 3.814697265625e-06
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "texturePath": "Sprites/LightSprite.png",
+                    "typeID": "Tristeon::Sprite",
+                    "width": 9
                 }
             ],
             "instanceID": 2206234258,
@@ -2849,7 +2933,9 @@
                     "flipY": false,
                     "height": 274,
                     "instanceID": 2567714882,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2880,7 +2966,9 @@
                     "flipY": false,
                     "height": 194,
                     "instanceID": 855887953,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2911,7 +2999,9 @@
                     "flipY": false,
                     "height": 104,
                     "instanceID": 1281948989,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2942,7 +3032,9 @@
                     "flipY": false,
                     "height": 248,
                     "instanceID": 3205175677,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_3_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2973,7 +3065,9 @@
                     "flipY": false,
                     "height": 182,
                     "instanceID": 3205175677,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_3_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3004,7 +3098,9 @@
                     "flipY": false,
                     "height": 174,
                     "instanceID": 2567714882,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3027,18 +3123,6 @@
             "typeID": "Tristeon::ActorLayer"
         },
         {
-            "columns": 0,
-            "instanceID": 776689448,
-            "name": "Middle",
-            "rows": 0,
-            "tileData": "",
-            "tilesets": [
-                "Tilesets\\GrassFiller3.tileset",
-                "Tilesets\\GrassFiller1.tileset"
-            ],
-            "typeID": "Tristeon::TileLayer"
-        },
-        {
             "actors": [
                 {
                     "behaviours": [],
@@ -3054,7 +3138,9 @@
                     "flipY": false,
                     "height": 598,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3085,7 +3171,9 @@
                     "flipY": false,
                     "height": 507,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3116,7 +3204,9 @@
                     "flipY": false,
                     "height": 507,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3147,7 +3237,9 @@
                     "flipY": false,
                     "height": 340,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3178,7 +3270,9 @@
                     "flipY": false,
                     "height": 415,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3209,7 +3303,9 @@
                     "flipY": false,
                     "height": 484,
                     "instanceID": 103861842,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3247,8 +3343,10 @@
                     "flipY": false,
                     "height": 1136,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 5766.2353515625,
@@ -3278,8 +3376,10 @@
                     "flipY": false,
                     "height": 1107,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 94.6800537109375,
@@ -3309,8 +3409,10 @@
                     "flipY": false,
                     "height": 1037,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1023.2786865234375,
@@ -3340,8 +3442,10 @@
                     "flipY": false,
                     "height": 1002,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 2646.6806640625,
@@ -3371,8 +3475,10 @@
                     "flipY": false,
                     "height": 1145,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 4379.5693359375,
@@ -3402,8 +3508,10 @@
                     "flipY": false,
                     "height": 1145,
                     "instanceID": 2947011710,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
-                    "normalPath": "",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": "Sprites/SpriteShapes/Sprite_Strip_Grass_2_Normal.jpg",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 5331.4716796875,
@@ -3433,7 +3541,9 @@
                     "flipY": false,
                     "height": 159,
                     "instanceID": 1366432402,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3464,7 +3574,9 @@
                     "flipY": false,
                     "height": 407,
                     "instanceID": 368577110,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_4_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3495,7 +3607,9 @@
                     "flipY": false,
                     "height": 303,
                     "instanceID": 3436920502,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3526,7 +3640,9 @@
                     "flipY": false,
                     "height": 311,
                     "instanceID": 3436920502,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3557,7 +3673,9 @@
                     "flipY": false,
                     "height": 347,
                     "instanceID": 2597476715,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3588,7 +3706,9 @@
                     "flipY": false,
                     "height": 192,
                     "instanceID": 3436920502,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3619,7 +3739,9 @@
                     "flipY": false,
                     "height": 260,
                     "instanceID": 2597476715,
+                    "lightMaskPath": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3657,7 +3779,9 @@
                     "flipY": false,
                     "height": 302,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3688,7 +3812,9 @@
                     "flipY": false,
                     "height": 241,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3719,7 +3845,9 @@
                     "flipY": false,
                     "height": 275,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3750,7 +3878,9 @@
                     "flipY": false,
                     "height": 380,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3781,7 +3911,9 @@
                     "flipY": false,
                     "height": 330,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3812,7 +3944,9 @@
                     "flipY": false,
                     "height": 380,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3843,7 +3977,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3874,7 +4010,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3905,7 +4043,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3936,7 +4076,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3967,7 +4109,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -3998,7 +4142,9 @@
                     "flipY": false,
                     "height": 284,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4029,7 +4175,9 @@
                     "flipY": false,
                     "height": 230,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4060,7 +4208,9 @@
                     "flipY": false,
                     "height": 275,
                     "instanceID": 1175009905,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4123,7 +4273,9 @@
                     "flipY": false,
                     "height": 489,
                     "instanceID": 1592583740,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4154,7 +4306,9 @@
                     "flipY": false,
                     "height": 489,
                     "instanceID": 1592583740,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4185,7 +4339,9 @@
                     "flipY": false,
                     "height": 491,
                     "instanceID": 1592583740,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -4216,7 +4372,9 @@
                     "flipY": false,
                     "height": 489,
                     "instanceID": 1592583740,
+                    "lightMaskPath": "",
                     "name": "New Sprite",
+                    "normalMapStrength": 0.10000000149011612,
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",

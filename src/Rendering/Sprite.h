@@ -12,7 +12,8 @@ namespace Tristeon
 	enum class TextureType
 	{
 		Albedo,
-		Normal
+		Normal,
+		LightMask
 	};
 	
 	/**
@@ -72,6 +73,8 @@ namespace Tristeon
 		 * Returns the current texture of the sprite. May be nullptr.
 		 */
 		virtual Texture* texture(const TextureType& type = TextureType::Albedo);
+
+		virtual String texturePath(const TextureType& type = TextureType::Albedo);
 		
 		/**
 		 * Returns the Sprite's Bounds.
@@ -88,6 +91,10 @@ namespace Tristeon
 
 		Texture* _normal = nullptr;
 		String _normalPath;
+		float _normalMapStrength = 0.1f;
+
+		Texture* _lightMask = nullptr;
+		String _lightMaskPath;
 	};
 
 	REGISTER_TYPE(Sprite);

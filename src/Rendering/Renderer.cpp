@@ -107,7 +107,7 @@ namespace Tristeon
 		//Render each layer
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{
-			Layer* layer = SceneManager::current()->layerAt(i);
+			auto* layer = SceneManager::current()->layerAt(i);
 			layer->render(Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } });
 		}
 

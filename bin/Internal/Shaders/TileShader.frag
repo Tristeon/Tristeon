@@ -10,6 +10,7 @@ struct Tileset
     sampler2D albedoMap;
     sampler2D normalMap;
     bool normalMapEnabled;
+    float normalMapStrength;
 
     uint cols;
     uint rows;
@@ -100,6 +101,7 @@ void main()
     {
         normal = 2 * texture2D(tileset.normalMap, tilesetUV).rgb - 1.0;
         normal.z *= -1;
+        normal = mix(vec3(0, 0, -1), normal, tileset.normalMapStrength);
     }
     else
     {
@@ -108,7 +110,7 @@ void main()
 
     vec2 worldPos = vec2(tileX * level.tileRenderWidth - level.tileRenderWidth / 2.0f, tileY * level.tileRenderHeight - level.tileRenderHeight / 2.0f);
 
-    fragColor = calculateLights(albedo, normal, vec3(worldPos, 0), camera.position);
+    fragColor = calculateLights(albedo, normal, vec3(worldPos, 0), camera.position, 1.0f);
 }
 
 ivec2 tileTo2DIndex(int tile)

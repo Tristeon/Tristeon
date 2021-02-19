@@ -63,5 +63,5 @@ void main()
 
     gl_Position = vec4(x, y, 0, 1);
 
-    worldPos = actor.position + vec2(rotX, rotY);
+    worldPos = vec2(x, y) * camera.displayPixels / camera.zoom / 2 + camera.position;
 }
