@@ -25,13 +25,14 @@ namespace TristeonEditor
 		///Removes the highlight on the selected tile and sets the selected tile to -1
 		void clearSelection();
 
-		QVBoxLayout* layout = nullptr;
+		QVBoxLayout* _layout = nullptr;
 		
-		Tristeon::Tileset* tileset;
-		QLabel* image;
+		Tristeon::Tileset* _tileset;
+		Tristeon::String _tilesetPath;
+		QLabel* _image;
 
-		QLabel* tileHighlight = nullptr;
-		Tristeon::Tile selectedTile;
+		QLabel* _tileHighlight = nullptr;
+		Tristeon::Tile _selectedTile;
 	};
 }
 

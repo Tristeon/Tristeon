@@ -205,11 +205,6 @@ namespace Tristeon
 		 * The filepath of the light mask
 		 */
 		String lightMaskPath;
-		
-		/**
-		 * The filepath of the tileset (not the texture)
-		 */
-		String filePath;
 
 		//TODO: Replace Tileset::id with instanceID
 		unsigned int id = 0;

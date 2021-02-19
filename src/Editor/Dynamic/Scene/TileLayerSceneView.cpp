@@ -114,7 +114,7 @@ namespace TristeonEditor
 		if (Keyboard::held(Keyboard::Alt)) return;
 
 		if (tileLayer->tileset(Brushes::selectedTile().tilesetID) == nullptr)
-			tileLayer->addTileset(Brushes::selectedTileset());
+			tileLayer->addTileset(Brushes::selectedTilesetPath());
 
 		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->checkBoundsByIndex(tileIndex))
 			Brushes::current()->draw(tileLayer, tileIndex);

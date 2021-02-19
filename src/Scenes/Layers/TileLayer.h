@@ -2,9 +2,6 @@
 #include "Layer.h"
 #include <Scenes/Tiles/Tileset.h>
 #include <Scenes/Tiles/Tile.h>
-
-#include <Rendering/Shader.h>
-
 #include <box2d/b2_fixture.h>
 
 namespace Tristeon
@@ -51,7 +48,7 @@ namespace Tristeon
 		/**
 		 * Adds a tileset if it hasn't already been added.
 		 */
-		void addTileset(Tileset* tileset);
+		void addTileset(const String& tilesetPath);
 #pragma endregion
 
 #pragma region Tile Modification
@@ -143,6 +140,7 @@ namespace Tristeon
 
 		Unique<Tile[]> _tiles = nullptr;
 		List<Tileset*> _tilesets;
+		List<String> _tilesetPaths;
 		unsigned int _columns = 0, _rows = 0;
 
 		/**

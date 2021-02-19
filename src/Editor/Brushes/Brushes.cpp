@@ -6,12 +6,12 @@ namespace TristeonEditor
 {
 	Tristeon::Unique<AbstractBrush> Brushes::_current = std::make_unique<Stamp>();
 	Tristeon::Tile Brushes::_tile { -1, -1 };
-	Tristeon::Tileset* Brushes::_tileset = nullptr;
+	Tristeon::String Brushes::_tilesetPath;
 	
-	void Brushes::selectTile(Tristeon::Tile const& tile, Tristeon::Tileset* tileset)
+	void Brushes::selectTile(Tristeon::Tile const& tile, const Tristeon::String& tilesetPath)
 	{
 		_tile = tile;
-		_tileset = tileset;
+		_tilesetPath = tilesetPath;
 	}
 
 	Tristeon::Tile Brushes::selectedTile()
@@ -19,9 +19,9 @@ namespace TristeonEditor
 		return _tile;
 	}
 
-	Tristeon::Tileset* Brushes::selectedTileset()
+	Tristeon::String Brushes::selectedTilesetPath()
 	{
-		return _tileset;
+		return _tilesetPath;
 	}
 
 	AbstractBrush* Brushes::current()

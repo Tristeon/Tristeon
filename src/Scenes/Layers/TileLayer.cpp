@@ -36,10 +36,10 @@ namespace Tristeon
 		j["columns"] = _columns;
 		j["rows"] = _rows;
 
-		auto sets = json::array();
-		for (auto* tileset : _tilesets)
-			sets.push_back(tileset->filePath);
-		j["tilesets"] = sets;
+		auto paths = json::array_t();
+		for (auto path : _tilesetPaths)
+			paths.push_back(path);
+		j["tilesets"] = paths;
 
 		//Tiles use a custom serialization method instead of the standard json library to speed things up
 		String tilesSerialized;
@@ -66,10 +66,10 @@ namespace Tristeon
 		{
 			for (auto& i : j["tilesets"])
 			{
-				auto tileset = Resources::jsonLoad<Tileset>(i);
+				auto* tileset = Resources::jsonLoad<Tileset>(i);
 				if (tileset == nullptr)
 					continue;
-				tileset->filePath = i.get<String>();
+				_tilesetPaths.add(i.get<String>());
 				_tilesets.add(tileset);
 			}
 		}
@@ -155,8 +155,9 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	void TileLayer::addTileset(Tileset* tileset)
+	void TileLayer::addTileset(const String& tilesetPath)
 	{
+		auto* tileset = Resources::jsonLoad<Tileset>(tilesetPath);
 		if (tileset == nullptr)
 			return;
 		
@@ -166,6 +167,7 @@ namespace Tristeon
 				return;
 		}
 
+		_tilesetPaths.add(tilesetPath);
 		_tilesets.add(tileset);
 	}
 
