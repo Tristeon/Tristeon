@@ -184,6 +184,13 @@ else(MSVC)
 	link_libs(Tristeon)
 endif(MSVC)
 
+#Add windeploy as a dependant target
+add_custom_target(WinDeploy
+	COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/
+)
+add_dependencies(Tristeon WinDeploy)
+
 #Add Qt binaries to build
 execute_process(COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
 				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
