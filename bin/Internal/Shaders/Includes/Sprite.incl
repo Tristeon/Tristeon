@@ -1,0 +1,11 @@
+struct Sprite
+{
+    uint width;
+    uint height;
+
+    vec4 colour;
+
+    bool flipX;
+    bool flipY;
+};
+uniform Sprite sprite;

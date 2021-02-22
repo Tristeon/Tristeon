@@ -1,0 +1,8 @@
+struct Actor
+{
+    vec2 position;
+    vec2 scale;
+    float rotation;
+    float depth;
+};
+uniform Actor actor;

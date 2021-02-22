@@ -1,14 +1,7 @@
 #version 140
+#include Includes/Camera.incl
+
 in vec2 pos;
-
-struct CameraData
-{
-    vec2 position;
-    uvec2 displayPixels;
-    float zoom;
-};
-uniform CameraData camera;
-
 void main()
 {
     float x = 0;

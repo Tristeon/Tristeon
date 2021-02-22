@@ -1040,7 +1040,7 @@
                         "y": 1.0
                     },
                     "typeID": "Tristeon::Camera",
-                    "zoom": 0.5
+                    "zoom": 1.0
                 },
                 {
                     "behaviours": [
@@ -2877,7 +2877,7 @@
                             "typeID": "Tristeon::Light"
                         },
                         {
-                            "instanceID": 1077842182,
+                            "instanceID": 2918020879,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],

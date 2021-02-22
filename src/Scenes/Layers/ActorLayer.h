@@ -109,7 +109,7 @@ namespace Tristeon
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
-		void render(const Framebuffer& framebuffer) override;
+		void render(const Framebuffer& framebuffer, const float& depth) override;
 
 		/**
 		 * Cleans up destroyed actors and behaviours.
@@ -167,6 +167,7 @@ namespace Tristeon
 		static_assert(!std::is_abstract<T>::value, "Can't add an abstract Actor!");
 		
 		T* actor = new T();
+		actor->_layer = this;
 		_actors.add(std::unique_ptr<T>(actor));
 		return actor;
 	}

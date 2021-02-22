@@ -1,5 +1,9 @@
 #version 140
 #include Lighting.incl
+#include Includes/Actor.incl
+#include Includes/Sprite.incl
+#include Includes/SpriteTextures.incl
+#include Includes/Camera.incl
 
 in vec2 texCoord;
 in vec2 worldPos;
@@ -18,28 +22,6 @@ struct Spacing
 };
 uniform Spacing spacing;
 
-//Sprite
-uniform sampler2D albedoMap;
-
-uniform sampler2D normalMap;
-uniform bool normalMapEnabled;
-uniform float normalMapStrength;
-
-uniform sampler2D lightMask;
-uniform bool lightMaskEnabled;
-struct Sprite
-{
-    uint width;
-    uint height;
-
-    vec4 colour;
-
-    bool flipX;
-    bool flipY;
-};
-uniform Sprite sprite;
-
-//Animation
 struct Animation
 {
     uint cols;
@@ -47,15 +29,6 @@ struct Animation
     uint frame;
 };
 uniform Animation animation;
-
-//Camera
-struct CameraData
-{
-    vec2 position;
-    uvec2 displayPixels;
-    float zoom;
-};
-uniform CameraData camera;
 
 void main()
 {
@@ -110,5 +83,5 @@ void main()
         mask = mask_val.r;
     }
 
-    fragColor = calculateLights(albedo, normal, vec3(worldPos, 0), camera.position, mask);
+    fragColor = calculateLights(albedo, normal, vec3(worldPos, actor.depth), camera.position, mask);
 }

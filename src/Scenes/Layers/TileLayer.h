@@ -23,7 +23,7 @@ namespace Tristeon
 
 	public:
 		TileLayer();
-		virtual ~TileLayer();
+		virtual ~TileLayer() override;
 
 		json serialize() override;
 		void deserialize(json j) override;
@@ -136,7 +136,7 @@ namespace Tristeon
 #pragma endregion
 		
 	protected:
-		void render(const Framebuffer& framebuffer) override;
+		void render(const Framebuffer& framebuffer, const float& depth) override;
 
 		Unique<Tile[]> _tiles = nullptr;
 		List<Tileset*> _tilesets;

@@ -13,6 +13,7 @@
 #include "glad/glad.h"
 #include "Math/Math.h"
 
+#include <Scenes/Layers/ActorLayer.h>
 #include "Scenes/SceneManager.h"
 #include "Scenes/Actors/Light.h"
 
@@ -82,11 +83,17 @@ namespace Tristeon
 			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
 
 			auto lights = Collector<Light>::all();
+			const auto layerCount = SceneManager::current()->layerCount();
 			for (size_t i = 0; i < lights.size(); i++)
 			{
+				const int layerIndex = SceneManager::current()->indexOf(lights[i]->actor()->layer());
+				float layerDepth = ((float)layerCount - (float)layerIndex) / (float)layerCount;
+				const float actorDepth = ((float)lights[i]->actor()->layer()->actorCount() - (float)i) / (float)lights[i]->actor()->layer()->actorCount();
+				const float resultingDepth = layerDepth + (actorDepth / (float)layerCount);
+				
 				auto pos = lights[i]->actor()->position;
 				auto col = lights[i]->colour();
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -256.0f);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, resultingDepth);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
@@ -105,10 +112,12 @@ namespace Tristeon
 		}
 
 		//Render each layer
+		const auto framebuffer = Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } };
+		const uint32_t count = SceneManager::current()->layerCount();
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{
-			auto* layer = SceneManager::current()->layerAt(i);
-			layer->render(Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } });
+			const float depth = ((float)count - i) / (float)count;
+			SceneManager::current()->layerAt(i)->render(framebuffer, depth);
 		}
 
 #ifdef TRISTEON_EDITOR

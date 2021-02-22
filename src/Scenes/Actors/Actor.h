@@ -110,6 +110,11 @@ namespace Tristeon
 		void destroy();
 
 		/**
+		 * Gets the current layer that the Actor is attached to.
+		*/
+		ActorLayer* layer();
+		
+		/**
 		 * Looks through every actor layer,
 		 * returns the first actor with the given name.
 		 *
@@ -143,6 +148,7 @@ namespace Tristeon
 		template<typename T>
 		static List<T*> findAllOfType();
 	private:
+		ActorLayer* _layer = nullptr;
 		List<Unique<Behaviour>> _behaviours{};
 		bool _destroyed = false;
 	};

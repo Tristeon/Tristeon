@@ -158,6 +158,11 @@ namespace Tristeon
 		}
 	}
 
+	ActorLayer* Actor::layer()
+	{
+		return _layer;
+	}
+
 	Actor* Actor::find(const String& name)
 	{
 		auto actors = Collector<Actor>::all();

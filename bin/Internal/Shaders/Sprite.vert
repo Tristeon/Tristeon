@@ -1,34 +1,7 @@
 #version 140
-
-//Sprite
-struct Sprite
-{
-    uint width;
-    uint height;
-
-    vec4 colour;
-
-    bool flipX;
-    bool flipY;
-};
-uniform Sprite sprite;
-
-struct Actor
-{
-    vec2 position;
-    vec2 scale;
-    float rotation;
-};
-uniform Actor actor;
-
-//Camera
-struct CameraData
-{
-    vec2 position;
-    uvec2 displayPixels;
-    float zoom;
-};
-uniform CameraData camera;
+#include Includes/Actor.incl
+#include Includes/Sprite.incl
+#include Includes/Camera.incl
  
 out vec2 texCoord;
 out vec2 worldPos;

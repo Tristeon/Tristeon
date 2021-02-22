@@ -1,4 +1,5 @@
 #version 140
+#include Includes/Camera.incl
 in vec2 texCoord;
 
 struct Grid 
@@ -7,15 +8,7 @@ struct Grid
     uint tileHeight;
 };
 
-struct CameraData
-{
-    vec2 position;
-    uvec2 displayPixels;
-    float zoom;
-};
-
 uniform Grid grid;
-uniform CameraData camera;
 
 out vec4 FragColor;
 

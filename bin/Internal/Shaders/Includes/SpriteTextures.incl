@@ -1,0 +1,8 @@
+uniform sampler2D albedoMap;
+
+uniform sampler2D normalMap;
+uniform bool normalMapEnabled;
+uniform float normalMapStrength;
+
+uniform sampler2D lightMask;
+uniform bool lightMaskEnabled;

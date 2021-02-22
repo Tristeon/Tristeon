@@ -1,0 +1,7 @@
+struct Camera
+{
+    vec2 position;
+    uvec2 displayPixels;
+    float zoom;
+};
+uniform Camera camera;

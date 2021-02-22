@@ -8,6 +8,8 @@
 #include <Rendering/Sprite.h>
 #include <Callbacks/IPreDestroy.h>
 
+#include "Scenes/SceneManager.h"
+
 namespace Tristeon
 {
 	ActorLayer::~ActorLayer()
@@ -51,7 +53,10 @@ namespace Tristeon
 			if (serializable == nullptr)
 				continue;
 			serializable->deserialize(serializedActor);
-			_actors.add(Unique<Actor>((Actor*)serializable.release()));
+
+			auto* releasedActor = (Actor*)serializable.release();
+			releasedActor->_layer = this;
+			_actors.add(Unique<Actor>(releasedActor));
 		}
 	}
 
@@ -107,18 +112,22 @@ namespace Tristeon
 		_destroyedBehaviours.add(behaviour);
 	}
 
-	void ActorLayer::render(const Framebuffer& framebuffer)
+	void ActorLayer::render(const Framebuffer& framebuffer, const float& depth)
 	{
 		//Render each graphic
-		for (auto& actor : _actors)
+		
+		for (uint32_t i = 0; i < _actors.size(); i++)
 		{
-			auto* graphic = dynamic_cast<Graphic*>(actor.get());
+			const float actorDepth = ((float)_actors.size() - (float)i) / (float)_actors.size();
+			const float resultingDepth = depth + (actorDepth / (float)SceneManager::current()->layerCount());
+			
+			auto* graphic = dynamic_cast<Graphic*>(_actors[i].get());
 			if (graphic == nullptr || !graphic->display)
 				continue;
 
 			auto* shader = graphic->getShader();
 			shader->bind();
-			graphic->render();
+			graphic->render(resultingDepth);
 		}
 	}
 

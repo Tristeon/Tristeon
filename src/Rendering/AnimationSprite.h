@@ -38,7 +38,7 @@ namespace Tristeon
 		 */
 		void setFrame(unsigned int const& frame);
 	protected:
-		void render() override;
+		void render(const float& depth) override;
 		void update() override;
 		Shader* getShader() override;
 
