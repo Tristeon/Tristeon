@@ -3,6 +3,8 @@
     "height": 1,
     "horizontalSpacing": 0,
     "id": 699008188,
+    "lightMaskPath": "",
+    "normalMapStrength": 1.0,
     "normalPath": "NormalMapHintsAssets/simplebrick_n.png",
     "spacingBottom": 0,
     "spacingLeft": 0,

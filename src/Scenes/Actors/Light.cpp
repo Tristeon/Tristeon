@@ -1,4 +1,5 @@
 #include "Light.h"
+#include <Rendering/Gizmos.h>
 
 namespace Tristeon
 {
@@ -18,11 +19,16 @@ namespace Tristeon
 		j["typeID"] = Type<Light>::fullName();
 		j["sourceType"] = _type;
 		j["intensity"] = _intensity;
-		j["range"] = _range;
+
+		j["innerRadius"] = _innerRadius;
+		j["outerRadius"] = _outerRadius;
+
+		j["innerCutoff"] = _innerCutoff;
+		j["outerCutoff"] = _outerCutoff;
+
 		j["colour"] = _colour;
 		
 		j["direction"] = _direction;
-		j["cutoff"] = _cutoff;
 		
 		return j;
 	}
@@ -33,10 +39,22 @@ namespace Tristeon
 
 		_intensity = j.value("intensity", 1.0f);
 		_type = j.value("sourceType", SourceType::Point);
-		_range = j.value("range", 256.0f);
+
+		_innerRadius = j.value("innerRadius", 256.0f);
+		_outerRadius = j.value("outerRadius", 1028.0f);
+
+		_innerCutoff = j.value("innerCutoff", 360.0f);
+		_outerCutoff = j.value("outerCutoff", 360.0f);
+
 		_colour = j.value("colour", Colour());
 
 		_direction = j.value("direction", Vector{});
-		_cutoff = j.value("cutoff", 360.0f);
+	}
+	
+	void Light::drawGizmos()
+	{
+		Gizmos::drawCircle(actor()->position, _innerRadius, Colour::green());
+		Gizmos::drawCircle(actor()->position, _outerRadius, Colour::red());
+		Gizmos::drawLine(actor()->position, actor()->position + _direction.normalize() * _outerRadius, Colour::blue());
 	}
 }

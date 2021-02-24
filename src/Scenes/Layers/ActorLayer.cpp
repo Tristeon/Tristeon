@@ -93,6 +93,7 @@ namespace Tristeon
 	{
 		auto serializable = TypeRegister::createInstance(type);
 		auto* actor = dynamic_cast<Actor*>(serializable.get());
+		actor->_layer = this;
 		if (actor != nullptr)
 		{
 			actor = dynamic_cast<Actor*>(serializable.release());

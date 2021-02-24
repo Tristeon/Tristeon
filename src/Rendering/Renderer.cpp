@@ -93,14 +93,16 @@ namespace Tristeon
 				
 				auto pos = lights[i]->actor()->position;
 				auto col = lights[i]->colour();
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, resultingDepth);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, resultingDepth*256.0f);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".range", lights[i]->range());
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerRadius", lights[i]->innerRadius());
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerRadius", lights[i]->outerRadius());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
 				auto invertedDirection = -lights[i]->direction().normalize();
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".invertedDirection", invertedDirection.x, invertedDirection.y);
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".cutoff", cos(Math::toRadians(lights[i]->cutoff())));
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerCutoff", cos(Math::toRadians(lights[i]->innerCutoff())));
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerCutoff", cos(Math::toRadians(lights[i]->outerCutoff())));
 			}
 			shader->setUniformValue("lightCount", (int)lights.size());
 

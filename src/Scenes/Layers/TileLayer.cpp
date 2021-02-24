@@ -251,6 +251,7 @@ namespace Tristeon
 			set->albedoMap->bind();
 
 			shader.setUniformValue("tileset.normalMapEnabled", (bool)set->normalMap);
+			shader.setUniformValue("tileset.normalMapStrength", set->normalMapStrength);
 			if (set->normalMap)
 			{
 				glActiveTexture(GL_TEXTURE2);
