@@ -11,6 +11,8 @@
 
 namespace Tristeon
 {
+	class ActorLayer;
+
 	/**
 	 * An actor is an empty container that can exist freely on an ActorLayer.
 	 * Actors can be inherited from to implement more specific actors such as Player, Car, Enemy, etc.
@@ -23,7 +25,7 @@ namespace Tristeon
 	 */
 	class Actor : public InstancedSerializable
 	{
-		friend class ActorLayer;
+		friend ActorLayer;
 		friend class SceneManager;
 		friend class Engine;
 	public:
