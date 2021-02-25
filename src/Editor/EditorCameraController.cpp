@@ -17,6 +17,15 @@ namespace TristeonEditor
 
 		if (Keyboard::pressed(Keyboard::F) && Editor::instance()->selectedActor() != nullptr)
 			Renderer::editorCamera()->position = (VectorI)Editor::instance()->selectedActor()->position;
+
+		if (Keyboard::pressed(Keyboard::F2))
+			Renderer::instance()->_editorLightingDisabled = !Renderer::instance()->_editorLightingDisabled;
+
+		if (Keyboard::pressed(Keyboard::F3))
+			Renderer::instance()->_editorGridEnabled = !Renderer::instance()->_editorGridEnabled;
+
+		if (Keyboard::pressed(Keyboard::F4))
+			Renderer::instance()->_editorGizmosEnabled = !Renderer::instance()->_editorGizmosEnabled;
 	}
 
 	void EditorCameraController::handleDragging()

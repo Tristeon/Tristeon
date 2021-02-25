@@ -83,7 +83,7 @@ namespace Tristeon
 		Bounds bounds() override;
 
 	protected:
-		void render(const float& depth) override;
+		void render() override;
 		Shader* getShader() override;
 
 		Texture* _albedo = nullptr;

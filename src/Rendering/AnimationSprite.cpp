@@ -54,7 +54,7 @@ namespace Tristeon
 		_currentFrame = (float)Math::clamp((int)frame, (int)_clip->startIndex, (int)_clip->endIndex);
 	}
 
-	void AnimationSprite::render(const float& depth)
+	void AnimationSprite::render()
 	{
 		auto* shader = getShader();
 		shader->bind();
@@ -71,7 +71,7 @@ namespace Tristeon
 			shader->setUniformValue("spacing.horizontalFrame", _clip->spacing.horizontalFrame);
 			shader->setUniformValue("spacing.verticalFrame", _clip->spacing.verticalFrame);
 		}
-		Sprite::render(depth);
+		Sprite::render();
 	}
 
 	void AnimationSprite::update()

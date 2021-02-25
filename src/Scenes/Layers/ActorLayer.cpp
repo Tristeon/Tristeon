@@ -55,7 +55,6 @@ namespace Tristeon
 			serializable->deserialize(serializedActor);
 
 			auto* releasedActor = (Actor*)serializable.release();
-			releasedActor->_layer = this;
 			_actors.add(Unique<Actor>(releasedActor));
 		}
 	}
@@ -93,7 +92,6 @@ namespace Tristeon
 	{
 		auto serializable = TypeRegister::createInstance(type);
 		auto* actor = dynamic_cast<Actor*>(serializable.get());
-		actor->_layer = this;
 		if (actor != nullptr)
 		{
 			actor = dynamic_cast<Actor*>(serializable.release());
@@ -116,19 +114,15 @@ namespace Tristeon
 	void ActorLayer::render(const Framebuffer& framebuffer, const float& depth)
 	{
 		//Render each graphic
-		
 		for (uint32_t i = 0; i < _actors.size(); i++)
 		{
-			const float actorDepth = ((float)_actors.size() - (float)i) / (float)_actors.size();
-			const float resultingDepth = depth + (actorDepth / (float)SceneManager::current()->layerCount());
-			
 			auto* graphic = dynamic_cast<Graphic*>(_actors[i].get());
 			if (graphic == nullptr || !graphic->display)
 				continue;
 
 			auto* shader = graphic->getShader();
 			shader->bind();
-			graphic->render(resultingDepth);
+			graphic->render();
 		}
 	}
 

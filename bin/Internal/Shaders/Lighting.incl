@@ -17,25 +17,26 @@ uniform Light lights[32];
 uniform int lightCount;
 uniform int disableLighting;
 
-vec4 calculateLights(vec4 albedo, vec3 normal, vec3 world_pos, vec2 view_pos, float mask)
+vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, float mask)
 {
     if (disableLighting == 1)
         return albedo;
-
-    world_pos.z *= 256;
 
     vec3 light;
     vec3 ambient;
     for (int i = 0; i < lightCount && i < 32; i++)
     {
-        vec3 toLight = lights[i].position - world_pos;
+        vec3 lightPos = lights[i].position;
+        lightPos.z *= 100;
+
+        vec3 toLight = lightPos - vec3(world_pos, 0);
         if (lights[i].type == 2)
         {
             ambient += clamp(lights[i].color * lights[i].intensity, 0, 1);
         }
         else
         {       
-            vec3 lightDir = normalize(vec3(toLight.xy, toLight.z*2));
+            vec3 lightDir = normalize(toLight);
             //Diffuse
             float diff = max(dot(normal, lightDir), 0.0);
             vec3 diffuse = vec3(diff, diff, diff);

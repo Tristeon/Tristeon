@@ -64,7 +64,7 @@ namespace Tristeon
 		 *
 		 * Inheriting classes should override this function to implement rendering behaviour.
 		 */
-		virtual void render(const float& depth) = 0;
+		virtual void render() = 0;
 
 		/**
 		 * Get a pointer to the Graphic's shader.

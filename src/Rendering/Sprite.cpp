@@ -137,7 +137,7 @@ namespace Tristeon
 		return "";
 	}
 
-	void Sprite::render(const float& depth)
+	void Sprite::render()
 	{
 		if (!_albedo)
 			return;
@@ -175,7 +175,6 @@ namespace Tristeon
 		shader->setUniformValue("sprite.flipY", flipY);
 
 		shader->setUniformValue("actor.position", position.x, position.y);
-		shader->setUniformValue("actor.depth", depth);
 		shader->setUniformValue("actor.scale", scale.x, scale.y);
 		shader->setUniformValue("actor.rotation", -rotation);
 		glDrawArrays(GL_TRIANGLES, 0, 3);

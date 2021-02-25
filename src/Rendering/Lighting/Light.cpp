@@ -28,6 +28,7 @@ namespace Tristeon
 
 		j["colour"] = _colour;
 		
+		j["distance"] = _distance;
 		j["direction"] = _direction;
 		
 		return j;
@@ -48,6 +49,7 @@ namespace Tristeon
 
 		_colour = j.value("colour", Colour());
 
+		_distance = j.value("distance", 1);
 		_direction = j.value("direction", Vector{});
 	}
 	

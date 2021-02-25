@@ -15,7 +15,8 @@
 
 #include <Scenes/Layers/ActorLayer.h>
 #include "Scenes/SceneManager.h"
-#include "Scenes/Actors/Light.h"
+#include <Rendering/Lighting/Light.h>
+#include <Rendering/Lighting/ShapeLight.h>
 
 namespace Tristeon
 {
@@ -86,14 +87,9 @@ namespace Tristeon
 			const auto layerCount = SceneManager::current()->layerCount();
 			for (size_t i = 0; i < lights.size(); i++)
 			{
-				const int layerIndex = SceneManager::current()->indexOf(lights[i]->actor()->layer());
-				float layerDepth = ((float)layerCount - (float)layerIndex) / (float)layerCount;
-				const float actorDepth = ((float)lights[i]->actor()->layer()->actorCount() - (float)i) / (float)lights[i]->actor()->layer()->actorCount();
-				const float resultingDepth = layerDepth + (actorDepth / (float)layerCount);
-				
 				auto pos = lights[i]->actor()->position;
 				auto col = lights[i]->colour();
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, resultingDepth*256.0f);
+				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -lights[i]->distance());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerRadius", lights[i]->innerRadius());
@@ -109,7 +105,7 @@ namespace Tristeon
 			shader->setUniformValue("disableLighting", false);
 #ifdef TRISTEON_EDITOR
 			if (camera == _editorCamera.get())
-				shader->setUniformValue("disableLighting", true);
+				shader->setUniformValue("disableLighting", _editorLightingDisabled);
 #endif
 		}
 
@@ -125,8 +121,8 @@ namespace Tristeon
 #ifdef TRISTEON_EDITOR
 		if (camera == _editorCamera.get())
 		{
-			Grid::render();
-			Gizmos::render();
+			if (_editorGridEnabled) Grid::render();
+			if (_editorGizmosEnabled) Gizmos::render();
 		}
 #endif
 	}

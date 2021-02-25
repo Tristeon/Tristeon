@@ -1,5 +1,5 @@
 #pragma once
-#include "Behaviour.h"
+#include <Scenes/Actors/Behaviour.h>
 #include <Serialization/TypeRegister.h>
 #include <Utils/Colour.h>
 #include <Callbacks/IDrawGizmos.h>
@@ -38,6 +38,8 @@ namespace Tristeon
 		[[nodiscard]] float outerCutoff() const { return _outerCutoff; }
 		[[nodiscard]] float innerCutoff() const { return _innerCutoff; }
 
+		[[nodiscard]] float distance() const { return _distance; }
+
 		void drawGizmos() override;
 	private:
 		SourceType _type = SourceType::Point;
@@ -50,6 +52,8 @@ namespace Tristeon
 		Vector _direction{};
 		float _innerCutoff = 360.0f;
 		float _outerCutoff = 360;
+
+		float _distance = 1;
 	};
 
 	REGISTER_TYPE(Light);

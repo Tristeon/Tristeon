@@ -1625,6 +1625,7 @@
                                 "x": 0.0,
                                 "y": 0.0
                             },
+                            "distance": 1.0,
                             "innerCutoff": 360.0,
                             "innerRadius": 256.0,
                             "instanceID": 662687147,
@@ -2677,7 +2678,7 @@
                         "x": 5424.923828125,
                         "y": 538.8610229492188
                     },
-                    "rotation": 5.0,
+                    "rotation": 4.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -2709,6 +2710,7 @@
                                 "x": 0.0,
                                 "y": 0.0
                             },
+                            "distance": 1.0,
                             "innerCutoff": 360.0,
                             "innerRadius": 256.0,
                             "instanceID": 2257990316,
@@ -2719,7 +2721,7 @@
                             "typeID": "Tristeon::Light"
                         },
                         {
-                            "instanceID": 2575722986,
+                            "instanceID": 1610751315,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
@@ -2733,7 +2735,7 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 32,
+                    "height": 72,
                     "instanceID": 3081070209,
                     "lightMaskPath": "Sprites/Noise_1.png",
                     "name": "Player",
@@ -2741,8 +2743,8 @@
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1024.591064453125,
-                        "y": 789.8988647460938
+                        "x": 977.30810546875,
+                        "y": 782.581787109375
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -2752,7 +2754,7 @@
                     },
                     "texturePath": "Sprites/LightSprite.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 32
+                    "width": 72
                 }
             ],
             "instanceID": 1543732810,
@@ -4091,6 +4093,7 @@
                                 "x": 0.4581228494644165,
                                 "y": -0.8888888955116272
                             },
+                            "distance": 1.0,
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,
@@ -4147,6 +4150,7 @@
                                 "x": 0.4581228494644165,
                                 "y": -0.8888888955116272
                             },
+                            "distance": 1.0,
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,
@@ -4175,8 +4179,8 @@
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 538.974609375,
-                        "y": 2019.31201171875
+                        "x": 727.002685546875,
+                        "y": 2088.942138671875
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -4203,6 +4207,7 @@
                                 "x": 0.4581228494644165,
                                 "y": -0.8888888955116272
                             },
+                            "distance": 1.0,
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,

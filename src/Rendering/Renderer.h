@@ -47,6 +47,9 @@ namespace Tristeon
 				return nullptr;
 			return instance()->_editorCamera.get();
 		}
+		bool _editorLightingDisabled = false;
+		bool _editorGizmosEnabled = true;
+		bool _editorGridEnabled = true;
 	private:
 		std::unique_ptr<Camera> _editorCamera = nullptr;
 #endif

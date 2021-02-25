@@ -83,5 +83,5 @@ void main()
         mask = mask_val.r;
     }
 
-    fragColor = calculateLights(albedo, normal, vec3(worldPos, actor.depth), camera.position, mask);
+    fragColor = calculateLights(albedo, normal, worldPos, camera.position, mask);
 }
