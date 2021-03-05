@@ -203,7 +203,7 @@ namespace Tristeon
 		return checkBoundsByPosition(position.x, position.y);
 	}
 
-	void TileLayer::render(const Framebuffer& framebuffer, const float& depth)
+	void TileLayer::render(const Framebuffer& framebuffer)
 	{
 		static auto shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/TileShader.frag");
 		
@@ -236,8 +236,6 @@ namespace Tristeon
 		shader.setUniformValue("level.tileRenderWidth", Grid::tileWidth());
 		shader.setUniformValue("level.tileRenderHeight", Grid::tileHeight());
 
-		shader.setUniformValue("level.depth", depth);
-		
 		shader.setUniformValue("tileset.albedoMap", 1);
 		shader.setUniformValue("tileset.normalMap", 2);
 		shader.setUniformValue("tileset.lightMask", 3);

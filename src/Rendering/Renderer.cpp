@@ -84,7 +84,6 @@ namespace Tristeon
 			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
 
 			auto lights = Collector<Light>::all();
-			const auto layerCount = SceneManager::current()->layerCount();
 			for (size_t i = 0; i < lights.size(); i++)
 			{
 				auto pos = lights[i]->actor()->position;
@@ -113,12 +112,8 @@ namespace Tristeon
 
 		//Render each layer
 		const auto framebuffer = Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } };
-		const uint32_t count = SceneManager::current()->layerCount();
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
-		{
-			const float depth = ((float)count - i) / (float)count;
-			SceneManager::current()->layerAt(i)->render(framebuffer, depth);
-		}
+			SceneManager::current()->layerAt(i)->render(framebuffer);
 
 #ifdef TRISTEON_EDITOR
 		if (camera == _editorCamera.get())

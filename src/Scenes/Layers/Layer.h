@@ -40,7 +40,7 @@ namespace Tristeon
 		 * Renders this layer to the currently bound framebuffer.
 		 * Layers are free to implement this in whichever way they like.
 		 */
-		virtual void render(const Framebuffer& framebuffer, const float& depth) = 0;
+		virtual void render(const Framebuffer& framebuffer) = 0;
 
 		/**
 		 * A virtual function that can be used by Layers to safely cleanup/destroy objects that might be subject to callback and/or other loops.

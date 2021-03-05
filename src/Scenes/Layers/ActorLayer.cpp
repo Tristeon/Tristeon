@@ -111,7 +111,7 @@ namespace Tristeon
 		_destroyedBehaviours.add(behaviour);
 	}
 
-	void ActorLayer::render(const Framebuffer& framebuffer, const float& depth)
+	void ActorLayer::render(const Framebuffer& framebuffer)
 	{
 		//Render each graphic
 		for (uint32_t i = 0; i < _actors.size(); i++)

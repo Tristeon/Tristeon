@@ -109,7 +109,7 @@ namespace Tristeon
 		/**
 		 * Renders the actors in this layer, in order of the actor list.
 		 */
-		void render(const Framebuffer& framebuffer, const float& depth) override;
+		void render(const Framebuffer& framebuffer) override;
 
 		/**
 		 * Cleans up destroyed actors and behaviours.
