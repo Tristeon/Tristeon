@@ -1,5 +1,6 @@
 #include "Light.h"
 #include <Rendering/Gizmos.h>
+#include <InstanceCollector.h>
 
 namespace Tristeon
 {
@@ -30,6 +31,8 @@ namespace Tristeon
 		
 		j["distance"] = _distance;
 		j["direction"] = _direction;
+
+		j["ignoreLayers"] = _ignoreLayers;
 		
 		return j;
 	}
@@ -51,6 +54,8 @@ namespace Tristeon
 
 		_distance = j.value("distance", 1);
 		_direction = j.value("direction", Vector{});
+
+		_ignoreLayers = j.value("ignoreLayers", std::set<uint32_t>());
 	}
 	
 	void Light::drawGizmos()
@@ -58,5 +63,27 @@ namespace Tristeon
 		Gizmos::drawCircle(actor()->position, _innerRadius, Colour::green());
 		Gizmos::drawCircle(actor()->position, _outerRadius, Colour::red());
 		Gizmos::drawLine(actor()->position, actor()->position + _direction.normalize() * _outerRadius, Colour::blue());
+	}
+
+	void Light::ignore(Layer* layer)
+	{
+		_ignoreLayers.insert(layer->instanceID());
+	}
+
+	void Light::unignore(Layer* layer)
+	{
+		_ignoreLayers.erase(layer->instanceID());
+	}
+
+	std::set<Layer*> Light::ignored()
+	{
+		std::set<Layer*> result;
+		for (auto id : _ignoreLayers)
+		{
+			auto* layer = InstanceCollector::find(id);
+			if (dynamic_cast<Layer*>(layer) != nullptr)
+				result.insert(dynamic_cast<Layer*>(layer));
+		}
+		return result;
 	}
 }

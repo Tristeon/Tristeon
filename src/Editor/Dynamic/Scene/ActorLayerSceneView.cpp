@@ -104,7 +104,6 @@ namespace TristeonEditor
 			dragging = false;
 			draggingScalar = false;
 			draggingRotate = false;
-			Editor::instance()->selectedActor(Editor::instance()->selectedActor());
 		}
 		
 		auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());

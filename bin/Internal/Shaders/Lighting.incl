@@ -51,8 +51,13 @@ vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, fl
             if (lights[i].type == 1)
             {
                 float angle = dot(normalize(toLight.xy), normalize(lights[i].invertedDirection));
+                
+                float cutoffAttenuation;
                 float difference = lights[i].outerCutoff - lights[i].innerCutoff;
-                float cutoffAttenuation = 1 - (angle - lights[i].innerCutoff) / difference;
+                if (difference == 0)
+                    cutoffAttenuation =  1 - (angle) / lights[i].outerCutoff;
+                else
+                    cutoffAttenuation = 1 - (angle - lights[i].innerCutoff) / difference;
                 attenuation *= max(cutoffAttenuation, 0.0);
             }
 

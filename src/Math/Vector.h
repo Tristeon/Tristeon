@@ -264,6 +264,20 @@ namespace Tristeon
 			return -(atan2(y, x) * 180.0f / 3.14159265);
 		}
 
+		VectorType<Type> rotate(Type degrees)
+		{
+			constexpr static Type TO_RAD = (Type)(3.14159265 / 180.0f);
+			const Type c = cos(degrees * TO_RAD);
+			const Type s = sin(degrees * TO_RAD);
+
+			Type tempX = x;
+			Type tempY = y;
+
+			x = tempX * c - tempY * s;
+			y = tempX * s + tempY * c;
+			return *this;
+		}
+
 		template<typename TA = Type, typename TB = Type>
 		static Type distance(const VectorType<TA>& a, const VectorType<TB>& b)
 		{

@@ -3,15 +3,31 @@
 
 namespace TristeonEditor
 {
-	void EditorFields::floatField(QFormLayout* layout, std::string label, float value, std::function<void(float)> changeCallback)
+	void EditorFields::vectorField(QFormLayout* layout, std::string label, Tristeon::Vector value, std::function<void(float)> changeCallbackX, std::function<void(float)> changeCallbackY)
 	{
-		floatField(layout, label, value, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), changeCallback);
+		auto* field = new QWidget();
+		auto* l = new QHBoxLayout(field);
+		l->setContentsMargins(0, 0, 0, 0);
+		field->setLayout(layout);
+
+		auto* x = floatField(field, value.x, changeCallbackX);
+		auto* y = floatField(field, value.y, changeCallbackY);
+		l->addWidget(x);
+		l->addWidget(y);
+
+		layout->addRow(new QLabel(QString::fromStdString(label)), field);
 	}
 
-	void EditorFields::floatField(QFormLayout* layout, std::string label, float value, float minValue, float maxValue, std::function<void(float)> changeCallback)
+	QDoubleSpinBox* EditorFields::floatField(QFormLayout* layout, std::string label, float value, std::function<void(float)> changeCallback)
+	{
+		return floatField(layout, label, value, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), changeCallback);
+	}
+
+	QDoubleSpinBox* EditorFields::floatField(QFormLayout* layout, std::string label, float value, float minValue, float maxValue, std::function<void(float)> changeCallback)
 	{
 		auto* field = floatField(nullptr, value, minValue, maxValue, changeCallback);
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+		return field;
 	}
 
 	QDoubleSpinBox* EditorFields::floatField(QWidget* parent, float value, std::function<void(float)> changeCallback)
@@ -32,15 +48,16 @@ namespace TristeonEditor
 		return field;
 	}
 
-	void EditorFields::intField(QFormLayout* layout, std::string label, int value, std::function<void(int)> changeCallback)
+	QSpinBox* EditorFields::intField(QFormLayout* layout, std::string label, int value, std::function<void(int)> changeCallback)
 	{
-		intField(layout, label, value, std::numeric_limits<int>::lowest(), std::numeric_limits<int>::max(), changeCallback);
+		return intField(layout, label, value, std::numeric_limits<int>::lowest(), std::numeric_limits<int>::max(), changeCallback);
 	}
 
-	void EditorFields::intField(QFormLayout* layout, std::string label, int value, int minValue, int maxValue, std::function<void(int)> changeCallback)
+	QSpinBox* EditorFields::intField(QFormLayout* layout, std::string label, int value, int minValue, int maxValue, std::function<void(int)> changeCallback)
 	{
 		auto* field = intField(nullptr, value, minValue, maxValue, changeCallback);
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+		return field;
 	}
 
 	QSpinBox* EditorFields::intField(QWidget* parent, int value, std::function<void(int)> changeCallback)
@@ -61,15 +78,15 @@ namespace TristeonEditor
 		return field;
 	}
 
-	void EditorFields::uintField(QFormLayout* layout, std::string label, uint value, std::function<void(uint)> changeCallback)
+	QSpinBox* EditorFields::uintField(QFormLayout* layout, std::string label, uint value, std::function<void(uint)> changeCallback)
 	{
-		intField(layout, label, value, 0, std::numeric_limits<int>::max(), changeCallback);
+		return intField(layout, label, value, 0, std::numeric_limits<int>::max(), changeCallback);
 	}
 
-	void EditorFields::uintField(QFormLayout* layout, std::string label, uint value, uint minValue, uint maxValue,
+	QSpinBox* EditorFields::uintField(QFormLayout* layout, std::string label, uint value, uint minValue, uint maxValue,
 		std::function<void(uint)> changeCallback)
 	{
-		intField(layout, label, value, minValue, maxValue, changeCallback);
+		return intField(layout, label, value, minValue, maxValue, changeCallback);
 	}
 
 	QSpinBox* EditorFields::uintField(QWidget* parent, uint value, std::function<void(uint)> changeCallback)
@@ -83,10 +100,11 @@ namespace TristeonEditor
 		return intField(parent, value, minValue, maxValue, changeCallback);
 	}
 
-	void EditorFields::boolField(QFormLayout* layout, std::string label, bool value, std::function<void(bool)> changeCallback)
+	QCheckBox* EditorFields::boolField(QFormLayout* layout, std::string label, bool value, std::function<void(bool)> changeCallback)
 	{
 		auto* field = boolField(nullptr, value, std::move(changeCallback));
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+		return field;
 	}
 
 	QCheckBox* EditorFields::boolField(QWidget* parent, bool value, std::function<void(bool)> changeCallback)
@@ -97,10 +115,11 @@ namespace TristeonEditor
 		return field;
 	}
 
-	void EditorFields::stringField(QFormLayout* layout, std::string label, std::string value, std::function<void(const std::string&)> changeCallback)
+	QLineEdit* EditorFields::stringField(QFormLayout* layout, std::string label, std::string value, std::function<void(const std::string&)> changeCallback)
 	{
 		auto* field = stringField(nullptr, value, changeCallback);
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+		return field;
 	}
 
 	QLineEdit* EditorFields::stringField(QWidget* parent, std::string value,
@@ -112,16 +131,31 @@ namespace TristeonEditor
 		return field;
 	}
 
-	void EditorFields::labelField(QFormLayout* layout, std::string label, std::string value)
+	QLabel* EditorFields::labelField(QFormLayout* layout, std::string label, std::string value)
 	{
-		layout->addRow(new QLabel(QString::fromStdString(label)), new QLabel(QString::fromStdString(value)));
+		auto* field = new QLabel(QString::fromStdString(value));
+		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+		return field;
 	}
 
-	void EditorFields::header(QFormLayout* layout, std::string label)
+	QLabel* EditorFields::header(QFormLayout* layout, std::string label)
 	{
-		QLabel* widget = new QLabel(label.data());
+		auto widget = new QLabel(label.data());
 		widget->setStyleSheet("font-weight: bold;");
 		layout->addRow(widget, new QWidget());
+		return widget;
+	}
+	
+	QComboBox* EditorFields::dropdown(QFormLayout* layout, std::string label, int currentIndex, Tristeon::List<std::string> options, std::function<void(int)> changeCallback)
+	{
+		auto field = new QComboBox();
+		for (auto option : options)
+			field->addItem(option.c_str());
+		field->setCurrentIndex(currentIndex);
+
+		QWidget::connect(field, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), changeCallback);
+		layout->addRow(new QLabel(label.c_str()), field);
+		return field;
 	}
 }
 #endif

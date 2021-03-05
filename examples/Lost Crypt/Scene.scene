@@ -1626,6 +1626,7 @@
                                 "y": 0.0
                             },
                             "distance": 1.0,
+                            "ignoreLayers": [],
                             "innerCutoff": 360.0,
                             "innerRadius": 256.0,
                             "instanceID": 662687147,
@@ -2711,6 +2712,7 @@
                                 "y": 0.0
                             },
                             "distance": 1.0,
+                            "ignoreLayers": [],
                             "innerCutoff": 360.0,
                             "innerRadius": 256.0,
                             "instanceID": 2257990316,
@@ -2721,7 +2723,7 @@
                             "typeID": "Tristeon::Light"
                         },
                         {
-                            "instanceID": 1610751315,
+                            "instanceID": 337377201,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
@@ -4094,6 +4096,7 @@
                                 "y": -0.8888888955116272
                             },
                             "distance": 1.0,
+                            "ignoreLayers": [],
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,
@@ -4151,6 +4154,7 @@
                                 "y": -0.8888888955116272
                             },
                             "distance": 1.0,
+                            "ignoreLayers": [],
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,
@@ -4208,6 +4212,7 @@
                                 "y": -0.8888888955116272
                             },
                             "distance": 1.0,
+                            "ignoreLayers": [],
                             "innerCutoff": 50.0,
                             "innerRadius": 1028.0,
                             "instanceID": 2152875753,

@@ -95,7 +95,9 @@ namespace Tristeon
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerRadius", lights[i]->innerRadius());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerRadius", lights[i]->outerRadius());
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
-				auto invertedDirection = -lights[i]->direction().normalize();
+
+				Vector direction = lights[i]->direction().normalize().rotate(-lights[i]->actor()->rotation);
+				auto invertedDirection = -direction.normalize();
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".invertedDirection", invertedDirection.x, invertedDirection.y);
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerCutoff", cos(Math::toRadians(lights[i]->innerCutoff())));
 				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerCutoff", cos(Math::toRadians(lights[i]->outerCutoff())));
