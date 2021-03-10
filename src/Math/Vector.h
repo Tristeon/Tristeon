@@ -99,16 +99,18 @@ namespace Tristeon
 			return { x * other.x, y * other.y };
 		}
 
-		VectorType<Type> operator*=(const Type& multiplier)
+		template<typename T = Type>
+		VectorType<Type> operator*=(const T& multiplier)
 		{
 			x *= multiplier;
 			y *= multiplier;
 			return *this;
 		}
 
-		[[nodiscard]] VectorType operator*(const Type& multiplier) const
+		template<typename T = Type>
+		[[nodiscard]] VectorType operator*(const T& multiplier) const
 		{
-			return { x * multiplier, y * multiplier };
+			return { (Type)(x * multiplier), (Type)(y * multiplier) };
 		}
 
 		template<typename T = Type>
@@ -125,7 +127,8 @@ namespace Tristeon
 			return { x / other.x, y / other.y };
 		}
 
-		VectorType<Type> operator/=(const Type& divider)
+		template<typename T = Type>
+		VectorType<Type> operator/=(const T& divider)
 		{
 			x /= divider;
 			y /= divider;
@@ -133,9 +136,10 @@ namespace Tristeon
 			return *this;
 		}
 
-		[[nodiscard]] VectorType operator/(const Type& divider) const
+		template<typename T = Type>
+		[[nodiscard]] VectorType operator/(const T& divider) const
 		{
-			return { x / divider, y / divider };
+			return { (Type)(x / divider), (Type)(y / divider) };
 		}
 
 		template<typename T = Type>
