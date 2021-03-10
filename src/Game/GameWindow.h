@@ -1,7 +1,7 @@
 #pragma once
 #ifndef TRISTEON_EDITOR
 #include "Window.h"
-#include <GLFW/glfw3.h>
+#include <glfw/glfw3.h>
 
 namespace Tristeon
 {
