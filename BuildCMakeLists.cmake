@@ -30,5 +30,8 @@ read_directory(${PROJECT_SOURCE_DIR}/src)
 #Add GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 add_subdirectory(external/glfw)
+include_directories(external/glfw/include)
 
 add_executable(Tristeon ${tristeonSRC})
+
+target_link_libraries(Tristeon PRIVATE glfw)
