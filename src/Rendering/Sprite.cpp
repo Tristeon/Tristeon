@@ -141,7 +141,7 @@ namespace Tristeon
 	{
 		if (!_albedo)
 			return;
-
+		
 		auto* shader = getShader();
 		shader->bind();
 

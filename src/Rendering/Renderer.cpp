@@ -1,22 +1,24 @@
 #include "Renderer.h"
 
+#include <Rendering/Lighting/AmbientLight.h>
+#include <Rendering/Lighting/PointLight.h>
+#include <Rendering/Lighting/SpotLight.h>
+
 #include <Scenes/Scene.h>
+#include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/Layer.h>
 
-#include "Engine.h"
-#include "Window.h"
-#include "Shader.h"
-#include "Gizmos.h"
-#include "Grid.h"
-#include "Rendering/Camera.h"
-#include "Collector.h"
-#include "glad/glad.h"
-#include "Math/Math.h"
+#include <Collector.h>
+#include <Engine.h>
+#include <Window.h>
+#include <glad/glad.h>
+#include <Rendering/Camera.h>
+#include <Rendering/Gizmos.h>
+#include <Rendering/Grid.h>
+#include <Rendering/Shader.h>
+#include <Scenes/SceneManager.h>
 
-#include <Scenes/Layers/ActorLayer.h>
-#include "Scenes/SceneManager.h"
-#include <Rendering/Lighting/Light.h>
-#include <Rendering/Lighting/ShapeLight.h>
+#include "Lighting/CompositeLight.h"
 
 namespace Tristeon
 {
@@ -36,7 +38,7 @@ namespace Tristeon
 
 	Renderer::~Renderer()
 	{
-	    glDeleteVertexArrays(1, &_dummyVAO);
+		glDeleteVertexArrays(1, &_dummyVAO);
 #ifdef TRISTEON_EDITOR
 		_editorCamera->destroy();
 #endif
@@ -55,7 +57,49 @@ namespace Tristeon
 		if (!Engine::playMode())
 			cameras.add(editorCamera());
 #endif
-		
+
+		//Pass lighting data
+		for (auto* shader : Collector<Shader>::all())
+		{
+			if (shader->empty())
+				continue;
+
+			shader->bind();
+			
+			auto pointLights = Collector<PointLight>::all();
+			uint64_t p = 0, s = 0;
+			while (p + s < pointLights.size())
+			{
+				auto* light = pointLights[p + s];
+				auto* spot = dynamic_cast<SpotLight*>(light);
+
+				if (spot)
+				{
+					light->prepareRender(shader, s);
+					s++;
+				}
+				else
+				{
+					light->prepareRender(shader, p);
+					p++;
+				}
+			}
+			shader->setUniformValue("spotLightCount", (int)s);
+			shader->setUniformValue("pointLightCount", (int)p);
+
+			Colour ambientLight{ 0, 0, 0, 0 };
+			for (auto* ambient : Collector<AmbientLight>::all())
+			{
+				ambientLight = {
+					ambientLight.r + ambient->colour().r * ambient->intensity(),
+					ambientLight.g + ambient->colour().g * ambient->intensity(),
+					ambientLight.b + ambient->colour().b * ambient->intensity(),
+					0,
+				};
+			}
+			shader->setUniformValue("ambientLight", ambientLight.r, ambientLight.g, ambientLight.b);
+		}
+
 		for (auto* camera : cameras)
 		{
 			camera->updateFramebuffers();
@@ -83,37 +127,33 @@ namespace Tristeon
 			shader->setUniformValue("camera.zoom", camera->zoom);
 			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
 
-			auto lights = Collector<Light>::all();
-			for (size_t i = 0; i < lights.size(); i++)
-			{
-				auto pos = lights[i]->actor()->position;
-				auto col = lights[i]->colour();
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".position", pos.x, pos.y, -lights[i]->distance());
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".intensity", lights[i]->intensity());
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".color", col.r, col.g, col.b);
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerRadius", lights[i]->innerRadius());
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerRadius", lights[i]->outerRadius());
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".type", (int)lights[i]->type());
-
-				Vector direction = lights[i]->direction().normalize().rotate(-lights[i]->actor()->rotation);
-				auto invertedDirection = -direction.normalize();
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".invertedDirection", invertedDirection.x, invertedDirection.y);
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".innerCutoff", cos(Math::toRadians(lights[i]->innerCutoff())));
-				shader->setUniformValue("lights[" + std::to_string(i) + "]" + ".outerCutoff", cos(Math::toRadians(lights[i]->outerCutoff())));
-			}
-			shader->setUniformValue("lightCount", (int)lights.size());
-
-			shader->setUniformValue("disableLighting", false);
 #ifdef TRISTEON_EDITOR
 			if (camera == _editorCamera.get())
 				shader->setUniformValue("disableLighting", _editorLightingDisabled);
+			else
 #endif
+				shader->setUniformValue("disableLighting", false);
+			shader->setUniformValue("compositeLight", 10);
 		}
 
+		//Render composite light
+		glBlendFunc(GL_ONE, GL_ONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, camera->_compositeLightFBO);
+		glClear(GL_COLOR_BUFFER_BIT);
+		for (auto* shape : Collector<CompositeLight>::all())
+			shape->render();
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		glActiveTexture(GL_TEXTURE10);
+		glBindTexture(GL_TEXTURE_2D, camera->_compositeLightTexture);
+		
 		//Render each layer
 		const auto framebuffer = Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } };
+		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
+		{
 			SceneManager::current()->layerAt(i)->render(framebuffer);
+		}
 
 #ifdef TRISTEON_EDITOR
 		if (camera == _editorCamera.get())

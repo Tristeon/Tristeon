@@ -74,6 +74,7 @@ namespace Tristeon
 		_lastWindowSize = Window::gameSize();
 
 		createFramebuffer();
+		createCompositeLightBuffer();
 	}
 
 	void Camera::createFramebuffer()
@@ -105,6 +106,39 @@ namespace Tristeon
 			TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
 		else
 			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_fbo));
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void Camera::createCompositeLightBuffer()
+	{
+		const VectorU size = resolution();
+
+		//Delete old framebuffer with its texture
+		if (_compositeLightFBO != NULL)
+			glDeleteFramebuffers(1, &_compositeLightFBO);
+		if (_compositeLightTexture != NULL)
+			glDeleteTextures(1, &_compositeLightTexture);
+
+		//Gen and bind Framebuffer
+		glGenFramebuffers(1, &_compositeLightFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, _compositeLightFBO);
+
+		//Create texture
+		glGenTextures(1, &_compositeLightTexture);
+		glBindTexture(GL_TEXTURE_2D, _compositeLightTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, size.x, size.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _compositeLightTexture, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+		//Finish
+		_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+		if (!_valid)
+			TRISTEON_WARNING("Failed to create composite light framebuffer with size " + size.toString());
+		else
+			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_compositeLightFBO));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 

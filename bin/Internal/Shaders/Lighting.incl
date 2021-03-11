@@ -1,9 +1,8 @@
-struct Light
+struct SpotLight
 {
     vec3 position;
     float intensity;
     vec3 color;
-    int type;
 
     float innerRadius;
     float outerRadius;
@@ -13,57 +12,97 @@ struct Light
 
     vec2 invertedDirection;
 };
-uniform Light lights[32];
-uniform int lightCount;
+
+struct PointLight
+{
+    vec3 position;
+    float intensity;
+    vec3 color;
+
+    float innerRadius;
+    float outerRadius;
+};
+
+uniform SpotLight spotLights[32];
+uniform int spotLightCount;
+
+uniform PointLight pointLights[32];
+uniform int pointLightCount;
+
+uniform vec3 ambientLight;
+
 uniform int disableLighting;
 
-vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, float mask)
+uniform sampler2D compositeLight;
+
+vec3 calculateLight(vec3 toLight, vec2 world_pos, vec3 normal, float intensity, vec3 color)
+{
+    vec3 lightDir = normalize(toLight);
+
+    //Diffuse
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = vec3(diff, diff, diff);
+
+    vec3 light = diffuse * intensity * color;  
+    return light;
+}
+
+float pointLightAttenuation(vec3 toLight, float outerRadius, float innerRadius)
+{    
+    float r = outerRadius - innerRadius;
+    float d = length(toLight.xy) - innerRadius;
+    float attenuation = clamp(1 - d / r, 0, 1);
+    if (length(toLight.xy) > outerRadius)
+        attenuation = 0;
+    return attenuation;
+}
+
+float spotLightAttenuation(vec3 toLight, float outerRadius, float innerRadius, vec2 invertedDirection, float outerCutoff, float innerCutoff)
+{
+    float attenuation = pointLightAttenuation(toLight, outerRadius, innerRadius);
+
+    float angle = dot(normalize(toLight.xy), normalize(invertedDirection));
+    
+    float cutoffAttenuation;
+    float difference = outerCutoff - innerCutoff;
+    if (difference == 0)
+        cutoffAttenuation =  1 - (angle) / outerCutoff;
+    else
+        cutoffAttenuation = 1 - (angle - innerCutoff) / difference;
+    attenuation *= max(cutoffAttenuation, 0.0);
+
+    return attenuation;
+}
+
+vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, float mask, vec2 displayPixels)
 {
     if (disableLighting == 1)
         return albedo;
 
-    vec3 light;
-    vec3 ambient;
-    for (int i = 0; i < lightCount && i < 32; i++)
+    vec3 lights;
+
+    for (int i = 0; i < pointLightCount; i++)
     {
-        vec3 lightPos = lights[i].position;
-        lightPos.z *= 100;
-
+        vec3 lightPos = pointLights[i].position;
         vec3 toLight = lightPos - vec3(world_pos, 0);
-        if (lights[i].type == 2)
-        {
-            ambient += clamp(lights[i].color * lights[i].intensity, 0, 1);
-        }
-        else
-        {       
-            vec3 lightDir = normalize(toLight);
-            //Diffuse
-            float diff = max(dot(normal, lightDir), 0.0);
-            vec3 diffuse = vec3(diff, diff, diff);
 
-            //Attenuation
-            float r = lights[i].outerRadius;
-            float d = length(toLight.xy) - lights[i].innerRadius;
-            float attenuation = 1 - d / r;
-            if (d > r)
-                attenuation = 0;
-
-            if (lights[i].type == 1)
-            {
-                float angle = dot(normalize(toLight.xy), normalize(lights[i].invertedDirection));
-                
-                float cutoffAttenuation;
-                float difference = lights[i].outerCutoff - lights[i].innerCutoff;
-                if (difference == 0)
-                    cutoffAttenuation =  1 - (angle) / lights[i].outerCutoff;
-                else
-                    cutoffAttenuation = 1 - (angle - lights[i].innerCutoff) / difference;
-                attenuation *= max(cutoffAttenuation, 0.0);
-            }
-
-            light += diffuse * attenuation * lights[i].intensity * lights[i].color;  
-        }
+        vec3 light = calculateLight(toLight, world_pos, normal, pointLights[i].intensity, pointLights[i].color);
+        lights += light * pointLightAttenuation(toLight, pointLights[i].outerRadius, pointLights[i].innerRadius);
     }
 
-    return albedo * mask * vec4(ambient, 1) + albedo * vec4(light, 1);
+    for (int i = 0; i < spotLightCount; i++)
+    {
+        vec3 lightPos = spotLights[i].position;
+        vec3 toLight = lightPos - vec3(world_pos, 0);
+
+        vec3 light = calculateLight(toLight, world_pos, normal, spotLights[i].intensity, spotLights[i].color);
+        lights += light * spotLightAttenuation(toLight, spotLights[i].outerRadius, spotLights[i].innerRadius, spotLights[i].invertedDirection, spotLights[i].outerCutoff, spotLights[i].innerCutoff);
+    }
+
+    vec4 composite = texture(compositeLight, gl_FragCoord.xy / displayPixels);
+    lights += composite.rgb * composite.a;
+
+    mask = max(mask, 0.3);
+    vec3 result = albedo.rgb * mask * ambientLight + albedo.rgb * mask * lights;
+    return vec4(result, albedo.a);
 }

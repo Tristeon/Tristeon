@@ -1,3 +1,4 @@
+/*
 #ifdef TRISTEON_EDITOR
 #include "LightEditor.h"
 #include <Editor/EditorFields.h>
@@ -66,3 +67,4 @@ namespace TristeonEditor
 }
 
 #endif
+*/

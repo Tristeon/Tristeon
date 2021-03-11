@@ -1,4 +1,5 @@
 #pragma once
+/*
 #ifdef TRISTEON_EDITOR
 #include "BehaviourEditor.h"
 #include <Rendering/Lighting/Light.h>
@@ -16,4 +17,4 @@ namespace TristeonEditor
 	OBJECT_EDITOR(Tristeon::Light, LightEditor);
 }
 
-#endif
+#endif*/
