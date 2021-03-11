@@ -43,7 +43,7 @@ namespace Tristeon
 		auto d = _direction.normalize().rotate(-actor()->rotation);
 		const auto invertedDirection = -d.normalize();
 		shader->setUniformValue("spotLights[" + std::to_string(index) + "]" + ".invertedDirection", invertedDirection.x, invertedDirection.y);
-		shader->setUniformValue("spotLights[" + std::to_string(index) + "]" + ".innerCutoff", cos(Math::toRadians(innerCutoff())));
-		shader->setUniformValue("spotLights[" + std::to_string(index) + "]" + ".outerCutoff", cos(Math::toRadians(outerCutoff())));
+		shader->setUniformValue("spotLights[" + std::to_string(index) + "]" + ".innerCutoff", cosf(Math::toRadians(innerCutoff())));
+		shader->setUniformValue("spotLights[" + std::to_string(index) + "]" + ".outerCutoff", cosf(Math::toRadians(outerCutoff())));
 	}
 }
