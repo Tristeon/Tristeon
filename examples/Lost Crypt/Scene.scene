@@ -2655,67 +2655,6 @@
         {
             "actors": [
                 {
-                    "behaviours": [
-                        {
-                            "instanceID": 3123816058,
-                            "typeID": "Tristeon::MouseFollowBehaviour"
-                        },
-                        {
-                            "colour": {
-                                "a": 1.0,
-                                "b": 1.0,
-                                "g": 1.0,
-                                "r": 1.0,
-                                "typeID": "Tristeon::Colour"
-                            },
-                            "distance": 256.0,
-                            "ignoreLayers": [],
-                            "innerRadius": 256.0,
-                            "instanceID": 615982606,
-                            "intensity": 1.0,
-                            "outerRadius": 1028.0,
-                            "typeID": "Tristeon::PointLight"
-                        }
-                    ],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 72,
-                    "instanceID": 3081070209,
-                    "lightMaskPath": "Sprites/Plain/black.png",
-                    "name": "Player",
-                    "normalMapStrength": 1.0,
-                    "normalPath": "",
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 977.30810546875,
-                        "y": 782.581787109375
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "texturePath": "Sprites/LightSprite.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 72
-                }
-            ],
-            "instanceID": 1543732810,
-            "name": "New ActorLayer",
-            "typeID": "Tristeon::ActorLayer"
-        },
-        {
-            "actors": [
-                {
                     "behaviours": [],
                     "colour": {
                         "a": 1.0,
@@ -4048,11 +3987,11 @@
                             "distance": 256.0,
                             "ignoreLayers": [],
                             "innerCutoff": 45.0,
-                            "innerRadius": 0.0,
+                            "innerRadius": 256.0,
                             "instanceID": 2068869232,
-                            "intensity": 2.0,
+                            "intensity": 1.0,
                             "outerCutoff": 60.0,
-                            "outerRadius": 2048.0,
+                            "outerRadius": 1028.0,
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -4066,7 +4005,7 @@
                     "display": true,
                     "flipX": false,
                     "flipY": false,
-                    "height": 93,
+                    "height": 136,
                     "instanceID": 1742952335,
                     "lightMaskPath": "",
                     "name": "Light",
@@ -4074,10 +4013,10 @@
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 2434.30908203125,
-                        "y": 2418.861572265625
+                        "x": 2770.310546875,
+                        "y": 2417.814697265625
                     },
-                    "rotation": 0.0,
+                    "rotation": 11.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -4085,7 +4024,7 @@
                     },
                     "texturePath": "Sprites/LightSprite.png",
                     "typeID": "Tristeon::Sprite",
-                    "width": 93
+                    "width": 136
                 },
                 {
                     "behaviours": [
@@ -4105,11 +4044,11 @@
                             "distance": 256.0,
                             "ignoreLayers": [],
                             "innerCutoff": 45.0,
-                            "innerRadius": 0.0,
+                            "innerRadius": 256.0,
                             "instanceID": 2063196613,
-                            "intensity": 2.0,
+                            "intensity": 1.0,
                             "outerCutoff": 60.0,
-                            "outerRadius": 2048.0,
+                            "outerRadius": 1028.0,
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -4162,11 +4101,11 @@
                             "distance": 256.0,
                             "ignoreLayers": [],
                             "innerCutoff": 45.0,
-                            "innerRadius": 0.0,
+                            "innerRadius": 256.0,
                             "instanceID": 3395781403,
-                            "intensity": 2.0,
+                            "intensity": 1.0,
                             "outerCutoff": 60.0,
-                            "outerRadius": 2048.0,
+                            "outerRadius": 1028.0,
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -4188,8 +4127,8 @@
                     "normalPath": "",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1563.596435546875,
-                        "y": 2234.832275390625
+                        "x": 1529.444580078125,
+                        "y": 2295.546630859375
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -4206,14 +4145,14 @@
                         {
                             "colour": {
                                 "a": 1.0,
-                                "b": 1.0,
-                                "g": 1.0,
-                                "r": 1.0,
+                                "b": 0.7452830076217651,
+                                "g": 0.6023771166801453,
+                                "r": 0.30584728717803955,
                                 "typeID": "Tristeon::Colour"
                             },
                             "ignoreLayers": [],
                             "instanceID": 298487506,
-                            "intensity": 0.5,
+                            "intensity": 1.0,
                             "typeID": "Tristeon::AmbientLight"
                         }
                     ],

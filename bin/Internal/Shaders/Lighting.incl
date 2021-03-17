@@ -102,7 +102,7 @@ vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, fl
     vec4 composite = texture(compositeLight, gl_FragCoord.xy / displayPixels);
     lights += composite.rgb * composite.a;
 
-    mask = max(mask, 0.3);
-    vec3 result = albedo.rgb * mask * ambientLight + albedo.rgb * mask * lights;
+    vec3 result = albedo.rgb * ambientLight + albedo.rgb * mask * lights;
+
     return vec4(result, albedo.a);
 }
