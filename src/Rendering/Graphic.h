@@ -1,6 +1,7 @@
 #pragma once
 #include "Scenes/Actors/Actor.h"
 #include <Rendering/Shader.h>
+#include <Rendering/RenderMask.h>
 
 namespace Tristeon
 {
@@ -16,13 +17,13 @@ namespace Tristeon
 		friend ActorLayer;
 	public:
 		Graphic() = default;
-		virtual ~Graphic() = default;
+		virtual ~Graphic() override = default;
 
 		DELETE_COPY(Graphic);
 		DEFAULT_MOVE(Graphic);
 
 		json serialize() override;
-		void deserialize(json j) override;
+		void deserialize(json pJson) override;
 		
 		/**
 		 * A square, defined by a min and max value.
@@ -36,7 +37,7 @@ namespace Tristeon
 			/**
 			 * Returns true if the position is between min and max.
 			 */
-			[[nodiscard]] bool contains(Vector const& position) const;
+			[[nodiscard]] bool contains(Vector const& pPosition) const;
 			/**
 			 * Calculates the size by doing (max - min).
 			 */
@@ -44,7 +45,7 @@ namespace Tristeon
 			/**
 			 * Returns true if the mouse is hovering over the bounds in any available camera.
 			 */
-			[[nodiscard]] bool underMouse();
+			[[nodiscard]] bool underMouse() const;
 		};
 		
 		/**
@@ -57,7 +58,11 @@ namespace Tristeon
 		 * Enables or disables rendering the graphic.
 		 */
 		bool display = true;
-		
+
+		/**
+		 * The RenderMask used to determine what mask this graphic should/shouldn't be rendered to.
+		 */
+		RenderMask renderMask = RenderMask::Default;
 	protected:
 		/**
 		 * Render the graphic to the GameView, called for each graphic by the ActorLayer.

@@ -1,5 +1,7 @@
 #include "Light.h"
+
 #include <InstanceCollector.h>
+#include <Collector.h>
 
 namespace Tristeon
 {
@@ -19,37 +21,15 @@ namespace Tristeon
 		j["typeID"] = Type<Light>::fullName();
 		j["intensity"] = _intensity;
 		j["colour"] = _colour;
-		j["ignoreLayers"] = _ignoreLayers;		
+		j["renderMask"] = (uint8_t)_mask;
 		return j;
 	}
 
-	void Light::deserialize(json j)
+	void Light::deserialize(json pJson)
 	{
-		Behaviour::deserialize(j);
-		_intensity = j.value("intensity", 1.0f);
-		_colour = j.value("colour", Colour());
-		_ignoreLayers = j.value("ignoreLayers", std::set<uint32_t>());
-	}
-
-	void Light::ignore(Layer* layer)
-	{
-		_ignoreLayers.insert(layer->instanceID());
-	}
-
-	void Light::unignore(Layer* layer)
-	{
-		_ignoreLayers.erase(layer->instanceID());
-	}
-
-	std::set<Layer*> Light::ignored()
-	{
-		std::set<Layer*> result;
-		for (auto id : _ignoreLayers)
-		{
-			auto* layer = InstanceCollector::find(id);
-			if (dynamic_cast<Layer*>(layer) != nullptr)
-				result.insert(dynamic_cast<Layer*>(layer));
-		}
-		return result;
+		Behaviour::deserialize(pJson);
+		_intensity = pJson.value("intensity", 1.0f);
+		_colour = pJson.value("colour", Colour());
+		_mask = pJson.value("renderMask", RenderMask::All);
 	}
 }

@@ -7,5 +7,7 @@ struct Sprite
 
     bool flipX;
     bool flipY;
+
+    int renderMask;
 };
 uniform Sprite sprite;

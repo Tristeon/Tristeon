@@ -1,6 +1,7 @@
 #include "PointLight.h"
-#include "Rendering/Gizmos.h"
-#include "Rendering/Shader.h"
+#include <Rendering/Gizmos.h>
+#include <Rendering/Shader.h>
+#include <Scenes/Actors/Actor.h>
 
 namespace Tristeon
 {

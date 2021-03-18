@@ -83,5 +83,5 @@ void main()
         mask = mask_val.r;
     }
 
-    fragColor = calculateLights(albedo, normal, worldPos, camera.position, mask, camera.displayPixels);
+    fragColor = calculateLights(albedo, normal, worldPos, camera.position, mask, camera.displayPixels, sprite.renderMask);
 }

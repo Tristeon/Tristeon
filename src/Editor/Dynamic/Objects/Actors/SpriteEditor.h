@@ -10,17 +10,16 @@ namespace TristeonEditor
 	class SpriteEditor : public ActorEditor
 	{
 	public:
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+		void targetChanged(Tristeon::TObject* pCurrent, Tristeon::TObject* pOld) override;
 		void displayProperties() override;
-		bool shouldDisplay(Tristeon::String const& propertyName) override;
+		bool shouldDisplay(Tristeon::String const& pPropertyName) override;
 
 	protected:
 		virtual void displayTextureButtons();
-		void changeTexturePressed(const Tristeon::TextureType& type, QPushButton* button);
+		void changeTexturePressed(const Tristeon::TextureType& pType, QPushButton* pButton);
 
-		Tristeon::Sprite* sprite = nullptr;
-
-		QPushButton* colorButton = nullptr;
+		Tristeon::Sprite* _sprite = nullptr;
+		QPushButton* _colorButton = nullptr;
 	};
 	OBJECT_EDITOR(Tristeon::Sprite, SpriteEditor);
 }

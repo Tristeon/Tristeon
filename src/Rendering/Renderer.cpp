@@ -133,19 +133,32 @@ namespace Tristeon
 			else
 #endif
 				shader->setUniformValue("disableLighting", false);
-			shader->setUniformValue("compositeLight", 10);
+			for (auto i = 0; i < 8; i++)
+				shader->setUniformValue("compositeLight[" + std::to_string(i) + "]", 10 + i);
 		}
 
 		//Render composite light
 		glBlendFunc(GL_ONE, GL_ONE);
-		glBindFramebuffer(GL_FRAMEBUFFER, camera->_compositeLightFBO);
-		glClear(GL_COLOR_BUFFER_BIT);
-		for (auto* shape : Collector<CompositeLight>::all())
-			shape->render();
+		for (auto i = 0; i < 8; i++)
+		{
+			auto mask = (RenderMask)(1 << i);
+			glBindFramebuffer(GL_FRAMEBUFFER, camera->_compositeLightFBOs[i]);
+			glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+			glClear(GL_COLOR_BUFFER_BIT);
+			for (auto* shape : Collector<CompositeLight>::all())
+			{
+				if (((int)shape->_mask & (int)mask) == (int)mask)
+					shape->render();
+			}
+		}
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glActiveTexture(GL_TEXTURE10);
-		glBindTexture(GL_TEXTURE_2D, camera->_compositeLightTexture);
+		//Bind all composite light textures
+		for (auto i = 0; i < (int)camera->_compositeLightTextures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE10 + i);
+			glBindTexture(GL_TEXTURE_2D, camera->_compositeLightTextures[i]);
+		}
 		
 		//Render each layer
 		const auto framebuffer = Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } };

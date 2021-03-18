@@ -1,8 +1,9 @@
 #include "SpotLight.h"
 
-#include "Math/Math.h"
-#include "Rendering/Gizmos.h"
-#include "Rendering/Shader.h"
+#include <Math/Math.h>
+#include <Rendering/Gizmos.h>
+#include <Rendering/Shader.h>
+#include <Scenes/Actors/Actor.h>
 
 namespace Tristeon
 {

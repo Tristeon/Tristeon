@@ -1,5 +1,7 @@
 #pragma once
 #include "PointLight.h"
+#include <Math/Vector.h>
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {

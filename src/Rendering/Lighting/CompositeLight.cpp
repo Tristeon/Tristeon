@@ -1,4 +1,5 @@
 #include "CompositeLight.h"
+#include <Collector.h>
 
 namespace Tristeon
 {

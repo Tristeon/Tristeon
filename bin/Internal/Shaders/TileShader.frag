@@ -110,7 +110,7 @@ void main()
 
     vec2 worldPos = vec2(tileX * level.tileRenderWidth - level.tileRenderWidth / 2.0f, tileY * level.tileRenderHeight - level.tileRenderHeight / 2.0f);
 
-    fragColor = calculateLights(albedo, normal, worldPos, camera.position, 1.0f, camera.displayPixels);
+    fragColor = calculateLights(albedo, normal, worldPos, camera.position, 1.0f, camera.displayPixels, 255);
 }
 
 ivec2 tileTo2DIndex(int tile)

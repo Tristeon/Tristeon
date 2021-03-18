@@ -1,5 +1,6 @@
 #pragma once
 #include "Light.h"
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {

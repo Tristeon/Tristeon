@@ -2,6 +2,7 @@
 #include <AssetManagement/Resources.h>
 
 #include "glad/glad.h"
+#include <magic_enum.hpp>
 
 namespace Tristeon
 {
@@ -173,10 +174,12 @@ namespace Tristeon
 
 		shader->setUniformValue("sprite.flipX", flipX);
 		shader->setUniformValue("sprite.flipY", flipY);
-
+		shader->setUniformValue("sprite.renderMask", (int)magic_enum::enum_index<RenderMask>(renderMask).value_or(1)-1);
+		
 		shader->setUniformValue("actor.position", position.x, position.y);
 		shader->setUniformValue("actor.scale", scale.x, scale.y);
 		shader->setUniformValue("actor.rotation", -rotation);
+
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 

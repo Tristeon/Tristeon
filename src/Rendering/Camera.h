@@ -80,8 +80,8 @@ namespace Tristeon
 		unsigned int _fboTexture = 0;
 		bool _valid = false;
 
-		unsigned int _compositeLightFBO;
-		unsigned int _compositeLightTexture;
+		std::array<unsigned int, 8> _compositeLightFBOs;
+		std::array<unsigned int, 8> _compositeLightTextures;
 		
 		/**
 		 * Creates a framebuffer and its corresponding color texture.

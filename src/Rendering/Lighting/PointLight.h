@@ -1,6 +1,7 @@
 #pragma once
 #include "Light.h"
-#include "Callbacks/IDrawGizmos.h"
+#include <Callbacks/IDrawGizmos.h>
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {

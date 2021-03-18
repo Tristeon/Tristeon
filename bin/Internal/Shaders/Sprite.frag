@@ -41,5 +41,5 @@ void main()
     if (lightMaskEnabled)
         mask = texture2D(lightMask, coords).r;
 
-    fragColor = calculateLights(albedo, normal, worldPos, camera.position, mask, camera.displayPixels);
+    fragColor = calculateLights(albedo, normal, worldPos, camera.position, mask, camera.displayPixels, sprite.renderMask);
 }

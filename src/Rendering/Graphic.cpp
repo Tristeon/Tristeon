@@ -9,9 +9,9 @@
 
 namespace Tristeon
 {
-	auto Graphic::Bounds::contains(Vector const& position) const -> bool
+	bool Graphic::Bounds::contains(Vector const& pPosition) const
 	{
-		return position.x > min.x && position.x < max.x&& position.y > min.y && position.y < max.y;
+		return pPosition.x > min.x && pPosition.x < max.x&& pPosition.y > min.y && pPosition.y < max.y;
 	}
 
 	Vector Graphic::Bounds::size() const
@@ -19,7 +19,7 @@ namespace Tristeon
 		return (max - min);
 	}
 
-	bool Graphic::Bounds::underMouse()
+	bool Graphic::Bounds::underMouse() const
 	{
 		if (Engine::playMode())
 		{
@@ -42,12 +42,14 @@ namespace Tristeon
 	{
 		json j = Actor::serialize();
 		j["display"] = display;
+		j["renderMask"] = renderMask;
 		return j;
 	}
 
-	void Graphic::deserialize(json j)
+	void Graphic::deserialize(json pJson)
 	{
-		Actor::deserialize(j);
-		display = j.value("display", true);
+		Actor::deserialize(pJson);
+		display = pJson.value("display", true);
+		renderMask = pJson.value("renderMask", RenderMask::Default);
 	}
 }
