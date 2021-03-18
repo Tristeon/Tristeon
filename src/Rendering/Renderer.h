@@ -1,22 +1,16 @@
 #pragma once
 #include <memory>
 #include <Utils/Singleton.h>
-#include <Rendering/Shader.h>
 #include <Rendering/Camera.h>
 #include <Utils/ClassDefaults.h>
-#include <Rendering/Lighting/LightRenderer.h>
 
 namespace Tristeon
 {
-	class Scene;
-	class HUD;
-
 	/**
 	 * The Renderer is an engine subysystem that manages rendering objects within a Scene.
 	 */
 	class Renderer final : public Singleton<Renderer>
 	{
-		friend Shader;
 	public:
 		Renderer();
 		~Renderer();
@@ -28,18 +22,20 @@ namespace Tristeon
 		 * Renders the current scene to the given framebuffer. The render function executes a set of steps in the following order:
 		 *
 		 * For each Camera:
-			* Bind camera's framebuffer
-			* Set viewport
 			* Pass camera data to each shader
+			* Render composite lights for the camera's viewport
+			* Bind composite light textures
+			*
+			* Set viewport
 			* Render each layer through its virtual render() function
-			* Render Gizmos
+			* Render Grid/Gizmos
 		 * 
 		 * Bind default framebuffer
 		 * Set viewport to fullscreen
 		 * Render each camera to the screen
 		 * Clear Gizmos
 		 */
-		void render(const unsigned int& framebuffer) const;
+		void render(const unsigned int& pFramebuffer) const;
 
 #ifdef TRISTEON_EDITOR
 		[[nodiscard]] static Camera* editorCamera()
@@ -59,8 +55,8 @@ namespace Tristeon
 		void passCameraData(Camera* pCamera) const;
 		
 		void renderOffline(Camera* pCamera) const;
-		void renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const;
+		void renderOnscreen(const unsigned int& pFramebuffer, const List<Camera*>& pCameras) const;
 		
-		unsigned int _dummyVAO = 0;
+		unsigned int _dummyVao = 0;
 	};
 }

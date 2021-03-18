@@ -1,9 +1,5 @@
 #include "Renderer.h"
 
-#include <Rendering/Lighting/AmbientLight.h>
-#include <Rendering/Lighting/PointLight.h>
-#include <Rendering/Lighting/SpotLight.h>
-
 #include <Scenes/Scene.h>
 #include <Scenes/Layers/ActorLayer.h>
 #include <Scenes/Layers/Layer.h>
@@ -18,6 +14,8 @@
 #include <Rendering/Shader.h>
 #include <Scenes/SceneManager.h>
 
+#include "Lighting/LightRenderer.h"
+
 namespace Tristeon
 {
 	Renderer::Renderer()
@@ -30,19 +28,19 @@ namespace Tristeon
 		_editorCamera->zoom = 0.25f;
 #endif
 
-		glGenVertexArrays(1, &_dummyVAO);
-		glBindVertexArray(_dummyVAO);
+		glGenVertexArrays(1, &_dummyVao);
+		glBindVertexArray(_dummyVao);
 	}
 
 	Renderer::~Renderer()
 	{
-		glDeleteVertexArrays(1, &_dummyVAO);
+		glDeleteVertexArrays(1, &_dummyVao);
 #ifdef TRISTEON_EDITOR
 		_editorCamera->destroy();
 #endif
 	}
 
-	void Renderer::render(const unsigned int& framebuffer) const
+	void Renderer::render(const unsigned int& pFramebuffer) const
 	{
 		auto* scene = SceneManager::current();
 		if (scene == nullptr)
@@ -64,7 +62,7 @@ namespace Tristeon
 			renderOffline(camera);
 		}
 
-		renderOnscreen(framebuffer, cameras);
+		renderOnscreen(pFramebuffer, cameras);
 	}
 
 	void Renderer::passCameraData(Camera* pCamera) const
@@ -120,16 +118,16 @@ namespace Tristeon
 #endif
 	}
 
-	void Renderer::renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const
+	void Renderer::renderOnscreen(const unsigned int& pFramebuffer, const List<Camera*>& pCameras) const
 	{
 		//Prepare renderer for rendering to the default framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, pFramebuffer);
 		glViewport(0, 0, (GLsizei)Window::gameWidth(), (GLsizei)Window::gameHeight());
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		if (Engine::playMode())
 		{
-			for (auto* camera : cameras)
+			for (auto* camera : pCameras)
 			{
 #ifdef TRISTEON_EDITOR
 				if (camera == _editorCamera.get())

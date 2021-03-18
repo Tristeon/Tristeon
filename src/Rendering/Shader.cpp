@@ -1,14 +1,11 @@
 #include "Shader.h"
 
 #include <filesystem>
+#include <glad/glad.h>
+#include <Shadinclude.hpp>
 
 #include "Engine.h"
-
 #include "Utils/Console.h"
-#include <fstream>
-#include <glad/glad.h>
-
-#include <Shadinclude.hpp>
 
 namespace Tristeon
 {
@@ -18,7 +15,7 @@ namespace Tristeon
 		Collector<Shader>::add(this);
 	}
 
-	Shader::Shader(const String& vertexShader, const String& fragmentShader) : _vertexPath(vertexShader), _fragmentPath(fragmentShader)
+	Shader::Shader(const String& pVertexShader, const String& pFragmentShader) : _vertexPath(pVertexShader), _fragmentPath(pFragmentShader)
 	{
 		load();
 		Collector<Shader>::add(this);
@@ -204,17 +201,17 @@ namespace Tristeon
 #endif
 
 		//Compile and check fragment shader
-		auto fragmentString = _fragmentData.data();
+		auto* fragmentString = _fragmentData.data();
 		const unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &fragmentString, nullptr);
 		glCompileShader(fragment);
 
 #ifdef TRISTEON_LOGENABLED
-		GLint compiledFragment = 0;
+		auto compiledFragment = 0;
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &compiledFragment);
 		if (compiledFragment == GL_FALSE)
 		{
-			int maxLength = 0;
+			auto maxLength = 0;
 			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &maxLength);
 
 			if (maxLength > 0)

@@ -26,7 +26,7 @@ namespace Tristeon
 		 *
 		 * If file loading & shader compilation succeeds, isRead() will be true.
 		 */
-		explicit Shader(const String& vertexShader, const String& fragmentShader);
+		explicit Shader(const String& pVertexShader, const String& pFragmentShader);
 		~Shader();
 
 		DELETE_COPY(Shader);
