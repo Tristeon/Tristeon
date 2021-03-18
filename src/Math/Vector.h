@@ -361,5 +361,16 @@ namespace Tristeon
 		p.x = j.value("x", 0u);
 		p.y = j.value("y", 0u);
 	}
+
+	typedef VectorType<bool> VectorB;
+	inline void to_json(nlohmann::json& j, const VectorB& p) {
+		j["x"] = p.x;
+		j["y"] = p.y;
+		j["typeID"] = Type<VectorB>::fullName();
+	}
+	inline void from_json(const nlohmann::json& j, VectorB& p) {
+		p.x = j.value("x", false);
+		p.y = j.value("y", false);
+	}
 #pragma endregion 
 }

@@ -19,9 +19,13 @@ namespace Tristeon
 		
 		[[nodiscard]] Colour colour() const { return _colour; }
 		void setColour(const Colour& pValue) { _colour = pValue; }
+
+		[[nodiscard]] RenderMask renderMask() const { return _renderMask; }
+		void setRenderMask(const RenderMask& pValue) { _renderMask = pValue; }
+	
 	protected:
 		float _intensity = 1.0f;
 		Colour _colour;
-		RenderMask _mask = RenderMask::All;
+		RenderMask _renderMask = RenderMask::All;
 	};
 }

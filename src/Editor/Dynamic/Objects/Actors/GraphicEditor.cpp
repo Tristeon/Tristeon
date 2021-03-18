@@ -32,7 +32,7 @@ namespace TristeonEditor
 		auto current = magic_enum::enum_index<Tristeon::RenderMask>(_graphic->renderMask);
 		if (_graphic->renderMask == Tristeon::RenderMask::All)
 			current = 9;
-		EditorFields::dropdown(form, "Type", current.has_value() ? (int)current.value() : (int)Tristeon::RenderMask::All, options, [=](int idx)
+		EditorFields::dropdown(form, "Render Mask", current.has_value() ? (int)current.value() : (int)Tristeon::RenderMask::All, options, [=](int idx)
 			{
 				_graphic->renderMask = magic_enum::enum_value<Tristeon::RenderMask>(idx);
 				if (idx == 9)

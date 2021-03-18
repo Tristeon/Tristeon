@@ -64,12 +64,12 @@ namespace Tristeon
 		}
 	}
 
-	void Sprite::setTexture(std::string const& path, bool const& setSize, const TextureType& type)
+	void Sprite::setTexture(std::string const& pPath, bool const& pSetSize, const TextureType& pType)
 	{
 		Texture** texPtr = nullptr;
 		String* pathPtr = nullptr;
 
-		switch (type)
+		switch (pType)
 		{
 			case TextureType::Albedo:
 			{
@@ -90,25 +90,25 @@ namespace Tristeon
 			}
 		}
 
-		*texPtr = Resources::assetLoad<Texture>(path);
-		*pathPtr = path;
+		*texPtr = Resources::assetLoad<Texture>(pPath);
+		*pathPtr = pPath;
 
-		if (!*texPtr && type == TextureType::Albedo)
+		if (!*texPtr && pType == TextureType::Albedo)
 		{
 			*texPtr = Resources::assetLoad<Texture>(Texture::defaultPath);
 			*pathPtr = Texture::defaultPath;
 		}
 
-		if (setSize)
+		if (pSetSize)
 		{
 			width = (*texPtr)->width();
 			height = (*texPtr)->height();
 		}
 	}
 
-	Texture* Sprite::texture(const TextureType& type)
+	Texture* Sprite::texture(const TextureType& pType)
 	{
-		switch (type)
+		switch (pType)
 		{
 		case TextureType::Albedo:
 			return _albedo;
@@ -122,9 +122,9 @@ namespace Tristeon
 		return nullptr;
 	}
 
-	String Sprite::texturePath(const TextureType& type)
+	String Sprite::texturePath(const TextureType& pType)
 	{
-		switch (type)
+		switch (pType)
 		{
 		case TextureType::Albedo:
 			return _albedoPath;

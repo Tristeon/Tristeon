@@ -36,6 +36,19 @@ namespace Tristeon
 		_colour = j.value("colour", Colour());
 	}
 
+	void SpriteLight::setTexture(const String& pPath, const bool& pSetSize)
+	{
+		_texture = Resources::assetLoad<Texture>(pPath);
+		_texturePath = pPath;
+		if (!_texture)
+			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+		else if (pSetSize)
+		{
+			_width = _texture->width();
+			_height = _texture->height();
+		}
+	}
+
 	void SpriteLight::render()
 	{
 		if (!_texture)

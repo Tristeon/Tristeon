@@ -13,6 +13,20 @@ namespace Tristeon
 		[[nodiscard]] json serialize() override;
 		void deserialize(json j) override;
 
+		[[nodiscard]] unsigned int width() const { return _width; }
+		void setWidth(const unsigned int& pValue) { _width = pValue; }
+
+		[[nodiscard]] unsigned int height() const { return _height; }
+		void setHeight(const unsigned int& pValue) { _height = pValue; }
+
+		[[nodiscard]] bool flipX() const { return _flipX; }
+		void setFlipX(const bool& pValue) { _flipX = pValue; }
+
+		[[nodiscard]] bool flipY() const { return _flipY; }
+		void setFlipY(const bool& pValue) { _flipY = pValue; }
+
+		[[nodiscard]] String texturePath() const { return _texturePath; }
+		void setTexture(const String& pPath, const bool& pSetSize = false);
 	protected:
 		void render() override;
 		Shader* shader() override;

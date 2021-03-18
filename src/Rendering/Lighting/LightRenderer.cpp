@@ -25,7 +25,7 @@ namespace Tristeon
 			glClear(GL_COLOR_BUFFER_BIT);
 			for (auto* shape : Collector<CompositeLight>::all())
 			{
-				if (((int)shape->_mask & (int)mask) == (int)mask)
+				if (((int)shape->_renderMask & (int)mask) == (int)mask)
 					shape->render();
 			}
 		}

@@ -63,18 +63,18 @@ namespace Tristeon
 		/**
 		 * Sets the texture of the sprite to the texture at the given path.
 		 *
-		 * \param path The filepath of the new texture.
-		 * \param setSize If true, the sprite will take on the size of the texture.
-		 * \param type The type of texture
+		 * \param pPath The filepath of the new texture.
+		 * \param pSetSize If true, the sprite will take on the size of the texture.
+		 * \param pType The type of texture
 		 */
-		virtual void setTexture(std::string const& path, bool const& setSize, const TextureType& type = TextureType::Albedo);
+		virtual void setTexture(const String& pPath, const bool& pSetSize, const TextureType& pType = TextureType::Albedo);
 
 		/**
 		 * Returns the current texture of the sprite. May be nullptr.
 		 */
-		virtual Texture* texture(const TextureType& type = TextureType::Albedo);
+		virtual Texture* texture(const TextureType& pType = TextureType::Albedo);
 
-		virtual String texturePath(const TextureType& type = TextureType::Albedo);
+		virtual String texturePath(const TextureType& pType = TextureType::Albedo);
 		
 		/**
 		 * Returns the Sprite's Bounds.

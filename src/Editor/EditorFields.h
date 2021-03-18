@@ -10,6 +10,12 @@ namespace TristeonEditor
 	{
 	public:
 		static void vectorField(QFormLayout* layout, std::string label, Tristeon::Vector value, std::function<void(float)> changeCallbackX, std::function<void(float)> changeCallbackY);
+
+		static void vectorIField(QFormLayout* layout, std::string label, Tristeon::VectorI value, std::function<void(int)> changeCallbackX, std::function<void(int)> changeCallbackY);
+
+		static void vectorUField(QFormLayout* layout, std::string label, Tristeon::VectorU value, std::function<void(unsigned int)> changeCallbackX, std::function<void(unsigned int)> changeCallbackY);
+
+		static void vectorBField(QFormLayout* layout, std::string label, Tristeon::VectorB value, std::function<void(bool)> changeCallbackX, std::function<void(bool)> changeCallbackY);
 		
 		static QDoubleSpinBox* floatField(QFormLayout* layout, std::string label, float value, std::function<void(float)> changeCallback);
 		static QDoubleSpinBox* floatField(QFormLayout* layout, std::string label, float value, float minValue, float maxValue, std::function<void(float)> changeCallback);

@@ -18,6 +18,54 @@ namespace TristeonEditor
 		layout->addRow(new QLabel(QString::fromStdString(label)), field);
 	}
 
+	void EditorFields::vectorIField(QFormLayout* layout, std::string label, Tristeon::VectorI value,
+		std::function<void(int)> changeCallbackX, std::function<void(int)> changeCallbackY)
+	{
+		auto* field = new QWidget();
+		auto* l = new QHBoxLayout(field);
+		l->setContentsMargins(0, 0, 0, 0);
+		field->setLayout(layout);
+
+		auto* x = intField(field, value.x, changeCallbackX);
+		auto* y = intField(field, value.y, changeCallbackY);
+		l->addWidget(x);
+		l->addWidget(y);
+
+		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+	}
+
+	void EditorFields::vectorUField(QFormLayout* layout, std::string label, Tristeon::VectorU value,
+		std::function<void(unsigned int)> changeCallbackX, std::function<void(unsigned int)> changeCallbackY)
+	{
+		auto* field = new QWidget();
+		auto* l = new QHBoxLayout(field);
+		l->setContentsMargins(0, 0, 0, 0);
+		field->setLayout(layout);
+
+		auto* x = uintField(field, value.x, changeCallbackX);
+		auto* y = uintField(field, value.y, changeCallbackY);
+		l->addWidget(x);
+		l->addWidget(y);
+
+		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+	}
+
+	void EditorFields::vectorBField(QFormLayout* layout, std::string label, Tristeon::VectorB value,
+		std::function<void(bool)> changeCallbackX, std::function<void(bool)> changeCallbackY)
+	{
+		auto* field = new QWidget();
+		auto* l = new QHBoxLayout(field);
+		l->setContentsMargins(0, 0, 0, 0);
+		field->setLayout(layout);
+
+		auto* x = boolField(field, value.x, changeCallbackX);
+		auto* y = boolField(field, value.y, changeCallbackY);
+		l->addWidget(x);
+		l->addWidget(y);
+
+		layout->addRow(new QLabel(QString::fromStdString(label)), field);
+	}
+
 	QDoubleSpinBox* EditorFields::floatField(QFormLayout* layout, std::string label, float value, std::function<void(float)> changeCallback)
 	{
 		return floatField(layout, label, value, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), changeCallback);
