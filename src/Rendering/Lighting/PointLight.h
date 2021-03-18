@@ -10,6 +10,8 @@ namespace Tristeon
 	class PointLight : public Light, public IDrawGizmos
 	{
 		friend class Renderer;
+		friend class LightRenderer;
+	
 	public:
 		PointLight();
 		virtual ~PointLight() override;

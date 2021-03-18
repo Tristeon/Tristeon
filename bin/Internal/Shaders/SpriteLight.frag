@@ -22,5 +22,5 @@ void main()
     vec4 tex = texture2D(texture, coords);
     vec3 albedo = tex.rgb * sprite.colour.rgb;
 
-    fragColor = vec4(albedo * tex.a * intensity, intensity);
+    fragColor = vec4(albedo * tex.a * intensity, 0);
 }

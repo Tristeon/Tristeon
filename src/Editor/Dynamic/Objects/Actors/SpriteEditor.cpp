@@ -10,37 +10,19 @@ namespace TristeonEditor
 {
 	void SpriteEditor::targetChanged(Tristeon::TObject* pCurrent, Tristeon::TObject* pOld)
 	{
-		ActorEditor::targetChanged(pCurrent, pOld);
+		GraphicEditor::targetChanged(pCurrent, pOld);
 
 		_sprite = (Tristeon::Sprite*)pCurrent;
 	}
 
 	void SpriteEditor::displayProperties()
 	{
-		ActorEditor::displayProperties();
+		GraphicEditor::displayProperties();
 		
 		auto* formWidget = new QWidget(scrollArea);
 		auto* form = new QFormLayout(formWidget);
 		formWidget->setLayout(form);
 		scrollLayout->addWidget(formWidget);
-
-		constexpr const auto& names = magic_enum::enum_names<Tristeon::RenderMask>();
-		Tristeon::List<Tristeon::String> options;
-		for (auto name : names)
-		{
-			if ((Tristeon::String)name != "None")
-				options.add((Tristeon::String)name);
-		}
-
-		auto current = magic_enum::enum_index<Tristeon::RenderMask>(_sprite->renderMask);
-		if (_sprite->renderMask == Tristeon::RenderMask::All)
-			current = 9;
-		EditorFields::dropdown(form, "Type", current.has_value() ? (int)current.value() : (int)Tristeon::RenderMask::All, options, [=](int idx)
-		{
-			_sprite->renderMask = magic_enum::enum_value<Tristeon::RenderMask>(idx);
-			if (idx == 9)
-				_sprite->renderMask = Tristeon::RenderMask::All;
-		});
 
 		EditorFields::boolField(form, "Display", _sprite->display, [=](int value) { _sprite->display = value; });
 		EditorFields::uintField(form, "Width", _sprite->width, [=](int value) { _sprite->width = value; });
@@ -59,6 +41,7 @@ namespace TristeonEditor
 		connect(_colorButton, &QPushButton::clicked, this, [&]()
 		{
 			auto* color = new QColorDialog(this);
+			color->setOption(QColorDialog::ShowAlphaChannel, true);
 			color->setCurrentColor(spriteColor);
 			color->open();
 			connect(color, &QColorDialog::currentColorChanged, this, [&](const QColor& color)
@@ -81,7 +64,7 @@ namespace TristeonEditor
 	{
 		if (pPropertyName == "display" || pPropertyName == "width" || pPropertyName == "height" || pPropertyName == "colour" || pPropertyName == "texturePath" || pPropertyName == "normalPath" || pPropertyName == "lightMaskPath" || pPropertyName == "flipX" || pPropertyName == "flipY")
 			return false;
-		return ActorEditor::shouldDisplay(pPropertyName);
+		return GraphicEditor::shouldDisplay(pPropertyName);
 	}
 
 	void SpriteEditor::displayTextureButtons()

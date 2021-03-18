@@ -4,6 +4,7 @@
 #include <Rendering/Shader.h>
 #include <Rendering/Camera.h>
 #include <Utils/ClassDefaults.h>
+#include <Rendering/Lighting/LightRenderer.h>
 
 namespace Tristeon
 {
@@ -38,7 +39,7 @@ namespace Tristeon
 		 * Render each camera to the screen
 		 * Clear Gizmos
 		 */
-		void render(const unsigned int& framebuffer);
+		void render(const unsigned int& framebuffer) const;
 
 #ifdef TRISTEON_EDITOR
 		[[nodiscard]] static Camera* editorCamera()
@@ -55,7 +56,9 @@ namespace Tristeon
 #endif
 
 	private:
-		void renderOffline(Camera* camera) const;
+		void passCameraData(Camera* pCamera) const;
+		
+		void renderOffline(Camera* pCamera) const;
 		void renderOnscreen(const unsigned int& framebuffer, const List<Camera*>& cameras) const;
 		
 		unsigned int _dummyVAO = 0;

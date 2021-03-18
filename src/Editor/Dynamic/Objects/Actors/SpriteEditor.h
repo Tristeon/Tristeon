@@ -1,13 +1,13 @@
 #pragma once
 #ifdef TRISTEON_EDITOR
+#include "GraphicEditor.h"
 #include <QtWidgets>
-#include "ActorEditor.h"
 #include <Rendering/Sprite.h>
 #include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 
 namespace TristeonEditor
 {
-	class SpriteEditor : public ActorEditor
+	class SpriteEditor : public GraphicEditor
 	{
 	public:
 		void targetChanged(Tristeon::TObject* pCurrent, Tristeon::TObject* pOld) override;

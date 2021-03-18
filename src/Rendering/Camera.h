@@ -19,6 +19,7 @@ namespace Tristeon
 	class Camera : public Actor, public IDrawGizmos
 	{
 		friend class Renderer;
+		friend class LightRenderer;
 	public:
 		Camera();
 		explicit Camera(const bool& registerSelf);

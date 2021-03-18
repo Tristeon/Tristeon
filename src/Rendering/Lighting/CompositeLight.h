@@ -7,7 +7,8 @@ namespace Tristeon
 	class CompositeLight : public Light
 	{
 		friend class Renderer;
-
+		friend class LightRenderer;
+	
 	public:
 		CompositeLight();
 		virtual ~CompositeLight() override;

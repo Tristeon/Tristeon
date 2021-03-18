@@ -18,8 +18,6 @@
 #include <Rendering/Shader.h>
 #include <Scenes/SceneManager.h>
 
-#include "Lighting/CompositeLight.h"
-
 namespace Tristeon
 {
 	Renderer::Renderer()
@@ -44,9 +42,9 @@ namespace Tristeon
 #endif
 	}
 
-	void Renderer::render(const unsigned int& framebuffer)
+	void Renderer::render(const unsigned int& framebuffer) const
 	{
-		Scene* scene = SceneManager::current();
+		auto* scene = SceneManager::current();
 		if (scene == nullptr)
 			return;
 
@@ -58,47 +56,7 @@ namespace Tristeon
 			cameras.add(editorCamera());
 #endif
 
-		//Pass lighting data
-		for (auto* shader : Collector<Shader>::all())
-		{
-			if (shader->empty())
-				continue;
-
-			shader->bind();
-			
-			auto pointLights = Collector<PointLight>::all();
-			uint64_t p = 0, s = 0;
-			while (p + s < pointLights.size())
-			{
-				auto* light = pointLights[p + s];
-				auto* spot = dynamic_cast<SpotLight*>(light);
-
-				if (spot)
-				{
-					light->prepareRender(shader, s);
-					s++;
-				}
-				else
-				{
-					light->prepareRender(shader, p);
-					p++;
-				}
-			}
-			shader->setUniformValue("spotLightCount", (int)s);
-			shader->setUniformValue("pointLightCount", (int)p);
-
-			Colour ambientLight{ 0, 0, 0, 0 };
-			for (auto* ambient : Collector<AmbientLight>::all())
-			{
-				ambientLight = {
-					ambientLight.r + ambient->colour().r * ambient->intensity(),
-					ambientLight.g + ambient->colour().g * ambient->intensity(),
-					ambientLight.b + ambient->colour().b * ambient->intensity(),
-					0,
-				};
-			}
-			shader->setUniformValue("ambientLight", ambientLight.r, ambientLight.g, ambientLight.b);
-		}
+		LightRenderer::passLights();
 
 		for (auto* camera : cameras)
 		{
@@ -109,67 +67,52 @@ namespace Tristeon
 		renderOnscreen(framebuffer, cameras);
 	}
 
-	void Renderer::renderOffline(Camera* camera) const
+	void Renderer::passCameraData(Camera* pCamera) const
 	{
-		const auto resolution = camera->resolution();
-		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
-		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		//Send common data to all shaders through a prepass
+		const auto resolution = pCamera->resolution();
 		for (auto* shader : Collector<Shader>::all())
 		{
 			if (shader->empty())
 				continue;
 
 			shader->bind();
-			shader->setUniformValue("camera.position", camera->position.x, camera->position.y);
-			shader->setUniformValue("camera.zoom", camera->zoom);
+			shader->setUniformValue("camera.position", pCamera->position.x, pCamera->position.y);
+			shader->setUniformValue("camera.zoom", pCamera->zoom);
 			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
 
 #ifdef TRISTEON_EDITOR
-			if (camera == _editorCamera.get())
+			if (pCamera == _editorCamera.get())
 				shader->setUniformValue("disableLighting", _editorLightingDisabled);
 			else
 #endif
 				shader->setUniformValue("disableLighting", false);
-			for (auto i = 0; i < 8; i++)
-				shader->setUniformValue("compositeLight[" + std::to_string(i) + "]", 10 + i);
 		}
+	}
 
-		//Render composite light
-		glBlendFunc(GL_ONE, GL_ONE);
-		for (auto i = 0; i < 8; i++)
-		{
-			auto mask = (RenderMask)(1 << i);
-			glBindFramebuffer(GL_FRAMEBUFFER, camera->_compositeLightFBOs[i]);
-			glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
-			glClear(GL_COLOR_BUFFER_BIT);
-			for (auto* shape : Collector<CompositeLight>::all())
-			{
-				if (((int)shape->_mask & (int)mask) == (int)mask)
-					shape->render();
-			}
-		}
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	void Renderer::renderOffline(Camera* pCamera) const
+	{
+		//Pass render data & render lights
+		passCameraData(pCamera);
+		LightRenderer::renderComposite(pCamera);
+		LightRenderer::bindCompositeTextures(pCamera);
 
-		//Bind all composite light textures
-		for (auto i = 0; i < (int)camera->_compositeLightTextures.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE10 + i);
-			glBindTexture(GL_TEXTURE_2D, camera->_compositeLightTextures[i]);
-		}
-		
+		//Prepare camera framebuffer
+		const auto resolution = pCamera->resolution();
+		glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_fbo);
+		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		//Render each layer
-		const auto framebuffer = Framebuffer{ camera->_fbo, { 0, 0, resolution.x, resolution.y } };
-		glBindFramebuffer(GL_FRAMEBUFFER, camera->_fbo);
+		const auto framebuffer = Framebuffer{ pCamera->_fbo, { 0, 0, resolution.x, resolution.y } };
+		glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_fbo);
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{
 			SceneManager::current()->layerAt(i)->render(framebuffer);
 		}
 
+		//Render grid/gizmos if this is the editor camera
 #ifdef TRISTEON_EDITOR
-		if (camera == _editorCamera.get())
+		if (pCamera == _editorCamera.get())
 		{
 			if (_editorGridEnabled) Grid::render();
 			if (_editorGizmosEnabled) Gizmos::render();
