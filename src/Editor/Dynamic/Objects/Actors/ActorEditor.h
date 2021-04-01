@@ -1,4 +1,5 @@
 #pragma once
+#include "Editor/Dynamic/Fields/FieldEditor.h"
 #ifdef TRISTEON_EDITOR
 #include <Editor/Dynamic/Objects/ObjectEditor.h>
 #include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
@@ -31,6 +32,7 @@ namespace TristeonEditor
 		void actorNameChanged(const QString& name);
 		void addButtonPressed();
 
+		Tristeon::List<Tristeon::Unique<FieldEditor>> fieldEditors;
 		Tristeon::Actor* actor = nullptr;
 
 		json data;
