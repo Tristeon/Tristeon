@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "Window.h"
+#include "PostProcessing/PostProcessingEffect.h"
 #include "Rendering/Gizmos.h"
 #include "Rendering/Shader.h"
 #include "Utils/Console.h"
@@ -74,6 +75,7 @@ namespace Tristeon
 		_lastWindowSize = Window::gameSize();
 
 		createFramebuffer();
+		createProcessingFramebuffers();
 		createCompositeLightBuffer();
 	}
 
@@ -107,6 +109,67 @@ namespace Tristeon
 		else
 			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_fbo));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void Camera::createProcessingFramebuffers()
+	{
+		const VectorU size = resolution();
+		{
+			//Delete old framebuffer with its texture
+			if (_processedFbo != NULL)
+				glDeleteFramebuffers(1, &_processedFbo);
+			if (_processedFboTexture != NULL)
+				glDeleteTextures(1, &_processedFboTexture);
+
+			//Gen and bind Framebuffer
+			glGenFramebuffers(1, &_processedFbo);
+			glBindFramebuffer(GL_FRAMEBUFFER, _processedFbo);
+
+			//Create texture
+			glGenTextures(1, &_processedFboTexture);
+			glBindTexture(GL_TEXTURE_2D, _processedFboTexture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _processedFboTexture, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+			//Finish
+			_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+			if (!_valid)
+				TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
+			else
+				TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_processedFbo));
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
+		{
+			//Delete old framebuffer with its texture
+			if (_previousProcessFbo != NULL)
+				glDeleteFramebuffers(1, &_previousProcessFbo);
+			if (_previousProcessFboTexture != NULL)
+				glDeleteTextures(1, &_previousProcessFboTexture);
+
+			//Gen and bind Framebuffer
+			glGenFramebuffers(1, &_previousProcessFbo);
+			glBindFramebuffer(GL_FRAMEBUFFER, _previousProcessFbo);
+
+			//Create texture
+			glGenTextures(1, &_previousProcessFboTexture);
+			glBindTexture(GL_TEXTURE_2D, _previousProcessFboTexture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _previousProcessFboTexture, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+			//Finish
+			_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+			if (!_valid)
+				TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
+			else
+				TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_previousProcessFbo));
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
 	}
 
 	void Camera::createCompositeLightBuffer()
@@ -150,7 +213,56 @@ namespace Tristeon
 		if (_lastScreenSize != screenSize || _lastWindowSize != Window::gameSize())
 			buildFramebuffers();
 	}
-	
+
+	void Camera::applyPostProcessing()
+	{
+		const auto effects = findBehaviours<PostProcessingEffect>();
+		const auto res = resolution();
+		
+		if (effects.empty())
+		{
+			//Copy directly
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, _fbo);
+			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _processedFbo);
+			glBlitFramebuffer(0, 0, res.x, res.y, 0, 0, res.x, res.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			return;
+		}
+
+		//Set default previous
+		glBindFramebuffer(GL_FRAMEBUFFER, _previousProcessFbo);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, _fbo);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _previousProcessFbo);
+		glBlitFramebuffer(0, 0, res.x, res.y, 0, 0, res.x, res.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		
+		//Draw effects
+		for (auto* effect : effects)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, _processedFbo);
+			glViewport(0, 0, res.x, res.y);
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			effect->shader()->bind();
+			effect->shader()->setUniformValue("original", 0);
+			effect->shader()->setUniformValue("previous", 1);
+			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, _fboTexture);
+
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, _previousProcessFboTexture);
+			
+			effect->render();
+			
+			//Copy result into separate texture
+			glBindFramebuffer(GL_FRAMEBUFFER, _previousProcessFbo);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, _processedFbo);
+			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _previousProcessFbo);
+			glBlitFramebuffer(0, 0, res.x, res.y, 0, 0, res.x, res.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		}
+	}
+
 	void Camera::drawToScreen() const
 	{
 		static Shader shader("Internal/Shaders/Camera.vert", "Internal/Shaders/Texture.frag");
@@ -162,7 +274,7 @@ namespace Tristeon
 
 		//Bind texture
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _fboTexture);
+		glBindTexture(GL_TEXTURE_2D, _processedFboTexture);
 		shader.setUniformValue("texture", 0);
 
 		//Pass screen info

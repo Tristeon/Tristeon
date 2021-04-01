@@ -2,7 +2,6 @@
 
 #include <qformlayout.h>
 
-
 #include "Settings.h"
 #include "Editor/EditorFields.h"
 

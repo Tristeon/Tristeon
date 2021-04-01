@@ -59,6 +59,7 @@ namespace Tristeon
 		for (auto* camera : cameras)
 		{
 			camera->updateFramebuffers();
+			camera->applyPostProcessing();
 			renderOffline(camera);
 		}
 
@@ -101,7 +102,7 @@ namespace Tristeon
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Render each layer
-		const auto framebuffer = Framebuffer{ pCamera->_fbo, { 0, 0, resolution.x, resolution.y } };
+		const auto framebuffer = Framebuffer{ pCamera->_fbo, pCamera->_fboTexture, { 0, 0, resolution.x, resolution.y } };
 		glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_fbo);
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{

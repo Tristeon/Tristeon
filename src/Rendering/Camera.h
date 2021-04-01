@@ -79,22 +79,34 @@ namespace Tristeon
 		//Framebuffer
 		unsigned int _fbo = 0;
 		unsigned int _fboTexture = 0;
+
+		unsigned int _processedFbo = 0;
+		unsigned int _processedFboTexture = 0;
+		
+		unsigned int _previousProcessFbo = 0;
+		unsigned int _previousProcessFboTexture = 0;
 		bool _valid = false;
 
-		std::array<unsigned int, 8> _compositeLightFBOs;
-		std::array<unsigned int, 8> _compositeLightTextures;
+		std::array<unsigned int, 8> _compositeLightFBOs { 0, 0, 0, 0, 0, 0, 0, 0 };
+		std::array<unsigned int, 8> _compositeLightTextures { 0, 0, 0, 0, 0, 0, 0, 0 };
 		
 		/**
 		 * Creates a framebuffer and its corresponding color texture.
 		 */
 		void buildFramebuffers();
 		void createFramebuffer();
+		void createProcessingFramebuffers();
 		void createCompositeLightBuffer();
 
 		/**
 		 * Binds the framebuffer for use.
 		 */
 		void updateFramebuffers();
+
+		/**
+		 * Apply post processing effects
+		 */
+		void applyPostProcessing();
 		/**
 		 * Draws the camera's framebuffer texture to the screen.
 		 */

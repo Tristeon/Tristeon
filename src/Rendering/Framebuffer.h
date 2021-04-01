@@ -13,6 +13,11 @@ namespace Tristeon
 		 */
 		unsigned int framebufferID = 0;
 
+		/**
+		 * The OpenGL texture ID.
+		 */
+		unsigned int textureID = 0;
+
 		struct {
 			/**
 			 * The horizontal coordinate of the lower left corner in pixels.
