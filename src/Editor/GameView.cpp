@@ -1,4 +1,3 @@
-#ifdef TRISTEON_EDITOR
 #include <glad/glad.h>
 
 #include "GameView.h"
@@ -103,9 +102,8 @@ namespace TristeonEditor
 	{
 		if (layerView != nullptr)
 		{
-			layout->removeWidget(layerView);
-			delete layerView;
-			layerView = nullptr;
+			layout->removeWidget(layerView.get());
+			layerView.reset();
 		}
 	}
 
@@ -113,25 +111,19 @@ namespace TristeonEditor
 	{
 		if (layerView != nullptr)
 		{
-			layout->removeWidget(layerView);
-			delete layerView;
-			layerView = nullptr;
+			layout->removeWidget(layerView.get());
+			layerView.reset();
 		}
 
 		if (layer == nullptr)
 			return;
 
-		layerView = TristeonEditor::SceneEditorRegister::createInstance(layer->serialize()["typeID"]);
+		layerView = TristeonEditor::SceneEditorRegister::createInstance(layer->serialize()["typeID"], layer);
 		if (layerView != nullptr)
 		{
-			layerView->target(layer);
-			layerView->setParent(this);
+			layout->addWidget(layerView.get());
 			layerView->resize(width(), height());
-			layerView->initialize();
 			layerView->setAttribute(Qt::WA_TranslucentBackground);
-			layout->addWidget(layerView);
-			layerView->show();
 		}
 	}
 }
-#endif

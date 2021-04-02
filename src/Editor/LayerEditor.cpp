@@ -1,8 +1,7 @@
-#ifdef TRISTEON_EDITOR
 #include "Scenes/Layers/Layer.h"
 #include "LayerEditor.h"
 #include "Editor.h"
-#include "Dynamic/Objects/ObjectEditorRegister.h"
+#include <Editor/Dynamic/EditorRegister.h>
 
 namespace TristeonEditor
 {
@@ -27,23 +26,16 @@ namespace TristeonEditor
 	{
 		if (current != nullptr)
 		{
-			layout->removeWidget(current);
-			current->deleteLater();
+			layout->removeWidget(current->widget());
+			current.reset();
 		}
-		current = nullptr;
 		
 		if (layer == nullptr)
 			return;
 
-		current = ObjectEditorRegister::createInstance(layer->serialize()["typeID"]);
+		auto serialized = layer->serialize();
+		current = EditorRegister::createInstance(serialized["typeID"], serialized, [=](nlohmann::json value) { layer->deserialize(value); });
 		if (current != nullptr)
-		{
-			current->target(layer);
-			current->setParent(contents);
-			current->initialize();
-			layout->addWidget(current);
-			current->show();
-		}
+			layout->addWidget(current->widget());
 	}
 }
-#endif

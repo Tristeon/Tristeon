@@ -1,11 +1,11 @@
-#ifdef TRISTEON_EDITOR
 #include "PropertyWindow.h"
-#include "Dynamic/Files/FileEditorRegister.h"
-#include <Editor/Dynamic/Objects/Actors/ActorEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 #include <Editor/Editor.h>
-#include "Scenes/Layers/Layer.h"
-#include "Scenes/Layers/TileLayer.h"
+
+#include <Editor/Dynamic/EditorRegister.h>
+#include <Editor/Dynamic/FileEditorRegister.h>
+
+#include <Editor/Dynamic/Objects/Actors/ActorEditor.h>
+#include <Editor/Dynamic/Files/FileItem.h>
 
 namespace TristeonEditor
 {
@@ -16,72 +16,48 @@ namespace TristeonEditor
 		contents->setLayout(layout);
 		contents->show();
 
-		if (Editor::instance()->selectedLayer() != nullptr)
-			selectedLayerChanged(Editor::instance()->selectedLayer());
+		selectedLayerChanged(Editor::instance()->selectedLayer());
 	}
 
 	void PropertyWindow::sceneLoaded(Tristeon::Scene * scene)
 	{
-		if (current != nullptr)
-		{
-			layout->removeWidget(current);
-			delete current;
-		}
-		current = nullptr;
+		current.reset();
 	}
 
 	void PropertyWindow::selectedActorChanged(Tristeon::Actor * actor)
 	{
-		if (current != nullptr)
-		{
-			layout->removeWidget(current);
-			delete current;
-		}
-		current = nullptr;
+		current.reset();
 
 		if (actor == nullptr)
 			return;
 
-		current = ObjectEditorRegister::createInstance(actor->serialize()["typeID"]);
-		if (current == nullptr)
-			current = new ActorEditor(); //Default editor for actors as fallback
+		auto serialized = actor->serialize();
 
-		current->target(actor);
-		current->setParent(contents);
-		current->initialize();
-		layout->addWidget(current);
-		//current->show();
+		current = EditorRegister::createInstance(serialized["typeID"], serialized,
+			[=](nlohmann::json pValue) { actor->deserialize(pValue); }
+		);
+
+		if (current == nullptr)
+		{
+			current = std::make_unique<ActorEditor>(serialized, 
+				[=](nlohmann::json pValue) { actor->deserialize(pValue); }
+			);
+		}
+
+		layout->addWidget(current->widget());
 	}
 
 	void PropertyWindow::selectedLayerChanged(Tristeon::Layer * layer)
 	{
-		if (current != nullptr)
-		{
-			layout->removeWidget(current);
-			delete current;
-		}
-		current = nullptr;
+		current.reset();
 	}
 
 	void PropertyWindow::selectedFilePathChanged(FileItem* item)
 	{
-		if (current != nullptr)
-		{
-			layout->removeWidget(current);
-			delete current;
-		}
-		current = nullptr;
-
-		current = FileEditorRegister::createInstance(item->extension);
+		current.reset();
+		current = FileEditorRegister::createInstance(item->extension, *item);
 
 		if (current != nullptr) 
-		{
-			current->target(item);
-			current->setParent(contents);
-			current->initialize();
-			layout->addWidget(current);
-			current->show();
-		}
+			layout->addWidget(current->widget());
 	}
 }
-#endif

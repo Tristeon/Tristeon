@@ -1,4 +1,3 @@
-#ifdef TRISTEON_EDITOR
 #include "Scenes/Layers/ActorLayer.h"
 #include "Serialization/Register.h"
 #include <QApplication>
@@ -10,7 +9,7 @@
 
 namespace TristeonEditor
 {
-	SceneEditor::SceneEditor()
+	SceneEditor::SceneEditor(Tristeon::Layer* pLayer) : _layer(pLayer)
 	{
 		QShortcut* copy = new QShortcut(QKeySequence(tr("Ctrl+C", "Copy")), this);
 		connect(copy, &QShortcut::activated, this, [&]()
@@ -38,10 +37,4 @@ namespace TristeonEditor
 				}
 			});
 	}
-
-	void SceneEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
-	{
-		currentLayer = (Tristeon::Layer*)current;
-	}
 }
-#endif

@@ -1,9 +1,9 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include <Editor/DockWidget.h>
-
 #include <QtWidgets>
+#include <Editor/DockWidget.h>
+#include <Standard/Unique.h>
 #include <Editor/Dynamic/AbstractEditor.h>
+
 namespace TristeonEditor
 {
 	class PropertyWindow : public QDockWidget, public DockWidget
@@ -18,9 +18,8 @@ namespace TristeonEditor
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
 		void selectedFilePathChanged(FileItem* item) override;
 
-		AbstractEditor* current = nullptr;
+		Tristeon::Unique<AbstractEditor> current = nullptr;
 		QWidget* contents = nullptr;
 		QGridLayout* layout = nullptr;
 	};
 }
-#endif

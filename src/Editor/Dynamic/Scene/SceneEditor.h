@@ -1,19 +1,23 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include "Editor/Dynamic/AbstractEditor.h"
-#include "Scenes/Layers/Layer.h"
+#include <qwidget.h>
+
+#include <Scenes/Layers/Layer.h>
+#include <Utils/ClassDefaults.h>
 
 namespace TristeonEditor
 {
-	class SceneEditor : public AbstractEditor
+	class SceneEditor : public QWidget
 	{
 	public:
-		SceneEditor();
-		
+		SceneEditor(Tristeon::Layer* pLayer);
+		virtual ~SceneEditor() = default;
+
 		virtual void updateView() = 0;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+
+		DELETE_COPY(SceneEditor);
+		DEFAULT_MOVE(SceneEditor);
+		
 	protected:
-		Tristeon::Layer* currentLayer = nullptr;
+		Tristeon::Layer* _layer = nullptr;
 	};
 }
-#endif

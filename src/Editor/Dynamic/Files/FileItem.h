@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
 #include <TObject.h>
 #include <Standard/String.h>
 
@@ -13,4 +12,3 @@ namespace TristeonEditor
 		Tristeon::String extension;
 	};
 }
-#endif

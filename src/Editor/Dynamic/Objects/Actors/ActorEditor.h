@@ -1,43 +1,34 @@
 #pragma once
-#include "Editor/Dynamic/Fields/FieldEditor.h"
-#ifdef TRISTEON_EDITOR
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
+#include <Editor/Dynamic/AbstractJsonEditor.h>
+#include <Editor/Dynamic/EditorRegister.h>
 #include <Scenes/Actors/Actor.h>
+
+#include <qwidget.h>
+#include <qformlayout.h>
 
 namespace TristeonEditor
 {
-	class ActorEditor : public ObjectEditor
+	class ActorEditor : public AbstractJsonEditor
 	{
 	public:
-		void initialize() override;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+		ActorEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
+		~ActorEditor() override;
 
-		void displayActorProperties();
-		virtual void displayProperties();
-		void displayAutoProperties();
-		void displayBehaviours();
-
-		/**
-		 * If true, the actor editor automatically displays the property after all other properties have been displayed
-		 */
-		virtual bool shouldDisplay(Tristeon::String const& propertyName);
+		virtual void setValue(const nlohmann::json& pValue) override;
+		virtual QWidget* widget() override;
 
 	protected:
+		QWidget* _widget;
+		QLayout* _layout;
+
+		QWidget* _formWidget;
+		QFormLayout* _formLayout;
+
 		QLayout* scrollLayout = nullptr;
 		QWidget* scrollArea = nullptr;
-		
-	private:
-		void addBehaviour(Tristeon::Behaviour* behaviour);
-		void actorNameChanged(const QString& name);
-		void addButtonPressed();
 
-		Tristeon::List<Tristeon::Unique<FieldEditor>> fieldEditors;
-		Tristeon::Actor* actor = nullptr;
-
-		json data;
+		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
 	};
 
-	OBJECT_EDITOR(Tristeon::Actor, ActorEditor);
+	EDITOR(Tristeon::Actor, ActorEditor);
 }
-#endif
