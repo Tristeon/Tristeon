@@ -28,10 +28,7 @@ namespace Tristeon
 		const String name = typeid(T).name();
 		List<String> vec = StringHelper::split(name, ' ');
 		if (vec.size() < 2)
-		{
-			TRISTEON_WARNING("Type failed to interpret the MSVC typename. Returning direct typeid(T).name(): " + String(typeid(T).name()));
 			return name;
-		}
 
 		String result;
 		for (auto i = 1; i < vec.size(); i++)
