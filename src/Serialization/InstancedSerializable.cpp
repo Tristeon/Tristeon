@@ -6,8 +6,8 @@ namespace Tristeon
 {
 	InstancedSerializable::InstancedSerializable()
 	{
-		InstanceCollector::add(this);
 		_instanceID = Random::generateUInt();
+		InstanceCollector::add(this);
 	}
 
 	InstancedSerializable::~InstancedSerializable() noexcept
@@ -24,7 +24,9 @@ namespace Tristeon
 
 	void InstancedSerializable::deserialize(json j)
 	{
+		InstanceCollector::remove(this);
 		_instanceID = j.value("instanceID", _instanceID);
+		InstanceCollector::add(this);
 	}
 
 	unsigned InstancedSerializable::instanceID() const
