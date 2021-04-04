@@ -8,10 +8,13 @@ namespace TristeonEditor
 	{
 	public:
 		AbstractEditor() = default;
-		virtual ~AbstractEditor() = default;
-		virtual QWidget* widget() = 0;
+		virtual ~AbstractEditor() { delete _widget; }
+		virtual QWidget* widget() { return _widget; }
 
 		DELETE_COPY(AbstractEditor);
 		DEFAULT_MOVE(AbstractEditor);
+
+	protected:
+		QWidget* _widget = nullptr;
 	};
 }

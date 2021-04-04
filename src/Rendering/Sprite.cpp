@@ -1,5 +1,6 @@
 #include "Sprite.h"
 #include <AssetManagement/Resources.h>
+#include <Serialization/MetaWrappers/TexturePath.h>
 
 #include "glad/glad.h"
 #include <magic_enum.hpp>
@@ -15,14 +16,12 @@ namespace Tristeon
 	{
 		json j = Graphic::serialize();
 		j["typeID"] = Type<Sprite>::fullName();
-		j["width"] = width;
-		j["height"] = height;
-		j["flipX"] = flipX;
-		j["flipY"] = flipY;
+		j["size"] = size;
+		j["flip"] = flip;
 		j["colour"] = colour;
-		j["texturePath"] = _albedoPath;
-		j["normalPath"] = _normalPath;
-		j["lightMaskPath"] = _lightMaskPath;
+		j["texturePath"] = TexturePath{ _albedoPath };
+		j["normalPath"] = TexturePath{ _normalPath };
+		j["lightMaskPath"] = TexturePath{ _lightMaskPath };
 		j["normalMapStrength"] = _normalMapStrength;
 		return j;
 	}
@@ -31,15 +30,12 @@ namespace Tristeon
 	{
 		Graphic::deserialize(j);
 
-		width = j.value("width", 1u);
-		height = j.value("height", 1u);
-
-		flipX = j.value("flipX", false);
-		flipY = j.value("flipY", false);
+		size = j.value("size", VectorU { 64, 64 });
+		flip = j.value("flip", VectorB(false, false));
 
 		colour = j.value("colour", Colour());
 
-		auto const newAlbedoPath = j.value("texturePath", "");
+		auto const newAlbedoPath = j.value("texturePath", json()).value("path", "");
 		if (newAlbedoPath != _albedoPath)
 		{
 			_albedo = Resources::assetLoad<Texture>(newAlbedoPath);
@@ -48,7 +44,7 @@ namespace Tristeon
 		if (!_albedo)
 			_albedo = Resources::assetLoad<Texture>(Texture::defaultPath);
 
-		auto const newNormalPath = j.value("normalPath", "");
+		auto const newNormalPath = j.value("normalPath", json()).value("path", "");
 		if (newNormalPath != _normalPath)
 		{
 			_normal = Resources::assetLoad<Texture>(newNormalPath);
@@ -56,7 +52,7 @@ namespace Tristeon
 		}
 		_normalMapStrength = j.value("normalMapStrength", 1.0f);
 		
-		auto const newLightMaskPath = j.value("lightMaskPath", "");
+		auto const newLightMaskPath = j.value("lightMaskPath", json()).value("path", "");
 		if (newLightMaskPath != _lightMaskPath)
 		{
 			_lightMask = Resources::assetLoad<Texture>(newLightMaskPath);
@@ -101,8 +97,7 @@ namespace Tristeon
 
 		if (pSetSize)
 		{
-			width = (*texPtr)->width();
-			height = (*texPtr)->height();
+			size = { (*texPtr)->width(), (*texPtr)->height() };
 		}
 	}
 
@@ -168,12 +163,12 @@ namespace Tristeon
 		}
 		
 		//Sprite info
-		shader->setUniformValue("sprite.width", width);
-		shader->setUniformValue("sprite.height", height);
+		shader->setUniformValue("sprite.width", size.x);
+		shader->setUniformValue("sprite.height", size.y);
 		shader->setUniformValue("sprite.colour", colour.r, colour.g, colour.b, colour.a);
 
-		shader->setUniformValue("sprite.flipX", flipX);
-		shader->setUniformValue("sprite.flipY", flipY);
+		shader->setUniformValue("sprite.flipX", flip.x);
+		shader->setUniformValue("sprite.flipY", flip.y);
 		shader->setUniformValue("sprite.renderMask", (int)magic_enum::enum_index<RenderMask>(renderMask).value_or(1)-1);
 		
 		shader->setUniformValue("actor.position", position.x, position.y);
@@ -191,7 +186,7 @@ namespace Tristeon
 
 	Graphic::Bounds Sprite::bounds()
 	{
-		Vector const halfSize = { width / 2.0f * scale.x, height / 2.0f * scale.y };
+		Vector const halfSize = { size.x / 2.0f * scale.x, size.y / 2.0f * scale.y };
 		return Bounds{ position - halfSize, position + halfSize };
 	}
 }

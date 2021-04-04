@@ -54,7 +54,7 @@ namespace TristeonEditor
 	template <typename T, typename EditorType>
 	struct DerivedEditorRegister : EditorRegister
 	{
-		static_assert(std::is_base_of<AbstractJsonEditor, EditorType>::value, "EdtitorType has to be a type of AbstractJsonEditor!");
+		static_assert(std::is_base_of<AbstractJsonEditor, EditorType>::value, "EditorType has to be a type of AbstractJsonEditor!");
 		static_assert(std::is_abstract<EditorType>::value == false, "EditorType can't be abstract");
 
 		DerivedEditorRegister()

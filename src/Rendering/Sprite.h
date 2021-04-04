@@ -35,25 +35,12 @@ namespace Tristeon
 		json serialize() override;
 		void deserialize(json j) override;
 
-		/**
-		 * The width of the sprite in pixels.
-		 */
-		unsigned int width = 64;
+		VectorU size { 64, 64 };
 
 		/**
-		 * The height of the sprite in pixels.
+		 * Flip the sprite vertically, or horizontally
 		 */
-		unsigned int height = 64;
-
-		/**
-		 * If true, the sprite is flipped horizontally
-		 */
-		bool flipX = false;
-
-		/**
-		 * If true, the sprite is flipped vertically
-		 */
-		bool flipY = false;
+		VectorB flip;
 
 		/**
 		 * The colour of the sprite, this acts as a multiplier on top of the existing texture.

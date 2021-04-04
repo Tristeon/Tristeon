@@ -71,28 +71,44 @@
                         "typeID": "Tristeon::Colour"
                     },
                     "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 305,
+                    "flip": {
+                        "typeID": "Tristeon::VectorType<bool>",
+                        "x": false,
+                        "y": false
+                    },
                     "instanceID": 310342092,
-                    "lightMaskPath": "",
+                    "lightMaskPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
                     "name": "New AnimationSprite",
                     "normalMapStrength": 1.0,
-                    "normalPath": "",
+                    "normalPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 340.9685363769531,
                         "y": 680.2012939453125
                     },
+                    "renderMask": 1,
                     "rotation": 0.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "NormalMapHintsAssets/spritesheet.png",
-                    "typeID": "Tristeon::AnimationSprite",
-                    "width": 305
+                    "size": {
+                        "typeID": "Tristeon::VectorType<unsignedint>",
+                        "x": 305,
+                        "y": 305
+                    },
+                    "texturePath": {
+                        "path": "NormalMapHintsAssets/spritesheet.png",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "typeID": "Tristeon::AnimationSprite"
                 },
                 {
                     "behaviours": [],
@@ -265,30 +281,7 @@
                     "typeID": "Tristeon::Actor"
                 },
                 {
-                    "behaviours": [
-                        {
-                            "colour": {
-                                "a": 1.0,
-                                "b": 1.0,
-                                "g": 1.0,
-                                "r": 1.0,
-                                "typeID": "Tristeon::Colour"
-                            },
-                            "direction": {
-                                "typeID": "Tristeon::VectorType<float>",
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "innerCutoff": 360.0,
-                            "innerRadius": 256.0,
-                            "instanceID": 3865318953,
-                            "intensity": 0.10000000149011612,
-                            "outerCutoff": 360.0,
-                            "outerRadius": 1028.0,
-                            "sourceType": 2,
-                            "typeID": "Tristeon::Light"
-                        }
-                    ],
+                    "behaviours": [],
                     "instanceID": 1291163949,
                     "name": "New Actor",
                     "position": {
@@ -314,29 +307,7 @@
                 {
                     "behaviours": [
                         {
-                            "colour": {
-                                "a": 1.0,
-                                "b": 1.0,
-                                "g": 1.0,
-                                "r": 1.0,
-                                "typeID": "Tristeon::Colour"
-                            },
-                            "direction": {
-                                "typeID": "Tristeon::VectorType<float>",
-                                "x": 0.0,
-                                "y": -1.0
-                            },
-                            "innerCutoff": 360.0,
-                            "innerRadius": 256.0,
-                            "instanceID": 3152115923,
-                            "intensity": 1.0,
-                            "outerCutoff": 360.0,
-                            "outerRadius": 512.0,
-                            "sourceType": 0,
-                            "typeID": "Tristeon::Light"
-                        },
-                        {
-                            "instanceID": 1343769641,
+                            "instanceID": 2622348267,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
@@ -348,28 +319,44 @@
                         "typeID": "Tristeon::Colour"
                     },
                     "display": true,
-                    "flipX": false,
-                    "flipY": false,
-                    "height": 1,
+                    "flip": {
+                        "typeID": "Tristeon::VectorType<bool>",
+                        "x": false,
+                        "y": false
+                    },
                     "instanceID": 1232564469,
-                    "lightMaskPath": "",
+                    "lightMaskPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
                     "name": "New Sprite",
                     "normalMapStrength": 0.10000000149011612,
-                    "normalPath": "",
+                    "normalPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 39.7197265625,
                         "y": 1009.0531616210938
                     },
+                    "renderMask": 1,
                     "rotation": 0.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "texturePath": "NormalMapHintsAssets/LightSprite.png",
-                    "typeID": "Tristeon::Sprite",
-                    "width": 1
+                    "size": {
+                        "typeID": "Tristeon::VectorType<unsignedint>",
+                        "x": 1,
+                        "y": 1
+                    },
+                    "texturePath": {
+                        "path": "NormalMapHintsAssets/LightSprite.png",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "typeID": "Tristeon::Sprite"
                 }
             ],
             "instanceID": 3315871122,

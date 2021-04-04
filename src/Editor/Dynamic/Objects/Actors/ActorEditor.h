@@ -13,12 +13,9 @@ namespace TristeonEditor
 	public:
 		ActorEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
 		~ActorEditor() override;
-
 		virtual void setValue(const nlohmann::json& pValue) override;
-		virtual QWidget* widget() override;
 
 	protected:
-		QWidget* _widget;
 		QLayout* _layout;
 
 		QWidget* _formWidget;
@@ -28,6 +25,10 @@ namespace TristeonEditor
 		QWidget* scrollArea = nullptr;
 
 		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
+
+		void displayDefaultProperties();
+		void displayAutoProperties();
+		void displayBehaviours();
 	};
 
 	EDITOR(Tristeon::Actor, ActorEditor);
