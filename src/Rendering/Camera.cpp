@@ -106,8 +106,6 @@ namespace Tristeon
 		_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 		if (!_valid)
 			TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
-		else
-			TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_fbo));
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
@@ -138,8 +136,6 @@ namespace Tristeon
 			_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 			if (!_valid)
 				TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
-			else
-				TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_processedFbo));
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 		{
@@ -166,8 +162,6 @@ namespace Tristeon
 			_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 			if (!_valid)
 				TRISTEON_WARNING("Failed to create camera's framebuffer with size " + size.toString());
-			else
-				TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_previousProcessFbo));
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 	}
@@ -202,8 +196,6 @@ namespace Tristeon
 			_valid = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 			if (!_valid)
 				TRISTEON_WARNING("Failed to create composite light framebuffer with size " + size.toString());
-			else
-				TRISTEON_LOG("Successfully created framebuffer " + std::to_string(_compositeLightFBOs[i]));
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 	}
