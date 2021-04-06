@@ -7,26 +7,12 @@
 
 namespace Tristeon
 {
-	struct TexturePath : Serializable
+	struct TexturePath
 	{
 		String path;
 
 		TexturePath() = default;
 		explicit TexturePath(const String& pPath) : path(pPath) { }
-		
-		[[nodiscard]] json serialize() override
-		{
-			json j;
-#ifdef TRISTEON_EDITOR
-			j["typeID"] = Type<TexturePath>::fullName();
-#endif
-			j["path"] = path;
-			return j;
-		}
-		void deserialize(json j)
-		{
-			path = j.value("path", "");
-		}
 	};
 
 	inline void to_json(nlohmann::json& j, const TexturePath& p) {

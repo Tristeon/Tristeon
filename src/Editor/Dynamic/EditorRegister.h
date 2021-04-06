@@ -1,6 +1,4 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-
 #include <map>
 
 #include <Standard/String.h>
@@ -64,5 +62,5 @@ namespace TristeonEditor
 	};
 
 #define EDITOR(type, editor) static const TristeonEditor::DerivedEditorRegister<type, editor> editor_reg_##editor
+#define EDITOR_(type, editor, name) static const TristeonEditor::DerivedEditorRegister<type, editor> editor_reg_##name
 }
-#endif
