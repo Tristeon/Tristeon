@@ -47,7 +47,7 @@ namespace TristeonEditor
 	{
 		_value = pValue;
 
-		auto val = magic_enum::enum_index(_value["value"].get<T>());
+		auto val = magic_enum::enum_index(_value["value"].template get<T>());
 		_comboBox->setCurrentIndex(val.has_value() ? val.value() : 0);
 	}
 }
