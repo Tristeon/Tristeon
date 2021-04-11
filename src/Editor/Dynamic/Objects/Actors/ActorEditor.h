@@ -26,6 +26,8 @@ namespace TristeonEditor
 
 		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
 
+		Tristeon::List<Tristeon::Unique<AbstractJsonEditor>> _behaviourEditors;
+		
 		void displayDefaultProperties();
 		void displayAutoProperties();
 		void displayBehaviours();

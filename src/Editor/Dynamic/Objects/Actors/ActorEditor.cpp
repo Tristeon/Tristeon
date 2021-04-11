@@ -7,6 +7,10 @@
 
 #include <Serialization/Register.h>
 
+
+#include "InstanceCollector.h"
+#include "Editor/Dynamic/Objects/Behaviours/BehaviourEditor.h"
+
 namespace TristeonEditor
 {
 	ActorEditor::ActorEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback) : AbstractJsonEditor(pValue, pCallback)
@@ -35,7 +39,7 @@ namespace TristeonEditor
 		scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 		scroll->setContentsMargins(0, 0, 0, 0);
 
-		scrollArea = new QWidget(scroll);
+		scrollArea = new QWidget();
 		scrollLayout = new QVBoxLayout(scrollArea);
 		scrollLayout->setAlignment(Qt::AlignTop);
 		scrollLayout->setContentsMargins(0, 0, 0, 0);
@@ -112,28 +116,28 @@ namespace TristeonEditor
 				continue;
 
 			Tristeon::String type;
-			
+
 			switch (it.value().type())
 			{
-			case detail::value_t::object: 
+			case detail::value_t::object:
 				type = it.value().value("typeID", "");
 				break;
-			case detail::value_t::array: 
+			case detail::value_t::array:
 				type = "";
 				break;
-			case detail::value_t::string: 
+			case detail::value_t::string:
 				type = Tristeon::Type<Tristeon::String>::fullName();
 				break;
-			case detail::value_t::boolean: 
+			case detail::value_t::boolean:
 				type = Tristeon::Type<bool>::fullName();
 				break;
-			case detail::value_t::number_integer: 
+			case detail::value_t::number_integer:
 				type = Tristeon::Type<int>::fullName();
 				break;
-			case detail::value_t::number_unsigned: 
+			case detail::value_t::number_unsigned:
 				type = Tristeon::Type<unsigned>::fullName();
 				break;
-			case detail::value_t::number_float: 
+			case detail::value_t::number_float:
 				type = Tristeon::Type<float>::fullName();
 				break;
 			default: break;
@@ -155,11 +159,41 @@ namespace TristeonEditor
 					form->addRow(key.c_str(), new QLabel("No custom editor found"));
 			}
 		}
-		
+
 	}
-	
+
 	void ActorEditor::displayBehaviours()
 	{
+		for (auto behaviour : _value["behaviours"])
+		{
+			auto editor = EditorRegister::createInstance(behaviour["typeID"], behaviour,
+				[=](json pVal)
+				{
+					auto* b = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(pVal["instanceID"]));
+					if (b)
+					{
+						b->deserialize(pVal);
+						_value = b->actor()->serialize();
+					}
+				}
+			);
+
+			if (!editor)
+			{
+				editor = std::make_unique<BehaviourEditor>(behaviour, 
+					[=](json pVal)
+					{
+						auto* b = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(pVal["instanceID"]));
+						if (b)
+						{
+							b->deserialize(pVal);
+							_value = b->actor()->serialize();
+						}
+					});
+			}
+
+			scrollArea->layout()->addWidget(editor->widget());
+		}
 		//for (auto* behaviour : actor->findBehaviours())
 		//	addBehaviour(behaviour);
 
@@ -191,16 +225,6 @@ namespace TristeonEditor
 
 	//void ActorEditor::addBehaviour(Tristeon::Behaviour* behaviour)
 	//{
-	//	json j = behaviour->serialize();
 
-	//	ObjectEditor * widget = ObjectEditorRegister::createInstance(j["typeID"]);
-
-	//	if (widget == nullptr)
-	//		widget = new BehaviourEditor(); //Default editor for behaviours as fallback.
-
-	//	widget->setParent(scrollArea);
-	//	widget->target(behaviour);
-	//	widget->initialize();
-	//	scrollArea->layout()->addWidget(widget);
 	//}
 }
