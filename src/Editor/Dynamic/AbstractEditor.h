@@ -1,25 +1,20 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include "TObject.h"
-#include <QWidget>
+#include <qwidget.h>
+#include <Utils/ClassDefaults.h>
 
 namespace TristeonEditor
 {
-	class Editor;
-
-	class AbstractEditor : public QWidget
+	class AbstractEditor
 	{
-		friend class PropertyWindow;
 	public:
-		virtual ~AbstractEditor() = default;
+		AbstractEditor() = default;
+		virtual ~AbstractEditor() { delete _widget; }
+		virtual QWidget* widget() { return _widget; }
 
-		virtual void initialize() = 0;
-		virtual void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) = 0;
+		DELETE_COPY(AbstractEditor);
+		DEFAULT_MOVE(AbstractEditor);
 
-		Tristeon::TObject* target() const { return _target; }
-		void target(Tristeon::TObject* value) { Tristeon::TObject* old = _target; _target = value; targetChanged(_target, old); }
-	private:
-		Tristeon::TObject* _target = nullptr;
+	protected:
+		QWidget* _widget = nullptr;
 	};
 }
-#endif

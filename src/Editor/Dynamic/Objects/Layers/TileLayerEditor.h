@@ -1,26 +1,28 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
+#include <Editor/Dynamic/AbstractJsonEditor.h>
+#include <Editor/Dynamic/EditorRegister.h>
+
+#include <Editor/Dynamic/Fields/UIntEditor.h>
+
 #include <QtWidgets>
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
 #include <Scenes/Layers/TileLayer.h>
 
 namespace TristeonEditor
 {
-	class TileLayerEditor : public ObjectEditor
+	class TileLayerEditor : public AbstractJsonEditor
 	{
 	public:
-		void initialize() override;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+		TileLayerEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
+		virtual void setValue(const nlohmann::json& pValue) override;
 
 	private:
 		void mapColumnsChanged(int columns);
 		void mapRowsChanged(int rows);
 		void resizeMap(int columns, int rows);
 		
-		Tristeon::TileLayer* targetLayer = nullptr;
+		Tristeon::Unique<UIntEditor> columns;
+		Tristeon::Unique<UIntEditor> rows;
 	};
 
-	OBJECT_EDITOR(Tristeon::TileLayer, TileLayerEditor);
+	EDITOR(Tristeon::TileLayer, TileLayerEditor);
 }
-#endif

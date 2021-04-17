@@ -1,25 +1,19 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
-#include <Scenes/Actors/Behaviour.h>
+#include <Editor/Dynamic/AbstractJsonEditor.h>
+#include <Standard/Unique.h>
 
 namespace TristeonEditor
 {
-	class BehaviourEditor : public ObjectEditor
+	class ActorEditor;
+
+	class BehaviourEditor : public AbstractJsonEditor
 	{
 	public:
-		void initialize() override;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+		BehaviourEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
+		virtual void setValue(const nlohmann::json& pValue) override;
 
-		virtual void displayContents();
+		ActorEditor* actorEditor = nullptr;
 	private:
-		void removeButtonPressed();
-
-		Tristeon::Behaviour* behaviour = nullptr;
-		json data;
+		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
 	};
-	
-	OBJECT_EDITOR(Tristeon::Behaviour, BehaviourEditor);
 }
-#endif

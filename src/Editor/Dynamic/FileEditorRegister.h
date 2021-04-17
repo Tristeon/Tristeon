@@ -1,15 +1,16 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include "FileEditor.h"
+#include "AbstractFileEditor.h"
 #include <map>
+#include <typeinfo> //Required by some compilers
 
 #include <Utils/Console.h>
 #include <Standard/String.h>
+#include <Standard/Unique.h>
 
 namespace TristeonEditor
 {
 	template <typename T>
-	FileEditor* createEditor() { return new T(); }
+	Tristeon::Unique<AbstractFileEditor> createFileEditor(FileItem pItem) { return std::make_unique<T>(pItem); }
 
 	/**
 	 * The FileEditorRegister, much like the TypeRegister is a map that is used to create instances of registered types.
@@ -19,21 +20,18 @@ namespace TristeonEditor
 	struct FileEditorRegister
 	{
 		//Map that contains typename as key and createinstance methods as value
-		using EditorMap = std::map<Tristeon::String, FileEditor*(*)()>;
+		using EditorMap = std::map<Tristeon::String, Tristeon::Unique<AbstractFileEditor>(*)(FileItem)>;
 
 		/**
-		 * Creates instance of an object that inherits from ObjectEditor.
+		 * Creates instance of an object that inherits from AbstractFileEditor.
 		 * The user must take ownership of the instance himself.
 		 */
-		static FileEditor* createInstance(const std::string& extension)
+		static Tristeon::Unique<AbstractFileEditor> createInstance(const std::string& pExtension, FileItem pItem)
 		{
-			const auto it = getMap()->find(extension);
+			const auto it = getMap()->find(pExtension);
 			if (it == getMap()->end())
-			{
-				TRISTEON_WARNING("Couldn't find FileEditor for extension " + extension);
 				return nullptr;
-			}
-			return it->second();
+			return it->second(pItem);
 		}
 
 		/**
@@ -52,11 +50,12 @@ namespace TristeonEditor
 	template <typename T>
 	struct DerivedFileEditorRegister : FileEditorRegister
 	{
-		static_assert(std::is_base_of<FileEditor, T>::value, "T has to be a type of FileEditor!");
+		static_assert(std::is_base_of<AbstractFileEditor, T>::value, "T has to be a type of AbstractFileEditor!");
+		static_assert(std::is_abstract<T>::value == false, "T can not be abstract!");
 
 		explicit DerivedFileEditorRegister(Tristeon::String extension)
 		{
-			getMap()->emplace(extension, &createEditor<T>);
+			getMap()->emplace(extension, &createFileEditor<T>);
 		}
 	};
 
@@ -65,4 +64,3 @@ namespace TristeonEditor
 	 */
 	#define FILE_EDITOR(extension, t) static const TristeonEditor::DerivedFileEditorRegister<t> file_editor_reg_##t(extension)
 }
-#endif

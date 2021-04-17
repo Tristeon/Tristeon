@@ -1,81 +1,71 @@
-#ifdef TRISTEON_EDITOR
+#include "Input/Keyboard.h"
 #include "ActorLayerSceneView.h"
 #include <Input/Mouse.h>
 #include "Engine.h"
 #include "Window.h"
 #include "Editor/Editor.h"
 #include "Editor/GameView.h"
-#include "Input/Keyboard.h"
 #include "Math/Math.h"
-#include "Rendering/Camera.h"
 #include "Rendering/Gizmos.h"
 #include "Rendering/Graphic.h"
 #include "Rendering/Grid.h"
 #include "Rendering/Sprite.h"
 
-using namespace Tristeon;
 namespace TristeonEditor
 {
-	SCENE_EDITOR_CPP(Tristeon::ActorLayer, ActorLayerSceneView);
-	
-	void ActorLayerSceneView::initialize()
-	{
-		actorLayer = dynamic_cast<ActorLayer*>(target());
-	}
-
 	void ActorLayerSceneView::updateView()
 	{
-		if (Engine::playMode())
+		if (Tristeon::Engine::playMode())
 		{
-			dragging = false;
-			draggingScalar = false;
-			draggingRotate = false;
+			_dragging = false;
+			_draggingScalar = false;
+			_draggingRotate = false;
 			return;
 		}
 
-		if (Mouse::pressed(Mouse::Left) && GameView::instance()->underMouse())
+		if (Tristeon::Mouse::pressed(Tristeon::Mouse::Left) && GameView::instance()->underMouse())
 		{
-			if (scalar.underMouse())
-				draggingScalar = true;
-			else if (rotator.underMouse())
-				draggingRotate = true;
+			if (_scalar.underMouse())
+				_draggingScalar = true;
+			else if (_rotator.underMouse())
+				_draggingRotate = true;
 			else
 				clickActor();
 		}
-		else if (Mouse::held(Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Keyboard::held(Keyboard::Alt))
+		else if (Tristeon::Mouse::held(Tristeon::Mouse::Left) && Editor::instance()->selectedActor() != nullptr && !Tristeon::Keyboard::held(Tristeon::Keyboard::Alt))
 		{
-			if (dragging)
+			if (_dragging)
 			{
-				if (Keyboard::held(Keyboard::Shift))
+				if (Tristeon::Keyboard::held(Tristeon::Keyboard::Shift))
 				{
-					auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
+					auto* graphic = dynamic_cast<Tristeon::Graphic*>(Editor::instance()->selectedActor());
 					if (graphic == nullptr)
-						Editor::instance()->selectedActor()->position = Grid::snap(Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset);
+						Editor::instance()->selectedActor()->position = Tristeon::Grid::snap(Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera()) - _draggingOffset);
 					else
-						graphic->position = Grid::snap(Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset) + graphic->bounds().size() / 2.0f - Grid::tileSize() / 2.0f;
+						graphic->position = Tristeon::Grid::snap(Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera()) - _draggingOffset) + graphic->bounds().size() / 2.0f - Tristeon::Grid::tileSize() / 2.0f;
 				}
 				else
-					Editor::instance()->selectedActor()->position = Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - draggingOffset;
+					Editor::instance()->selectedActor()->position = Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera()) - _draggingOffset;
 			}
-			else if (draggingScalar)
+			else if (_draggingScalar)
 			{
 				//TODO: Make graphic resizing more generic
-				auto* sprite = dynamic_cast<Sprite*>(Editor::instance()->selectedActor());
+				auto* sprite = dynamic_cast<Tristeon::Sprite*>(Editor::instance()->selectedActor());
 
 				if (sprite != nullptr && sprite->texture() != nullptr)
 				{
-					Vector const position = Editor::instance()->selectedActor()->position;
-					Vector const topRight = Window::screenToWorld(Mouse::position(), Renderer::editorCamera());
-					Vector const difference = topRight - position;
+					Tristeon::Vector const position = Editor::instance()->selectedActor()->position;
+					Tristeon::Vector const topRight = Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera());
+					Tristeon::Vector const difference = topRight - position;
 					if (difference.x < 0 || difference.y < 0)
 						return;
 
-					Vector size = difference / sprite->scale * 2;
+					Tristeon::Vector size = difference / sprite->scale * 2;
 
 					//Snap to aspect ratio
-					if (Keyboard::held(Keyboard::Shift))
+					if (Tristeon::Keyboard::held(Tristeon::Keyboard::Shift))
 					{
-						VectorI const imageSize = sprite->texture()->size();
+						Tristeon::VectorI const imageSize = sprite->texture()->size();
 						
 						if (size.x > size.y) //Prioritize X
 							size.x = imageSize.x / imageSize.y * size.y;
@@ -83,58 +73,57 @@ namespace TristeonEditor
 							size.y = imageSize.y / imageSize.x * size.x;
 					}
 					
-					sprite->width = size.x;
-					sprite->height = size.y;
+					sprite->size = size;
 				}
 			}
-			else if (draggingRotate)
+			else if (_draggingRotate)
 			{
-				Vector const position = Editor::instance()->selectedActor()->position;
-				Vector const mouse = (Window::screenToWorld(Mouse::position(), Renderer::editorCamera()) - position).normalize();
+				Tristeon::Vector const position = Editor::instance()->selectedActor()->position;
+				Tristeon::Vector const mouse = (Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera()) - position).normalize();
 				const float angle = mouse.angle();
 
-				if (Keyboard::held(Keyboard::Shift))
+				if (Tristeon::Keyboard::held(Tristeon::Keyboard::Shift))
 					Editor::instance()->selectedActor()->rotation = roundf(angle / 45.0f) * 45.0f;
 				else
 					Editor::instance()->selectedActor()->rotation = angle;
 			}
 		}
-		else if (Mouse::released(Mouse::Left))
+		else if (Tristeon::Mouse::released(Tristeon::Mouse::Left))
 		{
-			dragging = false;
-			draggingScalar = false;
-			draggingRotate = false;
+			_dragging = false;
+			_draggingScalar = false;
+			_draggingRotate = false;
 		}
 		
-		auto* graphic = dynamic_cast<Graphic*>(Editor::instance()->selectedActor());
+		auto* graphic = dynamic_cast<Tristeon::Graphic*>(Editor::instance()->selectedActor());
 		if (graphic != nullptr)
 		{
-			Graphic::Bounds const aabb = graphic->bounds();
-			Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Colour(0.5, 0.5, 1, 1));
+			Tristeon::Graphic::Bounds const aabb = graphic->bounds();
+			Tristeon::Gizmos::drawSquare(graphic->position, aabb.size(), graphic->rotation, Tristeon::Colour(0.5, 0.5, 1, 1));
 
-			const Vector handleSize = Vector(Math::clamp(32 / Renderer::editorCamera()->zoom, 8.0f, 256.0f), Math::clamp(32 / Renderer::editorCamera()->zoom, 8.0f, 256.0f));
-			const Vector cpos = Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
-			Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Colour(0.5, 0.5, 0.5));
-			scalar = Graphic::Bounds{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };
+			const Tristeon::Vector handleSize = Tristeon::Vector(Tristeon::Math::clamp(32 / Tristeon::Renderer::editorCamera()->zoom, 8.0f, 256.0f), Tristeon::Math::clamp(32 / Tristeon::Renderer::editorCamera()->zoom, 8.0f, 256.0f));
+			const Tristeon::Vector cpos = Tristeon::Math::orbit(graphic->position, aabb.size() / 2.0f, graphic->rotation);
+			Tristeon::Gizmos::drawSquare(cpos, handleSize, graphic->rotation, Tristeon::Colour(0.5, 0.5, 0.5));
+			_scalar = Tristeon::Graphic::Bounds{ cpos - handleSize / 2.0f, cpos + handleSize / 2.0f };
 
-			const Vector rpos = Math::orbit(graphic->position, Vector(aabb.size().x, 0), graphic->rotation);
-			Gizmos::drawSquare(rpos, handleSize, graphic->rotation, Colour(0, 0.5, 0.5));
-			rotator = Graphic::Bounds{ rpos - handleSize / 2.0f, rpos + handleSize / 2.0f };
+			const Tristeon::Vector rpos = Tristeon::Math::orbit(graphic->position, Tristeon::Vector(aabb.size().x, 0), graphic->rotation);
+			Tristeon::Gizmos::drawSquare(rpos, handleSize, graphic->rotation, Tristeon::Colour(0, 0.5, 0.5));
+			_rotator = Tristeon::Graphic::Bounds{ rpos - handleSize / 2.0f, rpos + handleSize / 2.0f };
 		}
 		else
 		{
-			dragging = false;
-			draggingScalar = false;
-			draggingRotate = false;
+			_dragging = false;
+			_draggingScalar = false;
+			_draggingRotate = false;
 		}
 	}
 
 	void ActorLayerSceneView::clickActor()
 	{
-		Vector const world = Window::screenToWorld(Mouse::position(), Renderer::editorCamera());
-		for (size_t i = 0; i < actorLayer->actorCount(); i++)
+		Tristeon::Vector const world = Tristeon::Window::screenToWorld(Tristeon::Mouse::position(), Tristeon::Renderer::editorCamera());
+		for (size_t i = 0; i < _actorLayer->actorCount(); i++)
 		{
-			auto* graphic = dynamic_cast<Graphic*>(actorLayer->actorAt(i));
+			auto* graphic = dynamic_cast<Tristeon::Graphic*>(_actorLayer->actorAt(i));
 
 			if (graphic != nullptr)
 			{
@@ -142,8 +131,8 @@ namespace TristeonEditor
 				{
 					if (graphic == Editor::instance()->selectedActor())
 					{
-						dragging = true;
-						draggingOffset = world - graphic->position;
+						_dragging = true;
+						_draggingOffset = world - graphic->position;
 					}
 
 					Editor::instance()->selectedActor(graphic);
@@ -153,9 +142,8 @@ namespace TristeonEditor
 		}
 
 		Editor::instance()->selectedActor(nullptr);
-		dragging = false;
-		draggingScalar = false;
-		draggingRotate = false;
+		_dragging = false;
+		_draggingScalar = false;
+		_draggingRotate = false;
 	}
 }
-#endif

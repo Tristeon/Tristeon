@@ -1,10 +1,10 @@
 #pragma once
+#include <Serialization/MetaWrappers/SerializedEnum.h>
 
 namespace Tristeon
 {
 	enum class RenderMask : uint8_t
 	{
-		None = 0,
 		Default = 1,
 		Mask1 = 1 << 1,
 		Mask2 = 1 << 2,
@@ -12,7 +12,8 @@ namespace Tristeon
 		Mask4 = 1 << 4,
 		Mask5 = 1 << 5,
 		Mask6 = 1 << 6,
-		Mask7 = 1 << 7,
-		All = 255
+		All = 127
 	};
+
+	ENUM_EDITOR(RenderMask);
 }

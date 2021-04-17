@@ -35,7 +35,7 @@ namespace TristeonEditor
 
 	private:
 		QGridLayout* layout = nullptr;
-		TristeonEditor::SceneEditor* layerView = nullptr;
+		Tristeon::Unique<TristeonEditor::SceneEditor> layerView = nullptr;
 		Tristeon::Unique<TristeonEditor::EditorCameraController> cameraController;
 	};
 }

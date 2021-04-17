@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <algorithm>
 #include <Utils/ClassDefaults.h>
+#include "json.h"
 
 using ull = unsigned long long;
 
@@ -553,5 +554,16 @@ namespace Tristeon
 	void List<T>::sort(Pred predicate)
 	{
 		std::sort(begin(), end(), predicate);
+	}
+
+	template<typename T>
+	inline void to_json(nlohmann::json& j, const List<T>& p) {
+		for (T val : p)
+			j.push_back(val);
+	}
+	template<typename T>
+	inline void from_json(const nlohmann::json& j, List<T>& p) {
+		for (auto element : j)
+			p.add(element.get<T>());
 	}
 }

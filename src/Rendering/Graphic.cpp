@@ -7,6 +7,8 @@
 #include "Renderer.h"
 #include "Rendering/Camera.h"
 
+#include <Serialization/MetaWrappers/SerializedEnum.h>
+
 namespace Tristeon
 {
 	bool Graphic::Bounds::contains(Vector const& pPosition) const
@@ -42,7 +44,7 @@ namespace Tristeon
 	{
 		json j = Actor::serialize();
 		j["display"] = display;
-		j["renderMask"] = renderMask;
+		j["renderMask"] = SerializedEnum<RenderMask>{ renderMask };
 		return j;
 	}
 
@@ -50,6 +52,6 @@ namespace Tristeon
 	{
 		Actor::deserialize(pJson);
 		display = pJson.value("display", true);
-		renderMask = pJson.value("renderMask", RenderMask::Default);
+		renderMask = pJson.value("renderMask", SerializedEnum<RenderMask>{}).value;
 	}
 }

@@ -1,4 +1,3 @@
-#ifdef TRISTEON_EDITOR
 #include "Editor/EditorFields.h"
 #include "TileLayerEditor.h"
 #include <Serialization/JsonSerializer.h>
@@ -8,43 +7,40 @@ using Tristeon::VectorI;
 
 namespace TristeonEditor
 {
-	void TileLayerEditor::initialize()
+	TileLayerEditor::TileLayerEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback) : AbstractJsonEditor(pValue, pCallback)
 	{
-		setMouseTracking(true);
-		
-		auto* formParent = new QWidget(this);
-		formParent->show();
-		layout->addWidget(formParent);
-		
-		auto* form = new QFormLayout();
-		formParent->setLayout(form);
-		
-		EditorFields::uintField(form, "Columns", targetLayer->columns(), 1, 1000, [&](int value) { mapColumnsChanged(value); });
-		EditorFields::uintField(form, "Rows", targetLayer->rows(), 1, 1000, [&](int value) { mapRowsChanged(value); });
+		auto* form = new QWidget();
+		_widget = form;
+
+		auto* formLayout = new QFormLayout();
+		form->setLayout(formLayout);
+
+		columns = std::make_unique<UIntEditor>(pValue["columns"], [=](nlohmann::json val) { mapColumnsChanged(val); });
+		formLayout->addRow("Columns", columns->widget());
+		rows = std::make_unique<UIntEditor>(pValue["rows"], [=](nlohmann::json val) { mapRowsChanged(val); });
+		formLayout->addRow("Rows", rows->widget());
 	}
 
-	void TileLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
+	void TileLayerEditor::setValue(const nlohmann::json& pValue)
 	{
-		targetLayer = dynamic_cast<Tristeon::TileLayer*>(current);
+		//TODO
 	}
 
 	void TileLayerEditor::mapColumnsChanged(int columns)
 	{
-		resizeMap(columns, targetLayer->rows());
+		resizeMap(columns, _value["rows"]);
 	}
 
 	void TileLayerEditor::mapRowsChanged(int rows)
 	{
-		resizeMap(targetLayer->columns(), rows);
+		resizeMap(_value["columns"], rows);
 	}
 
 	void TileLayerEditor::resizeMap(int columns, int rows)
 	{
-		json j = targetLayer->serialize();
-		
 		Tristeon::String data;
-		j["columns"] = columns;
-		j["rows"] = rows;
+		_value["columns"] = columns;
+		_value["rows"] = rows;
 
 		//TODO: Copy map over after resizing
 		for (unsigned int i = 0; i < columns * rows; i++)
@@ -53,8 +49,7 @@ namespace TristeonEditor
 			if (i < columns * rows - 1)
 				data += ",";
 		}
-		j["tileData"] = data;
-		targetLayer->deserialize(j);
+		_value["tileData"] = data;
+		_callback(_value);
 	}
 }
-#endif

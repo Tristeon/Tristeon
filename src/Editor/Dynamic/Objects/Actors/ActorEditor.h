@@ -1,41 +1,45 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
+#include <Editor/Dynamic/AbstractJsonEditor.h>
+#include <Editor/Dynamic/EditorRegister.h>
 #include <Scenes/Actors/Actor.h>
+
+#include <qwidget.h>
+#include <qformlayout.h>
+#include <qscrollarea.h>
 
 namespace TristeonEditor
 {
-	class ActorEditor : public ObjectEditor
+	class BehaviourEditor;
+
+	class ActorEditor : public AbstractJsonEditor
 	{
 	public:
-		void initialize() override;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
+		ActorEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
+		~ActorEditor() override;
+		virtual void setValue(const nlohmann::json& pValue) override;
 
-		void displayActorProperties();
-		virtual void displayProperties();
+		void removeBehaviourEditor(BehaviourEditor* editor);
+	protected:
+		QLayout* _layout = nullptr;
+
+		QWidget* _formWidget = nullptr;
+		QFormLayout* _formLayout = nullptr;
+
+		QScrollArea* _scroll = nullptr;
+		QWidget* _scrollWidget = nullptr;
+		QLayout* _scrollLayout = nullptr;
+		
+		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
+
+		Tristeon::List<Tristeon::Unique<AbstractJsonEditor>> _behaviourEditors;
+		
+		void displayDefaultProperties();
 		void displayAutoProperties();
 		void displayBehaviours();
 
-		/**
-		 * If true, the actor editor automatically displays the property after all other properties have been displayed
-		 */
-		virtual bool shouldDisplay(Tristeon::String const& propertyName);
-
-	protected:
-		QLayout* scrollLayout = nullptr;
-		QWidget* scrollArea = nullptr;
-		
-	private:
-		void addBehaviour(Tristeon::Behaviour* behaviour);
-		void actorNameChanged(const QString& name);
 		void addButtonPressed();
-
-		Tristeon::Actor* actor = nullptr;
-
-		json data;
+		void addBehaviourEditor(json behaviour);
 	};
 
-	OBJECT_EDITOR(Tristeon::Actor, ActorEditor);
+	EDITOR(Tristeon::Actor, ActorEditor);
 }
-#endif

@@ -1,11 +1,10 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
 #include "DockWidget.h"
 #include <QtWidgets>
 
 namespace TristeonEditor
 {
-	class ObjectEditor;
+	class AbstractEditor;
 	
 	class LayerEditor : public QDockWidget, public DockWidget
 	{
@@ -16,10 +15,8 @@ namespace TristeonEditor
 		void sceneLoaded(Tristeon::Scene* scene) override;
 		void selectedLayerChanged(Tristeon::Layer* layer) override;
 
-		ObjectEditor* current = nullptr;
+		std::unique_ptr<AbstractEditor> current = nullptr;
 		QWidget* contents = nullptr;
 		QGridLayout* layout = nullptr;
 	};
 }
-
-#endif

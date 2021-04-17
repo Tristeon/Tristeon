@@ -1,16 +1,17 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
 #include "SceneEditor.h"
 
 #include <iostream>
 #include <map>
 
+#include <Standard/Unique.h>
 #include <Serialization/Type.h>
+#include <Scenes/Layers/Layer.h>
 
 namespace TristeonEditor
 {
 	template <typename T>
-	SceneEditor* createEditor() { return new T(); }
+	Tristeon::Unique<SceneEditor> createSceneEditor(Tristeon::Layer* pLayer) { return std::make_unique<T>(pLayer); }
 
 	/**
 	 * The SceneEditorRegister, much like the TypeRegister is a map that is used to create instances of registered types.
@@ -20,21 +21,21 @@ namespace TristeonEditor
 	struct SceneEditorRegister
 	{
 		//Map that contains typename as key and createinstance methods as value
-		using EditorMap = std::map<Tristeon::String, SceneEditor* (*)()>;
+		using EditorMap = std::map<Tristeon::String, Tristeon::Unique<SceneEditor> (*)(Tristeon::Layer*)>;
 
 		/**
 		 * Creates instance of an object that inherits from SceneEditor.
 		 * The user must take ownership of the instance himself.
 		 */
-		static SceneEditor* createInstance(const std::string& s)
+		static Tristeon::Unique<SceneEditor> createInstance(const std::string& typeID, Tristeon::Layer* pLayer)
 		{
-			const auto it = getMap()->find(s);
+			const auto it = getMap()->find(typeID);
 			if (it == getMap()->end())
 			{
-				std::cout << "Couldn't find SceneEditor for type " << s << std::endl;
+				std::cout << "Couldn't find SceneEditor for type " << typeID << std::endl;
 				return nullptr;
 			}
-			return it->second();
+			return it->second(pLayer);
 		}
 
 		/**
@@ -57,17 +58,9 @@ namespace TristeonEditor
 
 		DerivedSceneEditorRegister()
 		{
-			getMap()->emplace(Tristeon::Type<T>::fullName(), &createEditor<EditorType>);
+			getMap()->emplace(Tristeon::Type<T>::fullName(), &createSceneEditor<EditorType>);
 		}
 	};
 
-	/**
-	 * Binds a custom editor to a given type.
-	 */
-#define SCENE_EDITOR_H(type, editor) static DerivedSceneEditorRegister<type, editor> scene_editor_reg;
-	 /**
-	  * Binds a custom editor to a given type.
-	  */
-#define SCENE_EDITOR_CPP(type, editor) DerivedSceneEditorRegister<type, editor> editor::scene_editor_reg;
+#define SCENE_EDITOR(type, editor) static const TristeonEditor::DerivedSceneEditorRegister<type, editor> scene_editor_reg_##editor
 }
-#endif

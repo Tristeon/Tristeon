@@ -32,7 +32,7 @@ namespace Tristeon
 		float const horizontal = (float)(Keyboard::held(Keyboard::D) - Keyboard::held(Keyboard::A));
 		body->applyForce(Vector(horizontal, 0) * Time::deltaTime() * runSpeed);
 
-		actor<Sprite>()->flipX = horizontal < 0;
+		actor<Sprite>()->flip.x = horizontal < 0;
 		
 		if (Keyboard::pressed(Keyboard::Number1))
 			Settings::Graphics::setPreferredDisplay(0);

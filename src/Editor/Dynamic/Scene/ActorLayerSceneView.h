@@ -1,33 +1,32 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include <QtWidgets>
 #include "SceneEditor.h"
-#include "SceneEditorRegister.h"
 #include "Rendering/Graphic.h"
-#include "Scenes/Layers/ActorLayer.h"
+
+#include <Scenes/Layers/ActorLayer.h>
+#include <Editor/Dynamic/Scene/SceneEditorRegister.h>
 
 namespace TristeonEditor
 {
 	class ActorLayerSceneView : public SceneEditor
 	{
-		SCENE_EDITOR_H(Tristeon::ActorLayer, ActorLayerSceneView)
 	public:
-		void initialize() override;
+		explicit ActorLayerSceneView(Tristeon::Layer* pLayer) : SceneEditor(pLayer), _actorLayer(dynamic_cast<Tristeon::ActorLayer*>(pLayer)) { }
 		void updateView() override;
 
 	private:
 		void clickActor();
 		
-		Tristeon::ActorLayer* actorLayer = nullptr;
+		Tristeon::ActorLayer* _actorLayer = nullptr;
 
-		Tristeon::Graphic::Bounds scalar{};
-		Tristeon::Graphic::Bounds rotator{};
+		Tristeon::Graphic::Bounds _scalar{};
+		Tristeon::Graphic::Bounds _rotator{};
 		
-		bool dragging = false;
-		bool draggingScalar = false;
-		bool draggingRotate = false;
+		bool _dragging = false;
+		bool _draggingScalar = false;
+		bool _draggingRotate = false;
 
-		Tristeon::Vector draggingOffset{};
+		Tristeon::Vector _draggingOffset{};
 	};
+
+	SCENE_EDITOR(Tristeon::ActorLayer, ActorLayerSceneView);
 }
-#endif

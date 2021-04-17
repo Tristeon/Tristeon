@@ -1,34 +1,36 @@
-#ifdef TRISTEON_EDITOR
-#include "Math/Vector.h"
 #include "BehaviourEditor.h"
-#include "Editor/EditorFields.h"
 
-#include <QtWidgets>
-#include <Editor/Editor.h>
+#include <qformlayout.h>
+#include <qlabel.h>
+#include <qtoolbutton.h>
+#include <Standard/String.h>
+#include <Serialization/Type.h>
+
+#include <Editor/Dynamic/EditorRegister.h>
+
+
+#include "InstanceCollector.h"
+#include "Editor/Dynamic/Objects/Actors/ActorEditor.h"
+#include "Scenes/Actors/Behaviour.h"
 
 namespace TristeonEditor
 {
-	void BehaviourEditor::initialize()
+	BehaviourEditor::BehaviourEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback) : AbstractJsonEditor(pValue, pCallback)
 	{
-		data = behaviour->serialize();
+		_widget = new QWidget();
+		_widget->setLayout(new QVBoxLayout());
+		_widget->layout()->setContentsMargins(0, 0, 0, 0);
+		_widget->setContentsMargins(0, 0, 0, 0);
 
-		QFrame* frame = new QFrame(this);
-		frame->setFrameShape(QFrame::Box);
-		frame->setFrameShadow(QFrame::Sunken);
-		
-		frame->setLayout(new QVBoxLayout());
-		frame->layout()->setContentsMargins(0, 0, 0, 0);
-		frame->setStyleSheet("background-color: rgb(22, 160, 133);");
-		layout->addWidget(frame);
-
-		auto* titleBar = new QWidget(frame);
-		frame->layout()->addWidget(titleBar);
+		auto* titleBar = new QWidget();
+		titleBar->setStyleSheet("background-color: rgb(22, 160, 133);");
+		_widget->layout()->addWidget(titleBar);
 
 		auto* titleLayout = new QHBoxLayout(titleBar);
 		titleLayout->setContentsMargins(0, 0, 0, 0);
 		titleBar->setLayout(titleLayout);
 
-		auto* typeName = new QLabel(QString::fromStdString(data["typeID"]), titleBar);
+		auto* typeName = new QLabel(QString::fromStdString(_value["typeID"]), titleBar);
 		typeName->setAlignment(Qt::AlignLeft);
 		titleLayout->addWidget(typeName);
 
@@ -36,117 +38,75 @@ namespace TristeonEditor
 		closeButton->setIcon(QIcon(QPixmap(QString("Internal/Icons/cross.jpg"))));
 		closeButton->setMaximumSize(15, 15);
 		titleLayout->addWidget(closeButton);
-		connect(closeButton, &QToolButton::clicked, this, &BehaviourEditor::removeButtonPressed);
+		QWidget::connect(closeButton, &QToolButton::clicked, [=]()
+			{
+				Tristeon::Behaviour* behaviour = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+				behaviour->destroy();
 
-		displayContents();
-	}
+				actorEditor->removeBehaviourEditor(this);
+			});
 
-	void BehaviourEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
-	{
-		behaviour = dynamic_cast<Tristeon::Behaviour*>(current);
-	}
-
-	void BehaviourEditor::displayContents()
-	{
-		auto* formWidget = new QWidget(this);
-		layout->addWidget(formWidget);
-		auto* form = new QFormLayout(formWidget);
+		QWidget* formWidget = new QWidget();
+		_widget->layout()->addWidget(formWidget);
+		auto* form = new QFormLayout();
 		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
 
-		for (auto it = data.begin(); it != data.end(); ++it)
+		for (auto it = _value.begin(); it != _value.end(); ++it)
 		{
-			std::string key = it.key();
+			const std::string& key = it.key();
 
-			if (key == "typeID" || key == "instanceID") continue;
-			
+			if (key == "typeID" || key == "instanceID" || key == "position" || key == "scale" || key == "rotation" || key == "name" || key == "behaviours")
+				continue;
+
+			Tristeon::String type;
+
 			switch (it.value().type())
 			{
-				case detail::value_t::boolean:
-				{
-					EditorFields::boolField(form, key, data[key], [=](int state)
-						{
-							data[key] = (bool)((Qt::CheckState)state == Qt::Checked || (Qt::CheckState)state == Qt::PartiallyChecked); behaviour->deserialize(data);
-					});
-					break;
-				}
-				case detail::value_t::string:
-				{
-					EditorFields::stringField(form, key, data[key], [=](std::string value) { data[key] = value; behaviour->deserialize(data); });
-					break;
-				}
-				case detail::value_t::object:
-				{
-					Tristeon::String const type = it.value().contains("typeID") ? it.value()["typeID"] : "";
+			case nlohmann::detail::value_t::object:
+				type = it.value().value("typeID", "");
+				break;
+			case nlohmann::detail::value_t::array:
+				type = "";
+				break;
+			case nlohmann::detail::value_t::string:
+				type = Tristeon::Type<Tristeon::String>::fullName();
+				break;
+			case nlohmann::detail::value_t::boolean:
+				type = Tristeon::Type<bool>::fullName();
+				break;
+			case nlohmann::detail::value_t::number_integer:
+				type = Tristeon::Type<int>::fullName();
+				break;
+			case nlohmann::detail::value_t::number_unsigned:
+				type = Tristeon::Type<unsigned>::fullName();
+				break;
+			case nlohmann::detail::value_t::number_float:
+				type = Tristeon::Type<float>::fullName();
+				break;
+			default: break;
+			}
 
-					bool const isVector = type == Tristeon::Type<Tristeon::Vector>::fullName();
-					bool const isVectorI = type == Tristeon::Type<Tristeon::VectorI>::fullName();
-
-					QWidget* field;
-					if (isVector || isVectorI)
-					{
-						field = new QWidget();
-						auto* layout = new QHBoxLayout(field);
-						layout->setContentsMargins(0, 0, 0, 0);
-						field->setLayout(layout);
-
-						if (isVector)
-						{
-							auto* x = EditorFields::floatField(field, it.value()["x"], [=](float value) { data[key]["x"] = value; behaviour->deserialize(data); });
-							auto* y = EditorFields::floatField(field, it.value()["y"], [=](float value) { data[key]["y"] = value; behaviour->deserialize(data); });
-							layout->addWidget(x);
-							layout->addWidget(y);
-						}
-
-						if (isVectorI)
-						{
-							auto* x = EditorFields::intField(field, it.value()["x"], [=](int value) { data[key]["x"] = value; behaviour->deserialize(data); });
-							auto* y = EditorFields::intField(field, it.value()["y"], [=](int value) { data[key]["y"] = value; behaviour->deserialize(data); });
-							layout->addWidget(x);
-							layout->addWidget(y);
-						}
+			if (type.empty())
+				form->addRow(key.c_str(), new QLabel("Type not supported"));
+			else
+			{
+				_editors[key] = EditorRegister::createInstance(type, _value[key],
+					[=](nlohmann::json val) {
+						_value[key] = val;
+						_callback(_value);
 					}
-					else
-					{
-						//TODO: Support nested objects in behaviour editor
-						field = new QLabel("Nested objects aren't supported yet");
-					}
-
-					if (field != nullptr)
-						form->addRow(new QLabel(QString::fromStdString(key)), field);
-					break;
-				}
-				case detail::value_t::array:
-				{
-					//TODO: Support arrays in behaviour editor
-					EditorFields::labelField(form, key, "Arrays not supported yet");
-					break;
-				}
-				case detail::value_t::number_float:
-				{
-					EditorFields::floatField(form, key, it.value(), [=](float value){ data[key] = value; behaviour->deserialize(data); });
-					break;
-				}
-				case detail::value_t::number_integer:
-				{
-					EditorFields::intField(form, key, it.value(), [=](int value) { data[key] = value; behaviour->deserialize(data); });
-					break;
-				}
-				case detail::value_t::number_unsigned:
-				{
-					EditorFields::intField(form, key, it.value(), 0, std::numeric_limits<int>::max(), [=](int value) { data[key] = (unsigned int)value; behaviour->deserialize(data); });
-					break;
-				}
-				default:
-					break;
+				);
+				if (_editors[key])
+					form->addRow(key.c_str(), _editors[key]->widget());
+				else
+					form->addRow(key.c_str(), new QLabel("No custom editor found"));
 			}
 		}
 	}
 
-	void BehaviourEditor::removeButtonPressed()
+	void BehaviourEditor::setValue(const nlohmann::json& pValue)
 	{
-		behaviour->destroy();
-		parent()->deleteLater();
+		//TODO
 	}
 }
-#endif

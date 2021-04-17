@@ -1,4 +1,3 @@
-#ifdef TRISTEON_EDITOR
 #include "Rendering/Camera.h"
 #include "Window.h"
 #include "Input/Keyboard.h"
@@ -8,44 +7,36 @@
 #include "TileLayerSceneView.h"
 #include "Editor/Brushes/Brushes.h"
 
-using namespace Tristeon;
-
 namespace TristeonEditor
 {
-	SCENE_EDITOR_CPP(Tristeon::TileLayer, TileLayerSceneView);
-
-	void TileLayerSceneView::targetChanged(TObject* current, TObject* old)
+	TileLayerSceneView::TileLayerSceneView(Tristeon::Layer* pLayer): SceneEditor(pLayer), _tileLayer(dynamic_cast<Tristeon::TileLayer*>(pLayer))
 	{
-		SceneEditor::targetChanged(current, old);
-		tileLayer = (TileLayer*)current;
-
 		setMouseTracking(true);
-	}
 
-	void TileLayerSceneView::initialize()
-	{
 		highlight = new QLabel(this);
 		highlight->setPixmap(QPixmap("Internal/Textures/selection.png"));
 		highlight->setScaledContents(true);
 		highlight->setAttribute(Qt::WA_TranslucentBackground);
+
 		updateTileSize();
 		updateTilePosition(lastMousePos);
+		
 		highlight->hide();
 	}
 
 	void TileLayerSceneView::updateView()
 	{
-		if (Engine::playMode())
+		if (Tristeon::Engine::playMode())
 		{
 			highlight->hide();
 			return;
 		}
 		highlight->show();
 
-		if ((VectorI)Renderer::editorCamera()->position != cameraPos || Renderer::editorCamera()->zoom != cameraZoom)
+		if ((Tristeon::VectorI)Tristeon::Renderer::editorCamera()->position != cameraPos || Tristeon::Renderer::editorCamera()->zoom != cameraZoom)
 		{
-			cameraPos = (VectorI)Renderer::editorCamera()->position;
-			cameraZoom = Renderer::editorCamera()->zoom;
+			cameraPos = (Tristeon::VectorI)Tristeon::Renderer::editorCamera()->position;
+			cameraZoom = Tristeon::Renderer::editorCamera()->zoom;
 
 			updateTileSize();
 			updateTilePosition(lastMousePos);
@@ -57,10 +48,10 @@ namespace TristeonEditor
 	{
 		SceneEditor::mouseMoveEvent(event);
 
-		if (Engine::playMode())
+		if (Tristeon::Engine::playMode())
 			return;
 
-		lastMousePos = Mouse::position();
+		lastMousePos = Tristeon::Mouse::position();
 		updateTilePosition(lastMousePos);
 	}
 
@@ -68,7 +59,7 @@ namespace TristeonEditor
 	{
 		SceneEditor::mousePressEvent(event);
 
-		if (Engine::playMode())
+		if (Tristeon::Engine::playMode())
 			return;
 
 		drawTile(lastTileIndex);
@@ -82,23 +73,23 @@ namespace TristeonEditor
 
 	void TileLayerSceneView::updateTileSize()
 	{
-		Vector const screenScale = Vector(width(), height()) / Window::gameSize();
-		Vector const size = Vector((float)Grid::tileWidth(), (float)Grid::tileHeight()) * screenScale * Renderer::editorCamera()->zoom;
+		Tristeon::Vector const screenScale = Tristeon::Vector(width(), height()) / Tristeon::Window::gameSize();
+		Tristeon::Vector const size = Tristeon::Vector((float)Tristeon::Grid::tileWidth(), (float)Tristeon::Grid::tileHeight()) * screenScale * Tristeon::Renderer::editorCamera()->zoom;
 		highlight->setMinimumSize((int)size.x, (int)size.y);
 		highlight->setMaximumSize((int)size.x, (int)size.y);
 		highlight->adjustSize();
 	}
 
-	void TileLayerSceneView::updateTilePosition(VectorU mousePos)
+	void TileLayerSceneView::updateTilePosition(Tristeon::VectorU mousePos)
 	{
-		Vector const scalar = Vector{ width() / (float)Window::gameWidth(), height() / (float)Window::gameHeight() } *Renderer::editorCamera()->zoom;
-		Vector const cameraPos = (Vector)(VectorI)Renderer::editorCamera()->position * scalar;
+		Tristeon::Vector const scalar = Tristeon::Vector{ width() / (float)Tristeon::Window::gameWidth(), height() / (float)Tristeon::Window::gameHeight() } * Tristeon::Renderer::editorCamera()->zoom;
+		Tristeon::Vector const cameraPos = (Tristeon::Vector)(Tristeon::VectorI)Tristeon::Renderer::editorCamera()->position * scalar;
 
-		VectorI const tileIndex = Grid::indexByPosition(Window::screenToWorld(mousePos, Renderer::editorCamera()));
+		Tristeon::VectorI const tileIndex = Tristeon::Grid::indexByPosition(Tristeon::Window::screenToWorld(mousePos, Tristeon::Renderer::editorCamera()));
 
-		Vector position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
-		position -= Vector{ (float)Grid::tileWidth() / 2.0f, (float)Grid::tileHeight() / 2.0f } *scalar; //Adjust center 
-		position += Vector{ (float)Grid::tileWidth() * tileIndex.x, (float)Grid::tileHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
+		Tristeon::Vector position = { width() / 2.0f, height() / 2.0f }; //Start at center of the screen coz tiles start there too
+		position -= Tristeon::Vector{ (float)Tristeon::Grid::tileWidth() / 2.0f, (float)Tristeon::Grid::tileHeight() / 2.0f } *scalar; //Adjust center 
+		position += Tristeon::Vector{ (float)Tristeon::Grid::tileWidth() * tileIndex.x, (float)Tristeon::Grid::tileHeight() * -tileIndex.y } *scalar; //Adjust based on tile index
 
 		highlight->move(position.x - cameraPos.x, position.y + cameraPos.y);
 		highlight->show();
@@ -111,15 +102,14 @@ namespace TristeonEditor
 		if (!underMouse())
 			return;
 		
-		if (Keyboard::held(Keyboard::Alt)) return;
+		if (Tristeon::Keyboard::held(Tristeon::Keyboard::Alt)) return;
 
-		if (tileLayer->tileset(Brushes::selectedTile().tilesetID) == nullptr)
-			tileLayer->addTileset(Brushes::selectedTilesetPath());
+		if (_tileLayer->tileset(Brushes::selectedTile().tilesetID) == nullptr)
+			_tileLayer->addTileset(Brushes::selectedTilesetPath());
 
-		if ((Mouse::pressed(Mouse::Left) || Mouse::held(Mouse::Left)) && tileLayer->checkBoundsByIndex(tileIndex))
-			Brushes::current()->draw(tileLayer, tileIndex);
-		else if ((Mouse::pressed(Mouse::Right) || Mouse::held(Mouse::Right)) && tileLayer->checkBoundsByIndex(tileIndex))
-			Brushes::current()->erase(tileLayer, tileIndex);
+		if ((Tristeon::Mouse::pressed(Tristeon::Mouse::Left) || Tristeon::Mouse::held(Tristeon::Mouse::Left)) && _tileLayer->checkBoundsByIndex(tileIndex))
+			Brushes::current()->draw(_tileLayer, tileIndex);
+		else if ((Tristeon::Mouse::pressed(Tristeon::Mouse::Right) || Tristeon::Mouse::held(Tristeon::Mouse::Right)) && _tileLayer->checkBoundsByIndex(tileIndex))
+			Brushes::current()->erase(_tileLayer, tileIndex);
 	}
 }
-#endif

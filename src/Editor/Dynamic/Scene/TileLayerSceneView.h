@@ -1,22 +1,21 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
 #include <QtWidgets>
 #include "SceneEditor.h"
-#include "SceneEditorRegister.h"
 #include <Scenes/Layers/TileLayer.h>
+#include <Editor/Dynamic/Scene/SceneEditorRegister.h>
+
 namespace TristeonEditor
 {
 	class TileLayerSceneView : public SceneEditor
 	{
-		SCENE_EDITOR_H(Tristeon::TileLayer, TileLayerSceneView);
 	public:
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
-		void initialize() override;
+		explicit TileLayerSceneView(Tristeon::Layer* pLayer);
+
 		void updateView() override;
 
 	protected:
 		QLabel* highlight = nullptr;
-		Tristeon::TileLayer* tileLayer = nullptr;
+		Tristeon::TileLayer* _tileLayer = nullptr;
 
 		float cameraZoom = 1.0f;
 		Tristeon::VectorI cameraPos{};
@@ -32,5 +31,6 @@ namespace TristeonEditor
 	private:
 		void drawTile(Tristeon::VectorI tileIndex);
 	};
+
+	SCENE_EDITOR(Tristeon::TileLayer, TileLayerSceneView);
 }
-#endif

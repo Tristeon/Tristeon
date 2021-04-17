@@ -1,19 +1,18 @@
 #pragma once
-#ifdef TRISTEON_EDITOR
-#include <Editor/Dynamic/Objects/ObjectEditor.h>
-#include <Editor/Dynamic/Objects/ObjectEditorRegister.h>
+#include <Editor/Dynamic/AbstractJsonEditor.h>
+#include <Editor/Dynamic/EditorRegister.h>
+
 #include <Scenes/Layers/ActorLayer.h>
 #include <QtWidgets>
 
 namespace TristeonEditor
 {
-	class ActorLayerEditor : public ObjectEditor
+	class ActorLayerEditor : public AbstractJsonEditor
 	{
 	public:
-		virtual ~ActorLayerEditor();
-		void initialize() override;
-		void targetChanged(Tristeon::TObject* current, Tristeon::TObject* old) override;
-
+		ActorLayerEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback);
+		virtual ~ActorLayerEditor() override;
+		virtual void setValue(const nlohmann::json& pValue) override;
 	private:
 		void selectedActorChanged(int index);
 		void actorRenamed(QListWidgetItem* item);
@@ -22,11 +21,9 @@ namespace TristeonEditor
 		void removeActor();
 
 		int nameChangedCallback = -1;
-		Tristeon::ActorLayer* targetLayer = nullptr;
 		QListWidget* list = nullptr;
-		std::map<QListWidgetItem*, Tristeon::Actor*> actors;
+		std::map<QListWidgetItem*, Tristeon::Actor*> actors; //TODO: Storing direct pointers to actors here can cause instability
 	};
 
-	OBJECT_EDITOR(Tristeon::ActorLayer, ActorLayerEditor);
+	EDITOR(Tristeon::ActorLayer, ActorLayerEditor);
 }
-#endif

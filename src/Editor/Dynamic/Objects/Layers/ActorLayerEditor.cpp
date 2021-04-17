@@ -1,14 +1,19 @@
-#ifdef TRISTEON_EDITOR
 #include "Editor/Palette.h"
 #include "ActorLayerEditor.h"
 #include <Editor/Editor.h>
 #include <QtWidgets>
+#include <InstanceCollector.h>
 
 namespace TristeonEditor
 {
-	void ActorLayerEditor::initialize()
+	ActorLayerEditor::ActorLayerEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback) : AbstractJsonEditor(pValue, pCallback)
 	{
-		list = new QListWidget(this);
+		_widget = new QWidget();
+		QVBoxLayout* layout = new QVBoxLayout();
+		layout->setContentsMargins(0, 0, 0, 0);
+		_widget->setLayout(layout);
+
+		list = new QListWidget();
 		list->setDragDropMode(QAbstractItemView::NoDragDrop);
 		list->setDefaultDropAction(Qt::DropAction::IgnoreAction);
 		list->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
@@ -16,33 +21,37 @@ namespace TristeonEditor
 		list->setStyleSheet(Palette::getRGBString("alternate-background-color", Palette::background));
 		layout->addWidget(list);
 
-		connect(list, &QListWidget::currentRowChanged, this, &ActorLayerEditor::selectedActorChanged);
-		connect(list, &QListWidget::itemChanged, this, &ActorLayerEditor::actorRenamed);
-		connect(list, &QListWidget::itemClicked, this, [=](QListWidgetItem * item) { Editor::instance()->selectedActor(actors[item]); });
-		for (size_t i = 0; i < targetLayer->actorCount(); i++)
+		QWidget::connect(list, &QListWidget::currentRowChanged, [=](int index) { selectedActorChanged(index); });
+		QWidget::connect(list, &QListWidget::itemChanged, [=](QListWidgetItem* item) { actorRenamed(item); });
+		QWidget::connect(list, &QListWidget::itemClicked, [=](QListWidgetItem* item) { Editor::instance()->selectedActor(actors[item]); });
+
+		Tristeon::ActorLayer* layer = dynamic_cast<Tristeon::ActorLayer*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+		if (layer == nullptr)
+			return;
+		for (size_t i = 0; i < layer->actorCount(); i++)
 		{
-			Tristeon::Actor* actor = targetLayer->actorAt(i);
+			Tristeon::Actor* actor = layer->actorAt(i);
 			auto* item = new QListWidgetItem(QString::fromStdString(actor->name));
 			item->setFlags(item->flags() | Qt::ItemIsEditable);
 			list->addItem(item);
 			actors[item] = actor;
 		}
-		
-		auto* buttonsParent = new QWidget(this);
+
+		auto* buttonsParent = new QWidget();
 		layout->addWidget(buttonsParent);
 
 		auto* horizontal = new QHBoxLayout(buttonsParent);
 		buttonsParent->setLayout(horizontal);
-		
-		auto* add = new QPushButton("+", this);
+
+		auto* add = new QPushButton("+");
 		add->setStyleSheet(Palette::getRGBString("background-color", Palette::add));
 		horizontal->addWidget(add);
-		connect(add, &QPushButton::clicked, this, &ActorLayerEditor::addActor);
-		
-		auto* remove = new QPushButton("-", this);
+		QWidget::connect(add, &QPushButton::clicked, [=]() { addActor(); });
+
+		auto* remove = new QPushButton("-");
 		remove->setStyleSheet(Palette::getRGBString("background-color", Palette::remove));
 		horizontal->addWidget(remove);
-		connect(remove, &QPushButton::clicked, this, &ActorLayerEditor::removeActor);
+		QWidget::connect(remove, &QPushButton::clicked, [=]() { removeActor(); });
 
 		nameChangedCallback = Editor::instance()->onSelectedActorNameChanged += [&](Tristeon::String const name)
 		{
@@ -57,9 +66,9 @@ namespace TristeonEditor
 			Editor::instance()->onSelectedActorNameChanged -= nameChangedCallback;
 	}
 
-	void ActorLayerEditor::targetChanged(Tristeon::TObject* current, Tristeon::TObject* old)
+	void ActorLayerEditor::setValue(const nlohmann::json& pValue)
 	{
-		targetLayer = dynamic_cast<Tristeon::ActorLayer*>(current);
+		//TODO
 	}
 
 	void ActorLayerEditor::selectedActorChanged(int index)
@@ -79,12 +88,16 @@ namespace TristeonEditor
 
 	void ActorLayerEditor::addActor()
 	{
-		QMenu contextMenu(tr("Context menu"));
+		QMenu contextMenu(QWidget::tr("Context menu"));
 
-		QAction* actor = new QAction(Tristeon::Type<Tristeon::Actor>::fullName().c_str(), this);
-		connect(actor, &QAction::triggered, this, [&](bool checked)
+		QAction* actor = new QAction(Tristeon::Type<Tristeon::Actor>::fullName().c_str());
+		QWidget::connect(actor, &QAction::triggered, [&](bool checked)
 			{
-				Tristeon::Actor* a = targetLayer->createActor(Tristeon::Type<Tristeon::Actor>::fullName());
+				Tristeon::ActorLayer* layer = dynamic_cast<Tristeon::ActorLayer*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+				if (layer == nullptr)
+					return;
+
+				Tristeon::Actor* a = layer->createActor(Tristeon::Type<Tristeon::Actor>::fullName());
 				a->name = "New Actor";
 
 				auto* item = new QListWidgetItem(QString::fromStdString(a->name));
@@ -100,10 +113,14 @@ namespace TristeonEditor
 		auto* map = Tristeon::Register<Tristeon::Actor>::getMap();
 		for (auto const& pair : *map)
 		{
-			QAction* action = new QAction(pair.first.c_str(), this);
-			connect(action, &QAction::triggered, this, [&](bool checked)
+			QAction* action = new QAction(pair.first.c_str());
+			QWidget::connect(action, &QAction::triggered, [&](bool checked)
 				{
-					Tristeon::Actor* a = targetLayer->createActor(pair.first);
+					Tristeon::ActorLayer* layer = dynamic_cast<Tristeon::ActorLayer*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+					if (layer == nullptr)
+						return;
+
+					Tristeon::Actor* a = layer->createActor(pair.first);
 					a->name = "New " + Tristeon::StringHelper::split(pair.first, ':').last();
 
 					auto* item = new QListWidgetItem(QString::fromStdString(a->name));
@@ -129,4 +146,3 @@ namespace TristeonEditor
 		list->takeItem(list->currentRow());
 	}
 }
-#endif
