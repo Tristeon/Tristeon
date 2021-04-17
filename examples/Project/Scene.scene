@@ -747,7 +747,24 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "instanceID": 1554923456,
+                            "intensity": 1.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::AmbientLight"
+                        }
+                    ],
                     "instanceID": 2236587147,
                     "name": "Ambient",
                     "position": {
