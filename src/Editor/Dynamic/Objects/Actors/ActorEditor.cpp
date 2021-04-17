@@ -31,26 +31,31 @@ namespace TristeonEditor
 
 		displayDefaultProperties();
 
-		auto* scroll = new QScrollArea();
-		_layout->addWidget(scroll);
-		scroll->setAlignment(Qt::AlignTop);
-		scroll->setWidgetResizable(true);
-		scroll->setFrameShape(QFrame::NoFrame);
-		scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-		scroll->setContentsMargins(0, 0, 0, 0);
+		_scroll = new QScrollArea();
+		_scroll->setFrameStyle(QFrame::NoFrame);
+		_scroll->setAlignment(Qt::AlignTop);
+		_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		_scroll->setWidgetResizable(true);
 
-		scrollArea = new QWidget();
-		scrollLayout = new QVBoxLayout(scrollArea);
-		scrollLayout->setAlignment(Qt::AlignTop);
-		scrollLayout->setContentsMargins(0, 0, 0, 0);
-		scrollArea->setLayout(scrollLayout);
-		_layout->addWidget(scrollArea);
-		scroll->setWidget(scrollArea);
+		_scrollWidget = new QWidget();
+		_scrollLayout = new QVBoxLayout();
+		_scrollLayout->setAlignment(Qt::AlignTop);
+		_scrollLayout->setContentsMargins(0, 0, 0, 0);
+		_scrollWidget->setLayout(_scrollLayout);
 
 		//Display manual properties first, then automatic properties, then behaviours.
 		//Each of these should be using the scroll area
 		displayAutoProperties();
 		displayBehaviours();
+
+		_scroll->setWidget(_scrollWidget);
+		_layout->addWidget(_scroll);
+
+		QPushButton* addBehaviour = new QPushButton();
+		addBehaviour->setStyleSheet("background-color: rgb(46, 204, 113);");
+		addBehaviour->setText("Add Behaviour");
+		_layout->addWidget(addBehaviour);
+		QWidget::connect(addBehaviour, &QPushButton::clicked, [=]() { addButtonPressed(); });
 	}
 
 	ActorEditor::~ActorEditor()
@@ -62,6 +67,18 @@ namespace TristeonEditor
 	{
 		_value = pValue;
 		//TODO
+	}
+
+	void ActorEditor::removeBehaviourEditor(BehaviourEditor* editor)
+	{
+		for (auto i = 0; i < _behaviourEditors.size(); i++)
+		{
+			if (_behaviourEditors[i].get() == editor)
+			{
+				_behaviourEditors[i].reset();
+				_behaviourEditors.removeAt(i);
+			}
+		}
 	}
 
 	void ActorEditor::displayDefaultProperties()
@@ -102,8 +119,8 @@ namespace TristeonEditor
 
 	void ActorEditor::displayAutoProperties()
 	{
-		auto* formWidget = new QWidget(scrollArea);
-		scrollLayout->addWidget(formWidget);
+		auto* formWidget = new QWidget();
+		_scrollLayout->addWidget(formWidget);
 		auto* form = new QFormLayout(formWidget);
 		form->setContentsMargins(0, 0, 0, 0);
 		formWidget->setLayout(form);
@@ -159,14 +176,60 @@ namespace TristeonEditor
 					form->addRow(key.c_str(), new QLabel("No custom editor found"));
 			}
 		}
-
 	}
 
 	void ActorEditor::displayBehaviours()
 	{
 		for (auto behaviour : _value["behaviours"])
 		{
-			auto editor = EditorRegister::createInstance(behaviour["typeID"], behaviour,
+			addBehaviourEditor(behaviour);
+		}
+	}
+
+	void ActorEditor::addButtonPressed()
+	{
+		QMenu contextMenu(QWidget::tr("Context menu"));
+
+		auto* map = Tristeon::Register<Tristeon::Behaviour>::getMap();
+		for (auto const& pair : *map)
+		{
+			QAction* action = new QAction(pair.first.c_str());
+			QWidget::connect(action, &QAction::triggered, [=](bool checked)
+				{
+					Tristeon::Actor* actor = dynamic_cast<Tristeon::Actor*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+					if (actor == nullptr)
+						return;
+				
+					auto* behaviour = actor->createBehaviour(pair.first);
+					addBehaviourEditor(behaviour->serialize());
+
+					_value = actor->serialize();
+					_callback(_value);
+				});
+			contextMenu.addAction(action);
+		}
+
+		contextMenu.exec(QCursor::pos());
+	}
+
+	void ActorEditor::addBehaviourEditor(json behaviour)
+	{
+		auto editor = EditorRegister::createInstance(behaviour["typeID"], behaviour,
+			[=](json pVal)
+			{
+				auto* b = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(pVal["instanceID"]));
+				if (b)
+				{
+					b->deserialize(pVal);
+					_value = b->actor()->serialize();
+					_callback(_value);
+				}
+			}
+		);
+
+		if (!editor)
+		{
+			editor = std::make_unique<BehaviourEditor>(behaviour,
 				[=](json pVal)
 				{
 					auto* b = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(pVal["instanceID"]));
@@ -174,57 +237,16 @@ namespace TristeonEditor
 					{
 						b->deserialize(pVal);
 						_value = b->actor()->serialize();
+						_callback(_value);
 					}
-				}
-			);
-
-			if (!editor)
-			{
-				editor = std::make_unique<BehaviourEditor>(behaviour, 
-					[=](json pVal)
-					{
-						auto* b = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(pVal["instanceID"]));
-						if (b)
-						{
-							b->deserialize(pVal);
-							_value = b->actor()->serialize();
-						}
-					});
-			}
-
-			scrollArea->layout()->addWidget(editor->widget());
+				});
 		}
-		//for (auto* behaviour : actor->findBehaviours())
-		//	addBehaviour(behaviour);
 
-		//QPushButton* addBehaviour = new QPushButton(this);
-		//addBehaviour->setStyleSheet("background-color: rgb(46, 204, 113);");
-		//addBehaviour->setText("Add Behaviour");
-		//layout->addWidget(addBehaviour);
-		//connect(addBehaviour, &QPushButton::clicked, this, &ActorEditor::addButtonPressed);
+		BehaviourEditor* be = dynamic_cast<BehaviourEditor*>(editor.get());
+		if (be)
+			be->actorEditor = this;
+		
+		_scrollLayout->addWidget(editor->widget());
+		_behaviourEditors.add(std::move(editor));
 	}
-
-	//void ActorEditor::addButtonPressed()
-	//{
-	//	QMenu contextMenu(tr("Context menu"));
-
-	//	auto* map = Tristeon::Register<Tristeon::Behaviour>::getMap();
-	//	for (auto const& pair : *map)
-	//	{
-	//		QAction* action = new QAction(pair.first.c_str(), this);
-	//		connect(action, &QAction::triggered, this, [&](bool checked)
-	//		{
-	//			auto* behaviour = actor->createBehaviour(pair.first);
-	//			addBehaviour(behaviour);
-	//		});
-	//		contextMenu.addAction(action);
-	//	}
-
-	//	contextMenu.exec(QCursor::pos());
-	//}
-
-	//void ActorEditor::addBehaviour(Tristeon::Behaviour* behaviour)
-	//{
-
-	//}
 }

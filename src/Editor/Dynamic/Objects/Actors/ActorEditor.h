@@ -5,9 +5,12 @@
 
 #include <qwidget.h>
 #include <qformlayout.h>
+#include <qscrollarea.h>
 
 namespace TristeonEditor
 {
+	class BehaviourEditor;
+
 	class ActorEditor : public AbstractJsonEditor
 	{
 	public:
@@ -15,15 +18,17 @@ namespace TristeonEditor
 		~ActorEditor() override;
 		virtual void setValue(const nlohmann::json& pValue) override;
 
+		void removeBehaviourEditor(BehaviourEditor* editor);
 	protected:
-		QLayout* _layout;
+		QLayout* _layout = nullptr;
 
-		QWidget* _formWidget;
-		QFormLayout* _formLayout;
+		QWidget* _formWidget = nullptr;
+		QFormLayout* _formLayout = nullptr;
 
-		QLayout* scrollLayout = nullptr;
-		QWidget* scrollArea = nullptr;
-
+		QScrollArea* _scroll = nullptr;
+		QWidget* _scrollWidget = nullptr;
+		QLayout* _scrollLayout = nullptr;
+		
 		std::map<std::string, Tristeon::Unique<AbstractJsonEditor>> _editors;
 
 		Tristeon::List<Tristeon::Unique<AbstractJsonEditor>> _behaviourEditors;
@@ -31,6 +36,9 @@ namespace TristeonEditor
 		void displayDefaultProperties();
 		void displayAutoProperties();
 		void displayBehaviours();
+
+		void addButtonPressed();
+		void addBehaviourEditor(json behaviour);
 	};
 
 	EDITOR(Tristeon::Actor, ActorEditor);

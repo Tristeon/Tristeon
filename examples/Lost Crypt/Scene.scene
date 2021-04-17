@@ -6062,7 +6062,10 @@
                             "intensity": 1.0,
                             "outerCutoff": 100.0,
                             "outerRadius": 1028.0,
-                            "renderMask": 255,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 255
+                            },
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -6092,14 +6095,14 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 2694.1669921875,
-                        "y": 2450.920654296875
+                        "x": 2701.736572265625,
+                        "y": 2471.737060546875
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
                         "value": 1
                     },
-                    "rotation": 11.0,
+                    "rotation": 22.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -6138,7 +6141,10 @@
                             "intensity": 1.0,
                             "outerCutoff": 60.0,
                             "outerRadius": 1500.0,
-                            "renderMask": 255,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 255
+                            },
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -6214,7 +6220,10 @@
                             "intensity": 1.0,
                             "outerCutoff": 100.0,
                             "outerRadius": 1500.0,
-                            "renderMask": 255,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 255
+                            },
                             "typeID": "Tristeon::SpotLight"
                         }
                     ],
@@ -6244,14 +6253,14 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1585.644775390625,
-                        "y": 2323.33642578125
+                        "x": 1561.0435791015625,
+                        "y": 2346.04541015625
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
                         "value": 1
                     },
-                    "rotation": 20.0,
+                    "rotation": 24.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -6280,7 +6289,10 @@
                             },
                             "instanceID": 298487506,
                             "intensity": 1.0,
-                            "renderMask": 255,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 255
+                            },
                             "typeID": "Tristeon::AmbientLight"
                         }
                     ],
@@ -6314,7 +6326,10 @@
                             "height": 250,
                             "instanceID": 587265251,
                             "intensity": 1.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 2000
@@ -6350,7 +6365,10 @@
                             "height": 222,
                             "instanceID": 56835493,
                             "intensity": 4.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 222
@@ -6421,7 +6439,10 @@
                             "height": 222,
                             "instanceID": 56835493,
                             "intensity": 4.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 222
@@ -6453,8 +6474,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1940.917724609375,
-                        "y": 900.4522094726563
+                        "x": 1935.62353515625,
+                        "y": 893.3933715820313
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6492,7 +6513,10 @@
                             "height": 222,
                             "instanceID": 56835493,
                             "intensity": 4.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 222
@@ -6524,8 +6548,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1034.211669921875,
-                        "y": 803.8458862304688
+                        "x": 1035.38818359375,
+                        "y": 805.0223999023438
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6563,7 +6587,10 @@
                             "height": 222,
                             "instanceID": 56835493,
                             "intensity": 2.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 222
@@ -6595,8 +6622,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1929.3594970703125,
-                        "y": 992.9178466796875
+                        "x": 1932.888916015625,
+                        "y": 994.09423828125
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6634,7 +6661,10 @@
                             "height": 500,
                             "instanceID": 587265251,
                             "intensity": 1.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 4000
@@ -6670,7 +6700,10 @@
                             "height": 222,
                             "instanceID": 56835493,
                             "intensity": 4.0,
-                            "renderMask": 1,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 1
+                            },
                             "texture": "Sprites/Lights/Sprite_SunSpots_1.png",
                             "typeID": "Tristeon::SpriteLight",
                             "width": 222
@@ -6702,8 +6735,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1036.8096923828125,
-                        "y": 941.5480346679688
+                        "x": 1039.1627197265625,
+                        "y": 946.25390625
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",

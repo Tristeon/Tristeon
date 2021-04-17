@@ -2,20 +2,55 @@
 
 #include <qformlayout.h>
 #include <qlabel.h>
+#include <qtoolbutton.h>
 #include <Standard/String.h>
 #include <Serialization/Type.h>
 
-#include "Editor/Dynamic/EditorRegister.h"
+#include <Editor/Dynamic/EditorRegister.h>
+
+
+#include "InstanceCollector.h"
+#include "Editor/Dynamic/Objects/Actors/ActorEditor.h"
+#include "Scenes/Actors/Behaviour.h"
 
 namespace TristeonEditor
 {
 	BehaviourEditor::BehaviourEditor(const nlohmann::json& pValue, const std::function<void(nlohmann::json)>& pCallback) : AbstractJsonEditor(pValue, pCallback)
 	{
 		_widget = new QWidget();
+		_widget->setLayout(new QVBoxLayout());
+		_widget->layout()->setContentsMargins(0, 0, 0, 0);
+		_widget->setContentsMargins(0, 0, 0, 0);
 
+		auto* titleBar = new QWidget();
+		titleBar->setStyleSheet("background-color: rgb(22, 160, 133);");
+		_widget->layout()->addWidget(titleBar);
+
+		auto* titleLayout = new QHBoxLayout(titleBar);
+		titleLayout->setContentsMargins(0, 0, 0, 0);
+		titleBar->setLayout(titleLayout);
+
+		auto* typeName = new QLabel(QString::fromStdString(_value["typeID"]), titleBar);
+		typeName->setAlignment(Qt::AlignLeft);
+		titleLayout->addWidget(typeName);
+
+		auto* closeButton = new QToolButton(titleBar);
+		closeButton->setIcon(QIcon(QPixmap(QString("Internal/Icons/cross.jpg"))));
+		closeButton->setMaximumSize(15, 15);
+		titleLayout->addWidget(closeButton);
+		QWidget::connect(closeButton, &QToolButton::clicked, [=]()
+			{
+				Tristeon::Behaviour* behaviour = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
+				behaviour->destroy();
+
+				actorEditor->removeBehaviourEditor(this);
+			});
+
+		QWidget* formWidget = new QWidget();
+		_widget->layout()->addWidget(formWidget);
 		auto* form = new QFormLayout();
 		form->setContentsMargins(0, 0, 0, 0);
-		_widget->setLayout(form);
+		formWidget->setLayout(form);
 
 		for (auto it = _value.begin(); it != _value.end(); ++it)
 		{

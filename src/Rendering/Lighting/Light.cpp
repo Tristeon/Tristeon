@@ -3,6 +3,8 @@
 #include <InstanceCollector.h>
 #include <Collector.h>
 
+#include <Serialization/MetaWrappers/SerializedEnum.h>
+
 namespace Tristeon
 {
 	Light::Light()
@@ -21,7 +23,7 @@ namespace Tristeon
 		j["typeID"] = Type<Light>::fullName();
 		j["intensity"] = _intensity;
 		j["colour"] = _colour;
-		j["renderMask"] = (uint8_t)_renderMask;
+		j["renderMask"] = SerializedEnum<RenderMask>(_renderMask);
 		return j;
 	}
 
@@ -30,6 +32,6 @@ namespace Tristeon
 		Behaviour::deserialize(pJson);
 		_intensity = pJson.value("intensity", 1.0f);
 		_colour = pJson.value("colour", Colour());
-		_renderMask = pJson.value("renderMask", RenderMask::All);
+		_renderMask = pJson.value("renderMask", SerializedEnum<RenderMask>(RenderMask::All)).value;
 	}
 }
