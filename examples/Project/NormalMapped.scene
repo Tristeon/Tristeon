@@ -92,7 +92,10 @@
                         "x": 340.9685363769531,
                         "y": 680.2012939453125
                     },
-                    "renderMask": 1,
+                    "renderMask": {
+                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                        "value": 1
+                    },
                     "rotation": 0.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -307,7 +310,7 @@
                 {
                     "behaviours": [
                         {
-                            "instanceID": 2622348267,
+                            "instanceID": 3249572216,
                             "typeID": "Tristeon::MouseFollowBehaviour"
                         }
                     ],
@@ -340,7 +343,10 @@
                         "x": 39.7197265625,
                         "y": 1009.0531616210938
                     },
-                    "renderMask": 1,
+                    "renderMask": {
+                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                        "value": 1
+                    },
                     "rotation": 0.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
