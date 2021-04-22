@@ -241,20 +241,13 @@ namespace Tristeon
 		shader.setUniformValue("tileset.normalMap", 2);
 		shader.setUniformValue("tileset.lightMask", 3);
 		
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
 		for (auto* set : _tilesets)
 		{
 			if (!set->albedoMap)
 				continue;
 			
 			glActiveTexture(GL_TEXTURE1);
-			set->albedoMap->bind();
+			glBindTexture(GL_TEXTURE_2D, set->albedoMap->textureID());
 
 			shader.setUniformValue("tileset.normalMapEnabled", (bool)set->normalMap);
 			shader.setUniformValue("tileset.normalMapStrength", set->normalMapStrength);
@@ -287,6 +280,12 @@ namespace Tristeon
 
 			//Draw
 			glDrawArrays(GL_TRIANGLES, 0, 3);
+		}
+
+		for (auto i = 0; i < 3; i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 

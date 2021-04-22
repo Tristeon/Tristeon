@@ -53,6 +53,11 @@ namespace Tristeon
 		 */
 		[[nodiscard]] bool loaded() const;
 
+		/**
+		 * Returns the texture's OpenGL ID
+		 */
+		[[nodiscard]] unsigned int textureID() { return _texture; }
+
 		static const String defaultPath;
 	private:
 		unsigned int _width = 0;

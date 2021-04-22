@@ -176,6 +176,12 @@ namespace Tristeon
 		shader->setUniformValue("actor.rotation", -rotation);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		for (auto i = 0; i < 3; i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 
 	Shader* Sprite::getShader()
