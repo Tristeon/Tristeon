@@ -2,6 +2,7 @@
 #include "Serialization/Serializable.h"
 #include "Standard/String.h"
 #include "Standard/Unique.h"
+#include "Serialization/TypeRegister.h"
 
 namespace Tristeon
 {
@@ -21,4 +22,6 @@ namespace Tristeon
 		
 		unsigned int GUID;
 	};
+
+	REGISTER_TYPE(MetaFile);
 }

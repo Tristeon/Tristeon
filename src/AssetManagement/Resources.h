@@ -95,6 +95,6 @@ namespace Tristeon
 		//TODO: Switch to new meta file system
 		static std::map<String, Unique<TObject>> _loadedResources;
 
-		static std::map<int,Unique<TObject>> _newLoadedResources;
+		static std::map<uint32_t,Unique<TObject>> _newLoadedResources;
 	};
 }
