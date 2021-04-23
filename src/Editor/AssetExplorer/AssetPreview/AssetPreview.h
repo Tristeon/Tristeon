@@ -12,7 +12,10 @@ namespace TristeonEditor
 
 		}
 
+		void setAnimating(const bool& pEnable) { _animate = pEnable; }
+
 	protected:
 		Tristeon::String _path;
+		bool _animate = false;
 	};
 }
