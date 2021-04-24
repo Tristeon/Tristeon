@@ -180,7 +180,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 263102741,
+                    "instanceID": 2044203057,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -336,7 +336,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 122402709,
+                    "instanceID": 2276364801,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -388,7 +388,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3165963983,
+                    "instanceID": 754212029,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -440,7 +440,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3165963983,
+                    "instanceID": 4075681642,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -551,7 +551,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1443902661,
+                    "instanceID": 2344221259,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -603,7 +603,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1443902661,
+                    "instanceID": 2731904645,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -655,7 +655,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1443902661,
+                    "instanceID": 976903947,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -707,7 +707,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1443902661,
+                    "instanceID": 1579481395,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -759,7 +759,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1443902661,
+                    "instanceID": 3575900235,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -974,7 +974,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3201237739,
+                    "instanceID": 1452372758,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1137,7 +1137,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1819342435,
+                    "instanceID": 3143358058,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1189,7 +1189,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1819342435,
+                    "instanceID": 2516692022,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1668,7 +1668,7 @@
                             "density": 1.0,
                             "friction": 0.10000000149011612,
                             "height": 51.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 948322889,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -1694,7 +1694,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 3376843707,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1737,7 +1737,7 @@
                             "density": 1.0,
                             "friction": 0.10000000149011612,
                             "height": 51.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 3708890560,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -1763,7 +1763,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 4117693421,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1806,7 +1806,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 51.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 1996939587,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -1832,7 +1832,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 524895462,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1875,7 +1875,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 51.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 3594175113,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -1901,7 +1901,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 602408790,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -1944,7 +1944,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 51.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 2656315371,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -1970,7 +1970,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 2122644558,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -2013,7 +2013,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 55.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 2019637257,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -2039,7 +2039,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 1017776688,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -2082,7 +2082,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 55.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 1582414138,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -2108,7 +2108,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 632434527,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -2151,7 +2151,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 55.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 3821198827,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -2177,7 +2177,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 3418185305,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -2220,7 +2220,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 55.0,
-                            "instanceID": 1386489818,
+                            "instanceID": 136513120,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -2246,7 +2246,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2670317415,
+                    "instanceID": 1110227884,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -2323,7 +2323,7 @@
                             "density": 1.0,
                             "friction": 0.0,
                             "height": 1000.0,
-                            "instanceID": 3986908374,
+                            "instanceID": 1366890799,
                             "offset": {
                                 "typeID": "Tristeon::VectorType<float>",
                                 "x": 0.0,
@@ -2336,7 +2336,7 @@
                             "width": 100.0
                         }
                     ],
-                    "instanceID": 326900604,
+                    "instanceID": 2236602227,
                     "name": "New Actor",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -2581,7 +2581,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 274128246,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2633,7 +2633,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2399111947,
+                    "instanceID": 307747121,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2685,7 +2685,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 3849636656,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2737,7 +2737,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 1383286373,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2789,7 +2789,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 3527379167,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2841,7 +2841,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 1091071645,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2893,7 +2893,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2399111947,
+                    "instanceID": 824657467,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2945,7 +2945,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 597738139,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -2997,7 +2997,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2399111947,
+                    "instanceID": 3561299287,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3101,7 +3101,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2399111947,
+                    "instanceID": 2478514352,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3153,7 +3153,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 2075080157,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3205,7 +3205,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 1682734654,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3257,7 +3257,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 1570708463,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3309,7 +3309,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 3499317298,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3361,7 +3361,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2399111947,
+                    "instanceID": 3058370351,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3413,7 +3413,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1426306059,
+                    "instanceID": 798388643,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3465,7 +3465,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 3050419344,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3517,7 +3517,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1094242751,
+                    "instanceID": 2788561852,
                     "lightMaskPath": {
                         "path": "Sprites/Vegetation/Sprite_Foliage_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3621,7 +3621,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1540553508,
+                    "instanceID": 4005884145,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -3784,7 +3784,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2289769761,
+                    "instanceID": 2067202865,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -3836,7 +3836,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2289769761,
+                    "instanceID": 76596386,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -3888,7 +3888,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2289769761,
+                    "instanceID": 1741297528,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -3940,7 +3940,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2289769761,
+                    "instanceID": 1853671106,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4207,7 +4207,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3205175677,
+                    "instanceID": 4203266534,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_3_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -4259,7 +4259,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2567714882,
+                    "instanceID": 523532097,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -4370,7 +4370,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 103861842,
+                    "instanceID": 1545968040,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4422,7 +4422,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 103861842,
+                    "instanceID": 4095104710,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4474,7 +4474,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 103861842,
+                    "instanceID": 1302961921,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4526,7 +4526,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 103861842,
+                    "instanceID": 240134531,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4578,7 +4578,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 103861842,
+                    "instanceID": 1042541571,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4689,7 +4689,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2947011710,
+                    "instanceID": 1676257257,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4741,7 +4741,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2947011710,
+                    "instanceID": 3427054764,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4793,7 +4793,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2947011710,
+                    "instanceID": 1775084859,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4845,7 +4845,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2947011710,
+                    "instanceID": 631588696,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -4897,7 +4897,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2947011710,
+                    "instanceID": 573294889,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5105,7 +5105,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3436920502,
+                    "instanceID": 1039960482,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -5209,7 +5209,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 3436920502,
+                    "instanceID": 31159008,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_1_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -5261,7 +5261,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 2597476715,
+                    "instanceID": 2109039289,
                     "lightMaskPath": {
                         "path": "Sprites/Rocks/Sprite_Rock_2_Mask.png",
                         "typeID": "Tristeon::TexturePath"
@@ -5372,7 +5372,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 1496873162,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5424,7 +5424,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 2446015457,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5476,7 +5476,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 690446022,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5528,7 +5528,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 3210230593,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5580,7 +5580,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 1751781520,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5632,7 +5632,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 3112548717,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5684,7 +5684,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 2630031208,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5736,7 +5736,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 1679225001,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5788,7 +5788,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 2102701046,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5840,7 +5840,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 4180659569,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5892,7 +5892,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 869282267,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5944,7 +5944,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 3832634358,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -5996,7 +5996,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1175009905,
+                    "instanceID": 1213386553,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6161,7 +6161,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1742952335,
+                    "instanceID": 1143212880,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6240,7 +6240,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1742952335,
+                    "instanceID": 2714985309,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6437,7 +6437,7 @@
                             "flipX": false,
                             "flipY": false,
                             "height": 222,
-                            "instanceID": 56835493,
+                            "instanceID": 3102938026,
                             "intensity": 4.0,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6461,7 +6461,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1896736625,
+                    "instanceID": 1545931352,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6511,7 +6511,7 @@
                             "flipX": false,
                             "flipY": false,
                             "height": 222,
-                            "instanceID": 56835493,
+                            "instanceID": 3776642401,
                             "intensity": 4.0,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6535,7 +6535,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1896736625,
+                    "instanceID": 2824034382,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6585,7 +6585,7 @@
                             "flipX": false,
                             "flipY": false,
                             "height": 222,
-                            "instanceID": 56835493,
+                            "instanceID": 351511824,
                             "intensity": 2.0,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6609,7 +6609,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1896736625,
+                    "instanceID": 2931173620,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6659,7 +6659,7 @@
                             "flipX": true,
                             "flipY": false,
                             "height": 500,
-                            "instanceID": 587265251,
+                            "instanceID": 2170319962,
                             "intensity": 1.0,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6670,7 +6670,7 @@
                             "width": 4000
                         }
                     ],
-                    "instanceID": 2417340891,
+                    "instanceID": 1965651067,
                     "name": "Spots",
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
@@ -6698,7 +6698,7 @@
                             "flipX": false,
                             "flipY": false,
                             "height": 222,
-                            "instanceID": 56835493,
+                            "instanceID": 1514435722,
                             "intensity": 4.0,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -6722,7 +6722,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1896736625,
+                    "instanceID": 3394101442,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6858,7 +6858,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1592583740,
+                    "instanceID": 2876579185,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6910,7 +6910,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1592583740,
+                    "instanceID": 3195698147,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -6962,7 +6962,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 1592583740,
+                    "instanceID": 365706432,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"

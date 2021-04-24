@@ -15,6 +15,7 @@
 #include <Scenes/SceneManager.h>
 
 #include "Lighting/LightRenderer.h"
+#include "DebugGL.h"
 
 namespace Tristeon
 {
@@ -29,12 +30,15 @@ namespace Tristeon
 #endif
 
 		glGenVertexArrays(1, &_dummyVao);
+		TRISTEON_DEBUG_GL();
 		glBindVertexArray(_dummyVao);
+		TRISTEON_DEBUG_GL();
 	}
 
 	Renderer::~Renderer()
 	{
 		glDeleteVertexArrays(1, &_dummyVao);
+		TRISTEON_DEBUG_GL();
 #ifdef TRISTEON_EDITOR
 		_editorCamera->destroy();
 #endif
@@ -59,8 +63,10 @@ namespace Tristeon
 		for (auto* camera : cameras)
 		{
 			camera->updateFramebuffers();
-			camera->applyPostProcessing();
+
 			renderOffline(camera);
+			
+			camera->applyPostProcessing();
 		}
 
 		renderOnscreen(pFramebuffer, cameras);
@@ -77,8 +83,8 @@ namespace Tristeon
 			shader->bind();
 			shader->setUniformValue("camera.position", pCamera->position.x, pCamera->position.y);
 			shader->setUniformValue("camera.zoom", pCamera->zoom);
-			shader->setUniformValue("camera.displayPixels", resolution.x, resolution.y);
-
+			shader->setUniformValue("camera.displayPixels", (uint32_t)resolution.x, (uint32_t)resolution.y);
+			
 #ifdef TRISTEON_EDITOR
 			if (pCamera == _editorCamera.get())
 				shader->setUniformValue("disableLighting", _editorLightingDisabled);
@@ -98,12 +104,14 @@ namespace Tristeon
 		//Prepare camera framebuffer
 		const auto resolution = pCamera->resolution();
 		glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_fbo);
+		TRISTEON_DEBUG_GL();
 		glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+		TRISTEON_DEBUG_GL();
 		glClear(GL_COLOR_BUFFER_BIT);
+		TRISTEON_DEBUG_GL();
 
 		//Render each layer
 		const auto framebuffer = Framebuffer{ pCamera->_fbo, pCamera->_fboTexture, { 0, 0, resolution.x, resolution.y } };
-		glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_fbo);
 		for (unsigned int i = 0; i < SceneManager::current()->layerCount(); i++)
 		{
 			SceneManager::current()->layerAt(i)->render(framebuffer);
@@ -123,8 +131,11 @@ namespace Tristeon
 	{
 		//Prepare renderer for rendering to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, pFramebuffer);
+		TRISTEON_DEBUG_GL();
 		glViewport(0, 0, (GLsizei)Window::gameWidth(), (GLsizei)Window::gameHeight());
+		TRISTEON_DEBUG_GL();
 		glClear(GL_COLOR_BUFFER_BIT);
+		TRISTEON_DEBUG_GL();
 
 		if (Engine::playMode())
 		{

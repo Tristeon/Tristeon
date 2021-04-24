@@ -4,6 +4,8 @@
 #include "Shader.h"
 
 #include <glad/glad.h>
+
+#include "DebugGL.h"
 #include "Editor/GameView.h" 
 
 namespace Tristeon
@@ -64,5 +66,6 @@ namespace Tristeon
 		
 		//Draw
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		TRISTEON_DEBUG_GL();
 	}
 }

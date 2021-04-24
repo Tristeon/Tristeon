@@ -74,7 +74,7 @@ float spotLightAttenuation(vec3 toLight, float outerRadius, float innerRadius, v
     return attenuation;
 }
 
-vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, float mask, vec2 displayPixels, int renderMask)
+vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, float mask, uvec2 displayPixels, int renderMask)
 {
     if (disableLighting == 1)
         return albedo;
@@ -100,7 +100,7 @@ vec4 calculateLights(vec4 albedo, vec3 normal, vec2 world_pos, vec2 view_pos, fl
     }
 
     int index = renderMask;
-    vec4 composite = texture(compositeLight[index], gl_FragCoord.xy / displayPixels);
+    vec4 composite = texture2D(compositeLight[index], gl_FragCoord.xy / vec2(float(displayPixels.x), float(displayPixels.y)));
     lights += composite.rgb;
 
     vec3 result = albedo.rgb * ambientLight + albedo.rgb * mask * lights;

@@ -1,6 +1,6 @@
 #version 140
 #include Lighting.incl
-
+#include Includes/Camera.incl
 in vec2 texCoord;
 
 out vec4 fragColor;
@@ -37,14 +37,6 @@ struct Level
     uint tileRenderHeight;
 };
 uniform Level level;
-
-struct CameraData
-{
-    vec2 position;
-    uvec2 displayPixels;
-    float zoom;
-};
-uniform CameraData camera;
 
 vec2 getTileUV(vec2 uv, uint x, uint y);
 ivec2 tileTo2DIndex(int tile);
@@ -110,7 +102,7 @@ void main()
 
     vec2 worldPos = vec2(tileX * level.tileRenderWidth - level.tileRenderWidth / 2.0f, tileY * level.tileRenderHeight - level.tileRenderHeight / 2.0f);
 
-    fragColor = calculateLights(albedo, normal, worldPos, camera.position, 1.0f, camera.displayPixels, 255);
+    fragColor = calculateLights(albedo, normal, worldPos, camera.position, 1.0f, camera.displayPixels, 1);
 }
 
 ivec2 tileTo2DIndex(int tile)
