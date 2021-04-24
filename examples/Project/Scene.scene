@@ -186,14 +186,14 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1076.5,
-                        "y": 1326.5
+                        "x": 649.19384765625,
+                        "y": 1562.40869140625
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
                         "value": 1
                     },
-                    "rotation": 0.0,
+                    "rotation": -12.0,
                     "scale": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1.0,
@@ -279,7 +279,27 @@
                     "zoom": 0.03999999910593033
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 256.0,
+                            "innerRadius": 1500.0,
+                            "instanceID": 3539385070,
+                            "intensity": 1.0,
+                            "outerRadius": 2048.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -306,8 +326,80 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 4394.73681640625,
-                        "y": 384.2105712890625
+                        "x": 969.0579223632813,
+                        "y": 1095.1396484375
+                    },
+                    "renderMask": {
+                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                        "value": 1
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "size": {
+                        "typeID": "Tristeon::VectorType<unsignedint>",
+                        "x": 209,
+                        "y": 209
+                    },
+                    "texturePath": {
+                        "path": "NormalMapHintsAssets/LightSprite.png",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "typeID": "Tristeon::Sprite"
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 1116719118,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flip": {
+                        "typeID": "Tristeon::VectorType<bool>",
+                        "x": false,
+                        "y": false
+                    },
+                    "instanceID": 1289285219,
+                    "lightMaskPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 7111.04052734375,
+                        "y": 1786.5283203125
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -331,7 +423,72 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 1458338489,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 2004076151,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 3776958263,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -345,7 +502,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 30496675,
+                    "instanceID": 3731545914,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -358,8 +515,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 2096.19140625,
-                        "y": 1056.467041015625
+                        "x": 8686.333984375,
+                        "y": 3376.977294921875
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -383,7 +540,124 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 3644735464,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 1860787678,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 3553147147,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 2252098101,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 4136396986,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -397,7 +671,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 30496675,
+                    "instanceID": 3933168032,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -410,164 +684,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 1109.0489501953125,
-                        "y": 858.3243408203125
-                    },
-                    "renderMask": {
-                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
-                        "value": 1
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "size": {
-                        "typeID": "Tristeon::VectorType<unsignedint>",
-                        "x": 337,
-                        "y": 337
-                    },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "typeID": "Tristeon::Sprite"
-                },
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flip": {
-                        "typeID": "Tristeon::VectorType<bool>",
-                        "x": false,
-                        "y": false
-                    },
-                    "instanceID": 30496675,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2929.95947265625,
-                        "y": 1693.9268798828125
-                    },
-                    "renderMask": {
-                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
-                        "value": 1
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "size": {
-                        "typeID": "Tristeon::VectorType<unsignedint>",
-                        "x": 173,
-                        "y": 173
-                    },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "typeID": "Tristeon::Sprite"
-                },
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flip": {
-                        "typeID": "Tristeon::VectorType<bool>",
-                        "x": false,
-                        "y": false
-                    },
-                    "instanceID": 30496675,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 2989.4736328125,
-                        "y": 410.5263671875
-                    },
-                    "renderMask": {
-                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
-                        "value": 1
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "size": {
-                        "typeID": "Tristeon::VectorType<unsignedint>",
-                        "x": 173,
-                        "y": 173
-                    },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "typeID": "Tristeon::Sprite"
-                },
-                {
-                    "behaviours": [],
-                    "colour": {
-                        "a": 1.0,
-                        "b": 1.0,
-                        "g": 1.0,
-                        "r": 1.0,
-                        "typeID": "Tristeon::Colour"
-                    },
-                    "display": true,
-                    "flip": {
-                        "typeID": "Tristeon::VectorType<bool>",
-                        "x": false,
-                        "y": false
-                    },
-                    "instanceID": 30496675,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
-                    },
-                    "position": {
-                        "typeID": "Tristeon::VectorType<float>",
-                        "x": 4149.333984375,
-                        "y": 1560.3677978515625
+                        "x": 5309.791015625,
+                        "y": 420.18701171875
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -591,7 +709,98 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 696184194,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 22334041,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 2060452464,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        },
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "direction": {
+                                "typeID": "Tristeon::VectorType<float>",
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "distance": 1.0,
+                            "innerCutoff": 360.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 720898784,
+                            "intensity": 1.0,
+                            "outerCutoff": 360.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::SpotLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -605,7 +814,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 30496675,
+                    "instanceID": 2723571617,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -618,8 +827,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 8660.568359375,
-                        "y": 3433.18359375
+                        "x": 5704.8525390625,
+                        "y": 2451.05126953125
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -643,7 +852,27 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 1399199939,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -657,7 +886,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 30496675,
+                    "instanceID": 1494727192,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -670,8 +899,8 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 6813.111328125,
-                        "y": 1585.72705078125
+                        "x": 2698.68017578125,
+                        "y": 1630.0635986328125
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -695,7 +924,27 @@
                     "typeID": "Tristeon::Sprite"
                 },
                 {
-                    "behaviours": [],
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 256.0,
+                            "instanceID": 4294919040,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -709,7 +958,7 @@
                         "x": false,
                         "y": false
                     },
-                    "instanceID": 30496675,
+                    "instanceID": 3344900575,
                     "lightMaskPath": {
                         "path": "",
                         "typeID": "Tristeon::TexturePath"
@@ -722,8 +971,152 @@
                     },
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
-                        "x": 7787.68701171875,
-                        "y": 2382.3369140625
+                        "x": 4124.6064453125,
+                        "y": 1889.322998046875
+                    },
+                    "renderMask": {
+                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                        "value": 1
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "size": {
+                        "typeID": "Tristeon::VectorType<unsignedint>",
+                        "x": 219,
+                        "y": 219
+                    },
+                    "texturePath": {
+                        "path": "NormalMapHintsAssets/LightSprite.png",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "typeID": "Tristeon::Sprite"
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 500.0,
+                            "instanceID": 2642350262,
+                            "intensity": 1.0,
+                            "outerRadius": 1028.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flip": {
+                        "typeID": "Tristeon::VectorType<bool>",
+                        "x": false,
+                        "y": false
+                    },
+                    "instanceID": 359328336,
+                    "lightMaskPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 8322.13671875,
+                        "y": 2630.0634765625
+                    },
+                    "renderMask": {
+                        "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                        "value": 1
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "size": {
+                        "typeID": "Tristeon::VectorType<unsignedint>",
+                        "x": 173,
+                        "y": 173
+                    },
+                    "texturePath": {
+                        "path": "NormalMapHintsAssets/LightSprite.png",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "typeID": "Tristeon::Sprite"
+                },
+                {
+                    "behaviours": [
+                        {
+                            "colour": {
+                                "a": 1.0,
+                                "b": 1.0,
+                                "g": 1.0,
+                                "r": 1.0,
+                                "typeID": "Tristeon::Colour"
+                            },
+                            "distance": 1.0,
+                            "innerRadius": 2500.0,
+                            "instanceID": 1144989677,
+                            "intensity": 5.0,
+                            "outerRadius": 5000.0,
+                            "renderMask": {
+                                "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                                "value": 127
+                            },
+                            "typeID": "Tristeon::PointLight"
+                        }
+                    ],
+                    "colour": {
+                        "a": 1.0,
+                        "b": 1.0,
+                        "g": 1.0,
+                        "r": 1.0,
+                        "typeID": "Tristeon::Colour"
+                    },
+                    "display": true,
+                    "flip": {
+                        "typeID": "Tristeon::VectorType<bool>",
+                        "x": false,
+                        "y": false
+                    },
+                    "instanceID": 2298768767,
+                    "lightMaskPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "name": "Light",
+                    "normalMapStrength": 0.10000000149011612,
+                    "normalPath": {
+                        "path": "",
+                        "typeID": "Tristeon::TexturePath"
+                    },
+                    "position": {
+                        "typeID": "Tristeon::VectorType<float>",
+                        "x": 8322.13671875,
+                        "y": 2630.0634765625
                     },
                     "renderMask": {
                         "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
@@ -757,7 +1150,7 @@
                                 "typeID": "Tristeon::Colour"
                             },
                             "instanceID": 1554923456,
-                            "intensity": 1.0,
+                            "intensity": 0.10000000149011612,
                             "renderMask": {
                                 "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
                                 "value": 127

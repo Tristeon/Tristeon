@@ -14,6 +14,8 @@
 #include <QOpenGLFunctions>
 #include <qgridlayout.h>
 
+#include <Rendering/DebugGL.h>
+
 using namespace Tristeon;
 
 namespace TristeonEditor
@@ -47,6 +49,7 @@ namespace TristeonEditor
 			TRISTEON_ERROR("Error initializing glad");
 			return;
 		}
+		
 		TRISTEON_LOG("Detected OpenGL: " + std::to_string(GLVersion.major) + "." + std::to_string(GLVersion.minor));
 		if (GLVersion.major < 3)
         {
@@ -55,20 +58,31 @@ namespace TristeonEditor
         }
 
 		glad_glClearColor(0, 0, 0, 1);
+		TRISTEON_DEBUG_GL();
 
 		//Enable culling
 		glad_glEnable(GL_CULL_FACE);
+		TRISTEON_DEBUG_GL();
+
 		glad_glCullFace(GL_BACK);
+		TRISTEON_DEBUG_GL();
 
 		//Enable transparency blending
 		glad_glEnable(GL_BLEND);
+		TRISTEON_DEBUG_GL();
+
 		glad_glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
+		TRISTEON_DEBUG_GL();
+
 		//Disable multisampling because any form of aliasing messes with transparency in 2D
 		glad_glDisable(GL_MULTISAMPLE);
+		TRISTEON_DEBUG_GL();
 
 		glad_glDisable(GL_DEPTH_TEST);
+		TRISTEON_DEBUG_GL();
+
 		glad_glDisable(GL_STENCIL_TEST);
+		TRISTEON_DEBUG_GL();
 	}
 
 	void GameView::resizeGL(int w, int h)

@@ -1,6 +1,8 @@
 #include "Gizmos.h"
 
 #include <glad/glad.h>
+
+#include "DebugGL.h"
 #include "Math/Math.h"
 #include "Math/Vector.h"
 #include "Shader.h"
@@ -85,23 +87,34 @@ namespace Tristeon
 		{
 			//create buffer
 			unsigned int buffer = 0;
+			TRISTEON_DEBUG_GL();
 			glGenBuffers(1, &buffer);
+			TRISTEON_DEBUG_GL();
 			glBindBuffer(GL_ARRAY_BUFFER, buffer);
+			TRISTEON_DEBUG_GL();
 			glBufferData(GL_ARRAY_BUFFER, shape.vertices.size() * sizeof(Vector), shape.vertices.ptr(), GL_STATIC_DRAW);
+			TRISTEON_DEBUG_GL();
 
 			//bind vertex attrib pointer
 			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			TRISTEON_DEBUG_GL();
 			glEnableVertexAttribArray(0);
+			TRISTEON_DEBUG_GL();
 
 			//draw
 			shader.setUniformValue("colour", shape.colour.r, shape.colour.g, shape.colour.b, shape.colour.a);
 			glLineWidth(2);
+			TRISTEON_DEBUG_GL();
 			glDrawArrays(GL_LINES, 0, shape.vertices.size());
+			TRISTEON_DEBUG_GL();
 
 			//cleanup
 			glDisableVertexAttribArray(0);
+			TRISTEON_DEBUG_GL();
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			TRISTEON_DEBUG_GL();
 			glDeleteBuffers(1, &buffer);
+			TRISTEON_DEBUG_GL();
 		}
 	}
 

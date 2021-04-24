@@ -2,6 +2,7 @@
 #include <Rendering/Shader.h>
 #include "AssetManagement/Resources.h"
 #include "glad/glad.h"
+#include "Rendering/DebugGL.h"
 #include "Rendering/Texture.h"
 
 namespace Tristeon
@@ -72,9 +73,11 @@ namespace Tristeon
 		
 		s->setUniformValue("texture", 0);
 		glActiveTexture(GL_TEXTURE0);
+		TRISTEON_DEBUG_GL();
 		_texture->bind();
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		TRISTEON_DEBUG_GL();
 	}
 
 	Shader* SpriteLight::shader()

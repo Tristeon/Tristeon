@@ -10,6 +10,8 @@
 #include <Rendering/Lighting/PointLight.h>
 #include <Rendering/Lighting/SpotLight.h>
 
+#include <Rendering/DebugGL.h>
+
 namespace Tristeon
 {
 	void LightRenderer::renderComposite(Camera* pCamera)
@@ -17,12 +19,16 @@ namespace Tristeon
 		const auto resolution = pCamera->resolution();
 		
 		glBlendFunc(GL_ONE, GL_ONE);
+		TRISTEON_DEBUG_GL();
 		for (auto i = 0; i < 8; i++)
 		{
 			auto mask = (RenderMask)(1 << i);
 			glBindFramebuffer(GL_FRAMEBUFFER, pCamera->_compositeLightFBOs[i]);
+			TRISTEON_DEBUG_GL();
 			glViewport(0, 0, (GLsizei)resolution.x, (GLsizei)resolution.y);
+			TRISTEON_DEBUG_GL();
 			glClear(GL_COLOR_BUFFER_BIT);
+			TRISTEON_DEBUG_GL();
 			for (auto* shape : Collector<CompositeLight>::all())
 			{
 				if (((int)shape->_renderMask & (int)mask) == (int)mask)
@@ -30,8 +36,11 @@ namespace Tristeon
 			}
 		}
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		TRISTEON_DEBUG_GL();
 		glActiveTexture(GL_TEXTURE0);
+		TRISTEON_DEBUG_GL();
 		glBindTexture(GL_TEXTURE_2D, 0);
+		TRISTEON_DEBUG_GL();
 	}
 
 	void LightRenderer::bindCompositeTextures(Camera* pCamera)
@@ -39,7 +48,9 @@ namespace Tristeon
 		for (auto i = 0; i < (int)pCamera->_compositeLightTextures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE10 + i);
+			TRISTEON_DEBUG_GL();
 			glBindTexture(GL_TEXTURE_2D, pCamera->_compositeLightTextures[i]);
+			TRISTEON_DEBUG_GL();
 		}
 	}
 
@@ -54,7 +65,7 @@ namespace Tristeon
 			shader->bind();
 
 			auto pointLights = Collector<PointLight>::all();
-			uint64_t p = 0, s = 0;
+			int p = 0, s = 0;
 			while (p + s < pointLights.size())
 			{
 				auto* light = pointLights[p + s];

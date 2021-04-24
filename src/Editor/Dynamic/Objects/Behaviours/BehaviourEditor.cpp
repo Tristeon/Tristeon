@@ -41,7 +41,8 @@ namespace TristeonEditor
 		QWidget::connect(closeButton, &QToolButton::clicked, [=]()
 			{
 				Tristeon::Behaviour* behaviour = dynamic_cast<Tristeon::Behaviour*>(Tristeon::InstanceCollector::find(_value["instanceID"]));
-				behaviour->destroy();
+				if (behaviour)
+					behaviour->destroy();
 
 				actorEditor->removeBehaviourEditor(this);
 			});

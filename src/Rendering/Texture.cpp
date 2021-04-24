@@ -4,6 +4,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+
+#include "DebugGL.h"
 #include "Utils/Console.h"
 
 namespace Tristeon
@@ -30,21 +32,31 @@ namespace Tristeon
 		}
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		TRISTEON_DEBUG_GL();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		TRISTEON_DEBUG_GL();
 
 		float borderColor[] = { 1, 1, 1, 1 };
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+		TRISTEON_DEBUG_GL();
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		TRISTEON_DEBUG_GL();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		TRISTEON_DEBUG_GL();
 
 		glGenTextures(1, &_texture);
+		TRISTEON_DEBUG_GL();
 
 		glBindTexture(GL_TEXTURE_2D, _texture);
+		TRISTEON_DEBUG_GL();
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		TRISTEON_DEBUG_GL();
 		glGenerateMipmap(GL_TEXTURE_2D);
+		TRISTEON_DEBUG_GL();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
+		TRISTEON_DEBUG_GL();
 
 		stbi_image_free(pixels);
 		_valid = true;
@@ -53,11 +65,13 @@ namespace Tristeon
 	Texture::~Texture()
 	{
 		glDeleteTextures(1, &_texture);
+		TRISTEON_DEBUG_GL();
 	}
 
 	void Texture::bind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, _texture);
+		TRISTEON_DEBUG_GL();
 	}
 
 	unsigned int Texture::width() const

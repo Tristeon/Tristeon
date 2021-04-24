@@ -5,6 +5,8 @@
 #include "glad/glad.h"
 #include <magic_enum.hpp>
 
+#include <Rendering/DebugGL.h>
+
 namespace Tristeon
 {
 	Sprite::Sprite()
@@ -143,7 +145,9 @@ namespace Tristeon
 
 		shader->setUniformValue("albedoMap", 0);
 		glActiveTexture(GL_TEXTURE0);
+		TRISTEON_DEBUG_GL();
 		_albedo->bind();
+		TRISTEON_DEBUG_GL();
 
 		shader->setUniformValue("normalMap", 1);
 		shader->setUniformValue("normalMapStrength", _normalMapStrength);
@@ -151,7 +155,9 @@ namespace Tristeon
 		if (_normal)
 		{
 			glActiveTexture(GL_TEXTURE1);
+			TRISTEON_DEBUG_GL();
 			_normal->bind();
+			TRISTEON_DEBUG_GL();
 		}
 
 		shader->setUniformValue("lightMask", 2);
@@ -159,7 +165,9 @@ namespace Tristeon
 		if (_lightMask)
 		{
 			glActiveTexture(GL_TEXTURE2);
+			TRISTEON_DEBUG_GL();
 			_lightMask->bind();
+			TRISTEON_DEBUG_GL();
 		}
 		
 		//Sprite info
@@ -176,12 +184,7 @@ namespace Tristeon
 		shader->setUniformValue("actor.rotation", -rotation);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		for (auto i = 0; i < 3; i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
+		TRISTEON_DEBUG_GL();
 	}
 
 	Shader* Sprite::getShader()
