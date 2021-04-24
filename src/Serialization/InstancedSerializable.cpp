@@ -7,6 +7,8 @@ namespace Tristeon
 	InstancedSerializable::InstancedSerializable()
 	{
 		_instanceID = Random::generateUInt();
+		while (InstanceCollector::find(_instanceID) != nullptr)
+			_instanceID = Random::generateUInt();
 		InstanceCollector::add(this);
 	}
 
@@ -26,6 +28,8 @@ namespace Tristeon
 	{
 		InstanceCollector::remove(this);
 		_instanceID = j.value("instanceID", _instanceID);
+		while (InstanceCollector::find(_instanceID) != nullptr)
+			_instanceID = Random::generateUInt();
 		InstanceCollector::add(this);
 	}
 
