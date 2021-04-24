@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <TObject.h>
 #include <Standard/String.h>
 #include <Utils/ClassDefaults.h>
@@ -82,6 +83,8 @@ namespace Tristeon
 	private:
 		void load();
 
+		int32_t uniformIndex(const String& pPath);
+
 		std::string _vertexPath;
 		std::string _fragmentPath;
 
@@ -93,5 +96,7 @@ namespace Tristeon
 		bool _empty = false;
 
 		unsigned int _program = 0;
+
+		std::map<String, int32_t> _uniformCache;
 	};
 }
