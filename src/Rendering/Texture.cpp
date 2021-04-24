@@ -65,7 +65,6 @@ namespace Tristeon
 	Texture::~Texture()
 	{
 		glDeleteTextures(1, &_texture);
-		TRISTEON_DEBUG_GL();
 	}
 
 	void Texture::bind() const

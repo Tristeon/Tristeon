@@ -26,9 +26,7 @@ namespace Tristeon
 	Camera::~Camera()
 	{
 		glDeleteFramebuffers(1, &_fbo);
-		TRISTEON_DEBUG_GL();
 		glDeleteTextures(1, &_fboTexture);
-		TRISTEON_DEBUG_GL();
 		Collector<Camera>::remove(this);
 	}
 

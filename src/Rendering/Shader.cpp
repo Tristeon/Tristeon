@@ -27,7 +27,6 @@ namespace Tristeon
 		Collector<Shader>::remove(this);
 
 		glDeleteProgram(_program);
-		TRISTEON_DEBUG_GL();
 	}
 
 	bool Shader::ready() const
