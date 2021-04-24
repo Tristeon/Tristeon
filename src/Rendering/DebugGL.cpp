@@ -5,7 +5,7 @@
 
 namespace Tristeon
 {
-	GLenum DebugGL::glCheckError_(const char* file, int line)
+	GLenum DebugGL::checkError(const char* file, int line)
 	{
 		GLenum errorCode;
 		while ((errorCode = glGetError()) != GL_NO_ERROR)
