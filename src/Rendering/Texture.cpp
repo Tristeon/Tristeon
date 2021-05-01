@@ -10,7 +10,7 @@
 
 namespace Tristeon
 {
-	const std::string Texture::defaultPath = "Internal/Textures/white.jpg";
+	const std::string Texture::defaultPath = "Engine://Textures/white.jpg";
 
 	Texture::Texture(std::string const& path)
 	{

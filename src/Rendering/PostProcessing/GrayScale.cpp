@@ -11,7 +11,7 @@ namespace Tristeon
 
 	Shader* GrayScale::shader()
 	{
-		static Shader s{ "Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/PostProcessing/GrayScale.frag" };
+		static Shader s{ "Engine://Shaders/FullscreenTriangle.vert", "Engine://Shaders/PostProcessing/GrayScale.frag" };
 		return &s;
 	}
 }

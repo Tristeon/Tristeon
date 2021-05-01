@@ -1,14 +1,16 @@
 #include "SceneManager.h"
 
+#include <Collector.h>
+#include <Engine.h>
+#include <Settings.h>
+#include <AssetManagement/Domains/Domain.h>
+
+#include <Callbacks/IInit.h>
+#include <Callbacks/ISceneLoaded.h>
+
 #include <Scenes/Scene.h>
 #include <Serialization/JsonSerializer.h>
-
 #include "AssetManagement/AssetDatabase.h"
-#include <Collector.h>
-#include <Callbacks/IInit.h>
-#include "Engine.h"
-#include "Settings.h"
-#include "Callbacks/ISceneLoaded.h"
 
 namespace Tristeon
 {
@@ -49,8 +51,8 @@ namespace Tristeon
 		if (filepath.empty())
 			throw std::invalid_argument("Filepath can't be empty!");
 
-		json const data = scene->serialize();
-		JsonSerializer::save(Settings::assetPath() + filepath, data);
+		auto const data = scene->serialize();
+		JsonSerializer::save(Domain::resolve(filepath), data);
 
 		AssetDatabase::add(filepath);
 	}
@@ -86,7 +88,7 @@ namespace Tristeon
 				postLoad();
 				return;
 			}
-			toLoad = JsonSerializer::load(Settings::assetPath() + path);
+			toLoad = JsonSerializer::load(path);
 		}
 		else //Don't load a scene if there's nothing to load
 		{

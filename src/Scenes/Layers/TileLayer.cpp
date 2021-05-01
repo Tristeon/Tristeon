@@ -206,7 +206,7 @@ namespace Tristeon
 
 	void TileLayer::render(const Framebuffer& framebuffer)
 	{
-		static auto shader = Shader("Internal/Shaders/FullscreenTriangle.vert", "Internal/Shaders/TileShader.frag");
+		static auto shader = Shader("Engine://Shaders/FullscreenTriangle.vert", "Engine://Shaders/TileShader.frag");
 		
 		if (_tbo == 0 || _tboTex == 0)
 			return;

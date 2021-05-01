@@ -6,7 +6,8 @@
 #include "Settings.h"
 #include <filesystem>
 
-#include "AssetManagement/MetaFiles/MetaFile.h"
+#include <AssetManagement/MetaFiles/MetaFile.h>
+#include <AssetManagement/Domains/Domain.h>
 
 namespace Tristeon
 {
@@ -20,8 +21,11 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
+			auto globalPath = Domain::resolve(path);
 
+			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
+			
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
 
@@ -40,8 +44,11 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
+			auto globalPath = Domain::resolve(path);
 
+			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
+			
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
 
@@ -59,7 +66,10 @@ namespace Tristeon
 			if (path.empty())
 				return nullptr;
 
-			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
+			auto globalPath = Domain::resolve(path);
+
+			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 
 			if (!std::filesystem::exists(globalPath))
 				return nullptr;
@@ -80,7 +90,10 @@ namespace Tristeon
 
 		static bool loaded(const String& path)
 		{
-			String const globalPath = path.find("Internal/") != String::npos ? path : Settings::assetPath() + path; //Add global asset path unless if it's internal
+			auto globalPath = Domain::resolve(path);
+
+			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 
 			if (globalPath.empty())
 				return false;

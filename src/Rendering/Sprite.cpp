@@ -189,7 +189,7 @@ namespace Tristeon
 
 	Shader* Sprite::getShader()
 	{
-		static Shader shader = Shader("Internal/Shaders/Sprite.vert", "Internal/Shaders/Sprite.frag");
+		static Shader shader = Shader("Engine://Shaders/Sprite.vert", "Engine://Shaders/Sprite.frag");
 		return &shader;
 	}
 

@@ -82,7 +82,7 @@ namespace Tristeon
 
 	Shader* SpriteLight::shader()
 	{
-		static Shader shader{ "Internal/Shaders/Sprite.vert", "Internal/Shaders/SpriteLight.frag" };
+		static Shader shader{ "Engine://Shaders/Sprite.vert", "Engine://Shaders/SpriteLight.frag" };
 		return &shader;
 	}
 }

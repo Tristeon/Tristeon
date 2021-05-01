@@ -55,13 +55,13 @@ namespace Tristeon
 		
 		json input = load(path);
 
+		if (input.is_null())
+			return nullptr;
+		
 		//Check if the object is serializing its typeID
 		const auto iterator = input.find("typeID");
 		if (iterator == input.end())
 			throw std::invalid_argument("The object you are serializing is not serializing its typeID!");
-
-		if (input.is_null())
-			throw std::invalid_argument("File is either a non-json file or corrupted");
 
 		//Create instance of the type that is specified in the json file under the "typeID" member
 		auto instance = TypeRegister::createInstance(input.value("typeID", ""));

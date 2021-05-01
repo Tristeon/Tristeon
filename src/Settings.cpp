@@ -180,6 +180,6 @@ namespace Tristeon
 
 	void Settings::save()
 	{
-		JsonSerializer::save(_assetPath + "settings.tristeon", _data);
+		JsonSerializer::save("Assets://settings.tristeon", _data);
 	}
 }

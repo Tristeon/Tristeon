@@ -78,13 +78,13 @@ namespace TristeonEditor
 	{
 		auto* project_contents = findChild<QWidget*>("project_contents");
 
-		json cache = Tristeon::JsonSerializer::load("Local/Projects.json");
+		json cache = Tristeon::JsonSerializer::load("Local://Projects.json");
 
 		if (cache.is_null())
 		{
 			cache = json();
 			cache["projects"] = json::array_t();
-			Tristeon::JsonSerializer::save("Local/Projects.json", cache);
+			Tristeon::JsonSerializer::save("Local://Projects.json", cache);
 			return;
 		}
 
@@ -121,7 +121,7 @@ namespace TristeonEditor
 
 		json save;
 		save["projects"] = valid_projects;
-		Tristeon::JsonSerializer::save("Local/Projects.json", save);
+		Tristeon::JsonSerializer::save("Local://Projects.json", save);
 
 		project_contents->layout()->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	}
@@ -166,7 +166,7 @@ namespace TristeonEditor
 	{
 		Tristeon::Settings::load(QFileInfo(path.c_str()).dir().path().toStdString() + "/");
 
-		json cache = Tristeon::JsonSerializer::load("Local/Projects.json");
+		json cache = Tristeon::JsonSerializer::load("Local://Projects.json");
 		json::array_t projects = cache.is_null() ? json::array_t() : cache.value("projects", json::array_t());
 		if (cache.is_null())
 			cache = json{};
@@ -181,7 +181,7 @@ namespace TristeonEditor
 		{
 			projects.push_back(path);
 			cache["projects"] = projects;
-			Tristeon::JsonSerializer::save("Local/Projects.json", cache);
+			Tristeon::JsonSerializer::save("Local://Projects.json", cache);
 		}
 
 		close();

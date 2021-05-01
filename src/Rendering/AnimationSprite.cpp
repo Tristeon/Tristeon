@@ -1,11 +1,10 @@
 #include "AnimationSprite.h"
 
 #include <Animations/AnimationClip.h>
-
-#include "AssetManagement/AssetDatabase.h"
-#include "AssetManagement/Resources.h"
-#include "Math/Math.h"
-#include "Utils/Time.h"
+#include <AssetManagement/AssetDatabase.h>
+#include <AssetManagement/Resources.h>
+#include <Math/Math.h>
+#include <Utils/Time.h>
 
 namespace Tristeon
 {
@@ -94,7 +93,7 @@ namespace Tristeon
 
 	Shader* AnimationSprite::getShader()
 	{
-		static Shader shader = Shader("Internal/Shaders/Sprite.vert", "Internal/Shaders/AnimatedSprite.frag");
+		static Shader shader = Shader("Engine://Shaders/Sprite.vert", "Engine://Shaders/AnimatedSprite.frag");
 		return &shader;
 	}
 }

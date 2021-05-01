@@ -1,12 +1,13 @@
 #include "Shader.h"
 
 #include <filesystem>
-#include <glad/glad.h>
 #include <Shadinclude.hpp>
+#include <glad/glad.h>
 
-#include "DebugGL.h"
-#include "Engine.h"
-#include "Utils/Console.h"
+#include <Engine.h>
+#include <AssetManagement/Domains/Domain.h>
+#include <Rendering/DebugGL.h>
+#include <Utils/Console.h>
 
 namespace Tristeon
 {
@@ -180,21 +181,24 @@ namespace Tristeon
 
 	void Shader::load()
 	{
-		if (!std::filesystem::exists(_vertexPath))
+		const auto vertexPath = Domain::resolve(_vertexPath);
+		const auto fragmentPath = Domain::resolve(_fragmentPath);
+		
+		if (!std::filesystem::exists(vertexPath))
 		{
 			TRISTEON_WARNING("Failed to create shader program because vertex file " + _vertexPath + " doesn't exist");
 			_failed = true;
 			return;
 		}
-		if (!std::filesystem::exists(_vertexPath))
+		if (!std::filesystem::exists(fragmentPath))
 		{
 			TRISTEON_WARNING("Failed to create shader program because fragment file " + _fragmentPath + " doesn't exist");
 			_failed = true;
 			return;
 		}
 
-		_vertexData = Shadinclude::load(_vertexPath);
-		_fragmentData = Shadinclude::load(_fragmentPath);
+		_vertexData = Shadinclude::load(vertexPath);
+		_fragmentData = Shadinclude::load(fragmentPath);
 
 		//Compile and check vertex shader
 		auto* vertexString = _vertexData.data();

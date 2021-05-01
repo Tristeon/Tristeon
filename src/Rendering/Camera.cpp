@@ -1,14 +1,12 @@
 #include "Camera.h"
 
 #include <glad/glad.h>
-
-
-#include "DebugGL.h"
-#include "Window.h"
-#include "PostProcessing/PostProcessingEffect.h"
-#include "Rendering/Gizmos.h"
-#include "Rendering/Shader.h"
-#include "Utils/Console.h"
+#include <Rendering/DebugGL.h>
+#include <Window.h>
+#include <Rendering/PostProcessing/PostProcessingEffect.h>
+#include <Rendering/Gizmos.h>
+#include <Rendering/Shader.h>
+#include <Utils/Console.h>
 
 namespace Tristeon
 {
@@ -322,7 +320,7 @@ namespace Tristeon
 
 	void Camera::drawToScreen() const
 	{
-		static Shader shader("Internal/Shaders/Camera.vert", "Internal/Shaders/Texture.frag");
+		static Shader shader("Engine://Shaders/Camera.vert", "Engine://Shaders/Texture.frag");
 
 		if (!_valid)
 			return;
