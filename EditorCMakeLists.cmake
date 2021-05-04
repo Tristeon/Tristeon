@@ -45,6 +45,12 @@ target_link_libraries(Tristeon PRIVATE Qt5::UiTools)
 target_link_libraries(Tristeon PRIVATE Qt5::Qml)
 target_link_libraries(Tristeon PRIVATE Qt5::Gamepad)
 
+add_library(Tristeon_Lib ${tristeonSRC})
+target_link_libraries(Tristeon_Lib PRIVATE Qt5::Widgets)
+target_link_libraries(Tristeon_Lib PRIVATE Qt5::UiTools)
+target_link_libraries(Tristeon_Lib PRIVATE Qt5::Qml)
+target_link_libraries(Tristeon_Lib PRIVATE Qt5::Gamepad)
+
 if(NOT TRISTEON_DISABLE_WINDEPLOY)
 	#Add windeploy as a dependant target
 	add_custom_target(WinDeploy

@@ -170,20 +170,38 @@ namespace Tristeon
 			return { x - other.x, y - other.y };
 		}
 
+		/**
+		* @brief Copies the vector and negates the copy's components such that x becomes -x and y becomes -y.
+		* For example, { -5, 23 } will become { 5, -23 }. This will also affect 0 and infinity when real numbers are used.
+		* 
+		* @return Retuns the negated vector.
+		*/
 		[[nodiscard]] VectorType operator-() const
 		{
 			return { -x, -y };
 		}
 
+		/**
+		* @brief Access the vector's components using the [] operator. Returns a reference to the x or y component depending on index being 0 or 1.
+		* 
+		* @exception Throws std::invalid_argument when index is not 0 or 1.
+		* 
+		* @return Returns a reference to the x or y component.
+		*/
 		[[nodiscard]] Type& operator[](const unsigned int& index)
 		{
 			if (index == 0)
 				return x;
 			if (index == 1)
 				return y;
-			throw std::invalid_argument("index used in Vector::operator[] can't be more than 1!");
+			throw std::invalid_argument("index used in Vector::operator[] has to be 0 or 1!");
 		}
 
+		/**
+		 * @brief Operator used for sorting. Vectors are sorted by x value first, and y value second, meaning that { 0, 15 } will come before { 1, 2 } but not before { 0, 14 }
+		 * @param other The vector to be compared against.
+		 * @return True if the vector is "more" than the other vector (aka is sorted further down the list)
+		*/
 		template<typename T = Type>
 		[[nodiscard]] bool operator<(const VectorType<T>& other) const
 		{
@@ -194,6 +212,11 @@ namespace Tristeon
 			return y < other.y;
 		}
 
+		/**
+		 * @brief Operator used for sorting. Vectors are sorted by x value first, and y value second, meaning that { 0, 15 } will come before { 1, 2 } but not before { 0, 14 }
+		 * @param other The vector to be compared against.
+		 * @return True if the vector is "more" than the other vector (aka is sorted further down the list)
+		*/
 		template<typename T = Type>
 		[[nodiscard]] bool operator>(const VectorType<T>& other) const
 		{
@@ -206,16 +229,45 @@ namespace Tristeon
 #pragma endregion
 
 #pragma region Math operations
-		[[nodiscard]] Type magnitude() const
+		
+		/**
+		 * @brief Returns the magnitude (or length) of the vector.
+		 * This value is calculated using the pythagoras algorithm c^2 = (a^2 + b^2) where c == magnitude, a == x and b == y.
+		 * The magnitude is never negative, but it may be 0 if both the x and y component are 0
+		 * 
+		 * @note magnitude() uses a square root calculation which is computationally expensive. Consider using magnitudeSquared() for things like range checks (simply square the range in the check)
+		 * 
+		 * @return Returns the computed magnitude
+		*/
+		[[nodiscard]] double magnitude() const
 		{
-			return sqrt(x * x + y * y);
+			return (double)sqrt(x * x + y * y);
 		}
 
-		[[nodiscard]] Type magnitudeSquared() const
+		/**
+		 * @brief Returns the squared magnitude (or squared length) of the vector. This function is less computationally expensive than its more accurate alternative magnitude().
+		 * 
+		 * This value is calculated using the pythagoras algorithm c^2 = (a^2 + b^2) where c^2 == squaredMagnitude, a == x and b == y.
+		 * 
+		 * SquaredMagnitude is not an accurate representation of the vector's magnitude, but its value can be used for things like range checks where range can simply be squared (e.g. if (vec.magnitudeSquared() < range * range);)
+		 * 
+		 * @return Returns the magnitude squared (magnitude ^ 2)
+		*/
+		[[nodiscard]] double magnitudeSquared() const
 		{
 			return x * x + y * y;
 		}
 
+		/**
+		 * @brief Resize the vector so that it maintains its direction but magnitude() becomes 1.
+		 * This is commonly used to calculate a purely directional vector for e.g. movement. The function divides the vector's components by its own magnitude.
+		 *
+		 * @note Magnitude may not become 1 with integer-based vectors because a normalized VectorI might see its components floored to { 0, 0}
+		 * @note With integer-based vectors, The vector's direction may not be accurate when normalized.
+		 * @note If the vector's magnitude is 0 (aka both x and y are 0) then the magnitude will remain 0 because the vector has no direction.
+		 * 
+		 * @return Returns itself to enable vector math chaining.
+		*/
 		VectorType<Type> normalize()
 		{
 			if (x == 0 && y == 0)
@@ -252,41 +304,57 @@ namespace Tristeon
 		}
 
 		template<typename TA = Type, typename TB = Type>
-		static Type dot(const VectorType<TA>& a, const VectorType<TB>& b)
+		static double dot(const VectorType<TA>& a, const VectorType<TB>& b)
 		{
 			return a.x * b.x + a.y * b.y;
 		}
 
 		template<typename TA = Type, typename TB = Type>
-		static Type angleBetween(const VectorType<TA>& a, const VectorType<TB>& b)
+		static double angleBetween(const VectorType<TA>& a, const VectorType<TB>& b)
 		{
-			return acos(dot(a, b) / (a.magnitude() * b.magnitude())) * 180.0f / 3.14159265;
+			return b.angle() - a.angle();
 		}
 
-		Type angle() const
+		double angle() const
 		{
-			return -(atan2(y, x) * 180.0f / 3.14159265);
+			if (x == 0 && y == 0)
+			{
+				Tristeon::Console::warning("Trying to get the angle of a { 0, 0 } vector. Returning incorrect value of 0");
+				return 0;
+			}
+
+			return -(atan2(y, x) * 180.0f / 3.14159265f);
 		}
 
 		VectorType<Type> rotate(Type degrees)
 		{
-			constexpr static Type TO_RAD = (Type)(3.14159265 / 180.0f);
-			const Type c = cos(degrees * TO_RAD);
-			const Type s = sin(degrees * TO_RAD);
+			if (x == 0 && y == 0)
+				return { 0, 0 };
+			
+			constexpr static auto TO_RAD = (double)(3.14159265 / 180.0);
+			const double c = cos(-degrees * TO_RAD);
+			const double s = sin(-degrees * TO_RAD);
 
-			Type tempX = x;
-			Type tempY = y;
+			const double tempX = x;
+			const double tempY = y;
 
-			x = tempX * c - tempY * s;
-			y = tempX * s + tempY * c;
+			x = (Type)(tempX * c - tempY * s);
+			y = (Type)(tempX * s + tempY * c);
 			return *this;
 		}
 
 		template<typename TA = Type, typename TB = Type>
-		static Type distance(const VectorType<TA>& a, const VectorType<TB>& b)
+		static double distance(const VectorType<TA>& a, const VectorType<TB>& b)
 		{
 			const VectorType diff = b - a;
 			return diff.magnitude();
+		}
+
+		template<typename TA = Type, typename TB = Type>
+		static double distanceSquared(const VectorType<TA>& a, const VectorType<TB>& b)
+		{
+			const VectorType diff = b - a;
+			return diff.magnitudeSquared();
 		}
 
 		template<typename TA = Type, typename TB = Type>
@@ -297,7 +365,7 @@ namespace Tristeon
 			if (t == 1) return b;
 
 			const auto interpolation = distance(a, b) * t;
-			const auto linearDirection = (b - a).normalized();
+			const auto linearDirection = (b - a).normalize();
 			return linearDirection * interpolation + a;
 		}
 #pragma endregion

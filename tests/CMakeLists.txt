@@ -1,4 +1,9 @@
-#Add source files recursively by looking through the folder structure
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
+project(Tristeon_Test LANGUAGES CXX)
+
+add_subdirectory(external/doctest)
+include_directories(external/doctest)
+
 macro(read_directory curdir)
 	file(GLOB children RELATIVE ${curdir} ${curdir}/*)
 	
@@ -6,7 +11,7 @@ macro(read_directory curdir)
 	
 	foreach(child ${children})
 		if (NOT (IS_DIRECTORY ${curdir}/${child}))
-			list(APPEND tristeonSRC ${curdir}/${child})
+			list(APPEND tristeonTestSrc ${curdir}/${child})
 			list(APPEND groupList ${curdir}/${child})
 		endif()
 	endforeach()
@@ -18,22 +23,14 @@ macro(read_directory curdir)
 		source_group(${GROUPNAME} FILES ${groupList})
 	endif()
 	
-    foreach(child ${children})
-        string(FIND ${curdir}/${child} "Editor" EDITOR_DIR_FOUND)
-		if (IS_DIRECTORY ${curdir}/${child} AND ${EDITOR_DIR_FOUND} EQUAL -1)
+	foreach(child ${children})
+		if (IS_DIRECTORY ${curdir}/${child})
 			read_directory(${curdir}/${child})
 		endif()
 	endforeach()
 endmacro()
 read_directory(${PROJECT_SOURCE_DIR}/src)
 
-#Add GLFW
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
-add_subdirectory(external/glfw)
-include_directories(external/glfw/include)
-
-add_executable(Tristeon ${tristeonSRC})
-add_library(Tristeon_Lib ${tristeonSRC})
-
-target_link_libraries(Tristeon PRIVATE glfw)
-target_link_libraries(Tristeon_Lib PRIVATE glfw)
+add_executable(Tristeon_Test ${tristeonTestSrc})
+target_link_libraries(Tristeon_Test PRIVATE doctest)
+target_link_libraries(Tristeon_Test PRIVATE Tristeon_Lib)
