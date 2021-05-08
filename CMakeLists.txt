@@ -91,33 +91,35 @@ ENDIF()
 
 if (MSVC)
 	#Set target output directory
-	set_target_properties(Tristeon
-		PROPERTIES
-		ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
-		LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
-		RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
-		
-		ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
-		LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
-		RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
-	)
+	if (TRISTEON_BUILD_EXE)
+		set_target_properties(Tristeon
+			PROPERTIES
+			ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
+			LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
+			RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin"
+			
+			ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
+			LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
+			RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin"
+		)
 
-	#Set working directory to build in MSVC
-	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon.vcxproj.user" 
-		"<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
-		<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
-		<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|x64'\">
-			<LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
-			<DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-		</PropertyGroup>
-		<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|x64'\">
-			<LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
-			<DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-		</PropertyGroup>
-		</Project>"
-	)
-	#Set Tristeon as the start project
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon)
+		#Set working directory to build in MSVC
+		file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/Tristeon.vcxproj.user" 
+			"<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
+			<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
+			<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|x64'\">
+				<LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+				<DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+			</PropertyGroup>
+			<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|x64'\">
+				<LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+				<DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+			</PropertyGroup>
+			</Project>"
+		)
+
+		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon)
+	endif()
 
     target_compile_options(box2d PUBLIC /MP)
     target_compile_options(glad PUBLIC /MP)
@@ -153,11 +155,17 @@ if(TRISTEON_BUILD_TESTS)
 	target_link_libraries(Tristeon_Lib PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
 	
 	if (UNIX)
-		target_link_libraries(Tristeon PRIVATE X11)
-		target_link_libraries(Tristeon PRIVATE Xrandr)
+		target_link_libraries(Tristeon_Lib PRIVATE X11)
+		target_link_libraries(Tristeon_Lib PRIVATE Xrandr)
 	endif()
 
 	#link tristeon lib to test build
 	add_subdirectory(tests)
 	add_dependencies(Tristeon_Test Tristeon_Lib)
+
+	if (MSVC)
+		if (TRISTEON_BUILD_TESTS AND NOT TRISTEON_BUILD_EXE)
+			set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tristeon_Test)
+		endif()
+	endif()
 endif()

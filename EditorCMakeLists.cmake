@@ -57,7 +57,7 @@ if (TRISTEON_BUILD_TESTS)
 	target_link_libraries(Tristeon_Lib PRIVATE Qt5::Gamepad)
 endif()
 
-if(NOT TRISTEON_DISABLE_WINDEPLOY)
+if(NOT TRISTEON_DISABLE_WINDEPLOY AND TRISTEON_BUILD_EXE)
 	#Add windeploy as a dependant target
 	add_custom_target(WinDeploy
 		COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
