@@ -1,3 +1,7 @@
+if exist docs 		@RD /S /Q docs
+if exist html 		@RD /S /Q html
+if exist doctrees 	@RD /S /Q doctrees
+
 @ECHO OFF
 
 pushd %~dp0
@@ -34,7 +38,7 @@ goto end
 :end
 popd
 
-DEL docs /Q
 REN html docs
+ECHO. 2>docs/.nojekyll
 
 pause
