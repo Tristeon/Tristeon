@@ -1,5 +1,5 @@
 {
-    "firstScene": "",
+    "firstScene": "Scene",
     "graphics": {
         "maxFPS": 0,
         "preferredDisplay": 0,

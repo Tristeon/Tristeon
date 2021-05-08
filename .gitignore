@@ -14,7 +14,8 @@ bin/[Ee]ditor/
 bin/[Dd]ebug[Ee]ditor/
 bin/[Dd]ebug/
 bin/[Rr]elease/
-build/
+docs/xml/
+docs/build/doctrees/
 
 #Cmake local files
 CMakeFiles/

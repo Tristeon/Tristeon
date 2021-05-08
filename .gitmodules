@@ -13,3 +13,7 @@
 [submodule "tests/external/doctest"]
 	path = tests/external/doctest
 	url = https://github.com/onqtam/doctest.git
+[submodule "docs/build/html"]
+	path = docs/build/html
+	url = ./
+	branch = gh-pages

@@ -24,6 +24,11 @@ namespace Tristeon
 		return value;
 	}
 
+	float Math::clamp01(const float& value)
+	{
+		return clamp(value, 0.0f, 1.0f);
+	}
+
 	int Math::clamp(const int& value, const int& min, const int& max)
 	{
 		if (min > max)
@@ -38,14 +43,7 @@ namespace Tristeon
 
 	Vector Math::orbit(const Vector& center, const Vector& offset, const float& rotation)
 	{
-		auto const theta = toRadians(rotation);
-		auto const c = cos(theta);
-		auto const s = sin(theta);
-
-		return {
-			center.x + offset.x * c + offset.y * s,
-			center.y - offset.x * s + offset.y * c
-		};
+		return center + Vector{ offset.x, offset.y }.rotate(rotation);
 	}
 
 	int Math::sign(const float& value)
