@@ -7,4 +7,7 @@ Tristeon is an open-source game engine built for 2D tile-based games. It is desi
 
    home
    links
+   tutorials
+   showcase
+   documentation
    api

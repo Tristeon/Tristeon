@@ -1,5 +1,7 @@
-Tristeon API
+API
 ======================================================
+Auto-generated documentation from Tristeon's source code/comments, combined with manually written samples and explanations.
+
 
 Core
 ^^^^^^
