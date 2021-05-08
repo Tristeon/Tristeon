@@ -1,3 +1,5 @@
+OPTION(TRISTEON_DISABLE_WINDEPLOY OFF)
+
 #Add source files recursively by looking through the folder structure
 macro(read_directory curdir)
 	file(GLOB children RELATIVE ${curdir} ${curdir}/*)
@@ -39,17 +41,21 @@ endif()
 find_package(Qt5 COMPONENTS Core Widgets OpenGL UiTools Qml Gamepad REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 
-add_executable(Tristeon ${tristeonSRC})
-target_link_libraries(Tristeon PRIVATE Qt5::Widgets)
-target_link_libraries(Tristeon PRIVATE Qt5::UiTools)
-target_link_libraries(Tristeon PRIVATE Qt5::Qml)
-target_link_libraries(Tristeon PRIVATE Qt5::Gamepad)
+if (TRISTEON_BUILD_EXE)
+	add_executable(Tristeon ${tristeonSRC})
+	target_link_libraries(Tristeon PRIVATE Qt5::Widgets)
+	target_link_libraries(Tristeon PRIVATE Qt5::UiTools)
+	target_link_libraries(Tristeon PRIVATE Qt5::Qml)
+	target_link_libraries(Tristeon PRIVATE Qt5::Gamepad)
+endif()
 
-add_library(Tristeon_Lib ${tristeonSRC})
-target_link_libraries(Tristeon_Lib PRIVATE Qt5::Widgets)
-target_link_libraries(Tristeon_Lib PRIVATE Qt5::UiTools)
-target_link_libraries(Tristeon_Lib PRIVATE Qt5::Qml)
-target_link_libraries(Tristeon_Lib PRIVATE Qt5::Gamepad)
+if (TRISTEON_BUILD_TESTS)
+	add_library(Tristeon_Lib ${tristeonSRC})
+	target_link_libraries(Tristeon_Lib PRIVATE Qt5::Widgets)
+	target_link_libraries(Tristeon_Lib PRIVATE Qt5::UiTools)
+	target_link_libraries(Tristeon_Lib PRIVATE Qt5::Qml)
+	target_link_libraries(Tristeon_Lib PRIVATE Qt5::Gamepad)
+endif()
 
 if(NOT TRISTEON_DISABLE_WINDEPLOY)
 	#Add windeploy as a dependant target
@@ -58,8 +64,9 @@ if(NOT TRISTEON_DISABLE_WINDEPLOY)
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/
 	)
 	add_dependencies(Tristeon WinDeploy)
+	
+	#Add Qt binaries to build
+	execute_process(COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
+					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 endif()
 
-#Add Qt binaries to build
-execute_process(COMMAND ${QT_PATH}/bin/windeployqt.exe --compiler-runtime --pdb .
-				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

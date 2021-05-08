@@ -5,6 +5,11 @@ set (Tristeon_VERSION_MAJOR 1)
 set (Tristeon_VERSION_MINOR 1)	
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+#Tristeon build options
+SET(TRISTEON_BUILD_EDITOR ON CACHE BOOL "")
+SET(TRISTEON_BUILD_TESTS OFF CACHE BOOL "")
+SET(TRISTEON_BUILD_EXE ON CACHE BOOL "")
+
 #CMake lookup path for modules (find_package)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -78,9 +83,7 @@ set(OPENAL_INCLUDE_DIR "external/openal-soft/include/al/" CACHE STRING "")
 set(OPENAL_LIBRARY "OpenAL" CACHE STRING "")
 
 #Run build/editor specific cmake commands
-OPTION(BUILD_EDITOR ON)
-
-IF (BUILD_EDITOR)
+IF (TRISTEON_BUILD_EDITOR)
     include("EditorCMakeLists.cmake")
 ELSE()
     include("BuildCMakeLists.cmake")
@@ -123,31 +126,38 @@ if (MSVC)
 endif(MSVC)
 
 #Link libraries
-target_link_libraries(Tristeon PRIVATE glad)
-target_link_libraries(Tristeon PRIVATE magic_enum)
-target_link_libraries(Tristeon PRIVATE OpenAL)
-target_link_libraries(Tristeon PRIVATE box2d)
-target_link_libraries(Tristeon PRIVATE Threads::Threads)
-target_link_libraries(Tristeon PRIVATE ${CMAKE_DL_LIBS})
+if (TRISTEON_BUILD_EXE)
+	target_link_libraries(Tristeon PRIVATE glad)
+	target_link_libraries(Tristeon PRIVATE magic_enum)
+	target_link_libraries(Tristeon PRIVATE OpenAL)
+	target_link_libraries(Tristeon PRIVATE box2d)
+	target_link_libraries(Tristeon PRIVATE Threads::Threads)
+	target_link_libraries(Tristeon PRIVATE ${CMAKE_DL_LIBS})
 
-target_link_libraries(Tristeon PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
+	target_link_libraries(Tristeon PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
 
-target_link_libraries(Tristeon_Lib PRIVATE glad)
-target_link_libraries(Tristeon_Lib PRIVATE magic_enum)
-target_link_libraries(Tristeon_Lib PRIVATE OpenAL)
-target_link_libraries(Tristeon_Lib PRIVATE box2d)
-target_link_libraries(Tristeon_Lib PRIVATE Threads::Threads)
-target_link_libraries(Tristeon_Lib PRIVATE ${CMAKE_DL_LIBS})
-
-target_link_libraries(Tristeon_Lib PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
-
-if (UNIX)
-	target_link_libraries(Tristeon PRIVATE X11)
-	target_link_libraries(Tristeon PRIVATE Xrandr)
-
-    target_link_libraries(Tristeon_Lib PRIVATE X11)
-    target_link_libraries(Tristeon_Lib PRIVATE Xrandr)
+	if (UNIX)
+		target_link_libraries(Tristeon PRIVATE X11)
+		target_link_libraries(Tristeon PRIVATE Xrandr)
+	endif()
 endif()
 
-add_subdirectory(tests)
-add_dependencies(Tristeon_Test Tristeon_Lib)
+if(TRISTEON_BUILD_TESTS)
+	target_link_libraries(Tristeon_Lib PRIVATE glad)
+	target_link_libraries(Tristeon_Lib PRIVATE magic_enum)
+	target_link_libraries(Tristeon_Lib PRIVATE OpenAL)
+	target_link_libraries(Tristeon_Lib PRIVATE box2d)
+	target_link_libraries(Tristeon_Lib PRIVATE Threads::Threads)
+	target_link_libraries(Tristeon_Lib PRIVATE ${CMAKE_DL_LIBS})
+
+	target_link_libraries(Tristeon_Lib PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pthread>$<$<CXX_COMPILER_ID:Clang>:-pthreads>")
+	
+	if (UNIX)
+		target_link_libraries(Tristeon PRIVATE X11)
+		target_link_libraries(Tristeon PRIVATE Xrandr)
+	endif()
+
+	#link tristeon lib to test build
+	add_subdirectory(tests)
+	add_dependencies(Tristeon_Test Tristeon_Lib)
+endif()
