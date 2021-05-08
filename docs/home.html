@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Getting Started &mdash; Tristeon 0.0.1-Alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Links" href="links.html" />
+    <link rel="prev" title="Tristeon" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tristeon
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-project">Building the project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-engine">Running the engine</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="showcase.html">Showcase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tristeon</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/home.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>Tristeon is still a work in progress and no installer/binaries have been released yet! If you'd like to play around with the project in its current state, you'll have to build it manually for now. We aim to simplify building Tristeon as much as we possibly can. This process is stil a work in progress so please bear with us for the time being.</p>
+<p>Officially supported programming environments (all x64):</p>
+<ul class="simple">
+<li><p>Windows | MSVC 2019 | x64</p></li>
+<li><p>Windows | MSVC 2019 (LLVM clang-cl) | x64</p></li>
+<li><p>Ubuntu 20.04 (LTS) | GCC | x64</p></li>
+<li><p>Ubuntu 20.04 (LTS)| Clang | x64 (built, not tested)</p></li>
+</ul>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>CMake</strong> CMake is used for project generation. To be able to build Tristeon, please make sure that you've got CMake 3.7 or higher installed [<a class="reference external" href="https://cmake.org/download/">https://cmake.org/download/</a>].</p></li>
+<li><p><strong>Qt</strong> Tristeon's editor uses the Qt5 framework for editor tooling. Our tests are currently done with Qt 5.14.1, but other versions should work fine. Please make sure you have Qt5 installed [<a class="reference external" href="https://www.qt.io/download-qt-installer">https://www.qt.io/download-qt-installer</a>].</p></li>
+<li><dl class="simple">
+<dt><strong>Linux</strong> If you're building on Linux, the following packages must be installed using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span></code>:</dt><dd><ul>
+<li><p>xorg-dev</p></li>
+<li><p>libglu1-mesa-dev</p></li>
+<li><p>qt5-default</p></li>
+<li><p>qttools5-dev</p></li>
+<li><p>qtdeclarative5-dev</p></li>
+<li><p>libqt5gamepad5-dev</p></li>
+<li><p>libopenal-dev</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="building-the-project">
+<h2>Building the project<a class="headerlink" href="#building-the-project" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Use CMake to build Tristeon's source code using the CMakeLists.txt file</dt><dd><ul class="simple">
+<li><p>If you'd like to use the clang compiler in MSVC, specify ClangCL in the &quot;Optional toolset to use&quot; box in CMake's GUI or through -T ClangCL</p></li>
+<li><p>Set BUILD_EDITOR to true if you wish to build the engine with the editor included</p></li>
+<li><p>Build the solution using Tristeon as the startup project</p></li>
+<li><dl class="simple">
+<dt>If you're building the editor and the WinDeploy project is causing issues, you can disable it by adding TRISTEON_DISABLE_WINDEPLOY in the CMake cache.</dt><dd><ul>
+<li><p>If you do disable WinDeploy, configure CMake a second time so that the Qt binaries get added to the build folder.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="running-the-engine">
+<h2>Running the engine<a class="headerlink" href="#running-the-engine" title="Permalink to this headline">¶</a></h2>
+<p><strong>Editor</strong></p>
+<p><em>Project Window</em></p>
+<p>When you build the project with the editor included, the engine will prompt you with a project window when it's opened. Using the project window, you can create new projects, open existing projects on your drive, or modify the properties of listed projects.</p>
+<img alt="_images/ProjectWindow.png" src="_images/ProjectWindow.png" />
+<p><em>Editor window</em></p>
+<p>The editor &amp; its workflow are still a work in progress but here's a temporary picture:</p>
+<img alt="_images/Editor.png" src="_images/Editor.png" />
+<p><strong>Game</strong></p>
+<div class="line-block">
+<div class="line">If you've built the engine without its editor, it will automatically attempt to find the project defined in build.json in the bin folder. Depending on the project's settings, the game might run in full-screen.</div>
+<div class="line">Unlike in the editor, in build mode the game will immediately start playing using the first Scene as defined by the &quot;Starting Scene&quot; field in the project's settings.</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019-2021, Leon Brands, Tristan Metz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
