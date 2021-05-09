@@ -79,6 +79,11 @@ namespace Tristeon
 		return _graphics._tileHeight;
 	}
 
+	VectorU Settings::Graphics::tileSize()
+	{
+		return VectorU{ tileWidth(), tileHeight() };
+	}
+
 	bool Settings::Graphics::vsync()
 	{
 		return _graphics._vsync;

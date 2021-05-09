@@ -1,4 +1,4 @@
-#include "InstanceCollector.h"
+#include <InstanceCollector.h>
 
 namespace Tristeon
 {
@@ -6,6 +6,8 @@ namespace Tristeon
 
 	void InstanceCollector::add(InstancedSerializable* t)
 	{
+		assert(_collection.find(t->instanceID()) == _collection.end());
+		
 		_collection[t->instanceID()] = t;
 	}
 

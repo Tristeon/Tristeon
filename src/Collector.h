@@ -4,10 +4,10 @@
 namespace Tristeon
 {
 	/**
-	 * Collector is a handy tool for collecting classes of a certain type.
+	 * @brief Collector is a handy tool for collecting classes of a certain type.
 	 *
-	 * Classes looking to be collected should add themselves in the constructor using Collector<Type>::add(this) and remove themselves in the deconstructor Collector<Type>::remove(this).
-	 * You may then use Collector<Type>::all() to receive all collected objects.
+	 * Classes looking to be collected should add themselves in the constructor using Collector<T>::add() and remove themselves in the deconstructor Collector<T>::remove().
+	 * You may then use Collector<T>::all() to receive all collected objects.
 	 *
 	 * Default engine classes that are actively tracked:
 	 * - Actor
@@ -20,6 +20,8 @@ namespace Tristeon
 	 * - IFixedUpdate
 	 * - ILateUpdate
 	 * - IDrawGizmos
+	 *
+	 * @tparam T The type of object to be collected. The collector creates a separate collection for each type, thus to be able to find collected instances, one needs to use the same type as the type that collects itself.
 	 */
 	template<typename T>
 	class Collector

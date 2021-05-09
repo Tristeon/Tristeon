@@ -1,8 +1,7 @@
 #pragma once
 #include <Utils/Singleton.h>
 #include <Math/Vector.h>
-
-#include "Settings.h"
+#include <Settings.h>
 #include <set>
 
 namespace Tristeon
@@ -14,8 +13,7 @@ namespace Tristeon
 	 * Window handles window creation and system input.
 	 * It also contains useful information about screen and game sizes and screen to world (and back) transformations.
 	 *
-	 * While statically accessed, Window handles all functionality internally through virtual methods.
-	 * This is because the editor and non-editor build can contain different functionality.
+	 * Window is statically accessed but it handles all functionality internally through virtual methods to accommodate for different window types when running either the editor or the non-editor build.
 	 */
 	class Window : private Singleton<Window>
 	{
@@ -30,57 +28,59 @@ namespace Tristeon
 		DEFAULT_MOVE(Window);
 
 		/**
-		 * The width of the window. This may potentially be different from the world/game size.
+		 * The width of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
 		 * For rendering purposes, it is recommended to use Window::gameWidth()
 		 */
 		[[nodiscard]] static unsigned int width() { return instance()->_windowWidth(); }
 
 		/**
-		 * The height of the window. This may potentially be different from the world/game size.
+		 * The height of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
 		 * For rendering purposes, it is recommended to use Window::gameHeight()
 		 */
 		[[nodiscard]] static unsigned int height() { return instance()->_windowHeight(); }
 
 		/**
-		 * The size of the window. This may potentially be different from the world/game size.
+		 * The size of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
 		 * For rendering purposes, it is recommended to use Window::gameSize()
 		 */
 		[[nodiscard]] static VectorU size() { return { width(), height() }; }
 
 		/**
-		 * Returns the width of the game screen. This may not be the width of the entire Window.
+		 * Returns the width of the game screen. This may not be the width of the entire Window, because in-editor mode the game is represented using a smaller view.
 		 */
 		[[nodiscard]] static unsigned int gameWidth() { return instance()->_gameWidth(); }
 
 		/**
-		 * Returns the height of the game screen. This may not be the height of the entire Window.
+		 * Returns the height of the game screen. This may not be the height of the entire Window, because in-editor mode the game is represented using a smaller view.
 		 */
 		[[nodiscard]] static unsigned int gameHeight() { return instance()->_gameHeight(); }
 
 		/**
-		 * Returns the size of the game screen. This may not be the size of the entire Window.
+		 * Returns the size of the game screen. This may not be the size of the entire Window, because in-editor mode the game is represented using a smaller view.
 		 */
 		[[nodiscard]] static VectorU gameSize() { return { gameWidth(), gameHeight() }; }
 
 		/**
 		 * Converts a screen point (Like Mouse::position() into world coordinates.
-		 * This function takes into account that game's screen might not always take up the full window.
+		 *
+		 * It is possible for this function to extend beyond visible coordinates in editor mode because of the smaller game view.
 		 */
 		[[nodiscard]] static Vector screenToWorld(const VectorU& screenPoint, Camera* camera) { return instance()->_screenToWorld(screenPoint, camera); }
 
 		/**
 		 * Converts a world coordinate into a screen point.
-		 * This function takes into account that game's screen might not always take up the full window.
 		 */
 		[[nodiscard]] static VectorU worldToScreen(const Vector& worldPoint, Camera* camera) { return instance()->_worldToScreen(worldPoint, camera); }
 
 		/**
 		 * Closes the window and the application.
+		 *
+		 * Before the application closes, the current scene is unloaded and all objects are destroyed.
 		 */
 		static void close() { instance()->_close(); }
 
 		/**
-		 * Returns true if the window is about to close
+		 * Returns true if the window is about to close.
 		 */
 		[[nodiscard]] static bool closingDown() { return instance()->_closingDown(); }
 
@@ -95,13 +95,13 @@ namespace Tristeon
 		[[nodiscard]] static std::set<VectorU> availableResolutions() { return instance()->_resolutions; }
 
 		/**
-		 * Returns the number of displays available
+		 * Returns the number of displays available.
 		 */
 		[[nodiscard]] static unsigned int numberOfDisplays();
 
 		/**
 		 * The current display that the Window is on.
-		 * In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if e.g. the previous display disconnected.
+		 * In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if the hardware situation is different from previous runs.
 		 *
 		 * In windowed mode, this function always returns 0 regardless of where the window is.
 		 */
