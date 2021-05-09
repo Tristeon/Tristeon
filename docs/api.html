@@ -272,8 +272,8 @@
 <dl class="cpp class">
 <dt id="_CPPv4I0EN8Tristeon9CollectorE">
 <span id="_CPPv3I0EN8Tristeon9CollectorE"></span><span id="_CPPv2I0EN8Tristeon9CollectorE"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="class_tristeon_1_1_collector"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Collector</span></code><a class="headerlink" href="#_CPPv4I0EN8Tristeon9CollectorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_tristeon_1_1_collector"><span class="std std-ref">Collector</span></a> is a handy tool for collecting classes of a certain type.</p>
-<p>Classes looking to be collected should add themselves in the constructor using Collector&lt;Type&gt;::add(this) and remove themselves in the deconstructor Collector&lt;Type&gt;::remove(this). You may then use <a class="reference internal" href="#class_tristeon_1_1_collector_1a0aa1a7677af9eafa7a31e029d1cee1f1"><span class="std std-ref">Collector&lt;Type&gt;::all()</span></a> to receive all collected objects.</p>
+<dd><p><a class="reference internal" href="#class_tristeon_1_1_collector"><span class="std std-ref">Collector</span></a> is a handy tool for collecting classes of a certain type. </p>
+<p>Classes looking to be collected should add themselves in the constructor using <a class="reference internal" href="#class_tristeon_1_1_collector_1a3073e51abb01f74fe9027c615233740a"><span class="std std-ref">Collector&lt;T&gt;::add()</span></a> and remove themselves in the deconstructor <a class="reference internal" href="#class_tristeon_1_1_collector_1a796e6a12e5cb4b7a99753d973257b37c"><span class="std std-ref">Collector&lt;T&gt;::remove()</span></a>. You may then use <a class="reference internal" href="#class_tristeon_1_1_collector_1a0aa1a7677af9eafa7a31e029d1cee1f1"><span class="std std-ref">Collector&lt;T&gt;::all()</span></a> to receive all collected objects.</p>
 <p>Default engine classes that are actively tracked:<ul class="simple">
 <li><p>Actor</p></li>
 <li><p>Behaviour</p></li>
@@ -283,8 +283,14 @@
 <li><p><a class="reference internal" href="#class_tristeon_1_1_i_update"><span class="std std-ref">IUpdate</span></a></p></li>
 <li><p><a class="reference internal" href="#class_tristeon_1_1_i_fixed_update"><span class="std std-ref">IFixedUpdate</span></a></p></li>
 <li><p><a class="reference internal" href="#class_tristeon_1_1_i_late_update"><span class="std std-ref">ILateUpdate</span></a></p></li>
-<li><p><a class="reference internal" href="#class_tristeon_1_1_i_draw_gizmos"><span class="std std-ref">IDrawGizmos</span></a> </p></li>
+<li><p><a class="reference internal" href="#class_tristeon_1_1_i_draw_gizmos"><span class="std std-ref">IDrawGizmos</span></a></p></li>
 </ul>
+</p>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam T</dt>
+<dd class="field-odd"><p>The type of object to be collected. The collector creates a separate collection for each type, thus to be able to find collected instances, one needs to use the same type as the type that collects itself. </p>
+</dd>
+</dl>
 </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
@@ -309,25 +315,110 @@
 </div>
 </dd></dl>
 
+<div class="line-block">
+<div class="line"><strong>Usage</strong></div>
+<div class="line">If a type of object wants to be collected, it is recommended to do so in its constructor and destructor:</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+   <span class="n">MyClass</span><span class="p">()</span>
+   <span class="p">{</span>
+      <span class="n">Collector</span><span class="o">&lt;</span><span class="n">MyClass</span><span class="o">&gt;::</span><span class="n">add</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="o">~</span><span class="n">MyClass</span><span class="p">()</span>
+   <span class="p">{</span>
+      <span class="n">Collector</span><span class="o">&lt;</span><span class="n">MyClass</span><span class="o">&gt;::</span><span class="n">remove</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="kt">void</span> <span class="n">doThing</span><span class="p">()</span>
+   <span class="p">{</span>
+      <span class="c1">//...</span>
+   <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The collected objects are easily accessed like so:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//The objects can then be accessed through the all function:</span>
+<span class="k">auto</span> <span class="n">instances</span> <span class="o">=</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">MyClass</span><span class="o">&gt;::</span><span class="n">all</span><span class="p">();</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">*</span> <span class="nl">instance</span> <span class="p">:</span> <span class="n">instances</span><span class="p">)</span> <span class="c1">//and e.g. iterated over</span>
+<span class="p">{</span>
+   <span class="n">instance</span><span class="o">-&gt;</span><span class="n">doThing</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="instancecollector">
 <h3>InstanceCollector<a class="headerlink" href="#instancecollector" title="Permalink to this headline">¶</a></h3>
 <dl class="cpp class">
 <dt id="_CPPv4N8Tristeon17InstanceCollectorE">
 <span id="_CPPv3N8Tristeon17InstanceCollectorE"></span><span id="_CPPv2N8Tristeon17InstanceCollectorE"></span><span id="Tristeon::InstanceCollector"></span><span class="target" id="class_tristeon_1_1_instance_collector"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">InstanceCollector</span></code><a class="headerlink" href="#_CPPv4N8Tristeon17InstanceCollectorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_tristeon_1_1_instance_collector"><span class="std std-ref">InstanceCollector</span></a> collects all objects with an InstanceID. It behaves in a very similar way to Collector&lt;T&gt;, except that it stores items by instanceID and uses the fast look up of std::map to find them back.</p>
-<p><a class="reference internal" href="#class_tristeon_1_1_instance_collector"><span class="std std-ref">InstanceCollector</span></a> is used for application wide reference lookups. </p>
+<dd><p><a class="reference internal" href="#class_tristeon_1_1_instance_collector"><span class="std std-ref">InstanceCollector</span></a> collects all objects with an InstanceID. It behaves in a very similar way to Collector&lt;T&gt;, except that it only stores InstancedSerializable objects by instanceID and uses the fast lookup of std::map to find them back.</p>
+<p>InstancedSerializable automatically adds and removes each instance to the collector.</p>
+<p><a class="reference internal" href="#class_tristeon_1_1_instance_collector"><span class="std std-ref">InstanceCollector</span></a> is used for application wide reference lookups for things like finding actors, layers, behaviours, etc. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon17InstanceCollector4findERKj">
 <span id="_CPPv3N8Tristeon17InstanceCollector4findERKj"></span><span id="_CPPv2N8Tristeon17InstanceCollector4findERKj"></span><span id="Tristeon::InstanceCollector::find__unsigned-iCR"></span><span class="target" id="class_tristeon_1_1_instance_collector_1af3270c1c08fc153487e0ab6a3e827047"></span><em class="property"><span class="pre">static</span></em> <span class="pre">InstancedSerializable</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">find</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon17InstanceCollector4findERKj" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the object with the given ID. Returns nullptr if no such object exists. </p>
+<dd><p>Returns the object with the given ID, usually obtained through json data or through InstancedSerializable::instanceID(). </p>
+<p>The function is most notably used in scene references, Actor::find() and SerializedInstance::get(), but there are other manual use cases where this function can be particularly convenient.</p>
+<p>Since instancedSerializables set their instanceID upon deserialize(), you can not use InstancedSerializable in the deserialization phase of scene loading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns the InstancedSerializable, or nullptr if no fitting InstancedSerializable exists. </p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 </dd></dl>
 
+<div class="line-block">
+<div class="line"><strong>Usage</strong></div>
+<div class="line">InstanceCollector is used to find InstancedSerializables back in runtime by their instanceID. This can be used in for example serialization to reference objects like in this camera follow class:</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CameraFollow</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Behaviour</span><span class="p">,</span> <span class="k">public</span> <span class="n">IStart</span><span class="p">,</span> <span class="k">public</span> <span class="n">ILateUpdate</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+   <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">serialize</span><span class="p">()</span> <span class="k">override</span>
+   <span class="p">{</span>
+      <span class="n">json</span> <span class="n">j</span> <span class="o">=</span> <span class="n">Behaviour</span><span class="o">::</span><span class="n">serialize</span><span class="p">();</span>
+      <span class="n">j</span><span class="p">[</span><span class="s">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_target</span><span class="o">-&gt;</span><span class="n">instanceID</span><span class="p">();</span> <span class="c1">//Store the target&#39;s instanceID in our json data</span>
+      <span class="k">return</span> <span class="n">j</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="kt">void</span> <span class="n">deserialize</span><span class="p">(</span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">j</span><span class="p">)</span> <span class="k">override</span>
+   <span class="p">{</span>
+      <span class="n">Behaviour</span><span class="o">::</span><span class="n">deserialize</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+      <span class="n">_targetID</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;target&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span> <span class="c1">//Load the target&#39;s instanceID</span>
+      <span class="c1">//InstanceCollector::find usually can&#39;t be used in deserialization time because objects might not have been created yet or their instanceID might not have been set yet</span>
+   <span class="p">}</span>
+
+   <span class="c1">//Start is called when the scene and all of its objects have been fully created</span>
+   <span class="kt">void</span> <span class="n">start</span><span class="p">()</span> <span class="k">override</span>
+   <span class="p">{</span>
+      <span class="c1">//Now use the InstanceCollector to find the target back</span>
+      <span class="n">_target</span> <span class="o">=</span> <span class="n">InstanceCollector</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">_targetID</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="c1">//LateUpdate is called after all the other update calls, meaning that this Camera behaviour is more likely to get the right target position in case the target moves in update.</span>
+   <span class="kt">void</span> <span class="n">lateUpdate</span><span class="p">()</span> <span class="k">override</span>
+   <span class="p">{</span>
+      <span class="c1">//The target might not exist</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">_target</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+
+      <span class="n">actor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">position</span> <span class="o">=</span> <span class="n">_target</span><span class="o">-&gt;</span><span class="n">position</span><span class="p">;</span> <span class="c1">//We can now use the target&#39;s actual reference for gameplay interactions</span>
+   <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+   <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">_targetID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="n">Actor</span><span class="o">*</span> <span class="n">_target</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="window">
 <h3>Window<a class="headerlink" href="#window" title="Permalink to this headline">¶</a></h3>
@@ -335,7 +426,7 @@
 <dt id="_CPPv4N8Tristeon6WindowE">
 <span id="_CPPv3N8Tristeon6WindowE"></span><span id="_CPPv2N8Tristeon6WindowE"></span><span id="Tristeon::Window"></span><span class="target" id="class_tristeon_1_1_window"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Window</span></code> <span class="pre">:</span> <em class="property"><span class="pre">private</span></em> <span class="pre">Tristeon</span><span class="pre">::</span><span class="pre">Singleton</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N8Tristeon6WindowE" title="Tristeon::Window"><span class="pre">Window</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4N8Tristeon6WindowE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p><a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> handles window creation and system input. It also contains useful information about screen and game sizes and screen to world (and back) transformations.</p>
-<p>While statically accessed, <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> handles all functionality internally through virtual methods. This is because the editor and non-editor build can contain different functionality. </p>
+<p><a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> is statically accessed but it handles all functionality internally through virtual methods to accommodate for different window types when running either the editor or the non-editor build. </p>
 <p>Subclassed by Tristeon::GameWindow</p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -365,61 +456,63 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window5widthEv">
 <span id="_CPPv3N8Tristeon6Window5widthEv"></span><span id="_CPPv2N8Tristeon6Window5widthEv"></span><span id="Tristeon::Window::width"></span><span class="target" id="class_tristeon_1_1_window_1a3678dfd4b5242c09afaa6990942b553d"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">width</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window5widthEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The width of the window. This may potentially be different from the world/game size. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a34a459b51e82281aac5e5b7093da6f87"><span class="std std-ref">Window::gameWidth()</span></a> </p>
+<dd><p>The width of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a34a459b51e82281aac5e5b7093da6f87"><span class="std std-ref">Window::gameWidth()</span></a> </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window6heightEv">
 <span id="_CPPv3N8Tristeon6Window6heightEv"></span><span id="_CPPv2N8Tristeon6Window6heightEv"></span><span id="Tristeon::Window::height"></span><span class="target" id="class_tristeon_1_1_window_1aaf09d39c7d6928d1610fe35f7b695aee"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">height</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window6heightEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The height of the window. This may potentially be different from the world/game size. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a465421a62b7d3b8b52e7b50fc3cba36c"><span class="std std-ref">Window::gameHeight()</span></a> </p>
+<dd><p>The height of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a465421a62b7d3b8b52e7b50fc3cba36c"><span class="std std-ref">Window::gameHeight()</span></a> </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window4sizeEv">
 <span id="_CPPv3N8Tristeon6Window4sizeEv"></span><span id="_CPPv2N8Tristeon6Window4sizeEv"></span><span id="Tristeon::Window::size"></span><span class="target" id="class_tristeon_1_1_window_1a6ddf91841f692cff3dd1b34cd2b8d5e6"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The size of the window. This may potentially be different from the world/game size. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a23631733a1b64b7f10ef5afa00f703fd"><span class="std std-ref">Window::gameSize()</span></a> </p>
+<dd><p>The size of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a23631733a1b64b7f10ef5afa00f703fd"><span class="std std-ref">Window::gameSize()</span></a> </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window9gameWidthEv">
 <span id="_CPPv3N8Tristeon6Window9gameWidthEv"></span><span id="_CPPv2N8Tristeon6Window9gameWidthEv"></span><span id="Tristeon::Window::gameWidth"></span><span class="target" id="class_tristeon_1_1_window_1a34a459b51e82281aac5e5b7093da6f87"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">gameWidth</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window9gameWidthEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the width of the game screen. This may not be the width of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>. </p>
+<dd><p>Returns the width of the game screen. This may not be the width of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>, because in-editor mode the game is represented using a smaller view. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window10gameHeightEv">
 <span id="_CPPv3N8Tristeon6Window10gameHeightEv"></span><span id="_CPPv2N8Tristeon6Window10gameHeightEv"></span><span id="Tristeon::Window::gameHeight"></span><span class="target" id="class_tristeon_1_1_window_1a465421a62b7d3b8b52e7b50fc3cba36c"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">gameHeight</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window10gameHeightEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the height of the game screen. This may not be the height of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>. </p>
+<dd><p>Returns the height of the game screen. This may not be the height of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>, because in-editor mode the game is represented using a smaller view. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window8gameSizeEv">
 <span id="_CPPv3N8Tristeon6Window8gameSizeEv"></span><span id="_CPPv2N8Tristeon6Window8gameSizeEv"></span><span id="Tristeon::Window::gameSize"></span><span class="target" id="class_tristeon_1_1_window_1a23631733a1b64b7f10ef5afa00f703fd"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">gameSize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window8gameSizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the size of the game screen. This may not be the size of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>. </p>
+<dd><p>Returns the size of the game screen. This may not be the size of the entire <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>, because in-editor mode the game is represented using a smaller view. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window13screenToWorldERK7VectorUP6Camera">
 <span id="_CPPv3N8Tristeon6Window13screenToWorldERK7VectorUP6Camera"></span><span id="_CPPv2N8Tristeon6Window13screenToWorldERK7VectorUP6Camera"></span><span id="Tristeon::Window::screenToWorld__VectorUCR.CameraP"></span><span class="target" id="class_tristeon_1_1_window_1afbb9f0ef5a109172ce0468072b43db67"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">Vector</span> <code class="sig-name descname"><span class="pre">screenToWorld</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">VectorU</span> <span class="pre">&amp;</span><em><span class="pre">screenPoint</span></em>, <span class="pre">Camera</span> <span class="pre">*</span><em><span class="pre">camera</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window13screenToWorldERK7VectorUP6Camera" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Converts a screen point (Like Mouse::position() into world coordinates. This function takes into account that game's screen might not always take up the full window. </p>
+<dd><p>Converts a screen point (Like Mouse::position() into world coordinates.</p>
+<p>It is possible for this function to extend beyond visible coordinates in editor mode because of the smaller game view. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window13worldToScreenERK6VectorP6Camera">
 <span id="_CPPv3N8Tristeon6Window13worldToScreenERK6VectorP6Camera"></span><span id="_CPPv2N8Tristeon6Window13worldToScreenERK6VectorP6Camera"></span><span id="Tristeon::Window::worldToScreen__VectorCR.CameraP"></span><span class="target" id="class_tristeon_1_1_window_1a568bebf4544ff1f997c3c7416ca2663d"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">worldToScreen</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">Vector</span> <span class="pre">&amp;</span><em><span class="pre">worldPoint</span></em>, <span class="pre">Camera</span> <span class="pre">*</span><em><span class="pre">camera</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window13worldToScreenERK6VectorP6Camera" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Converts a world coordinate into a screen point. This function takes into account that game's screen might not always take up the full window. </p>
+<dd><p>Converts a world coordinate into a screen point. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window5closeEv">
 <span id="_CPPv3N8Tristeon6Window5closeEv"></span><span id="_CPPv2N8Tristeon6Window5closeEv"></span><span id="Tristeon::Window::close"></span><span class="target" id="class_tristeon_1_1_window_1af8c9bd42691bc83f5a9fb24957bb72c4"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window5closeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Closes the window and the application. </p>
+<dd><p>Closes the window and the application.</p>
+<p>Before the application closes, the current scene is unloaded and all objects are destroyed. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window11closingDownEv">
 <span id="_CPPv3N8Tristeon6Window11closingDownEv"></span><span id="_CPPv2N8Tristeon6Window11closingDownEv"></span><span id="Tristeon::Window::closingDown"></span><span class="target" id="class_tristeon_1_1_window_1afeb6fa407e5d0512ab1a2888c979b093"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">closingDown</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window11closingDownEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns true if the window is about to close </p>
+<dd><p>Returns true if the window is about to close. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -437,13 +530,13 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window16numberOfDisplaysEv">
 <span id="_CPPv3N8Tristeon6Window16numberOfDisplaysEv"></span><span id="_CPPv2N8Tristeon6Window16numberOfDisplaysEv"></span><span id="Tristeon::Window::numberOfDisplays"></span><span class="target" id="class_tristeon_1_1_window_1a30f73a2cf98c9da4c84b4d01a5215691"></span><em class="property"><span class="pre">static</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">numberOfDisplays</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window16numberOfDisplaysEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the number of displays available </p>
+<dd><p>Returns the number of displays available. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window14currentDisplayEv">
 <span id="_CPPv3N8Tristeon6Window14currentDisplayEv"></span><span id="_CPPv2N8Tristeon6Window14currentDisplayEv"></span><span id="Tristeon::Window::currentDisplay"></span><span class="target" id="class_tristeon_1_1_window_1a57d72e90e8851d8e81ce8f76127ae942"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">currentDisplay</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window14currentDisplayEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The current display that the <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> is on. In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if e.g. the previous display disconnected.</p>
+<dd><p>The current display that the <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> is on. In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if the hardware situation is different from previous runs.</p>
 <p>In windowed mode, this function always returns 0 regardless of where the window is. </p>
 </dd></dl>
 
@@ -456,13 +549,13 @@
 <dl class="cpp class">
 <dt id="_CPPv4N8Tristeon6EngineE">
 <span id="_CPPv3N8Tristeon6EngineE"></span><span id="_CPPv2N8Tristeon6EngineE"></span><span id="Tristeon::Engine"></span><span class="target" id="class_tristeon_1_1_engine"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Engine</span></code> <span class="pre">:</span> <em class="property"><span class="pre">private</span></em> <span class="pre">Tristeon</span><span class="pre">::</span><span class="pre">Singleton</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4N8Tristeon6EngineE" title="Tristeon::Engine"><span class="pre">Engine</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4N8Tristeon6EngineE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_tristeon_1_1_engine"><span class="std std-ref">Engine</span></a> is the absolute core of Tristeon. It owns engine subsystems such as Renderer, GameView, Physics, etc. It manages the creation and destruction of the engine subsystems. Subsystems may be accessible through their own Singleton instances. </p>
+<dd><p><a class="reference internal" href="#class_tristeon_1_1_engine"><span class="std std-ref">Engine</span></a> is the core class of Tristeon. It owns engine subsystems such as Renderer, GameView, Physics, etc. It manages the creation and destruction of the engine subsystems. Subsystems may be accessible through their own Singleton instances. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Engine11setPlayModeERKb">
 <span id="_CPPv3N8Tristeon6Engine11setPlayModeERKb"></span><span id="_CPPv2N8Tristeon6Engine11setPlayModeERKb"></span><span id="Tristeon::Engine::setPlayMode__bCR"></span><span class="target" id="class_tristeon_1_1_engine_1a1ca1337f641385c1259fea60dd1a92e9"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setPlayMode</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">bool</span> <span class="pre">&amp;</span><em><span class="pre">enabled</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Engine11setPlayModeERKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Enables or disables the play-mode, usually adjusted by the editor. </p>
+<dd><p>Enables or disables the play-mode, this is usually changed by the editor's start/stop buttons but applications may set this variable as well. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -480,32 +573,20 @@
 <dl class="cpp class">
 <dt id="_CPPv4N8Tristeon8SettingsE">
 <span id="_CPPv3N8Tristeon8SettingsE"></span><span id="_CPPv2N8Tristeon8SettingsE"></span><span id="Tristeon::Settings"></span><span class="target" id="class_tristeon_1_1_settings"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Settings</span></code><a class="headerlink" href="#_CPPv4N8Tristeon8SettingsE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_tristeon_1_1_settings"><span class="std std-ref">Settings</span></a> is the main interface for interacting with graphics and physics settings.</p>
-<p>Some of these properties are also available through other class interfaces like Grid. </p>
+<dd><p><a class="reference internal" href="#class_tristeon_1_1_settings"><span class="std std-ref">Settings</span></a> is the main interface for interacting with graphics and physics settings. Upon application startup, settings loads in the project's settings from the settings.tristeon file.</p>
+<p>Some settings are easily adjustable and can be changed dynamically, others can only be modified using the project window. For convenience' sake, some of the settings are also available through other class interfaces like for example Grid. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings9assetPathEv">
 <span id="_CPPv3N8Tristeon8Settings9assetPathEv"></span><span id="_CPPv2N8Tristeon8Settings9assetPathEv"></span><span id="Tristeon::Settings::assetPath"></span><span class="target" id="class_tristeon_1_1_settings_1a9e34fdf3c72ca92a434596e88ed4c159"></span><em class="property"><span class="pre">static</span></em> <span class="pre">String</span> <code class="sig-name descname"><span class="pre">assetPath</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings9assetPathEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The path to the asset folder. </p>
+<dd><p>The path to the asset folder. This folder contains all of the project's assets (images, scenes, etc.). </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings14firstSceneNameEv">
 <span id="_CPPv3N8Tristeon8Settings14firstSceneNameEv"></span><span id="_CPPv2N8Tristeon8Settings14firstSceneNameEv"></span><span id="Tristeon::Settings::firstSceneName"></span><span class="target" id="class_tristeon_1_1_settings_1adba0cf87cfff4626e496310c00e5a7a9"></span><em class="property"><span class="pre">static</span></em> <span class="pre">String</span> <code class="sig-name descname"><span class="pre">firstSceneName</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings14firstSceneNameEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The first scene to be loaded in build mode. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N8Tristeon8Settings9serializeEv">
-<span id="_CPPv3N8Tristeon8Settings9serializeEv"></span><span id="_CPPv2N8Tristeon8Settings9serializeEv"></span><span id="Tristeon::Settings::serialize"></span><span class="target" id="class_tristeon_1_1_settings_1a09b1528a4239d8bc468a2724f4b9ff4a"></span><em class="property"><span class="pre">static</span></em> <span class="pre">json</span> <code class="sig-name descname"><span class="pre">serialize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings9serializeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Static version of the Serializable::serialize function. Writes the data into a json object. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N8Tristeon8Settings11deserializeE4json">
-<span id="_CPPv3N8Tristeon8Settings11deserializeE4json"></span><span id="_CPPv2N8Tristeon8Settings11deserializeE4json"></span><span id="Tristeon::Settings::deserialize__json"></span><span class="target" id="class_tristeon_1_1_settings_1a80e4f96cbe7ae2627d4665480c09f9f7"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">deserialize</span></code><span class="sig-paren">(</span><span class="pre">json</span> <em><span class="pre">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings11deserializeE4json" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Static version of the Serializable::deserialize function. Reads the data from a json object. </p>
+<dd><p>The first scene to be loaded in build mode. If the scene can't be found upon load time, an empty scene will be created &amp; loaded (but not saved). </p>
 </dd></dl>
 
 </div>
@@ -545,50 +626,64 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics9tileWidthEv">
 <span id="_CPPv3N8Tristeon8Settings8Graphics9tileWidthEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics9tileWidthEv"></span><span id="Tristeon::Settings::Graphics::tileWidth"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1ac76e57ee2bd1bf6633b28345f06bde27"></span><em class="property"><span class="pre">static</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">tileWidth</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics9tileWidthEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The width of tiles in pixels. </p>
+<dd><p>The width (size on the x-axis) of a single tile on the grid in pixels.</p>
+<p>Tiles are un-rotated squares, defined by <a class="reference internal" href="#class_tristeon_1_1_settings_1_1_graphics_1ac76e57ee2bd1bf6633b28345f06bde27"><span class="std std-ref">tileWidth()</span></a> and <a class="reference internal" href="#class_tristeon_1_1_settings_1_1_graphics_1a96b98dfb1ffbb572217128709002a767"><span class="std std-ref">tileHeight()</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics10tileHeightEv">
 <span id="_CPPv3N8Tristeon8Settings8Graphics10tileHeightEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics10tileHeightEv"></span><span id="Tristeon::Settings::Graphics::tileHeight"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1a96b98dfb1ffbb572217128709002a767"></span><em class="property"><span class="pre">static</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">tileHeight</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics10tileHeightEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The height of tiles in pixels. </p>
+<dd><p>The height (size on the y-axis) of a single tile on the grid in pixels.</p>
+<p>Tiles are un-rotated squares, defined by <a class="reference internal" href="#class_tristeon_1_1_settings_1_1_graphics_1ac76e57ee2bd1bf6633b28345f06bde27"><span class="std std-ref">tileWidth()</span></a> and <a class="reference internal" href="#class_tristeon_1_1_settings_1_1_graphics_1a96b98dfb1ffbb572217128709002a767"><span class="std std-ref">tileHeight()</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N8Tristeon8Settings8Graphics8tileSizeEv">
+<span id="_CPPv3N8Tristeon8Settings8Graphics8tileSizeEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics8tileSizeEv"></span><span id="Tristeon::Settings::Graphics::tileSize"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1a46477fbc8555022db7048146abe0e1a9"></span><em class="property"><span class="pre">static</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">tileSize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics8tileSizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The size of a single tile on the grid in pixels. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics5vsyncEv">
 <span id="_CPPv3N8Tristeon8Settings8Graphics5vsyncEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics5vsyncEv"></span><span id="Tristeon::Settings::Graphics::vsync"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1ac3f5c57d7e498ee10fa279b1f9ee4bb2"></span><em class="property"><span class="pre">static</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">vsync</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics5vsyncEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>If vertical sync is enabled. </p>
+<dd><p>If vertical sync is enabled.</p>
+<p>Vertical sync limits the application's refresh rate to the screen's refresh rate (usually represented in hz). By doing so, you can prevent effects like screen tearing, but you might increase input lag and reduce the frame rate, which might be undesired by the user.</p>
+<p>It is usually a good idea to allow users to change this in a settings menu. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics8setVsyncERKb">
 <span id="_CPPv3N8Tristeon8Settings8Graphics8setVsyncERKb"></span><span id="_CPPv2N8Tristeon8Settings8Graphics8setVsyncERKb"></span><span id="Tristeon::Settings::Graphics::setVsync__bCR"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1ab22c777bd09267598ca21e9e6bdfe7fd"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setVsync</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">bool</span> <span class="pre">&amp;</span><em><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics8setVsyncERKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Enable/disable vsync in the settings and for the runtime window. </p>
+<dd><p>Enable/disable vsync in the settings and for the runtime window.</p>
+<p>Vertical sync limits the application's refresh rate to the screen's refresh rate (usually represented in hz). By doing so, you can prevent effects like screen tearing, but you might increase input lag and reduce the frame rate, which might be undesired by the user.</p>
+<p>It is usually a good idea to allow users to change this in a settings menu. Setting this affects the settings and the runtime property. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics10windowModeEv">
 <span id="_CPPv3N8Tristeon8Settings8Graphics10windowModeEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics10windowModeEv"></span><span id="Tristeon::Settings::Graphics::windowMode"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1af457381c65672dfdbd68502224ffa201"></span><em class="property"><span class="pre">static</span></em> <a class="reference internal" href="#_CPPv4N8Tristeon8Settings8Graphics10WindowModeE" title="Tristeon::Settings::Graphics::WindowMode"><span class="pre">WindowMode</span></a> <code class="sig-name descname"><span class="pre">windowMode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics10windowModeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The current window mode. </p>
+<dd><p>The current window mode (fullscreen status &amp; decoration). </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics13setWindowModeERK10WindowMode">
 <span id="_CPPv3N8Tristeon8Settings8Graphics13setWindowModeERK10WindowMode"></span><span id="_CPPv2N8Tristeon8Settings8Graphics13setWindowModeERK10WindowMode"></span><span id="Tristeon::Settings::Graphics::setWindowMode__WindowModeCR"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1afaad2fb850980b840500bd3cf8494084"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setWindowMode</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="#_CPPv4N8Tristeon8Settings8Graphics10WindowModeE" title="Tristeon::Settings::Graphics::WindowMode"><span class="pre">WindowMode</span></a> <span class="pre">&amp;</span><em><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics13setWindowModeERK10WindowMode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Set the window mode in the settings and the runtime window. </p>
+<dd><p>Set the window mode in the settings and the runtime window.</p>
+<p>This determines the window's fullscreen status &amp; decoration. See the WindowMode enum for more. Setting this affects the settings and the runtime property. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics19preferredResolutionEv">
 <span id="_CPPv3N8Tristeon8Settings8Graphics19preferredResolutionEv"></span><span id="_CPPv2N8Tristeon8Settings8Graphics19preferredResolutionEv"></span><span id="Tristeon::Settings::Graphics::preferredResolution"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1af1750d4ee83c352898c173ea5952b425"></span><em class="property"><span class="pre">static</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">preferredResolution</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics19preferredResolutionEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The resolution that the game will take when loaded in on fullscreen. </p>
+<dd><p>The resolution that the game will take when loaded in on fullscreen.</p>
+<p>If the game is unable to use this resolution it'll attempt to find the most suitable option. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings8Graphics22setPreferredResolutionERK7VectorU">
 <span id="_CPPv3N8Tristeon8Settings8Graphics22setPreferredResolutionERK7VectorU"></span><span id="_CPPv2N8Tristeon8Settings8Graphics22setPreferredResolutionERK7VectorU"></span><span id="Tristeon::Settings::Graphics::setPreferredResolution__VectorUCR"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1a25060973b1bd1a4d9957f03cf8e34841"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setPreferredResolution</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">VectorU</span> <span class="pre">&amp;</span><em><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics22setPreferredResolutionERK7VectorU" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Set the preferred resolution. The game will attempt to take this resolution when loaded in on fullscreen.</p>
-<p>It also sets the current <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a>'s resolution. </p>
+<dd><p>Set the preferred resolution. The game will attempt to take this resolution when loaded in on fullscreen. If the game is unable to use this resolution it'll attempt to find the most suitable option.</p>
+<p>Setting this affects the settings and the runtime property. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -601,7 +696,7 @@
 <dt id="_CPPv4N8Tristeon8Settings8Graphics9setMaxFPSERKj">
 <span id="_CPPv3N8Tristeon8Settings8Graphics9setMaxFPSERKj"></span><span id="_CPPv2N8Tristeon8Settings8Graphics9setMaxFPSERKj"></span><span id="Tristeon::Settings::Graphics::setMaxFPS__unsigned-iCR"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1a3d6d6309f8b5a0f9de0be11f0fb10808"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setMaxFPS</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">&amp;</span><em><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics9setMaxFPSERKj" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Set the maximum number of frames per second. If frames render faster than this, then the update loop waits at the end of the frame until enough time has past. If the value is set to 0, the engine runs as if there were no limit.</p>
-<p>This affects both the settings and the runtime property. </p>
+<p>Setting this affects the settings and the runtime property. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -614,7 +709,8 @@
 <dt id="_CPPv4N8Tristeon8Settings8Graphics19setPreferredDisplayERKj">
 <span id="_CPPv3N8Tristeon8Settings8Graphics19setPreferredDisplayERKj"></span><span id="_CPPv2N8Tristeon8Settings8Graphics19setPreferredDisplayERKj"></span><span id="Tristeon::Settings::Graphics::setPreferredDisplay__unsigned-iCR"></span><span class="target" id="class_tristeon_1_1_settings_1_1_graphics_1af332a0b53c4b08b2dc4b8020a09dab83"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setPreferredDisplay</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">&amp;</span><em><span class="pre">display</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings8Graphics19setPreferredDisplayERKj" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Set the preferred display used for borderless and fullscreen applications. Upon loading, the application will attempt to use this monitor but will default to display 0 if it can't be found.</p>
-<p>If called in runtime, and the monitor exists, the application will switch to the given display. Whenever the display is changed, <a class="reference internal" href="#class_tristeon_1_1_window_1a928da2013c9b48155d451fc9aef10461"><span class="std std-ref">Window::availableResolutions</span></a> updates. </p>
+<p>If called in runtime, and the monitor exists, the application will switch to the given display. Whenever the display is changed, <a class="reference internal" href="#class_tristeon_1_1_window_1a928da2013c9b48155d451fc9aef10461"><span class="std std-ref">Window::availableResolutions</span></a> updates.</p>
+<p>Setting this affects the settings and the runtime property. </p>
 </dd></dl>
 
 </div>
@@ -628,13 +724,15 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings7Physics14fixedDeltaTimeEv">
 <span id="_CPPv3N8Tristeon8Settings7Physics14fixedDeltaTimeEv"></span><span id="_CPPv2N8Tristeon8Settings7Physics14fixedDeltaTimeEv"></span><span id="Tristeon::Settings::Physics::fixedDeltaTime"></span><span class="target" id="class_tristeon_1_1_settings_1_1_physics_1a8e0a714eac0742be76d234cbeac04128"></span><em class="property"><span class="pre">static</span></em> <span class="pre">float</span> <code class="sig-name descname"><span class="pre">fixedDeltaTime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings7Physics14fixedDeltaTimeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The time between fixed frames. </p>
+<dd><p>The time between fixed frames in ms.</p>
+<p>Fixed frames call callback functions like fixedUpdate() at this interval, regardless of the application's frame rate. For example, if this value is 20, then there are 1000 / 20 = 50 calls per second. In the event that fixedUpdate() takes longer than its own delta-time, it may skip frames to catch up. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings7Physics14pixelsPerMeterEv">
 <span id="_CPPv3N8Tristeon8Settings7Physics14pixelsPerMeterEv"></span><span id="_CPPv2N8Tristeon8Settings7Physics14pixelsPerMeterEv"></span><span id="Tristeon::Settings::Physics::pixelsPerMeter"></span><span class="target" id="class_tristeon_1_1_settings_1_1_physics_1a20d6fd009b515cd88bf8d0fcf854154a"></span><em class="property"><span class="pre">static</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">pixelsPerMeter</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings7Physics14pixelsPerMeterEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The amount of pixels per meter. </p>
+<dd><p>The amount of pixels per meter. This is used by the physics engine because Box2D uses a meter-based system where Tristeon uses pixel-based sizes. To make up for this, the size of an object is divided by this value. Try to maintain a relatively accurate conversion rate to make for sensible physics interactions because Box2D uses the size in meters for mass calculations.</p>
+<p>For example, if an object is 512 pixels tall, and pixelsPerMeter is 256, then the object is seen as a 2 meter tall object in physics. </p>
 </dd></dl>
 
 </div>

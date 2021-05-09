@@ -12,6 +12,8 @@ breathe_projects = { "Tristeon": "../xml" }
 breathe_default_project = "Tristeon"
 breathe_default_members = ('members', 'undoc-members')
 
+pygments_style = 'default'
+
 # -- General configuration ---------------------------------------------------
 extensions = [
     'sphinx.ext.autodoc',
