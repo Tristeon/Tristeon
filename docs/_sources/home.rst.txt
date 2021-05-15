@@ -29,7 +29,7 @@ Building the project
 ====================
 Use CMake to build Tristeon's source code using the CMakeLists.txt file
    * If you'd like to use the clang compiler in MSVC, specify ClangCL in the "Optional toolset to use" box in CMake's GUI or through -T ClangCL
-   * Set BUILD_EDITOR to true if you wish to build the engine with the editor included
+   * Set TRISTEON_BUILD_EDITOR to true if you wish to build the engine with the editor included
    * Build the solution using Tristeon as the startup project
    * If you're building the editor and the WinDeploy project is causing issues, you can disable it by adding TRISTEON_DISABLE_WINDEPLOY in the CMake cache.
       * If you do disable WinDeploy, configure CMake a second time so that the Qt binaries get added to the build folder.
