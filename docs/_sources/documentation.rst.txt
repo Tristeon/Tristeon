@@ -50,6 +50,72 @@ Rotations happen around the object's origin point (usually its center). The imag
 
 .. image:: images/Rotations.svg
 
+Serialization
+^^^^^^^^^^^^^^^^^^^^
+Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled but you can read more about that in the serialization classes mentioned throughout the section.
+
+===============
+JSON
+===============
+Tristeon scenes, objects, and other data types are stored using the json format (https://www.json.org/json-en.html). Json is a highly readable format that is easy to modify and fares fairly well with source control.
+
+For example, a json representation of an Actor with an AmbientLight behaviour:
+
+.. code-block:: json
+
+    {
+        "behaviours": [
+            {
+                "colour": {
+                    "a": 1.0,
+                    "b": 1.0,
+                    "g": 1.0,
+                    "r": 1.0,
+                    "typeID": "Tristeon::Colour"
+                },
+                "instanceID": 1554923456,
+                "intensity": 0.5,
+                "renderMask": {
+                    "typeID": "Tristeon::SerializedEnum<enumTristeon::RenderMask>",
+                    "value": 127
+                },
+                "typeID": "Tristeon::AmbientLight"
+            }
+        ],
+        "instanceID": 2236587147,
+        "name": "Ambient",
+        "position": {
+            "typeID": "Tristeon::VectorType<float>",
+            "x": 0.0,
+            "y": 0.0
+        },
+        "rotation": 0.0,
+        "scale": {
+            "typeID": "Tristeon::VectorType<float>",
+            "x": 1.0,
+            "y": 1.0
+        },
+        "typeID": "Tristeon::Actor"
+    }
+
+In the example above, the Actor's properties are represented using a `"name": value` pattern, each separated by a comma. This can for example be seen in the "name" and "rotation" properties.
+
+A value can also be a nested object itself: `"name": { "x": 0 }`. There are many examples of this within the example above but we'd recommend to take a look at the "position" and "scale" fields because they contain very little extra data, making it easier to get a grasp of the syntax.
+
+Arrays or lists are represented in a similar pattern except they are written like `"name": [ value, value ]` where the space between the brackets can be filled with value entries separated by commas. This can be seen in the "behaviours" field, which is an array of behaviours. Each element in the behaviours array is a separate json object that contains fields and additionally nested objects.
+
+Where some fields are very straight-forward (the Actor's name for example), others may seem a little less clear (typeID, instanceID), so we'll try to clarify some of the special fields down below.
+
+=====================
+Type introspection
+=====================
+
+===============
+Instance IDs
+===============
+
+
+
 Scenes
 ^^^^^^^^^^^^^^^^^^^^
 ===============
@@ -60,8 +126,12 @@ Layers
 Actors & Behaviours
 ====================
 
-Serialization
-^^^^^^^^^^^^^^^^^^^^
+
+
+Asset Management
+^^^^^^^^^^^^^^^^^^
+
+
 
 Editor
 ^^^^^^^^^^^^^^^^^^^^

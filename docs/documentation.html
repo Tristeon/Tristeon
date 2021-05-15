@@ -97,12 +97,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#rotation">Rotation</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#serialization">Serialization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-introspection">Type introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instance-ids">Instance IDs</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#scenes">Scenes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#layers">Layers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#actors-behaviours">Actors &amp; Behaviours</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#serialization">Serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asset-management">Asset Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#editor">Editor</a></li>
 </ul>
 </li>
@@ -208,6 +214,61 @@ Illustrated below is a point or position on Tristeon's 2D coordinate system:</p>
 <p>Rotations happen around the object's origin point (usually its center). The image below illustrates an object being rotated at rotation 0, 45, 90, 135, and 180 respectively (left to right). The red arrow indicates the direction of the right-pointing vector local to the object.</p>
 <img alt="_images/Rotations.svg" src="_images/Rotations.svg" /></div>
 </div>
+<div class="section" id="serialization">
+<h2>Serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h2>
+<p>Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled but you can read more about that in the serialization classes mentioned throughout the section.</p>
+<div class="section" id="json">
+<h3>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<p>Tristeon scenes, objects, and other data types are stored using the json format (<a class="reference external" href="https://www.json.org/json-en.html">https://www.json.org/json-en.html</a>). Json is a highly readable format that is easy to modify and fares fairly well with source control.</p>
+<p>For example, a json representation of an Actor with an AmbientLight behaviour:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;behaviours&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;colour&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;a&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="nt">&quot;b&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="nt">&quot;g&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="nt">&quot;r&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::Colour&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;instanceID&quot;</span><span class="p">:</span> <span class="mi">1554923456</span><span class="p">,</span>
+            <span class="nt">&quot;intensity&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="nt">&quot;renderMask&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::SerializedEnum&lt;enumTristeon::RenderMask&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">127</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::AmbientLight&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;instanceID&quot;</span><span class="p">:</span> <span class="mi">2236587147</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ambient&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::VectorType&lt;float&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;rotation&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="nt">&quot;scale&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::VectorType&lt;float&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;typeID&quot;</span><span class="p">:</span> <span class="s2">&quot;Tristeon::Actor&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the example above, the Actor's properties are represented using a <cite>&quot;name&quot;: value</cite> pattern, each separated by a comma. This can for example be seen in the &quot;name&quot; and &quot;rotation&quot; properties.</p>
+<p>A value can also be a nested object itself: <cite>&quot;name&quot;: { &quot;x&quot;: 0 }</cite>. There are many examples of this within the example above but we'd recommend to take a look at the &quot;position&quot; and &quot;scale&quot; fields because they contain very little extra data, making it easier to get a grasp of the syntax.</p>
+<p>Arrays or lists are represented in a similar pattern except they are written like <cite>&quot;name&quot;: [ value, value ]</cite> where the space between the brackets can be filled with value entries separated by commas. This can be seen in the &quot;behaviours&quot; field, which is an array of behaviours. Each element in the behaviours array is a separate json object that contains fields and additionally nested objects.</p>
+<p>Where some fields are very straight-forward (the Actor's name for example), others may seem a little less clear (typeID, instanceID), so we'll try to clarify some of the special fields down below.</p>
+</div>
+<div class="section" id="type-introspection">
+<h3>Type introspection<a class="headerlink" href="#type-introspection" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="instance-ids">
+<h3>Instance IDs<a class="headerlink" href="#instance-ids" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
 <div class="section" id="scenes">
 <h2>Scenes<a class="headerlink" href="#scenes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="layers">
@@ -217,8 +278,8 @@ Illustrated below is a point or position on Tristeon's 2D coordinate system:</p>
 <h3>Actors &amp; Behaviours<a class="headerlink" href="#actors-behaviours" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
-<div class="section" id="serialization">
-<h2>Serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="asset-management">
+<h2>Asset Management<a class="headerlink" href="#asset-management" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="editor">
 <h2>Editor<a class="headerlink" href="#editor" title="Permalink to this headline">¶</a></h2>
