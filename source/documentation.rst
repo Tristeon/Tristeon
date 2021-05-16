@@ -44,7 +44,7 @@ Scale affects the object from its origin point (usually the center), and only ev
 Rotation
 ===============
 
-Rotations can turn objects clockwise or counter-clockwise. Rotations in Tristeon are described using degrees, and are applied in a clockwise direction, meaning that increasing an object's rotation will turn it in the clockwise direction (right). A rotation of 0 zero describes a neutral or identity rotation which means that the object isn't rotated and the right-pointing vector local to the object points right Vector(1, 0).
+Rotations can turn objects clockwise or counter-clockwise. Rotations in Tristeon are described using degrees, and are applied in a clockwise direction, meaning that increasing an object's rotation will turn it in the clockwise direction (right). A rotation of 0 describes a neutral or identity rotation which means that the object isn't rotated and the right-pointing vector local to the object points right (`Vector(1, 0)`).
 
 Rotations happen around the object's origin point (usually its center). The image below illustrates an object being rotated at rotation 0, 45, 90, 135, and 180 respectively (left to right). The red arrow indicates the direction of the right-pointing vector local to the object.
 
@@ -52,12 +52,12 @@ Rotations happen around the object's origin point (usually its center). The imag
 
 Serialization
 ^^^^^^^^^^^^^^^^^^^^
-Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled in code but you can read more about that in the serialization classes mentioned throughout the section.
+Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled in code but you can read more about that in the serialization API, in classes like :ref:`Serializable`, :ref:`JsonSerializer`, and :ref:`TypeRegister`.
 
 ===============
 JSON
 ===============
-Tristeon scenes, objects, and other data types are stored using the json format (https://www.json.org/json-en.html). Json is a highly readable format that is easy to modify and fares fairly well with source control.
+Tristeon scenes, objects, and other data types are stored using the json format (https://www.json.org/json-en.html). Json is a highly readable format that is easy to modify and fares fairly well with source control. This ofcourse doesn't mean that you have to write the json files yourself, all json data in Tristeon is generated, but modifying it shouldn't pose any additional challenges.
 
 For example, a json representation of an :ref:`Actor` with an :ref:`AmbientLight` behaviour:
 
@@ -98,7 +98,7 @@ For example, a json representation of an :ref:`Actor` with an :ref:`AmbientLight
         "typeID": "Tristeon::Actor"
     }
 
-In the example above, the :ref:`Actor` 's properties are represented using a `"name": value` pattern, each separated by a comma. This can for example be seen in the "name" and "rotation" properties.
+In the example above, the properties are represented using a `"name": value` pattern, each separated by a comma. This can for example be seen in the "name" and "rotation" properties.
 
 A value can also be a nested object itself: `"name": { "x": 0 }`. There are many examples of this within the example above but we'd recommend to take a look at the "position" and "scale" fields because they contain very little extra data, making it easier to get a grasp of the syntax.
 
