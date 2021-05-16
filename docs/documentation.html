@@ -99,7 +99,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#serialization">Serialization</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#type-introspection">Type introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-ids">Type IDs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#instance-ids">Instance IDs</a></li>
 </ul>
 </li>
@@ -197,12 +197,12 @@
 </div>
 <div class="section" id="position">
 <h3>Position<a class="headerlink" href="#position" title="Permalink to this headline">¶</a></h3>
-<p>Positions are points on the cartesian coordinate system. Objects can have a position and can be moved by changing the x and/or y value of their position, meaning that for example to move an object right over time, one simply needs to increase the object's x position every frame.
+<p>Positions are points on the cartesian coordinate system. In Tristeon, these points are represented by the <a class="reference internal" href="api.html#vector"><span class="std std-ref">Vector</span></a> class. Objects can have a position and can be moved by changing the x and/or y value of their position, meaning that for example to move an object right over time, one simply needs to increase the object's x position every frame.
 Illustrated below is a point or position on Tristeon's 2D coordinate system:</p>
 <img alt="_images/Point.svg" src="_images/Point.svg" /></div>
 <div class="section" id="scale">
 <h3>Scale<a class="headerlink" href="#scale" title="Permalink to this headline">¶</a></h3>
-<p>Scaling in Tristeon follow the very same two-dimensional system to describe the size of an object along the x-axis and y-axis. An object's scale acts as a multiplier, meaning that if their size is originally defined by e.g. their sprite/image size, the final object's size can be calculated by multiplying the original size by its scale.</p>
+<p>Scaling in Tristeon follows the very same two-dimensional system to describe the size of an object along the x-axis and y-axis (and thus is represented by the <a class="reference internal" href="api.html#vector"><span class="std std-ref">Vector</span></a> class). An object's scale acts as a multiplier, meaning that if their size is originally defined by e.g. their sprite/image size, the final object's size can be calculated by multiplying the original size by its scale.</p>
 <p>Scaling in the x-axis increases the object's size horizontally, scaling in the y-axis increases the object's size vertically. Note that scaling is local to the object, meaning that if an object is rotated 90 degrees, these effects will change accordingly (so in a 90 degree rotation situation, the x axis will actually visually scale the object vertically).</p>
 <p>Scale affects the object from its origin point (usually the center), and only ever affects the object's size. Scale can be 0 but this makes the object non-visible. Scale can not be less than 0. An example of object scaling is illustrated below:</p>
 <a class="reference internal image-reference" href="_images/Unscaled.svg"><img alt="_images/Unscaled.svg" src="_images/Unscaled.svg" width="300px" /></a>
@@ -216,11 +216,11 @@ Illustrated below is a point or position on Tristeon's 2D coordinate system:</p>
 </div>
 <div class="section" id="serialization">
 <h2>Serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h2>
-<p>Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled but you can read more about that in the serialization classes mentioned throughout the section.</p>
+<p>Tristeon uses a standardized way to store object data across the engine. Our goal with object serialization in Tristeon is to create a homogeneous approach to serialization that is very human-readable and at least somewhat version-control friendly. This section won't cover how exactly all serialization is handled in code but you can read more about that in the serialization classes mentioned throughout the section.</p>
 <div class="section" id="json">
 <h3>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
 <p>Tristeon scenes, objects, and other data types are stored using the json format (<a class="reference external" href="https://www.json.org/json-en.html">https://www.json.org/json-en.html</a>). Json is a highly readable format that is easy to modify and fares fairly well with source control.</p>
-<p>For example, a json representation of an Actor with an AmbientLight behaviour:</p>
+<p>For example, a json representation of an <a class="reference internal" href="api.html#actor"><span class="std std-ref">Actor</span></a> with an <a class="reference internal" href="api.html#ambientlight"><span class="std std-ref">AmbientLight</span></a> behaviour:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;behaviours&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -257,16 +257,50 @@ Illustrated below is a point or position on Tristeon's 2D coordinate system:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the example above, the Actor's properties are represented using a <cite>&quot;name&quot;: value</cite> pattern, each separated by a comma. This can for example be seen in the &quot;name&quot; and &quot;rotation&quot; properties.</p>
+<p>In the example above, the <a class="reference internal" href="api.html#actor"><span class="std std-ref">Actor</span></a> 's properties are represented using a <cite>&quot;name&quot;: value</cite> pattern, each separated by a comma. This can for example be seen in the &quot;name&quot; and &quot;rotation&quot; properties.</p>
 <p>A value can also be a nested object itself: <cite>&quot;name&quot;: { &quot;x&quot;: 0 }</cite>. There are many examples of this within the example above but we'd recommend to take a look at the &quot;position&quot; and &quot;scale&quot; fields because they contain very little extra data, making it easier to get a grasp of the syntax.</p>
-<p>Arrays or lists are represented in a similar pattern except they are written like <cite>&quot;name&quot;: [ value, value ]</cite> where the space between the brackets can be filled with value entries separated by commas. This can be seen in the &quot;behaviours&quot; field, which is an array of behaviours. Each element in the behaviours array is a separate json object that contains fields and additionally nested objects.</p>
-<p>Where some fields are very straight-forward (the Actor's name for example), others may seem a little less clear (typeID, instanceID), so we'll try to clarify some of the special fields down below.</p>
+<p>Arrays or lists are represented in a similar pattern except they are written like <cite>&quot;name&quot;: [ value, value ]</cite> where the space between the brackets can be filled with value entries separated by commas. This can be seen in the &quot;behaviours&quot; field, which is an array of <a class="reference internal" href="api.html#behaviour"><span class="std std-ref">Behaviour</span></a>. Each element in the array is a separate json object that contains fields and additionally nested objects.</p>
+<p>Where some fields are very straight-forward (the <a class="reference internal" href="api.html#actor"><span class="std std-ref">Actor</span></a> 's name for example), others may seem a little less clear (typeID, instanceID), so we'll try to clarify some of the special fields down below.</p>
 </div>
-<div class="section" id="type-introspection">
-<h3>Type introspection<a class="headerlink" href="#type-introspection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="type-ids">
+<h3>Type IDs<a class="headerlink" href="#type-ids" title="Permalink to this headline">¶</a></h3>
+<p>In Tristeon, a lot of types like <a class="reference internal" href="api.html#actor"><span class="std std-ref">Actor</span></a> and <a class="reference internal" href="api.html#behaviour"><span class="std std-ref">Behaviour</span></a> can be derived from, but they are commonly stored as their base types. So, to be able to create the appropriate derived types in serialization time, Tristeon stores a type-name along each object.</p>
+<div class="line-block">
+<div class="line">This is represented by the &quot;typeID&quot; field that we store into each json object. For example a <a class="reference internal" href="api.html#sprite"><span class="std std-ref">Sprite</span></a> actor will serialize its typeID as <cite>&quot;typeID&quot;: &quot;Tristeon::Sprite&quot;</cite>. The typeID is always the full type's name, including its namespace, with all typedefs deducted and with all templated types shown in place.</div>
+<div class="line">Some examples are:</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Resulting typeID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Actor</p></td>
+<td><p>Tristeon::Actor</p></td>
+</tr>
+<tr class="row-odd"><td><p>List&lt;Colour&gt;</p></td>
+<td><p>Tristeon::List&lt;Tristeon::Colour&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p>Vector</p></td>
+<td><p>Tristeon::VectorType&lt;float&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>int32_t</p></td>
+<td><p>int</p></td>
+</tr>
+</tbody>
+</table>
+<p>This typeID is used by the <a class="reference internal" href="api.html#typeregister"><span class="std std-ref">TypeRegister</span></a> to create derived types in runtime. The <a class="reference internal" href="api.html#typeregister"><span class="std std-ref">TypeRegister</span></a> maps templated factory functions to typeID strings to create the derived types. Read more about how this is handled in detail in the <a class="reference internal" href="api.html#typeregister"><span class="std std-ref">TypeRegister</span></a> API.</p>
 </div>
 <div class="section" id="instance-ids">
 <h3>Instance IDs<a class="headerlink" href="#instance-ids" title="Permalink to this headline">¶</a></h3>
+<p>Instance IDs are unique identifiers that allow us to do very quick lookups for references to other objects in the <a class="reference internal" href="api.html#scene"><span class="std std-ref">Scene</span></a>. In order for an object to have an instance ID, its type needs to inherit from InstancedSerializable at some point in the inheritance tree. Most inheritable classes in Tristeon like <a class="reference internal" href="api.html#actor"><span class="std std-ref">Actor</span></a> and <a class="reference internal" href="api.html#behaviour"><span class="std std-ref">Behaviour</span></a> already do, so they'll have this built-in.</p>
+<p>An instance's ID is randomly generated upon creation of the object (or loaded from json), and is stored in its json representation. Once set, the instance ID is expected to never change (although there are exceptions in the case of an ID collision). This means that you can safely serialize an object's instance ID as a way to reference it when the <a class="reference internal" href="api.html#scene"><span class="std std-ref">Scene</span></a> is saved.</p>
+<p>The details of the implementation can be found at <a class="reference internal" href="api.html#instancedserializable"><span class="std std-ref">InstancedSerializable</span></a>. To be able to do runtime lookups of an object with an instance ID, reference <a class="reference internal" href="api.html#instancecollector"><span class="std std-ref">InstanceCollector</span></a>.</p>
 </div>
 </div>
 <div class="section" id="scenes">
