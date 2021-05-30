@@ -27,15 +27,10 @@ namespace Tristeon
 		
 		static String resolve(const String& path)
 		{
-			//local paths can start with ../ in which case we should return the already localized path
-			if (path.size() >= 3 && path[0] == '.' && path[1] == '.' && path[2] == '/')
-				return path;
-			
-			//Separate domain
-			const auto idx = path.find_first_of(':');
-			if (idx == std::string::npos || idx == 1) //1 implies global path (e.g. C:/)
+			if (isResolved(path))
 				return path;
 
+			const auto idx = path.find_first_of(':');
 			const auto domain = StringHelper::toLower(path.substr(0, idx));
 
 			//Find domain path function
