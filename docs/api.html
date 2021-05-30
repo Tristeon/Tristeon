@@ -297,7 +297,7 @@
 <dl class="cpp class">
 <dt id="_CPPv4I0EN8Tristeon9CollectorE">
 <span id="_CPPv3I0EN8Tristeon9CollectorE"></span><span id="_CPPv2I0EN8Tristeon9CollectorE"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="class_tristeon_1_1_collector"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Tristeon</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Collector</span></code><a class="headerlink" href="#_CPPv4I0EN8Tristeon9CollectorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_tristeon_1_1_collector"><span class="std std-ref">Collector</span></a> is a handy tool for collecting classes of a certain type. </p>
+<dd><p><a class="reference internal" href="#class_tristeon_1_1_collector"><span class="std std-ref">Collector</span></a> is a handy tool for collecting classes of a certain type.</p>
 <p>Classes looking to be collected should add themselves in the constructor using <a class="reference internal" href="#class_tristeon_1_1_collector_1a3073e51abb01f74fe9027c615233740a"><span class="std std-ref">Collector&lt;T&gt;::add()</span></a> and remove themselves in the deconstructor <a class="reference internal" href="#class_tristeon_1_1_collector_1a796e6a12e5cb4b7a99753d973257b37c"><span class="std std-ref">Collector&lt;T&gt;::remove()</span></a>. You may then use <a class="reference internal" href="#class_tristeon_1_1_collector_1a0aa1a7677af9eafa7a31e029d1cee1f1"><span class="std std-ref">Collector&lt;T&gt;::all()</span></a> to receive all collected objects.</p>
 <p>Default engine classes that are actively tracked:<ul class="simple">
 <li><p>Actor</p></li>
@@ -388,7 +388,7 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon17InstanceCollector4findERKj">
 <span id="_CPPv3N8Tristeon17InstanceCollector4findERKj"></span><span id="_CPPv2N8Tristeon17InstanceCollector4findERKj"></span><span id="Tristeon::InstanceCollector::find__unsigned-iCR"></span><span class="target" id="class_tristeon_1_1_instance_collector_1af3270c1c08fc153487e0ab6a3e827047"></span><em class="property"><span class="pre">static</span></em> <span class="pre">InstancedSerializable</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">find</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon17InstanceCollector4findERKj" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the object with the given ID, usually obtained through json data or through InstancedSerializable::instanceID(). </p>
+<dd><p>Returns the object with the given ID, usually obtained through json data or through InstancedSerializable::instanceID().</p>
 <p>The function is most notably used in scene references, Actor::find() and SerializedInstance::get(), but there are other manual use cases where this function can be particularly convenient.</p>
 <p>Since instancedSerializables set their instanceID upon deserialize(), you can not use InstancedSerializable in the deserialization phase of scene loading.</p>
 <dl class="field-list simple">
@@ -481,19 +481,19 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window5widthEv">
 <span id="_CPPv3N8Tristeon6Window5widthEv"></span><span id="_CPPv2N8Tristeon6Window5widthEv"></span><span id="Tristeon::Window::width"></span><span class="target" id="class_tristeon_1_1_window_1a3678dfd4b5242c09afaa6990942b553d"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">width</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window5widthEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The width of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a34a459b51e82281aac5e5b7093da6f87"><span class="std std-ref">Window::gameWidth()</span></a> </p>
+<dd><p>The width of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a34a459b51e82281aac5e5b7093da6f87"><span class="std std-ref">Window::gameWidth()</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window6heightEv">
 <span id="_CPPv3N8Tristeon6Window6heightEv"></span><span id="_CPPv2N8Tristeon6Window6heightEv"></span><span id="Tristeon::Window::height"></span><span class="target" id="class_tristeon_1_1_window_1aaf09d39c7d6928d1610fe35f7b695aee"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">height</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window6heightEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The height of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a465421a62b7d3b8b52e7b50fc3cba36c"><span class="std std-ref">Window::gameHeight()</span></a> </p>
+<dd><p>The height of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a465421a62b7d3b8b52e7b50fc3cba36c"><span class="std std-ref">Window::gameHeight()</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window4sizeEv">
 <span id="_CPPv3N8Tristeon6Window4sizeEv"></span><span id="_CPPv2N8Tristeon6Window4sizeEv"></span><span id="Tristeon::Window::size"></span><span class="target" id="class_tristeon_1_1_window_1a6ddf91841f692cff3dd1b34cd2b8d5e6"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">VectorU</span> <code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The size of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a23631733a1b64b7f10ef5afa00f703fd"><span class="std std-ref">Window::gameSize()</span></a> </p>
+<dd><p>The size of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view. For rendering purposes, it is recommended to use <a class="reference internal" href="#class_tristeon_1_1_window_1a23631733a1b64b7f10ef5afa00f703fd"><span class="std std-ref">Window::gameSize()</span></a>. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -561,7 +561,7 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon6Window14currentDisplayEv">
 <span id="_CPPv3N8Tristeon6Window14currentDisplayEv"></span><span id="_CPPv2N8Tristeon6Window14currentDisplayEv"></span><span id="Tristeon::Window::currentDisplay"></span><span class="target" id="class_tristeon_1_1_window_1a57d72e90e8851d8e81ce8f76127ae942"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">inline</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">currentDisplay</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon6Window14currentDisplayEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The current display that the <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> is on. In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if the hardware situation is different from previous runs.</p>
+<dd><p>The current display that the <a class="reference internal" href="#class_tristeon_1_1_window"><span class="std std-ref">Window</span></a> is on. In fullscreen, this is usually the same as <a class="reference internal" href="#class_tristeon_1_1_settings_1_1_graphics_1a4ce0ae9243af20d35691038d7fcc3a8c"><span class="std std-ref">Settings::Graphics::preferredDisplay()</span></a>, but it may differ if the hardware situation is different from previous runs.</p>
 <p>In windowed mode, this function always returns 0 regardless of where the window is. </p>
 </dd></dl>
 
@@ -756,8 +756,8 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon8Settings7Physics14pixelsPerMeterEv">
 <span id="_CPPv3N8Tristeon8Settings7Physics14pixelsPerMeterEv"></span><span id="_CPPv2N8Tristeon8Settings7Physics14pixelsPerMeterEv"></span><span id="Tristeon::Settings::Physics::pixelsPerMeter"></span><span class="target" id="class_tristeon_1_1_settings_1_1_physics_1a20d6fd009b515cd88bf8d0fcf854154a"></span><em class="property"><span class="pre">static</span></em> <span class="pre">unsigned</span> <span class="pre">int</span> <code class="sig-name descname"><span class="pre">pixelsPerMeter</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Tristeon8Settings7Physics14pixelsPerMeterEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The amount of pixels per meter. This is used by the physics engine because Box2D uses a meter-based system where Tristeon uses pixel-based sizes. To make up for this, the size of an object is divided by this value. Try to maintain a relatively accurate conversion rate to make for sensible physics interactions because Box2D uses the size in meters for mass calculations.</p>
-<p>For example, if an object is 512 pixels tall, and pixelsPerMeter is 256, then the object is seen as a 2 meter tall object in physics. </p>
+<dd><p>The number of pixels per meter. This is used by the physics engine because Box2D uses a meter-based system where Tristeon uses pixel-based sizes. To make up for this, the size of an object is divided by this value. Try to maintain a relatively accurate conversion rate to make for sensible physics interactions because Box2D uses the size in meters for mass calculations.</p>
+<p>For example, if an object is 512 pixels tall, and pixelsPerMeter is 256, then the physics engine interprets the object as being 2 meters tall. </p>
 </dd></dl>
 
 </div>
@@ -781,12 +781,11 @@
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon13AnimationClip13AnimationClipEv">
 <span id="_CPPv3N8Tristeon13AnimationClip13AnimationClipEv"></span><span id="_CPPv2N8Tristeon13AnimationClip13AnimationClipEv"></span><span id="Tristeon::AnimationClip::AnimationClip"></span><span class="target" id="class_tristeon_1_1_animation_clip_1ae80ceb4449c736f63836f7b11cc7dd74"></span><code class="sig-name descname"><span class="pre">AnimationClip</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">default</span><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip13AnimationClipEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Creates an empty animationclip. </p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8Tristeon13AnimationClipD0Ev">
-<span id="_CPPv3N8Tristeon13AnimationClipD0Ev"></span><span id="_CPPv2N8Tristeon13AnimationClipD0Ev"></span><span id="Tristeon::AnimationClip::~AnimationClip"></span><span class="target" id="class_tristeon_1_1_animation_clip_1a0bcd2ec63be005e8e4f636e58d3fa515"></span><em class="property"><span class="pre">virtual</span></em> <code class="sig-name descname"><span class="pre">~AnimationClip</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">default</span><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClipD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8Tristeon13AnimationClipD0Ev"></span><span id="_CPPv2N8Tristeon13AnimationClipD0Ev"></span><span id="Tristeon::AnimationClip::~AnimationClip"></span><span class="target" id="class_tristeon_1_1_animation_clip_1af4c923b0dbb0876f130d8a97b7662a47"></span><em class="property"><span class="pre">virtual</span></em> <code class="sig-name descname"><span class="pre">~AnimationClip</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">override</span></em> <span class="pre">=</span> <span class="pre">default</span><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClipD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
@@ -854,35 +853,39 @@
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip10albedoPathE">
 <span id="_CPPv3N8Tristeon13AnimationClip10albedoPathE"></span><span id="_CPPv2N8Tristeon13AnimationClip10albedoPathE"></span><span id="Tristeon::AnimationClip::albedoPath__String"></span><span class="target" id="class_tristeon_1_1_animation_clip_1ad6256fa7bc89fa9b73b9757a657f196c"></span><span class="pre">String</span> <code class="sig-name descname"><span class="pre">albedoPath</span></code><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip10albedoPathE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Path to the color texture. </p>
+</dd></dl>
 
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip10normalPathE">
 <span id="_CPPv3N8Tristeon13AnimationClip10normalPathE"></span><span id="_CPPv2N8Tristeon13AnimationClip10normalPathE"></span><span id="Tristeon::AnimationClip::normalPath__String"></span><span class="target" id="class_tristeon_1_1_animation_clip_1a72fb15432bc1e28906012207b11c1ef2"></span><span class="pre">String</span> <code class="sig-name descname"><span class="pre">normalPath</span></code><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip10normalPathE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Path to the normal map texture. </p>
+</dd></dl>
 
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip17normalMapStrengthE">
 <span id="_CPPv3N8Tristeon13AnimationClip17normalMapStrengthE"></span><span id="_CPPv2N8Tristeon13AnimationClip17normalMapStrengthE"></span><span id="Tristeon::AnimationClip::normalMapStrength__float"></span><span class="target" id="class_tristeon_1_1_animation_clip_1acb68adb2054f04cf02d5e303788c531b"></span><span class="pre">float</span> <code class="sig-name descname"><span class="pre">normalMapStrength</span></code> <span class="pre">=</span> <span class="pre">1.0f</span><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip17normalMapStrengthE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dd><p>The strength of the normal map. Normals are interpolated between (0, 0, -1) and the value read in the normal map by this value. 0 means that the the normal map will have no effect and 1 means that the normal map takes full effect. </p>
+</dd></dl>
 
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip13lightMaskPathE">
 <span id="_CPPv3N8Tristeon13AnimationClip13lightMaskPathE"></span><span id="_CPPv2N8Tristeon13AnimationClip13lightMaskPathE"></span><span id="Tristeon::AnimationClip::lightMaskPath__String"></span><span class="target" id="class_tristeon_1_1_animation_clip_1a531ba07106798adb37c490bcfd65bb59"></span><span class="pre">String</span> <code class="sig-name descname"><span class="pre">lightMaskPath</span></code><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip13lightMaskPathE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Path to the light mask texture. </p>
+</dd></dl>
 
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip12playbackRateE">
 <span id="_CPPv3N8Tristeon13AnimationClip12playbackRateE"></span><span id="_CPPv2N8Tristeon13AnimationClip12playbackRateE"></span><span id="Tristeon::AnimationClip::playbackRate__float"></span><span class="target" id="class_tristeon_1_1_animation_clip_1a00c8ffb2308f48aa0d98a4ccee5e4e8a"></span><span class="pre">float</span> <code class="sig-name descname"><span class="pre">playbackRate</span></code> <span class="pre">=</span> <span class="pre">1</span><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip12playbackRateE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A modifier for the playback rate of the animationclip. This modifier works as a multiplier in where 1 is the default speed and &gt; 1 speeds up and &lt; 1 slows down.</p>
-<p>TODO: <a class="reference internal" href="#class_tristeon_1_1_animation_clip_1a00c8ffb2308f48aa0d98a4ccee5e4e8a"><span class="std std-ref">AnimationClip::playbackRate</span></a> doesn't support negative (backwards) playback rates yet. </p>
+<dd><p>A modifier for the playback rate of the animationclip. This modifier works as a multiplier in where 1 is the default speed and &gt; 1 speeds up and &lt; 1 slows down. </p>
 </dd></dl>
 
 </div>
 <dl class="cpp struct">
 <dt id="_CPPv4N8Tristeon13AnimationClip7SpacingE">
 <span id="_CPPv3N8Tristeon13AnimationClip7SpacingE"></span><span id="_CPPv2N8Tristeon13AnimationClip7SpacingE"></span><span id="Tristeon::AnimationClip::Spacing"></span><span class="target" id="struct_tristeon_1_1_animation_clip_1_1_spacing"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">Spacing</span></code><a class="headerlink" href="#_CPPv4N8Tristeon13AnimationClip7SpacingE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
+<dd><p>Describes the spacing around and between animation frames. </p>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
 <dl class="cpp var">
 <dt id="_CPPv4N8Tristeon13AnimationClip7Spacing4leftE">
