@@ -125,16 +125,11 @@ if (MSVC)
     target_compile_options(glad PUBLIC /MP)
     target_compile_options(OpenAL PUBLIC /MP)
 
-	target_compile_features(OpenAL PUBLIC cxx_std_17)
-	target_compile_options(OpenAL PUBLIC -xc++ -lstdc++ -shared-libgcc)
     add_definitions(/MP)
 endif(MSVC)
 
 #Link libraries
 if (TRISTEON_BUILD_EXE)
-	target_compile_features(Tristeon PRIVATE cxx_std_17)
-	target_compile_options(Tristeon PRIVATE -xc++ -lstdc++ -shared-libgcc)
-
 	target_link_libraries(Tristeon PRIVATE glad)
 	target_link_libraries(Tristeon PRIVATE magic_enum)
 	target_link_libraries(Tristeon PRIVATE OpenAL)
@@ -151,9 +146,6 @@ if (TRISTEON_BUILD_EXE)
 endif()
 
 if(TRISTEON_BUILD_TESTS)
-	target_compile_features(Tristeon_Lib PRIVATE cxx_std_17)
-	target_compile_options(Tristeon_Lib PRIVATE -xc++ -lstdc++ -shared-libgcc)
-
 	target_link_libraries(Tristeon_Lib PRIVATE glad)
 	target_link_libraries(Tristeon_Lib PRIVATE magic_enum)
 	target_link_libraries(Tristeon_Lib PRIVATE OpenAL)

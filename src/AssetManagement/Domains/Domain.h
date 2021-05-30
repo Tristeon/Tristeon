@@ -41,9 +41,13 @@ namespace Tristeon
 				return path;
 			}
 
+			//Move along path until we find the first normal character again
+			//this resolves paths like /////////////////what.png 
+			const auto pathIndex = path.find_first_not_of("/\\", idx + 1);
+
 			//Resolve
 			const auto domainPath = (*getMap())[domain];
-			return domainPath() + "//" + path.substr(idx + 1, String::npos);
+			return domainPath() + "/" + path.substr(pathIndex, String::npos);
 		}
 	};
 }
