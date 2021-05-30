@@ -4,7 +4,7 @@
 namespace Tristeon
 {
 	/**
-	 * @brief Collector is a handy tool for collecting classes of a certain type.
+	 * Collector is a handy tool for collecting classes of a certain type.
 	 *
 	 * Classes looking to be collected should add themselves in the constructor using Collector<T>::add() and remove themselves in the deconstructor Collector<T>::remove().
 	 * You may then use Collector<T>::all() to receive all collected objects.

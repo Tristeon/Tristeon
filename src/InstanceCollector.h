@@ -18,7 +18,7 @@ namespace Tristeon
 		
 	public:
 		/**
-		 * @brief Returns the object with the given ID, usually obtained through json data or through InstancedSerializable::instanceID().
+		 * Returns the object with the given ID, usually obtained through json data or through InstancedSerializable::instanceID().
 		 *
 		 * The function is most notably used in scene references, Actor::find() and SerializedInstance::get(), but there are other manual use cases where this function can be particularly convenient.
 		 *

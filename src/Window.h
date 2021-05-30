@@ -29,19 +29,19 @@ namespace Tristeon
 
 		/**
 		 * The width of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
-		 * For rendering purposes, it is recommended to use Window::gameWidth()
+		 * For rendering purposes, it is recommended to use Window::gameWidth().
 		 */
 		[[nodiscard]] static unsigned int width() { return instance()->_windowWidth(); }
 
 		/**
 		 * The height of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
-		 * For rendering purposes, it is recommended to use Window::gameHeight()
+		 * For rendering purposes, it is recommended to use Window::gameHeight().
 		 */
 		[[nodiscard]] static unsigned int height() { return instance()->_windowHeight(); }
 
 		/**
 		 * The size of the window. This may potentially be different from the world/game size, because in-editor mode the game is represented using a smaller view.
-		 * For rendering purposes, it is recommended to use Window::gameSize()
+		 * For rendering purposes, it is recommended to use Window::gameSize().
 		 */
 		[[nodiscard]] static VectorU size() { return { width(), height() }; }
 
@@ -101,7 +101,7 @@ namespace Tristeon
 
 		/**
 		 * The current display that the Window is on.
-		 * In fullscreen, this is usually the same as Project::Graphics::preferredDisplay(), but it may differ if the hardware situation is different from previous runs.
+		 * In fullscreen, this is usually the same as Settings::Graphics::preferredDisplay(), but it may differ if the hardware situation is different from previous runs.
 		 *
 		 * In windowed mode, this function always returns 0 regardless of where the window is.
 		 */

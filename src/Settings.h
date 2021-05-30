@@ -190,11 +190,11 @@ namespace Tristeon
 			[[nodiscard]] static float fixedDeltaTime();
 
 			/**
-			 * The amount of pixels per meter.
+			 * The number of pixels per meter.
 			 * This is used by the physics engine because Box2D uses a meter-based system where Tristeon uses pixel-based sizes.
 			 * To make up for this, the size of an object is divided by this value. Try to maintain a relatively accurate conversion rate to make for sensible physics interactions because Box2D uses the size in meters for mass calculations.
 			 *
-			 * For example, if an object is 512 pixels tall, and pixelsPerMeter is 256, then the object is seen as a 2 meter tall object in physics.
+			 * For example, if an object is 512 pixels tall, and pixelsPerMeter is 256, then the physics engine interprets the object as being 2 meters tall.
 			 */
 			[[nodiscard]] static unsigned int pixelsPerMeter();
 
@@ -209,7 +209,7 @@ namespace Tristeon
 		static String _assetPath;
 		static String _firstScene;
 
-		static nlohmann::json _data;
+		static json _data;
 		
 		static void loadBuild();
 		static void load(const String& folder);

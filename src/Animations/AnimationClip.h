@@ -14,11 +14,8 @@ namespace Tristeon
 	class AnimationClip : public Serializable
 	{
 	public:
-		/**
-		 * Creates an empty animationclip.
-		 */
 		AnimationClip() = default;
-		virtual ~AnimationClip() = default;
+		virtual ~AnimationClip() override = default;
 		
 		DELETE_COPY(AnimationClip);
 		DEFAULT_MOVE(AnimationClip);
@@ -27,6 +24,9 @@ namespace Tristeon
 		void deserialize(json j) override;
 
 		//TODO: For consistency's sake, Tileset and AnimationClip should use the same Spacing structure
+		/**
+		 * Describes the spacing around and between animation frames.
+		 */
 		struct Spacing
 		{
 			/**
@@ -97,18 +97,30 @@ namespace Tristeon
 		 */
 		bool loops = false;
 
+		/**
+		 * Path to the color texture.
+		*/
 		String albedoPath;
+		/**
+		 * Path to the normal map texture.
+		*/
 		String normalPath;
+		/**
+		 * The strength of the normal map. Normals are interpolated between (0, 0, -1) and the value read in the normal map by this value. 0 means that the the normal map will have no effect and 1 means that the normal map takes full effect.
+		*/
 		float normalMapStrength = 1.0f;
+
+		/**
+		 * Path to the light mask texture.
+		*/
 		String lightMaskPath;
 
 		/**
 		 * A modifier for the playback rate of the animationclip.
 		 * This modifier works as a multiplier in where 1 is the default speed and > 1 speeds up and < 1 slows down.
 		 *
-		 * TODO: AnimationClip::playbackRate doesn't support negative (backwards) playback rates yet.
 		 */
-		float playbackRate = 1;
+		float playbackRate = 1; //TODO: AnimationClip::playbackRate doesn't support negative (backwards) playback rates yet.
 	};
 
 	REGISTER_TYPE(AnimationClip);
