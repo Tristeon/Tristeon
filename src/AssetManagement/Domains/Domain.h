@@ -27,6 +27,10 @@ namespace Tristeon
 		
 		static String resolve(const String& path)
 		{
+			//local paths can start with ../ in which case we should return the already localized path
+			if (path.size() >= 3 && path[0] == '.' && path[1] == '.' && path[2] == '/')
+				return path;
+			
 			//Separate domain
 			const auto idx = path.find_first_of(':');
 			if (idx == std::string::npos || idx == 1) //1 implies global path (e.g. C:/)
@@ -48,6 +52,19 @@ namespace Tristeon
 			//Resolve
 			const auto domainPath = (*getMap())[domain];
 			return domainPath() + "/" + path.substr(pathIndex, String::npos);
+		}
+
+		static bool isResolved(const String& path)
+		{
+			//resolved paths can start with ../ in which case we should return the already localized path
+			if (path.size() >= 3 && path[0] == '.' && path[1] == '.' && path[2] == '/')
+				return true;
+			
+			const auto idx = path.find_first_of(':');
+			if (idx == std::string::npos || idx == 1) //1 implies global path (e.g. C:/)
+				return true;
+
+			return false;
 		}
 	};
 }
