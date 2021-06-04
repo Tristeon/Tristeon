@@ -16,5 +16,5 @@ namespace Tristeon
 	};
 
 	REGISTER_TYPE(TextureMetaFile);
-	FILE_EXTENSION_TYPE(TextureMetaFile,".png");
+	FILE_EXTENSION_TYPE(TextureMetaFile,".png", ".jpg", ".jpeg", ".bmp", ".tga", ".psd");
 }

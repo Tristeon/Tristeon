@@ -1,22 +1,22 @@
 ﻿#include "TextureMetaFile.h"
+#include <Rendering/Texture.h>
 
-#include "Rendering/Texture.h"
-
-using namespace Tristeon;
-
-json TextureMetaFile::serialize()
+namespace Tristeon
 {
-	json j = MetaFile::serialize();
-	j["typeID"] = Type<TextureMetaFile>::fullName();
-	return j;
-}
+	json TextureMetaFile::serialize()
+	{
+		json j = MetaFile::serialize();
+		j["typeID"] = Type<TextureMetaFile>::fullName();
+		return j;
+	}
 
-void TextureMetaFile::deserialize(json j)
-{
-	MetaFile::deserialize(j);
-}
+	void TextureMetaFile::deserialize(json j)
+	{
+		MetaFile::deserialize(j);
+	}
 
-Unique<TObject> TextureMetaFile::load()
-{
-	return std::make_unique<Texture>();	
+	Unique<TObject> TextureMetaFile::load()
+	{
+		return std::make_unique<Texture>();
+	}
 }
