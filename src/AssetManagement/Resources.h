@@ -82,7 +82,7 @@ namespace Tristeon
 			if (_newLoadedResources.find(metaFile->GUID) != _newLoadedResources.end())
 				return (T*)_newLoadedResources[metaFile->GUID].get();
 
-			Unique<TObject> loadedAsset = metaFile->load();
+			auto loadedAsset = metaFile->load(globalPath);
 
 			_newLoadedResources[metaFile->GUID] = std::move(loadedAsset);
 			return (T*)_newLoadedResources[metaFile->GUID].get();

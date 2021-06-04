@@ -15,8 +15,8 @@ namespace Tristeon
 		MetaFile::deserialize(j);
 	}
 
-	Unique<TObject> AudioMetaFile::load()
+	Unique<TObject> AudioMetaFile::load(const String& path)
 	{
-		return std::make_unique<AudioClip>();
+		return std::make_unique<AudioClip>(path);
 	}
 }

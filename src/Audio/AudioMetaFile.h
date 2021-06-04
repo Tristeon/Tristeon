@@ -12,7 +12,7 @@ namespace Tristeon
 		
 		void deserialize(json j) override;
 
-		Unique<TObject> load() override;
+		Unique<TObject> load(const String& path) override;
 	};
 
 	REGISTER_TYPE(AudioMetaFile);

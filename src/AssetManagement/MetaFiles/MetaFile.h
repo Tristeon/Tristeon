@@ -12,7 +12,7 @@ namespace Tristeon
 	class MetaFile : public Serializable
 	{
 	public:
-		virtual Unique<TObject> load() { return nullptr; }
+		virtual Unique<TObject> load(const String& path) { return nullptr; }
 
 		json serialize() override;
 

@@ -15,8 +15,8 @@ namespace Tristeon
 		MetaFile::deserialize(j);
 	}
 
-	Unique<TObject> TextureMetaFile::load()
+	Unique<TObject> TextureMetaFile::load(const String& path)
 	{
-		return std::make_unique<Texture>();
+		return std::make_unique<Texture>(path);
 	}
 }
