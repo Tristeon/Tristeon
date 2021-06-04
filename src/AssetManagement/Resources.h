@@ -23,7 +23,7 @@ namespace Tristeon
 
 			auto globalPath = Domain::resolve(path);
 
-			if (!Domain::isResolved(globalPath)) //Couldn't find global path
+			if (!Domain::isResolved(globalPath) || !std::filesystem::exists(globalPath)) //Couldn't find global path
 				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 			
 			if (!std::filesystem::exists(globalPath))
@@ -46,7 +46,7 @@ namespace Tristeon
 
 			auto globalPath = Domain::resolve(path);
 
-			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+			if (!Domain::isResolved(globalPath) || !std::filesystem::exists(globalPath)) //Couldn't find global path
 				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 			
 			if (!std::filesystem::exists(globalPath))
@@ -68,7 +68,7 @@ namespace Tristeon
 
 			auto globalPath = Domain::resolve(path);
 
-			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+			if (!Domain::isResolved(globalPath) || !std::filesystem::exists(globalPath)) //Couldn't find global path
 				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 
 			if (!std::filesystem::exists(globalPath))
@@ -92,7 +92,7 @@ namespace Tristeon
 		{
 			auto globalPath = Domain::resolve(path);
 
-			if (globalPath.size() >= 2 && globalPath[1] != ':') //Couldn't find global path
+			if (!Domain::isResolved(globalPath) || !std::filesystem::exists(globalPath)) //Couldn't find global path
 				globalPath = Domain::resolve("Assets://" + path); //Use assets path by default
 
 			if (globalPath.empty())

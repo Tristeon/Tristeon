@@ -44,7 +44,10 @@ namespace Tristeon
 			_albedoPath = newAlbedoPath;
 		}
 		if (!_albedo)
+		{
 			_albedo = Resources::assetLoad<Texture>(Texture::defaultPath);
+			TRISTEON_WARNING("Failed to load texture " + newAlbedoPath);
+		}
 
 		auto const newNormalPath = j.value("normalPath", json()).value("path", "");
 		if (newNormalPath != _normalPath)

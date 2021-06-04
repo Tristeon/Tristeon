@@ -18,7 +18,7 @@ namespace Tristeon
 		/**
 		 * Creates a default (white) texture.
 		 */
-		explicit Texture() : Texture(defaultPath) { }
+		explicit Texture();
 		/**
 		 * Creates a texture with an image at the given filepath.
 		 */

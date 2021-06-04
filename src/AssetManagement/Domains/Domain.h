@@ -33,6 +33,9 @@ namespace Tristeon
 			const auto idx = path.find_first_of(':');
 			const auto domain = StringHelper::toLower(path.substr(0, idx));
 
+			if (idx == 0 || idx == std::string::npos)
+				return path;
+			
 			//Find domain path function
 			if (getMap()->find(domain) == getMap()->end())
 			{
@@ -54,6 +57,10 @@ namespace Tristeon
 			//resolved paths can start with ../ in which case we should return the already localized path
 			if (path.size() >= 3 && path[0] == '.' && path[1] == '.' && path[2] == '/')
 				return true;
+
+			//can't use executable folder 
+			if (path.find_first_of('/') == std::string::npos)
+				return false;
 			
 			const auto idx = path.find_first_of(':');
 			if (idx == std::string::npos || idx == 1) //1 implies global path (e.g. C:/)

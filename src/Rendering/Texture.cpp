@@ -4,13 +4,17 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-
-#include "DebugGL.h"
-#include "Utils/Console.h"
+#include <Rendering/DebugGL.h>
+#include <AssetManagement/Domains/Domain.h>
+#include <Utils/Console.h>
 
 namespace Tristeon
 {
 	const std::string Texture::defaultPath = "Engine://Textures/white.jpg";
+
+	Texture::Texture(): Texture(Domain::resolve(defaultPath))
+	{
+	}
 
 	Texture::Texture(std::string const& path)
 	{
