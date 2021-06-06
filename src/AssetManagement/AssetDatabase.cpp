@@ -1,69 +1,102 @@
 #include "AssetManagement/AssetDatabase.h"
+#include <AssetManagement/MetaFiles/MetaFile.h>
 #include <Serialization/JsonSerializer.h>
 #include "Settings.h"
 #include <filesystem>
+
 
 namespace fs = std::filesystem;
 
 namespace Tristeon
 {
-	std::map<String, List<String>> AssetDatabase::assets;
+	std::map<uint32_t, AssetDatabase::Asset> AssetDatabase::_assets;
 
 	void AssetDatabase::add(String const& path)
 	{
+		const auto metaFile = JsonSerializer::deserialize<MetaFile>(path + ".meta");
+		if (!metaFile)
+		{
+			TRISTEON_WARNING("Couldn't find metafile for asset " + path + ". Asset wasn't added to the database");
+			return;
+		}
+
 		auto const p = fs::path(path);
 		auto const suffix = p.extension().string();
-		
-		if (assets.find(suffix) == assets.end())
-			assets[suffix] = List<String>();
+		auto const name = p.stem().string();
 
-		if (!assets[suffix].contains(path))
-			assets[suffix].add(path);
+		_assets[metaFile->GUID] = Asset{ path, name, suffix };
 	}
 
 	void AssetDatabase::remove(String const& path)
 	{
 		auto const p = fs::path(path);
-		if (assets.find(p.extension().string()) == assets.end())
-			assets[p.extension().string()] = List<String>();
-		assets[p.extension().string()].remove(path);
-	}
-
-	List<String> AssetDatabase::get(String const& extension)
-	{
-		if (assets.find(extension) != assets.end())
-			return assets[extension];
-		return List<String>();
-	}
-
-	String AssetDatabase::findByName(String const& name)
-	{
-		for (const auto& pair : assets)
+		uint32_t foundGUID = 0;
+		for (auto [guid, asset] : _assets)
 		{
-			for (String path : pair.second)
+			if (asset.path == path)
 			{
-				if (fs::path(path).stem() == name)
-					return path;
+				foundGUID = guid;
+				break;
 			}
 		}
-		return "";
+
+		if (foundGUID != 0)
+			_assets.erase(foundGUID);
 	}
 
-	String AssetDatabase::findByName(String const& name, String const& extension)
+	void AssetDatabase::remove(const uint32_t& guid)
 	{
-		List<String> paths = get(extension);
-		for (String path : paths)
+		_assets.erase(guid);
+	}
+
+	String AssetDatabase::get(const uint32_t& guid)
+	{
+		if (_assets.find(guid) == _assets.end())
 		{
-			if (fs::path(path).stem() == name)
-				return path;
+			TRISTEON_WARNING("Couldn't locate asset with GUID " + std::to_string(guid));
+			return "";
+		}
+		return _assets[guid].path;
+	}
+
+	String AssetDatabase::find(String const& name)
+	{
+		for (auto [guid, asset] : _assets)
+		{
+			if (asset.name == name)
+				return asset.path;
 		}
 
 		return "";
+	}
+
+	String AssetDatabase::find(String const& name, String const& extension)
+	{
+		for (auto [guid, asset] : _assets)
+		{
+			if (asset.extension == extension && asset.name == name)
+				return asset.path;
+		}
+
+		return "";
+	}
+
+	List<String> AssetDatabase::findByExtension(const String& extension)
+	{
+		List<String> result;
+
+		for (auto [guid, asset] : _assets)
+		{
+			if (asset.extension == extension)
+				result.add(asset.path);
+		}
+		
+		return result;
 	}
 
 	void AssetDatabase::load()
 	{
-		assets.clear();
+		_assets.clear();
 		detectAll();
 	}
 
@@ -84,10 +117,10 @@ namespace Tristeon
 			}
 			else
 			{
-				if (assets.find(entry.path().extension().string()) == assets.end())
-					assets[entry.path().extension().string()] = List<String>();
+				if (entry.path().extension().string() == ".meta")
+					continue;
 
-				assets[entry.path().extension().string()].add("assets://" + relative(entry.path(), std::filesystem::path(Settings::assetPath())).string());
+				add("assets://" + relative(entry.path(), std::filesystem::path(Settings::assetPath())).string());
 			}
 		}
 	}

@@ -13,7 +13,7 @@ namespace TristeonEditor
 		tilesetTabs->setStyleSheet(
 			"background-color: rgb(255, 255, 255);\nborder-color: rgb(0, 0, 0);\ncolor: rgb(00, 00, 00);");
 
-		for (auto tileset : Tristeon::AssetDatabase::get(".tileset"))
+		for (auto tileset : Tristeon::AssetDatabase::findByExtension(".tileset"))
 		{
 			auto* tab = new TilesetTab(tileset);
 			tilesetTabs->addTab(tab, QString::fromStdString(std::filesystem::path(tileset).stem().string()));

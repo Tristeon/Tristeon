@@ -79,7 +79,7 @@ namespace Tristeon
 		}
 		else if (!_cachedName.empty())
 		{
-			path = AssetDatabase::findByName(_cachedName, ".scene");
+			path = AssetDatabase::find(_cachedName, ".scene");
 			if (path.empty())
 			{
 				TRISTEON_WARNING("Couldn't find scene: " + _cachedName);
