@@ -8,6 +8,7 @@
 
 #include <AssetManagement/MetaFiles/MetaFile.h>
 #include <AssetManagement/Domains/Domain.h>
+#include <AssetManagement/AssetDatabase.h>
 
 namespace Tristeon
 {

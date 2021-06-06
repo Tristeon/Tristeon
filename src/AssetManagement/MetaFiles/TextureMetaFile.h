@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "MetaFile.h"
-#include "Serialization/TypeRegister.h"
-#include "AssetManagement/FileExtensionRegister.h"
+#include <Serialization/TypeRegister.h>
+#include <AssetManagement/FileExtensionRegister.h>
 
 namespace Tristeon
 {
@@ -9,9 +9,6 @@ namespace Tristeon
 	{
 	public:
 		json serialize() override;
-
-		void deserialize(json j) override;
-
 		Unique<TObject> load(const String& path) override;
 	};
 

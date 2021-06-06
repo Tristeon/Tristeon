@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include "Serialization/Serializable.h"
-#include "Standard/String.h"
-#include "Standard/Unique.h"
-#include "Serialization/TypeRegister.h"
+
+#include <Standard/String.h>
+#include <Standard/Unique.h>
+#include <Serialization/TypeRegister.h>
 
 namespace Tristeon
 {
@@ -15,12 +16,10 @@ namespace Tristeon
 		virtual Unique<TObject> load(const String& path) { return nullptr; }
 
 		json serialize() override;
-
 		void deserialize(json j) override;
 		
 		String filepath;
-		
-		unsigned int GUID;
+		uint32_t GUID;
 	};
 
 	REGISTER_TYPE(MetaFile);
