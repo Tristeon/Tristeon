@@ -2,7 +2,7 @@
 #include <AssetManagement/Resources.h>
 #include <Serialization/MetaWrappers/TexturePath.h>
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 #include <magic_enum.hpp>
 
 #include <Rendering/DebugGL.h>
@@ -40,19 +40,19 @@ namespace Tristeon
 		auto const newAlbedoPath = j.value("texturePath", json()).value("path", "");
 		if (newAlbedoPath != _albedoPath)
 		{
-			_albedo = Resources::assetLoad<Texture>(newAlbedoPath);
+			_albedo = Resources::load<Texture>(newAlbedoPath);
 			_albedoPath = newAlbedoPath;
 		}
 		if (!_albedo)
 		{
-			_albedo = Resources::assetLoad<Texture>(Texture::defaultPath);
+			_albedo = Resources::load<Texture>(Texture::defaultPath);
 			TRISTEON_WARNING("Failed to load texture " + newAlbedoPath);
 		}
 
 		auto const newNormalPath = j.value("normalPath", json()).value("path", "");
 		if (newNormalPath != _normalPath)
 		{
-			_normal = Resources::assetLoad<Texture>(newNormalPath);
+			_normal = Resources::load<Texture>(newNormalPath);
 			_normalPath = newNormalPath;
 		}
 		_normalMapStrength = j.value("normalMapStrength", 1.0f);
@@ -60,15 +60,15 @@ namespace Tristeon
 		auto const newLightMaskPath = j.value("lightMaskPath", json()).value("path", "");
 		if (newLightMaskPath != _lightMaskPath)
 		{
-			_lightMask = Resources::assetLoad<Texture>(newLightMaskPath);
+			_lightMask = Resources::load<Texture>(newLightMaskPath);
 			_lightMaskPath = newLightMaskPath;
 		}
 	}
 
 	void Sprite::setTexture(std::string const& pPath, bool const& pSetSize, const TextureType& pType)
 	{
-		Texture** texPtr = nullptr;
-		String* pathPtr = nullptr;
+		Texture** texPtr;
+		String* pathPtr;
 
 		switch (pType)
 		{
@@ -88,15 +88,18 @@ namespace Tristeon
 			{
 				texPtr = &_lightMask;
 				pathPtr = &_lightMaskPath;
+				break;
 			}
+			default:
+				throw;
 		}
 
-		*texPtr = Resources::assetLoad<Texture>(pPath);
+		*texPtr = Resources::load<Texture>(pPath);
 		*pathPtr = pPath;
 
 		if (!*texPtr && pType == TextureType::Albedo)
 		{
-			*texPtr = Resources::assetLoad<Texture>(Texture::defaultPath);
+			*texPtr = Resources::load<Texture>(Texture::defaultPath);
 			*pathPtr = Texture::defaultPath;
 		}
 

@@ -59,7 +59,7 @@ namespace Tristeon
 		_playOnInit = j.value("playOnInit", false);
 
 		_clipPath = j.value("clipPath", "");
-		setClip(Resources::assetLoad<AudioClip>(_clipPath));
+		setClip(Resources::load<AudioClip>(_clipPath));
 	}
 
 	void AudioSource::play()

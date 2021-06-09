@@ -22,7 +22,7 @@ namespace Tristeon
 
 	Tileset::Tileset()
 	{
-		albedoMap = Resources::assetLoad<Texture>(Texture::defaultPath);
+		albedoMap = Resources::load<Texture>(Texture::defaultPath);
 		albedoPath = Texture::defaultPath;
 		
 		this->tileInfo = std::make_unique<TileInfo[]>(cols * rows);
@@ -73,14 +73,14 @@ namespace Tristeon
 		id = j.value("id", 0);
 
 		albedoPath = j.value("albedoPath", "");
-		albedoMap = Resources::assetLoad<Texture>(albedoPath);
+		albedoMap = Resources::load<Texture>(albedoPath);
 
 		normalPath = j.value("normalPath", "");
-		normalMap = Resources::assetLoad<Texture>(normalPath);
+		normalMap = Resources::load<Texture>(normalPath);
 		normalMapStrength = j.value("normalMapStrength", 1.0f);
 
 		lightMaskPath = j.value("lightMaskPath", "");
-		lightMask = Resources::assetLoad<Texture>(lightMaskPath);
+		lightMask = Resources::load<Texture>(lightMaskPath);
 		
 		spacingLeft = j.value("spacingLeft", 0);
 		spacingRight = j.value("spacingRight", 0);

@@ -50,14 +50,14 @@ namespace Tristeon
 
 	Audio::Handle Audio::play(const String& path, const bool& looping, const float& volume)
 	{
-		auto* clip = Resources::assetLoad<AudioClip>(path);
+		auto* clip = Resources::load<AudioClip>(path);
 		return play(clip, looping, volume);
 	}
 
 	Audio::Handle Audio::play(const String& path, const Vector& position, const float& minimumRange, const float& maximumRange,
 		const bool& looping, const float& volume)
 	{
-		auto* clip = Resources::assetLoad<AudioClip>(path);
+		auto* clip = Resources::load<AudioClip>(path);
 		return play(clip, position, minimumRange, maximumRange, looping, volume);
 	}
 

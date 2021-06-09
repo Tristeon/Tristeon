@@ -24,9 +24,9 @@ namespace Tristeon
 	{
 		CompositeLight::deserialize(j);
 		_texturePath = j.value("texture", Texture::defaultPath);
-		_texture = Resources::assetLoad<Texture>(_texturePath);
+		_texture = Resources::load<Texture>(_texturePath);
 		if (!_texture)
-			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+			_texture = Resources::load<Texture>(Texture::defaultPath);
 
 		_width = j.value("width", 1u);
 		_height = j.value("height", 1u);
@@ -39,10 +39,10 @@ namespace Tristeon
 
 	void SpriteLight::setTexture(const String& pPath, const bool& pSetSize)
 	{
-		_texture = Resources::assetLoad<Texture>(pPath);
+		_texture = Resources::load<Texture>(pPath);
 		_texturePath = pPath;
 		if (!_texture)
-			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+			_texture = Resources::load<Texture>(Texture::defaultPath);
 		else if (pSetSize)
 		{
 			_width = _texture->width();
@@ -53,7 +53,7 @@ namespace Tristeon
 	void SpriteLight::render()
 	{
 		if (!_texture)
-			_texture = Resources::assetLoad<Texture>(Texture::defaultPath);
+			_texture = Resources::load<Texture>(Texture::defaultPath);
 		
 		Shader* s = shader();
 		s->bind();
