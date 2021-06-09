@@ -4,6 +4,7 @@
 
 #include <Utils/Colour.h>
 #include <Serialization/TypeRegister.h>
+#include <Serialization/MetaWrappers/TextureField.h>
 
 namespace Tristeon
 {
@@ -26,7 +27,7 @@ namespace Tristeon
 		/**
 		 * Creates a white sprite of size 64x64.
 		 */
-		Sprite();
+		Sprite() = default;
 		virtual ~Sprite() = default;
 
 		DELETE_COPY(Sprite);
@@ -60,8 +61,6 @@ namespace Tristeon
 		 * Returns the current texture of the sprite. May be nullptr.
 		 */
 		virtual Texture* texture(const TextureType& pType = TextureType::Albedo);
-
-		virtual String texturePath(const TextureType& pType = TextureType::Albedo);
 		
 		/**
 		 * Returns the Sprite's Bounds.
@@ -73,15 +72,11 @@ namespace Tristeon
 		void render() override;
 		Shader* getShader() override;
 
-		Texture* _albedo = nullptr;
-		String _albedoPath;
-
-		Texture* _normal = nullptr;
-		String _normalPath;
+		TextureField _albedo;
+		TextureField _normal;
+		TextureField _lightMask;
+		
 		float _normalMapStrength = 1.0f;
-
-		Texture* _lightMask = nullptr;
-		String _lightMaskPath;
 	};
 
 	REGISTER_TYPE(Sprite);

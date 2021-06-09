@@ -1,9 +1,8 @@
 #include "AssetManagement/AssetDatabase.h"
 #include <AssetManagement/MetaFiles/MetaFile.h>
 #include <Serialization/JsonSerializer.h>
-#include "Settings.h"
+#include <Settings.h>
 #include <filesystem>
-
 
 namespace fs = std::filesystem;
 
@@ -49,14 +48,24 @@ namespace Tristeon
 		_assets.erase(guid);
 	}
 
-	String AssetDatabase::get(const uint32_t& guid)
+	String AssetDatabase::path(const uint32_t& guid)
 	{
 		if (_assets.find(guid) == _assets.end())
-		{
-			TRISTEON_WARNING("Couldn't locate asset with GUID " + std::to_string(guid));
 			return "";
-		}
 		return _assets[guid].path;
+	}
+
+	uint32_t AssetDatabase::guid(const String& path)
+	{
+		auto comparePath = path;
+		std::replace(comparePath.begin(), comparePath.end(), '\\', '/');
+		
+		for (auto [guid, asset] : _assets)
+		{
+			if (asset.path == comparePath)
+				return guid;
+		}
+		return 0;
 	}
 
 	String AssetDatabase::find(String const& name)
@@ -120,7 +129,9 @@ namespace Tristeon
 				if (entry.path().extension().string() == ".meta")
 					continue;
 
-				add("assets://" + relative(entry.path(), std::filesystem::path(Settings::assetPath())).string());
+				auto path = "assets://" + relative(entry.path(), std::filesystem::path(Settings::assetPath())).string();
+				std::replace(path.begin(), path.end(), '\\', '/');
+				add(path);
 			}
 		}
 	}

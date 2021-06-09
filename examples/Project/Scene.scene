@@ -14,6 +14,10 @@
         {
             "actors": [
                 {
+                    "albedo": {
+                        "guid": 423190714,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "density": 1.0,
@@ -68,16 +72,16 @@
                         "y": false
                     },
                     "instanceID": 1304861322,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Penguin",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 633.4859619140625,
@@ -98,15 +102,15 @@
                         "x": 256,
                         "y": 256
                     },
-                    "texturePath": {
-                        "path": "penguin.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 739608839,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [],
-                    "clipPath": "AnimClip.clip",
+                    "clipPath": "assets://AnimClip.clip",
                     "colour": {
                         "a": 1.0,
                         "b": 1.0,
@@ -121,16 +125,16 @@
                         "y": false
                     },
                     "instanceID": 1157287089,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Animated Numbers",
-                    "normalMapStrength": 1.0,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 1.0,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 2237.5,
@@ -151,13 +155,13 @@
                         "x": 635,
                         "y": 635
                     },
-                    "texturePath": {
-                        "path": "SpriteSheet.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::AnimationSprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 3512265957,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [],
                     "clipPath": "assets://CharacterWalk.clip",
                     "colour": {
@@ -174,16 +178,16 @@
                         "y": false
                     },
                     "instanceID": 3774548040,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Walking Character",
-                    "normalMapStrength": 1.0,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 1.0,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 961.665771484375,
@@ -203,10 +207,6 @@
                         "typeID": "Tristeon::VectorType<unsignedint>",
                         "x": 361,
                         "y": 349
-                    },
-                    "texturePath": {
-                        "path": "Character.png",
-                        "typeID": "Tristeon::TexturePath"
                     },
                     "typeID": "Tristeon::AnimationSprite"
                 },
@@ -279,6 +279,10 @@
                     "zoom": 0.03999999910593033
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -314,16 +318,16 @@
                         "y": false
                     },
                     "instanceID": 30496675,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 1359.4898681640625,
@@ -344,13 +348,13 @@
                         "x": 209,
                         "y": 209
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -386,16 +390,16 @@
                         "y": false
                     },
                     "instanceID": 1289285219,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 7111.04052734375,
@@ -416,13 +420,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -503,16 +507,16 @@
                         "y": false
                     },
                     "instanceID": 3731545914,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 8686.333984375,
@@ -533,13 +537,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -672,16 +676,16 @@
                         "y": false
                     },
                     "instanceID": 3933168032,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 5309.791015625,
@@ -702,13 +706,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -815,16 +819,16 @@
                         "y": false
                     },
                     "instanceID": 2723571617,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 6461.86181640625,
@@ -845,13 +849,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -887,16 +891,16 @@
                         "y": false
                     },
                     "instanceID": 1494727192,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 3287.465087890625,
@@ -917,13 +921,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -959,16 +963,16 @@
                         "y": false
                     },
                     "instanceID": 3344900575,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 4694.69970703125,
@@ -989,13 +993,13 @@
                         "x": 219,
                         "y": 219
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -1031,16 +1035,16 @@
                         "y": false
                     },
                     "instanceID": 359328336,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 8322.13671875,
@@ -1061,13 +1065,13 @@
                         "x": 173,
                         "y": 173
                     },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
-                    },
                     "typeID": "Tristeon::Sprite"
                 },
                 {
+                    "albedo": {
+                        "guid": 4000338929,
+                        "typeID": "Tristeon::TextureField"
+                    },
                     "behaviours": [
                         {
                             "colour": {
@@ -1103,16 +1107,16 @@
                         "y": false
                     },
                     "instanceID": 2298768767,
-                    "lightMaskPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "lightMask": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
                     "name": "Light",
-                    "normalMapStrength": 0.10000000149011612,
-                    "normalPath": {
-                        "path": "",
-                        "typeID": "Tristeon::TexturePath"
+                    "normal": {
+                        "guid": 0,
+                        "typeID": "Tristeon::TextureField"
                     },
+                    "normalMapStrength": 0.10000000149011612,
                     "position": {
                         "typeID": "Tristeon::VectorType<float>",
                         "x": 8322.13671875,
@@ -1132,10 +1136,6 @@
                         "typeID": "Tristeon::VectorType<unsignedint>",
                         "x": 173,
                         "y": 173
-                    },
-                    "texturePath": {
-                        "path": "NormalMapHintsAssets/LightSprite.png",
-                        "typeID": "Tristeon::TexturePath"
                     },
                     "typeID": "Tristeon::Sprite"
                 },

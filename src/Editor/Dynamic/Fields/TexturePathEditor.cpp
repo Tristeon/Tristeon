@@ -4,7 +4,8 @@
 #include <qdir.h>
 #include <qfiledialog.h>
 
-#include "Settings.h"
+#include <Settings.h>
+#include <AssetManagement/AssetDatabase.h>
 
 namespace TristeonEditor
 {
@@ -22,7 +23,7 @@ namespace TristeonEditor
 				auto const localPath = baseDir.relativeFilePath(path);
 				auto const fileName = QFileInfo(path).baseName();
 
-				_value["path"] = localPath.toStdString();
+				_value["guid"] = Tristeon::AssetDatabase::guid("assets://" + localPath.toStdString());
 				_button->setText(fileName);
 				_callback(_value);
 			});
@@ -31,6 +32,6 @@ namespace TristeonEditor
 	void TexturePathEditor::setValue(const nlohmann::json& pValue)
 	{
 		_value = pValue;
-		_button->setText(pValue["path"].get<std::string>().c_str());
+		_button->setText(Tristeon::AssetDatabase::path(pValue.value("guid", 0)).c_str());
 	}
 }

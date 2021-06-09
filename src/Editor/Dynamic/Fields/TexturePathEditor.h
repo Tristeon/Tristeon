@@ -4,7 +4,7 @@
 #include "Editor/Dynamic/AbstractJsonEditor.h"
 #include <Editor/Dynamic/EditorRegister.h>
 
-#include <Serialization/MetaWrappers/TexturePath.h>
+#include <Serialization/MetaWrappers/TextureField.h>
 
 namespace TristeonEditor
 {
@@ -17,5 +17,5 @@ namespace TristeonEditor
 		QPushButton* _button = nullptr;
 	};
 
-	EDITOR(Tristeon::TexturePath, TexturePathEditor);
+	EDITOR(Tristeon::TextureField, TexturePathEditor);
 }

@@ -87,12 +87,9 @@ namespace Tristeon
 			if (_newLoadedResources.find(guid) != _newLoadedResources.end())
 				return (T*)_newLoadedResources[guid].get();
 
-			const String path = AssetDatabase::get(guid);
-			if (path == "")
-			{
-				TRISTEON_WARNING("Couldn't load path for guid " + guid);
+			const String path = AssetDatabase::path(guid);
+			if (path.empty())
 				return nullptr;
-			}
 
 			return load<T>(path);
 		}

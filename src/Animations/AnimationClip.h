@@ -1,6 +1,7 @@
 #pragma once
 #include <Serialization/Serializable.h>
 #include <Serialization/TypeRegister.h>
+#include <Serialization/MetaWrappers/TextureField.h>
 
 namespace Tristeon
 {
@@ -98,22 +99,23 @@ namespace Tristeon
 		bool loops = false;
 
 		/**
-		 * Path to the color texture.
+		 * The base color of the animation clip
 		*/
-		String albedoPath;
+		TextureField albedo;
 		/**
-		 * Path to the normal map texture.
+		 * The normal map
 		*/
-		String normalPath;
+		TextureField normal;
+		/**
+		 * The light mask, determines how much light the clip receives at any point in the texture.
+		 * The r color value acts as a multiplier, where 0 means no light is received, and 1 means all the possible light is received.
+		*/
+		TextureField lightMask;
+		
 		/**
 		 * The strength of the normal map. Normals are interpolated between (0, 0, -1) and the value read in the normal map by this value. 0 means that the the normal map will have no effect and 1 means that the normal map takes full effect.
 		*/
 		float normalMapStrength = 1.0f;
-
-		/**
-		 * Path to the light mask texture.
-		*/
-		String lightMaskPath;
 
 		/**
 		 * A modifier for the playback rate of the animationclip.

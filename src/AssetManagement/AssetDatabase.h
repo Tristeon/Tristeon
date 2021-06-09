@@ -12,7 +12,9 @@ namespace Tristeon
 		static void remove(const String& path);
 		static void remove(const uint32_t& guid);
 
-		static String get(const uint32_t& guid);
+		static String path(const uint32_t& guid);
+		static uint32_t guid(const String& path);
+		
 		static String find(const String& name);
 		static String find(const String& name, const String& extension);
 

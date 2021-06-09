@@ -29,7 +29,7 @@ namespace TristeonEditor
 		QPainter painter;
 		painter.begin(this);
 
-		const auto brush = QBrush(QImage((Tristeon::Settings::assetPath() + clip.albedoPath).c_str()));
+		const auto brush = QBrush(QImage((Tristeon::Settings::assetPath() + clip.albedo.path()).c_str()));
 
 		if (!_animate)
 		{

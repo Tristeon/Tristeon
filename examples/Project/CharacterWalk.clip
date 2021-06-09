@@ -13,6 +13,17 @@
         "verticalFrame": 0
     },
     "startIndex": 13,
-    "texturePath": "Character.png",
+    "albedo": {
+        "guid": 3512265957,
+        "typeID": "Tristeon::TextureField"
+    },
+    "normal": {
+        "guid": 0,
+        "typeID": "Tristeon::TextureField"
+    },
+    "lightMask": {
+        "guid": 0,
+        "typeID": "Tristeon::TextureField"
+    },
     "typeID": "Tristeon::AnimationClip"
 }

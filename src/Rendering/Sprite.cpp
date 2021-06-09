@@ -1,6 +1,6 @@
 #include "Sprite.h"
 #include <AssetManagement/Resources.h>
-#include <Serialization/MetaWrappers/TexturePath.h>
+#include <Serialization/MetaWrappers/TextureField.h>
 
 #include <glad/glad.h>
 #include <magic_enum.hpp>
@@ -9,11 +9,6 @@
 
 namespace Tristeon
 {
-	Sprite::Sprite()
-	{
-		_albedo = Resources::load<Texture>(Texture::defaultPath);
-	}
-
 	json Sprite::serialize()
 	{
 		json j = Graphic::serialize();
@@ -21,9 +16,9 @@ namespace Tristeon
 		j["size"] = size;
 		j["flip"] = flip;
 		j["colour"] = colour;
-		j["texturePath"] = TexturePath{ _albedoPath };
-		j["normalPath"] = TexturePath{ _normalPath };
-		j["lightMaskPath"] = TexturePath{ _lightMaskPath };
+		j["albedo"] = _albedo;
+		j["normal"] = _normal;
+		j["lightMask"] = _lightMask;
 		j["normalMapStrength"] = _normalMapStrength;
 		return j;
 	}
@@ -37,75 +32,37 @@ namespace Tristeon
 
 		colour = j.value("colour", Colour());
 
-		auto const newAlbedoPath = j.value("texturePath", json()).value("path", "");
-		if (newAlbedoPath != _albedoPath)
-		{
-			_albedo = Resources::load<Texture>(newAlbedoPath);
-			_albedoPath = newAlbedoPath;
-		}
-		if (!_albedo)
-		{
-			_albedo = Resources::load<Texture>(Texture::defaultPath);
-			TRISTEON_WARNING("Failed to load texture " + newAlbedoPath);
-		}
-
-		auto const newNormalPath = j.value("normalPath", json()).value("path", "");
-		if (newNormalPath != _normalPath)
-		{
-			_normal = Resources::load<Texture>(newNormalPath);
-			_normalPath = newNormalPath;
-		}
+		_albedo = j.value("albedo", TextureField(0));
+		_normal = j.value("normal", TextureField(0));
+		_lightMask = j.value("lightMask", TextureField(0));
 		_normalMapStrength = j.value("normalMapStrength", 1.0f);
-		
-		auto const newLightMaskPath = j.value("lightMaskPath", json()).value("path", "");
-		if (newLightMaskPath != _lightMaskPath)
-		{
-			_lightMask = Resources::load<Texture>(newLightMaskPath);
-			_lightMaskPath = newLightMaskPath;
-		}
 	}
 
 	void Sprite::setTexture(std::string const& pPath, bool const& pSetSize, const TextureType& pType)
 	{
-		Texture** texPtr;
-		String* pathPtr;
-
 		switch (pType)
 		{
 			case TextureType::Albedo:
 			{
-				texPtr = &_albedo;
-				pathPtr = &_albedoPath;
+				_albedo = TextureField(pPath);
+				if (pSetSize)
+					size = { _albedo->width(), _albedo->height() };
 				break;
 			}
 			case TextureType::Normal:
 			{
-				texPtr = &_normal;
-				pathPtr = &_normalPath;
+				_normal = TextureField(pPath);
+				if (pSetSize)
+					size = { _normal->width(), _normal->height() };
 				break;
 			}
 			case TextureType::LightMask:
 			{
-				texPtr = &_lightMask;
-				pathPtr = &_lightMaskPath;
+				_lightMask = TextureField(pPath);
+				if (pSetSize)
+					size = { _lightMask->width(), _lightMask->height() };
 				break;
 			}
-			default:
-				throw;
-		}
-
-		*texPtr = Resources::load<Texture>(pPath);
-		*pathPtr = pPath;
-
-		if (!*texPtr && pType == TextureType::Albedo)
-		{
-			*texPtr = Resources::load<Texture>(Texture::defaultPath);
-			*pathPtr = Texture::defaultPath;
-		}
-
-		if (pSetSize)
-		{
-			size = { (*texPtr)->width(), (*texPtr)->height() };
 		}
 	}
 
@@ -114,38 +71,19 @@ namespace Tristeon
 		switch (pType)
 		{
 		case TextureType::Albedo:
-			return _albedo;
+			return *_albedo;
 		case TextureType::Normal:
-			return _normal;
+			return *_normal;
 		case TextureType::LightMask:
-			return _lightMask;
+			return *_lightMask;
 		}
 
 		TRISTEON_LOG("Invalid argument passed, type needs to be a valid enum value");
 		return nullptr;
 	}
 
-	String Sprite::texturePath(const TextureType& pType)
-	{
-		switch (pType)
-		{
-		case TextureType::Albedo:
-			return _albedoPath;
-		case TextureType::Normal:
-			return _normalPath;
-		case TextureType::LightMask:
-			return _lightMaskPath;
-		}
-
-		TRISTEON_LOG("Invalid argument passed, type needs to be a valid enum value");
-		return "";
-	}
-
 	void Sprite::render()
 	{
-		if (!_albedo)
-			return;
-		
 		auto* shader = getShader();
 		shader->bind();
 

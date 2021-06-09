@@ -5,17 +5,17 @@ namespace Tristeon
 {
 	json AnimationClip::serialize()
 	{
-		json j = Serializable::serialize();
+		auto j = Serializable::serialize();
 		j["typeID"] = Type<AnimationClip>::fullName();
 		j["rows"] = rows;
 		j["cols"] = cols;
 		j["startIndex"] = startIndex;
 		j["endIndex"] = endIndex;
 		j["loops"] = loops;
-		j["texturePath"] = albedoPath;
-		j["normalPath"] = normalPath;
+		j["albedo"] = albedo;
+		j["normal"] = normal;
+		j["lightMask"] = lightMask;
 		j["normalMapStrength"] = normalMapStrength;
-		j["lightMaskPath"] = lightMaskPath;
 		j["playbackRate"] = playbackRate;
 
 		j["spacing"]["left"] = spacing.left;
@@ -37,13 +37,15 @@ namespace Tristeon
 		startIndex = j.value("startIndex", 0);
 		endIndex = j.value("endIndex", rows * cols);
 		loops = j.value("loops", true);
-		albedoPath = j.value("texturePath", "");
-		normalPath = j.value("normalPath", "");
+		
+		albedo = j.value("albedo", TextureField(0));
+		normal = j.value("normal", TextureField(0));
+		lightMask = j.value("lightMask", TextureField(0));
 		normalMapStrength = j.value("normalMapStrength", 1.0f);
-		lightMaskPath = j.value("lightMaskPath", "");
+
 		playbackRate = j.value("playbackRate", 1.0f);
 
-		const json s = j.value("spacing", json());
+		const auto s = j.value("spacing", json());
 		spacing.left = s.value("left", 0);
 		spacing.right = s.value("right", 0);
 		spacing.top = s.value("top", 0);
