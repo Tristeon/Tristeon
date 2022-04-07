@@ -921,7 +921,7 @@ alternate-background-color: rgb(127, 140, 141);</string>
     <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
-    <string>File Explorer</string>
+    <string>Asset Explorer</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
